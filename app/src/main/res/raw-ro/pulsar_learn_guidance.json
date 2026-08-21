@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "guide_id": "pulsar_gagne_20_340",
+  "locale": "ro",
+  "release_status": "released",
+  "stages": [
+    {
+      "number": 1,
+      "instruction": "Pregătiți filtrul de hârtie fără a reține aer.",
+      "concise_instruction": "Așezați și clătiți hârtia folosind supapa.",
+      "target": "Supapă închisă → deschideți deasupra chiuvetei → închideți din nou",
+      "completion_cue": "Hârtia stă plat pe bază, fără buzunare de aer vizibile.",
+      "explanation": "Scoateți cilindrul, închideți supapa și turnați un strat puțin adânc de apă fierbinte peste nervurile bazei. Așezați o hârtie Pulsar uscată, apoi deschideți supapa deasupra chiuvetei. Scurgerea fixează hârtia și elimină aerul prins. Închideți supapa înainte de reasamblare.",
+      "practical_tip": "Folosiți un strat puțin adânc de apă; trebuie doar să acopere nervurile bazei.",
+      "alt_text": "O mână așază plat un filtru rotund de hârtie în baza neagră Pulsar, lângă maneta orizontală a supapei.",
+      "warning": null
+    },
+    {
+      "number": 2,
+      "instruction": "Pentru această rețetă 1:17, adăugați 20 g de cafea, nivelați patul, montați capacul și tarați.",
+      "concise_instruction": "Pentru rețeta 1:17, adăugați 20 g, nivelați, acoperiți și tarați.",
+      "target": "20 g cafea · 340 g apă în total · 1:17 · măcinare relativ grosieră",
+      "completion_cue": "Patul este nivelat, iar dispozitivul cu capac indică 0 g.",
+      "explanation": "Montați cilindrul pe baza pregătită, adăugați cafeaua și nivelați-o fără a o compacta. Montați capacul de dispersie înainte de a tara cântarul. Acest ghid folosește 20 g de cafea și 340 g de apă: un raport de 1:17 înseamnă 17 g de apă pentru fiecare 1 g de cafea. Menținerea rețetei neschimbate face ca timpul ulterior de scurgere să fie util pentru reglarea măcinării.",
+      "practical_tip": "Nu este necesar un alt dispozitiv ca referință. Începeți cu particule vizibil grosiere și uniforme, nu cu o măcinare prăfoasă, apoi reglați în funcție de scurgerea finală și gustul acestui Pulsar.",
+      "alt_text": "Cafea măcinată cade în camera transparentă deschisă a Pulsarului, aflată pe un recipient și un cântar, cu capacul de dispersie alături.",
+      "warning": null
+    },
+    {
+      "number": 3,
+      "instruction": "Deschideți supapa, porniți cronometrul și turnați până la 60 g, de trei ori doza de 20 g.",
+      "concise_instruction": "Deschideți supapa și turnați până la 60 g (3× doza de cafea).",
+      "target": "60 g apă cumulată · preinfuzie 1:3 · aproximativ 99 °C",
+      "completion_cue": "Cântarul indică 60 g și apar primele picături de cafea.",
+      "explanation": "Turnați prin capacul de dispersie cu supapa deschisă. Acest început deschis permite apei să elimine aerul de sub hârtie înainte de a începe preinfuzia reținută. Cu 20 g de cafea, indicația de 60 g reprezintă o preinfuzie 1:3: 3 g de apă pentru fiecare 1 g de cafea. Aceasta este doar partea de preinfuzie; rețeta completă se încheie la 340 g și 1:17.",
+      "practical_tip": "Turnați constant în centru; capacul distribuie apa.",
+      "alt_text": "Un fierbător negru toarnă prin capacul de dispersie Pulsar, iar supapa deschisă și verticală lasă primele picături să cadă în recipient.",
+      "warning": null
+    },
+    {
+      "number": 4,
+      "instruction": "La primele picături, închideți supapa și rotiți ușor o dată.",
+      "concise_instruction": "Închideți la primele picături și rotiți ușor o dată.",
+      "target": "Supapă orizontală · nu mai picură",
+      "completion_cue": "Preinfuzia este complet umedă și reținută deasupra supapei închise.",
+      "explanation": "Țineți dispozitivul de bază în timp ce închideți supapa. O singură rotire ușoară este suficientă pentru a umezi zonele uscate fără a împinge particulele fine în hârtie.",
+      "practical_tip": "Evitați rotirea sau amestecarea puternică; agitarea excesivă poate încetini sau bloca scurgerea.",
+      "alt_text": "Două mâini stabilizează baza Pulsar și mută maneta laterală transparentă în poziția orizontală închisă deasupra unui recipient gol.",
+      "warning": null
+    },
+    {
+      "number": 5,
+      "instruction": "Țineți supapa închisă până la 1:00.",
+      "concise_instruction": "Mențineți preinfuzia închisă până la 1:00.",
+      "target": "Preinfuzia se încheie la 1:00",
+      "completion_cue": "La 1:00, cafeaua a rămas scufundată cu supapa închisă.",
+      "explanation": "Preinfuzia reținută oferă cafelei timp să se satureze înainte ca percolarea să reînceapă.",
+      "practical_tip": "Lăsați dispozitivul să stea; nu este necesară amestecarea suplimentară în timpul așteptării.",
+      "alt_text": "Preinfuzie nemișcată în Pulsar, cu amestec puțin adânc și cu bule, supapă orizontală închisă și fără cafea care să picure în recipient.",
+      "warning": null
+    },
+    {
+      "number": 6,
+      "instruction": "La 1:00, deschideți supapa și turnați în impulsuri până la 340 g în total, raportul final de 1:17.",
+      "concise_instruction": "Deschideți la 1:00 și turnați în impulsuri până la 340 g în total (1:17).",
+      "target": "340 g cumulat · adăugați 280 g după preinfuzie · mențineți amestecul la aproximativ 1 cm deasupra patului",
+      "completion_cue": "Cântarul indică 340 g, iar nivelul amestecului a rămas scăzut.",
+      "explanation": "Turnați în impulsuri mici prin capac în timp ce cafeaua se scurge în recipient. Un nivel scăzut și stabil limitează timpul de contact fără bypass și evită umplerea excesivă. Ținta de 340 g include cele 60 g anterioare de preinfuzie, astfel că această etapă adaugă 280 g. Cu 20 g de cafea, 340 g de apă în total oferă raportul final de 1:17.",
+      "practical_tip": "Faceți pauză între impulsuri când apa urcă cu mai mult de aproximativ 1 cm deasupra patului.",
+      "alt_text": "Un fierbător negru toarnă în impulsuri prin capacul Pulsar, cu supapa verticală, nivel scăzut al amestecului și cafea curgând în recipient.",
+      "warning": null
+    },
+    {
+      "number": 7,
+      "instruction": "Lăsați dispozitivul să termine scurgerea.",
+      "concise_instruction": "Lăsați scurgerea finală să se încheie.",
+      "target": "Urmăriți un timp total de 3:30–4:30",
+      "completion_cue": "Nu mai rămâne apă deasupra patului plat de cafea.",
+      "explanation": "Un debit mai lent spre final este normal pe măsură ce coloana de apă scade. Folosiți timpul total ca verificare practică a măcinării, nu ca motiv să deranjați patul. Ținta de 3:30–4:30 aparține exact acestei rețete de 20 g / 340 g; o altă doză sau proporție modifică adâncimea patului și debitul și are nevoie de propriul rezultat, nu de o comparație directă.",
+      "practical_tip": "Pentru această rețetă de 20 g / 340 g, măcinați mai fin data viitoare dacă se termină înainte de 3:30. Dacă durează peste 4:30, măcinați mai grosier sau agitați mai puțin. Lăsați gustul să decidă reglajul final.",
+      "alt_text": "Un Pulsar aproape golit, cu supapa verticală, pat umed și plat, ultimele picături și cafea gata în recipient.",
+      "warning": null
+    },
+    {
+      "number": 8,
+      "instruction": "Închideți supapa, ridicați de baza neagră și serviți.",
+      "concise_instruction": "Închideți, ridicați numai de bază și serviți.",
+      "target": "Supapă orizontală înainte de îndepărtare",
+      "completion_cue": "Dispozitivul este ridicat de pe recipient, iar cafeaua este gata.",
+      "explanation": "Închiderea supapei previne picăturile rămase. Lăsați recipientul pe cântar în timp ce ridicați dispozitivul drept în sus de bază.",
+      "practical_tip": "Așezați dispozitivul pe o suprafață rezistentă la căldură înainte de servire.",
+      "alt_text": "Două mâini ridică un Pulsar scurs numai de baza neagră, deasupra unui recipient nemișcat cu cafea gata.",
+      "warning": "Camera transparentă și lichidul pot fi fierbinți. Ridicați dispozitivul asamblat numai de baza sa neagră."
+    }
+  ]
+}

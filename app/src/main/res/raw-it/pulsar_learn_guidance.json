@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "guide_id": "pulsar_gagne_20_340",
+  "locale": "it",
+  "release_status": "released",
+  "stages": [
+    {
+      "number": 1,
+      "instruction": "Prepara il filtro di carta senza intrappolare aria.",
+      "concise_instruction": "Posiziona e risciacqua la carta azionando la valvola.",
+      "target": "Valvola chiusa → aprire sopra il lavello → richiudere",
+      "completion_cue": "La carta aderisce piatta alla base, senza sacche d’aria visibili.",
+      "explanation": "Rimuovi il cilindro, chiudi la valvola e versa un sottile strato d’acqua calda sulle nervature della base. Inserisci un filtro Pulsar asciutto, poi apri la valvola sopra il lavello. Lo scarico fa aderire la carta ed espelle l’aria intrappolata. Chiudi la valvola prima di rimontare.",
+      "practical_tip": "Usa poca acqua: deve soltanto coprire le nervature della base.",
+      "alt_text": "Una mano appoggia un filtro di carta rotondo nella base nera del Pulsar accanto alla leva orizzontale della valvola.",
+      "warning": null
+    },
+    {
+      "number": 2,
+      "instruction": "Per questa ricetta 1:17, aggiungi 20 g di caffè, livella il letto, inserisci il coperchio e tara.",
+      "concise_instruction": "Per questa ricetta 1:17, aggiungi 20 g, livella, copri e tara.",
+      "target": "20 g di caffè · 340 g d’acqua totali · 1:17 · macinatura piuttosto grossa",
+      "completion_cue": "Il letto è piano e il brewer con il coperchio indica 0 g.",
+      "explanation": "Monta il cilindro sulla base preparata, aggiungi il caffè e livellalo senza comprimerlo. Inserisci il coperchio di dispersione prima di tarare la bilancia. Questa guida usa 20 g di caffè e 340 g d’acqua: un rapporto 1:17 significa 17 g d’acqua per ogni 1 g di caffè. Mantenendo fissa la ricetta, il successivo tempo di deflusso diventa utile per affinare la macinatura.",
+      "practical_tip": "Non serve un altro brewer come riferimento. Inizia con particelle visibilmente grosse e uniformi, non con una macinatura polverosa, poi regola in base al deflusso finale e al gusto di questo Pulsar.",
+      "alt_text": "Caffè macinato che cade nella camera trasparente aperta del Pulsar sopra una caraffa e una bilancia, con il coperchio di dispersione accanto.",
+      "warning": null
+    },
+    {
+      "number": 3,
+      "instruction": "Apri la valvola, avvia il timer e versa fino a 60 g, tre volte la dose di 20 g.",
+      "concise_instruction": "Apri la valvola e versa fino a 60 g (3× la dose di caffè).",
+      "target": "60 g d’acqua cumulativa · preinfusione 1:3 · circa 99 °C",
+      "completion_cue": "La bilancia indica 60 g e compaiono le prime gocce di caffè.",
+      "explanation": "Versa attraverso il coperchio di dispersione con la valvola aperta. Questo avvio aperto permette all’acqua in ingresso di spostare l’aria sotto la carta prima che inizi la preinfusione trattenuta. Con 20 g di caffè, la lettura di 60 g corrisponde a una preinfusione 1:3: 3 g d’acqua per ogni 1 g di caffè. È solo la parte di preinfusione; la ricetta completa termina a 340 g e 1:17.",
+      "practical_tip": "Versa con continuità al centro; il coperchio distribuisce l’acqua.",
+      "alt_text": "Un bollitore nero versa attraverso il coperchio di dispersione del Pulsar mentre la valvola aperta e verticale lascia cadere le prime gocce nella caraffa.",
+      "warning": null
+    },
+    {
+      "number": 4,
+      "instruction": "Alle prime gocce, chiudi la valvola e fai una sola rotazione delicata.",
+      "concise_instruction": "Chiudi alle prime gocce e ruota una volta delicatamente.",
+      "target": "Valvola orizzontale · nessun altro gocciolamento",
+      "completion_cue": "La preinfusione è completamente bagnata e trattenuta sopra la valvola chiusa.",
+      "explanation": "Tieni il brewer dalla base mentre chiudi la valvola. Una sola rotazione delicata basta a bagnare le zone asciutte senza spingere le particelle fini nella carta.",
+      "practical_tip": "Evita rotazioni o mescolamenti energici; un’agitazione eccessiva può rallentare o bloccare il deflusso.",
+      "alt_text": "Due mani stabilizzano la base del Pulsar e portano la leva laterale trasparente in posizione orizzontale chiusa sopra una caraffa vuota.",
+      "warning": null
+    },
+    {
+      "number": 5,
+      "instruction": "Mantieni la valvola chiusa fino a 1:00.",
+      "concise_instruction": "Mantieni chiusa la preinfusione fino a 1:00.",
+      "target": "La preinfusione termina a 1:00",
+      "completion_cue": "A 1:00, il caffè è rimasto immerso con la valvola chiusa.",
+      "explanation": "La preinfusione trattenuta dà al caffè il tempo di saturarsi prima che riprenda la percolazione.",
+      "practical_tip": "Lascia riposare il brewer; durante l’attesa non serve mescolare ancora.",
+      "alt_text": "Una preinfusione ferma nel Pulsar, con miscela poco profonda e gorgogliante, valvola orizzontale chiusa e nessun caffè che gocciola nella caraffa.",
+      "warning": null
+    },
+    {
+      "number": 6,
+      "instruction": "A 1:00, apri la valvola e versa a impulsi fino a 340 g totali, il rapporto finale 1:17.",
+      "concise_instruction": "Apri a 1:00 e versa a impulsi fino a 340 g totali (1:17).",
+      "target": "340 g cumulativi · aggiungere 280 g dopo la preinfusione · mantenere la miscela circa 1 cm sopra il letto",
+      "completion_cue": "La bilancia indica 340 g e il livello della miscela è rimasto basso.",
+      "explanation": "Versa in piccoli impulsi attraverso il coperchio mentre il caffè defluisce nella caraffa. Un livello basso e stabile limita il tempo di contatto senza bypass ed evita di riempire troppo il brewer. L’obiettivo di 340 g include i precedenti 60 g della preinfusione, quindi questa fase aggiunge 280 g. Con 20 g di caffè, 340 g d’acqua totali danno il rapporto finale 1:17.",
+      "practical_tip": "Fai una pausa tra gli impulsi quando l’acqua supera il letto di circa 1 cm.",
+      "alt_text": "Un bollitore nero versa a impulsi attraverso il coperchio del Pulsar, con valvola verticale, miscela bassa e caffè che scorre nella caraffa.",
+      "warning": null
+    },
+    {
+      "number": 7,
+      "instruction": "Lascia completare il deflusso.",
+      "concise_instruction": "Lascia terminare il deflusso finale.",
+      "target": "Punta a un tempo totale di 3:30–4:30",
+      "completion_cue": "Non resta acqua sopra il letto di caffè piatto.",
+      "explanation": "Un flusso più lento verso la fine è normale quando la colonna d’acqua scende. Usa il tempo totale come controllo pratico della macinatura, non come motivo per disturbare il letto. L’obiettivo di 3:30–4:30 appartiene a questa precisa ricetta da 20 g / 340 g; una dose o un rapporto diversi cambiano profondità e flusso del letto e richiedono quindi un proprio risultato invece di un confronto diretto.",
+      "practical_tip": "Per questa ricetta da 20 g / 340 g, macina più fine la prossima volta se termina prima di 3:30. Se supera 4:30, macina più grosso o agita meno. Lascia che sia il gusto a decidere l’ultima regolazione.",
+      "alt_text": "Un Pulsar quasi drenato con valvola verticale, letto bagnato e piano, ultime gocce e caffè finito nella caraffa.",
+      "warning": null
+    },
+    {
+      "number": 8,
+      "instruction": "Chiudi la valvola, solleva dalla base nera e servi.",
+      "concise_instruction": "Chiudi, solleva solo dalla base e servi.",
+      "target": "Valvola orizzontale prima della rimozione",
+      "completion_cue": "Il brewer è sollevato dalla caraffa e il caffè è pronto.",
+      "explanation": "Chiudere la valvola evita gocce residue. Lascia la caraffa sulla bilancia mentre sollevi il brewer verticalmente dalla base.",
+      "practical_tip": "Appoggia il brewer su una superficie resistente al calore prima di servire.",
+      "alt_text": "Due mani sollevano un Pulsar drenato soltanto dalla base nera sopra una caraffa ferma di caffè pronto.",
+      "warning": "La camera trasparente e il liquido possono essere caldi. Solleva il brewer assemblato soltanto dalla base nera."
+    }
+  ]
+}

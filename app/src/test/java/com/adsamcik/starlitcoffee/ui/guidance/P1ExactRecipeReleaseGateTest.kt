@@ -47,7 +47,7 @@ class P1ExactRecipeReleaseGateTest {
     }
 
     @Test
-    fun `reviewed non-English guidance also requires its approved terminology glossary`() {
+    fun `released non-English guidance also requires its terminology glossary`() {
         val guidance = BuiltInP1ExactGuidanceLoadResult.Loaded(
             catalog = exactCatalog,
             localeTag = "cs",
@@ -93,63 +93,6 @@ class P1ExactRecipeReleaseGateTest {
                 ?.find(primaryStage.contentId)
                 ?.terminologyReferences,
         )
-    }
-
-    @Test
-    fun `preview locale stays gated until explicit consent`() {
-        val guidance = BuiltInP1ExactGuidanceLoadResult.Loaded(
-            catalog = exactCatalog,
-            localeTag = "cs",
-            canonicalEnglishCatalog = exactCatalog,
-        )
-        val terminology = BuiltInP1ExactTerminologyLoadResult.Loaded(
-            P1ExactTerminologyCatalog(
-                localeTag = "cs",
-                localizationStatus = P1ExactLocalizationStatus.PREVIEW,
-                uiCopy = BrewingTerminologyUiCopy("Show", "Hide", "English terms"),
-                referencesByContentId = emptyMap(),
-            ),
-        )
-        val coverage = P1ExactRecipeLocalizationCoverage(
-            supportedLocaleTags = P1ExactRecipeLocalizationCoverage.supportedAppLocaleTags,
-            coveredLocaleTagsByRecipe = emptyMap(),
-            previewLocaleTagsByRecipe = mapOf(PRIMARY_RECIPE to setOf("cs")),
-        )
-        val blocked = P1ExactRecipeReleaseGate(
-            guidanceLoadResult = guidance,
-            instructionAssets = approvedAssetsFor(PRIMARY_RECIPE),
-            terminologyLoadResult = terminology,
-            localizationCoverage = coverage,
-        )
-        val enabled = P1ExactRecipeReleaseGate(
-            guidanceLoadResult = guidance,
-            instructionAssets = approvedAssetsFor(PRIMARY_RECIPE),
-            terminologyLoadResult = terminology,
-            localizationCoverage = coverage,
-            allowPreview = true,
-        )
-
-        assertTrue(blocked.eligibleRecipeIds.isEmpty())
-        assertEquals(setOf(PRIMARY_RECIPE), blocked.previewEligibleRecipeIds)
-        assertTrue(blocked.requiresPreviewConsent)
-        assertTrue(enabled.isEligible(PRIMARY_RECIPE))
-        assertTrue(enabled.isPreview(PRIMARY_RECIPE))
-        assertFalse(enabled.requiresPreviewConsent)
-    }
-
-    @Test
-    fun `preview safety warning includes canonical English reference`() {
-        val stage = exactCatalog.stages.first { it.requiresSafetyCriticalExpertReview && it.warning != null }
-        val localized = stage.copy(
-            full = stage.full.copy(warning = "Localized safety warning"),
-        )
-        val content = localized.toBuiltInGuidanceContent(
-            englishSafetyWarning = requireNotNull(stage.warning),
-        )
-
-        assertTrue(content.text.warning?.contains("Localized safety warning") == true)
-        assertTrue(content.text.warning?.contains("English safety reference:") == true)
-        assertTrue(content.text.warning?.contains(requireNotNull(stage.warning)) == true)
     }
 
     @Test

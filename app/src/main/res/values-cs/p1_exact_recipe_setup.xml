@@ -57,6 +57,9 @@
     <string name="label_brewer_profile_thick_paper_carafe">Karafa se silným papírovým filtrem</string>
     <string name="label_brewer_profile_conical">Obecný kónický dripper</string>
     <string name="label_brewer_profile_family_manual_gravity">Manuální překapávání</string>
+    <string name="label_brewer_profile_pulsar">Pulsar</string>
+    <string name="label_brewer_profile_family_valve_controlled_no_bypass">Řízení ventilem bez obtoku</string>
+    <string name="recipe_pulsar_gagne_20_340">Gagného máčené předspaření · 20 g / 340 g</string>
 
     <string name="recipe_p1_v60_official_15_250">Oficiální Hario · 15 g / 250 g</string>
     <string name="recipe_p1_v60_rao_20_330">V60 podle Scotta Raa · 20 g / 330 g</string>
@@ -79,9 +82,4 @@
     <string name="recipe_p1_phin_gravity_14_118">Gravitační phin · 14 g / 118 g</string>
     <string name="recipe_p1_phin_screw_18_120">Phin se šroubovací vložkou · 18 g / 120 g</string>
 
-    <string name="label_guidance_preview">Náhled překladu</string>
-    <string name="msg_guidance_preview_consent">Tyto pokyny byly přeloženy automaticky a neprošly odbornou kontrolou. U bezpečnostně kritických kroků se zobrazí také anglické varování.</string>
-    <string name="action_use_preview_translation">Použít náhled</string>
-    <string name="action_keep_current_guidance">Teď ne</string>
-    <string name="action_turn_off_preview_translation">Vypnout náhled překladu</string>
 </resources>

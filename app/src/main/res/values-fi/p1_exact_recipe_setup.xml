@@ -58,6 +58,9 @@
     <string name="label_brewer_profile_thick_paper_carafe">Kannukahvinkeitin paksulla paperisuodattimella</string>
     <string name="label_brewer_profile_conical">Yleismallinen kartiomainen suodatinsuppilo</string>
     <string name="label_brewer_profile_family_manual_gravity">Manuaalinen painovoimauutto</string>
+    <string name="label_brewer_profile_pulsar">Pulsar</string>
+    <string name="label_brewer_profile_family_valve_controlled_no_bypass">Venttiiliohjattu ilman ohivirtausta</string>
+    <string name="recipe_pulsar_gagne_20_340">Gagnén suljettu esikostutus · 20 g / 340 g</string>
 
     <string name="recipe_p1_v60_official_15_250">Harion virallinen resepti · 15 g / 250 g</string>
     <string name="recipe_p1_v60_rao_20_330">Scott Rao V60 · 20 g / 330 g</string>
@@ -80,9 +83,4 @@
     <string name="recipe_p1_phin_gravity_14_118">Painovoimainen phin · 14 g / 118 g</string>
     <string name="recipe_p1_phin_screw_18_120">Phin kierrettävällä sisäosalla · 18 g / 120 g</string>
 
-    <string name="label_guidance_preview">Käännöksen esikatselu</string>
-    <string name="msg_guidance_preview_consent">Nämä ohjeet on käännetty automaattisesti, eikä asiantuntija ole vielä tarkistanut niitä. Turvallisuuden kannalta kriittisissä vaiheissa näytetään myös englanninkielinen varoitus.</string>
-    <string name="action_use_preview_translation">Käytä esikatselua</string>
-    <string name="action_keep_current_guidance">Ei nyt</string>
-    <string name="action_turn_off_preview_translation">Poista käännöksen esikatselu käytöstä</string>
 </resources>

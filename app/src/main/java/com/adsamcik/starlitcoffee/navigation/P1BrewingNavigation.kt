@@ -54,7 +54,6 @@ internal fun NavGraphBuilder.p1BrewingRoutes(
         snackbarHostState = snackbarHostState,
         unavailableMessage = configuration.unavailableMessage,
         exactRecipeReleaseGate = exactRecipeReleaseGate,
-        onTurnOffPreview = configuration.onTurnOffPreview,
     )
     p1LearningLibraryRoute(
         navController = navController,
@@ -74,7 +73,6 @@ private fun NavGraphBuilder.p1BrewerSetupRoute(
     snackbarHostState: SnackbarHostState,
     unavailableMessage: String,
     exactRecipeReleaseGate: P1ExactRecipeReleaseGate,
-    onTurnOffPreview: () -> Unit,
 ) {
     composable<BrewerProfileSetup> setupRoute@{
         val eligibleRecipeIds = exactRecipeReleaseGate.eligibleRecipeIds
@@ -137,8 +135,6 @@ private fun NavGraphBuilder.p1BrewerSetupRoute(
             },
             onLearn = { selection -> navController.navigate(selection.learnRoute()) },
             onBack = { navController.popBackStack() },
-            isGuidancePreview = eligibleRecipeIds.any(exactRecipeReleaseGate::isPreview),
-            onTurnOffPreview = onTurnOffPreview,
         )
     }
 }
@@ -248,7 +244,6 @@ private fun NavGraphBuilder.p1LearnBrewerRoute(
             resolution = resolution,
             onBack = { navController.popBackStack() },
             instructionAssets = BuiltInInstructionAssetCatalog.catalog,
-            isGuidancePreview = exactRecipeReleaseGate.isPreview(exactRecipe.id),
         )
     }
 }

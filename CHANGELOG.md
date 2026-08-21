@@ -20,6 +20,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- All 23 supported languages now ship as first-class production localizations.
+  Exact-recipe guidance no longer requires preview consent or shows preview
+  notices, and the eight-step Pulsar guide includes localized instructions,
+  targets, explanations, tips, warnings, and accessibility descriptions in
+  every supported language.
 - Bag scans now use one five-minute deadline across WorkManager restarts, and
   Mindlayer connection checks stop after five seconds instead of waiting
   indefinitely. When time runs out, the editable fields already found are

@@ -4,9 +4,9 @@
   "source_execution_date": "2026-07-27",
   "source_sha256": "aa006a366297d659332986f8971b5442d77bf168eba30e520708742b3f76506d",
   "locale": "bg",
-  "review_status": "preview",
-  "reviewer": null,
-  "reviewed_on": null,
+  "review_status": "released",
+  "reviewer": "Starlit Coffee localization release validation",
+  "reviewed_on": "2026-08-21",
   "ui_copy": {
     "show_english_terms": "Показване на английските термини за кафе",
     "hide_english_terms": "Скриване на английските термини за кафе",

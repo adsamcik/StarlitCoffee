@@ -58,6 +58,9 @@
     <string name="label_brewer_profile_thick_paper_carafe">Karafový kávovar s hrubým papierovým filtrom</string>
     <string name="label_brewer_profile_conical">Všeobecný kužeľový dripper</string>
     <string name="label_brewer_profile_family_manual_gravity">Ručná gravitačná príprava</string>
+    <string name="label_brewer_profile_pulsar">Pulsar</string>
+    <string name="label_brewer_profile_family_valve_controlled_no_bypass">Riadený ventilom bez obtoku</string>
+    <string name="recipe_pulsar_gagne_20_340">Gagného zadržané predmáčanie · 20 g / 340 g</string>
 
     <string name="recipe_p1_v60_official_15_250">Oficiálny recept Hario · 15 g / 250 g</string>
     <string name="recipe_p1_v60_rao_20_330">Scott Rao V60 · 20 g / 330 g</string>
@@ -80,9 +83,4 @@
     <string name="recipe_p1_phin_gravity_14_118">Gravitačný phin · 14 g / 118 g</string>
     <string name="recipe_p1_phin_screw_18_120">Phin so skrutkovacou vložkou · 18 g / 120 g</string>
 
-    <string name="label_guidance_preview">Náhľad prekladu</string>
-    <string name="msg_guidance_preview_consent">Tieto pokyny boli preložené automaticky a neprešli odbornou kontrolou. Pri krokoch kritických pre bezpečnosť sa zobrazí aj anglické varovanie.</string>
-    <string name="action_use_preview_translation">Použiť náhľad</string>
-    <string name="action_keep_current_guidance">Nie teraz</string>
-    <string name="action_turn_off_preview_translation">Vypnúť náhľad prekladu</string>
 </resources>

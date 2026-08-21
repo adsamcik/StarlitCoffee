@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "guide_id": "pulsar_gagne_20_340",
+  "locale": "nl",
+  "release_status": "released",
+  "stages": [
+    {
+      "number": 1,
+      "instruction": "Maak het papieren filter nat zonder lucht in te sluiten.",
+      "concise_instruction": "Plaats en spoel het papier met de ventielcyclus.",
+      "target": "Ventiel dicht → boven de gootsteen openen → weer sluiten",
+      "completion_cue": "Het papier ligt vlak tegen de bodem zonder zichtbare luchtbel.",
+      "explanation": "Verwijder de cilinder, sluit het ventiel en giet een ondiep laagje heet water over de ribbels van de bodem. Plaats een droog Pulsar-papier en open het ventiel boven de gootsteen. Door het leeglopen zet het papier zich vast en wordt ingesloten lucht verdreven. Sluit het ventiel voordat je alles weer monteert.",
+      "practical_tip": "Houd het water ondiep; het hoeft alleen de ribbels van de bodem te bedekken.",
+      "alt_text": "Een hand legt een rond papieren filter vlak in de zwarte Pulsar-bodem naast de horizontale ventielhendel.",
+      "warning": null
+    },
+    {
+      "number": 2,
+      "instruction": "Voeg voor dit 1:17-recept 20 g koffie toe, maak het bed vlak, plaats de dop en tarreer.",
+      "concise_instruction": "Voor dit 1:17-recept: voeg 20 g toe, maak vlak, plaats de dop en tarreer.",
+      "target": "20 g koffie · 340 g water totaal · 1:17 · vrij grove maling",
+      "completion_cue": "Het koffiebed is vlak en de brewer met dop geeft 0 g aan.",
+      "explanation": "Monteer de cilinder op de voorbereide bodem, voeg koffie toe en maak die vlak zonder aan te drukken. Plaats de verdeelkap voordat je de weegschaal tarreert. Deze gids gebruikt 20 g koffie en 340 g water: een verhouding van 1:17 betekent 17 g water voor elke 1 g koffie. Als het recept gelijk blijft, kun je de latere doorlooptijd gebruiken om de maling te verfijnen.",
+      "practical_tip": "Een andere brewer is niet nodig als referentie. Begin met zichtbaar grove, gelijkmatige deeltjes in plaats van een poederige maling en verfijn de instelling aan de hand van de uiteindelijke doorloop en smaak van deze Pulsar.",
+      "alt_text": "Gemalen koffie valt in de open, heldere Pulsar-kamer op een serveerkan en weegschaal, met de verdeelkap ernaast.",
+      "warning": null
+    },
+    {
+      "number": 3,
+      "instruction": "Open het ventiel, start de timer en schenk tot 60 g, driemaal de dosis van 20 g.",
+      "concise_instruction": "Open het ventiel en schenk tot 60 g (3× de koffiedosis).",
+      "target": "60 g water cumulatief · bloomverhouding 1:3 · ongeveer 99 °C",
+      "completion_cue": "De weegschaal geeft 60 g aan en de eerste koffiedruppels verschijnen.",
+      "explanation": "Schenk door de verdeelkap met het ventiel open. Deze open start laat het inkomende water lucht onder het papier verdringen voordat de vastgehouden bloom begint. Met 20 g koffie is de aflezing van 60 g een bloom van 1:3: 3 g water voor elke 1 g koffie. Dit is alleen het bloomgedeelte; het volledige recept eindigt bij 340 g en 1:17.",
+      "practical_tip": "Schenk gelijkmatig in het midden; de kap verdeelt het water voor je.",
+      "alt_text": "Een zwarte ketel schenkt door de verdeelkap van de Pulsar, terwijl het rechtopstaande open ventiel de eerste druppels in de serveerkan laat lopen.",
+      "warning": null
+    },
+    {
+      "number": 4,
+      "instruction": "Sluit het ventiel bij de eerste druppels en zwenk eenmaal voorzichtig.",
+      "concise_instruction": "Sluit bij de eerste druppels en zwenk eenmaal voorzichtig.",
+      "target": "Ventiel horizontaal · geen druppels meer",
+      "completion_cue": "De bloom is volledig nat en blijft boven het gesloten ventiel.",
+      "explanation": "Houd de brewer bij de bodem vast terwijl je het ventiel sluit. Eén zachte zwenkbeweging is genoeg om droge plekken nat te maken zonder fijne deeltjes in het papier te drukken.",
+      "practical_tip": "Vermijd krachtig zwenken of roeren; te veel beweging kan de doorloop vertragen of verstoppen.",
+      "alt_text": "Twee handen stabiliseren de Pulsar-bodem en bewegen de heldere zijhendel boven een lege serveerkan naar de horizontale gesloten stand.",
+      "warning": null
+    },
+    {
+      "number": 5,
+      "instruction": "Houd het ventiel gesloten tot 1:00.",
+      "concise_instruction": "Houd de gesloten bloom vast tot 1:00.",
+      "target": "Bloom eindigt bij 1:00",
+      "completion_cue": "Bij 1:00 is de koffie met gesloten ventiel ondergedompeld gebleven.",
+      "explanation": "De vastgehouden bloom geeft de koffie tijd om te verzadigen voordat de percolatie verdergaat.",
+      "practical_tip": "Laat de brewer rusten; tijdens het wachten hoef je niet extra te roeren.",
+      "alt_text": "Een stille Pulsar-bloom met een ondiep borrelend mengsel, horizontaal gesloten ventiel en geen koffie die in de serveerkan druppelt.",
+      "warning": null
+    },
+    {
+      "number": 6,
+      "instruction": "Open bij 1:00 het ventiel en schenk in pulsen tot 340 g totaal, de uiteindelijke verhouding van 1:17.",
+      "concise_instruction": "Open bij 1:00 en schenk in pulsen tot 340 g totaal (1:17).",
+      "target": "340 g cumulatief · na de bloom 280 g toevoegen · mengsel ongeveer 1 cm boven het bed houden",
+      "completion_cue": "De weegschaal geeft 340 g aan en het niveau van het mengsel bleef laag.",
+      "explanation": "Schenk in kleine pulsen door de kap terwijl koffie in de serveerkan loopt. Een laag, stabiel niveau beperkt de contacttijd zonder bypass en voorkomt overvullen. Het doel van 340 g omvat de eerdere 60 g bloom, dus deze fase voegt 280 g toe. Met 20 g koffie geeft 340 g water totaal de uiteindelijke verhouding van 1:17.",
+      "practical_tip": "Pauzeer tussen pulsen wanneer het water meer dan ongeveer 1 cm boven het koffiebed komt.",
+      "alt_text": "Een zwarte ketel schenkt in pulsen door de Pulsar-kap, met het ventiel rechtop, een laag mengsel en koffie die in de serveerkan stroomt.",
+      "warning": null
+    },
+    {
+      "number": 7,
+      "instruction": "Laat de brewer volledig doorlopen.",
+      "concise_instruction": "Laat de laatste doorloop voltooien.",
+      "target": "Streef naar een totale tijd van 3:30–4:30",
+      "completion_cue": "Er staat geen water meer boven het vlakke koffiebed.",
+      "explanation": "Een tragere stroom aan het einde is normaal als de waterkolom daalt. Gebruik de totale tijd als praktische controle van de maling, niet als reden om het bed te verstoren. Het doel van 3:30–4:30 hoort bij dit exacte recept van 20 g / 340 g; een andere dosis of verhouding verandert de beddiepte en stroming en vraagt daarom om een eigen resultaat in plaats van een directe vergelijking.",
+      "practical_tip": "Maal voor dit recept van 20 g / 340 g de volgende keer fijner als het vóór 3:30 klaar is. Maal grover of beweeg minder als het langer dan 4:30 duurt. Laat de smaak de laatste aanpassing bepalen.",
+      "alt_text": "Een bijna doorgelopen Pulsar met het ventiel rechtop, een vlak nat bed, de laatste druppels en gezette koffie in de serveerkan.",
+      "warning": null
+    },
+    {
+      "number": 8,
+      "instruction": "Sluit het ventiel, til op aan de zwarte bodem en serveer.",
+      "concise_instruction": "Sluit, til alleen aan de bodem op en serveer.",
+      "target": "Ventiel horizontaal vóór verwijderen",
+      "completion_cue": "De brewer is van de serveerkan getild en de koffie is klaar.",
+      "explanation": "Door het ventiel te sluiten voorkom je losse druppels. Laat de serveerkan op de weegschaal staan terwijl je de brewer recht omhoog tilt aan de bodem.",
+      "practical_tip": "Zet de brewer vóór het serveren op een hittebestendig oppervlak.",
+      "alt_text": "Twee handen tillen een doorgelopen Pulsar alleen aan de zwarte bodem boven een stilstaande serveerkan met gezette koffie.",
+      "warning": "De heldere kamer en vloeistof kunnen heet zijn. Til de gemonteerde brewer alleen aan de zwarte bodem op."
+    }
+  ]
+}

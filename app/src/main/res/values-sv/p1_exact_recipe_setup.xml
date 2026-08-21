@@ -58,6 +58,9 @@
     <string name="label_brewer_profile_thick_paper_carafe">Kannbryggare med tjockt pappersfilter</string>
     <string name="label_brewer_profile_conical">Generisk konisk dripper</string>
     <string name="label_brewer_profile_family_manual_gravity">Manuell gravitationsbryggning</string>
+    <string name="label_brewer_profile_pulsar">Pulsar</string>
+    <string name="label_brewer_profile_family_valve_controlled_no_bypass">Ventilstyrd utan bypass</string>
+    <string name="recipe_pulsar_gagne_20_340">Gagnés hållna blomning · 20 g / 340 g</string>
 
     <string name="recipe_p1_v60_official_15_250">Officiellt Hario-recept · 15 g / 250 g</string>
     <string name="recipe_p1_v60_rao_20_330">Scott Rao V60 · 20 g / 330 g</string>
@@ -80,9 +83,4 @@
     <string name="recipe_p1_phin_gravity_14_118">Phin med gravitationsflöde · 14 g / 118 g</string>
     <string name="recipe_p1_phin_screw_18_120">Phin med skruvinsats · 18 g / 120 g</string>
 
-    <string name="label_guidance_preview">Förhandsversion av översättning</string>
-    <string name="msg_guidance_preview_consent">Den här vägledningen har översatts automatiskt och har ännu inte granskats av en specialist. Säkerhetskritiska steg visar även varningen på engelska.</string>
-    <string name="action_use_preview_translation">Använd förhandsversionen</string>
-    <string name="action_keep_current_guidance">Inte nu</string>
-    <string name="action_turn_off_preview_translation">Stäng av förhandsversionen</string>
 </resources>

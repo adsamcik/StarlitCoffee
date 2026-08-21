@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "guide_id": "pulsar_gagne_20_340",
+  "locale": "sl",
+  "release_status": "released",
+  "stages": [
+    {
+      "number": 1,
+      "instruction": "Pripravite papirnati filter, ne da bi ujeli zrak.",
+      "concise_instruction": "Namestite in sperite papir z uporabo ventila.",
+      "target": "Ventil zaprt → odprite nad koritom → znova zaprite",
+      "completion_cue": "Papir leži ravno ob podstavku, brez vidnega zračnega žepa.",
+      "explanation": "Odstranite valj, zaprite ventil in prek reber podstavka nalijte plitvo plast vroče vode. Vstavite suh papir Pulsar in nato odprite ventil nad koritom. Odtok namesti papir in iztisne ujeti zrak. Pred ponovno sestavo zaprite ventil.",
+      "practical_tip": "Plast vode naj bo plitva; prekriti mora le rebra podstavka.",
+      "alt_text": "Roka ravno namešča okrogel papirnati filter v črni podstavek Pulsarja poleg vodoravne ročice ventila.",
+      "warning": null
+    },
+    {
+      "number": 2,
+      "instruction": "Za ta recept 1:17 dodajte 20 g kave, poravnajte plast, namestite pokrov in tarirajte tehtnico.",
+      "concise_instruction": "Za recept 1:17 dodajte 20 g, poravnajte, pokrijte in tarirajte.",
+      "target": "20 g kave · skupaj 340 g vode · 1:17 · razmeroma grobo mletje",
+      "completion_cue": "Plast je ravna, pripravljalnik s pokrovom pa kaže 0 g.",
+      "explanation": "Namestite valj na pripravljen podstavek, dodajte kavo in jo poravnajte brez stiskanja. Pred tariranjem tehtnice namestite razpršilni pokrov. Ta vodnik uporablja 20 g kave in 340 g vode: razmerje 1:17 pomeni 17 g vode na vsak 1 g kave. Če recept ostane nespremenjen, je poznejši čas odtekanja uporaben za natančno nastavitev mletja.",
+      "practical_tip": "Za primerjavo ne potrebujete drugega pripravljalnika. Začnite z vidno grobimi, enakomernimi delci namesto praškastega mletja, nato pa nastavitev prilagodite glede na končno odtekanje in okus tega Pulsarja.",
+      "alt_text": "Mleta kava pada v odprto prozorno komoro Pulsarja na strežnem vrču in tehtnici, z razpršilnim pokrovom ob strani.",
+      "warning": null
+    },
+    {
+      "number": 3,
+      "instruction": "Odprite ventil, zaženite časovnik in nalijte do 60 g, kar je trikratnik odmerka 20 g.",
+      "concise_instruction": "Odprite ventil in nalijte do 60 g (3× odmerek kave).",
+      "target": "skupaj 60 g vode · razmerje prednamakanja 1:3 · približno 99 °C",
+      "completion_cue": "Tehtnica kaže 60 g in pojavijo se prve kaplje kave.",
+      "explanation": "Nalivajte skozi razpršilni pokrov z odprtim ventilom. Ta odprti začetek omogoča dotekajoči vodi, da izpod papirja izpodrine zrak, preden se začne zadržano prednamakanje. Pri 20 g kave odčitek 60 g ustreza razmerju 1:3: 3 g vode na vsak 1 g kave. To je le del prednamakanja; celoten recept se konča pri 340 g in 1:17.",
+      "practical_tip": "Nalivajte enakomerno v sredino; pokrov razporedi vodo.",
+      "alt_text": "Črn grelnik naliva skozi razpršilni pokrov Pulsarja, medtem ko pokončni odprti ventil spušča prve kaplje v strežni vrč.",
+      "warning": null
+    },
+    {
+      "number": 4,
+      "instruction": "Ob prvih kapljah zaprite ventil in enkrat nežno zavrtite.",
+      "concise_instruction": "Ob prvih kapljah zaprite in enkrat nežno zavrtite.",
+      "target": "Ventil vodoravno · kapljanje se je ustavilo",
+      "completion_cue": "Prednamakanje je v celoti mokro in zadržano nad zaprtim ventilom.",
+      "explanation": "Med zapiranjem ventila držite pripravljalnik za podstavek. En nežen zasuk zadošča za omočenje suhih mest, ne da bi drobne delce potisnili v papir.",
+      "practical_tip": "Izogibajte se močnemu vrtenju ali mešanju; preveč gibanja lahko upočasni ali zamaši odtekanje.",
+      "alt_text": "Dve roki stabilizirata podstavek Pulsarja in premakneta prozorno stransko ročico v vodoravni zaprti položaj nad praznim strežnim vrčem.",
+      "warning": null
+    },
+    {
+      "number": 5,
+      "instruction": "Ventil naj ostane zaprt do 1:00.",
+      "concise_instruction": "Prednamakanje naj ostane zaprto do 1:00.",
+      "target": "Prednamakanje se konča pri 1:00",
+      "completion_cue": "Pri 1:00 je bila kava ves čas potopljena z zaprtim ventilom.",
+      "explanation": "Zadržano prednamakanje da kavi čas, da se napoji, preden se perkolacija nadaljuje.",
+      "practical_tip": "Pustite pripravljalnik mirovati; med čakanjem dodatno mešanje ni potrebno.",
+      "alt_text": "Mirujoče prednamakanje v Pulsarju s plitvo mešanico z mehurčki, vodoravno zaprtim ventilom in brez kapljanja kave v strežni vrč.",
+      "warning": null
+    },
+    {
+      "number": 6,
+      "instruction": "Pri 1:00 odprite ventil in nalivajte v sunkih do skupaj 340 g, končnega razmerja 1:17.",
+      "concise_instruction": "Pri 1:00 odprite in nalivajte v sunkih do skupaj 340 g (1:17).",
+      "target": "skupaj 340 g · po prednamakanju dodajte 280 g · mešanica naj bo približno 1 cm nad plastjo",
+      "completion_cue": "Tehtnica kaže 340 g, raven mešanice pa je ostala nizka.",
+      "explanation": "Nalivajte skozi pokrov v majhnih sunkih, medtem ko kava odteka v strežni vrč. Nizka in stalna raven omejuje čas stika brez obvoda in preprečuje prepolnitev. Cilj 340 g vključuje prejšnjih 60 g prednamakanja, zato v tej fazi dodate 280 g. Pri 20 g kave skupaj 340 g vode da končno razmerje 1:17.",
+      "practical_tip": "Med sunki prekinite nalivanje, kadar se voda dvigne več kot približno 1 cm nad plast kave.",
+      "alt_text": "Črn grelnik naliva v sunkih skozi pokrov Pulsarja, ventil je pokončen, raven mešanice nizka, pripravljena kava pa teče v strežni vrč.",
+      "warning": null
+    },
+    {
+      "number": 7,
+      "instruction": "Pustite, da pripravljalnik dokonča odtekanje.",
+      "concise_instruction": "Pustite, da se končno odtekanje zaključi.",
+      "target": "Ciljajte na skupni čas 3:30–4:30",
+      "completion_cue": "Nad ravno plastjo kave ni več stoječe vode.",
+      "explanation": "Počasnejši pretok proti koncu je normalen, ko vodni stolpec pada. Skupni čas uporabite kot praktično preverjanje mletja, ne kot razlog za motenje plasti. Cilj 3:30–4:30 velja prav za ta recept 20 g / 340 g; drugačen odmerek ali razmerje spremeni globino plasti in pretok, zato potrebuje lastno oceno namesto neposredne primerjave.",
+      "practical_tip": "Za ta recept 20 g / 340 g naslednjič meljite bolj fino, če se konča pred 3:30. Če traja dlje kot 4:30, meljite bolj grobo ali manj premikajte. Končno prilagoditev naj določi okus.",
+      "alt_text": "Skoraj izpraznjen Pulsar s pokončnim ventilom, ravno mokro plastjo, zadnjimi kapljami in pripravljeno kavo v strežnem vrču.",
+      "warning": null
+    },
+    {
+      "number": 8,
+      "instruction": "Zaprite ventil, dvignite za črni podstavek in postrezite.",
+      "concise_instruction": "Zaprite, dvignite samo za podstavek in postrezite.",
+      "target": "Ventil vodoravno pred odstranitvijo",
+      "completion_cue": "Pripravljalnik je dvignjen s strežnega vrča in kava je pripravljena.",
+      "explanation": "Zaprt ventil preprečuje posamezne kaplje. Strežni vrč naj ostane na tehtnici, medtem ko pripravljalnik za podstavek dvignete naravnost navzgor.",
+      "practical_tip": "Pred postrežbo postavite pripravljalnik na toplotno odporno površino.",
+      "alt_text": "Dve roki dvigujeta odcejen Pulsar samo za črni podstavek nad mirujočim strežnim vrčem s pripravljeno kavo.",
+      "warning": "Prozorna komora in tekočina sta lahko vroči. Sestavljen pripravljalnik dvigujte samo za njegov črni podstavek."
+    }
+  ]
+}

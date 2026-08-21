@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "guide_id": "pulsar_gagne_20_340",
+  "locale": "en",
+  "release_status": "released",
+  "stages": [
+    {
+      "number": 1,
+      "instruction": "Prime the paper without trapping air.",
+      "concise_instruction": "Seat and prime the paper with the valve cycle.",
+      "target": "Valve closed → open over the sink → closed again",
+      "completion_cue": "The paper sits flat against the base with no visible air pocket.",
+      "explanation": "With the barrel removed, close the valve and add a shallow layer of hot water over the base ridges. Place a dry Pulsar paper, then open the valve over the sink. Draining seats the paper and pushes trapped air out. Close the valve before reassembling.",
+      "practical_tip": "Keep the water shallow; it only needs to cover the base ridges.",
+      "alt_text": "A hand seating a round paper filter flat in the black Pulsar base beside its horizontal valve lever.",
+      "warning": null
+    },
+    {
+      "number": 2,
+      "instruction": "For this 1:17 recipe, add 20 g of coffee, level the bed, fit the cap, and tare.",
+      "concise_instruction": "For this 1:17 recipe, add 20 g, level, cap, and tare.",
+      "target": "20 g coffee · 340 g water total · 1:17 · relatively coarse grind",
+      "completion_cue": "The bed is level and the capped brewer reads 0 g.",
+      "explanation": "Assemble the barrel on the primed base, add the coffee, and level it without compacting it. Fit the dispersion cap before taring the scale. This guide uses 20 g coffee and 340 g water: a 1:17 ratio means 17 g of water for every 1 g of coffee. Keeping that recipe fixed makes the later drawdown time useful when refining the grind.",
+      "practical_tip": "No other brewer is needed as a reference. Start with visibly coarse, even particles rather than a powdery grind, then use this Pulsar's final drawdown and taste to refine the setting.",
+      "alt_text": "Ground coffee falling into an open clear Pulsar chamber on a server and scale, with the dispersion cap beside it.",
+      "warning": null
+    },
+    {
+      "number": 3,
+      "instruction": "Open the valve, start the timer, and pour to 60 g—three times the 20 g dose.",
+      "concise_instruction": "Open the valve and pour to 60 g (3× the coffee dose).",
+      "target": "60 g cumulative water · 1:3 bloom ratio · about 99 °C",
+      "completion_cue": "The scale reads 60 g and the first coffee drops appear.",
+      "explanation": "Pour through the dispersion cap with the valve open. This open start lets the incoming water displace air below the paper before the steeped bloom begins. With 20 g coffee, the 60 g scale reading is a 1:3 bloom: 3 g water for each 1 g coffee. It is only the bloom portion; the full recipe finishes at 340 g and 1:17.",
+      "practical_tip": "Use a steady central pour; the cap distributes the water for you.",
+      "alt_text": "A black kettle pouring through the Pulsar dispersion cap while the upright open valve allows the first drops into the server.",
+      "warning": null
+    },
+    {
+      "number": 4,
+      "instruction": "At the first drips, close the valve and swirl once, gently.",
+      "concise_instruction": "Close at the first drips; swirl once, gently.",
+      "target": "Valve horizontal · no more dripping",
+      "completion_cue": "The bloom is fully wet and retained above the closed valve.",
+      "explanation": "Hold the brewer by its base while closing the valve. One gentle swirl is enough to wet dry pockets without driving fines into the paper.",
+      "practical_tip": "Avoid forceful swirling or stirring; excess agitation can slow or clog the drawdown.",
+      "alt_text": "Two hands stabilize the Pulsar base and move the clear side lever to its horizontal closed position over an empty server.",
+      "warning": null
+    },
+    {
+      "number": 5,
+      "instruction": "Keep the valve closed until 1:00.",
+      "concise_instruction": "Hold the closed bloom to 1:00.",
+      "target": "Bloom ends at 1:00",
+      "completion_cue": "At 1:00, the coffee has remained immersed with the valve closed.",
+      "explanation": "The retained bloom gives the coffee time to saturate before percolation resumes.",
+      "practical_tip": "Let the brewer rest; no extra stirring is needed during this wait.",
+      "alt_text": "A still Pulsar bloom with a shallow bubbling slurry, horizontal closed valve, and no coffee dripping into the server.",
+      "warning": null
+    },
+    {
+      "number": 6,
+      "instruction": "At 1:00, open the valve and pulse-pour to 340 g total—the final 1:17 ratio.",
+      "concise_instruction": "Open at 1:00 and pulse-pour to 340 g total (1:17).",
+      "target": "340 g cumulative · add 280 g after the bloom · keep slurry about 1 cm above the bed",
+      "completion_cue": "The scale reads 340 g and the slurry has stayed low.",
+      "explanation": "Pour through the cap in small pulses while coffee drains into the server. A low, steady slurry level limits bypass-free contact time without overfilling the brewer. The 340 g target includes the earlier 60 g bloom, so this phase adds 280 g. With 20 g coffee, 340 g total water is the final 1:17 ratio.",
+      "practical_tip": "Pause between pulses whenever the water rises more than about 1 cm above the bed.",
+      "alt_text": "A black kettle pulse-pouring through the Pulsar cap with the valve upright, a low slurry, and brewed coffee flowing into the server.",
+      "warning": null
+    },
+    {
+      "number": 7,
+      "instruction": "Let the brewer finish drawing down.",
+      "concise_instruction": "Let the final drawdown finish.",
+      "target": "Aim for a total time of 3:30–4:30",
+      "completion_cue": "No standing water remains above the flat coffee bed.",
+      "explanation": "A slower flow near the end is normal as the water head falls. Use the total time as a practical grind check, not as a reason to disturb the bed. The 3:30–4:30 target belongs to this exact 20 g / 340 g recipe; a different dose or ratio changes bed depth and flow, so it needs its own result rather than a direct comparison.",
+      "practical_tip": "For this 20 g / 340 g recipe, grind finer next time if it finishes before 3:30. If it runs beyond 4:30, grind coarser or agitate less. Let taste decide the final adjustment.",
+      "alt_text": "A nearly drained Pulsar with its valve upright, a flat wet bed, final drops, and finished coffee in the server.",
+      "warning": null
+    },
+    {
+      "number": 8,
+      "instruction": "Close the valve, lift by the black base, and serve.",
+      "concise_instruction": "Close, lift only by the base, and serve.",
+      "target": "Valve horizontal before removal",
+      "completion_cue": "The brewer is clear of the server and the coffee is ready.",
+      "explanation": "Closing the valve prevents stray drips. Keep the server on the scale while lifting the brewer straight upward by the base.",
+      "practical_tip": "Set the brewer on a heat-safe surface before serving.",
+      "alt_text": "Two hands lift a drained Pulsar only by its black base above a stationary server of finished coffee.",
+      "warning": "The clear chamber and liquid may be hot. Lift the assembled brewer only by its black base."
+    }
+  ]
+}

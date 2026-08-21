@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "guide_id": "pulsar_gagne_20_340",
+  "locale": "pt",
+  "release_status": "released",
+  "stages": [
+    {
+      "number": 1,
+      "instruction": "Prepare o filtro de papel sem reter ar.",
+      "concise_instruction": "Assente e enxague o papel com o ciclo da válvula.",
+      "target": "Válvula fechada → abrir sobre o lava-loiça → voltar a fechar",
+      "completion_cue": "O papel fica plano contra a base, sem bolsas de ar visíveis.",
+      "explanation": "Retire o cilindro, feche a válvula e adicione uma camada pouco profunda de água quente sobre as nervuras da base. Coloque um papel Pulsar seco e abra a válvula sobre o lava-loiça. A drenagem assenta o papel e expulsa o ar retido. Feche a válvula antes de voltar a montar.",
+      "practical_tip": "Use pouca água; basta cobrir as nervuras da base.",
+      "alt_text": "Uma mão assenta um filtro de papel redondo na base preta do Pulsar, junto à alavanca horizontal da válvula.",
+      "warning": null
+    },
+    {
+      "number": 2,
+      "instruction": "Para esta receita 1:17, adicione 20 g de café, nivele o leito, coloque a tampa e tare.",
+      "concise_instruction": "Para esta receita 1:17, adicione 20 g, nivele, tape e tare.",
+      "target": "20 g de café · 340 g de água no total · 1:17 · moagem relativamente grossa",
+      "completion_cue": "O leito está nivelado e o equipamento tapado marca 0 g.",
+      "explanation": "Monte o cilindro na base preparada, adicione o café e nivele-o sem o compactar. Coloque a tampa de dispersão antes de tarar a balança. Este guia utiliza 20 g de café e 340 g de água: uma proporção 1:17 significa 17 g de água por cada 1 g de café. Manter a receita fixa torna o tempo de drenagem posterior útil para afinar a moagem.",
+      "practical_tip": "Não precisa de outro equipamento como referência. Comece com partículas visivelmente grossas e uniformes, em vez de uma moagem em pó, e ajuste com base na drenagem final e no sabor deste Pulsar.",
+      "alt_text": "Café moído a cair na câmara transparente aberta do Pulsar sobre uma jarra e uma balança, com a tampa de dispersão ao lado.",
+      "warning": null
+    },
+    {
+      "number": 3,
+      "instruction": "Abra a válvula, inicie o temporizador e verta até 60 g, três vezes a dose de 20 g.",
+      "concise_instruction": "Abra a válvula e verta até 60 g (3× a dose de café).",
+      "target": "60 g de água acumulada · pré-infusão 1:3 · cerca de 99 °C",
+      "completion_cue": "A balança marca 60 g e aparecem as primeiras gotas de café.",
+      "explanation": "Verta pela tampa de dispersão com a válvula aberta. Este início aberto permite que a água desloque o ar sob o papel antes de começar a pré-infusão retida. Com 20 g de café, a leitura de 60 g corresponde a uma pré-infusão 1:3: 3 g de água por cada 1 g de café. É apenas a parte da pré-infusão; a receita completa termina em 340 g e 1:17.",
+      "practical_tip": "Verta de forma constante ao centro; a tampa distribui a água.",
+      "alt_text": "Uma chaleira preta verte pela tampa de dispersão do Pulsar enquanto a válvula aberta e vertical deixa cair as primeiras gotas na jarra.",
+      "warning": null
+    },
+    {
+      "number": 4,
+      "instruction": "Às primeiras gotas, feche a válvula e rode suavemente uma vez.",
+      "concise_instruction": "Feche às primeiras gotas e rode suavemente uma vez.",
+      "target": "Válvula horizontal · sem mais gotejamento",
+      "completion_cue": "A pré-infusão está totalmente molhada e retida acima da válvula fechada.",
+      "explanation": "Segure o equipamento pela base enquanto fecha a válvula. Uma rotação suave basta para molhar zonas secas sem empurrar partículas finas para o papel.",
+      "practical_tip": "Evite rodar ou mexer com força; a agitação excessiva pode abrandar ou bloquear a drenagem.",
+      "alt_text": "Duas mãos estabilizam a base do Pulsar e movem a alavanca lateral transparente para a posição horizontal fechada sobre uma jarra vazia.",
+      "warning": null
+    },
+    {
+      "number": 5,
+      "instruction": "Mantenha a válvula fechada até 1:00.",
+      "concise_instruction": "Mantenha a pré-infusão fechada até 1:00.",
+      "target": "A pré-infusão termina em 1:00",
+      "completion_cue": "Em 1:00, o café permaneceu imerso com a válvula fechada.",
+      "explanation": "A pré-infusão retida dá ao café tempo para saturar antes de a percolação recomeçar.",
+      "practical_tip": "Deixe o equipamento repousar; não é preciso voltar a mexer durante a espera.",
+      "alt_text": "Pré-infusão imóvel no Pulsar, com mistura pouco profunda e borbulhante, válvula horizontal fechada e sem café a pingar para a jarra.",
+      "warning": null
+    },
+    {
+      "number": 6,
+      "instruction": "Em 1:00, abra a válvula e verta por impulsos até 340 g no total, a proporção final de 1:17.",
+      "concise_instruction": "Abra em 1:00 e verta por impulsos até 340 g no total (1:17).",
+      "target": "340 g acumulados · adicionar 280 g após a pré-infusão · manter a mistura cerca de 1 cm acima do leito",
+      "completion_cue": "A balança marca 340 g e o nível da mistura manteve-se baixo.",
+      "explanation": "Verta em pequenos impulsos pela tampa enquanto o café drena para a jarra. Um nível baixo e estável limita o tempo de contacto sem bypass e evita encher demasiado o equipamento. O objetivo de 340 g inclui os 60 g anteriores da pré-infusão, por isso esta fase adiciona 280 g. Com 20 g de café, 340 g de água no total dão a proporção final de 1:17.",
+      "practical_tip": "Faça uma pausa entre impulsos quando a água subir mais de cerca de 1 cm acima do leito.",
+      "alt_text": "Uma chaleira preta verte por impulsos pela tampa do Pulsar, com a válvula vertical, mistura baixa e café a fluir para a jarra.",
+      "warning": null
+    },
+    {
+      "number": 7,
+      "instruction": "Deixe o equipamento terminar a drenagem.",
+      "concise_instruction": "Deixe terminar a drenagem final.",
+      "target": "Procure um tempo total de 3:30–4:30",
+      "completion_cue": "Não resta água sobre o leito de café plano.",
+      "explanation": "Um fluxo mais lento perto do fim é normal à medida que a coluna de água desce. Use o tempo total como verificação prática da moagem, não como motivo para perturbar o leito. O objetivo de 3:30–4:30 pertence a esta receita exata de 20 g / 340 g; uma dose ou proporção diferente altera a profundidade e o fluxo do leito, pelo que precisa do seu próprio resultado em vez de uma comparação direta.",
+      "practical_tip": "Para esta receita de 20 g / 340 g, moa mais fino da próxima vez se terminar antes de 3:30. Se passar de 4:30, moa mais grosso ou agite menos. Deixe o sabor decidir o ajuste final.",
+      "alt_text": "Um Pulsar quase drenado, com válvula vertical, leito húmido e plano, últimas gotas e café pronto na jarra.",
+      "warning": null
+    },
+    {
+      "number": 8,
+      "instruction": "Feche a válvula, levante pela base preta e sirva.",
+      "concise_instruction": "Feche, levante apenas pela base e sirva.",
+      "target": "Válvula horizontal antes de retirar",
+      "completion_cue": "O equipamento está afastado da jarra e o café está pronto.",
+      "explanation": "Fechar a válvula evita gotas soltas. Mantenha a jarra na balança enquanto levanta o equipamento verticalmente pela base.",
+      "practical_tip": "Coloque o equipamento numa superfície resistente ao calor antes de servir.",
+      "alt_text": "Duas mãos levantam um Pulsar drenado apenas pela base preta sobre uma jarra imóvel com café pronto.",
+      "warning": "A câmara transparente e o líquido podem estar quentes. Levante o equipamento montado apenas pela base preta."
+    }
+  ]
+}

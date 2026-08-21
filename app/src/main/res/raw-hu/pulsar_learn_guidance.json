@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "guide_id": "pulsar_gagne_20_340",
+  "locale": "hu",
+  "release_status": "released",
+  "stages": [
+    {
+      "number": 1,
+      "instruction": "Készítse elő a papírszűrőt úgy, hogy ne maradjon alatta levegő.",
+      "concise_instruction": "Helyezze be és öblítse át a papírt a szelep használatával.",
+      "target": "Szelep zárva → nyissa ki a mosogató fölött → zárja vissza",
+      "completion_cue": "A papír laposan fekszik az alapon, látható légbuborék nélkül.",
+      "explanation": "Vegye le a hengert, zárja el a szelepet, és öntsön sekély réteg forró vizet az alap bordáira. Helyezzen be egy száraz Pulsar-papírt, majd nyissa ki a szelepet a mosogató fölött. A lefolyó víz a helyére igazítja a papírt és kiszorítja az alatta rekedt levegőt. Összeszerelés előtt zárja el a szelepet.",
+      "practical_tip": "A vízréteg legyen sekély; csak az alap bordáit kell elfednie.",
+      "alt_text": "Egy kéz laposan behelyez egy kerek papírszűrőt a fekete Pulsar-alapba a vízszintes szelepkarnál.",
+      "warning": null
+    },
+    {
+      "number": 2,
+      "instruction": "Ehhez az 1:17 recepthez adjon hozzá 20 g kávét, egyengesse el az ágyat, tegye fel a fedelet, és tárázza a mérleget.",
+      "concise_instruction": "1:17 recept: adjon hozzá 20 g-ot, egyengesse el, fedje le és tárázza.",
+      "target": "20 g kávé · összesen 340 g víz · 1:17 · viszonylag durva őrlés",
+      "completion_cue": "A kávéágy egyenletes, és a lefedett eszköz 0 g-ot mutat.",
+      "explanation": "Szerelje a hengert az előkészített alapra, adja hozzá a kávét, és tömörítés nélkül egyengesse el. A mérleg tárázása előtt helyezze fel az elosztófedelet. Ez az útmutató 20 g kávét és 340 g vizet használ: az 1:17 arány 17 g vizet jelent minden 1 g kávéhoz. Ha a recept változatlan marad, a későbbi lefolyási idő segít az őrlés finomhangolásában.",
+      "practical_tip": "Nincs szükség másik eszközre viszonyításként. Poros őrlemény helyett láthatóan durva, egyenletes szemcsékkel kezdjen, majd ennek a Pulsarnak a végső lefolyása és íze alapján finomítsa a beállítást.",
+      "alt_text": "Őrölt kávé hullik a nyitott, átlátszó Pulsar-kamrába egy kiöntőedényen és mérlegen, mellette az elosztófedéllel.",
+      "warning": null
+    },
+    {
+      "number": 3,
+      "instruction": "Nyissa ki a szelepet, indítsa el az időzítőt, és öntsön 60 g-ig, a 20 g-os adag háromszorosáig.",
+      "concise_instruction": "Nyissa ki a szelepet, és öntsön 60 g-ig (3× kávéadag).",
+      "target": "összesen 60 g víz · 1:3 előáztatási arány · körülbelül 99 °C",
+      "completion_cue": "A mérleg 60 g-ot mutat, és megjelennek az első kávécseppek.",
+      "explanation": "Nyitott szelep mellett öntsön az elosztófedélen keresztül. Ez a nyitott kezdés lehetővé teszi, hogy a beáramló víz kiszorítsa a levegőt a papír alól a visszatartott előáztatás kezdete előtt. 20 g kávénál a 60 g-os mérlegérték 1:3 arányú előáztatást jelent: 3 g víz minden 1 g kávéhoz. Ez csak az előáztatási rész; a teljes recept 340 g-nál és 1:17 aránynál ér véget.",
+      "practical_tip": "Egyenletesen, középre öntsön; a fedél elosztja a vizet.",
+      "alt_text": "Egy fekete vízforraló a Pulsar elosztófedelén keresztül önt, miközben a függőleges nyitott szelep az első cseppeket a kiöntőedénybe engedi.",
+      "warning": null
+    },
+    {
+      "number": 4,
+      "instruction": "Az első cseppeknél zárja el a szelepet, és egyszer finoman forgassa meg.",
+      "concise_instruction": "Az első cseppeknél zárja el, és egyszer finoman forgassa meg.",
+      "target": "Szelep vízszintes · nincs több csepegés",
+      "completion_cue": "Az előáztatás teljesen nedves, és a zárt szelep fölött marad.",
+      "explanation": "A szelep zárásakor az alapnál fogja az eszközt. Egy finom forgatás elég a száraz részek benedvesítéséhez anélkül, hogy a finom szemcséket a papírba nyomná.",
+      "practical_tip": "Kerülje az erős forgatást vagy keverést; a túlzott mozgatás lassíthatja vagy eltömítheti a lefolyást.",
+      "alt_text": "Két kéz stabilizálja a Pulsar alapját, és az átlátszó oldalsó kart vízszintes, zárt helyzetbe mozgatja egy üres kiöntőedény fölött.",
+      "warning": null
+    },
+    {
+      "number": 5,
+      "instruction": "Tartsa zárva a szelepet 1:00-ig.",
+      "concise_instruction": "Tartsa zárva az előáztatást 1:00-ig.",
+      "target": "Az előáztatás 1:00-kor ér véget",
+      "completion_cue": "1:00-kor a kávé zárt szelep mellett végig víz alatt maradt.",
+      "explanation": "A visszatartott előáztatás időt ad a kávénak a telítődésre, mielőtt folytatódik a perkoláció.",
+      "practical_tip": "Hagyja pihenni az eszközt; várakozás közben nincs szükség további keverésre.",
+      "alt_text": "Mozdulatlan Pulsar-előáztatás sekély, buborékos keverékkel, vízszintesen zárt szeleppel és a kiöntőedénybe nem csepegő kávéval.",
+      "warning": null
+    },
+    {
+      "number": 6,
+      "instruction": "1:00-kor nyissa ki a szelepet, és szakaszosan öntsön összesen 340 g-ig, a végső 1:17 arányig.",
+      "concise_instruction": "1:00-kor nyissa ki, és szakaszosan öntsön összesen 340 g-ig (1:17).",
+      "target": "összesen 340 g · az előáztatás után adjon hozzá 280 g-ot · tartsa a keveréket körülbelül 1 cm-rel a kávéágy fölött",
+      "completion_cue": "A mérleg 340 g-ot mutat, és a keverék szintje alacsony maradt.",
+      "explanation": "Kis szakaszokban öntsön a fedélen keresztül, miközben a kávé a kiöntőedénybe folyik. Az alacsony, egyenletes szint korlátozza a bypass nélküli érintkezési időt, és megakadályozza a túltöltést. A 340 g-os cél tartalmazza az előáztatás korábbi 60 g-ját, ezért ebben a szakaszban 280 g kerül hozzáadásra. 20 g kávénál összesen 340 g víz adja a végső 1:17 arányt.",
+      "practical_tip": "Tartson szünetet a szakaszok között, amikor a víz több mint körülbelül 1 cm-rel a kávéágy fölé emelkedik.",
+      "alt_text": "Egy fekete vízforraló szakaszosan önt a Pulsar fedelén keresztül, a szelep függőleges, a keverék szintje alacsony, a kávé pedig a kiöntőedénybe folyik.",
+      "warning": null
+    },
+    {
+      "number": 7,
+      "instruction": "Hagyja teljesen lefolyni az eszközt.",
+      "concise_instruction": "Hagyja befejeződni a végső lefolyást.",
+      "target": "Célozzon meg 3:30–4:30 teljes időt",
+      "completion_cue": "Nem maradt álló víz a lapos kávéágy fölött.",
+      "explanation": "A vízoszlop csökkenésével a lassabb áramlás a végén normális. A teljes időt az őrlés gyakorlati ellenőrzésére használja, ne a kávéágy megzavarására. A 3:30–4:30 cél kifejezetten ehhez a 20 g / 340 g-os recepthez tartozik; más adag vagy arány megváltoztatja az ágy mélységét és az áramlást, ezért közvetlen összehasonlítás helyett saját eredményt igényel.",
+      "practical_tip": "Ennél a 20 g / 340 g-os receptnél legközelebb őröljön finomabbra, ha 3:30 előtt befejeződik. Ha 4:30-nál tovább tart, őröljön durvábbra vagy kevesebbet mozgassa. A végső módosítást az íz döntse el.",
+      "alt_text": "Majdnem teljesen lefolyt Pulsar függőleges szeleppel, lapos nedves kávéággyal, utolsó cseppekkel és kész kávéval a kiöntőedényben.",
+      "warning": null
+    },
+    {
+      "number": 8,
+      "instruction": "Zárja el a szelepet, emelje fel a fekete alapnál, és tálalja.",
+      "concise_instruction": "Zárja el, csak az alapnál emelje fel, és tálalja.",
+      "target": "A szelep eltávolítás előtt vízszintes",
+      "completion_cue": "Az eszköz már nincs a kiöntőedényen, és a kávé elkészült.",
+      "explanation": "A szelep lezárása megakadályozza az utócsepegést. Hagyja a kiöntőedényt a mérlegen, miközben az eszközt az alapnál fogva egyenesen felemeli.",
+      "practical_tip": "Tálalás előtt tegye az eszközt hőálló felületre.",
+      "alt_text": "Két kéz a lefolyt Pulsart csak a fekete alapnál emeli fel a kész kávét tartalmazó, mozdulatlan kiöntőedény fölött.",
+      "warning": "Az átlátszó kamra és a folyadék forró lehet. Az összeszerelt eszközt csak a fekete alapnál emelje fel."
+    }
+  ]
+}

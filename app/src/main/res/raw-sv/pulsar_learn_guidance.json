@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "guide_id": "pulsar_gagne_20_340",
+  "locale": "sv",
+  "release_status": "released",
+  "stages": [
+    {
+      "number": 1,
+      "instruction": "Förbered pappersfiltret utan att stänga in luft.",
+      "concise_instruction": "Placera och skölj papperet med ventilcykeln.",
+      "target": "Ventil stängd → öppna över vasken → stäng igen",
+      "completion_cue": "Papperet ligger plant mot basen utan synlig luftficka.",
+      "explanation": "Ta bort cylindern, stäng ventilen och häll ett grunt lager varmt vatten över basens ribbor. Lägg i ett torrt Pulsar-papper och öppna sedan ventilen över vasken. Avrinningen sätter papperet på plats och pressar ut instängd luft. Stäng ventilen innan du monterar ihop bryggaren igen.",
+      "practical_tip": "Håll vattenlagret grunt; det behöver bara täcka basens ribbor.",
+      "alt_text": "En hand lägger ett runt pappersfilter plant i den svarta Pulsar-basen bredvid den vågräta ventilspaken.",
+      "warning": null
+    },
+    {
+      "number": 2,
+      "instruction": "För detta 1:17-recept: tillsätt 20 g kaffe, jämna till bädden, sätt på locket och tarera.",
+      "concise_instruction": "För detta 1:17-recept: tillsätt 20 g, jämna till, sätt på locket och tarera.",
+      "target": "20 g kaffe · totalt 340 g vatten · 1:17 · relativt grov malning",
+      "completion_cue": "Kaffebädden är jämn och bryggaren med lock visar 0 g.",
+      "explanation": "Montera cylindern på den förberedda basen, tillsätt kaffet och jämna till det utan att packa det. Sätt på fördelningslocket innan vågen tareras. Den här guiden använder 20 g kaffe och 340 g vatten: Förhållandet 1:17 betyder 17 g vatten för varje 1 g kaffe. När receptet hålls oförändrat kan den senare avrinningstiden användas för att finjustera malningen.",
+      "practical_tip": "Ingen annan bryggare behövs som referens. Börja med synligt grova och jämna partiklar i stället för en puderlik malning och justera sedan utifrån den här Pulsarns slutliga avrinning och smak.",
+      "alt_text": "Malet kaffe faller ner i den öppna genomskinliga Pulsar-kammaren på en serveringskanna och våg, med fördelningslocket bredvid.",
+      "warning": null
+    },
+    {
+      "number": 3,
+      "instruction": "Öppna ventilen, starta timern och häll till 60 g—tre gånger dosen på 20 g.",
+      "concise_instruction": "Öppna ventilen och häll till 60 g (3× kaffedosen).",
+      "target": "60 g vatten totalt · blomningsförhållande 1:3 · cirka 99 °C",
+      "completion_cue": "Vågen visar 60 g och de första kaffedropparna syns.",
+      "explanation": "Häll genom fördelningslocket med ventilen öppen. Den öppna starten gör att inkommande vatten kan tränga undan luften under papperet innan den kvarhållna blomningen börjar. Med 20 g kaffe motsvarar vågens 60 g en blomning på 1:3: 3 g vatten för varje 1 g kaffe. Det är bara blomningsdelen; hela receptet slutar vid 340 g och 1:17.",
+      "practical_tip": "Häll jämnt i mitten; locket fördelar vattnet åt dig.",
+      "alt_text": "En svart vattenkokare häller genom Pulsarns fördelningslock medan den upprätta öppna ventilen låter de första dropparna rinna ner i serveringskannan.",
+      "warning": null
+    },
+    {
+      "number": 4,
+      "instruction": "Stäng ventilen vid de första dropparna och snurra varsamt en gång.",
+      "concise_instruction": "Stäng vid de första dropparna och snurra varsamt en gång.",
+      "target": "Ventil vågrät · inget mer dropp",
+      "completion_cue": "Blomningen är helt våt och hålls kvar ovanför den stängda ventilen.",
+      "explanation": "Håll bryggaren i basen medan du stänger ventilen. En varsam snurrning räcker för att väta torra områden utan att pressa fina partiklar mot papperet.",
+      "practical_tip": "Undvik kraftig snurrning eller omrörning; för mycket rörelse kan bromsa eller täppa till avrinningen.",
+      "alt_text": "Två händer stabiliserar Pulsar-basen och flyttar den genomskinliga sidospaken till vågrätt stängt läge över en tom serveringskanna.",
+      "warning": null
+    },
+    {
+      "number": 5,
+      "instruction": "Håll ventilen stängd till 1:00.",
+      "concise_instruction": "Håll blomningen stängd till 1:00.",
+      "target": "Blomningen slutar vid 1:00",
+      "completion_cue": "Vid 1:00 har kaffet varit nedsänkt med ventilen stängd.",
+      "explanation": "Den kvarhållna blomningen ger kaffet tid att mättas innan perkolationen fortsätter.",
+      "practical_tip": "Låt bryggaren vila; ingen extra omrörning behövs under väntan.",
+      "alt_text": "En stilla Pulsar-blomning med en grund bubblande blandning, vågrätt stängd ventil och inget kaffe som droppar ner i serveringskannan.",
+      "warning": null
+    },
+    {
+      "number": 6,
+      "instruction": "Öppna ventilen vid 1:00 och pulshäll till totalt 340 g—det slutliga förhållandet 1:17.",
+      "concise_instruction": "Öppna vid 1:00 och pulshäll till totalt 340 g (1:17).",
+      "target": "totalt 340 g · tillsätt 280 g efter blomningen · håll blandningen cirka 1 cm över bädden",
+      "completion_cue": "Vågen visar 340 g och blandningens nivå har hållits låg.",
+      "explanation": "Häll i små pulser genom locket medan kaffet rinner ner i serveringskannan. En låg och stabil nivå begränsar kontakttiden utan bypass och undviker att bryggaren överfylls. Målet på 340 g inkluderar blomningens tidigare 60 g, så den här fasen tillför 280 g. Med 20 g kaffe ger totalt 340 g vatten det slutliga förhållandet 1:17.",
+      "practical_tip": "Pausa mellan pulserna när vattnet stiger mer än cirka 1 cm över kaffebädden.",
+      "alt_text": "En svart vattenkokare pulshäller genom Pulsar-locket med ventilen upprätt, låg blandningsnivå och bryggt kaffe som rinner ner i serveringskannan.",
+      "warning": null
+    },
+    {
+      "number": 7,
+      "instruction": "Låt bryggaren rinna klart.",
+      "concise_instruction": "Låt den slutliga avrinningen bli klar.",
+      "target": "Sikta på en totaltid på 3:30–4:30",
+      "completion_cue": "Inget vatten står kvar ovanför den plana kaffebädden.",
+      "explanation": "Ett långsammare flöde mot slutet är normalt när vattenpelaren sjunker. Använd totaltiden som en praktisk kontroll av malningen, inte som ett skäl att störa bädden. Målet 3:30–4:30 gäller exakt detta recept med 20 g / 340 g; en annan dos eller ett annat förhållande ändrar bäddens djup och flöde och behöver därför ett eget resultat i stället för en direkt jämförelse.",
+      "practical_tip": "För detta recept med 20 g / 340 g ska du mala finare nästa gång om det slutar före 3:30. Om det tar längre än 4:30, mal grövre eller rör mindre. Låt smaken avgöra den sista justeringen.",
+      "alt_text": "En nästan tömd Pulsar med ventilen upprätt, en plan våt bädd, de sista dropparna och färdigt kaffe i serveringskannan.",
+      "warning": null
+    },
+    {
+      "number": 8,
+      "instruction": "Stäng ventilen, lyft i den svarta basen och servera.",
+      "concise_instruction": "Stäng, lyft bara i basen och servera.",
+      "target": "Ventil vågrät innan bryggaren tas bort",
+      "completion_cue": "Bryggaren är fri från serveringskannan och kaffet är klart.",
+      "explanation": "En stängd ventil förhindrar lösa droppar. Låt serveringskannan stå på vågen medan bryggaren lyfts rakt upp i basen.",
+      "practical_tip": "Ställ bryggaren på en värmetålig yta före servering.",
+      "alt_text": "Två händer lyfter en tömd Pulsar endast i den svarta basen över en stillastående serveringskanna med färdigt kaffe.",
+      "warning": "Den genomskinliga kammaren och vätskan kan vara heta. Lyft den monterade bryggaren endast i den svarta basen."
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "guide_id": "pulsar_gagne_20_340",
+  "locale": "sk",
+  "release_status": "released",
+  "stages": [
+    {
+      "number": 1,
+      "instruction": "Pripravte papierový filter bez zachytenia vzduchu.",
+      "concise_instruction": "Usaďte a prepláchnite papier pomocou ventilu.",
+      "target": "Ventil zatvorený → otvoriť nad drezom → znovu zatvoriť",
+      "completion_cue": "Papier leží rovno na základni a nie je pod ním viditeľná vzduchová bublina.",
+      "explanation": "Odoberte valec, zatvorte ventil a nalejte plytkú vrstvu horúcej vody na rebrá základne. Vložte suchý papier Pulsar a nad drezom otvorte ventil. Odtok papier usadí a vytlačí zachytený vzduch. Pred opätovným zostavením ventil zatvorte.",
+      "practical_tip": "Stačí plytká vrstva vody, ktorá zakryje rebrá základne.",
+      "alt_text": "Ruka ukladá okrúhly papierový filter naplocho do čiernej základne Pulsaru vedľa vodorovnej páčky ventilu.",
+      "warning": null
+    },
+    {
+      "number": 2,
+      "instruction": "Pre tento recept 1:17 nasypte 20 g kávy, zarovnajte lôžko, nasaďte veko a vynulujte váhu.",
+      "concise_instruction": "Pre recept 1:17 nasypte 20 g, zarovnajte, nasaďte veko a vynulujte.",
+      "target": "20 g kávy · spolu 340 g vody · 1:17 · pomerne hrubé mletie",
+      "completion_cue": "Lôžko je rovné a váha s nasadeným vekom ukazuje 0 g.",
+      "explanation": "Nasaďte valec na pripravenú základňu, nasypte kávu a bez stláčania ju zarovnajte. Pred vynulovaním váhy nasaďte distribučné veko. Tento návod používa 20 g kávy a 340 g vody: pomer 1:17 znamená 17 g vody na každý 1 g kávy. Pri zachovaní receptu možno podľa neskoršieho času odtoku dobre doladiť mletie.",
+      "practical_tip": "Nie je potrebné porovnávať s iným dripperom. Začnite viditeľne hrubými, rovnomernými časticami namiesto práškového mletia a nastavenie dolaďte podľa konečného odtoku a chuti z tohto Pulsaru.",
+      "alt_text": "Mletá káva padá do otvorenej priehľadnej komory Pulsaru na serveri a váhe; vedľa leží distribučné veko.",
+      "warning": null
+    },
+    {
+      "number": 3,
+      "instruction": "Otvorte ventil, spustite časovač a nalejte do 60 g, teda trojnásobku dávky 20 g.",
+      "concise_instruction": "Otvorte ventil a nalejte do 60 g (3× dávka kávy).",
+      "target": "60 g vody spolu · predmáčanie 1:3 · približne 99 °C",
+      "completion_cue": "Váha ukazuje 60 g a objavujú sa prvé kvapky kávy.",
+      "explanation": "Nalievajte cez distribučné veko s otvoreným ventilom. Tento otvorený začiatok umožní pritekajúcej vode vytlačiť vzduch spod papiera ešte pred zadržaným predmáčaním. Pri 20 g kávy zodpovedá údaj 60 g predmáčaniu 1:3: 3 g vody na každý 1 g kávy. Ide len o časť predmáčania; celý recept končí na 340 g a pomere 1:17.",
+      "practical_tip": "Nalievajte rovnomerne do stredu; veko vodu rozvedie za vás.",
+      "alt_text": "Čierna kanvica nalieva cez distribučné veko Pulsaru; vzpriamený otvorený ventil prepúšťa prvé kvapky do servera.",
+      "warning": null
+    },
+    {
+      "number": 4,
+      "instruction": "Pri prvých kvapkách zatvorte ventil a raz jemne zakrúžte.",
+      "concise_instruction": "Pri prvých kvapkách zatvorte a raz jemne zakrúžte.",
+      "target": "Ventil vodorovne · ďalšie kvapkanie sa zastavilo",
+      "completion_cue": "Predmáčanie je celé mokré a zostáva nad zatvoreným ventilom.",
+      "explanation": "Pri zatváraní ventilu držte dripper za základňu. Jedno jemné zakrúženie stačí na namočenie suchých miest bez zatlačenia jemných častíc do papiera.",
+      "practical_tip": "Vyhnite sa prudkému krúženiu alebo miešaniu; nadmerný pohyb môže odtok spomaliť alebo upchať.",
+      "alt_text": "Dve ruky stabilizujú základňu Pulsaru a posúvajú priehľadnú bočnú páčku do vodorovnej zatvorenej polohy nad prázdnym serverom.",
+      "warning": null
+    },
+    {
+      "number": 5,
+      "instruction": "Nechajte ventil zatvorený do 1:00.",
+      "concise_instruction": "Držte predmáčanie so zatvoreným ventilom do 1:00.",
+      "target": "Predmáčanie končí v 1:00",
+      "completion_cue": "V 1:00 bola káva po celý čas ponorená so zatvoreným ventilom.",
+      "explanation": "Zadržané predmáčanie dáva káve čas nasiaknuť pred obnovením prekvapkávania.",
+      "practical_tip": "Nechajte dripper odpočívať; počas čakania nie je potrebné ďalšie miešanie.",
+      "alt_text": "Pokojné predmáčanie v Pulsare s plytkou bublajúcou zmesou, vodorovne zatvoreným ventilom a bez kvapkania kávy do servera.",
+      "warning": null
+    },
+    {
+      "number": 6,
+      "instruction": "V 1:00 otvorte ventil a pulzne dolievajte do celkových 340 g, teda konečného pomeru 1:17.",
+      "concise_instruction": "V 1:00 otvorte a pulzne dolievajte do celkových 340 g (1:17).",
+      "target": "spolu 340 g · po predmáčaní pridať 280 g · hladina asi 1 cm nad lôžkom",
+      "completion_cue": "Váha ukazuje 340 g a hladina zmesi zostala nízka.",
+      "explanation": "Nalievajte cez veko v malých pulzoch, kým káva odteká do servera. Nízka a stabilná hladina obmedzuje čas kontaktu bez obtoku a neprepĺňa dripper. Cieľ 340 g zahŕňa predchádzajúcich 60 g predmáčania, takže v tejto fáze pridáte 280 g. Pri 20 g kávy zodpovedá celkových 340 g vody konečnému pomeru 1:17.",
+      "practical_tip": "Medzi pulzmi prerušte nalievanie vždy, keď voda vystúpi viac než asi 1 cm nad lôžko.",
+      "alt_text": "Čierna kanvica pulzne nalieva cez veko Pulsaru so vzpriameným ventilom, nízkou hladinou zmesi a kávou odtekajúcou do servera.",
+      "warning": null
+    },
+    {
+      "number": 7,
+      "instruction": "Nechajte dripper dokončiť odtok.",
+      "concise_instruction": "Nechajte dokončiť záverečný odtok.",
+      "target": "Cieľový celkový čas 3:30–4:30",
+      "completion_cue": "Nad rovným kávovým lôžkom nezostáva stáť voda.",
+      "explanation": "Pomalší prietok ku koncu je pri poklese vodného stĺpca normálny. Celkový čas použite ako praktickú kontrolu mletia, nie ako dôvod narúšať lôžko. Cieľ 3:30–4:30 platí pre tento presný recept 20 g / 340 g; iná dávka alebo pomer zmení hĺbku lôžka a prietok, preto vyžaduje vlastné vyhodnotenie namiesto priameho porovnania.",
+      "practical_tip": "Pri tomto recepte 20 g / 340 g nabudúce meľte jemnejšie, ak skončí pred 3:30. Ak trvá dlhšie než 4:30, meľte hrubšie alebo menej miešajte. O konečnej úprave rozhodne chuť.",
+      "alt_text": "Takmer odkvapkaný Pulsar so vzpriameným ventilom, rovným mokrým lôžkom, poslednými kvapkami a hotovou kávou v serveri.",
+      "warning": null
+    },
+    {
+      "number": 8,
+      "instruction": "Zatvorte ventil, zdvihnite dripper za čiernu základňu a podávajte.",
+      "concise_instruction": "Zatvorte, zdvihnite iba za základňu a podávajte.",
+      "target": "Pred odobratím je ventil vodorovne",
+      "completion_cue": "Dripper je odobratý zo servera a káva je pripravená.",
+      "explanation": "Zatvorený ventil zabráni odkvapkávaniu. Pri zdvíhaní drippera priamo nahor za základňu nechajte server na váhe.",
+      "practical_tip": "Pred podávaním položte dripper na teplovzdorný povrch.",
+      "alt_text": "Dve ruky zdvíhajú odkvapkaný Pulsar iba za čiernu základňu nad stojacim serverom s hotovou kávou.",
+      "warning": "Priehľadná komora aj tekutina môžu byť horúce. Zostavený dripper zdvíhajte iba za čiernu základňu."
+    }
+  ]
+}

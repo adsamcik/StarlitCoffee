@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "guide_id": "pulsar_gagne_20_340",
+  "locale": "hr",
+  "release_status": "released",
+  "stages": [
+    {
+      "number": 1,
+      "instruction": "Pripremite papirnati filtar bez zadržavanja zraka.",
+      "concise_instruction": "Namjestite i isperite papir pomoću ventila.",
+      "target": "Ventil zatvoren → otvorite nad sudoperom → ponovno zatvorite",
+      "completion_cue": "Papir ravno prianja uz bazu, bez vidljivog džepa zraka.",
+      "explanation": "Uklonite cilindar, zatvorite ventil i prelijte rebra baze plitkim slojem vruće vode. Stavite suhi Pulsar papir, a zatim otvorite ventil nad sudoperom. Otjecanje namješta papir i istiskuje zadržani zrak. Zatvorite ventil prije ponovnog sastavljanja.",
+      "practical_tip": "Sloj vode neka bude plitak; treba samo prekriti rebra baze.",
+      "alt_text": "Ruka ravno postavlja okrugli papirnati filtar u crnu bazu Pulsara pokraj vodoravne ručice ventila.",
+      "warning": null
+    },
+    {
+      "number": 2,
+      "instruction": "Za ovaj recept 1:17 dodajte 20 g kave, poravnajte sloj, stavite poklopac i tarirajte vagu.",
+      "concise_instruction": "Za recept 1:17 dodajte 20 g, poravnajte, poklopite i tarirajte.",
+      "target": "20 g kave · ukupno 340 g vode · 1:17 · razmjerno grubo mljevenje",
+      "completion_cue": "Sloj je ravan, a uređaj s poklopcem pokazuje 0 g.",
+      "explanation": "Postavite cilindar na pripremljenu bazu, dodajte kavu i poravnajte je bez sabijanja. Stavite disperzijski poklopac prije tariranja vage. Ovaj vodič koristi 20 g kave i 340 g vode: omjer 1:17 znači 17 g vode na svaki 1 g kave. Ako recept ostane isti, kasnije vrijeme otjecanja može poslužiti za precizno podešavanje mljevenja.",
+      "practical_tip": "Za usporedbu nije potreban drugi uređaj. Počnite s vidljivo grubim, ujednačenim česticama umjesto praškastog mljevenja, a zatim prilagodite postavku prema završnom otjecanju i okusu iz ovog Pulsara.",
+      "alt_text": "Mljevena kava pada u otvorenu prozirnu komoru Pulsara na posudi i vagi, s disperzijskim poklopcem pokraj nje.",
+      "warning": null
+    },
+    {
+      "number": 3,
+      "instruction": "Otvorite ventil, pokrenite mjerač vremena i ulijte do 60 g, tri puta više od doze od 20 g.",
+      "concise_instruction": "Otvorite ventil i ulijte do 60 g (3× doza kave).",
+      "target": "ukupno 60 g vode · omjer prednamakanja 1:3 · oko 99 °C",
+      "completion_cue": "Vaga pokazuje 60 g i pojavljuju se prve kapi kave.",
+      "explanation": "Ulijevajte kroz disperzijski poklopac s otvorenim ventilom. Ovaj otvoreni početak omogućuje vodi da istisne zrak ispod papira prije početka zadržanog prednamakanja. Uz 20 g kave, očitanje od 60 g odgovara omjeru 1:3: 3 g vode na svaki 1 g kave. To je samo dio za prednamakanje; cijeli recept završava na 340 g i 1:17.",
+      "practical_tip": "Ulijevajte ravnomjerno u sredinu; poklopac raspoređuje vodu.",
+      "alt_text": "Crno kuhalo ulijeva kroz disperzijski poklopac Pulsara dok uspravni otvoreni ventil propušta prve kapi u posudu.",
+      "warning": null
+    },
+    {
+      "number": 4,
+      "instruction": "Pri prvim kapima zatvorite ventil i jednom nježno zavrtite.",
+      "concise_instruction": "Zatvorite pri prvim kapima i jednom nježno zavrtite.",
+      "target": "Ventil vodoravno · nema daljnjeg kapanja",
+      "completion_cue": "Prednamakanje je potpuno mokro i zadržano iznad zatvorenog ventila.",
+      "explanation": "Pri zatvaranju ventila držite uređaj za bazu. Jedno nježno zakretanje dovoljno je za vlaženje suhih mjesta bez utiskivanja sitnih čestica u papir.",
+      "practical_tip": "Izbjegavajte snažno zakretanje ili miješanje; pretjerano pokretanje može usporiti ili začepiti otjecanje.",
+      "alt_text": "Dvije ruke stabiliziraju bazu Pulsara i pomiču prozirnu bočnu ručicu u vodoravni zatvoreni položaj iznad prazne posude.",
+      "warning": null
+    },
+    {
+      "number": 5,
+      "instruction": "Držite ventil zatvoren do 1:00.",
+      "concise_instruction": "Držite prednamakanje zatvoreno do 1:00.",
+      "target": "Prednamakanje završava na 1:00",
+      "completion_cue": "Na 1:00 kava je ostala uronjena sa zatvorenim ventilom.",
+      "explanation": "Zadržano prednamakanje daje kavi vremena da se zasiti prije nastavka perkolacije.",
+      "practical_tip": "Ostavite uređaj da miruje; tijekom čekanja nije potrebno dodatno miješanje.",
+      "alt_text": "Mirno prednamakanje u Pulsaru s plitkom mješavinom koja mjehuri, vodoravno zatvorenim ventilom i bez kapanja kave u posudu.",
+      "warning": null
+    },
+    {
+      "number": 6,
+      "instruction": "Na 1:00 otvorite ventil i ulijevajte u impulsima do ukupno 340 g, konačnog omjera 1:17.",
+      "concise_instruction": "Otvorite na 1:00 i ulijevajte u impulsima do ukupno 340 g (1:17).",
+      "target": "ukupno 340 g · nakon prednamakanja dodati 280 g · držati mješavinu oko 1 cm iznad sloja",
+      "completion_cue": "Vaga pokazuje 340 g, a razina mješavine ostala je niska.",
+      "explanation": "Ulijevajte u malim impulsima kroz poklopac dok kava otječe u posudu. Niska i stabilna razina ograničava vrijeme dodira bez zaobilaznog protoka i sprječava prepunjavanje. Cilj od 340 g uključuje ranijih 60 g prednamakanja, pa ova faza dodaje 280 g. Uz 20 g kave, ukupno 340 g vode daje konačni omjer 1:17.",
+      "practical_tip": "Zastanite između impulsa kad se voda podigne više od oko 1 cm iznad sloja kave.",
+      "alt_text": "Crno kuhalo ulijeva u impulsima kroz poklopac Pulsara, s uspravnim ventilom, niskom razinom mješavine i kavom koja teče u posudu.",
+      "warning": null
+    },
+    {
+      "number": 7,
+      "instruction": "Pustite da uređaj dovrši otjecanje.",
+      "concise_instruction": "Pustite da završi konačno otjecanje.",
+      "target": "Ciljajte na ukupno vrijeme 3:30–4:30",
+      "completion_cue": "Iznad ravnog sloja kave više nema stajaće vode.",
+      "explanation": "Sporiji protok pri kraju normalan je kako se stupac vode spušta. Ukupno vrijeme koristite kao praktičnu provjeru mljevenja, a ne kao razlog za ometanje sloja. Cilj 3:30–4:30 odnosi se upravo na ovaj recept 20 g / 340 g; druga doza ili omjer mijenja dubinu sloja i protok, pa zahtijeva vlastiti rezultat umjesto izravne usporedbe.",
+      "practical_tip": "Za ovaj recept 20 g / 340 g sljedeći put meljite sitnije ako završi prije 3:30. Ako traje dulje od 4:30, meljite krupnije ili manje pokrećite. Neka okus odredi završnu prilagodbu.",
+      "alt_text": "Gotovo ispražnjen Pulsar s uspravnim ventilom, ravnim mokrim slojem, posljednjim kapima i gotovom kavom u posudi.",
+      "warning": null
+    },
+    {
+      "number": 8,
+      "instruction": "Zatvorite ventil, podignite za crnu bazu i poslužite.",
+      "concise_instruction": "Zatvorite, podignite samo za bazu i poslužite.",
+      "target": "Ventil vodoravno prije uklanjanja",
+      "completion_cue": "Uređaj je podignut s posude i kava je spremna.",
+      "explanation": "Zatvaranje ventila sprječava pojedinačne kapi. Ostavite posudu na vagi dok uređaj podižete ravno prema gore držeći ga za bazu.",
+      "practical_tip": "Prije posluživanja stavite uređaj na površinu otpornu na toplinu.",
+      "alt_text": "Dvije ruke podižu ocijeđeni Pulsar samo za crnu bazu iznad nepomične posude s gotovom kavom.",
+      "warning": "Prozirna komora i tekućina mogu biti vruće. Sastavljeni uređaj podižite samo za njegovu crnu bazu."
+    }
+  ]
+}

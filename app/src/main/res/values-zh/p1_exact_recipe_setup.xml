@@ -58,6 +58,9 @@
     <string name="label_brewer_profile_thick_paper_carafe">厚滤纸咖啡壶</string>
     <string name="label_brewer_profile_conical">通用锥形滤杯</string>
     <string name="label_brewer_profile_family_manual_gravity">手动重力滴滤</string>
+    <string name="label_brewer_profile_pulsar">Pulsar</string>
+    <string name="label_brewer_profile_family_valve_controlled_no_bypass">阀门控制无旁路</string>
+    <string name="recipe_pulsar_gagne_20_340">Gagné 浸泡式闷蒸 · 20 g / 340 g</string>
 
     <string name="recipe_p1_v60_official_15_250">Hario 官方配方 · 15 g / 250 g</string>
     <string name="recipe_p1_v60_rao_20_330">Scott Rao V60 · 20 g / 330 g</string>
@@ -80,9 +83,4 @@
     <string name="recipe_p1_phin_gravity_14_118">重力 Phin · 14 g / 118 g</string>
     <string name="recipe_p1_phin_screw_18_120">旋压内芯 Phin · 18 g / 120 g</string>
 
-    <string name="label_guidance_preview">翻译预览</string>
-    <string name="msg_guidance_preview_consent">这些指南由系统自动翻译，尚未经过专业审核。涉及安全的重要步骤还会同时显示英文警告。</string>
-    <string name="action_use_preview_translation">使用预览翻译</string>
-    <string name="action_keep_current_guidance">暂不使用</string>
-    <string name="action_turn_off_preview_translation">关闭翻译预览</string>
 </resources>

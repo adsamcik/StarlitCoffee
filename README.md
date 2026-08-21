@@ -14,15 +14,13 @@ stage.
   tracking, and brew history.
 - Material 3 Expressive UI with light, dark, dynamic-color, accessibility, and
   large-text support.
-- Reviewed English guidance plus clearly labelled, opt-in translation previews
-  for the other supported app locales.
+- Released, localized guidance in all 23 supported app languages.
 
 ## Project status
 
 The app is under active development. The `main` branch is expected to build and
-pass its automated validation, but non-English exact-guidance previews are not
-presented as editorially reviewed translations. See [CHANGELOG.md](CHANGELOG.md)
-for current release status and upgrade notes.
+pass its automated localization and release validation. See
+[CHANGELOG.md](CHANGELOG.md) for current release status and upgrade notes.
 
 ## Requirements
 

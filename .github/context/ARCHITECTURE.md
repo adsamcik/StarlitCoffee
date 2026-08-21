@@ -141,7 +141,7 @@ CalculatorBrewScreen
 ```
 
 Exact P1 routes are reachable only through `P1ExactRecipeReleaseGate`. The gate
-requires matching recipe, plan, guidance, reviewed locale coverage, and approved
+requires matching recipe, plan, guidance, released locale coverage, and approved
 stage art. Incomplete vertical slices are absent rather than substituted with a
 generic recipe, instruction, or illustration.
 

@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "guide_id": "pulsar_gagne_20_340",
+  "locale": "de",
+  "release_status": "released",
+  "stages": [
+    {
+      "number": 1,
+      "instruction": "Bereite das Filterpapier vor, ohne Luft einzuschließen.",
+      "concise_instruction": "Setze das Papier ein und spüle es mit dem Ventilzyklus.",
+      "target": "Ventil geschlossen → über dem Spülbecken öffnen → wieder schließen",
+      "completion_cue": "Das Papier liegt flach am Boden an, ohne sichtbare Luftblase.",
+      "explanation": "Nimm den Zylinder ab, schließe das Ventil und gib eine flache Schicht heißes Wasser über die Rippen des Bodens. Lege ein trockenes Pulsar-Filterpapier ein und öffne das Ventil über dem Spülbecken. Das Ablaufen setzt das Papier und drückt eingeschlossene Luft heraus. Schließe das Ventil vor dem Zusammenbau.",
+      "practical_tip": "Halte die Wasserschicht flach; sie muss nur die Rippen des Bodens bedecken.",
+      "alt_text": "Eine Hand legt einen runden Papierfilter flach in den schwarzen Pulsar-Boden neben dem waagerechten Ventilhebel.",
+      "warning": null
+    },
+    {
+      "number": 2,
+      "instruction": "Gib für dieses 1:17-Rezept 20 g Kaffee hinein, ebne das Bett, setze den Deckel auf und tariere.",
+      "concise_instruction": "Für dieses 1:17-Rezept: 20 g einfüllen, ebnen, Deckel aufsetzen und tarieren.",
+      "target": "20 g Kaffee · 340 g Wasser gesamt · 1:17 · relativ grober Mahlgrad",
+      "completion_cue": "Das Kaffeebett ist eben und die Waage zeigt mit aufgesetztem Deckel 0 g.",
+      "explanation": "Setze den Zylinder auf den vorbereiteten Boden, gib den Kaffee hinein und ebne ihn, ohne ihn zu verdichten. Setze den Verteilungsdeckel vor dem Tarieren der Waage auf. Diese Anleitung verwendet 20 g Kaffee und 340 g Wasser: Ein Verhältnis von 1:17 bedeutet 17 g Wasser je 1 g Kaffee. Wenn das Rezept gleich bleibt, lässt sich der Mahlgrad später anhand der Ablaufzeit sinnvoll verfeinern.",
+      "practical_tip": "Ein anderer Brüher ist nicht als Vergleich nötig. Beginne mit sichtbar groben, gleichmäßigen Partikeln statt einem pudrigen Mahlgut und passe die Einstellung anhand des finalen Ablaufs und Geschmacks dieses Pulsars an.",
+      "alt_text": "Gemahlener Kaffee fällt in die offene, klare Pulsar-Kammer auf Server und Waage; der Verteilungsdeckel liegt daneben.",
+      "warning": null
+    },
+    {
+      "number": 3,
+      "instruction": "Öffne das Ventil, starte den Timer und gieße bis 60 g – dem Dreifachen der Dosis von 20 g.",
+      "concise_instruction": "Ventil öffnen und bis 60 g gießen (3× Kaffeedosis).",
+      "target": "60 g Wasser kumuliert · Bloom-Verhältnis 1:3 · etwa 99 °C",
+      "completion_cue": "Die Waage zeigt 60 g und die ersten Kaffeetropfen erscheinen.",
+      "explanation": "Gieße bei geöffnetem Ventil durch den Verteilungsdeckel. Durch diesen offenen Start verdrängt das einströmende Wasser die Luft unter dem Papier, bevor der gehaltene Bloom beginnt. Bei 20 g Kaffee entspricht die Anzeige von 60 g einem Bloom von 1:3: 3 g Wasser je 1 g Kaffee. Das ist nur der Bloom-Anteil; das vollständige Rezept endet bei 340 g und 1:17.",
+      "practical_tip": "Gieße gleichmäßig in die Mitte; der Deckel verteilt das Wasser für dich.",
+      "alt_text": "Ein schwarzer Wasserkessel gießt durch den Pulsar-Verteilungsdeckel, während das aufrechte offene Ventil die ersten Tropfen in den Server lässt.",
+      "warning": null
+    },
+    {
+      "number": 4,
+      "instruction": "Schließe bei den ersten Tropfen das Ventil und schwenke einmal sanft.",
+      "concise_instruction": "Bei den ersten Tropfen schließen und einmal sanft schwenken.",
+      "target": "Ventil waagerecht · kein weiteres Tropfen",
+      "completion_cue": "Der Bloom ist vollständig benetzt und bleibt über dem geschlossenen Ventil.",
+      "explanation": "Halte den Brüher beim Schließen des Ventils am Boden. Ein sanftes Schwenken reicht, um trockene Stellen zu benetzen, ohne Feinpartikel in das Papier zu treiben.",
+      "practical_tip": "Vermeide kräftiges Schwenken oder Rühren; zu viel Bewegung kann den Ablauf verlangsamen oder verstopfen.",
+      "alt_text": "Zwei Hände stabilisieren den Pulsar-Boden und bewegen den klaren Seitenhebel über einem leeren Server in die waagerechte geschlossene Stellung.",
+      "warning": null
+    },
+    {
+      "number": 5,
+      "instruction": "Halte das Ventil bis 1:00 geschlossen.",
+      "concise_instruction": "Halte den Bloom bis 1:00 bei geschlossenem Ventil.",
+      "target": "Bloom endet bei 1:00",
+      "completion_cue": "Bei 1:00 war der Kaffee mit geschlossenem Ventil durchgehend eingetaucht.",
+      "explanation": "Der gehaltene Bloom gibt dem Kaffee Zeit, sich zu sättigen, bevor die Perkolation weitergeht.",
+      "practical_tip": "Lass den Brüher ruhen; während dieser Wartezeit ist kein weiteres Rühren nötig.",
+      "alt_text": "Ein ruhiger Pulsar-Bloom mit flacher, blubbernder Mischung, waagerecht geschlossenem Ventil und ohne Kaffeetropfen im Server.",
+      "warning": null
+    },
+    {
+      "number": 6,
+      "instruction": "Öffne bei 1:00 das Ventil und gieße in Pulsen bis insgesamt 340 g – dem endgültigen Verhältnis von 1:17.",
+      "concise_instruction": "Bei 1:00 öffnen und in Pulsen bis insgesamt 340 g gießen (1:17).",
+      "target": "340 g kumuliert · nach dem Bloom 280 g zugeben · Mischung etwa 1 cm über dem Bett halten",
+      "completion_cue": "Die Waage zeigt 340 g und der Pegel der Mischung blieb niedrig.",
+      "explanation": "Gieße in kleinen Pulsen durch den Deckel, während der Kaffee in den Server abläuft. Ein niedriger, gleichmäßiger Pegel begrenzt die Kontaktzeit ohne Bypass, ohne den Brüher zu überfüllen. Das Ziel von 340 g enthält die früheren 60 g des Blooms, daher kommen in dieser Phase 280 g hinzu. Bei 20 g Kaffee ergeben insgesamt 340 g Wasser das endgültige Verhältnis von 1:17.",
+      "practical_tip": "Pausiere zwischen den Pulsen, sobald das Wasser mehr als etwa 1 cm über das Kaffeebett steigt.",
+      "alt_text": "Ein schwarzer Wasserkessel gießt in Pulsen durch den Pulsar-Deckel; das Ventil steht aufrecht, die Mischung bleibt niedrig und Kaffee fließt in den Server.",
+      "warning": null
+    },
+    {
+      "number": 7,
+      "instruction": "Lass den Brüher vollständig ablaufen.",
+      "concise_instruction": "Lass den finalen Ablauf enden.",
+      "target": "Gesamtzeit von 3:30–4:30 anstreben",
+      "completion_cue": "Über dem flachen Kaffeebett steht kein Wasser mehr.",
+      "explanation": "Ein langsamerer Fluss gegen Ende ist normal, wenn die Wassersäule sinkt. Nutze die Gesamtzeit als praktische Mahlgradkontrolle, nicht als Grund, das Bett zu stören. Das Ziel von 3:30–4:30 gilt für dieses genaue Rezept mit 20 g / 340 g; eine andere Dosis oder ein anderes Verhältnis verändert Betttiefe und Fluss und braucht deshalb ein eigenes Ergebnis statt eines direkten Vergleichs.",
+      "practical_tip": "Mahle für dieses Rezept mit 20 g / 340 g beim nächsten Mal feiner, wenn es vor 3:30 endet. Läuft es länger als 4:30, mahle gröber oder bewege weniger. Der Geschmack entscheidet über die letzte Anpassung.",
+      "alt_text": "Ein fast abgelaufener Pulsar mit aufrechtem Ventil, flachem nassem Kaffeebett, letzten Tropfen und fertigem Kaffee im Server.",
+      "warning": null
+    },
+    {
+      "number": 8,
+      "instruction": "Schließe das Ventil, hebe den Brüher am schwarzen Boden an und serviere.",
+      "concise_instruction": "Schließen, nur am Boden anheben und servieren.",
+      "target": "Ventil vor dem Abnehmen waagerecht",
+      "completion_cue": "Der Brüher ist vom Server abgehoben und der Kaffee ist bereit.",
+      "explanation": "Das Schließen des Ventils verhindert einzelne Tropfen. Lass den Server auf der Waage, während du den Brüher am Boden gerade nach oben hebst.",
+      "practical_tip": "Stelle den Brüher vor dem Servieren auf eine hitzebeständige Fläche.",
+      "alt_text": "Zwei Hände heben einen abgelaufenen Pulsar nur am schwarzen Boden über einem stehenden Server mit fertigem Kaffee an.",
+      "warning": "Die klare Kammer und die Flüssigkeit können heiß sein. Hebe den zusammengesetzten Brüher nur am schwarzen Boden an."
+    }
+  ]
+}

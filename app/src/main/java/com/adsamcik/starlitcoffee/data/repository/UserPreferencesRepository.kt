@@ -40,7 +40,6 @@ data class UserPreferences(
     val dimModeForceDarkInLight: Boolean = true,
     val showBrewingInstructions: Boolean = true,
     val showEnglishBrewingTerms: Boolean = false,
-    val exactGuidancePreviewEnabled: Boolean = false,
     val bloomSpritesheetWeights: Map<String, Int> = emptyMap(),
     // How many times each spritesheet has been picked for a brew. Used by the
     // domain selector to bias future picks toward under-shown flowers, so
@@ -120,7 +119,6 @@ private object UserPreferenceKeys {
     val DIM_MODE_FORCE_DARK_IN_LIGHT = booleanPreferencesKey("dim_mode_force_dark_in_light")
     val SHOW_BREWING_INSTRUCTIONS = booleanPreferencesKey("show_brewing_instructions")
     val SHOW_ENGLISH_BREWING_TERMS = booleanPreferencesKey("show_english_brewing_terms")
-    val EXACT_GUIDANCE_PREVIEW_ENABLED = booleanPreferencesKey("exact_guidance_preview_enabled")
     val BLOOM_SPRITESHEET_WEIGHTS = stringSetPreferencesKey("bloom_spritesheet_weights")
     val BLOOM_SPRITESHEET_DISPLAY_COUNTS = stringSetPreferencesKey("bloom_spritesheet_display_counts")
     val RATING_REMINDER_ENABLED = booleanPreferencesKey("rating_reminder_enabled")
@@ -221,12 +219,6 @@ abstract class UserPreferencesWriter protected constructor(
         }
     }
 
-    suspend fun updateExactGuidancePreviewEnabled(enabled: Boolean) {
-        context.dataStore.edit { prefs ->
-            prefs[UserPreferenceKeys.EXACT_GUIDANCE_PREVIEW_ENABLED] = enabled
-        }
-    }
-
     override suspend fun updateBloomSpritesheetWeights(weights: Map<String, Int>) {
         context.dataStore.edit { prefs ->
             val persistedWeights = weights
@@ -305,7 +297,6 @@ class UserPreferencesRepository(context: Context) :
                 dimModeForceDarkInLight = prefs[UserPreferenceKeys.DIM_MODE_FORCE_DARK_IN_LIGHT] ?: true,
                 showBrewingInstructions = prefs[UserPreferenceKeys.SHOW_BREWING_INSTRUCTIONS] ?: true,
                 showEnglishBrewingTerms = prefs[UserPreferenceKeys.SHOW_ENGLISH_BREWING_TERMS] ?: false,
-                exactGuidancePreviewEnabled = prefs[UserPreferenceKeys.EXACT_GUIDANCE_PREVIEW_ENABLED] ?: false,
                 bloomSpritesheetWeights = parseBloomSpritesheetWeights(
                     prefs[UserPreferenceKeys.BLOOM_SPRITESHEET_WEIGHTS].orEmpty(),
                 ),

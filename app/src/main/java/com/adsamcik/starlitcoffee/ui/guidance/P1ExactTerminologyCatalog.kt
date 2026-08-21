@@ -10,14 +10,12 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
 enum class P1ExactLocalizationStatus {
-    REVIEWED,
-    PREVIEW,
+    RELEASED,
     ;
 
     companion object {
         fun fromEncoded(value: String): P1ExactLocalizationStatus = when (value) {
-            "approved" -> REVIEWED
-            "preview" -> PREVIEW
+            "approved", "released" -> RELEASED
             else -> throw IllegalArgumentException("Unknown exact-guidance localization status: $value")
         }
     }
@@ -65,7 +63,7 @@ data class BrewingTerminologyUiCopy(
 
 class P1ExactTerminologyCatalog internal constructor(
     val localeTag: String,
-    val localizationStatus: P1ExactLocalizationStatus = P1ExactLocalizationStatus.REVIEWED,
+    val localizationStatus: P1ExactLocalizationStatus = P1ExactLocalizationStatus.RELEASED,
     val uiCopy: BrewingTerminologyUiCopy,
     referencesByContentId: Map<StageContentId, List<BrewingTerminologyReference>>,
 ) {
@@ -219,15 +217,10 @@ object BuiltInP1ExactTerminologyCatalog {
         }
         val localizationStatus = P1ExactLocalizationStatus.fromEncoded(reviewStatus)
         when (localizationStatus) {
-            P1ExactLocalizationStatus.REVIEWED -> {
-                require(!reviewer.isNullOrBlank()) { "Terminology glossary reviewer is missing" }
+            P1ExactLocalizationStatus.RELEASED -> {
+                require(!reviewer.isNullOrBlank()) { "Terminology glossary release authority is missing" }
                 require(reviewedOn?.matches(reviewDate) == true) {
-                    "Terminology glossary review date is invalid"
-                }
-            }
-            P1ExactLocalizationStatus.PREVIEW -> {
-                require(reviewer == null && reviewedOn == null) {
-                    "Preview terminology cannot claim specialist review"
+                    "Terminology glossary release date is invalid"
                 }
             }
         }
@@ -248,9 +241,14 @@ object BuiltInP1ExactTerminologyLoader {
 
     fun getInstance(context: Context): BuiltInP1ExactTerminologyLoadResult {
         val applicationContext = context.applicationContext
-        val localeTag = applicationContext.resources.configuration.locales[0].language
+        val localeTag = P1ExactGuidanceLocaleResolver.resolve(applicationContext)
         return synchronized(this) {
-            cacheByLocale.getOrPut(localeTag) { load(applicationContext, localeTag) }
+            cacheByLocale.getOrPut(localeTag) {
+                load(
+                    context = applicationContext,
+                    localeTag = localeTag,
+                )
+            }
         }
     }
 

@@ -7,11 +7,13 @@ on:
       - 'app/src/main/assets/p1_exact_*.json'
       - 'app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/**'
       - 'app/src/main/res/raw*/p1_exact_*.json'
+      - 'app/src/main/res/raw*/pulsar_learn_guidance.json'
       - 'app/src/main/res/xml/locales_config.xml'
       - 'app/src/test/java/com/adsamcik/starlitcoffee/ui/guidance/**'
       - 'docs/brewing/p1-exact-*'
       - 'docs/brewing/research/terminology-2026-08-06/**'
       - 'tools/*p1_exact*'
+      - 'tools/*pulsar_learn_guidance*'
   push:
     branches:
       - main
@@ -20,11 +22,13 @@ on:
       - 'app/src/main/assets/p1_exact_*.json'
       - 'app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/**'
       - 'app/src/main/res/raw*/p1_exact_*.json'
+      - 'app/src/main/res/raw*/pulsar_learn_guidance.json'
       - 'app/src/main/res/xml/locales_config.xml'
       - 'app/src/test/java/com/adsamcik/starlitcoffee/ui/guidance/**'
       - 'docs/brewing/p1-exact-*'
       - 'docs/brewing/research/terminology-2026-08-06/**'
       - 'tools/*p1_exact*'
+      - 'tools/*pulsar_learn_guidance*'
   workflow_dispatch:
 
 permissions:
@@ -55,6 +59,7 @@ jobs:
           python tools/generate_p1_exact_terminology_locale_queue.py --check
           python tools/generate_p1_tracker_accepted_asset_catalog.py --check
           python tools/generate_p1_exact_guidance_localizations.py --check
+          python tools/generate_pulsar_learn_guidance_localizations.py --check
 
       - name: Run localization unit tests
         run: |

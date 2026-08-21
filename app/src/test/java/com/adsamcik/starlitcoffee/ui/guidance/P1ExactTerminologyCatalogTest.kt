@@ -53,7 +53,7 @@ class P1ExactTerminologyCatalogTest {
     }
 
     @Test
-    fun `preview glossary decodes without claiming review`() {
+    fun `released glossary decodes with release metadata`() {
         val catalog = BuiltInP1ExactTerminologyCatalog.decode(
             encodedReferences = referenceAsset().readText(),
             encodedGlossary = projectFile(
@@ -63,7 +63,7 @@ class P1ExactTerminologyCatalogTest {
             activeLocaleTag = "cs",
         )
 
-        assertEquals(P1ExactLocalizationStatus.PREVIEW, catalog.localizationStatus)
+        assertEquals(P1ExactLocalizationStatus.RELEASED, catalog.localizationStatus)
     }
 
     @Test

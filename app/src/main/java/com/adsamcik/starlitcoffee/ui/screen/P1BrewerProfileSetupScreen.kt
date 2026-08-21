@@ -95,8 +95,6 @@ fun P1BrewerProfileSetupScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
     onLearn: ((P1BrewerProfileStartSelection) -> Unit)? = null,
-    isGuidancePreview: Boolean = false,
-    onTurnOffPreview: (() -> Unit)? = null,
 ) {
     val selectedProfile = state.selectedProfile
     val selectedRecipe = state.selectedRecipe
@@ -152,11 +150,6 @@ fun P1BrewerProfileSetupScreen(
             contentPadding = PaddingValues(horizontal = 20.dp, vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            if (isGuidancePreview) {
-                item(key = "guidance-preview-notice") {
-                    GuidancePreviewNotice(onTurnOffPreview = onTurnOffPreview)
-                }
-            }
             item(key = "profile-introduction") {
                 SetupSectionIntroduction(
                     title = stringResource(R.string.heading_brewer_profile_choose),

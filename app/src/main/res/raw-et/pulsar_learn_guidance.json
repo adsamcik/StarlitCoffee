@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "guide_id": "pulsar_gagne_20_340",
+  "locale": "et",
+  "release_status": "released",
+  "stages": [
+    {
+      "number": 1,
+      "instruction": "Valmista paberfilter ette nii, et õhk ei jääks selle alla.",
+      "concise_instruction": "Paigalda ja loputa paber ventiili abil.",
+      "target": "Ventiil suletud → ava kraanikausi kohal → sulge uuesti",
+      "completion_cue": "Paber asetseb tasaselt vastu põhja ja nähtavat õhutaskut pole.",
+      "explanation": "Eemalda silinder, sulge ventiil ja vala põhja ribidele õhuke kiht kuuma vett. Aseta kuiv Pulsari paber kohale ning ava ventiil kraanikausi kohal. Äravoolav vesi surub paberi paika ja eemaldab selle alla jäänud õhu. Sulge ventiil enne uuesti kokkupanekut.",
+      "practical_tip": "Kasuta vaid madalat veekihti; see peab katma ainult põhja ribid.",
+      "alt_text": "Käsi asetab ümmarguse paberfiltri tasaselt musta Pulsari põhja horisontaalse ventiilihoova kõrvale.",
+      "warning": null
+    },
+    {
+      "number": 2,
+      "instruction": "Selle 1:17 retsepti jaoks lisa 20 g kohvi, tasanda kohvikiht, paigalda kaas ja nulli kaal.",
+      "concise_instruction": "1:17 retsept: lisa 20 g, tasanda, paigalda kaas ja nulli kaal.",
+      "target": "20 g kohvi · kokku 340 g vett · 1:17 · üsna jäme jahvatus",
+      "completion_cue": "Kohvikiht on tasane ja kaanega valmistaja näitab 0 g.",
+      "explanation": "Paigalda silinder ettevalmistatud põhjale, lisa kohv ja tasanda see kokku surumata. Paigalda jaotuskaas enne kaalu nullimist. Selles juhendis kasutatakse 20 g kohvi ja 340 g vett: suhe 1:17 tähendab 17 g vett iga 1 g kohvi kohta. Kui retsept jääb samaks, aitab hilisem läbivooluaeg jahvatust täpsustada.",
+      "practical_tip": "Võrdluseks pole teist valmistajat vaja. Alusta nähtavalt jämedatest ja ühtlastest osakestest, mitte pulbrilisest jahvatusest, ning täpsusta seadistust selle Pulsari lõpliku läbivoolu ja maitse järgi.",
+      "alt_text": "Jahvatatud kohv langeb avatud läbipaistvasse Pulsari kambrisse serveri ja kaalu peal, jaotuskaas selle kõrval.",
+      "warning": null
+    },
+    {
+      "number": 3,
+      "instruction": "Ava ventiil, käivita taimer ja vala 60 g-ni ehk kolm korda 20 g annuseni.",
+      "concise_instruction": "Ava ventiil ja vala 60 g-ni (3× kohviannus).",
+      "target": "kokku 60 g vett · eelniisutuse suhe 1:3 · umbes 99 °C",
+      "completion_cue": "Kaal näitab 60 g ja ilmuvad esimesed kohvitilgad.",
+      "explanation": "Vala läbi jaotuskaane, kui ventiil on avatud. Avatud algus laseb siseneval veel paberi alt õhu välja suruda enne suletud eelniisutuse algust. Kui kohvi on 20 g, vastab kaalu näit 60 g eelniisutuse suhtele 1:3: 3 g vett iga 1 g kohvi kohta. See on ainult eelniisutuse osa; kogu retsept lõpeb 340 g ja suhtega 1:17.",
+      "practical_tip": "Vala ühtlaselt keskele; kaas jaotab vee sinu eest.",
+      "alt_text": "Must veekeetja valab läbi Pulsari jaotuskaane, samal ajal kui püstine avatud ventiil laseb esimestel tilkadel serverisse voolata.",
+      "warning": null
+    },
+    {
+      "number": 4,
+      "instruction": "Esimeste tilkade ajal sulge ventiil ja keeruta üks kord õrnalt.",
+      "concise_instruction": "Sulge esimeste tilkade ajal ja keeruta üks kord õrnalt.",
+      "target": "Ventiil horisontaalne · tilkumine on lõppenud",
+      "completion_cue": "Eelniisutus on täielikult märg ja püsib suletud ventiili kohal.",
+      "explanation": "Hoia ventiili sulgemise ajal valmistajat põhjast. Ühest õrnast keerutusest piisab kuivade kohtade niisutamiseks ilma peenosakesi paberisse surumata.",
+      "practical_tip": "Väldi jõulist keerutamist või segamist; liigne liigutamine võib läbivoolu aeglustada või ummistada.",
+      "alt_text": "Kaks kätt hoiavad Pulsari põhja stabiilsena ja liigutavad läbipaistva külghoova tühja serveri kohal horisontaalsesse suletud asendisse.",
+      "warning": null
+    },
+    {
+      "number": 5,
+      "instruction": "Hoia ventiil suletuna kuni 1:00.",
+      "concise_instruction": "Hoia eelniisutus suletuna kuni 1:00.",
+      "target": "Eelniisutus lõpeb ajal 1:00",
+      "completion_cue": "Ajal 1:00 on kohv püsinud suletud ventiiliga vee all.",
+      "explanation": "Suletud eelniisutus annab kohvile aega küllastuda enne perkolatsiooni jätkumist.",
+      "practical_tip": "Lase valmistajal rahulikult seista; ootamise ajal pole vaja rohkem segada.",
+      "alt_text": "Paigal Pulsari eelniisutus madala mullitava seguga, horisontaalse suletud ventiiliga ja ilma serverisse tilkuva kohvita.",
+      "warning": null
+    },
+    {
+      "number": 6,
+      "instruction": "Ajal 1:00 ava ventiil ja vala impulssidena kokku 340 g-ni ehk lõpliku suhteni 1:17.",
+      "concise_instruction": "Ava ajal 1:00 ja vala impulssidena kokku 340 g-ni (1:17).",
+      "target": "kokku 340 g · lisa pärast eelniisutust 280 g · hoia segu umbes 1 cm kohvikihi kohal",
+      "completion_cue": "Kaal näitab 340 g ja segu tase on püsinud madal.",
+      "explanation": "Vala läbi kaane väikeste impulssidena, samal ajal kui kohv serverisse voolab. Madal ja stabiilne tase piirab möödavooluta kokkupuuteaega ega lase valmistajal üle täituda. Eesmärk 340 g sisaldab eelniisutuse varasemat 60 g, seega lisatakse selles etapis 280 g. Kui kohvi on 20 g, annab kokku 340 g vett lõpliku suhte 1:17.",
+      "practical_tip": "Peata valamine impulsside vahel alati, kui vesi tõuseb kohvikihist rohkem kui umbes 1 cm kõrgemale.",
+      "alt_text": "Must veekeetja valab impulssidena läbi Pulsari kaane, ventiil on püsti, segu tase madal ja valmistatud kohv voolab serverisse.",
+      "warning": null
+    },
+    {
+      "number": 7,
+      "instruction": "Lase valmistajal lõpuni läbi voolata.",
+      "concise_instruction": "Lase viimasel läbivoolul lõppeda.",
+      "target": "Püüa saavutada koguaeg 3:30–4:30",
+      "completion_cue": "Tasase kohvikihi kohal ei ole enam seisvat vett.",
+      "explanation": "Aeglasem vool lõpu poole on veesamba langedes normaalne. Kasuta koguaega jahvatuse praktiliseks kontrolliks, mitte põhjusena kohvikihti häirida. Eesmärk 3:30–4:30 kehtib täpselt selle 20 g / 340 g retsepti kohta; erinev annus või suhe muudab kihi sügavust ja voolu ning vajab seetõttu otsese võrdluse asemel oma tulemust.",
+      "practical_tip": "Selle 20 g / 340 g retsepti puhul jahvata järgmisel korral peenemalt, kui see lõpeb enne 3:30. Kui see kestab üle 4:30, jahvata jämedamalt või liiguta vähem. Lase maitsel määrata lõplik seadistus.",
+      "alt_text": "Peaaegu tühjaks voolanud Pulsar püstise ventiili, tasase märja kohvikihi, viimaste tilkade ja serveris oleva valmis kohviga.",
+      "warning": null
+    },
+    {
+      "number": 8,
+      "instruction": "Sulge ventiil, tõsta mustast põhjast ja serveeri.",
+      "concise_instruction": "Sulge, tõsta ainult põhjast ja serveeri.",
+      "target": "Ventiil enne eemaldamist horisontaalne",
+      "completion_cue": "Valmistaja on serverist eemaldatud ja kohv on valmis.",
+      "explanation": "Ventiili sulgemine hoiab ära üksikud tilgad. Jäta server kaalule ja tõsta valmistaja põhjast otse üles.",
+      "practical_tip": "Aseta valmistaja enne serveerimist kuumakindlale pinnale.",
+      "alt_text": "Kaks kätt tõstavad tühjaks voolanud Pulsari ainult mustast põhjast valmis kohviga paigal seisva serveri kohal.",
+      "warning": "Läbipaistev kamber ja vedelik võivad olla kuumad. Tõsta kokkupandud valmistajat ainult selle mustast põhjast."
+    }
+  ]
+}

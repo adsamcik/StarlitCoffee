@@ -58,6 +58,9 @@
     <string name="label_brewer_profile_thick_paper_carafe">Karaffenbrüher mit dickem Papierfilter</string>
     <string name="label_brewer_profile_conical">Allgemeiner konischer Dripper</string>
     <string name="label_brewer_profile_family_manual_gravity">Manuelle Schwerkraftfiltration</string>
+    <string name="label_brewer_profile_pulsar">Pulsar</string>
+    <string name="label_brewer_profile_family_valve_controlled_no_bypass">Ventilgesteuert ohne Bypass</string>
+    <string name="recipe_pulsar_gagne_20_340">Gagnés gehaltener Bloom · 20 g / 340 g</string>
 
     <string name="recipe_p1_v60_official_15_250">Offizielles Hario-Rezept · 15 g / 250 g</string>
     <string name="recipe_p1_v60_rao_20_330">Scott Rao V60 · 20 g / 330 g</string>
@@ -80,9 +83,4 @@
     <string name="recipe_p1_phin_gravity_14_118">Phin mit Schwerkraft · 14 g / 118 g</string>
     <string name="recipe_p1_phin_screw_18_120">Phin mit Schraubeinsatz · 18 g / 120 g</string>
 
-    <string name="label_guidance_preview">Übersetzungsvorschau</string>
-    <string name="msg_guidance_preview_consent">Diese Anleitung wurde automatisch übersetzt und noch nicht fachlich geprüft. Bei sicherheitskritischen Schritten wird zusätzlich der englische Warnhinweis angezeigt.</string>
-    <string name="action_use_preview_translation">Vorschau verwenden</string>
-    <string name="action_keep_current_guidance">Jetzt nicht</string>
-    <string name="action_turn_off_preview_translation">Übersetzungsvorschau ausschalten</string>
 </resources>

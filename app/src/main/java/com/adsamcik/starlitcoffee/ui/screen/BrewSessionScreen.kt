@@ -170,7 +170,6 @@ fun BrewSessionScreen(
         }
     }
     val terminologyUiCopy = exactRecipeId?.let(exactRecipeReleaseGate::terminologyUiCopyFor)
-    val isGuidancePreview = exactRecipeId?.let(exactRecipeReleaseGate::isPreview) == true
     val showEnglishTerminology = sessionTerminologyOverride ?: showEnglishBrewingTerms
     val isReleaseGatedExactSession = persistedRecipe?.let { recipe ->
         exactRecipeReleaseGate.shouldGatePersistedSession(
@@ -442,7 +441,6 @@ fun BrewSessionScreen(
                     sessionTerminologyOverride = enabled
                     scope.launch { onShowEnglishBrewingTerms(enabled) }
                 },
-                isGuidancePreview = isGuidancePreview,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding),
@@ -571,7 +569,6 @@ private fun BrewSessionContent(
     terminologyUiCopy: BrewingTerminologyUiCopy?,
     showEnglishTerminology: Boolean,
     onShowEnglishTerminology: (Boolean) -> Unit,
-    isGuidancePreview: Boolean,
     modifier: Modifier = Modifier,
 ) {
     val stage = presentation.currentStage
@@ -601,10 +598,6 @@ private fun BrewSessionContent(
                 onBack = onBack,
             )
             return@Column
-        }
-
-        if (isGuidancePreview) {
-            GuidancePreviewNotice()
         }
 
         actionFailureMessageResId?.let { messageResId ->

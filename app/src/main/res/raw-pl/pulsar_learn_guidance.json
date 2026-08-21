@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "guide_id": "pulsar_gagne_20_340",
+  "locale": "pl",
+  "release_status": "released",
+  "stages": [
+    {
+      "number": 1,
+      "instruction": "Przygotuj papierowy filtr bez uwięzienia powietrza.",
+      "concise_instruction": "Ułóż i przepłucz papier, używając zaworu.",
+      "target": "Zawór zamknięty → otwórz nad zlewem → ponownie zamknij",
+      "completion_cue": "Papier leży płasko na podstawie, bez widocznej kieszeni powietrznej.",
+      "explanation": "Zdejmij cylinder, zamknij zawór i nalej płytką warstwę gorącej wody na żebra podstawy. Włóż suchy papier Pulsar, a następnie otwórz zawór nad zlewem. Odpływająca woda układa papier i wypycha uwięzione powietrze. Zamknij zawór przed ponownym złożeniem.",
+      "practical_tip": "Warstwa wody powinna być płytka; wystarczy, że przykryje żebra podstawy.",
+      "alt_text": "Dłoń układa okrągły papierowy filtr płasko w czarnej podstawie Pulsara obok poziomej dźwigni zaworu.",
+      "warning": null
+    },
+    {
+      "number": 2,
+      "instruction": "Do tego przepisu 1:17 wsyp 20 g kawy, wyrównaj złoże, załóż pokrywkę i wytaruj wagę.",
+      "concise_instruction": "Przepis 1:17: wsyp 20 g, wyrównaj, załóż pokrywkę i wytaruj.",
+      "target": "20 g kawy · łącznie 340 g wody · 1:17 · dość grube mielenie",
+      "completion_cue": "Złoże jest równe, a zaparzacz z pokrywką wskazuje 0 g.",
+      "explanation": "Zamontuj cylinder na przygotowanej podstawie, wsyp kawę i wyrównaj ją bez ubijania. Załóż pokrywkę rozpraszającą przed tarowaniem wagi. Ten poradnik wykorzystuje 20 g kawy i 340 g wody: proporcja 1:17 oznacza 17 g wody na każdy 1 g kawy. Zachowanie tego samego przepisu pozwala później wykorzystać czas spływania do dopracowania mielenia.",
+      "practical_tip": "Nie potrzebujesz innego zaparzacza do porównania. Zacznij od widocznie grubych, równych drobin zamiast pylistego przemiału, a ustawienie dopracuj według końcowego spływania i smaku z tego Pulsara.",
+      "alt_text": "Zmielona kawa wpada do otwartej przezroczystej komory Pulsara na serwerze i wadze, a obok leży pokrywka rozpraszająca.",
+      "warning": null
+    },
+    {
+      "number": 3,
+      "instruction": "Otwórz zawór, uruchom minutnik i nalej do 60 g, czyli trzykrotności porcji 20 g.",
+      "concise_instruction": "Otwórz zawór i nalej do 60 g (3× porcja kawy).",
+      "target": "łącznie 60 g wody · preinfuzja 1:3 · około 99 °C",
+      "completion_cue": "Waga wskazuje 60 g i pojawiają się pierwsze krople kawy.",
+      "explanation": "Nalewaj przez pokrywkę rozpraszającą przy otwartym zaworze. Taki otwarty początek pozwala napływającej wodzie wyprzeć powietrze spod papieru przed rozpoczęciem zatrzymanej preinfuzji. Przy 20 g kawy wskazanie 60 g odpowiada preinfuzji 1:3: 3 g wody na każdy 1 g kawy. To tylko część preinfuzji; cały przepis kończy się przy 340 g i 1:17.",
+      "practical_tip": "Nalewaj równomiernie na środek; pokrywka rozprowadzi wodę.",
+      "alt_text": "Czarny czajnik nalewa przez pokrywkę rozpraszającą Pulsara, a pionowy otwarty zawór przepuszcza pierwsze krople do serwera.",
+      "warning": null
+    },
+    {
+      "number": 4,
+      "instruction": "Przy pierwszych kroplach zamknij zawór i raz delikatnie zakręć zaparzaczem.",
+      "concise_instruction": "Zamknij przy pierwszych kroplach i raz delikatnie zakręć.",
+      "target": "Zawór poziomo · brak dalszego kapania",
+      "completion_cue": "Preinfuzja jest całkowicie mokra i zatrzymana nad zamkniętym zaworem.",
+      "explanation": "Podczas zamykania zaworu trzymaj zaparzacz za podstawę. Jeden delikatny ruch wystarczy, aby zwilżyć suche miejsca bez wciskania drobnych cząstek w papier.",
+      "practical_tip": "Unikaj mocnego kręcenia lub mieszania; nadmierny ruch może spowolnić albo zatkać spływanie.",
+      "alt_text": "Dwie dłonie stabilizują podstawę Pulsara i przesuwają przezroczystą boczną dźwignię do poziomej zamkniętej pozycji nad pustym serwerem.",
+      "warning": null
+    },
+    {
+      "number": 5,
+      "instruction": "Trzymaj zawór zamknięty do 1:00.",
+      "concise_instruction": "Utrzymuj zamkniętą preinfuzję do 1:00.",
+      "target": "Preinfuzja kończy się przy 1:00",
+      "completion_cue": "Przy 1:00 kawa pozostawała zanurzona przy zamkniętym zaworze.",
+      "explanation": "Zatrzymana preinfuzja daje kawie czas na nasycenie przed wznowieniem perkolacji.",
+      "practical_tip": "Pozostaw zaparzacz w spokoju; podczas oczekiwania nie trzeba dodatkowo mieszać.",
+      "alt_text": "Nieruchoma preinfuzja w Pulsarze z płytką, bulgoczącą mieszaniną, poziomo zamkniętym zaworem i bez kapania kawy do serwera.",
+      "warning": null
+    },
+    {
+      "number": 6,
+      "instruction": "Przy 1:00 otwórz zawór i dolewaj pulsami do łącznie 340 g, czyli końcowej proporcji 1:17.",
+      "concise_instruction": "Otwórz przy 1:00 i dolewaj pulsami do łącznie 340 g (1:17).",
+      "target": "łącznie 340 g · po preinfuzji dodaj 280 g · utrzymuj mieszaninę około 1 cm nad złożem",
+      "completion_cue": "Waga wskazuje 340 g, a poziom mieszaniny pozostał niski.",
+      "explanation": "Nalewaj małymi pulsami przez pokrywkę, gdy kawa spływa do serwera. Niski, stabilny poziom ogranicza czas kontaktu bez bypassu i zapobiega przepełnieniu zaparzacza. Cel 340 g obejmuje wcześniejsze 60 g preinfuzji, więc ta faza dodaje 280 g. Przy 20 g kawy łącznie 340 g wody daje końcową proporcję 1:17.",
+      "practical_tip": "Rób przerwy między pulsami, gdy woda podniesie się o więcej niż około 1 cm nad złoże.",
+      "alt_text": "Czarny czajnik nalewa pulsami przez pokrywkę Pulsara, zawór jest pionowo, poziom mieszaniny niski, a zaparzona kawa płynie do serwera.",
+      "warning": null
+    },
+    {
+      "number": 7,
+      "instruction": "Pozwól zaparzaczowi całkowicie ociec.",
+      "concise_instruction": "Poczekaj na koniec ostatniego spływania.",
+      "target": "Celuj w łączny czas 3:30–4:30",
+      "completion_cue": "Nad płaskim złożem kawy nie stoi już woda.",
+      "explanation": "Wolniejszy przepływ pod koniec jest normalny, gdy obniża się słup wody. Użyj łącznego czasu jako praktycznej kontroli mielenia, a nie powodu do naruszania złoża. Cel 3:30–4:30 dotyczy dokładnie tego przepisu 20 g / 340 g; inna porcja lub proporcja zmienia głębokość złoża i przepływ, dlatego wymaga własnego wyniku zamiast bezpośredniego porównania.",
+      "practical_tip": "Dla tego przepisu 20 g / 340 g następnym razem zmiel drobniej, jeśli kończy się przed 3:30. Jeśli trwa dłużej niż 4:30, zmiel grubiej lub mniej poruszaj zaparzaczem. Ostateczną korektę oprzyj na smaku.",
+      "alt_text": "Prawie opróżniony Pulsar z pionowym zaworem, płaskim mokrym złożem, ostatnimi kroplami i gotową kawą w serwerze.",
+      "warning": null
+    },
+    {
+      "number": 8,
+      "instruction": "Zamknij zawór, unieś za czarną podstawę i podawaj.",
+      "concise_instruction": "Zamknij, unieś wyłącznie za podstawę i podawaj.",
+      "target": "Zawór poziomo przed zdjęciem",
+      "completion_cue": "Zaparzacz jest zdjęty z serwera, a kawa jest gotowa.",
+      "explanation": "Zamknięcie zaworu zapobiega pojedynczym kroplom. Zostaw serwer na wadze i unieś zaparzacz pionowo za podstawę.",
+      "practical_tip": "Przed podaniem odstaw zaparzacz na powierzchnię odporną na ciepło.",
+      "alt_text": "Dwie dłonie unoszą ocieknięty Pulsar wyłącznie za czarną podstawę nad nieruchomym serwerem z gotową kawą.",
+      "warning": "Przezroczysta komora i płyn mogą być gorące. Złożony zaparzacz podnoś wyłącznie za czarną podstawę."
+    }
+  ]
+}

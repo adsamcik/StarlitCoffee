@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "guide_id": "pulsar_gagne_20_340",
+  "locale": "fr",
+  "release_status": "released",
+  "stages": [
+    {
+      "number": 1,
+      "instruction": "Préparez le filtre en papier sans emprisonner d’air.",
+      "concise_instruction": "Placez et rincez le papier en actionnant la vanne.",
+      "target": "Vanne fermée → ouvrir au-dessus de l’évier → refermer",
+      "completion_cue": "Le papier repose à plat contre la base, sans poche d’air visible.",
+      "explanation": "Retirez le cylindre, fermez la vanne et versez une fine couche d’eau chaude sur les nervures de la base. Posez un papier Pulsar sec, puis ouvrez la vanne au-dessus de l’évier. L’écoulement plaque le papier et chasse l’air emprisonné. Refermez la vanne avant le remontage.",
+      "practical_tip": "Gardez une faible hauteur d’eau ; elle doit seulement couvrir les nervures de la base.",
+      "alt_text": "Une main plaque un filtre rond en papier dans la base noire du Pulsar, à côté du levier horizontal de la vanne.",
+      "warning": null
+    },
+    {
+      "number": 2,
+      "instruction": "Pour cette recette à 1:17, ajoutez 20 g de café, égalisez le lit, posez le couvercle et faites la tare.",
+      "concise_instruction": "Pour cette recette à 1:17, ajoutez 20 g, égalisez, couvrez et faites la tare.",
+      "target": "20 g de café · 340 g d’eau au total · 1:17 · mouture assez grossière",
+      "completion_cue": "Le lit est plat et la balance indique 0 g avec le couvercle en place.",
+      "explanation": "Montez le cylindre sur la base préparée, ajoutez le café et égalisez-le sans le tasser. Posez le couvercle de dispersion avant de faire la tare. Ce guide utilise 20 g de café et 340 g d’eau : un ratio de 1:17 signifie 17 g d’eau pour chaque 1 g de café. En gardant cette recette fixe, le temps d’écoulement final devient utile pour affiner la mouture.",
+      "practical_tip": "Aucune autre cafetière n’est nécessaire comme référence. Commencez par des particules visiblement grossières et régulières plutôt que par une mouture poudreuse, puis affinez le réglage selon l’écoulement final et le goût de ce Pulsar.",
+      "alt_text": "Du café moulu tombe dans la chambre transparente ouverte du Pulsar posé sur une verseuse et une balance, avec le couvercle de dispersion à côté.",
+      "warning": null
+    },
+    {
+      "number": 3,
+      "instruction": "Ouvrez la vanne, lancez le minuteur et versez jusqu’à 60 g, soit trois fois la dose de 20 g.",
+      "concise_instruction": "Ouvrez la vanne et versez jusqu’à 60 g (3× la dose de café).",
+      "target": "60 g d’eau cumulée · pré-infusion à 1:3 · environ 99 °C",
+      "completion_cue": "La balance indique 60 g et les premières gouttes de café apparaissent.",
+      "explanation": "Versez à travers le couvercle de dispersion avec la vanne ouverte. Ce départ ouvert permet à l’eau entrante de chasser l’air sous le papier avant le début de la pré-infusion fermée. Avec 20 g de café, les 60 g affichés correspondent à une pré-infusion de 1:3 : 3 g d’eau pour chaque 1 g de café. Ce n’est que la part de pré-infusion ; la recette complète se termine à 340 g et 1:17.",
+      "practical_tip": "Versez régulièrement au centre ; le couvercle répartit l’eau pour vous.",
+      "alt_text": "Une bouilloire noire verse à travers le couvercle de dispersion du Pulsar tandis que la vanne ouverte et verticale laisse tomber les premières gouttes dans la verseuse.",
+      "warning": null
+    },
+    {
+      "number": 4,
+      "instruction": "Aux premières gouttes, fermez la vanne et faites doucement tourner une fois.",
+      "concise_instruction": "Fermez aux premières gouttes et faites doucement tourner une fois.",
+      "target": "Vanne horizontale · plus aucun écoulement",
+      "completion_cue": "La pré-infusion est entièrement mouillée et retenue au-dessus de la vanne fermée.",
+      "explanation": "Tenez la cafetière par sa base pendant la fermeture de la vanne. Une seule rotation douce suffit à mouiller les zones sèches sans pousser les particules fines dans le papier.",
+      "practical_tip": "Évitez les rotations ou mélanges vigoureux ; une agitation excessive peut ralentir ou bloquer l’écoulement.",
+      "alt_text": "Deux mains stabilisent la base du Pulsar et placent le levier latéral transparent en position horizontale fermée au-dessus d’une verseuse vide.",
+      "warning": null
+    },
+    {
+      "number": 5,
+      "instruction": "Gardez la vanne fermée jusqu’à 1:00.",
+      "concise_instruction": "Maintenez la pré-infusion fermée jusqu’à 1:00.",
+      "target": "La pré-infusion se termine à 1:00",
+      "completion_cue": "À 1:00, le café est resté immergé avec la vanne fermée.",
+      "explanation": "Cette pré-infusion retenue laisse au café le temps de se saturer avant la reprise de la percolation.",
+      "practical_tip": "Laissez la cafetière au repos ; aucun mélange supplémentaire n’est nécessaire pendant l’attente.",
+      "alt_text": "Une pré-infusion immobile dans le Pulsar, avec un mélange peu profond qui bulle, la vanne horizontale fermée et aucune goutte dans la verseuse.",
+      "warning": null
+    },
+    {
+      "number": 6,
+      "instruction": "À 1:00, ouvrez la vanne et versez par impulsions jusqu’à 340 g au total, soit le ratio final de 1:17.",
+      "concise_instruction": "Ouvrez à 1:00 et versez par impulsions jusqu’à 340 g au total (1:17).",
+      "target": "340 g cumulés · ajouter 280 g après la pré-infusion · maintenir le mélange à environ 1 cm au-dessus du lit",
+      "completion_cue": "La balance indique 340 g et le niveau du mélange est resté bas.",
+      "explanation": "Versez en petites impulsions à travers le couvercle pendant que le café s’écoule dans la verseuse. Un niveau bas et stable limite le temps de contact sans dérivation tout en évitant de trop remplir la cafetière. L’objectif de 340 g comprend les 60 g de la pré-infusion, cette phase ajoute donc 280 g. Avec 20 g de café, 340 g d’eau au total donnent le ratio final de 1:17.",
+      "practical_tip": "Faites une pause entre les impulsions dès que l’eau dépasse le lit d’environ 1 cm.",
+      "alt_text": "Une bouilloire noire verse par impulsions à travers le couvercle du Pulsar, vanne verticale, mélange bas et café s’écoulant dans la verseuse.",
+      "warning": null
+    },
+    {
+      "number": 7,
+      "instruction": "Laissez la cafetière terminer son écoulement.",
+      "concise_instruction": "Laissez l’écoulement final se terminer.",
+      "target": "Visez un temps total de 3:30–4:30",
+      "completion_cue": "Il ne reste plus d’eau au-dessus du lit de café plat.",
+      "explanation": "Un débit plus lent vers la fin est normal lorsque la hauteur d’eau diminue. Utilisez le temps total comme contrôle pratique de la mouture, et non comme raison de perturber le lit. L’objectif de 3:30–4:30 appartient à cette recette précise de 20 g / 340 g ; une dose ou un ratio différent modifie la profondeur du lit et le débit et doit donc être évalué séparément plutôt que comparé directement.",
+      "practical_tip": "Pour cette recette de 20 g / 340 g, moulez plus fin la prochaine fois si elle se termine avant 3:30. Si elle dépasse 4:30, moulez plus gros ou agitez moins. Laissez le goût décider du réglage final.",
+      "alt_text": "Un Pulsar presque égoutté, vanne verticale, lit humide et plat, dernières gouttes et café fini dans la verseuse.",
+      "warning": null
+    },
+    {
+      "number": 8,
+      "instruction": "Fermez la vanne, soulevez par la base noire et servez.",
+      "concise_instruction": "Fermez, soulevez uniquement par la base et servez.",
+      "target": "Vanne horizontale avant le retrait",
+      "completion_cue": "La cafetière ne repose plus sur la verseuse et le café est prêt.",
+      "explanation": "La fermeture de la vanne évite les gouttes résiduelles. Laissez la verseuse sur la balance et soulevez la cafetière verticalement par sa base.",
+      "practical_tip": "Posez la cafetière sur une surface résistante à la chaleur avant de servir.",
+      "alt_text": "Deux mains soulèvent un Pulsar égoutté uniquement par sa base noire au-dessus d’une verseuse immobile remplie de café.",
+      "warning": "La chambre transparente et le liquide peuvent être chauds. Soulevez la cafetière assemblée uniquement par sa base noire."
+    }
+  ]
+}

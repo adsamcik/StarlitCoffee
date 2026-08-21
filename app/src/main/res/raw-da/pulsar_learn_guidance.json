@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "guide_id": "pulsar_gagne_20_340",
+  "locale": "da",
+  "release_status": "released",
+  "stages": [
+    {
+      "number": 1,
+      "instruction": "Klargør papirfilteret uden at indkapsle luft.",
+      "concise_instruction": "Placér og skyl papiret med ventilcyklussen.",
+      "target": "Ventil lukket → åbn over vasken → luk igen",
+      "completion_cue": "Papiret ligger fladt mod bunden uden synlige luftlommer.",
+      "explanation": "Tag cylinderen af, luk ventilen, og hæld et lavt lag varmt vand over ribberne i bunden. Læg et tørt Pulsar-papir i, og åbn derefter ventilen over vasken. Afløbet lægger papiret på plads og presser indespærret luft ud. Luk ventilen, før du samler bryggeren igen.",
+      "practical_tip": "Brug kun et lavt vandlag; det skal blot dække ribberne i bunden.",
+      "alt_text": "En hånd lægger et rundt papirfilter fladt i den sorte Pulsar-bund ved siden af det vandrette ventilgreb.",
+      "warning": null
+    },
+    {
+      "number": 2,
+      "instruction": "Til denne 1:17-opskrift: tilsæt 20 g kaffe, planér kaffelaget, sæt låget på, og tarér.",
+      "concise_instruction": "Til denne 1:17-opskrift: tilsæt 20 g, planér, sæt låg på, og tarér.",
+      "target": "20 g kaffe · 340 g vand i alt · 1:17 · forholdsvis grov kværning",
+      "completion_cue": "Kaffelaget er plant, og bryggeren med låg viser 0 g.",
+      "explanation": "Montér cylinderen på den klargjorte bund, tilsæt kaffen, og planér den uden at presse den sammen. Sæt fordelingslåget på, før vægten tareres. Denne vejledning bruger 20 g kaffe og 340 g vand: Forholdet 1:17 betyder 17 g vand for hvert 1 g kaffe. Når opskriften holdes fast, kan den senere afløbstid bruges til at finjustere kværningen.",
+      "practical_tip": "Du behøver ikke en anden brygger som reference. Start med synligt grove, ensartede partikler frem for en pulveragtig kværning, og justér derefter ud fra denne Pulsars afsluttende afløb og smag.",
+      "alt_text": "Malet kaffe falder ned i det åbne, klare Pulsar-kammer på en serveringskande og vægt med fordelingslåget ved siden af.",
+      "warning": null
+    },
+    {
+      "number": 3,
+      "instruction": "Åbn ventilen, start timeren, og hæld til 60 g—tre gange dosen på 20 g.",
+      "concise_instruction": "Åbn ventilen, og hæld til 60 g (3× kaffedosen).",
+      "target": "60 g vand i alt · bloom-forhold 1:3 · cirka 99 °C",
+      "completion_cue": "Vægten viser 60 g, og de første kaffedråber kommer frem.",
+      "explanation": "Hæld gennem fordelingslåget med ventilen åben. Denne åbne start lader det indkommende vand fortrænge luft under papiret, før den tilbageholdte bloom begynder. Med 20 g kaffe svarer vægtens 60 g til en bloom på 1:3: 3 g vand for hvert 1 g kaffe. Det er kun bloom-delen; hele opskriften slutter ved 340 g og 1:17.",
+      "practical_tip": "Hæld jævnt i midten; låget fordeler vandet for dig.",
+      "alt_text": "En sort kedel hælder gennem Pulsarens fordelingslåg, mens den opretstående åbne ventil lader de første dråber løbe ned i serveringskanden.",
+      "warning": null
+    },
+    {
+      "number": 4,
+      "instruction": "Luk ventilen ved de første dråber, og sving forsigtigt én gang.",
+      "concise_instruction": "Luk ved de første dråber, og sving forsigtigt én gang.",
+      "target": "Ventil vandret · ikke mere dryp",
+      "completion_cue": "Bloomen er helt våd og tilbageholdt over den lukkede ventil.",
+      "explanation": "Hold bryggeren i bunden, mens ventilen lukkes. Ét forsigtigt sving er nok til at væde tørre områder uden at presse fine partikler ned i papiret.",
+      "practical_tip": "Undgå kraftig svingning eller omrøring; for meget bevægelse kan forsinke eller blokere afløbet.",
+      "alt_text": "To hænder stabiliserer Pulsar-bunden og flytter det klare sidegreb til vandret lukket position over en tom serveringskande.",
+      "warning": null
+    },
+    {
+      "number": 5,
+      "instruction": "Hold ventilen lukket til 1:00.",
+      "concise_instruction": "Hold bloomen lukket til 1:00.",
+      "target": "Bloomen slutter ved 1:00",
+      "completion_cue": "Ved 1:00 har kaffen været nedsænket med ventilen lukket.",
+      "explanation": "Den tilbageholdte bloom giver kaffen tid til at blive mættet, før perkolationen fortsætter.",
+      "practical_tip": "Lad bryggeren stå i ro; der er ikke behov for mere omrøring under ventetiden.",
+      "alt_text": "En rolig Pulsar-bloom med en lav, boblende blanding, vandret lukket ventil og ingen kaffe, der drypper ned i serveringskanden.",
+      "warning": null
+    },
+    {
+      "number": 6,
+      "instruction": "Ved 1:00 åbnes ventilen, og der hældes i pulser til 340 g i alt—det endelige forhold på 1:17.",
+      "concise_instruction": "Åbn ved 1:00, og hæld i pulser til 340 g i alt (1:17).",
+      "target": "340 g i alt · tilsæt 280 g efter bloom · hold blandingen cirka 1 cm over kaffelaget",
+      "completion_cue": "Vægten viser 340 g, og blandingens niveau er forblevet lavt.",
+      "explanation": "Hæld i små pulser gennem låget, mens kaffen løber ned i serveringskanden. Et lavt og stabilt niveau begrænser kontakttiden uden bypass og forhindrer overfyldning. Målet på 340 g omfatter de tidligere 60 g bloom, så denne fase tilføjer 280 g. Med 20 g kaffe giver 340 g vand i alt det endelige forhold på 1:17.",
+      "practical_tip": "Hold pause mellem pulserne, når vandet stiger mere end cirka 1 cm over kaffelaget.",
+      "alt_text": "En sort kedel hælder i pulser gennem Pulsar-låget med ventilen oprejst, et lavt blandingsniveau og brygget kaffe, der løber ned i serveringskanden.",
+      "warning": null
+    },
+    {
+      "number": 7,
+      "instruction": "Lad bryggeren løbe helt igennem.",
+      "concise_instruction": "Lad det afsluttende afløb blive færdigt.",
+      "target": "Sigt efter en samlet tid på 3:30–4:30",
+      "completion_cue": "Der står ikke længere vand over det flade kaffelag.",
+      "explanation": "Et langsommere flow mod slutningen er normalt, når vandsøjlen falder. Brug den samlede tid som en praktisk kontrol af kværningen, ikke som grund til at forstyrre kaffelaget. Målet på 3:30–4:30 gælder præcis denne opskrift med 20 g / 340 g; en anden dosis eller et andet forhold ændrer lagets dybde og flow og skal derfor vurderes for sig i stedet for ved direkte sammenligning.",
+      "practical_tip": "Til denne opskrift med 20 g / 340 g skal du kværne finere næste gang, hvis den slutter før 3:30. Hvis den varer længere end 4:30, skal du kværne grovere eller bevæge mindre. Lad smagen afgøre den sidste justering.",
+      "alt_text": "En næsten tømt Pulsar med opretstående ventil, fladt vådt kaffelag, de sidste dråber og færdig kaffe i serveringskanden.",
+      "warning": null
+    },
+    {
+      "number": 8,
+      "instruction": "Luk ventilen, løft i den sorte bund, og servér.",
+      "concise_instruction": "Luk, løft kun i bunden, og servér.",
+      "target": "Ventil vandret før bryggeren fjernes",
+      "completion_cue": "Bryggeren er løftet fri af serveringskanden, og kaffen er klar.",
+      "explanation": "En lukket ventil forhindrer løse dråber. Lad serveringskanden stå på vægten, mens bryggeren løftes lige op i bunden.",
+      "practical_tip": "Stil bryggeren på en varmebestandig overflade før servering.",
+      "alt_text": "To hænder løfter en tømt Pulsar kun i den sorte bund over en stillestående serveringskande med færdig kaffe.",
+      "warning": "Det klare kammer og væsken kan være varme. Løft kun den samlede brygger i den sorte bund."
+    }
+  ]
+}

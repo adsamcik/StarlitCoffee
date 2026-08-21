@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "guide_id": "pulsar_gagne_20_340",
+  "locale": "lt",
+  "release_status": "released",
+  "stages": [
+    {
+      "number": 1,
+      "instruction": "Paruoškite popierinį filtrą nepalikdami oro.",
+      "concise_instruction": "Įdėkite ir praskalaukite popierių naudodami vožtuvą.",
+      "target": "Vožtuvas uždarytas → atidaryti virš kriauklės → vėl uždaryti",
+      "completion_cue": "Popierius lygiai prigludęs prie pagrindo, be matomos oro kišenės.",
+      "explanation": "Nuimkite cilindrą, uždarykite vožtuvą ir ant pagrindo briaunų užpilkite negilų karšto vandens sluoksnį. Įdėkite sausą „Pulsar“ popierių ir atidarykite vožtuvą virš kriauklės. Nutekantis vanduo prispaudžia popierių ir išstumia po juo likusį orą. Prieš surinkdami vožtuvą uždarykite.",
+      "practical_tip": "Vandens sluoksnis turi būti negilus; jam tereikia apsemti pagrindo briaunas.",
+      "alt_text": "Ranka lygiai įdeda apvalų popierinį filtrą į juodą „Pulsar“ pagrindą šalia horizontalios vožtuvo svirties.",
+      "warning": null
+    },
+    {
+      "number": 2,
+      "instruction": "Šiam 1:17 receptui įberkite 20 g kavos, išlyginkite sluoksnį, uždėkite dangtelį ir nunulinkite svarstykles.",
+      "concise_instruction": "1:17 receptas: įberkite 20 g, išlyginkite, uždėkite dangtelį ir nunulinkite.",
+      "target": "20 g kavos · iš viso 340 g vandens · 1:17 · gana stambus malimas",
+      "completion_cue": "Kavos sluoksnis lygus, o įrenginys su dangteliu rodo 0 g.",
+      "explanation": "Pritvirtinkite cilindrą prie paruošto pagrindo, suberkite kavą ir išlyginkite jos nesuspausdami. Prieš nunulindami svarstykles uždėkite paskirstymo dangtelį. Šiame vadove naudojama 20 g kavos ir 340 g vandens: santykis 1:17 reiškia 17 g vandens kiekvienam 1 g kavos. Nekeičiant recepto vėlesnis nutekėjimo laikas padeda tikslinti malimą.",
+      "practical_tip": "Palyginimui nereikia kito ruošimo įrenginio. Pradėkite nuo aiškiai stambių, vienodų dalelių, o ne miltelių pavidalo malimo, ir tiksliau nustatykite pagal galutinį šio „Pulsar“ nutekėjimą bei skonį.",
+      "alt_text": "Malta kava byra į atvirą skaidrią „Pulsar“ kamerą ant serverio ir svarstyklių, o šalia padėtas paskirstymo dangtelis.",
+      "warning": null
+    },
+    {
+      "number": 3,
+      "instruction": "Atidarykite vožtuvą, paleiskite laikmatį ir pilkite iki 60 g – tris kartus daugiau už 20 g dozę.",
+      "concise_instruction": "Atidarykite vožtuvą ir pilkite iki 60 g (3× kavos dozė).",
+      "target": "iš viso 60 g vandens · pirminio drėkinimo santykis 1:3 · apie 99 °C",
+      "completion_cue": "Svarstyklės rodo 60 g ir pasirodo pirmieji kavos lašai.",
+      "explanation": "Pilkite per paskirstymo dangtelį atidarę vožtuvą. Tokia atvira pradžia leidžia vandeniui išstumti orą iš po popieriaus prieš prasidedant sulaikytam pirminiam drėkinimui. Naudojant 20 g kavos, 60 g rodmuo atitinka santykį 1:3: 3 g vandens kiekvienam 1 g kavos. Tai tik pirminio drėkinimo dalis; visas receptas baigiamas ties 340 g ir 1:17.",
+      "practical_tip": "Pilkite tolygiai į centrą; dangtelis paskirstys vandenį.",
+      "alt_text": "Juodas virdulys pila per „Pulsar“ paskirstymo dangtelį, o vertikalus atviras vožtuvas praleidžia pirmuosius lašus į serverį.",
+      "warning": null
+    },
+    {
+      "number": 4,
+      "instruction": "Pasirodžius pirmiesiems lašams uždarykite vožtuvą ir vieną kartą švelniai pasukite.",
+      "concise_instruction": "Pasirodžius pirmiesiems lašams uždarykite ir švelniai pasukite kartą.",
+      "target": "Vožtuvas horizontalus · daugiau nelaša",
+      "completion_cue": "Pirminis drėkinimas visiškai šlapias ir sulaikytas virš uždaryto vožtuvo.",
+      "explanation": "Uždarydami vožtuvą laikykite įrenginį už pagrindo. Vieno švelnaus pasukimo pakanka sudrėkinti sausas vietas, neįspaudžiant smulkių dalelių į popierių.",
+      "practical_tip": "Venkite stipriai sukti ar maišyti; per didelis judinimas gali sulėtinti arba užkimšti nutekėjimą.",
+      "alt_text": "Dvi rankos stabilizuoja „Pulsar“ pagrindą ir perkelia skaidrią šoninę svirtį į horizontalią uždarytą padėtį virš tuščio serverio.",
+      "warning": null
+    },
+    {
+      "number": 5,
+      "instruction": "Laikykite vožtuvą uždarytą iki 1:00.",
+      "concise_instruction": "Laikykite pirminį drėkinimą uždarytą iki 1:00.",
+      "target": "Pirminis drėkinimas baigiasi ties 1:00",
+      "completion_cue": "Ties 1:00 kava buvo panardinta, o vožtuvas uždarytas.",
+      "explanation": "Sulaikytas pirminis drėkinimas suteikia kavai laiko prisigerti prieš tęsiant perkolaciją.",
+      "practical_tip": "Palikite įrenginį ramybėje; laukiant papildomai maišyti nereikia.",
+      "alt_text": "Nejudantis „Pulsar“ pirminis drėkinimas su negiliu burbuliuojančiu mišiniu, horizontaliai uždarytu vožtuvu ir į serverį nelašančia kava.",
+      "warning": null
+    },
+    {
+      "number": 6,
+      "instruction": "Ties 1:00 atidarykite vožtuvą ir pilkite impulsais iki iš viso 340 g – galutinio santykio 1:17.",
+      "concise_instruction": "Ties 1:00 atidarykite ir pilkite impulsais iki iš viso 340 g (1:17).",
+      "target": "iš viso 340 g · po pirminio drėkinimo pridėti 280 g · laikyti mišinį apie 1 cm virš kavos sluoksnio",
+      "completion_cue": "Svarstyklės rodo 340 g, o mišinio lygis išliko žemas.",
+      "explanation": "Pilkite mažais impulsais per dangtelį, kol kava teka į serverį. Žemas ir stabilus lygis riboja sąlyčio be apėjimo trukmę ir neleidžia perpildyti įrenginio. 340 g tikslas apima ankstesnius 60 g pirminio drėkinimo, todėl šiame etape pridedama 280 g. Naudojant 20 g kavos, iš viso 340 g vandens suteikia galutinį santykį 1:17.",
+      "practical_tip": "Tarp impulsų sustokite, kai vanduo pakyla daugiau nei maždaug 1 cm virš kavos sluoksnio.",
+      "alt_text": "Juodas virdulys pila impulsais per „Pulsar“ dangtelį, vožtuvas vertikalus, mišinio lygis žemas, o paruošta kava teka į serverį.",
+      "warning": null
+    },
+    {
+      "number": 7,
+      "instruction": "Leiskite įrenginiui baigti nutekėti.",
+      "concise_instruction": "Leiskite baigtis galutiniam nutekėjimui.",
+      "target": "Siekite bendro 3:30–4:30 laiko",
+      "completion_cue": "Virš lygaus kavos sluoksnio nebeliko stovinčio vandens.",
+      "explanation": "Lėtesnis srautas pabaigoje, vandens stulpui mažėjant, yra normalus. Bendrą laiką naudokite kaip praktinį malimo patikrinimą, o ne priežastį judinti sluoksnį. 3:30–4:30 tikslas taikomas būtent šiam 20 g / 340 g receptui; kita dozė ar santykis keičia sluoksnio gylį ir srautą, todėl juos reikia vertinti atskirai, o ne tiesiogiai lyginti.",
+      "practical_tip": "Šiam 20 g / 340 g receptui kitą kartą malkite smulkiau, jei baigiama anksčiau nei 3:30. Jei trunka ilgiau nei 4:30, malkite stambiau arba mažiau judinkite. Galutinį pakeitimą tegul lemia skonis.",
+      "alt_text": "Beveik nutekėjęs „Pulsar“ su vertikaliu vožtuvu, lygiu šlapiu kavos sluoksniu, paskutiniais lašais ir paruošta kava serveryje.",
+      "warning": null
+    },
+    {
+      "number": 8,
+      "instruction": "Uždarykite vožtuvą, kelkite už juodo pagrindo ir patiekite.",
+      "concise_instruction": "Uždarykite, kelkite tik už pagrindo ir patiekite.",
+      "target": "Prieš nuimant vožtuvas horizontalus",
+      "completion_cue": "Įrenginys pakeltas nuo serverio, o kava paruošta.",
+      "explanation": "Uždarius vožtuvą neliks pavienių lašų. Laikykite serverį ant svarstyklių ir kelkite įrenginį tiesiai aukštyn už pagrindo.",
+      "practical_tip": "Prieš patiekdami padėkite įrenginį ant karščiui atsparaus paviršiaus.",
+      "alt_text": "Dvi rankos kelia nutekėjusį „Pulsar“ tik už juodo pagrindo virš nejudančio serverio su paruošta kava.",
+      "warning": "Skaidri kamera ir skystis gali būti karšti. Surinktą įrenginį kelkite tik už jo juodo pagrindo."
+    }
+  ]
+}

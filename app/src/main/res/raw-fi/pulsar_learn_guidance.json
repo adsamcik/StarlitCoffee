@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "guide_id": "pulsar_gagne_20_340",
+  "locale": "fi",
+  "release_status": "released",
+  "stages": [
+    {
+      "number": 1,
+      "instruction": "Kostuta paperisuodatin niin, ettei alle jää ilmaa.",
+      "concise_instruction": "Aseta ja huuhtele paperi venttiiliä käyttämällä.",
+      "target": "Venttiili kiinni → avaa altaan yllä → sulje uudelleen",
+      "completion_cue": "Paperi on tasaisesti pohjaa vasten eikä sen alla näy ilmataskua.",
+      "explanation": "Irrota sylinteri, sulje venttiili ja lisää ohut kerros kuumaa vettä pohjan harjanteille. Aseta kuiva Pulsar-paperi ja avaa venttiili altaan yllä. Valuva vesi asettaa paperin paikalleen ja työntää alle jääneen ilman pois. Sulje venttiili ennen kokoamista.",
+      "practical_tip": "Pidä vesikerros matalana; sen tarvitsee vain peittää pohjan harjanteet.",
+      "alt_text": "Käsi asettaa pyöreän paperisuodattimen tasaisesti mustaan Pulsar-pohjaan vaakasuoran venttiilivivun viereen.",
+      "warning": null
+    },
+    {
+      "number": 2,
+      "instruction": "Lisää tähän 1:17-reseptiin 20 g kahvia, tasaa peti, aseta kansi ja taaraa.",
+      "concise_instruction": "1:17-resepti: lisää 20 g, tasaa, aseta kansi ja taaraa.",
+      "target": "20 g kahvia · yhteensä 340 g vettä · 1:17 · melko karkea jauhatus",
+      "completion_cue": "Kahvipeti on tasainen ja kannellinen suodatin näyttää 0 g.",
+      "explanation": "Kiinnitä sylinteri valmisteltuun pohjaan, lisää kahvi ja tasaa se tiivistämättä. Aseta vedenjakokansi ennen vaa’an taarausta. Tässä ohjeessa käytetään 20 g kahvia ja 340 g vettä: suhde 1:17 tarkoittaa 17 g vettä jokaista 1 g kahvia kohti. Kun resepti pidetään samana, myöhempi valumisaika auttaa jauhatusasetuksen hienosäädössä.",
+      "practical_tip": "Vertailuun ei tarvita toista suodatinta. Aloita näkyvästi karkeista ja tasakokoisista hiukkasista jauhomaisen jauhatuksen sijaan ja hienosäädä asetusta tämän Pulsarin lopullisen valumisen ja maun perusteella.",
+      "alt_text": "Jauhettua kahvia putoaa avoimeen läpinäkyvään Pulsar-kammioon tarjoiluastian ja vaa’an päällä, vedenjakokansi vieressä.",
+      "warning": null
+    },
+    {
+      "number": 3,
+      "instruction": "Avaa venttiili, käynnistä ajastin ja kaada 60 g:aan eli kolminkertainen määrä 20 g:n annokseen nähden.",
+      "concise_instruction": "Avaa venttiili ja kaada 60 g:aan (3× kahviannos).",
+      "target": "60 g vettä yhteensä · esikostutussuhde 1:3 · noin 99 °C",
+      "completion_cue": "Vaaka näyttää 60 g ja ensimmäiset kahvipisarat ilmestyvät.",
+      "explanation": "Kaada vedenjakokannen läpi venttiilin ollessa auki. Avoin aloitus antaa tulevan veden syrjäyttää paperin alla olevan ilman ennen suljettua esikostutusta. Kun kahvia on 20 g, vaa’an lukema 60 g vastaa suhdetta 1:3: 3 g vettä jokaista 1 g kahvia kohti. Tämä on vain esikostutusosuus; koko resepti päättyy 340 g:aan ja suhteeseen 1:17.",
+      "practical_tip": "Kaada tasaisesti keskelle; kansi jakaa veden puolestasi.",
+      "alt_text": "Musta vedenkeitin kaataa Pulsarin vedenjakokannen läpi, kun pystyssä oleva avoin venttiili päästää ensimmäiset pisarat tarjoiluastiaan.",
+      "warning": null
+    },
+    {
+      "number": 4,
+      "instruction": "Sulje venttiili ensimmäisten pisaroiden kohdalla ja pyöräytä kerran varovasti.",
+      "concise_instruction": "Sulje ensimmäisillä pisaroilla ja pyöräytä kerran varovasti.",
+      "target": "Venttiili vaakasuorassa · ei enää tippumista",
+      "completion_cue": "Esikostutus on kauttaaltaan märkä ja pysyy suljetun venttiilin yläpuolella.",
+      "explanation": "Pidä suodatinta pohjasta venttiiliä sulkiessasi. Yksi varovainen pyöräytys riittää kostuttamaan kuivat kohdat työntämättä hienoja hiukkasia paperiin.",
+      "practical_tip": "Vältä voimakasta pyörittämistä tai sekoittamista; liiallinen liike voi hidastaa tai tukkia valumisen.",
+      "alt_text": "Kaksi kättä vakauttaa Pulsarin pohjan ja siirtää läpinäkyvän sivuvivun vaakasuoraan suljettuun asentoon tyhjän tarjoiluastian yllä.",
+      "warning": null
+    },
+    {
+      "number": 5,
+      "instruction": "Pidä venttiili suljettuna aikaan 1:00 asti.",
+      "concise_instruction": "Pidä esikostutus suljettuna aikaan 1:00 asti.",
+      "target": "Esikostutus päättyy ajassa 1:00",
+      "completion_cue": "Ajassa 1:00 kahvi on ollut upoksissa venttiilin ollessa suljettuna.",
+      "explanation": "Suljettu esikostutus antaa kahville aikaa kyllästyä ennen suodatuksen jatkumista.",
+      "practical_tip": "Anna suodattimen levätä; odotuksen aikana ei tarvitse sekoittaa.",
+      "alt_text": "Paikallaan oleva Pulsar-esikostutus, jossa on matala kupliva seos, vaakasuora suljettu venttiili eikä kahvia tipu tarjoiluastiaan.",
+      "warning": null
+    },
+    {
+      "number": 6,
+      "instruction": "Avaa venttiili ajassa 1:00 ja kaada pulsseina yhteensä 340 g:aan eli lopulliseen suhteeseen 1:17.",
+      "concise_instruction": "Avaa ajassa 1:00 ja kaada pulsseina yhteensä 340 g:aan (1:17).",
+      "target": "yhteensä 340 g · lisää esikostutuksen jälkeen 280 g · pidä seos noin 1 cm kahvipedin yläpuolella",
+      "completion_cue": "Vaaka näyttää 340 g ja seoksen pinta on pysynyt matalana.",
+      "explanation": "Kaada kannen läpi pieninä pulsseina samalla, kun kahvi valuu tarjoiluastiaan. Matala ja tasainen pinta rajoittaa ohivirtauksettoman kosketuksen kestoa täyttämättä suodatinta liikaa. Tavoite 340 g sisältää esikostutuksen aiemmat 60 g, joten tässä vaiheessa lisätään 280 g. Kun kahvia on 20 g, yhteensä 340 g vettä antaa lopullisen suhteen 1:17.",
+      "practical_tip": "Pidä pulssien välissä tauko aina, kun vesi nousee yli noin 1 cm kahvipedin yläpuolelle.",
+      "alt_text": "Musta vedenkeitin kaataa pulsseina Pulsar-kannen läpi, venttiili pystyssä, seoksen pinta matalana ja kahvi valumassa tarjoiluastiaan.",
+      "warning": null
+    },
+    {
+      "number": 7,
+      "instruction": "Anna suodattimen valua loppuun.",
+      "concise_instruction": "Anna viimeisen valumisen valmistua.",
+      "target": "Tavoittele kokonaisaikaa 3:30–4:30",
+      "completion_cue": "Tasaisen kahvipedin päällä ei ole enää seisovaa vettä.",
+      "explanation": "Hitaampi virtaus loppua kohti on normaalia vesipatsaan laskiessa. Käytä kokonaisaikaa käytännöllisenä jauhatuksen tarkistuksena, älä syynä häiritä petiä. Tavoite 3:30–4:30 koskee juuri tätä 20 g / 340 g:n reseptiä; eri annos tai suhde muuttaa pedin syvyyttä ja virtausta, joten se tarvitsee oman tuloksensa suoran vertailun sijaan.",
+      "practical_tip": "Jauha tälle 20 g / 340 g:n reseptille ensi kerralla hienommaksi, jos valuminen päättyy ennen 3:30. Jos se kestää yli 4:30, jauha karkeammaksi tai vähennä liikettä. Anna maun ratkaista viimeinen säätö.",
+      "alt_text": "Lähes tyhjäksi valunut Pulsar, venttiili pystyssä, tasainen märkä peti, viimeiset pisarat ja valmis kahvi tarjoiluastiassa.",
+      "warning": null
+    },
+    {
+      "number": 8,
+      "instruction": "Sulje venttiili, nosta mustasta pohjasta ja tarjoile.",
+      "concise_instruction": "Sulje, nosta vain pohjasta ja tarjoile.",
+      "target": "Venttiili vaakasuorassa ennen poistamista",
+      "completion_cue": "Suodatin on irti tarjoiluastiasta ja kahvi on valmis.",
+      "explanation": "Venttiilin sulkeminen estää yksittäiset tipat. Pidä tarjoiluastia vaa’alla ja nosta suodatin suoraan ylöspäin pohjasta.",
+      "practical_tip": "Aseta suodatin kuumuutta kestävälle alustalle ennen tarjoilua.",
+      "alt_text": "Kaksi kättä nostaa tyhjäksi valuneen Pulsarin vain sen mustasta pohjasta valmista kahvia sisältävän paikallaan olevan tarjoiluastian yllä.",
+      "warning": "Läpinäkyvä kammio ja neste voivat olla kuumia. Nosta koottu suodatin vain sen mustasta pohjasta."
+    }
+  ]
+}

@@ -862,10 +862,13 @@
     <string name="label_brewer_profile_automatic_batch_generic">Automatic batch brewer</string>
     <string name="label_brewer_profile_automatic_single_cup_generic">Podless single-cup brewer</string>
     <string name="label_brewer_profile_vietnamese_phin">Vietnamese phin</string>
+    <string name="label_brewer_profile_pulsar">Pulsar</string>
     <string name="label_brewer_profile_family_steep_and_release">Steep and release</string>
     <string name="label_brewer_profile_family_heated_unfiltered">Heated unfiltered</string>
     <string name="label_brewer_profile_family_automatic_batch">Automatic batch</string>
     <string name="label_brewer_profile_family_restricted_flow_gravity_concentrate">Restricted-flow gravity concentrate</string>
+    <string name="label_brewer_profile_family_valve_controlled_no_bypass">Valve-controlled no-bypass</string>
+    <string name="recipe_pulsar_gagne_20_340">Gagné steeped bloom · 20 g / 340 g</string>
     <string name="label_guidance">Guidance</string>
     <string name="action_remember_guidance_for_brewer">Remember guidance for this brewer</string>
     <string name="action_use_saved_guidance">Use saved guidance</string>

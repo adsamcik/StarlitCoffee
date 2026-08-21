@@ -58,6 +58,9 @@
     <string name="label_brewer_profile_thick_paper_carafe">Уред с кана и дебел хартиен филтър</string>
     <string name="label_brewer_profile_conical">Обикновен конусен дрипър</string>
     <string name="label_brewer_profile_family_manual_gravity">Ръчно гравитационно приготвяне</string>
+    <string name="label_brewer_profile_pulsar">Pulsar</string>
+    <string name="label_brewer_profile_family_valve_controlled_no_bypass">Управление с клапан без байпас</string>
+    <string name="recipe_pulsar_gagne_20_340">Gagné с накиснато преднамокряне · 20 g / 340 g</string>
 
     <string name="recipe_p1_v60_official_15_250">Официална рецепта на Hario · 15 g / 250 g</string>
     <string name="recipe_p1_v60_rao_20_330">Scott Rao V60 · 20 g / 330 g</string>
@@ -80,9 +83,4 @@
     <string name="recipe_p1_phin_gravity_14_118">Гравитационен phin · 14 g / 118 g</string>
     <string name="recipe_p1_phin_screw_18_120">Phin с винтова вложка · 18 g / 120 g</string>
 
-    <string name="label_guidance_preview">Предварителен превод</string>
-    <string name="msg_guidance_preview_consent">Тези указания са преведени автоматично и не са преминали специализиран преглед. При критичните за безопасността стъпки се показва и предупреждението на английски.</string>
-    <string name="action_use_preview_translation">Използване на предварителния превод</string>
-    <string name="action_keep_current_guidance">Не сега</string>
-    <string name="action_turn_off_preview_translation">Изключване на предварителния превод</string>
 </resources>

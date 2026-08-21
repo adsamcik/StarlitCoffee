@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "guide_id": "pulsar_gagne_20_340",
+  "locale": "lv",
+  "release_status": "released",
+  "stages": [
+    {
+      "number": 1,
+      "instruction": "Sagatavojiet papīra filtru, neatstājot zem tā gaisu.",
+      "concise_instruction": "Ievietojiet un izskalojiet papīru, izmantojot vārstu.",
+      "target": "Vārsts aizvērts → atvērt virs izlietnes → atkal aizvērt",
+      "completion_cue": "Papīrs līdzeni pieguļ pamatnei, un zem tā nav redzama gaisa kabata.",
+      "explanation": "Noņemiet cilindru, aizveriet vārstu un pārlejiet pamatnes rievas ar seklu karsta ūdens kārtu. Ievietojiet sausu Pulsar papīru un atveriet vārstu virs izlietnes. Notekošais ūdens piespiež papīru vietā un izspiež iesprostoto gaisu. Pirms atkārtotas salikšanas aizveriet vārstu.",
+      "practical_tip": "Ūdens kārtai jābūt seklai; tai tikai jānosedz pamatnes rievas.",
+      "alt_text": "Roka līdzeni ievieto apaļu papīra filtru melnajā Pulsar pamatnē blakus horizontālajai vārsta svirai.",
+      "warning": null
+    },
+    {
+      "number": 2,
+      "instruction": "Šai 1:17 receptei ieberiet 20 g kafijas, izlīdziniet slāni, uzlieciet vāku un atiestatiet svarus.",
+      "concise_instruction": "1:17 recepte: ieberiet 20 g, izlīdziniet, uzlieciet vāku un atiestatiet svarus.",
+      "target": "20 g kafijas · kopā 340 g ūdens · 1:17 · samērā rupjš malums",
+      "completion_cue": "Kafijas slānis ir līdzens, un ierīce ar vāku rāda 0 g.",
+      "explanation": "Piestipriniet cilindru sagatavotajai pamatnei, ieberiet kafiju un izlīdziniet to, nesaspiežot. Pirms svaru atiestatīšanas uzlieciet sadales vāku. Šajā pamācībā izmanto 20 g kafijas un 340 g ūdens: attiecība 1:17 nozīmē 17 g ūdens uz katru 1 g kafijas. Nemainot recepti, vēlāk pēc noteces laika var precīzi pielāgot malumu.",
+      "practical_tip": "Salīdzinājumam nav vajadzīga cita ierīce. Sāciet ar redzami rupjām, vienmērīgām daļiņām, nevis pulverveida malumu, un pielāgojiet iestatījumu pēc šī Pulsar galīgās noteces un garšas.",
+      "alt_text": "Malta kafija birst atvērtajā caurspīdīgajā Pulsar kamerā uz servera un svariem, bet blakus atrodas sadales vāks.",
+      "warning": null
+    },
+    {
+      "number": 3,
+      "instruction": "Atveriet vārstu, ieslēdziet taimeri un lejiet līdz 60 g — trīs reizes vairāk par 20 g devu.",
+      "concise_instruction": "Atveriet vārstu un lejiet līdz 60 g (3× kafijas deva).",
+      "target": "kopā 60 g ūdens · priekšmitrināšanas attiecība 1:3 · aptuveni 99 °C",
+      "completion_cue": "Svari rāda 60 g, un parādās pirmie kafijas pilieni.",
+      "explanation": "Lejiet caur sadales vāku ar atvērtu vārstu. Šāds atvērts sākums ļauj ienākošajam ūdenim izspiest gaisu no papīra apakšas, pirms sākas aizturētā priekšmitrināšana. Ja kafijas ir 20 g, 60 g rādījums atbilst attiecībai 1:3: 3 g ūdens uz katru 1 g kafijas. Tā ir tikai priekšmitrināšanas daļa; visa recepte beidzas pie 340 g un 1:17.",
+      "practical_tip": "Lejiet vienmērīgi centrā; vāks sadalīs ūdeni.",
+      "alt_text": "Melna tējkanna lej caur Pulsar sadales vāku, kamēr vertikālais atvērtais vārsts laiž pirmos pilienus serverī.",
+      "warning": null
+    },
+    {
+      "number": 4,
+      "instruction": "Pie pirmajiem pilieniem aizveriet vārstu un vienreiz saudzīgi iegrieziet.",
+      "concise_instruction": "Pie pirmajiem pilieniem aizveriet un vienreiz saudzīgi iegrieziet.",
+      "target": "Vārsts horizontāli · pilēšana beigusies",
+      "completion_cue": "Priekšmitrinājums ir pilnībā slapjš un paliek virs aizvērtā vārsta.",
+      "explanation": "Aizverot vārstu, turiet ierīci aiz pamatnes. Pietiek ar vienu saudzīgu iegriešanu, lai samitrinātu sausās vietas, neiespiežot smalkās daļiņas papīrā.",
+      "practical_tip": "Izvairieties no spēcīgas griešanas vai maisīšanas; pārmērīga kustība var palēnināt vai aizsprostot noteci.",
+      "alt_text": "Divas rokas stabilizē Pulsar pamatni un pārvieto caurspīdīgo sānu sviru horizontālā aizvērtā stāvoklī virs tukša servera.",
+      "warning": null
+    },
+    {
+      "number": 5,
+      "instruction": "Turiet vārstu aizvērtu līdz 1:00.",
+      "concise_instruction": "Turiet priekšmitrinājumu aizvērtu līdz 1:00.",
+      "target": "Priekšmitrināšana beidzas pie 1:00",
+      "completion_cue": "Pie 1:00 kafija ir bijusi iegremdēta ar aizvērtu vārstu.",
+      "explanation": "Aizturētā priekšmitrināšana dod kafijai laiku piesātināties, pirms atsākas perkolācija.",
+      "practical_tip": "Ļaujiet ierīcei mierīgi stāvēt; gaidīšanas laikā nav jāmaisa.",
+      "alt_text": "Nekustīgs Pulsar priekšmitrinājums ar seklu burbuļojošu maisījumu, horizontāli aizvērtu vārstu un serverī nepilošu kafiju.",
+      "warning": null
+    },
+    {
+      "number": 6,
+      "instruction": "Pie 1:00 atveriet vārstu un lejiet impulsos līdz kopā 340 g — galīgajai attiecībai 1:17.",
+      "concise_instruction": "Pie 1:00 atveriet un lejiet impulsos līdz kopā 340 g (1:17).",
+      "target": "kopā 340 g · pēc priekšmitrināšanas pievienot 280 g · turēt maisījumu aptuveni 1 cm virs kafijas slāņa",
+      "completion_cue": "Svari rāda 340 g, un maisījuma līmenis ir saglabājies zems.",
+      "explanation": "Lejiet caur vāku nelielos impulsos, kamēr kafija tek serverī. Zems un stabils līmenis ierobežo bezapvedceļa saskares laiku un neļauj pārpildīt ierīci. 340 g mērķī ietilpst iepriekšējie 60 g priekšmitrināšanas, tāpēc šajā posmā pievieno 280 g. Ja kafijas ir 20 g, kopā 340 g ūdens dod galīgo attiecību 1:17.",
+      "practical_tip": "Starp impulsiem apstājieties, kad ūdens paceļas vairāk nekā aptuveni 1 cm virs kafijas slāņa.",
+      "alt_text": "Melna tējkanna lej impulsos caur Pulsar vāku, vārsts ir vertikāli, maisījuma līmenis zems un pagatavotā kafija tek serverī.",
+      "warning": null
+    },
+    {
+      "number": 7,
+      "instruction": "Ļaujiet ierīcei pilnībā notecēt.",
+      "concise_instruction": "Ļaujiet pabeigties galīgajai notecei.",
+      "target": "Mērķējiet uz kopējo laiku 3:30–4:30",
+      "completion_cue": "Virs līdzenā kafijas slāņa vairs nav stāvoša ūdens.",
+      "explanation": "Lēnāka plūsma beigās, ūdens stabam pazeminoties, ir normāla. Izmantojiet kopējo laiku kā praktisku maluma pārbaudi, nevis iemeslu traucēt kafijas slāni. Mērķis 3:30–4:30 attiecas tieši uz šo 20 g / 340 g recepti; cita deva vai attiecība maina slāņa dziļumu un plūsmu, tāpēc tai vajadzīgs savs rezultāts, nevis tiešs salīdzinājums.",
+      "practical_tip": "Šai 20 g / 340 g receptei nākamreiz maliet smalkāk, ja tā beidzas pirms 3:30. Ja tā ilgst vairāk par 4:30, maliet rupjāk vai mazāk kustiniet. Galīgo pielāgojumu lai nosaka garša.",
+      "alt_text": "Gandrīz notecējis Pulsar ar vertikālu vārstu, līdzenu slapju kafijas slāni, pēdējiem pilieniem un gatavu kafiju serverī.",
+      "warning": null
+    },
+    {
+      "number": 8,
+      "instruction": "Aizveriet vārstu, paceliet aiz melnās pamatnes un pasniedziet.",
+      "concise_instruction": "Aizveriet, paceliet tikai aiz pamatnes un pasniedziet.",
+      "target": "Pirms noņemšanas vārsts horizontāli",
+      "completion_cue": "Ierīce ir noņemta no servera, un kafija ir gatava.",
+      "explanation": "Aizvērts vārsts novērš atsevišķus pilienus. Atstājiet serveri uz svariem un paceliet ierīci taisni uz augšu aiz pamatnes.",
+      "practical_tip": "Pirms pasniegšanas novietojiet ierīci uz karstumizturīgas virsmas.",
+      "alt_text": "Divas rokas paceļ notecējušu Pulsar tikai aiz melnās pamatnes virs nekustīga servera ar gatavu kafiju.",
+      "warning": "Caurspīdīgā kamera un šķidrums var būt karsti. Saliktu ierīci paceliet tikai aiz tās melnās pamatnes."
+    }
+  ]
+}

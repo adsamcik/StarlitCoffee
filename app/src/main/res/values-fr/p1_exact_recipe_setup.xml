@@ -58,6 +58,9 @@
     <string name="label_brewer_profile_thick_paper_carafe">Cafetière à carafe avec filtre papier épais</string>
     <string name="label_brewer_profile_conical">Porte-filtre conique générique</string>
     <string name="label_brewer_profile_family_manual_gravity">Gravité manuelle</string>
+    <string name="label_brewer_profile_pulsar">Pulsar</string>
+    <string name="label_brewer_profile_family_valve_controlled_no_bypass">Sans dérivation, contrôlé par vanne</string>
+    <string name="recipe_pulsar_gagne_20_340">Pré-infusion immergée de Gagné · 20 g / 340 g</string>
 
     <string name="recipe_p1_v60_official_15_250">Recette officielle Hario · 15 g / 250 g</string>
     <string name="recipe_p1_v60_rao_20_330">Scott Rao V60 · 20 g / 330 g</string>
@@ -80,9 +83,4 @@
     <string name="recipe_p1_phin_gravity_14_118">Phin par gravité · 14 g / 118 g</string>
     <string name="recipe_p1_phin_screw_18_120">Phin à insert vissé · 18 g / 120 g</string>
 
-    <string name="label_guidance_preview">Traduction en préversion</string>
-    <string name="msg_guidance_preview_consent">Ces instructions ont été traduites automatiquement et n’ont pas encore fait l’objet d’une validation spécialisée. Les étapes critiques pour la sécurité affichent également l’avertissement en anglais.</string>
-    <string name="action_use_preview_translation">Utiliser la préversion</string>
-    <string name="action_keep_current_guidance">Pas maintenant</string>
-    <string name="action_turn_off_preview_translation">Désactiver la préversion</string>
 </resources>

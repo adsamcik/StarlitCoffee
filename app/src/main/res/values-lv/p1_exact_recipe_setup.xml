@@ -57,6 +57,9 @@
     <string name="label_brewer_profile_thick_paper_carafe">Kafijas pagatavošanas ierīce ar karafi un biezu papīra filtru</string>
     <string name="label_brewer_profile_conical">Universāls konisks driperis</string>
     <string name="label_brewer_profile_family_manual_gravity">Manuāla gravitācijas pagatavošana</string>
+    <string name="label_brewer_profile_pulsar">Pulsar</string>
+    <string name="label_brewer_profile_family_valve_controlled_no_bypass">Ar vārstu vadāms, bez apvedceļa</string>
+    <string name="recipe_pulsar_gagne_20_340">Gagné aizturētā priekšmitrināšana · 20 g / 340 g</string>
 
     <string name="recipe_p1_v60_official_15_250">Hario oficiālā recepte · 15 g / 250 g</string>
     <string name="recipe_p1_v60_rao_20_330">Scott Rao V60 · 20 g / 330 g</string>
@@ -79,9 +82,4 @@
     <string name="recipe_p1_phin_gravity_14_118">Gravitācijas phin · 14 g / 118 g</string>
     <string name="recipe_p1_phin_screw_18_120">Phin ar skrūvējamu ieliktni · 18 g / 120 g</string>
 
-    <string name="label_guidance_preview">Tulkojuma priekšskatījums</string>
-    <string name="msg_guidance_preview_consent">Šie norādījumi ir tulkoti automātiski un vēl nav pārbaudīti nozares speciālista. Drošībai kritiskajos soļos tiek parādīts arī brīdinājums angļu valodā.</string>
-    <string name="action_use_preview_translation">Izmantot priekšskatījumu</string>
-    <string name="action_keep_current_guidance">Ne tagad</string>
-    <string name="action_turn_off_preview_translation">Izslēgt tulkojuma priekšskatījumu</string>
 </resources>

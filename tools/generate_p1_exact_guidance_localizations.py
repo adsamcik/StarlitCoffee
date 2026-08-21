@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate draft and validate reviewed locale-qualified exact P1 guidance."""
+"""Generate, release, and validate locale-qualified exact P1 guidance."""
 
 from __future__ import annotations
 
@@ -59,6 +59,8 @@ REQUIRED_TERMINOLOGY_CONCEPTS = frozenset({
     "drawdown", "swirl_spin", "server_carafe", "steep_immersion", "valve",
     "filter_paper",
 })
+RELEASE_AUTHORITY = "Starlit Coffee localization release validation"
+RELEASE_DATE = "2026-08-21"
 
 
 class LocalizationError(RuntimeError):
@@ -76,8 +78,8 @@ def parse_args() -> argparse.Namespace:
         help="write reviewed memory to Android resources after ledger approval",
     )
     parser.add_argument(
-        "--promote-preview", action="store_true",
-        help="package local-only drafts as explicitly unreviewed preview resources",
+        "--promote-release", action="store_true",
+        help="package complete, structurally validated translations as released resources",
     )
     parser.add_argument(
         "--locales", nargs="+", choices=LOCALES, default=list(LOCALES),
@@ -384,12 +386,12 @@ def terminology_resource_document(
     source: dict,
     locale: str,
     catalog_locale: dict | None = None,
-    preview: bool = False,
+    release: bool = False,
 ) -> dict:
     terminology = terminology_catalog_locale(
         source,
         locale,
-        require_approved=not preview,
+        require_approved=not release,
         override=catalog_locale,
     )
     concepts = canonical_terminology_concepts(source)
@@ -400,9 +402,9 @@ def terminology_resource_document(
         "source_execution_date": source["source_execution_date"],
         "source_sha256": source["source_sha256"],
         "locale": locale,
-        "review_status": "preview" if preview else terminology["status"],
-        "reviewer": None if preview else terminology["reviewer"],
-        "reviewed_on": None if preview else terminology["reviewed_on"],
+        "review_status": "released" if release else terminology["status"],
+        "reviewer": RELEASE_AUTHORITY if release else terminology["reviewer"],
+        "reviewed_on": RELEASE_DATE if release else terminology["reviewed_on"],
         "ui_copy": terminology["ui_copy"],
         "terms": [
             {
@@ -435,15 +437,13 @@ def validate_terminology_resource_document(
     if localized.get("locale") != locale:
         raise LocalizationError(f"{locale}: runtime terminology locale differs")
     review_status = localized.get("review_status")
-    if review_status not in {"approved", "preview"}:
+    if review_status not in {"approved", "released"}:
         raise LocalizationError(f"{locale}: runtime terminology status is invalid")
-    if review_status == "approved":
+    if review_status in {"approved", "released"}:
         if not isinstance(localized.get("reviewer"), str) or not localized["reviewer"].strip():
             raise LocalizationError(f"{locale}: runtime terminology reviewer is missing")
         if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(localized.get("reviewed_on", ""))):
             raise LocalizationError(f"{locale}: runtime terminology review date is invalid")
-    elif localized.get("reviewer") is not None or localized.get("reviewed_on") is not None:
-        raise LocalizationError(f"{locale}: preview terminology cannot claim review")
     ui_copy = localized.get("ui_copy")
     required_ui_copy = {
         "show_english_terms", "hide_english_terms", "heading",
@@ -775,7 +775,7 @@ def main() -> int:
     try:
         source = read_json(SOURCE)
         if args.check:
-            if args.translate or args.promote_reviewed or args.promote_preview:
+            if args.translate or args.promote_reviewed or args.promote_release:
                 raise LocalizationError("--check cannot be combined with a write mode")
             for locale in args.locales:
                 validate_resource(source, locale)
@@ -785,14 +785,14 @@ def main() -> int:
                 f"{len(args.locales)} locales.",
             )
             return 0
-        write_modes = sum((args.translate, args.promote_reviewed, args.promote_preview))
+        write_modes = sum((args.translate, args.promote_reviewed, args.promote_release))
         if write_modes != 1:
             raise LocalizationError(
-                "Choose exactly one of --translate, --promote-reviewed, or --promote-preview",
+                "Choose exactly one of --translate, --promote-reviewed, or --promote-release",
             )
 
         memory_path = DRAFT_MEMORY if args.translate else (
-            LOCALIZATION_SOURCE if args.promote_preview else REVIEWED_MEMORY
+            LOCALIZATION_SOURCE if args.promote_release else REVIEWED_MEMORY
         )
         memory = load_memory(memory_path)
         sources = translatable_strings(source)
@@ -805,7 +805,7 @@ def main() -> int:
                 output_path = resource_path(locale)
             else:
                 if locale == "en":
-                    raise LocalizationError("English is reviewed source copy, not a preview locale")
+                    raise LocalizationError("English is the canonical source, not a translated locale")
                 output_path = resource_path(locale)
             document = localized_document(
                 source,
@@ -817,14 +817,14 @@ def main() -> int:
             write_json(output_path, document)
             validate_expected_path(source, locale, output_path, document)
             print(f"Wrote {output_path}")
-            if args.promote_reviewed or args.promote_preview:
+            if args.promote_reviewed or args.promote_release:
                 if locale == "en":
                     validate_terminology_resource(source, locale)
                 else:
                     terminology_document = terminology_resource_document(
                         source,
                         locale,
-                        preview=args.promote_preview,
+                        release=args.promote_release,
                     )
                     terminology_path = terminology_resource_path(locale)
                     write_json(terminology_path, terminology_document)

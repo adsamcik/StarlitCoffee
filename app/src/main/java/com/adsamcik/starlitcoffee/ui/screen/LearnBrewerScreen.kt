@@ -66,7 +66,6 @@ fun LearnBrewerScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
     instructionAssets: InstructionAssetCatalog? = null,
-    isGuidancePreview: Boolean = false,
 ) {
     val steps = resolution.content
     var currentStepIndex by rememberSaveable(steps.firstOrNull()?.id?.value) {
@@ -131,12 +130,6 @@ fun LearnBrewerScreen(
                 contentPadding = PaddingValues(horizontal = 20.dp, vertical = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                if (isGuidancePreview) {
-                    item(key = "guidance_preview_notice") {
-                        GuidancePreviewNotice()
-                    }
-                }
-
                 if (
                     resolution.availability !is LearnGuidanceCatalogAvailability.Available ||
                     currentStep == null

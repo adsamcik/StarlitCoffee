@@ -14,12 +14,11 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanNode
  *
  * The packaged research manifest is canonical English source copy, not an
  * Android localization catalogue. Production therefore remains empty until a
- * recipe has reviewed copy for every locale declared by the app.
+ * recipe has complete, released copy for every locale declared by the app.
  */
 data class P1ExactRecipeLocalizationCoverage(
     val supportedLocaleTags: Set<String>,
     val coveredLocaleTagsByRecipe: Map<BuiltInRecipeId, Set<String>>,
-    val previewLocaleTagsByRecipe: Map<BuiltInRecipeId, Set<String>> = emptyMap(),
 ) {
     init {
         require(supportedLocaleTags == supportedAppLocaleTags) {
@@ -30,14 +29,13 @@ data class P1ExactRecipeLocalizationCoverage(
             "Supported locales must use normalized language tags"
         }
         require(
-            (coveredLocaleTagsByRecipe.values + previewLocaleTagsByRecipe.values)
-                .flatten()
+            coveredLocaleTagsByRecipe.values.flatten()
                 .all(LOCALE_TAG_PATTERN::matches),
         ) {
             "Exact-guidance locale coverage must use normalized language tags"
         }
         require(
-            (coveredLocaleTagsByRecipe.values + previewLocaleTagsByRecipe.values)
+            coveredLocaleTagsByRecipe.values
                 .all { covered -> covered.all(supportedLocaleTags::contains) },
         ) {
             "Exact-guidance locale coverage cannot name an unsupported locale"
@@ -47,55 +45,19 @@ data class P1ExactRecipeLocalizationCoverage(
     fun isComplete(
         recipeId: BuiltInRecipeId,
         localeTag: String,
-        allowPreview: Boolean = false,
-    ): Boolean = localeTag in supportedLocaleTags && (
-        coveredLocaleTagsByRecipe[recipeId]?.contains(localeTag) == true ||
-            allowPreview && previewLocaleTagsByRecipe[recipeId]?.contains(localeTag) == true
-        )
-
-    fun isPreview(recipeId: BuiltInRecipeId, localeTag: String): Boolean =
-        previewLocaleTagsByRecipe[recipeId]?.contains(localeTag) == true &&
-            coveredLocaleTagsByRecipe[recipeId]?.contains(localeTag) != true
+    ): Boolean = localeTag in supportedLocaleTags &&
+        coveredLocaleTagsByRecipe[recipeId]?.contains(localeTag) == true
 
     companion object {
-        val supportedAppLocaleTags: Set<String> = linkedSetOf(
-            "en",
-            "bg",
-            "cs",
-            "da",
-            "de",
-            "el",
-            "es",
-            "et",
-            "fi",
-            "fr",
-            "hr",
-            "hu",
-            "it",
-            "lt",
-            "lv",
-            "nl",
-            "pl",
-            "pt",
-            "ro",
-            "sk",
-            "sl",
-            "sv",
-            "zh",
-        )
+        val supportedAppLocaleTags: Set<String> =
+            P1ExactGuidanceLocaleResolver.supportedLanguageTags
 
-        /**
-         * Canonical English has passed the exact-copy checks. Other locales
-         * remain fail-closed until their professional review is recorded.
-         */
+        /** Every packaged app locale has complete, released exact guidance. */
         val production: P1ExactRecipeLocalizationCoverage =
             P1ExactRecipeLocalizationCoverage(
                 supportedLocaleTags = supportedAppLocaleTags,
                 coveredLocaleTagsByRecipe = BuiltInP1RecipeCatalog.recipes.associate { recipe ->
-                    recipe.id to setOf("en")
-                },
-                previewLocaleTagsByRecipe = BuiltInP1RecipeCatalog.recipes.associate { recipe ->
-                    recipe.id to (supportedAppLocaleTags - "en")
+                    recipe.id to supportedAppLocaleTags
                 },
             )
     }
@@ -105,7 +67,7 @@ data class P1ExactRecipeLocalizationCoverage(
  * Recipe-level release authority for exact P1 Learn, setup, and live sessions.
  *
  * Eligibility requires one canonical recipe, its exact ordered plan, its
- * exact-recipe guidance, reviewed localization for the active locale, and
+ * exact-recipe guidance, released localization for the active locale, and
  * an approved exact illustration for every required stage. Nothing is inferred
  * from another recipe that shares the same physical brewer profile.
  */
@@ -115,13 +77,11 @@ class P1ExactRecipeReleaseGate(
     terminologyLoadResult: BuiltInP1ExactTerminologyLoadResult? = null,
     private val localizationCoverage: P1ExactRecipeLocalizationCoverage =
         P1ExactRecipeLocalizationCoverage.production,
-    private val allowPreview: Boolean = false,
     private val stagePlanFor: (BuiltInRecipeId) -> BrewStagePlan? =
         BuiltInP1ExactStagePlanCatalog::find,
 ) {
     private val loadedGuidance = guidanceLoadResult as? BuiltInP1ExactGuidanceLoadResult.Loaded
     private val guidanceCatalog = loadedGuidance?.catalog
-    private val canonicalEnglishGuidanceCatalog = loadedGuidance?.canonicalEnglishCatalog
     private val activeLocaleTag = loadedGuidance?.localeTag
     private val terminologyCatalog =
         (terminologyLoadResult as? BuiltInP1ExactTerminologyLoadResult.Loaded)?.catalog
@@ -136,20 +96,10 @@ class P1ExactRecipeReleaseGate(
             recipe.id.takeIf(::isEligible)
         }
 
-    val previewEligibleRecipeIds: Set<BuiltInRecipeId> = BuiltInP1RecipeCatalog.recipes
-        .mapNotNullTo(linkedSetOf()) { recipe ->
-            recipe.id.takeIf { id -> isEligible(id, permitPreview = true) && isPreviewResource(id) }
-        }
-
-    val requiresPreviewConsent: Boolean = !allowPreview && previewEligibleRecipeIds.isNotEmpty()
-
-    fun isPreview(recipeId: BuiltInRecipeId): Boolean =
-        isEligible(recipeId) && isPreviewResource(recipeId)
-
     fun isEligible(recipeId: BuiltInRecipeId): Boolean =
-        isEligible(recipeId, permitPreview = allowPreview)
+        isEligibleInternal(recipeId)
 
-    private fun isEligible(recipeId: BuiltInRecipeId, permitPreview: Boolean): Boolean {
+    private fun isEligibleInternal(recipeId: BuiltInRecipeId): Boolean {
         val definition = definitionsById[recipeId] ?: return false
         val recipeGuidance = guidanceCatalog?.findRecipe(recipeId) ?: return false
         val plan = stagePlanFor(recipeId) ?: return false
@@ -166,7 +116,6 @@ class P1ExactRecipeReleaseGate(
             activeLocaleTag != null && localizationCoverage.isComplete(
                 recipeId = recipeId,
                 localeTag = activeLocaleTag,
-                allowPreview = permitPreview && isPreviewResource(recipeId),
             ),
             activeLocaleTag == "en" || terminologyMatchesActiveLocale,
             plan.id.value == "builtin_recipe_${recipeId.value}",
@@ -176,11 +125,6 @@ class P1ExactRecipeReleaseGate(
             stagesMatch,
         ).all { requirement -> requirement }
     }
-
-    private fun isPreviewResource(recipeId: BuiltInRecipeId): Boolean =
-        activeLocaleTag != null &&
-            terminologyCatalog?.localizationStatus == P1ExactLocalizationStatus.PREVIEW &&
-            localizationCoverage.isPreview(recipeId, activeLocaleTag)
 
     private fun P1ExactRecipeGuidance.matchesDefinition(
         definition: BuiltInP1RecipeDefinition,
@@ -214,7 +158,6 @@ class P1ExactRecipeReleaseGate(
             guidanceCatalog?.forRecipe(
                 recipeId = recipeId,
                 terminologyCatalog = terminologyCatalog,
-                englishSafetyCatalog = canonicalEnglishGuidanceCatalog.takeIf { isPreview(recipeId) },
             )
         } else {
             null

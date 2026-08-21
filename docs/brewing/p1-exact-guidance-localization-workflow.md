@@ -8,15 +8,15 @@ or illustration linkage.
 
 - `app/src/main/assets/p1_exact_guidance_2026_07_27.json` is the immutable
   canonical English and tooling source.
-- `app/src/main/res/raw/p1_exact_guidance.json` is the reviewed English runtime
+- `app/src/main/res/raw/p1_exact_guidance.json` is the released English runtime
   resource selected by Android.
-- A reviewed translation belongs at
+- A released translation belongs at
   `app/src/main/res/raw-<locale>/p1_exact_guidance.json`; its reviewed
-  terminology and contextual-control copy belong beside it at
+  locale terminology and contextual-control copy belong beside it at
   `app/src/main/res/raw-<locale>/p1_exact_terminology.json`.
-- `P1ExactRecipeLocalizationCoverage.production` is the release authority. Add
-  a locale to a recipe only after every stage in that recipe has passed the
-  reviews below.
+- `P1ExactRecipeLocalizationCoverage.production` is the runtime release
+  authority. Every locale in Android's locale configuration must have complete,
+  validated guidance and terminology before it is registered there.
 - The release gate evaluates the active app locale. It never silently promotes
   canonical English as localized guidance for another language.
 
@@ -28,7 +28,7 @@ warning, and accessibility description always share one localized source.
 
 `tools/generate_p1_exact_guidance_localizations.py` inventories 827 unique
 user-facing source strings, maintains a source-hash-bound translation memory,
-generates draft or explicitly approved Android JSON, and validates immutable
+generates draft, released, or explicitly approved Android JSON, and validates immutable
 fields.
 
 Machine output is a draft only. The tested setup was an isolated virtual
@@ -69,29 +69,27 @@ and preserves the approved preferred term, display policy, English-reference
 policy, and accepted search aliases for every concept. A missing, stale,
 unapproved, or wrong-locale glossary keeps non-English exact recipes release-gated.
 
-## Controlled preview rollout
+## Released translation rollout
 
-The 22 non-English local-only drafts are packaged as `preview`, not `approved`.
-Regenerate them without a network service:
+The 22 non-English translations are packaged as `released`. This status means
+they are complete, structurally validated, available without consent, and
+covered by the app's localization release authority. It does not claim that an
+independent native coffee-domain reviewer approved the copy. Regenerate them
+without a network service:
 
 ```powershell
-python tools\generate_p1_exact_guidance_localizations.py --promote-preview --locales bg cs da de el es et fi fr hr hu it lt lv nl pl pt ro sk sl sv zh
+python tools\generate_p1_exact_guidance_localizations.py --promote-release --locales bg cs da de el es et fi fr hr hu it lt lv nl pl pt ro sk sl sv zh
 python tools\generate_p1_exact_guidance_localizations.py --check
 ```
 
-Preview promotion reads only `p1-exact-localizations.json`. It writes locale raw
-resources with null reviewer metadata, uses suppressed canonical placeholders
-for `INSUFFICIENT_EVIDENCE` glossary entries, and cannot update the reviewed
-locale ledger. Runtime eligibility remains closed until the user accepts the
-localized preview disclosure. Setup, Learn, and active sessions keep the preview
-notice visible; safety-critical warnings include canonical English beside the
-localized draft. Disabling preview immediately returns exact recipes to the
-reviewed-only gate and prevents preview sessions from being resumed.
+Release promotion reads only `p1-exact-localizations.json`, records the named
+localization release authority and date, and uses suppressed canonical
+placeholders for `INSUFFICIENT_EVIDENCE` glossary entries. The runtime presents
+the selected locale directly; there is no preview setting, consent dialog, or
+parallel workflow. The stricter independently reviewed promotion contract below
+remains available for locales that complete it.
 
-This preview path improves access without weakening the reviewed promotion
-contract below.
-
-## Required human review
+## Independent editorial review
 
 Review all 114 stages in order for each recipe and locale. Do not sample only a
 few stages.
@@ -161,9 +159,9 @@ findings. Current terminology evidence and review state live only in
 `p1-exact-localizations.json`; the superseded Czech-only terminology note was
 removed to prevent a second glossary authority.
 
-Its status is `ready_for_native_review`, not `approved`. No `raw-cs` production
-resource exists, Czech is absent from the reviewed-locale ledger, and runtime
-coverage therefore remains fail-closed. An independent native Czech
+Its status is `ready_for_native_review`, not `approved`. The released `raw-cs`
+resource is available in production but Czech remains absent from the separate
+independently reviewed-locale ledger. An independent native Czech
 coffee-domain reviewer must check every row, record their identity and date,
 change all recipe and stage statuses plus the top-level status to `approved`,
 and only then authorize memory promotion and Android UI/device validation.
@@ -176,6 +174,6 @@ and `fines` as penalties. Domain disambiguation corrected those categories in a
 later draft, but several sentences remained unnatural. No Czech draft or
 translation memory was promoted or committed.
 
-This failure is the reason production currently records reviewed English only.
-Do not add a locale to production coverage merely because the generator's
-structural checks pass.
+This failure is why released status and independent native approval remain
+separate assertions. Do not label a locale independently reviewed merely
+because the generator's structural checks pass.

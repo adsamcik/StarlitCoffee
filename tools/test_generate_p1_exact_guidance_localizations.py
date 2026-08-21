@@ -68,13 +68,13 @@ class TerminologyCatalogPromotionTest(unittest.TestCase):
         self.assertEqual("contextual_first_occurrence", drawdown["english_reference_policy"])
         self.assertEqual("Zobrazit anglické termíny", glossary["ui_copy"]["show_english_terms"])
 
-    def test_preview_glossary_is_explicitly_unreviewed_and_withholds_unknown_terms(self) -> None:
-        glossary = TOOL.terminology_resource_document(self.source, "bg", preview=True)
+    def test_released_glossary_has_release_authority_and_withholds_unknown_terms(self) -> None:
+        glossary = TOOL.terminology_resource_document(self.source, "bg", release=True)
         TOOL.validate_terminology_resource_document(self.source, glossary, "bg")
 
-        self.assertEqual("preview", glossary["review_status"])
-        self.assertIsNone(glossary["reviewer"])
-        self.assertIsNone(glossary["reviewed_on"])
+        self.assertEqual("released", glossary["review_status"])
+        self.assertEqual(TOOL.RELEASE_AUTHORITY, glossary["reviewer"])
+        self.assertEqual(TOOL.RELEASE_DATE, glossary["reviewed_on"])
         source_catalog = TOOL.read_json(TOOL.LOCALIZATION_SOURCE)
         unresolved_ids = {
             term["concept_id"]

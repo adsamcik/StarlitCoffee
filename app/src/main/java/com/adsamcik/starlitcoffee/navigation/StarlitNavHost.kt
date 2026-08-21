@@ -19,7 +19,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.LocalCafe
 import androidx.compose.material.icons.filled.MoreHoriz
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -32,7 +31,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -189,8 +187,6 @@ fun StarlitNavHost() {
     val userPrefs by userPreferencesRepository.userPreferences.collectAsStateWithLifecycle(
         initialValue = null,
     )
-    var previewConsentOverride by rememberSaveable { mutableStateOf(false) }
-    var showGuidancePreviewConsent by rememberSaveable { mutableStateOf(false) }
     val stableBrewingPreferences by userPreferencesRepository.brewingPreferences.collectAsStateWithLifecycle(
         initialValue = StableBrewingPreferences(emptySet(), null),
     )
@@ -206,14 +202,11 @@ fun StarlitNavHost() {
     val exactRecipeReleaseGate = remember(
         exactGuidanceLoadResult,
         exactTerminologyLoadResult,
-        userPrefs?.exactGuidancePreviewEnabled,
-        previewConsentOverride,
     ) {
         P1ExactRecipeReleaseGate(
             guidanceLoadResult = exactGuidanceLoadResult,
             instructionAssets = BuiltInInstructionAssetCatalog.catalog,
             terminologyLoadResult = exactTerminologyLoadResult,
-            allowPreview = userPrefs?.exactGuidancePreviewEnabled == true || previewConsentOverride,
         )
     }
     val recoverableSessionId = remember(recoverableSessions, exactRecipeReleaseGate) {
@@ -364,33 +357,6 @@ fun StarlitNavHost() {
         navController.navigate(Learning) {
             launchSingleTop = true
         }
-    }
-
-    if (showGuidancePreviewConsent) {
-        AlertDialog(
-            onDismissRequest = { showGuidancePreviewConsent = false },
-            title = { Text(stringResource(R.string.label_guidance_preview)) },
-            text = { Text(stringResource(R.string.msg_guidance_preview_consent)) },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        showGuidancePreviewConsent = false
-                        previewConsentOverride = true
-                        scope.launch {
-                            userPreferencesRepository.updateExactGuidancePreviewEnabled(true)
-                        }
-                        navigateToLearning()
-                    },
-                ) {
-                    Text(stringResource(R.string.action_use_preview_translation))
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showGuidancePreviewConsent = false }) {
-                    Text(stringResource(R.string.action_keep_current_guidance))
-                }
-            },
-        )
     }
 
     Scaffold(
@@ -554,16 +520,6 @@ fun StarlitNavHost() {
                     configuration = P1BrewingRouteConfiguration(
                         unavailableMessage = sessionUnavailableMessage,
                         exactRecipeReleaseGate = exactRecipeReleaseGate,
-                        onTurnOffPreview = {
-                            previewConsentOverride = false
-                            scope.launch {
-                                userPreferencesRepository.updateExactGuidancePreviewEnabled(false)
-                            }
-                            navController.navigate(CalculatorBrew) {
-                                popUpTo(CalculatorBrew) { inclusive = false }
-                                launchSingleTop = true
-                            }
-                        },
                     ),
                 )
 
@@ -777,11 +733,7 @@ fun StarlitNavHost() {
                 composable<More> {
                     MoreScreen(
                         onNavigateToLearning = {
-                            if (exactRecipeReleaseGate.requiresPreviewConsent) {
-                                showGuidancePreviewConsent = true
-                            } else {
-                                navigateToLearning()
-                            }
+                            navigateToLearning()
                         },
                         onNavigateToRecipes = { navController.navigate(SavedRecipes) },
                         onNavigateToBags = { navController.navigate(BagInventory) },
