@@ -285,11 +285,6 @@
     <string name="cd_notif_rating_4">Αξιολόγηση ως τέλειο</string>
 
     <!-- Bag analysis screen + notification -->
-    <string name="screen_analyzing_bag_title">Ανάλυση της συσκευασίας σας</string>
-    <string name="msg_analyzing_bag_subtitle">Η AI διαβάζει την ετικέτα για να συμπληρώσει τις λεπτομέρειες. Αυτό μπορεί να πάρει λίγο χρόνο.</string>
-    <string name="msg_analyzing_bag_background_hint">Μπορείτε να συνεχίσετε να χρησιμοποιείτε την εφαρμογή — θα σας ειδοποιήσουμε όταν ολοκληρωθεί.</string>
-    <string name="action_skip_ai">Παράλειψη AI</string>
-    <string name="action_run_in_background">Συνέχεια στο παρασκήνιο</string>
     <string name="notif_channel_bag_analysis">Ανάλυση συσκευασίας</string>
     <string name="notif_channel_bag_analysis_desc">Σας ενημερώνει όταν η AI ολοκληρώσει την ανάγνωση της ετικέτας συσκευασίας καφέ.</string>
     <string name="notif_scan_progress_title">Ανάγνωση ετικέτας συσκευασίας…</string>
@@ -412,14 +407,11 @@
     <string name="msg_decaf_grind_adjustment">Επιλέχθηκε ντεκαφεϊνέ. Η παρακάτω πρόταση άλεσης προσαρμόζεται σε πιο χοντρή άλεση όταν αυτό ωφελεί τη μέθοδο.</string>
     <string name="label_decaf_process_optional">Μέθοδος decaf (προαιρετικά)</string>
     <string name="msg_decaf_process_hint">Επιτρέπει στον κανόνα παρασκευής να προσαρμόζει ήπια την άλεση: οι decaf με μέθοδο νερού και CO₂ συνήθως χρειάζονται μικρότερη μετατόπιση προς χοντρότερη άλεση από εκείνους με διαλύτη.</string>
-    <string name="cd_captured_bag_photo">Φωτογραφία συσκευασίας που λήφθηκε</string>
     <string name="label_detected_details">Εντοπισμένες λεπτομέρειες</string>
     <string name="msg_tap_chip_to_edit">Πατήστε οποιαδήποτε ετικέτα για επεξεργασία</string>
     <string name="label_needs_review">Χρειάζεται έλεγχο</string>
     <string name="action_edit_all_fields">Επεξεργασία όλων των πεδίων</string>
     <string name="action_add_more_details">Προσθήκη περισσότερων λεπτομερειών</string>
-    <string name="msg_analyzing_label">Ανάλυση φωτογραφιών ετικέτας</string>
-    <string name="msg_analyzing_label_detail">Ελέγχουμε το θάμπωμα, συνδυάζουμε το κείμενο εμπρός/πίσω και προετοιμάζουμε τα πιο αξιόπιστα πεδία.</string>
     <string name="label_review_fields">Ελέγξτε αυτά τα πεδία</string>
     <string name="label_qr_website">Ιστότοπος QR</string>
     <string name="action_open_website">Άνοιγμα ιστοτόπου</string>
@@ -448,9 +440,7 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">Υπηρεσία AI (Mindlayer)</string>
-    <string name="action_connect_mindlayer">Σύνδεση Mindlayer</string>
     <string name="action_mindlayer_google_play">Λήψη του Mindlayer από το Google Play</string>
-    <string name="msg_mindlayer_connection_offer">Το Mindlayer είναι εγκατεστημένο. Θέλετε να το συνδέσετε για ιδιωτική AI στη συσκευή;</string>
     <string name="msg_mindlayer_install_recommendation">Εγκαταστήστε το Mindlayer από το Google Play για να διαβάζετε ετικέτες συσκευασιών καφέ με ιδιωτική AI στη συσκευή. Μπορείτε να το κάνετε αργότερα στις Ρυθμίσεις.</string>
     <string name="action_test_connection">Δοκιμή σύνδεσης</string>
     <string name="action_run_test_prompt">Εκτέλεση δοκιμαστικού prompt</string>
@@ -510,10 +500,6 @@
     <string name="msg_could_not_read_label">Δεν ήταν δυνατή η ανάγνωση της ετικέτας</string>
     <string name="action_retake_photo">Νέα λήψη φωτογραφίας</string>
     <string name="action_add_details_manually">Προσθήκη λεπτομερειών χειροκίνητα</string>
-    <string name="msg_llm_enrichment_succeeded">Ο εμπλουτισμός AI βελτίωσε αυτή τη σάρωση ετικέτας.</string>
-    <string name="msg_llm_enrichment_failed">Η AI δεν μπόρεσε να ολοκληρώσει την ανάγνωση αυτής της ετικέτας αυτή τη φορά — έληξε ο χρόνος ή προέκυψε προσωρινό σφάλμα (έγινε ήδη αυτόματη επανάληψη). Πατήστε επανάληψη για να δοκιμάσετε άλλη μία φορά ή συμπληρώστε απλώς τα παρακάτω πεδία.</string>
-    <string name="msg_llm_enrichment_unavailable">Ο εμπλουτισμός AI δεν είναι διαθέσιμος αυτή τη στιγμή. Μπορείτε να δοκιμάσετε ξανά ή να συνεχίσετε χειροκίνητη επεξεργασία.</string>
-    <string name="action_retry_llm_enrichment">Επανάληψη εμπλουτισμού AI</string>
 
     <!-- BrewLogDetailScreen -->
     <string name="action_share_brew">Κοινοποίηση παρασκευής</string>

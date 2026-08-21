@@ -287,11 +287,6 @@
     <string name="cd_notif_rating_4">Ocijenite kao sjajno</string>
 
     <!-- Bag analysis screen + notification -->
-    <string name="screen_analyzing_bag_title">Analiza vaše vrećice</string>
-    <string name="msg_analyzing_bag_subtitle">AI čita etiketu kako bi ispunio pojedinosti. To može potrajati trenutak.</string>
-    <string name="msg_analyzing_bag_background_hint">Možete nastaviti koristiti aplikaciju — obavijestit ćemo vas kad završi.</string>
-    <string name="action_skip_ai">Preskočite AI</string>
-    <string name="action_run_in_background">Nastavite u pozadini</string>
     <string name="notif_channel_bag_analysis">Analiza vrećice</string>
     <string name="notif_channel_bag_analysis_desc">Obavještava vas kad AI završi čitanje etikete vrećice kave.</string>
     <string name="notif_scan_progress_title">Čitanje etikete vrećice…</string>
@@ -414,14 +409,11 @@
     <string name="msg_decaf_grind_adjustment">Odabrana je kava bez kofeina. Preporuka za mljevenje u nastavku prilagođava se na grublje kada to odgovara ovoj metodi.</string>
     <string name="label_decaf_process_optional">Postupak dekofeinizacije (neobavezno)</string>
     <string name="msg_decaf_process_hint">Omogućuje pravilu pripreme da blago prilagodi mljevenje: kave bez kofeina obrađene vodom i CO₂ obično trebaju manje grubljeg mljevenja od onih obrađenih otapalima.</string>
-    <string name="cd_captured_bag_photo">Snimljena fotografija vrećice</string>
     <string name="label_detected_details">Otkrivene pojedinosti</string>
     <string name="msg_tap_chip_to_edit">Dodirnite bilo koji čip za uređivanje</string>
     <string name="label_needs_review">Treba pregled</string>
     <string name="action_edit_all_fields">Uredite sva polja</string>
     <string name="action_add_more_details">Dodajte više pojedinosti</string>
-    <string name="msg_analyzing_label">Analiza fotografija etikete</string>
-    <string name="msg_analyzing_label_detail">Provjeravamo zamućenost, spajamo tekst s prednje i stražnje strane i pripremamo najpouzdanija polja.</string>
     <string name="label_review_fields">Pregledajte ova polja</string>
     <string name="label_qr_website">QR web-stranica</string>
     <string name="action_open_website">Otvorite web-stranicu</string>
@@ -450,9 +442,7 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">AI usluga (Mindlayer)</string>
-    <string name="action_connect_mindlayer">Poveži Mindlayer</string>
     <string name="action_mindlayer_google_play">Preuzmite Mindlayer na Google Playu</string>
-    <string name="msg_mindlayer_connection_offer">Mindlayer je instaliran. Želite li ga povezati za privatni AI na uređaju?</string>
     <string name="msg_mindlayer_install_recommendation">Instalirajte Mindlayer s Google Playa za čitanje oznaka pakiranja kave uz privatni AI na uređaju. To možete učiniti kasnije u Postavkama.</string>
     <string name="action_test_connection">Testirajte vezu</string>
     <string name="action_run_test_prompt">Pokrenite testni upit</string>
@@ -512,10 +502,6 @@
     <string name="msg_could_not_read_label">Nije moguće pročitati etiketu</string>
     <string name="action_retake_photo">Ponovno snimite fotografiju</string>
     <string name="action_add_details_manually">Dodajte pojedinosti ručno</string>
-    <string name="msg_llm_enrichment_succeeded">AI obogaćivanje poboljšalo je ovo skeniranje etikete.</string>
-    <string name="msg_llm_enrichment_failed">AI ovaj put nije uspio dovršiti čitanje etikete — isteklo je vrijeme ili je došlo do privremene pogreške (već je automatski pokušao ponovno). Dodirnite ponovni pokušaj za još jedan pokušaj ili jednostavno ispunite polja u nastavku.</string>
-    <string name="msg_llm_enrichment_unavailable">AI obogaćivanje trenutačno nije dostupno. Možete pokušati ponovno ili nastaviti uređivati ručno.</string>
-    <string name="action_retry_llm_enrichment">Ponovite AI obogaćivanje</string>
 
     <!-- BrewLogDetailScreen -->
     <string name="action_share_brew">Podijelite pripremu</string>

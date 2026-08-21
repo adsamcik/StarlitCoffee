@@ -278,11 +278,6 @@
     <string name="cd_notif_rating_4">Ohodnotit jako skvělé</string>
 
     <!-- Bag analysis screen + notification -->
-    <string name="screen_analyzing_bag_title">Analýza balení</string>
-    <string name="msg_analyzing_bag_subtitle">AI čte etiketu a doplňuje údaje. Může to chvíli trvat.</string>
-    <string name="msg_analyzing_bag_background_hint">Aplikaci můžete dál používat — až bude hotovo, dáme vám vědět.</string>
-    <string name="action_skip_ai">Přeskočit AI</string>
-    <string name="action_run_in_background">Pokračovat na pozadí</string>
     <string name="notif_channel_bag_analysis">Analýza balení</string>
     <string name="notif_channel_bag_analysis_desc">Upozorní vás, když AI dočte etiketu balení kávy.</string>
     <string name="notif_scan_progress_title">Čtu etiketu balení…</string>
@@ -443,14 +438,11 @@
     <string name="msg_decaf_grind_adjustment">Zvolena bezkofeinová káva. Níže uvedené doporučení mletí je nastaveno hruběji, pokud je to pro tento způsob přípravy vhodné.</string>
     <string name="label_decaf_process_optional">Způsob dekofeinizace (volitelné)</string>
     <string name="msg_decaf_process_hint">Umožňuje pravidlu přípravy mírně upravit mletí: vodní procesy a CO₂ dekofeinizace obvykle nevyžadují tak hrubé mletí jako solventní procesy.</string>
-    <string name="cd_captured_bag_photo">Foto balení</string>
 <string name="label_detected_details">Zjištěné údaje</string>
     <string name="msg_tap_chip_to_edit">Klepnutím na štítek ho upravíte</string>
     <string name="label_needs_review">Vyžaduje kontrolu</string>
 <string name="action_edit_all_fields">Upravit všechna pole</string>
     <string name="action_add_more_details">Přidat další podrobnosti</string>
-    <string name="msg_analyzing_label">Analyzujeme fotografie štítku</string>
-    <string name="msg_analyzing_label_detail">Kontrolujeme rozmazání, slučujeme text přední a zadní strany a připravujeme nejspolehlivější pole.</string>
     <string name="label_review_fields">Zkontrolujte tato pole</string>
     <string name="label_qr_website">QR web</string>
     <string name="action_open_website">Otevřít web</string>
@@ -479,9 +471,7 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">Služba AI (Mindlayer)</string>
-    <string name="action_connect_mindlayer">Připojit Mindlayer</string>
     <string name="action_mindlayer_google_play">Získat Mindlayer z Google Play</string>
-    <string name="msg_mindlayer_connection_offer">Mindlayer je nainstalovaný. Chcete jej připojit pro soukromou AI přímo v zařízení?</string>
     <string name="msg_mindlayer_install_recommendation">Nainstalujte Mindlayer z Google Play pro čtení etiket balení kávy pomocí soukromé AI přímo v zařízení. Můžete to udělat později v Nastavení.</string>
     <string name="action_test_connection">Otestovat připojení</string>
     <string name="action_run_test_prompt">Spustit testovací prompt</string>
@@ -541,10 +531,6 @@
     <string name="msg_could_not_read_label">Štítek se nepodařilo přečíst</string>
     <string name="action_retake_photo">Vyfotit znovu</string>
     <string name="action_add_details_manually">Zadat ručně</string>
-    <string name="msg_llm_enrichment_succeeded">AI obohacení zlepšilo sken štítku.</string>
-    <string name="msg_llm_enrichment_failed">Umělá inteligence tentokrát nedokázala štítek dočíst — vypršel časový limit nebo nastala dočasná chyba (automatické opakování nepomohlo). Klepnutím na Zkusit znovu to zopakujte, nebo pole níže vyplňte ručně.</string>
-    <string name="msg_llm_enrichment_unavailable">AI obohacení teď není k dispozici. Můžete to zkusit znovu nebo pokračovat ručně.</string>
-    <string name="action_retry_llm_enrichment">Zkusit AI obohacení znovu</string>
 
     <!-- BrewLogDetailScreen -->
     <string name="action_share_brew">Sdílet várku</string>

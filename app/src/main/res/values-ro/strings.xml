@@ -287,11 +287,6 @@
     <string name="cd_notif_rating_4">Evaluați ca excelentă</string>
 
     <!-- Bag analysis screen + notification -->
-    <string name="screen_analyzing_bag_title">Analizăm pachetul dumneavoastră</string>
-    <string name="msg_analyzing_bag_subtitle">AI citește eticheta pentru a completa detaliile. Poate dura câteva momente.</string>
-    <string name="msg_analyzing_bag_background_hint">Puteți continua să folosiți aplicația — vă vom notifica atunci când este gata.</string>
-    <string name="action_skip_ai">Omiteți AI</string>
-    <string name="action_run_in_background">Continuați în fundal</string>
     <string name="notif_channel_bag_analysis">Analiză pachet</string>
     <string name="notif_channel_bag_analysis_desc">Vă anunță când AI a terminat de citit eticheta unui pachet de cafea.</string>
     <string name="notif_scan_progress_title">Se citește eticheta pachetului…</string>
@@ -414,14 +409,11 @@
     <string name="msg_decaf_grind_adjustment">Este selectată cafeaua fără cofeină. Recomandarea de măcinare de mai jos este ajustată mai grosier când această metodă beneficiază de acest lucru.</string>
     <string name="label_decaf_process_optional">Proces decaf (opțional)</string>
     <string name="msg_decaf_process_hint">Permite regulii de preparare să ajusteze ușor măcinarea: decafurile procesate cu apă și CO₂ au de obicei nevoie de mai puțină grosierire decât cele procesate cu solvenți.</string>
-    <string name="cd_captured_bag_photo">Fotografie capturată a pachetului</string>
     <string name="label_detected_details">Detalii detectate</string>
     <string name="msg_tap_chip_to_edit">Atingeți orice etichetă pentru editare</string>
     <string name="label_needs_review">Necesită revizuire</string>
     <string name="action_edit_all_fields">Editați toate câmpurile</string>
     <string name="action_add_more_details">Adăugați mai multe detalii</string>
-    <string name="msg_analyzing_label">Se analizează fotografiile etichetei</string>
-    <string name="msg_analyzing_label_detail">Verificăm neclaritatea, combinăm textul de pe față/spate și pregătim cele mai fiabile câmpuri.</string>
     <string name="label_review_fields">Revizuiți aceste câmpuri</string>
     <string name="label_qr_website">Site QR</string>
     <string name="action_open_website">Deschideți site-ul</string>
@@ -450,9 +442,7 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">Serviciu AI (Mindlayer)</string>
-    <string name="action_connect_mindlayer">Conectați Mindlayer</string>
     <string name="action_mindlayer_google_play">Obțineți Mindlayer de pe Google Play</string>
-    <string name="msg_mindlayer_connection_offer">Mindlayer este instalat. Doriți să îl conectați pentru IA privată pe dispozitiv?</string>
     <string name="msg_mindlayer_install_recommendation">Instalați Mindlayer de pe Google Play pentru a citi etichetele pachetelor de cafea cu IA privată pe dispozitiv. Puteți face acest lucru mai târziu în Setări.</string>
     <string name="action_test_connection">Testați conexiunea</string>
     <string name="action_run_test_prompt">Rulați promptul de test</string>
@@ -512,10 +502,6 @@
     <string name="msg_could_not_read_label">Eticheta nu a putut fi citită</string>
     <string name="action_retake_photo">Refaceți fotografia</string>
     <string name="action_add_details_manually">Adăugați detaliile manual</string>
-    <string name="msg_llm_enrichment_succeeded">Îmbogățirea AI a îmbunătățit această scanare a etichetei.</string>
-    <string name="msg_llm_enrichment_failed">AI nu a putut termina citirea acestei etichete de data aceasta — timpul a expirat sau a apărut o eroare temporară (a reîncercat deja automat). Atingeți reîncercare pentru a încerca încă o dată sau completați câmpurile de mai jos.</string>
-    <string name="msg_llm_enrichment_unavailable">Îmbogățirea AI nu este disponibilă acum. Puteți reîncerca sau continua editarea manuală.</string>
-    <string name="action_retry_llm_enrichment">Reîncercați îmbogățirea AI</string>
 
     <!-- BrewLogDetailScreen -->
     <string name="action_share_brew">Distribuiți prepararea</string>

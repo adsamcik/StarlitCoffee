@@ -12,7 +12,4 @@
     <string name="msg_could_not_undo_coffee_use">Nije moguće poništiti jer se ova vrećica promijenila</string>
     <string name="label_coffee_use_history">Potrošnja kave</string>
     <string name="format_grams_used">Potrošeno %1$.0f g</string>
-    <string name="msg_llm_model_setup_required">Mindlayer treba svoj model na uređaju prije nego što AI može pročitati ovu etiketu. Otvorite postavljanje pa pokušajte ponovno; već pronađena polja možete sigurno urediti.</string>
-    <string name="msg_llm_enrichment_timed_out">Skeniranje je doseglo ograničenje od pet minuta. Možete upotrijebiti već pronađena polja, urediti ih ili pokušati ponovno.</string>
-    <string name="action_set_up_ai">Otvori postavljanje modela</string>
 </resources>

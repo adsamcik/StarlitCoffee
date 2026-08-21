@@ -3,7 +3,7 @@ package com.adsamcik.starlitcoffee.ui.component
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.util.WeightParser
 
-internal data class BagFormSnapshot(
+data class BagFormSnapshot(
     val name: String = "",
     val roaster: String = "",
     val originCountry: String = "",

@@ -12,7 +12,4 @@
     <string name="msg_could_not_undo_coffee_use">Impossible d’annuler car ce paquet a été modifié</string>
     <string name="label_coffee_use_history">Utilisation du café</string>
     <string name="format_grams_used">%1$.0f g utilisés</string>
-    <string name="msg_llm_model_setup_required">Mindlayer a besoin de son modèle sur l’appareil avant que l’IA puisse lire cette étiquette. Ouvrez la configuration, puis réessayez ; les champs déjà trouvés peuvent être modifiés sans risque.</string>
-    <string name="msg_llm_enrichment_timed_out">L’analyse a atteint la limite de cinq minutes. Vous pouvez utiliser les champs déjà trouvés, les modifier ou réessayer.</string>
-    <string name="action_set_up_ai">Ouvrir la configuration du modèle</string>
 </resources>

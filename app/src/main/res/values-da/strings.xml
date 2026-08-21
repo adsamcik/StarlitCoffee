@@ -285,11 +285,6 @@
     <string name="cd_notif_rating_4">Bedøm som fantastisk</string>
 
     <!-- Bag analysis screen + notification -->
-    <string name="screen_analyzing_bag_title">Analyserer din pose</string>
-    <string name="msg_analyzing_bag_subtitle">AI læser etiketten for at udfylde detaljerne. Det kan tage et øjeblik.</string>
-    <string name="msg_analyzing_bag_background_hint">Du kan fortsætte med at bruge appen — vi giver besked, når den er færdig.</string>
-    <string name="action_skip_ai">Spring AI over</string>
-    <string name="action_run_in_background">Fortsæt i baggrunden</string>
     <string name="notif_channel_bag_analysis">Poseanalyse</string>
     <string name="notif_channel_bag_analysis_desc">Fortæller dig, når AI er færdig med at læse en kaffeposes etikette.</string>
     <string name="notif_scan_progress_title">Læser posens etiket…</string>
@@ -411,14 +406,11 @@
     <string name="msg_decaf_grind_adjustment">Koffeinfri er valgt. Maleanbefalingen nedenfor justeres grovere, når denne bryggemetode har gavn af det.</string>
     <string name="label_decaf_process_optional">Koffeinfri proces (valgfrit)</string>
     <string name="msg_decaf_process_hint">Lader brygreglen justere malingen let: vandproces- og CO₂-decaf kræver typisk mindre grov maling end solventprocesser.</string>
-    <string name="cd_captured_bag_photo">Foto af kaffepose</string>
     <string name="label_detected_details">Registrerede detaljer</string>
     <string name="msg_tap_chip_to_edit">Tryk på en chip for at redigere</string>
     <string name="label_needs_review">Kræver gennemgang</string>
     <string name="action_edit_all_fields">Rediger alle felter</string>
     <string name="action_add_more_details">Tilføj flere detaljer</string>
-    <string name="msg_analyzing_label">Analyserer labelfotos</string>
-    <string name="msg_analyzing_label_detail">Vi tjekker slør, samler tekst fra for- og bagside og forbereder de mest pålidelige felter.</string>
     <string name="label_review_fields">Gennemgå disse felter</string>
     <string name="label_qr_website">QR-websted</string>
     <string name="action_open_website">Åbn websted</string>
@@ -447,9 +439,7 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">AI-tjeneste (Mindlayer)</string>
-    <string name="action_connect_mindlayer">Forbind Mindlayer</string>
     <string name="action_mindlayer_google_play">Hent Mindlayer på Google Play</string>
-    <string name="msg_mindlayer_connection_offer">Mindlayer er installeret. Vil du forbinde den til privat AI på enheden?</string>
     <string name="msg_mindlayer_install_recommendation">Installer Mindlayer fra Google Play for at læse kaffeposeetiketter med privat AI på enheden. Du kan gøre det senere i Indstillinger.</string>
     <string name="action_test_connection">Test forbindelse</string>
     <string name="action_run_test_prompt">Kør testprompt</string>
@@ -509,10 +499,6 @@
     <string name="msg_could_not_read_label">Kunne ikke læse labelen</string>
     <string name="action_retake_photo">Tag foto igen</string>
     <string name="action_add_details_manually">Tilføj detaljer manuelt</string>
-    <string name="msg_llm_enrichment_succeeded">AI-berigelse forbedrede denne labelscanning.</string>
-    <string name="msg_llm_enrichment_failed">AI\'en kunne ikke læse denne etiket færdig denne gang — den fik timeout eller en midlertidig fejl (den prøvede automatisk igen). Tryk på Prøv igen, eller udfyld blot felterne nedenfor.</string>
-    <string name="msg_llm_enrichment_unavailable">AI-berigelse er ikke tilgængelig lige nu. Du kan prøve igen eller fortsætte med manuel redigering.</string>
-    <string name="action_retry_llm_enrichment">Prøv AI-berigelse igen</string>
 
     <!-- BrewLogDetailScreen -->
     <string name="action_share_brew">Del bryg</string>

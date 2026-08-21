@@ -287,11 +287,6 @@
     <string name="cd_notif_rating_4">Avaliar como incrível</string>
 
     <!-- Bag analysis screen + notification -->
-    <string name="screen_analyzing_bag_title">A analisar a sua embalagem</string>
-    <string name="msg_analyzing_bag_subtitle">A IA está a ler o rótulo para preencher os detalhes. Isto pode demorar um momento.</string>
-    <string name="msg_analyzing_bag_background_hint">Pode continuar a usar a app — avisamos quando terminar.</string>
-    <string name="action_skip_ai">Ignorar IA</string>
-    <string name="action_run_in_background">Continuar em segundo plano</string>
     <string name="notif_channel_bag_analysis">Análise da embalagem</string>
     <string name="notif_channel_bag_analysis_desc">Avisa quando a IA terminar de ler o rótulo de uma embalagem de café.</string>
     <string name="notif_scan_progress_title">A ler o rótulo da embalagem…</string>
@@ -414,14 +409,11 @@
     <string name="msg_decaf_grind_adjustment">Foi selecionado café descafeinado. A recomendação de moagem abaixo é ajustada para mais grossa quando este método beneficia disso.</string>
     <string name="label_decaf_process_optional">Processo de descafeinação (opcional)</string>
     <string name="msg_decaf_process_hint">Permite que a regra de preparação ajuste suavemente a moagem: descafeinados por água e CO₂ costumam precisar de menos ajuste para mais grosso do que os de solvente.</string>
-    <string name="cd_captured_bag_photo">Foto da embalagem captada</string>
 <string name="label_detected_details">Detalhes detetados</string>
     <string name="msg_tap_chip_to_edit">Toque em qualquer chip para editar</string>
     <string name="label_needs_review">Precisa de revisão</string>
 <string name="action_edit_all_fields">Editar todos os campos</string>
     <string name="action_add_more_details">Adicionar mais detalhes</string>
-    <string name="msg_analyzing_label">A analisar fotos do rótulo</string>
-    <string name="msg_analyzing_label_detail">Estamos a verificar desfocagem, a juntar texto da frente e do verso e a preparar os campos mais fiáveis.</string>
     <string name="label_review_fields">Rever estes campos</string>
     <string name="label_qr_website">Site do QR</string>
     <string name="action_open_website">Abrir site</string>
@@ -450,9 +442,7 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">Serviço de IA (Mindlayer)</string>
-    <string name="action_connect_mindlayer">Ligar Mindlayer</string>
     <string name="action_mindlayer_google_play">Obter o Mindlayer no Google Play</string>
-    <string name="msg_mindlayer_connection_offer">O Mindlayer está instalado. Pretende ligá-lo para IA privada no dispositivo?</string>
     <string name="msg_mindlayer_install_recommendation">Instale o Mindlayer a partir do Google Play para ler rótulos de embalagens de café com IA privada no dispositivo. Pode fazê-lo mais tarde nas Definições.</string>
     <string name="action_test_connection">Testar ligação</string>
     <string name="action_run_test_prompt">Executar prompt de teste</string>
@@ -512,10 +502,6 @@
     <string name="msg_could_not_read_label">Não foi possível ler o rótulo</string>
     <string name="action_retake_photo">Repetir foto</string>
     <string name="action_add_details_manually">Adicionar detalhes manualmente</string>
-    <string name="msg_llm_enrichment_succeeded">O enriquecimento por IA melhorou esta leitura do rótulo.</string>
-    <string name="msg_llm_enrichment_failed">A IA não conseguiu terminar de ler este rótulo desta vez — esgotou o tempo ou encontrou um erro temporário (já tentou novamente de forma automática). Toque em tentar novamente para tentar mais uma vez, ou preencha os campos abaixo.</string>
-    <string name="msg_llm_enrichment_unavailable">O enriquecimento por IA não está disponível neste momento. Pode tentar novamente ou continuar a editar manualmente.</string>
-    <string name="action_retry_llm_enrichment">Tentar enriquecimento por IA novamente</string>
 
     <!-- BrewLogDetailScreen -->
     <string name="action_share_brew">Partilhar preparação</string>

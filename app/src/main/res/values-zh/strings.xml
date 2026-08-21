@@ -282,11 +282,6 @@
     <string name="cd_notif_rating_4">评为很棒</string>
 
     <!-- Bag analysis screen + notification -->
-    <string name="screen_analyzing_bag_title">正在分析咖啡袋</string>
-    <string name="msg_analyzing_bag_subtitle">AI 正在读取标签以填写详情。这可能需要一些时间。</string>
-    <string name="msg_analyzing_bag_background_hint">你可以继续使用应用——完成后我们会通知你。</string>
-    <string name="action_skip_ai">跳过 AI</string>
-    <string name="action_run_in_background">在后台继续</string>
     <string name="notif_channel_bag_analysis">咖啡袋分析</string>
     <string name="notif_channel_bag_analysis_desc">当 AI 读取完咖啡袋标签时通知你。</string>
     <string name="notif_scan_progress_title">正在读取咖啡袋标签…</string>
@@ -408,14 +403,11 @@
     <string name="msg_decaf_grind_adjustment">已选择低因咖啡。若此冲煮方式适合较粗研磨，下方的研磨建议会相应调粗。</string>
     <string name="label_decaf_process_optional">脱咖啡因处理法（可选）</string>
     <string name="msg_decaf_process_hint">让冲煮规则对研磨做轻微偏置：水处理和CO₂低因通常比溶剂处理低因需要更少调粗。</string>
-    <string name="cd_captured_bag_photo">已拍摄的咖啡袋照片</string>
 <string name="label_detected_details">识别到的详情</string>
     <string name="msg_tap_chip_to_edit">点按任意标签进行编辑</string>
     <string name="label_needs_review">需要检查</string>
 <string name="action_edit_all_fields">编辑所有字段</string>
     <string name="action_add_more_details">添加更多详情</string>
-    <string name="msg_analyzing_label">正在分析标签照片</string>
-    <string name="msg_analyzing_label_detail">我们正在检查模糊度，合并正反面文字，并准备最可靠的字段。</string>
     <string name="label_review_fields">检查这些字段</string>
     <string name="label_qr_website">二维码网站</string>
     <string name="action_open_website">打开网站</string>
@@ -444,9 +436,7 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">AI服务（Mindlayer）</string>
-    <string name="action_connect_mindlayer">连接 Mindlayer</string>
     <string name="action_mindlayer_google_play">从 Google Play 获取 Mindlayer</string>
-    <string name="msg_mindlayer_connection_offer">Mindlayer 已安装。是否要连接它以使用设备端的私密 AI？</string>
     <string name="msg_mindlayer_install_recommendation">从 Google Play 安装 Mindlayer，即可使用设备端私密 AI 读取咖啡袋标签。您也可以稍后在“设置”中安装。</string>
     <string name="action_test_connection">测试连接</string>
     <string name="action_run_test_prompt">运行测试提示词</string>
@@ -506,10 +496,6 @@
     <string name="msg_could_not_read_label">无法读取标签</string>
     <string name="action_retake_photo">重新拍照</string>
     <string name="action_add_details_manually">手动添加详情</string>
-    <string name="msg_llm_enrichment_succeeded">AI增强改进了这次标签扫描。</string>
-    <string name="msg_llm_enrichment_failed">AI 这次没能读完这张标签——超时或出现临时错误（已自动重试但仍未成功）。点按重试再试一次，或直接在下方填写各项。</string>
-    <string name="msg_llm_enrichment_unavailable">AI增强暂时不可用。你可以重试，或继续手动编辑。</string>
-    <string name="action_retry_llm_enrichment">重试AI增强</string>
 
     <!-- BrewLogDetailScreen -->
     <string name="action_share_brew">分享冲煮</string>

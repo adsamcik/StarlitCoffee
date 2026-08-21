@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_settings_section_scanning">Scannen</string>
+    <string name="label_enhanced_label_recognition">Verbeterde labelherkenning</string>
+    <string name="msg_enhanced_label_recognition">Kijk voor meer details in de zak met koffiebonen op dit apparaat, indien beschikbaar. Basistekstlezen op het apparaat vanaf het label blijft beschikbaar.</string>
+    <string name="label_label_recognition_privacy">Labelherkenning en privacy</string>
+    <string name="msg_label_recognition_privacy">Ontdek wat er op uw apparaat blijft en wanneer netwerkzoekopdrachten worden gebruikt.</string>
+    <string name="msg_could_not_open_privacy_policy">Kan het privacybeleid niet openen.</string>
+    <string name="cd_front_label_photo">Etiketfoto voorkant</string>
+    <string name="cd_back_label_photo">Etiketfoto achterkant</string>
+    <string name="format_cd_additional_label_photo">Extra labelfoto %1$d</string>
+    <string name="label_label_evidence">Informatiebronnen van het label</string>
+    <string name="evidence_from_label">Van het etiket</string>
+    <string name="evidence_confirmed_on_label">Bevestigd op het etiket</string>
+    <string name="evidence_from_qr_website">Van de QR-website</string>
+    <string name="evidence_from_label_code">Van de labelcode</string>
+    <string name="evidence_from_saved_bag">Van eerder opgeslagen koffiegegevens</string>
+    <string name="evidence_from_barcode_lookup">Van het opzoeken van streepjescodes</string>
+    <string name="evidence_suggested_from_label_context">Voorgesteld vanuit de labelcontext</string>
+    <string name="evidence_front_photo">Voorste foto</string>
+    <string name="evidence_back_photo">Achterste foto</string>
+    <string name="msg_checking_label">Het etiket controleren…</string>
+    <string name="msg_checking_more_details">Controleren voor meer details…</string>
+    <plurals name="format_label_details_need_review">
+        <item quantity="one">Details die moeten worden beoordeeld: %1$d</item>
+        <item quantity="other">Details die moeten worden beoordeeld: %1$d</item>
+    </plurals>
+    <string name="msg_could_not_read_more_details">Kon niet meer details lezen. Je kunt doorgaan met bewerken of het opnieuw proberen.</string>
+    <string name="action_set_up_label_recognition">Etiketherkenning instellen</string>
+    <string name="action_use_label_recognition">Gebruik labelherkenning</string>
+    <string name="action_finish_label_recognition_setup">Voltooi de installatie</string>
+    <string name="action_always_enter_manually">Voer altijd handmatig in</string>
+    <string name="action_apply_suggestion">Suggestie toepassen</string>
+    <string name="format_new_label_suggestion">Nieuwe suggestie voor %1$s: %2$s</string>
+    <string name="msg_label_recognition_offer">Optioneel: gebruik Mindlayer op dit apparaat om meer details van het koffiezakjeslabel te vinden. Controleer alles voordat u het opslaat.</string>
+    <string name="action_try_label_again">Probeer het opnieuw</string>
+    <string name="action_retake_label_photo">Foto opnieuw maken</string>
+    <string name="label_coffee_draft">Onvoltooide koffiedetails</string>
+    <string name="action_review_coffee_draft">Bekijk onvoltooide koffiedetails</string>
+    <string name="msg_draft_needs_attention">Deze koffiegegevens hebben uw beoordeling nodig</string>
+    <string name="action_discard_draft">Gooi onafgemaakte koffiedetails weg</string>
+    <string name="cd_open_coffee_draft">Open onvoltooide koffiedetails voor %1$s. %2$s</string>
+    <string name="action_save_coffee">Bewaar koffiegegevens</string>
+    <string name="screen_add_coffee_title">Voeg koffie toe</string>
+    <string name="screen_edit_coffee_title">Koffie bewerken</string>
+    <string name="screen_review_coffee_title">Koffiedetails bekijken</string>
+    <string name="msg_camera_permission_alternatives">U kunt cameratoegang verlenen, foto\'s van het koffiezaklabel kiezen of zelf de gegevens invoeren die op de koffiezak zijn afgedrukt.</string>
+    <string name="action_choose_photos">Kies foto\'s</string>
+    <string name="action_enter_manually">Handmatig invoeren</string>
+    <string name="action_ok">Oké</string>
+    <string name="action_set_roast_date">Stel de koffiebranddatum in</string>
+    <string name="action_change_roast_date">Wijzig de koffiebranddatum</string>
+    <string name="action_set_best_before">Houdbaarheidsdatum instellen</string>
+    <string name="action_change_best_before">Wijzig de houdbaarheidsdatum</string>
+    <string name="action_show_optional_details">Toon optionele details</string>
+    <string name="action_hide_optional_details">Optionele details verbergen</string>
+</resources>

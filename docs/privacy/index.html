@@ -67,15 +67,18 @@
     <ul>
         <li>coffee bags, barcodes, photos, roasters, origins, roast dates, and notes;</li>
         <li>brew logs, recipes, ratings, flavour tags, grinders, and presets;</li>
+        <li>unfinished coffee-label drafts, including staged photos, partial fields, and your edits;</li>
         <li>your settings and recent scan history; and</li>
         <li>local troubleshooting records, such as app logs, crash stacks, unresponsive-app events, and
             Android process-exit reasons.</li>
     </ul>
     <p>
-        I cannot remotely access, retrieve, change, or delete this data. Camera images used for barcode and
-        label recognition are processed on your device and discarded after analysis unless you choose to keep
-        a photo. Label recognition and smart fill use the Mindlayer service installed on the same device.
-        Images and extracted text are not sent to an online AI service.
+        I cannot remotely access, retrieve, change, or delete this data. Barcode and label recognition run on
+        your device. Bundled Google ML Kit text recognition provides the baseline; if you enable enhanced
+        recognition, the Mindlayer service installed on the same device can add details through a local bound
+        service. Images and extracted text are not sent to an online AI service. Camera preview frames are
+        discarded after analysis. Photos you capture or import for an editable draft remain in private,
+        no-backup storage until you save or explicitly discard that draft.
     </p>
     <p>
         Diagnostics are also local. They use limited storage, exclude text and unknown values by default, and
@@ -145,6 +148,9 @@
     <h2 id="deletion">5. Retention and deletion</h2>
     <ul>
         <li><strong>Local records:</strong> remain until you delete them in the app or uninstall the app.</li>
+        <li><strong>Unfinished coffee drafts:</strong> remain available until you save or explicitly discard
+            them. Closing a draft removes its staged photos and structured fields; a minimal ownership marker
+            prevents late background work from recreating it.</li>
         <li><strong>Diagnostics:</strong> can be deleted from the Diagnostics screen. They are also removed
             when you uninstall the app and are excluded from backup.</li>
         <li><strong>Android backup:</strong> may remain after uninstalling. Manage it through Android or your

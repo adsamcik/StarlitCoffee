@@ -57,11 +57,6 @@
     <string name="format_notif_brew_target_reached_body">Cieľ %1$s vášho receptu bol dosiahnutý. Klepnutím skontrolujte varenie.</string>
     <string name="action_add_coffee">Pridajte kávu</string>
     <string name="action_read_bag_photos">Prečítajte si fotografie tašky</string>
-    <string name="action_scan_bag_ai">Skenovanie vrecka · AI vypĺňa detaily</string>
     <string name="action_scan_first_bag">Naskenujte moju prvú tašku</string>
     <string name="msg_scan_first_coffee_hint">Naskenujte prednú a zadnú stranu a vyplňte podrobnosti automaticky. Fotografie zostanú vo vašom zariadení.</string>
-    <string name="dialog_ai_scan_setup_title">Nastavte skenovanie súkromných štítkov</string>
-    <string name="msg_ai_scan_setup">Starlit Coffee používa Mindlayer na súkromné čítanie štítkov kávy na vašom zariadení. Nainštalujte ho raz, potom bude toto skenovanie automaticky pokračovať.</string>
-    <string name="dialog_ai_scan_unsupported_title">Automatické skenovanie nie je podporované</string>
-    <string name="msg_ai_scan_unsupported">Automatické skenovanie štítkov vyžaduje Android 12 alebo novší. Stále môžete tašku pridať ručne alebo naskenovať jej čiarový kód.</string>
 </resources>

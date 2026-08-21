@@ -285,11 +285,6 @@
     <string name="cd_notif_rating_4">Hinda suurepäraseks</string>
 
     <!-- Bag analysis screen + notification -->
-    <string name="screen_analyzing_bag_title">Paki analüüsimine</string>
-    <string name="msg_analyzing_bag_subtitle">Tehisintellekt loeb etiketti, et üksikasjad täita. See võib veidi aega võtta.</string>
-    <string name="msg_analyzing_bag_background_hint">Võid rakendust edasi kasutada — teavitame, kui valmis.</string>
-    <string name="action_skip_ai">Jäta AI vahele</string>
-    <string name="action_run_in_background">Jätka taustal</string>
     <string name="notif_channel_bag_analysis">Paki analüüs</string>
     <string name="notif_channel_bag_analysis_desc">Teavitab, kui AI on kohvipaki etiketi lugemise lõpetanud.</string>
     <string name="notif_scan_progress_title">Paki etiketi lugemine…</string>
@@ -412,14 +407,11 @@
     <string name="msg_decaf_grind_adjustment">Valitud on kofeiinivaba kohv. Allolevat jahvatussoovitust kohandatakse jämedamaks, kui see valmistusviis sellest kasu saab.</string>
     <string name="label_decaf_process_optional">Kofeiinieemalduse viis (valikuline)</string>
     <string name="msg_decaf_process_hint">Laseb valmistusreeglil jahvatust pehmelt kohandada: vee- ja CO₂-töötlusega kofeiinivabad vajavad tavaliselt vähem jämestamist kui lahustiga töödeldud.</string>
-    <string name="cd_captured_bag_photo">Jäädvustatud paki foto</string>
 <string name="label_detected_details">Tuvastatud üksikasjad</string>
     <string name="msg_tap_chip_to_edit">Puuduta muutmiseks mõnda silti</string>
     <string name="label_needs_review">Vajab ülevaatamist</string>
 <string name="action_edit_all_fields">Muuda kõiki välju</string>
     <string name="action_add_more_details">Lisa rohkem üksikasju</string>
-    <string name="msg_analyzing_label">Etiketi fotode analüüsimine</string>
-    <string name="msg_analyzing_label_detail">Kontrollime hägusust, ühendame esi- ja tagakülje teksti ning valmistame ette kõige usaldusväärsemad väljad.</string>
     <string name="label_review_fields">Vaata need väljad üle</string>
     <string name="label_qr_website">QR-veebisait</string>
     <string name="action_open_website">Ava veebisait</string>
@@ -448,9 +440,7 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">AI-teenus (Mindlayer)</string>
-    <string name="action_connect_mindlayer">Ühenda Mindlayer</string>
     <string name="action_mindlayer_google_play">Hangi Mindlayer Google Playst</string>
-    <string name="msg_mindlayer_connection_offer">Mindlayer on installitud. Kas soovid selle ühendada privaatseks seadmesiseseks tehisintellektiks?</string>
     <string name="msg_mindlayer_install_recommendation">Paigalda Mindlayer Google Playst, et lugeda kohvipakkide silte privaatse seadmesisese tehisintellektiga. Seda saab teha hiljem seadetes.</string>
     <string name="action_test_connection">Testi ühendust</string>
     <string name="action_run_test_prompt">Käivita testpäring</string>
@@ -510,10 +500,6 @@
     <string name="msg_could_not_read_label">Etiketti ei õnnestunud lugeda</string>
     <string name="action_retake_photo">Tee foto uuesti</string>
     <string name="action_add_details_manually">Lisa üksikasjad käsitsi</string>
-    <string name="msg_llm_enrichment_succeeded">AI-rikastus parandas selle etiketi skannimist.</string>
-    <string name="msg_llm_enrichment_failed">AI ei suutnud seekord seda etiketti lõpuni lugeda — aeg sai otsa või tekkis ajutine viga (proovis juba automaatselt uuesti). Puuduta „Proovi uuesti“, et veel kord proovida, või täida lihtsalt allolevad väljad.</string>
-    <string name="msg_llm_enrichment_unavailable">AI-rikastus pole praegu saadaval. Võid proovida uuesti või jätkata käsitsi muutmist.</string>
-    <string name="action_retry_llm_enrichment">Proovi AI-rikastust uuesti</string>
 
     <!-- BrewLogDetailScreen -->
     <string name="action_share_brew">Jaga valmistust</string>

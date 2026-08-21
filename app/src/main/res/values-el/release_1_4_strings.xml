@@ -57,11 +57,6 @@
     <string name="format_notif_brew_target_reached_body">Ο στόχος %1$s της συνταγής σας έχει επιτευχθεί. Πατήστε για να ελέγξετε την παρασκευή.</string>
     <string name="action_add_coffee">Προσθέστε καφέ</string>
     <string name="action_read_bag_photos">Διαβάστε φωτογραφίες της τσάντας</string>
-    <string name="action_scan_bag_ai">Σάκος σάρωσης · Το AI συμπληρώνει τις λεπτομέρειες</string>
     <string name="action_scan_first_bag">Σαρώστε την πρώτη μου τσάντα</string>
     <string name="msg_scan_first_coffee_hint">Σαρώστε το μπροστινό και το πίσω μέρος για να συμπληρώσετε αυτόματα τις λεπτομέρειες. Οι φωτογραφίες παραμένουν στη συσκευή σας.</string>
-    <string name="dialog_ai_scan_setup_title">Ρυθμίστε τη σάρωση ιδιωτικής ετικέτας</string>
-    <string name="msg_ai_scan_setup">Το Starlit Coffee χρησιμοποιεί το Mindlayer για να διαβάζει ιδιωτικά τις ετικέτες καφέ στη συσκευή σας. Εγκαταστήστε το μία φορά και, στη συνέχεια, αυτή η σάρωση θα συνεχιστεί αυτόματα.</string>
-    <string name="dialog_ai_scan_unsupported_title">Η αυτόματη σάρωση δεν υποστηρίζεται</string>
-    <string name="msg_ai_scan_unsupported">Η αυτόματη σάρωση ετικετών χρειάζεται Android 12 ή νεότερη έκδοση. Μπορείτε ακόμα να προσθέσετε την τσάντα χειροκίνητα ή να σαρώσετε τον γραμμωτό κώδικα της.</string>
 </resources>

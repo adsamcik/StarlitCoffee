@@ -57,11 +57,6 @@
     <string name="format_notif_brew_target_reached_body">Se alcanzó el objetivo %1$s de su receta. Toque para comprobar la preparación.</string>
     <string name="action_add_coffee">agregar café</string>
     <string name="action_read_bag_photos">Leer fotos de bolsos</string>
-    <string name="action_scan_bag_ai">Escanear bolsa · La IA llena los detalles</string>
     <string name="action_scan_first_bag">Escanea mi primer bolso</string>
     <string name="msg_scan_first_coffee_hint">Escanee el anverso y el reverso para completar los detalles automáticamente. Las fotos permanecen en su dispositivo.</string>
-    <string name="dialog_ai_scan_setup_title">Configurar el escaneo de etiquetas privadas</string>
-    <string name="msg_ai_scan_setup">Starlit Coffee utiliza Mindlayer para leer las etiquetas del café de forma privada en su dispositivo. Instálelo una vez, luego este análisis continuará automáticamente.</string>
-    <string name="dialog_ai_scan_unsupported_title">El escaneo automático no es compatible</string>
-    <string name="msg_ai_scan_unsupported">El escaneo automático de etiquetas necesita Android 12 o posterior. Aún puedes agregar la bolsa manualmente o escanear su código de barras.</string>
 </resources>

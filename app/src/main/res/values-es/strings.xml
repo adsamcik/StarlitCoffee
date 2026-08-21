@@ -287,11 +287,6 @@
     <string name="cd_notif_rating_4">Valorar como increíble</string>
 
     <!-- Bag analysis screen + notification -->
-    <string name="screen_analyzing_bag_title">Analizando tu bolsa</string>
-    <string name="msg_analyzing_bag_subtitle">La IA está leyendo la etiqueta para completar los detalles. Puede tardar un momento.</string>
-    <string name="msg_analyzing_bag_background_hint">Puedes seguir usando la app — te avisaremos cuando termine.</string>
-    <string name="action_skip_ai">Omitir IA</string>
-    <string name="action_run_in_background">Continuar en segundo plano</string>
     <string name="notif_channel_bag_analysis">Análisis de bolsa</string>
     <string name="notif_channel_bag_analysis_desc">Te avisa cuando la IA termina de leer la etiqueta de una bolsa de café.</string>
     <string name="notif_scan_progress_title">Leyendo la etiqueta de la bolsa…</string>
@@ -414,14 +409,11 @@
     <string name="msg_decaf_grind_adjustment">Se ha seleccionado descafeinado. La recomendación de molienda de abajo se ajusta a un punto más grueso cuando este método se beneficia de ello.</string>
     <string name="label_decaf_process_optional">Proceso de descafeinado (opcional)</string>
     <string name="msg_decaf_process_hint">Permite que la regla de preparación ajuste suavemente la molienda: los descafeinados por proceso de agua y CO₂ suelen necesitar menos ajuste hacia grueso que los de proceso con solvente.</string>
-    <string name="cd_captured_bag_photo">Foto de bolsa capturada</string>
 <string name="label_detected_details">Detalles detectados</string>
     <string name="msg_tap_chip_to_edit">Toca cualquier chip para editar</string>
     <string name="label_needs_review">Requiere revisión</string>
 <string name="action_edit_all_fields">Editar todos los campos</string>
     <string name="action_add_more_details">Añadir más detalles</string>
-    <string name="msg_analyzing_label">Analizando fotos de la etiqueta</string>
-    <string name="msg_analyzing_label_detail">Estamos comprobando el desenfoque, combinando el texto del frente y el dorso, y preparando los campos más fiables.</string>
     <string name="label_review_fields">Revisa estos campos</string>
     <string name="label_qr_website">Web del QR</string>
     <string name="action_open_website">Abrir sitio web</string>
@@ -450,9 +442,7 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">Servicio de IA (Mindlayer)</string>
-    <string name="action_connect_mindlayer">Conectar Mindlayer</string>
     <string name="action_mindlayer_google_play">Obtener Mindlayer en Google Play</string>
-    <string name="msg_mindlayer_connection_offer">Mindlayer está instalado. ¿Quieres conectarlo para usar IA privada en el dispositivo?</string>
     <string name="msg_mindlayer_install_recommendation">Instala Mindlayer desde Google Play para leer etiquetas de bolsas de café con IA privada en el dispositivo. Puedes hacerlo más tarde en Ajustes.</string>
     <string name="action_test_connection">Probar conexión</string>
     <string name="action_run_test_prompt">Ejecutar prompt de prueba</string>
@@ -512,10 +502,6 @@
     <string name="msg_could_not_read_label">No se pudo leer la etiqueta</string>
     <string name="action_retake_photo">Repetir foto</string>
     <string name="action_add_details_manually">Añadir detalles manualmente</string>
-    <string name="msg_llm_enrichment_succeeded">El enriquecimiento con IA mejoró este escaneo de etiqueta.</string>
-    <string name="msg_llm_enrichment_failed">La IA no pudo terminar de leer esta etiqueta esta vez: se agotó el tiempo o hubo un error temporal (ya lo reintentó automáticamente). Toca Reintentar para probar otra vez, o rellena los campos de abajo.</string>
-    <string name="msg_llm_enrichment_unavailable">El enriquecimiento con IA no está disponible ahora. Puedes reintentarlo o seguir editando manualmente.</string>
-    <string name="action_retry_llm_enrichment">Reintentar enriquecimiento con IA</string>
 
     <!-- BrewLogDetailScreen -->
     <string name="action_share_brew">Compartir preparación</string>

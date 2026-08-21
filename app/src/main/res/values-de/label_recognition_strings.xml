@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_settings_section_scanning">Scannen</string>
+    <string name="label_enhanced_label_recognition">Verbesserte Etikettenerkennung</string>
+    <string name="msg_enhanced_label_recognition">Weitere Informationen finden Sie in der Tüte mit Kaffeebohnen auf diesem Gerät, sofern verfügbar. Das einfache Lesen von Text auf dem Gerät vom Etikett bleibt weiterhin verfügbar.</string>
+    <string name="label_label_recognition_privacy">Etikettenerkennung und Datenschutz</string>
+    <string name="msg_label_recognition_privacy">Erfahren Sie, was auf Ihrem Gerät verbleibt und wann Netzwerksuchen verwendet werden.</string>
+    <string name="msg_could_not_open_privacy_policy">Die Datenschutzrichtlinie konnte nicht geöffnet werden.</string>
+    <string name="cd_front_label_photo">Foto des vorderen Etiketts</string>
+    <string name="cd_back_label_photo">Foto auf dem hinteren Etikett</string>
+    <string name="format_cd_additional_label_photo">Zusätzliches Etikettenfoto %1$d</string>
+    <string name="label_label_evidence">Informationsquellen des Labels</string>
+    <string name="evidence_from_label">Vom Etikett</string>
+    <string name="evidence_confirmed_on_label">Auf dem Etikett bestätigt</string>
+    <string name="evidence_from_qr_website">Von der QR-Website</string>
+    <string name="evidence_from_label_code">Aus dem Etikettencode</string>
+    <string name="evidence_from_saved_bag">Aus zuvor gespeicherten Kaffeedetails</string>
+    <string name="evidence_from_barcode_lookup">Aus der Barcode-Suche</string>
+    <string name="evidence_suggested_from_label_context">Aus dem Etikettenkontext vorgeschlagen</string>
+    <string name="evidence_front_photo">Foto vorne</string>
+    <string name="evidence_back_photo">Foto von hinten</string>
+    <string name="msg_checking_label">Überprüfung des Etiketts…</string>
+    <string name="msg_checking_more_details">Ich suche nach weiteren Details …</string>
+    <plurals name="format_label_details_need_review">
+        <item quantity="one">Details, die überprüft werden müssen: %1$d</item>
+        <item quantity="other">Details, die überprüft werden müssen: %1$d</item>
+    </plurals>
+    <string name="msg_could_not_read_more_details">Konnte keine weiteren Details lesen. Sie können die Bearbeitung fortsetzen oder es erneut versuchen.</string>
+    <string name="action_set_up_label_recognition">Etikettenerkennung einrichten</string>
+    <string name="action_use_label_recognition">Verwenden Sie die Etikettenerkennung</string>
+    <string name="action_finish_label_recognition_setup">Beenden Sie die Einrichtung</string>
+    <string name="action_always_enter_manually">Geben Sie immer manuell ein</string>
+    <string name="action_apply_suggestion">Vorschlag anwenden</string>
+    <string name="format_new_label_suggestion">Neuer Vorschlag für %1$s: %2$s</string>
+    <string name="msg_label_recognition_offer">Optional: Verwenden Sie Mindlayer auf diesem Gerät, um weitere Details auf dem Etikett der Kaffeetüte zu finden. Überprüfen Sie alles, bevor Sie es speichern.</string>
+    <string name="action_try_label_again">Versuchen Sie es erneut</string>
+    <string name="action_retake_label_photo">Foto erneut aufnehmen</string>
+    <string name="label_coffee_draft">Details zum unvollendeten Kaffee</string>
+    <string name="action_review_coffee_draft">Überprüfen Sie die Details zum unvollendeten Kaffee</string>
+    <string name="msg_draft_needs_attention">Diese Kaffeedetails benötigen Ihre Bewertung</string>
+    <string name="action_discard_draft">Verwerfen Sie unvollendete Kaffeedetails</string>
+    <string name="cd_open_coffee_draft">Offene Details zu unvollendetem Kaffee für %1$s. %2$s</string>
+    <string name="action_save_coffee">Kaffeedetails speichern</string>
+    <string name="screen_add_coffee_title">Kaffee hinzufügen</string>
+    <string name="screen_edit_coffee_title">Kaffee bearbeiten</string>
+    <string name="screen_review_coffee_title">Überprüfen Sie die Kaffeedetails</string>
+    <string name="msg_camera_permission_alternatives">Sie können den Zugriff auf die Kamera zulassen, Fotos des Kaffeebeuteletiketts auswählen oder die auf dem Kaffeebeutel aufgedruckten Daten selbst eingeben.</string>
+    <string name="action_choose_photos">Wählen Sie Fotos aus</string>
+    <string name="action_enter_manually">Geben Sie manuell ein</string>
+    <string name="action_ok">Okay</string>
+    <string name="action_set_roast_date">Stellen Sie das Kaffeeröstdatum ein</string>
+    <string name="action_change_roast_date">Datum der Kaffeeröstung ändern</string>
+    <string name="action_set_best_before">Mindesthaltbarkeitsdatum einstellen</string>
+    <string name="action_change_best_before">Mindesthaltbarkeitsdatum ändern</string>
+    <string name="action_show_optional_details">Optionale Details anzeigen</string>
+    <string name="action_hide_optional_details">Optionale Details ausblenden</string>
+</resources>

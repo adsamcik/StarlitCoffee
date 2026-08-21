@@ -18,6 +18,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   20 g / 340 g steeped-bloom method as an eight-step, evidence-backed guide with
   reviewed Pulsar-specific artwork, explicit valve states, drawdown guidance,
   grind troubleshooting, and safe handling by the brewer base.
+- **Resumable coffee-label drafts** — camera and gallery scans now open an
+  editable draft immediately, preserve partial fields and staged photos across
+  navigation or process recreation, and remain available from the bean list
+  until explicitly saved or discarded.
+- **Bundled label reading** — on-device ML Kit text recognition now provides the
+  dependable baseline for every supported device. Optional Mindlayer
+  enrichment can add more detail without blocking capture, review, editing, or
+  manual entry.
 - **Plan by coffee in the cup** — the preparation calculator can optionally
   treat a water-side amount as desired beverage output, then estimate the dry
   dose and water to pour with method-aware input-to-cup loss. The estimate is
@@ -47,6 +55,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   generated tactile icon matched to its physical shape, and separates recipe
   names from quantity details. It opens directly on those methods without a
   redundant introductory banner.
+- Coffee-label recognition now updates the open form progressively. Save stays
+  available while more details are checked, user-edited or focused fields are
+  never overwritten by late results, and provider/setup language appears only
+  as a contextual recovery action.
+- Label Recognition has one ordinary setting with a safe default; service and
+  model diagnostics remain debug-only. Camera denial offers photo selection and
+  manual entry instead of a dead end.
+- Background completion notifications now describe a coffee draft outcome and
+  return to the exact draft that produced them.
 - Bag scans now use one five-minute deadline across WorkManager restarts, and
   Mindlayer connection checks stop after five seconds instead of waiting
   indefinitely. When time runs out, the editable fields already found are
@@ -96,6 +113,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Learning guides now resolve the same supported language as Android's packaged
   resources, so devices using an unsupported system language correctly receive
   the released English curriculum.
+- Saving or discarding a scan now writes a durable terminal marker so late
+  workers, retries, recovery, and notifications cannot resurrect or overwrite
+  the closed draft. Active draft photos are excluded from startup cache expiry.
 - Model setup failures now lead directly to Mindlayer's Models screen, while
   transient busy/resource errors honor the SDK retry hint within a small cap.
 - Cancelling an outer scan deadline continues through provider-level timeout

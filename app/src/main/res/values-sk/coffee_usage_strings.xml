@@ -12,7 +12,4 @@
     <string name="msg_could_not_undo_coffee_use">Zmenu nemožno vrátiť, pretože sa toto vrecko zmenilo</string>
     <string name="label_coffee_use_history">Spotreba kávy</string>
     <string name="format_grams_used">Použitých %1$.0f g</string>
-    <string name="msg_llm_model_setup_required">Mindlayer potrebuje svoj model v zariadení, aby AI mohla prečítať tento štítok. Otvorte nastavenie a skúste to znova; už nájdené polia môžete bezpečne upraviť.</string>
-    <string name="msg_llm_enrichment_timed_out">Skenovanie dosiahlo päťminútový limit. Môžete použiť už nájdené polia, upraviť ich alebo to skúsiť znova.</string>
-    <string name="action_set_up_ai">Otvoriť nastavenie modelu</string>
 </resources>

@@ -31,6 +31,11 @@ class BagAnalysisNotificationWorker(
         ) {
             return Result.success()
         }
+        val draft = BagDraftStore.findByWorkId(applicationContext, workId)
+        if (draft != null && !draft.isActive) {
+            AndroidBagAnalysisNotifier.cancel(applicationContext, workId)
+            return Result.success()
+        }
         val storedResult = BagExtractionResultStore.read(applicationContext, workId)
         if (workInfo == null && storedResult == null) return Result.success()
         return deliverNotification(workInfo, storedResult, workId)

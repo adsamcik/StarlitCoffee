@@ -287,11 +287,6 @@
     <string name="cd_notif_rating_4">Valuta come ottimo</string>
 
     <!-- Bag analysis screen + notification -->
-    <string name="screen_analyzing_bag_title">Analisi della confezione</string>
-    <string name="msg_analyzing_bag_subtitle">L\'IA sta leggendo l\'etichetta per compilare i dettagli. Può richiedere un momento.</string>
-    <string name="msg_analyzing_bag_background_hint">Puoi continuare a usare l\'app — ti avviseremo quando avrà finito.</string>
-    <string name="action_skip_ai">Salta l\'IA</string>
-    <string name="action_run_in_background">Continua in background</string>
     <string name="notif_channel_bag_analysis">Analisi confezione</string>
     <string name="notif_channel_bag_analysis_desc">Ti avvisa quando l\'IA ha finito di leggere l\'etichetta di una confezione di caffè.</string>
     <string name="notif_scan_progress_title">Lettura dell’etichetta della confezione…</string>
@@ -414,14 +409,11 @@
     <string name="msg_decaf_grind_adjustment">È selezionato il decaffeinato. La macinatura consigliata qui sotto viene regolata più grossa quando questo metodo ne beneficia.</string>
     <string name="label_decaf_process_optional">Processo decaffeinato (facoltativo)</string>
     <string name="msg_decaf_process_hint">Permette alla regola di preparazione di orientare leggermente la macinatura: i deca a processo ad acqua e CO₂ in genere richiedono meno grossolanità rispetto a quelli a solvente.</string>
-    <string name="cd_captured_bag_photo">Foto confezione acquisita</string>
 <string name="label_detected_details">Dettagli rilevati</string>
     <string name="msg_tap_chip_to_edit">Tocca qualsiasi chip per modificare</string>
     <string name="label_needs_review">Da rivedere</string>
 <string name="action_edit_all_fields">Modifica tutti i campi</string>
     <string name="action_add_more_details">Aggiungi altri dettagli</string>
-    <string name="msg_analyzing_label">Analisi foto etichetta</string>
-    <string name="msg_analyzing_label_detail">Stiamo controllando sfocatura, unendo il testo fronte/retro e preparando i campi più affidabili.</string>
     <string name="label_review_fields">Rivedi questi campi</string>
     <string name="label_qr_website">Sito QR</string>
     <string name="action_open_website">Apri sito web</string>
@@ -450,9 +442,7 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">Servizio AI (Mindlayer)</string>
-    <string name="action_connect_mindlayer">Connetti Mindlayer</string>
     <string name="action_mindlayer_google_play">Scarica Mindlayer da Google Play</string>
-    <string name="msg_mindlayer_connection_offer">Mindlayer è installato. Vuoi collegarlo per usare l\'IA privata sul dispositivo?</string>
     <string name="msg_mindlayer_install_recommendation">Installa Mindlayer da Google Play per leggere le etichette delle confezioni di caffè con IA privata sul dispositivo. Puoi farlo più tardi in Impostazioni.</string>
     <string name="action_test_connection">Testa la connessione</string>
     <string name="action_run_test_prompt">Esegui prompt di test</string>
@@ -512,10 +502,6 @@
     <string name="msg_could_not_read_label">Impossibile leggere etichetta</string>
     <string name="action_retake_photo">Scatta di nuovo</string>
     <string name="action_add_details_manually">Aggiungi dettagli manualmente</string>
-    <string name="msg_llm_enrichment_succeeded">L\'arricchimento AI ha migliorato questa scansione dell\'etichetta.</string>
-    <string name="msg_llm_enrichment_failed">L\'IA non è riuscita a leggere fino in fondo questa etichetta stavolta — timeout o errore temporaneo (ha già ritentato automaticamente). Tocca Riprova per un altro tentativo, oppure compila i campi qui sotto.</string>
-    <string name="msg_llm_enrichment_unavailable">L\'arricchimento AI non è disponibile ora. Puoi riprovare o continuare a modificare manualmente.</string>
-    <string name="action_retry_llm_enrichment">Riprova arricchimento AI</string>
 
     <!-- BrewLogDetailScreen -->
     <string name="action_share_brew">Condividi preparazione</string>

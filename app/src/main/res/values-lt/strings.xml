@@ -289,11 +289,6 @@
     <string name="cd_notif_rating_4">Įvertinti kaip puikų</string>
 
     <!-- Bag analysis screen + notification -->
-    <string name="screen_analyzing_bag_title">Analizuojama jūsų pakuotė</string>
-    <string name="msg_analyzing_bag_subtitle">DI skaito etiketę, kad užpildytų informaciją. Tai gali šiek tiek užtrukti.</string>
-    <string name="msg_analyzing_bag_background_hint">Galite toliau naudotis programėle — pranešime, kai bus baigta.</string>
-    <string name="action_skip_ai">Praleisti DI</string>
-    <string name="action_run_in_background">Tęsti fone</string>
     <string name="notif_channel_bag_analysis">Pakuotės analizė</string>
     <string name="notif_channel_bag_analysis_desc">Praneša, kai DI baigia skaityti kavos pakuotės etiketę.</string>
     <string name="notif_scan_progress_title">Skaitoma pakuotės etiketė…</string>
@@ -416,14 +411,11 @@
     <string name="msg_decaf_grind_adjustment">Pasirinkta kava be kofeino. Toliau pateikta malimo rekomendacija koreguojama į stambesnę, kai tai naudinga šiam ruošimo būdui.</string>
     <string name="label_decaf_process_optional">Kofeino šalinimo būdas (nebūtina)</string>
     <string name="msg_decaf_process_hint">Leidžia plikymo taisyklei švelniai koreguoti malimą: vandeniu ir CO₂ apdorotai kavai be kofeino paprastai reikia mažiau stambinti nei apdorotai tirpikliais.</string>
-    <string name="cd_captured_bag_photo">Nufotografuota pakuotė</string>
     <string name="label_detected_details">Aptikta informacija</string>
     <string name="msg_tap_chip_to_edit">Bakstelėkite bet kurį elementą, kad redaguotumėte</string>
     <string name="label_needs_review">Reikia peržiūrėti</string>
     <string name="action_edit_all_fields">Redaguoti visus laukus</string>
     <string name="action_add_more_details">Pridėti daugiau informacijos</string>
-    <string name="msg_analyzing_label">Analizuojamos etiketės nuotraukos</string>
-    <string name="msg_analyzing_label_detail">Tikriname ryškumą, sujungiame priekinės ir galinės pusės tekstą ir parengiame patikimiausius laukus.</string>
     <string name="label_review_fields">Peržiūrėkite šiuos laukus</string>
     <string name="label_qr_website">QR svetainė</string>
     <string name="action_open_website">Atverti svetainę</string>
@@ -452,9 +444,7 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">DI paslauga (Mindlayer)</string>
-    <string name="action_connect_mindlayer">Prijungti Mindlayer</string>
     <string name="action_mindlayer_google_play">Gaukite Mindlayer iš Google Play</string>
-    <string name="msg_mindlayer_connection_offer">Mindlayer įdiegtas. Ar norite jį prijungti privačiam įrenginyje veikiančiam DI?</string>
     <string name="msg_mindlayer_install_recommendation">Įdiekite Mindlayer iš Google Play, kad galėtumėte skaityti kavos pakuočių etiketes naudodami privatų įrenginyje veikiantį DI. Tai galite padaryti vėliau nustatymuose.</string>
     <string name="action_test_connection">Tikrinti ryšį</string>
     <string name="action_run_test_prompt">Paleisti bandomąją užklausą</string>
@@ -514,10 +504,6 @@
     <string name="msg_could_not_read_label">Nepavyko perskaityti etiketės</string>
     <string name="action_retake_photo">Fotografuoti iš naujo</string>
     <string name="action_add_details_manually">Pridėti informaciją rankiniu būdu</string>
-    <string name="msg_llm_enrichment_succeeded">DI papildymas pagerino šį etiketės nuskaitymą.</string>
-    <string name="msg_llm_enrichment_failed">DI šįkart nespėjo perskaityti šios etiketės — baigėsi skirtas laikas arba įvyko laikina klaida (bandymas jau buvo pakartotas automatiškai). Bakstelėkite pakartojimą, kad bandytumėte dar kartą, arba tiesiog užpildykite laukus žemiau.</string>
-    <string name="msg_llm_enrichment_unavailable">DI papildymas šiuo metu nepasiekiamas. Galite pakartoti arba toliau redaguoti rankiniu būdu.</string>
-    <string name="action_retry_llm_enrichment">Kartoti DI papildymą</string>
 
     <!-- BrewLogDetailScreen -->
     <string name="action_share_brew">Dalytis kava</string>

@@ -57,11 +57,6 @@
     <string name="format_notif_brew_target_reached_body">Din opskrifts %1$s-mål er nået. Tryk for at kontrollere brygget.</string>
     <string name="action_add_coffee">Tilsæt kaffe</string>
     <string name="action_read_bag_photos">Læs taskebilleder</string>
-    <string name="action_scan_bag_ai">Scan taske · AI udfylder detaljer</string>
     <string name="action_scan_first_bag">Scan min første taske</string>
     <string name="msg_scan_first_coffee_hint">Scan forsiden og bagsiden for at udfylde detaljerne automatisk. Billeder bliver på din enhed.</string>
-    <string name="dialog_ai_scan_setup_title">Konfigurer private label-scanning</string>
-    <string name="msg_ai_scan_setup">Starlit Coffee bruger Mindlayer til at læse kaffeetiketter privat på din enhed. Installer det én gang, så fortsætter denne scanning automatisk.</string>
-    <string name="dialog_ai_scan_unsupported_title">Automatisk scanning understøttes ikke</string>
-    <string name="msg_ai_scan_unsupported">Automatisk etiketscanning kræver Android 12 eller nyere. Du kan stadig tilføje posen manuelt eller scanne dens stregkode.</string>
 </resources>

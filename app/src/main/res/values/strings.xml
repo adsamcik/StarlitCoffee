@@ -159,6 +159,12 @@
     <string name="label_settings_section_brewing">Brewing</string>
     <string name="label_settings_section_appearance">Appearance</string>
     <string name="label_settings_section_notifications">Notifications</string>
+    <string name="label_settings_section_scanning">Scanning</string>
+    <string name="label_enhanced_label_recognition">Enhanced label recognition</string>
+    <string name="msg_enhanced_label_recognition">Look for more bag details on this device when available. Basic on-device text reading from the label remains available.</string>
+    <string name="label_label_recognition_privacy">Label recognition and privacy</string>
+    <string name="msg_label_recognition_privacy">Learn what stays on your device and when network lookups are used.</string>
+    <string name="msg_could_not_open_privacy_policy">Could not open the privacy policy.</string>
     <string name="label_settings_section_developer">Developer</string>
     <string name="label_settings_section_support">Support &amp; privacy</string>
     <string name="label_diagnostics">Diagnostics</string>
@@ -359,18 +365,13 @@
     <string name="cd_notif_rating_4">Rate as awesome</string>
 
     <!-- Bag analysis screen + notification -->
-    <string name="screen_analyzing_bag_title">Analyzing your bag</string>
-    <string name="msg_analyzing_bag_subtitle">AI is reading the label to fill in the details. This can take a moment.</string>
-    <string name="msg_analyzing_bag_background_hint">You can keep using the app — we\'ll notify you when it\'s done.</string>
-    <string name="action_skip_ai">Skip AI</string>
-    <string name="action_run_in_background">Continue in background</string>
-    <string name="notif_channel_bag_analysis">Bag analysis</string>
-    <string name="notif_channel_bag_analysis_desc">Tells you when AI has finished reading a coffee bag label.</string>
+    <string name="notif_channel_bag_analysis">Coffee drafts</string>
+    <string name="notif_channel_bag_analysis_desc">Tells you when a coffee label draft is ready to review.</string>
     <string name="notif_scan_progress_title">Reading bag label…</string>
-    <string name="notif_bag_analysis_title">Bag analysis complete</string>
-    <string name="notif_bag_analysis_body">Tap to review the details we found.</string>
-    <string name="notif_bag_analysis_failed_title">Bag analysis failed</string>
-    <string name="notif_bag_analysis_failed_body">Tap to review and add the details manually.</string>
+    <string name="notif_bag_analysis_title">Coffee draft ready</string>
+    <string name="notif_bag_analysis_body">Tap to review the label details.</string>
+    <string name="notif_bag_analysis_failed_title">Coffee draft needs attention</string>
+    <string name="notif_bag_analysis_failed_body">Tap to review what was found and fill in anything missing.</string>
     <!-- Bag scan progress stages -->
     <string name="scan_stage_ocr">Reading the label…</string>
     <string name="scan_stage_barcode">Looking up the barcode…</string>
@@ -380,7 +381,7 @@
     <string name="scan_stage_combine">Combining the results…</string>
     <string name="scan_stage_finalizing">Finishing up…</string>
     <string name="format_scan_stage_step">Step %1$d of %2$d</string>
-    <string name="format_notif_bag_analysis_body">Tap to review %1$s.</string>
+    <string name="format_notif_bag_analysis_body">Tap to review the draft for %1$s.</string>
 
     <!-- Settings: rating reminder -->
     <string name="label_rating_reminder">Rating reminder</string>
@@ -492,20 +493,30 @@
     <string name="msg_decaf_grind_adjustment">Decaf selected. The grind recommendation below is adjusted coarser when this method benefits from it.</string>
     <string name="label_decaf_process_optional">Decaf process (optional)</string>
     <string name="msg_decaf_process_hint">Lets the brew rule soft-bias the grind: water-process and CO₂ decafs typically need less coarsening than solvent-process ones.</string>
-    <string name="cd_captured_bag_photo">Captured bag photo</string>
+    <string name="cd_front_label_photo">Front label photo</string>
+    <string name="cd_back_label_photo">Back label photo</string>
+    <string name="format_cd_additional_label_photo">Additional label photo %1$d</string>
 <string name="label_detected_details">Detected Details</string>
     <string name="msg_tap_chip_to_edit">Tap any chip to edit</string>
     <string name="label_needs_review">Needs Review</string>
 <string name="action_edit_all_fields">Edit all fields</string>
     <string name="action_add_more_details">Add more details</string>
-    <string name="msg_analyzing_label">Analyzing label photos</string>
-    <string name="msg_analyzing_label_detail">We are checking blur, merging front/back text, and preparing the most reliable fields.</string>
     <string name="label_review_fields">Review these fields</string>
     <string name="label_qr_website">QR website</string>
     <string name="action_open_website">Open website</string>
     <string name="label_qr_link_found">QR link found</string>
 <string name="action_explore_extract">Explore &amp; extract</string>
     <string name="label_detected_field_evidence">Detected field evidence</string>
+    <string name="label_label_evidence">Label evidence</string>
+    <string name="evidence_from_label">From the label</string>
+    <string name="evidence_confirmed_on_label">Confirmed on the label</string>
+    <string name="evidence_from_qr_website">From the QR website</string>
+    <string name="evidence_from_label_code">From the label code</string>
+    <string name="evidence_from_saved_bag">From a saved bag</string>
+    <string name="evidence_from_barcode_lookup">From the barcode lookup</string>
+    <string name="evidence_suggested_from_label_context">Suggested from label context</string>
+    <string name="evidence_front_photo">Front photo</string>
+    <string name="evidence_back_photo">Back photo</string>
 
     <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
     <string name="cd_bag_photo">Bag photo</string>
@@ -540,25 +551,44 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">AI Service (Mindlayer)</string>
-    <string name="action_connect_mindlayer">Connect Mindlayer</string>
     <string name="action_mindlayer_google_play">Get Mindlayer on Google Play</string>
-    <string name="msg_mindlayer_connection_offer">Mindlayer is installed. Would you like to connect it for private, on-device AI?</string>
     <string name="msg_mindlayer_install_recommendation">Install Mindlayer from Google Play to read bag labels with private, on-device AI. You can do this later in Settings.</string>
     <string name="action_test_connection">Test Connection</string>
     <string name="action_run_test_prompt">Run Test Prompt</string>
     <string name="label_testing">Testing…</string>
+    <string name="msg_checking_label">Checking the label…</string>
+    <string name="msg_checking_more_details">Checking for more details…</string>
+    <plurals name="format_label_details_need_review">
+        <item quantity="one">%1$d detail needs review</item>
+        <item quantity="other">%1$d details need review</item>
+    </plurals>
+    <string name="msg_could_not_read_more_details">Couldn’t read more details. You can keep editing or try again.</string>
+    <string name="action_set_up_label_recognition">Set up label recognition</string>
+    <string name="action_use_label_recognition">Use label recognition</string>
+    <string name="action_finish_label_recognition_setup">Finish setup</string>
+    <string name="action_always_enter_manually">Always enter manually</string>
+    <string name="action_apply_suggestion">Apply</string>
+    <string name="format_new_label_suggestion">New suggestion for %1$s: %2$s</string>
+    <string name="msg_label_recognition_offer">Optional: use Mindlayer on this device to look for more label details. Review everything before saving.</string>
+    <string name="action_try_label_again">Try again</string>
+    <string name="action_retake_label_photo">Retake photo</string>
+    <string name="label_coffee_draft">Coffee draft</string>
+    <string name="action_review_coffee_draft">Review coffee details</string>
+    <string name="msg_draft_needs_attention">Needs your review</string>
+    <string name="action_discard_draft">Discard draft</string>
+    <string name="cd_open_coffee_draft">Open %1$s. %2$s</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">Enable AI</string>
-    <string name="consent_requesting">Requesting AI access…</string>
-    <string name="consent_granted">AI enabled</string>
-    <string name="consent_already_approved">AI is already enabled</string>
-    <string name="consent_still_unavailable">AI is approved but the service isn\'t ready yet</string>
-    <string name="consent_declined">AI access wasn\'t granted</string>
-    <string name="consent_denied_temporary">AI access was denied — try again later</string>
-    <string name="consent_denied_permanent">AI access is blocked — unblock it in the Mindlayer app</string>
-    <string name="consent_service_unavailable">Mindlayer AI service is unavailable</string>
-    <string name="consent_failed">Couldn\'t request AI access</string>
+    <string name="action_enable_ai">Enable label recognition</string>
+    <string name="consent_requesting">Requesting label-recognition access…</string>
+    <string name="consent_granted">Label recognition enabled</string>
+    <string name="consent_already_approved">Label recognition is already enabled</string>
+    <string name="consent_still_unavailable">Label recognition is approved but is not ready yet</string>
+    <string name="consent_declined">Label recognition wasn\'t enabled</string>
+    <string name="consent_denied_temporary">Label-recognition access was denied — try again later</string>
+    <string name="consent_denied_permanent">Label-recognition access is blocked — manage it in the Mindlayer app</string>
+    <string name="consent_service_unavailable">Enhanced label recognition is unavailable</string>
+    <string name="consent_failed">Couldn\'t request label-recognition access</string>
 
     <!-- PostBrewCheckInCard -->
     <string name="label_how_was_last_cup">How was your last cup?</string>
@@ -574,6 +604,10 @@
     <string name="msg_save_favorite_hint">Give this recipe a name you\'ll remember</string>
     <string name="hint_save_favorite_example">e.g. Monday Morning, Weekend Slow</string>
     <string name="action_save_simple">Save</string>
+    <string name="action_save_coffee">Save coffee</string>
+    <string name="screen_add_coffee_title">Add coffee</string>
+    <string name="screen_edit_coffee_title">Edit coffee</string>
+    <string name="screen_review_coffee_title">Review coffee</string>
 
     <!-- ScanHistoryDialog -->
     <string name="dialog_scan_history_title">Scan History</string>
@@ -598,38 +632,29 @@
     <string name="action_scan_label">Scan label</string>
     <string name="action_add_bag_barcode">Scan barcode</string>
     <string name="action_read_bag_photos">Read bag photos</string>
-    <string name="action_scan_bag_ai">Scan bag · AI fills details</string>
     <string name="action_scan_first_bag">Scan my first bag</string>
     <string name="action_add_bag_manual">Add manually</string>
     <string name="msg_no_beans_yet">No beans yet</string>
     <string name="msg_scan_first_coffee_hint">Scan the front and back to fill in the details automatically. Photos stay on your device.</string>
-    <string name="dialog_ai_scan_setup_title">Set up private label scanning</string>
-    <string name="msg_ai_scan_setup">Starlit Coffee uses Mindlayer to read coffee labels privately on your device. Install it once, then this scan will continue automatically.</string>
-    <string name="dialog_ai_scan_unsupported_title">Automatic scanning isn\'t supported</string>
-    <string name="msg_ai_scan_unsupported">Automatic label scanning needs Android 12 or newer. You can still add the bag manually or scan its barcode.</string>
     <string name="action_brew_now">Brew now</string>
     <string name="msg_could_not_read_label">Could not read label</string>
     <string name="action_retake_photo">Retake photo</string>
     <string name="action_add_details_manually">Add details manually</string>
-    <string name="msg_llm_enrichment_succeeded">AI enrichment improved this label scan.</string>
-    <string name="msg_llm_enrichment_failed">The AI couldn\'t finish reading this label this time — it timed out or hit a temporary error (it already retried automatically). Tap retry to try once more, or just fill in the fields below.</string>
-    <string name="msg_llm_enrichment_unavailable">AI enrichment is not available right now. You can retry or continue editing manually.</string>
-    <string name="msg_llm_model_setup_required">Mindlayer needs its on-device model before AI can read this label. Open setup, then retry; the fields already found are safe to edit.</string>
-    <string name="msg_llm_enrichment_timed_out">The scan reached its five-minute limit. You can use the fields already found, edit them, or retry.</string>
-    <string name="action_set_up_ai">Open model setup</string>
-    <string name="action_retry_llm_enrichment">Retry AI enrichment</string>
 
     <!-- BrewLogDetailScreen -->
     <string name="action_share_brew">Share brew</string>
 
     <!-- LiveScanScreen -->
     <string name="dialog_discard_scan_title">Discard scan?</string>
-    <string name="msg_discard_scan_body">You have detected fields that haven\'t been saved.</string>
+    <string name="msg_discard_scan_body">This coffee draft and its staged photos will be deleted.</string>
     <string name="dialog_discard_changes_title">Discard changes?</string>
     <string name="msg_discard_changes_body">Your unsaved changes will be lost.</string>
     <string name="action_discard">Discard</string>
     <string name="action_keep_scanning">Keep Scanning</string>
     <string name="msg_camera_permission_required">Camera permission required</string>
+    <string name="msg_camera_permission_alternatives">You can allow camera access, choose label photos, or enter the bag details yourself.</string>
+    <string name="action_choose_photos">Choose photos</string>
+    <string name="action_enter_manually">Enter manually</string>
     <string name="screen_scan_bag_title">Scan Coffee Bag</string>
 
     <!-- MethodPickerScreen -->
@@ -665,6 +690,13 @@
     <string name="action_view_history">View History</string>
     <string name="action_share_report">Share Report</string>
     <string name="action_clear">Clear</string>
+    <string name="action_ok">OK</string>
+    <string name="action_set_roast_date">Set roast date</string>
+    <string name="action_change_roast_date">Change roast date</string>
+    <string name="action_set_best_before">Set best before</string>
+    <string name="action_change_best_before">Change best before</string>
+    <string name="action_show_optional_details">Show optional details</string>
+    <string name="action_hide_optional_details">Hide optional details</string>
 
     <!-- Enum: StrengthPreset -->
     <string name="strength_light">Light</string>

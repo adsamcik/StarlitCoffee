@@ -57,11 +57,6 @@
     <string name="format_notif_brew_target_reached_body">A meta %1$s da sua receita foi atingida. Toque para verificar a bebida.</string>
     <string name="action_add_coffee">Adicionar café</string>
     <string name="action_read_bag_photos">Leia fotos da bolsa</string>
-    <string name="action_scan_bag_ai">Saco de digitalização · AI preenche detalhes</string>
     <string name="action_scan_first_bag">Digitalize minha primeira bolsa</string>
     <string name="msg_scan_first_coffee_hint">Digitalize a frente e o verso para preencher os detalhes automaticamente. As fotos permanecem no seu dispositivo.</string>
-    <string name="dialog_ai_scan_setup_title">Configurar digitalização de marca própria</string>
-    <string name="msg_ai_scan_setup">Starlit Coffee usa Mindlayer para ler rótulos de café de forma privada em seu dispositivo. Instale-o uma vez e a verificação continuará automaticamente.</string>
-    <string name="dialog_ai_scan_unsupported_title">A verificação automática não é compatível</string>
-    <string name="msg_ai_scan_unsupported">A digitalização automática de etiquetas precisa do Android 12 ou mais recente. Você ainda pode adicionar a sacola manualmente ou escanear seu código de barras.</string>
 </resources>
