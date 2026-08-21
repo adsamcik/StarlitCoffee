@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_settings_section_support">Támogatás és adatvédelem</string>
+    <string name="label_diagnostics">Diagnosztika</string>
+    <string name="msg_diagnostics_summary">Tekintse át, ossza meg, mentse vagy törölje a helyi hibaelhárítási adatokat</string>
+    <string name="label_privacy_policy">Adatvédelmi szabályzat</string>
+    <string name="msg_privacy_policy_summary">Olvassa el, hogyan kezeli a Starlit Coffee az adatokat</string>
+    <string name="msg_privacy_policy_open_failed">Az adatvédelmi szabályzat nem nyitható meg.</string>
+    <string name="screen_diagnostics_title">Diagnosztika</string>
+    <string name="msg_diagnostics_unavailable">A diagnosztika nem érhető el ebben a folyamatban.</string>
+    <string name="msg_diagnostics_support_description">A hibaelhárításhoz csomagba gyűjti a legutóbbi alkalmazáshibákat és teljesítményadatokat.</string>
+</resources>

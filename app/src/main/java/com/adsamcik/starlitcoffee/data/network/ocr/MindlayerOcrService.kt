@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Point
 import android.graphics.Rect
-import android.util.Log
 import com.adsamcik.mindlayer.ServiceCapabilities
 import com.adsamcik.mindlayer.ModelReadinessItem
 import com.adsamcik.mindlayer.sdk.Mindlayer
@@ -16,8 +15,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import java.io.ByteArrayOutputStream
 import kotlin.time.Duration.Companion.seconds
-
-private const val TAG = "MindlayerOcr"
+import dev.tracebox.Tracebox
 
 class MindlayerModelSetupRequiredException(
     val family: String,
@@ -104,12 +102,12 @@ class MindlayerOcrService(
      */
     override suspend fun recognize(bitmap: Bitmap): RecognizedText? {
         if (!ensureCapability(throwOnSetupRequired = true)) {
-            Log.w(TAG, "OCR capability not advertised by Mindlayer service")
+            Tracebox.log.warn("OCR capability not advertised by Mindlayer service")
             return null
         }
 
         val pngBytes = withContext(Dispatchers.Default) { encodePng(bitmap) } ?: run {
-            Log.w(TAG, "PNG encode returned null — skipping OCR")
+            Tracebox.log.warn("PNG encode returned null — skipping OCR")
             return null
         }
 
@@ -128,7 +126,7 @@ class MindlayerOcrService(
             }
         }.onFailure { error ->
             if (error is CancellationException) throw error
-            Log.w(TAG, "OCR call failed: ${error.message}", error)
+            Tracebox.log.error(error, "OCR call failed: {}", error.message)
         }.getOrNull()
     }
 
@@ -147,7 +145,7 @@ class MindlayerOcrService(
         } catch (e: MindlayerModelSetupRequiredException) {
             throw e
         } catch (e: Exception) {
-            Log.w(TAG, "Capability check failed: ${e.message}", e)
+            Tracebox.log.error(e, "Capability check failed: {}", e.message)
             false
         }
     }

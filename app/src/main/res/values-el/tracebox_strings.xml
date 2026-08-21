@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_settings_section_support">Υποστήριξη και απόρρητο</string>
+    <string name="label_diagnostics">Διαγνωστικά</string>
+    <string name="msg_diagnostics_summary">Ελέγξτε, κοινοποιήστε, αποθηκεύστε ή διαγράψτε τοπικά δεδομένα αντιμετώπισης προβλημάτων</string>
+    <string name="label_privacy_policy">Πολιτική απορρήτου</string>
+    <string name="msg_privacy_policy_summary">Διαβάστε πώς το Starlit Coffee χειρίζεται τα δεδομένα</string>
+    <string name="msg_privacy_policy_open_failed">Δεν ήταν δυνατό το άνοιγμα της πολιτικής απορρήτου.</string>
+    <string name="screen_diagnostics_title">Διαγνωστικά</string>
+    <string name="msg_diagnostics_unavailable">Τα διαγνωστικά δεν είναι διαθέσιμα σε αυτή τη διεργασία.</string>
+    <string name="msg_diagnostics_support_description">Συγκεντρώνει πρόσφατα σφάλματα εφαρμογής και στοιχεία απόδοσης για την αντιμετώπιση προβλημάτων.</string>
+</resources>

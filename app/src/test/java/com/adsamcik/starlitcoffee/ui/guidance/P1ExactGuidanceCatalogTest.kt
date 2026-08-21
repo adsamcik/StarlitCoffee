@@ -63,6 +63,53 @@ class P1ExactGuidanceCatalogTest {
     }
 
     @Test
+    fun `exact Learn contract merges recipe summary and structured stage targets`() {
+        BuiltInP1RecipeCatalog.recipes.forEach { recipe ->
+            val guidance = requireNotNull(catalog.findRecipe(recipe.id))
+            val plan = requireNotNull(BuiltInP1ExactStagePlanCatalog.find(recipe.id))
+            val learnGuide = P1ExactLearnGuideFactory.create(recipe, guidance, plan)
+            val stages = plan.nodes.map { node -> (node as StagePlanNode.Stage).definition }
+
+            assertEquals(recipe, learnGuide.recipe)
+            assertEquals(guidance, learnGuide.guidance)
+            assertEquals(recipe.orderedStageCount, learnGuide.stageFactsByContentId.size)
+            guidance.stages.zip(stages).forEach { (authored, stage) ->
+                val facts = requireNotNull(learnGuide.stageFactsByContentId[authored.contentId])
+                assertTrue(facts.equipmentState.isNotBlank())
+                assertEquals(stage.referenceTargets.temperatureTarget, facts.temperatureTarget)
+                if (stage.referenceTargets.massTargets.isNotEmpty()) {
+                    assertTrue(facts.addedWater != null || facts.cumulativeWater != null)
+                }
+                if (stage.referenceTargets.timeTargets.isNotEmpty()) {
+                    assertTrue(facts.startCondition != null || facts.timing != null)
+                }
+            }
+        }
+    }
+
+    @Test
+    fun `Clever water-first erratum preserves the source two-thirty release`() {
+        val recipe = requireNotNull(
+            catalog.findRecipe(BuiltInRecipeId("clever_water_first_15_250")),
+        )
+        val steep = recipe.stages.single { stage -> stage.sourceStageId == "stage_04" }
+        val release = recipe.stages.single { stage -> stage.sourceStageId == "stage_05" }
+
+        assertEquals(
+            "Stir around 2:00 and prepare to release at 2:30",
+            steep.targetDurationOrRange,
+        )
+        assertEquals("At 2:30", release.startTimeOrPrecedingCondition)
+        assertEquals("Target drawdown about 60 seconds", release.targetDurationOrRange)
+        assertEquals(
+            "Flow begins immediately and completes around 3:30",
+            release.completionCriterion,
+        )
+        assertEquals(release.completionCriterion, release.full.observableCompletionCue)
+        assertEquals(release.completionCriterion, release.concise.completionCue)
+    }
+
+    @Test
     fun `every stage preserves all four canonical guidance densities`() {
         catalog.stages.forEach { stage ->
             val full = stage.presentation(GuidancePresentationLevel.FULL)
@@ -72,7 +119,8 @@ class P1ExactGuidanceCatalogTest {
             val custom = stage.presentation(GuidancePresentationLevel.CUSTOM)
 
             assertEquals(stage.full.imperativeInstruction, full.instruction)
-            assertEquals(stage.full.conciseExplanation, full.explanation)
+            assertEquals(stage.concise.currentTarget, full.target)
+            assertNull(full.explanation)
             assertEquals(stage.full.observableCompletionCue, full.completionCue)
             assertEquals(stage.concise.currentAction, concise.instruction)
             assertEquals(stage.concise.currentTarget, concise.target)
@@ -87,6 +135,8 @@ class P1ExactGuidanceCatalogTest {
                 utilities.utilities,
             )
             assertEquals(stage.full.imperativeInstruction, custom.instruction)
+            assertEquals(stage.concise.currentTarget, custom.target)
+            assertNull(custom.explanation)
             assertTrue(stage.full.textFreeIllustrationBrief.isNotBlank())
             assertTrue(stage.full.accessibleAltText.isNotBlank())
             assertEquals(stage.full.accessibleAltText, full.accessibleAltText)
@@ -227,46 +277,52 @@ class P1ExactGuidanceCatalogTest {
     @Test
     fun `source warnings and critical review classifications remain explicit`() {
         val warningStages = catalog.stages.filter { stage -> stage.warning != null }
-        val criticalStages = catalog.stages.filter(
-            P1ExactStageGuidance::requiresSafetyCriticalExpertReview,
-        )
-        val criticalWithAuthoredWarnings = criticalStages.filter { stage -> stage.warning != null }
-        val criticalWithoutAuthoredWarnings = criticalStages.filter { stage -> stage.warning == null }
+        val criticalSafetyStages = catalog.stages.filter { stage ->
+            stage.safetySeverity == StageSafetySeverity.CRITICAL
+        }
+        val warningSafetyStages = catalog.stages.filter { stage ->
+            stage.safetySeverity == StageSafetySeverity.WARNING
+        }
+        val visualCriticalWithoutSafety = catalog.stages.filter { stage ->
+            stage.requiresSafetyCriticalExpertReview && stage.safetySeverity == null
+        }
 
         assertEquals(37, warningStages.size)
         assertEquals(53, catalog.stages.count { it.visualPriority == P1ExactVisualPriority.MANDATORY })
         assertEquals(33, catalog.stages.count { it.visualPriority == P1ExactVisualPriority.OPTIONAL })
-        assertEquals(28, criticalStages.size)
-        assertEquals(23, criticalWithAuthoredWarnings.size)
-        assertEquals(5, criticalWithoutAuthoredWarnings.size)
+        assertEquals(28, catalog.stages.count(P1ExactStageGuidance::requiresSafetyCriticalExpertReview))
+        assertEquals(21, criticalSafetyStages.size)
+        assertEquals(12, warningSafetyStages.size)
+        assertTrue(visualCriticalWithoutSafety.isNotEmpty())
 
         warningStages.forEach { stage ->
             GuidancePresentationLevel.entries.forEach { level ->
                 assertEquals(stage.warning, stage.presentation(level).warning)
             }
         }
-        criticalWithAuthoredWarnings.forEach { stage ->
+        criticalSafetyStages.forEach { stage ->
+            assertTrue(stage.warning?.isNotBlank() == true)
             val content = stage.toBuiltInGuidanceContent()
-            assertTrue(content.safetyCritical)
+            assertFalse(content.safetyCritical)
             assertTrue(content.visibility.alwaysVisible)
             assertEquals(stage.warning, content.text.warning)
         }
-        criticalWithoutAuthoredWarnings.forEach { stage ->
+        warningSafetyStages.forEach { stage ->
+            assertTrue(stage.warning?.isNotBlank() == true)
             val content = stage.toBuiltInGuidanceContent()
             assertFalse(content.safetyCritical)
-            assertNull(content.text.warning)
-            assertEquals(
-                StageSafetySeverity.CRITICAL,
-                planStage(stage).safetyMessages.single().severity,
-            )
+            assertEquals(stage.warning, content.text.warning)
+        }
+        visualCriticalWithoutSafety.forEach { stage ->
+            assertTrue(planStage(stage).safetyMessages.isEmpty())
         }
     }
 
     @Test
     fun `compact live resolver never removes an authored stage warning`() {
-        val stage = stage(BuiltInRecipeId("v60_official_15_250"), sourceStageNumber = 4)
+        val stage = stage(BuiltInRecipeId("auto_cupone_20_300"), sourceStageNumber = 1)
         val planStage = planStage(stage)
-        assertEquals(StageSafetySeverity.WARNING, planStage.safetyMessages.single().severity)
+        assertEquals(StageSafetySeverity.CRITICAL, planStage.safetyMessages.single().severity)
 
         val resolver = DurableBrewSessionGuidanceResolver(
             guidanceCatalogs = listOf(catalog.asBuiltInGuidanceCatalog()),
@@ -280,7 +336,7 @@ class P1ExactGuidanceCatalogTest {
                     preferences = DurableBrewSessionGuidancePreferences(sessionOverride = level),
                 ),
             )
-            val resolvedStage = resolution.routineContent.single { content ->
+            val resolvedStage = (resolution.routineContent + resolution.criticalContent).single { content ->
                 content.id == stage.contentId
             }
 

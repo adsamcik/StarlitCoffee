@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_settings_section_support">Atbalsts un privātums</string>
+    <string name="label_diagnostics">Diagnostika</string>
+    <string name="msg_diagnostics_summary">Pārskatiet, kopīgojiet, saglabājiet vai dzēsiet lokālos problēmu novēršanas datus</string>
+    <string name="label_privacy_policy">Privātuma politika</string>
+    <string name="msg_privacy_policy_summary">Uzziniet, kā Starlit Coffee apstrādā datus</string>
+    <string name="msg_privacy_policy_open_failed">Neizdevās atvērt privātuma politiku.</string>
+    <string name="screen_diagnostics_title">Diagnostika</string>
+    <string name="msg_diagnostics_unavailable">Diagnostika šajā procesā nav pieejama.</string>
+    <string name="msg_diagnostics_support_description">Apkopo jaunākās lietotnes kļūdas un veiktspējas kontekstu problēmu novēršanai.</string>
+</resources>

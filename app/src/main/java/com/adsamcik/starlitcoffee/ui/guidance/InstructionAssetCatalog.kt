@@ -157,9 +157,14 @@ data class InstructionAssetRecord(
     val safetySensitive: Boolean,
     val provenance: InstructionAssetProvenance,
     val review: InstructionAssetReview,
+    /** SHA-256 of the packaged drawable bytes used for hash-bound visual review. */
+    val resourceSha256: String? = null,
 ) {
     init {
         require(drawableRes != 0) { "Instruction assets must use a drawable resource" }
+        require(resourceSha256 == null || SHA256_PATTERN.matches(resourceSha256)) {
+            "Instruction asset resource hashes must be lowercase SHA-256 values"
+        }
         if (namingConvention == InstructionAssetNamingConvention.SCOPED_SLOT) {
             require(altTextRes != null && altTextRes != 0) {
                 "Scoped instruction assets must use a localized alt-text resource"
@@ -196,6 +201,7 @@ data class InstructionAssetRecord(
 
     companion object {
         const val FAMILY_DEFAULT_PROFILE_SEGMENT = "family"
+        private val SHA256_PATTERN = Regex("[0-9a-f]{64}")
     }
 }
 

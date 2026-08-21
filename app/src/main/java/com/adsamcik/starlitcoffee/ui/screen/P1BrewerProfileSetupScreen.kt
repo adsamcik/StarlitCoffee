@@ -425,7 +425,7 @@ private fun ExactRecipeSelectionCard(
 }
 
 @Composable
-private fun ExactRecipeDetailsCard(recipe: BuiltInP1RecipeDefinition) {
+internal fun ExactRecipeDetailsCard(recipe: BuiltInP1RecipeDefinition) {
     Card(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         modifier = Modifier.fillMaxWidth(),
@@ -474,7 +474,7 @@ private fun ExactRecipeDetailsCard(recipe: BuiltInP1RecipeDefinition) {
 }
 
 @Composable
-private fun DetailsRow(label: String, value: String) {
+internal fun DetailsRow(label: String, value: String) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -758,7 +758,7 @@ private fun CezveHeatSourceCard(
 
 
 @Composable
-private fun temperatureLabel(temperature: P1TemperatureSemantics): String = when (temperature.basis) {
+internal fun temperatureLabel(temperature: P1TemperatureSemantics): String = when (temperature.basis) {
     P1TemperatureBasis.USER_EXACT -> stringResource(
         R.string.format_exact_recipe_temperature,
         formatNumber(requireNotNull(temperature.minimumC)),
@@ -792,7 +792,7 @@ private fun temperatureRangeLabel(temperature: P1TemperatureSemantics, resourceI
     )
 
 @Composable
-private fun timeLabel(time: P1TimeSemantics): String = when (time.basis) {
+internal fun timeLabel(time: P1TimeSemantics): String = when (time.basis) {
     P1TimeBasis.APPROXIMATE -> stringResource(
         R.string.format_exact_recipe_time_approximate,
         formatDuration(requireNotNull(time.minimumSeconds)),
@@ -817,7 +817,7 @@ private fun timeLabel(time: P1TimeSemantics): String = when (time.basis) {
 }
 
 @Composable
-private fun ratioDenominatorLabel(roles: Set<QuantityRole>): String {
+internal fun ratioDenominatorLabel(roles: Set<QuantityRole>): String {
     val labels = mutableListOf<String>()
     for (role in roles.sortedBy(QuantityRole::ordinal)) {
         labels += when (role) {
@@ -831,7 +831,7 @@ private fun ratioDenominatorLabel(roles: Set<QuantityRole>): String {
 }
 
 @Composable
-private fun equipmentOptionLabel(option: P1EquipmentOption): String {
+internal fun equipmentOptionLabel(option: P1EquipmentOption): String {
     val parts = mutableListOf(filterSelectionLabel(option.filterSelection))
     option.basketId?.let { basketId -> parts += basketLabel(basketId) }
     for (accessoryId in option.accessoryIds.sortedBy { it.value }) {
@@ -857,6 +857,7 @@ private fun filterSelectionLabel(selection: FilterSelection): String = when (sel
 private fun filterLabel(id: FilterProfileId): String = stringResource(
     when (id.value) {
         "cone_paper" -> R.string.label_exact_equipment_cone_paper
+        "moccamaster_number_four_cone_paper" -> R.string.label_exact_equipment_moccamaster_number_four_paper
         "wave_paper" -> R.string.label_exact_equipment_wave_paper
         "wedge_paper" -> R.string.label_exact_equipment_wedge_paper
         "chemex_six_cup_bonded_paper" -> R.string.label_exact_equipment_chemex_paper
@@ -873,6 +874,7 @@ private fun basketLabel(id: BasketProfileId): String = stringResource(
         "automatic_cone_basket" -> R.string.label_exact_equipment_cone_basket
         "automatic_flat_basket" -> R.string.label_exact_equipment_flat_basket
         "automatic_number_one_basket" -> R.string.label_exact_equipment_number_one_basket
+        "moccamaster_kbgv_select_cone_basket" -> R.string.label_exact_equipment_moccamaster_kbgv_basket
         else -> R.string.label_exact_recipe_unavailable
     },
 )
@@ -881,6 +883,9 @@ private fun basketLabel(id: BasketProfileId): String = stringResource(
 private fun accessoryLabel(id: AccessoryProfileId): String = stringResource(
     when (id.value) {
         "phin_screw_insert" -> R.string.label_exact_equipment_phin_screw_insert
+        "moccamaster_kbgv_glass_carafe" -> R.string.label_exact_equipment_moccamaster_glass_carafe
+        "moccamaster_automatic_drip_stop" -> R.string.label_exact_equipment_moccamaster_drip_stop
+        "moccamaster_half_full_selector" -> R.string.label_exact_equipment_moccamaster_selector
         else -> R.string.label_exact_recipe_unavailable
     },
 )
@@ -897,7 +902,7 @@ private fun heatSourceLabel(heatSource: HeatSourceClass): String = when (heatSou
 }
 
 @Composable
-private fun formatMass(value: Double): String = stringResource(
+internal fun formatMass(value: Double): String = stringResource(
     R.string.format_brewer_profile_mass,
     formatNumber(value),
     stringResource(R.string.unit_grams),
@@ -909,7 +914,7 @@ private fun formatDuration(seconds: Int): String = "%d:%02d".format(
     seconds % 60,
 )
 
-private fun formatNumber(value: Double): String = NumberFormat.getNumberInstance(Locale.getDefault()).run {
+internal fun formatNumber(value: Double): String = NumberFormat.getNumberInstance(Locale.getDefault()).run {
     isGroupingUsed = false
     minimumFractionDigits = 0
     maximumFractionDigits = 3

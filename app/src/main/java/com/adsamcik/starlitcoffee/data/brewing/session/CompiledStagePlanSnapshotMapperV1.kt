@@ -7,6 +7,7 @@ import com.adsamcik.starlitcoffee.domain.brewing.StagePlanId
 import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStageDefinition
 import com.adsamcik.starlitcoffee.domain.brewing.session.CompiledBrewStage
 import com.adsamcik.starlitcoffee.domain.brewing.session.CompiledStagePlan
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageAdvanceConstraint
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageAlertPolicy
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageCompletionMode
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageEquipmentRequirement
@@ -62,6 +63,10 @@ internal object CompiledStagePlanSnapshotMapperV1 {
             requiredEquipmentStateId = value.equipmentRequirement?.requiredState?.value,
             completion = completionToSnapshot(value.completionMode),
             referenceTargets = StageReferenceTargetsSnapshotMapper.toSnapshot(value.referenceTargets),
+            advanceConstraint = StageAdvanceConstraintSnapshotV1(
+                notBeforeStageElapsedMillis = value.advanceConstraint.notBeforeStageElapsedMillis,
+                notBeforeBrewElapsedMillis = value.advanceConstraint.notBeforeBrewElapsedMillis,
+            ),
             alertPolicy = StageAlertPolicySnapshotV1(
                 alertOnStart = value.alertPolicy.alertOnStart,
                 alertOnCompletion = value.alertPolicy.alertOnCompletion,
@@ -134,6 +139,10 @@ internal object CompiledStagePlanSnapshotMapperV1 {
             },
             completionMode = completionToDomain(value.completion),
             referenceTargets = StageReferenceTargetsSnapshotMapper.toDomain(value.referenceTargets),
+            advanceConstraint = StageAdvanceConstraint(
+                notBeforeStageElapsedMillis = value.advanceConstraint.notBeforeStageElapsedMillis,
+                notBeforeBrewElapsedMillis = value.advanceConstraint.notBeforeBrewElapsedMillis,
+            ),
             alertPolicy = StageAlertPolicy(
                 alertOnStart = value.alertPolicy.alertOnStart,
                 alertOnCompletion = value.alertPolicy.alertOnCompletion,

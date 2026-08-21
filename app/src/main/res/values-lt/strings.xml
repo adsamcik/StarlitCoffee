@@ -116,10 +116,8 @@
     <string name="prep_tip_pulsar_40k">Praskalaukite 40K metalinį filtrą, kad įkaistų cilindras. Uždėkite cilindrą, suberkite kavą, išlyginkite sluoksnį, uždėkite paskirstymo dangtelį. Nunulinkite svarstykles.</string>
     <string name="prep_tip_pour_over_paper">Įdėkite popierinį filtrą ir praskalaukite karštu vandeniu, kad įkaistų ir dingtų popieriaus skonis. Suberkite kavą, nunulinkite svarstykles.</string>
     <string name="prep_tip_french_press">Pašildykite presą, tada išpilkite vandenį. Suberkite kavą, pastatykite ant svarstyklių ir nunulinkite prieš pildami vandenį.</string>
-    <string name="prep_tip_aeropress">Įdėkite praskalautą filtrą į dangtelį. Suberkite kavą, pastatykite prietaisą ant tvirto puodelio ar indo ir nunulinkite svarstykles.</string>
     <string name="prep_tip_espresso">Nusausinkite portafiltrą. Įdėkite dozę, paskirstykite ir tolygiai suspauskite prieš įtvirtindami.</string>
     <string name="prep_tip_moka">Pripilkite apatinę kamerą iki vožtuvo. Pripildykite krepšelį kava, išlyginkite — nespauskite. Atsargiai surinkite.</string>
-    <string name="prep_tip_cold_brew">Suberkite kavą į indą, nunulinkite svarstykles, tada įpilkite kambario temperatūros ar šalto vandens ir uždenkite.</string>
     <string name="format_prep_grind_specific">Malimas %1$s — nustatykite %2$s į %3$s</string>
     <string name="format_prep_grind_generic">Malimas %1$s — %2$s (%3$s)</string>
 
@@ -360,18 +358,12 @@
     <string name="instruction_french_press_start">Įpilkite visą vandenį, švelniai pamaišykite ir uždėkite dangtį</string>
     <string name="instruction_french_press_steep">Leiskite plikytis netrikdant iki nustatyto laiko</string>
     <string name="instruction_french_press_plunge">Lėtai nuspauskite stūmoklį, tada nupilkite kavą</string>
-    <string name="instruction_aeropress_start">Įpilkite vandens, pamaišykite ir pradėkite plikymą</string>
-    <string name="instruction_aeropress_steep">Plikykite su uždėtu dangteliu; pasiruoškite spausti</string>
-    <string name="instruction_aeropress_press">Spauskite tolygiai iki šnypštimo, tada sustokite</string>
     <string name="instruction_espresso_start">Įtvirtinkite portafiltrą ir pradėkite ekstrakciją</string>
     <string name="instruction_espresso_pull">Stebėkite tėkmę ir išeigą; laikykite puodelį ant svarstyklių</string>
     <string name="instruction_espresso_stop">Sustokite pasiekę tikslinę išeigą arba kai srovė pašviesėja</string>
     <string name="instruction_moka_start">Surinkite kavinuką ir švelniai kaitinkite atidarę dangtį</string>
     <string name="instruction_moka_flow">Stebėkite, kaip kava teka į viršutinę kamerą</string>
     <string name="instruction_moka_remove">Nukelkite nuo ugnies, kai srovė pašviesėja arba pradeda purkšti</string>
-    <string name="instruction_cold_brew_start">Sumaišykite kavą ir vandenį, pamaišykite, kad sudrėktų visa kava</string>
-    <string name="instruction_cold_brew_steep">Uždenkite ir palikite plikytis; kava turi būti visiškai sudrėkusi</string>
-    <string name="instruction_cold_brew_filter">Nufiltruokite koncentratą ir atvėsinkite arba atskieskite prieš patiekdami</string>
 
     <!-- Warnings -->
     <!-- Taste Feedback -->
@@ -762,7 +754,6 @@
     <string name="screen_learning_title">Mokykitės</string>
     <string name="msg_learning_subtitle">Vaizdiniai nuoseklūs kavos ruošimo vadovai</string>
     <string name="msg_learning_intro">Pasirinkite kavos ruošimo įrenginį ir receptą, tada peržiūrėkite po vieną aiškų žingsnį.</string>
-    <string name="msg_learning_empty">Mokymosi vadovų dar nėra.</string>
     <string name="action_show_details">Rodyti išsamią informaciją</string>
     <string name="action_hide_details">Slėpti išsamią informaciją</string>
 </resources>

@@ -24,7 +24,6 @@ internal val P1ManualGravityPlanSpecs = listOf(
             completion = cumulativeWaterCompletion(250.0),
             massTargets = listOf(waterCue(BREW_CUMULATIVE, EXACT, 250.0)),
             temperatureTarget = temperatureCue(RANGE, 92.0, 96.0),
-            sourceWarning = true,
             visualPriority = MANDATORY,
         ),
         p1Stage(
@@ -45,7 +44,6 @@ internal val P1ManualGravityPlanSpecs = listOf(
                 waterCue(BREW_CUMULATIVE, EXACT, 60.0),
             ),
             temperatureTarget = temperatureCue(EXACT, 97.0),
-            sourceWarning = true,
             visualPriority = MANDATORY,
         ),
         p1Stage(
@@ -321,7 +319,6 @@ internal val P1ManualGravityPlanSpecs = listOf(
                 waterCue(BREW_CUMULATIVE, EXACT, 400.0),
             ),
             temperatureTarget = temperatureCue(APPROXIMATE, 91.0, 96.0),
-            sourceWarning = true,
             visualPriority = MANDATORY,
         ),
     ),

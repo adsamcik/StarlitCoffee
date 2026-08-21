@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_settings_section_support">Tuki ja tietosuoja</string>
+    <string name="label_diagnostics">Diagnostiikka</string>
+    <string name="msg_diagnostics_summary">Tarkista, jaa, tallenna tai poista paikalliset vianmääritystiedot</string>
+    <string name="label_privacy_policy">Tietosuojakäytäntö</string>
+    <string name="msg_privacy_policy_summary">Lue, miten Starlit Coffee käsittelee tietoja</string>
+    <string name="msg_privacy_policy_open_failed">Tietosuojakäytäntöä ei voitu avata.</string>
+    <string name="screen_diagnostics_title">Diagnostiikka</string>
+    <string name="msg_diagnostics_unavailable">Diagnostiikka ei ole käytettävissä tässä prosessissa.</string>
+    <string name="msg_diagnostics_support_description">Paketoi viimeisimmät sovellusvirheet ja suorituskykytiedot vianmääritystä varten.</string>
+</resources>

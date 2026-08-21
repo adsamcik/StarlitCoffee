@@ -23,6 +23,8 @@ espresso = "3.7.0"
 serializationJson = "1.11.0"
 detekt = "1.23.8"
 mindlayer = "1.0.0-alpha.7"
+tracebox = "0.1.0-alpha.3"
+desugarJdkLibsNio = "2.1.5"
 
 [libraries]
 # Compose BOM
@@ -84,6 +86,12 @@ kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 
 # Mindlayer on-device LLM
 mindlayer-sdk = { group = "com.adsamcik.mindlayer", name = "sdk", version.ref = "mindlayer" }
+
+# Offline, user-controlled diagnostics
+tracebox-runtime = { group = "io.github.tracebox", name = "tracebox", version.ref = "tracebox" }
+tracebox-native = { group = "io.github.tracebox", name = "tracebox-native", version.ref = "tracebox" }
+tracebox-ui-compose = { group = "io.github.tracebox", name = "tracebox-ui-compose", version.ref = "tracebox" }
+desugar-jdk-libs-nio = { group = "com.android.tools", name = "desugar_jdk_libs_nio", version.ref = "desugarJdkLibsNio" }
 
 # Testing
 coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }

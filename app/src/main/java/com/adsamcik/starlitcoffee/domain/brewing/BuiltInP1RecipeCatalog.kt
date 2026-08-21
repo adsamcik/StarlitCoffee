@@ -31,6 +31,7 @@ enum class P1RecipeEvidenceClass {
     BATTLE_TESTED,
     COMPETITION_PROVEN,
     HISTORICALLY_DOCUMENTED,
+    APP_AUTHORED_ADAPTATION,
 }
 
 enum class P1SourceConfidence {
@@ -383,7 +384,7 @@ object BuiltInP1RecipeCatalog {
             inputG = 250.0,
             ratioValue = 16.67,
             temperature = approximateUserRange(95.0, 100.0),
-            time = approximate(160),
+            time = approximate(210),
             completion = P1CompletionSemantics.VALVE_RELEASE_AND_DRAWDOWN,
             evidenceClass = P1RecipeEvidenceClass.ORIGINAL_CREATOR_RECIPE,
             confidence = P1SourceConfidence.HIGH,
@@ -480,7 +481,7 @@ object BuiltInP1RecipeCatalog {
             temperature = P1TemperatureSemantics(P1TemperatureBasis.COLD_START_OBSERVATION_CONTROLLED),
             time = P1TimeSemantics(P1TimeBasis.OBSERVATION_DEPENDENT),
             completion = P1CompletionSemantics.FIRST_FOAM_RISE_BEFORE_ROLLING_BOIL,
-            evidenceClass = P1RecipeEvidenceClass.HISTORICALLY_DOCUMENTED,
+            evidenceClass = P1RecipeEvidenceClass.APP_AUTHORED_ADAPTATION,
             confidence = P1SourceConfidence.MEDIUM_HIGH,
             sources = setOf("SRC-MEHMET-EFENDI", "SRC-UNESCO-TURKISH"),
             stageCount = 6,
@@ -498,7 +499,7 @@ object BuiltInP1RecipeCatalog {
             temperature = P1TemperatureSemantics(P1TemperatureBasis.COLD_START_OBSERVATION_CONTROLLED),
             time = P1TimeSemantics(P1TimeBasis.OBSERVATION_DEPENDENT),
             completion = P1CompletionSemantics.SECOND_FOAM_RISE_BEFORE_ROLLING_BOIL,
-            evidenceClass = P1RecipeEvidenceClass.HISTORICALLY_DOCUMENTED,
+            evidenceClass = P1RecipeEvidenceClass.APP_AUTHORED_ADAPTATION,
             confidence = P1SourceConfidence.MEDIUM_LOW,
             sources = setOf("SRC-UNESCO-TURKISH", "SRC-MEHMET-EFENDI"),
             stageCount = 6,
@@ -510,7 +511,7 @@ object BuiltInP1RecipeCatalog {
             sourceFamily = "automatic_batch",
             sourceProfile = "one_button_home_batch_brewer_with_cone_or_flat_paper_basket_sized_for_500_g_water",
             appFamily = "automatic_batch",
-            appProfile = "automatic_batch_generic",
+            appProfile = "moccamaster_kbgv_select",
             coffeeG = 30.0,
             inputG = 500.0,
             inputRole = QuantityRole.RESERVOIR_INPUT,
@@ -522,14 +523,14 @@ object BuiltInP1RecipeCatalog {
             confidence = P1SourceConfidence.HIGH,
             sources = setOf("SRC-MOCCAMASTER-BREW", "SRC-SCA-CERTIFIED-HOME", "SRC-ECBC-STANDARD"),
             stageCount = 5,
-            equipment = automaticBatchPaperOptions(),
+            equipment = listOf(kbgvSelectEquipment()),
         ),
         recipe(
             id = "auto_batch_1000_60",
             sourceFamily = "automatic_batch",
             sourceProfile = "home_batch_brewer_with_flat_or_cone_basket_rated_for_1_000_g_reservoir_water_and_thermal_or_glass_carafe",
             appFamily = "automatic_batch",
-            appProfile = "automatic_batch_generic",
+            appProfile = "moccamaster_kbgv_select",
             coffeeG = 60.0,
             inputG = 1_000.0,
             inputRole = QuantityRole.RESERVOIR_INPUT,
@@ -541,7 +542,7 @@ object BuiltInP1RecipeCatalog {
             confidence = P1SourceConfidence.HIGH,
             sources = setOf("SRC-MOCCAMASTER-BREW", "SRC-SCA-CERTIFIED-HOME", "SRC-ECBC-STANDARD"),
             stageCount = 4,
-            equipment = automaticBatchPaperOptions(),
+            equipment = listOf(kbgvSelectEquipment()),
         ),
         recipe(
             id = "auto_cupone_20_300",
@@ -576,7 +577,7 @@ object BuiltInP1RecipeCatalog {
             coffeeG = 14.0,
             inputG = 118.0,
             ratioValue = 8.43,
-            temperature = userRange(91.0, 93.0),
+            temperature = userRange(91.0, 96.0),
             time = approximate(300),
             completion = P1CompletionSemantics.FIRST_AND_LAST_DRIP_WITHOUT_FORCED_PRESSURE,
             evidenceClass = P1RecipeEvidenceClass.ORIGINAL_CREATOR_RECIPE,
@@ -690,9 +691,14 @@ object BuiltInP1RecipeCatalog {
         accessoryIds = accessoryIds.mapTo(mutableSetOf(), ::AccessoryProfileId),
     )
 
-    private fun automaticBatchPaperOptions(): List<P1EquipmentOption> = listOf(
-        singleFilterOption("cone_paper", "automatic_cone_basket"),
-        singleFilterOption("flat_basket_paper", "automatic_flat_basket"),
+    private fun kbgvSelectEquipment(): P1EquipmentOption = singleFilterOption(
+        filterId = "moccamaster_number_four_cone_paper",
+        basketId = "moccamaster_kbgv_select_cone_basket",
+        accessoryIds = setOf(
+            "moccamaster_kbgv_glass_carafe",
+            "moccamaster_automatic_drip_stop",
+            "moccamaster_half_full_selector",
+        ),
     )
 
     private fun userExact(value: Double) = P1TemperatureSemantics(P1TemperatureBasis.USER_EXACT, value, value)

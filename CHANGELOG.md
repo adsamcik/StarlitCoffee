@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Private, user-controlled diagnostics** — Tracebox now records bounded,
+  privacy-aware app logs and JVM, ANR, OS-exit, handled-exception, and native
+  failure context locally. A simple Settings screen lets users review the exact
+  package before sharing or saving it, adjust advanced capture policy, or
+  delete all Tracebox data; nothing is uploaded automatically.
+- **Illustrated NextLevel Pulsar guide** — Learn now includes Jonathan Gagné's
+  20 g / 340 g steeped-bloom method as an eight-step, evidence-backed guide with
+  reviewed Pulsar-specific artwork, explicit valve states, drawdown guidance,
+  grind troubleshooting, and safe handling by the brewer base.
 - **Plan by coffee in the cup** — the preparation calculator can optionally
   treat a water-side amount as desired beverage output, then estimate the dry
   dose and water to pour with method-aware input-to-cup loss. The estimate is
@@ -20,11 +29,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- All 23 supported languages now ship as first-class production localizations.
-  Exact-recipe guidance no longer requires preview consent or shows preview
-  notices, and the eight-step Pulsar guide includes localized instructions,
-  targets, explanations, tips, warnings, and accessibility descriptions in
-  every supported language.
+- All 23 supported languages remain available for the app interface and the
+  new Pulsar guide. Exact-recipe technical guidance now releases only for
+  independently reviewed locales; canonical English is currently eligible,
+  while the other packaged exact locale packs remain fail-closed.
+- Pulsar learning steps now explain the 20 g / 340 g recipe as a 1:17
+  coffee-to-water ratio, identify the 60 g bloom as a cumulative 1:3 target,
+  and distinguish the final 340 g scale reading from the 280 g added after the
+  bloom. Grind and timing guidance now stands on Pulsar-specific feedback
+  instead of assuming familiarity with another brewer.
+- Learning guides now use a more expressive, image-led step layout with clearer
+  progress in a slimmer anchored header, smoothly animated progress, and
+  directional transitions that move only the changing step content. Richer
+  completion cues and a compact action dock remain comfortable on phones and
+  tablets. The
+  guide selector now groups brewers by method, gives each brewer a distinct
+  generated tactile icon matched to its physical shape, and separates recipe
+  names from quantity details. It opens directly on those methods without a
+  redundant introductory banner.
 - Bag scans now use one five-minute deadline across WorkManager restarts, and
   Mindlayer connection checks stop after five seconds instead of waiting
   indefinitely. When time runs out, the editable fields already found are
@@ -36,6 +58,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Exact Learn guides now merge authored teaching copy with the executable
+  recipe contract, showing dose, every input, ratio semantics, temperature,
+  grind scope, equipment, timing, cumulative and incremental water, completion
+  semantics, and source provenance instead of hiding the technical targets.
+- Source-defined time boundaries now prevent early stage advancement while
+  retaining observations and measurements made before the boundary. Safety
+  severity is authored independently from illustration-review priority, with
+  semantic, action-local warnings for true hazards.
+- Exact-recipe release eligibility now consumes open evidence and hardware
+  blockers and requires an independent full-resolution, phone-scale, mechanics,
+  and alt-text verdict bound to the packaged drawable SHA-256. Tracker approval
+  metadata alone no longer releases artwork.
+- The independent pixel audit now covers all 114 exact-stage illustrations.
+  It approves 103 and holds 11 incorrect frames: nine generic batch-brewer
+  views, the Switch frame that drains while its valve should be closed, and the
+  screw-phin frame whose hand pose implies unsafe downward pressure.
+- Moccamaster batch recipes now require the KBGV Select, #4 cone paper, glass
+  carafe, automatic drip stop, and correct half/full selector instead of
+  accepting generic flat-basket hardware.
+- Legacy AeroPress guidance now uses only the standard upright orientation on a
+  sturdy vessel with hands clear of the outlet. Cold brew now steeps covered at
+  4 °C or colder and is served or refrigerated promptly after filtering.
+- Cezve recipes are accurately labelled as app-authored adaptations and remain
+  blocked pending pot-headroom and heat-state review. The unsupported
+  screw-insert phin remains blocked, while the gravity-phin range is restored to
+  91–96 °C.
+- Exact Full guidance omits repetitive generated explanations, legacy V60 copy
+  follows the selected recipe's pour cadence, and unreviewed localized legacy
+  AeroPress/cold-brew overrides fall back to the corrected English safety copy.
+- The Clever water-first guide now follows its named source: break the crust at
+  2:00, let it settle for 30 seconds, release at 2:30, and expect roughly one
+  minute of drawdown instead of releasing half a minute early.
+- Pulsar guide illustrations now use genuine transparency across every
+  disconnected outer background region instead of exposing a rasterized
+  checker pattern on the guide card.
+- Learning guides now resolve the same supported language as Android's packaged
+  resources, so devices using an unsupported system language correctly receive
+  the released English curriculum.
 - Model setup failures now lead directly to Mindlayer's Models screen, while
   transient busy/resource errors honor the SDK retry hint within a small cap.
 - Cancelling an outer scan deadline continues through provider-level timeout

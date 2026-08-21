@@ -114,10 +114,8 @@
     <string name="prep_tip_pulsar_40k">Passe o filtro metálico 40K por água para pré-aquecer o cilindro. Monte o cilindro, adicione o café moído, nivele a cama e coloque a tampa de dispersão. Tare a balança.</string>
     <string name="prep_tip_pour_over_paper">Coloque o filtro de papel e passe-o por água quente para pré-aquecer e remover o sabor a papel. Adicione o café moído e tare a balança.</string>
     <string name="prep_tip_french_press">Pré-aqueça a prensa, depois esvazie-a. Adicione o café moído, coloque na balança e tare antes de adicionar água.</string>
-    <string name="prep_tip_aeropress">Insira um filtro enxaguado na tampa. Adicione o café moído, coloque o preparador sobre uma chávena ou jarro estável e tare a balança.</string>
     <string name="prep_tip_espresso">Seque o porta-filtro. Doseie, distribua e compacte nivelado antes de encaixar.</string>
     <string name="prep_tip_moka">Encha a câmara inferior até à válvula. Encha o cesto com café moído, nivele — não compacte. Monte com cuidado.</string>
-    <string name="prep_tip_cold_brew">Adicione o café moído ao recipiente, tare a balança, depois adicione água à temperatura ambiente ou fria e tape.</string>
     <string name="format_prep_grind_specific">Moagem %1$s — definir %2$s para %3$s</string>
     <string name="format_prep_grind_generic">Moagem %1$s — %2$s (%3$s)</string>
 
@@ -358,18 +356,12 @@
     <string name="instruction_french_press_start">Adicione toda a água, mexa suavemente e coloque a tampa por cima</string>
     <string name="instruction_french_press_steep">Deixe em infusão, sem mexer, até ao tempo-alvo</string>
     <string name="instruction_french_press_plunge">Pressione lentamente e depois verta o café</string>
-    <string name="instruction_aeropress_start">Adicione água, mexa e inicie a infusão</string>
-    <string name="instruction_aeropress_steep">Deixe em infusão com a tampa colocada; prepare-se para pressionar</string>
-    <string name="instruction_aeropress_press">Pressione de forma constante até ouvir o silvo, depois pare</string>
     <string name="instruction_espresso_start">Encaixe o porta-filtro e comece o shot</string>
     <string name="instruction_espresso_pull">Observe o fluxo e o rendimento; mantenha a chávena na balança</string>
     <string name="instruction_espresso_stop">Pare no rendimento-alvo ou quando o shot começar a clarear</string>
     <string name="instruction_moka_start">Monte a cafeteira e aqueça suavemente com a tampa aberta</string>
     <string name="instruction_moka_flow">Observe o café a fluir para a câmara superior</string>
     <string name="instruction_moka_remove">Retire do calor quando o fluxo ficar pálido ou começar a salpicar</string>
-    <string name="instruction_cold_brew_start">Combine café e água, mexa para molhar todo o café moído</string>
-    <string name="instruction_cold_brew_steep">Tape e deixe em infusão; mantenha o café moído totalmente saturado</string>
-    <string name="instruction_cold_brew_filter">Filtre o concentrado e arrefeça ou dilua para servir</string>
 
     <!-- Warnings -->
 <!-- Taste Feedback -->
@@ -760,7 +752,6 @@
     <string name="screen_learning_title">Aprender</string>
     <string name="msg_learning_subtitle">Guias visuais de preparação passo a passo</string>
     <string name="msg_learning_intro">Escolha um método e uma receita e explore um passo claro de cada vez.</string>
-    <string name="msg_learning_empty">Ainda não existem guias de aprendizagem disponíveis.</string>
     <string name="action_show_details">Mostrar detalhes</string>
     <string name="action_hide_details">Ocultar detalhes</string>
 </resources>

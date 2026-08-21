@@ -35,6 +35,8 @@
     <string name="msg_brew_session_paused">Brew paused.</string>
     <string name="msg_brew_stage_manual">Complete this step when the physical action is done.</string>
     <string name="msg_brew_stage_observation">Mark this step when you see the expected physical change.</string>
+    <string name="format_brew_stage_wait_before_next" translatable="false">Recipe timing: wait %1$s before the next step.</string>
+    <string name="format_brew_clock_wait_before_next" translatable="false">Brew-clock boundary: %1$s remaining before the next step.</string>
     <string name="format_brew_stage_target_grams">Target %1$.0f g</string>
     <string name="format_brew_stage_recorded_grams">Recorded %1$.0f g</string>
     <string name="format_brew_stage_remaining_grams">%1$.0f g remaining</string>
@@ -72,6 +74,11 @@
     <string name="warning_brew_safety_open_flame">Never leave an open flame or hot hob unattended.</string>
     <string name="warning_brew_safety_stability">Keep the brewer and serving vessel stable before continuing.</string>
     <string name="warning_brew_safety_food_storage">Keep long cold brews covered and refrigerated when required.</string>
+    <string name="warning_brew_safety_power_off_unplug" translatable="false">Switch off and unplug the brewer, then let the outlet cool before clearing or cleaning it.</string>
+    <string name="warning_brew_safety_hot_outlet" translatable="false">Wait for flow to stop. The outlet arm and coffee are hot; keep hands clear and remove the vessel carefully.</string>
+    <string name="warning_brew_safety_gravity_no_pressure" translatable="false">This is a gravity brewer. Do not press, tighten, or force it to speed up the flow.</string>
+    <string name="warning_brew_safety_aeropress_upright" translatable="false">Use the standard upright orientation on a sturdy, stable vessel. Do not use inverted brewing or thin glass.</string>
+    <string name="warning_brew_safety_aeropress_press" translatable="false">Keep the upright brewer centered on a sturdy vessel, keep hands clear of the outlet, and never force the plunger.</string>
     <string name="cd_brew_session_status">%1$s. %2$s.</string>
     <string name="label_brew_safety_critical">Critical safety</string>
     <string name="label_brew_safety_warning">Safety warning</string>

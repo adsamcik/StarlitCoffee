@@ -100,6 +100,51 @@ class SessionReducerTest {
     }
 
     @Test
+    fun `manual advance cannot bypass a source minimum time`() {
+        val state = session(
+            stage(
+                id = "bloom",
+                completion = StageCompletionMode.Manual,
+                advanceConstraint = StageAdvanceConstraint(notBeforeStageElapsedMillis = 30_000L),
+            ),
+            stage("pour", StageCompletionMode.Manual),
+        )
+        val started = reduce(state, SessionEvent.Start(), monotonic = 0L, wall = 1_000L)
+        val early = reduce(started.state, SessionEvent.ManualAdvance(), monotonic = 29_999L, wall = 30_999L)
+        val allowed = reduce(early.state, SessionEvent.ManualAdvance(), monotonic = 30_000L, wall = 31_000L)
+
+        assertEquals(0, early.state.currentStageIndex)
+        assertEquals(1, allowed.state.currentStageIndex)
+        assertEquals(StageCompletionKind.MANUAL, allowed.state.stageProgress[0].completionKind)
+    }
+
+    @Test
+    fun `early source observation is retained and completes when its boundary arrives`() {
+        val observationId = StageObservationId("bloom_finished")
+        val state = session(
+            stage(
+                id = "bloom",
+                completion = StageCompletionMode.ObservedEvent(observationId),
+                advanceConstraint = StageAdvanceConstraint(notBeforeBrewElapsedMillis = 30_000L),
+            ),
+            stage("pour", StageCompletionMode.Manual),
+        )
+        val started = reduce(state, SessionEvent.Start(), monotonic = 0L, wall = 1_000L)
+        val observedEarly = reduce(
+            started.state,
+            SessionEvent.RecordObservation(observationId),
+            monotonic = 20_000L,
+            wall = 21_000L,
+        )
+        val boundary = reduce(observedEarly.state, SessionEvent.Tick(), monotonic = 30_000L, wall = 31_000L)
+
+        assertEquals(0, observedEarly.state.currentStageIndex)
+        assertTrue(observationId in observedEarly.state.stageProgress[0].actuals.observations)
+        assertEquals(1, boundary.state.currentStageIndex)
+        assertEquals(StageCompletionKind.OBSERVED, boundary.state.stageProgress[0].completionKind)
+    }
+
+    @Test
     fun `measurements reject unusable values and preserve ordered final effects`() {
         val state = session(stage("pour", StageCompletionMode.AddedAmount(10.0)))
         val started = reduce(state, SessionEvent.Start(), monotonic = 0L, wall = 1_000L)
@@ -238,11 +283,13 @@ class SessionReducerTest {
         id: String,
         completion: StageCompletionMode,
         alertOnStart: Boolean = false,
+        advanceConstraint: StageAdvanceConstraint = StageAdvanceConstraint(),
     ): BrewStageDefinition = BrewStageDefinition(
         id = StageId(id),
         action = BrewStageAction.CUSTOM,
         contentId = StageContentId("${id}_content"),
         completionMode = completion,
+        advanceConstraint = advanceConstraint,
         alertPolicy = StageAlertPolicy(alertOnStart = alertOnStart),
     )
 

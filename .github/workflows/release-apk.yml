@@ -53,6 +53,7 @@ jobs:
           python tools/generate_p1_exact_terminology_review_packets.py --check
           python tools/generate_p1_exact_terminology_locale_queue.py --check
           python tools/generate_p1_tracker_accepted_asset_catalog.py --check
+          python tools/generate_p1_exact_visual_review_catalog.py --check
           python tools/generate_p1_exact_guidance_localizations.py --check
           python tools/generate_pulsar_learn_guidance_localizations.py --check
 

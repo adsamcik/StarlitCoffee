@@ -1,6 +1,5 @@
 package com.adsamcik.starlitcoffee.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -14,6 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import dev.tracebox.Tracebox
 
 data class OnboardingSubmission(
     val enabledMethods: Set<BrewMethod>,
@@ -74,7 +74,7 @@ class OnboardingViewModel(
             } catch (error: CancellationException) {
                 throw error
             } catch (error: Exception) {
-                Log.e(TAG, "Failed to complete onboarding", error)
+                Tracebox.log.error(error, "Failed to complete onboarding")
                 _uiState.update { it.copy(isSubmitting = false, failure = true) }
             }
         }
@@ -84,9 +84,6 @@ class OnboardingViewModel(
         _uiState.update { it.copy(completedSubmission = null) }
     }
 
-    companion object {
-        private const val TAG = "OnboardingViewModel"
-    }
 }
 
 class OnboardingViewModelFactory(

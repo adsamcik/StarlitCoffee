@@ -967,7 +967,7 @@ class BuiltinBrewerSessionStartFactoryTest {
         mismatchedContentIndex: Int? = null,
     ): BrewStagePlan = BrewStagePlan(
         id = StagePlanId("builtin_recipe_${recipeId.value}"),
-        version = 1,
+        version = 2,
         nodes = actions.mapIndexed { index, action ->
             val stageNumber = (index + 1).toString().padStart(2, '0')
             val stageId = "p1_${recipeId.value}_stage_$stageNumber"

@@ -2,9 +2,9 @@ package com.adsamcik.starlitcoffee.util
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.util.Log
 import androidx.core.net.toUri
 import java.io.File
+import dev.tracebox.Tracebox
 
 /**
  * Renders a focused, square WebP thumbnail for a coffee bag by cropping the
@@ -12,8 +12,6 @@ import java.io.File
  * This produces the small `photoUri` the list card displays.
  */
 object BagThumbnailWriter {
-
-    private const val TAG = "BagThumbnailWriter"
     private const val MAX_DECODE_PX = 2048
 
     /**
@@ -68,10 +66,10 @@ object BagThumbnailWriter {
                 if (!bitmap.isRecycled) bitmap.recycle()
             }
         } catch (e: Exception) {
-            Log.w(TAG, "Failed to create focused thumbnail", e)
+            Tracebox.log.error(e, "Failed to create focused thumbnail")
             null
         } catch (error: OutOfMemoryError) {
-            Log.e(TAG, "Insufficient memory to create focused thumbnail", error)
+            Tracebox.log.error(error, "Insufficient memory to create focused thumbnail")
             null
         }
     }

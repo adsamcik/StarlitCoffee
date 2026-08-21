@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_settings_section_support">Support och integritet</string>
+    <string name="label_diagnostics">Diagnostik</string>
+    <string name="msg_diagnostics_summary">Granska, dela, spara eller radera lokala felsökningsdata</string>
+    <string name="label_privacy_policy">Integritetspolicy</string>
+    <string name="msg_privacy_policy_summary">Läs hur Starlit Coffee hanterar data</string>
+    <string name="msg_privacy_policy_open_failed">Det gick inte att öppna integritetspolicyn.</string>
+    <string name="screen_diagnostics_title">Diagnostik</string>
+    <string name="msg_diagnostics_unavailable">Diagnostik är inte tillgänglig i den här processen.</string>
+    <string name="msg_diagnostics_support_description">Samlar de senaste appfelen och prestandainformationen i ett paket för felsökning.</string>
+</resources>

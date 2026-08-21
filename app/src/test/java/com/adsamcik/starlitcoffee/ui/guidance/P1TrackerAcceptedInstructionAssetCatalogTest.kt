@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.guidance
 
+import com.adsamcik.starlitcoffee.domain.brewing.BuiltInP1RecipeCatalog
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -23,6 +24,7 @@ class P1TrackerAcceptedInstructionAssetCatalogTest {
             asset.id.value == "instruction_${asset.contentId.value}_default"
         })
         assertTrue(runtimeAssets.all { asset -> asset.provenance.promptRevision.startsWith("accepted_") })
+        assertTrue(runtimeAssets.all { asset -> asset.resourceSha256?.matches(Regex("[0-9a-f]{64}")) == true })
         assertTrue(runtimeAssets.all { asset -> asset.altTextRes == null })
         assertTrue(runtimeAssets.all { asset -> asset.companionInstructionRes == null })
     }
@@ -33,11 +35,15 @@ class P1TrackerAcceptedInstructionAssetCatalogTest {
 
         P1TrackerAcceptedInstructionAssetCatalog.runtimeAssets().forEach { runtimeAsset ->
             val candidate = requireNotNull(candidatesById[runtimeAsset.id])
+            val definition = requireNotNull(BuiltInP1RecipeCatalog.find(candidate.recipeId))
             assertEquals(candidate.drawableRes, runtimeAsset.drawableRes)
-            assertEquals(candidate.familyId, runtimeAsset.familyId)
-            assertEquals(candidate.profileId, runtimeAsset.profileId)
+            assertEquals(definition.sourceMethodFamilyId, candidate.familyId.value)
+            assertEquals(definition.sourceBrewerProfileId.value, candidate.profileId.value)
+            assertEquals(definition.methodFamilyId, runtimeAsset.familyId)
+            assertEquals(definition.brewerProfileId, runtimeAsset.profileId)
             assertEquals(candidate.stageId, runtimeAsset.stageId)
             assertEquals(candidate.contentId, runtimeAsset.contentId)
+            assertEquals(candidate.resourceSha256, runtimeAsset.resourceSha256)
             assertEquals(
                 candidate.visualPriority == P1ExactVisualPriority.SAFETY_CRITICAL,
                 runtimeAsset.safetySensitive,

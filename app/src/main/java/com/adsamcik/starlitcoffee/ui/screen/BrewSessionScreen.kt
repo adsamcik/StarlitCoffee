@@ -190,7 +190,12 @@ fun BrewSessionScreen(
         val guidanceCatalogs = exactRecipeId
             ?.let(exactRecipeReleaseGate::catalogFor)
             ?.let(::listOf)
-            ?: listOf(LegacyBuiltInGuidanceCatalog.catalog, P1BuiltInGuidanceCatalog.catalog)
+            ?: if (Locale.getDefault().language == Locale.ENGLISH.language) {
+                listOf(LegacyBuiltInGuidanceCatalog.catalog, P1BuiltInGuidanceCatalog.catalog)
+            } else {
+                // Legacy/generic technical brewing copy has not received locale-specific review.
+                emptyList()
+            }
         DurableBrewSessionGuidanceResolver(
             guidanceCatalogs = guidanceCatalogs,
             instructionAssets = BuiltInInstructionAssetCatalog.catalog,
@@ -720,6 +725,40 @@ private fun BrewSessionStageCard(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
+            if (!stage.advanceConstraint.isSatisfied) {
+                Surface(
+                    shape = MaterialTheme.shapes.large,
+                    color = MaterialTheme.colorScheme.secondaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Column(
+                        modifier = Modifier.padding(12.dp),
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                    ) {
+                        stage.advanceConstraint.stageRemainingMillis
+                            .takeIf { remaining -> remaining > 0L }
+                            ?.let { remaining ->
+                                Text(
+                                    stringResource(
+                                        R.string.format_brew_stage_wait_before_next,
+                                        formatDuration(remaining),
+                                    ),
+                                )
+                            }
+                        stage.advanceConstraint.brewRemainingMillis
+                            .takeIf { remaining -> remaining > 0L }
+                            ?.let { remaining ->
+                                Text(
+                                    stringResource(
+                                        R.string.format_brew_clock_wait_before_next,
+                                        formatDuration(remaining),
+                                    ),
+                                )
+                            }
+                    }
+                }
+            }
             when (val completion = stage.completion) {
                 BrewStageCompletionPresentation.Manual -> {
                     Text(stringResource(R.string.msg_brew_stage_manual))
@@ -1088,6 +1127,11 @@ private fun StageActualInputKind.event(grams: Double): StageActualValue = when (
 }
 
 private fun StageSafetyMessage.messageRes(): Int = when {
+    code.contains("power_off") || code.contains("unplug") -> R.string.warning_brew_safety_power_off_unplug
+    code.contains("hot_outlet") -> R.string.warning_brew_safety_hot_outlet
+    code.contains("gravity_brewer_no_pressure") -> R.string.warning_brew_safety_gravity_no_pressure
+    code.contains("aeropress_standard_orientation") -> R.string.warning_brew_safety_aeropress_upright
+    code.contains("aeropress_sturdy_vessel") -> R.string.warning_brew_safety_aeropress_press
     code.contains("open_flame") || code.contains("unattended") -> R.string.warning_brew_safety_open_flame
     code.contains("hot_metal") || code.contains("hot_glass") -> R.string.warning_brew_safety_hot_metal
     code.contains("overflow") || code.contains("boil_over") -> R.string.warning_brew_safety_overflow

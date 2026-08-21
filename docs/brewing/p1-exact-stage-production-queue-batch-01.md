@@ -191,7 +191,7 @@ orientation without a label, arrow, inset, or wrong-versus-right comparison.
   `instruction_p1_clever_water_first_15_250_stage_05_instruction_default`
 - Canonical action: Place the Clever on the server to release.
 - Exact equipment state: Bottom actuator open.
-- Completion cue: Flow begins immediately and completes around 2:40.
+- Completion cue: Flow begins immediately and completes around 3:30.
 - Source warning: Server must be stable and large enough.
 - Visual priority: `safety-critical`
 - Evidence: `SRC-CLEVER-HOFFMANN` (original professional technique) and

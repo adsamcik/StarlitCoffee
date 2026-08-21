@@ -112,10 +112,8 @@
     <string name="prep_tip_pulsar_40k">40K-Metallfilter abspülen, um den Zylinder vorzuheizen. Zylinder aufsetzen, Mahlgut einfüllen, Bett ebnen, Dispersionskappe aufsetzen. Waage tarieren.</string>
     <string name="prep_tip_pour_over_paper">Papierfilter einsetzen und mit heißem Wasser spülen, um vorzuwärmen und Papiergeschmack zu entfernen. Mahlgut einfüllen, Waage tarieren.</string>
     <string name="prep_tip_french_press">French Press vorwärmen, dann leeren. Mahlgut einfüllen, auf die Waage stellen und vor dem Wasserzugießen tarieren.</string>
-    <string name="prep_tip_aeropress">Gespülten Filter in die Kappe einsetzen. Mahlgut einfüllen, Brüher auf eine stabile Tasse oder einen Server stellen und Waage tarieren.</string>
     <string name="prep_tip_espresso">Siebträger trocken auswischen. Dosieren, verteilen und eben tampen, bevor er eingespannt wird.</string>
     <string name="prep_tip_moka">Untere Kammer bis zum Ventil füllen. Sieb mit Mahlgut füllen, glattstreichen — nicht tampen. Vorsichtig zusammenschrauben.</string>
-    <string name="prep_tip_cold_brew">Mahlgut in das Gefäß geben, Waage tarieren, dann Wasser mit Raumtemperatur oder kaltes Wasser zugeben und abdecken.</string>
     <string name="format_prep_grind_specific">%1$s mahlen — %2$s auf %3$s einstellen</string>
     <string name="format_prep_grind_generic">%1$s mahlen — %2$s (%3$s)</string>
 
@@ -356,18 +354,12 @@
     <string name="instruction_french_press_start">Alles Wasser zugeben, vorsichtig umrühren und den Deckel aufsetzen</string>
     <string name="instruction_french_press_steep">Bis zur Zielzeit ungestört ziehen lassen</string>
     <string name="instruction_french_press_plunge">Langsam herunterdrücken, dann den Kaffee abgießen</string>
-    <string name="instruction_aeropress_start">Wasser zugeben, umrühren und die Ziehzeit starten</string>
-    <string name="instruction_aeropress_steep">Mit Kappe ziehen lassen; zum Pressen bereitmachen</string>
-    <string name="instruction_aeropress_press">Gleichmäßig pressen bis zum Zischen, dann stoppen</string>
     <string name="instruction_espresso_start">Siebträger einspannen und den Shot starten</string>
     <string name="instruction_espresso_pull">Fluss und Ausbeute beobachten; Tasse auf der Waage lassen</string>
     <string name="instruction_espresso_stop">Bei Zielausbeute oder wenn der Shot blond wird stoppen</string>
     <string name="instruction_moka_start">Kanne zusammensetzen und mit offenem Deckel sanft erhitzen</string>
     <string name="instruction_moka_flow">Beobachten, wie Kaffee in die obere Kammer fließt</string>
     <string name="instruction_moka_remove">Vom Herd nehmen, wenn der Fluss hell wird oder spritzt</string>
-    <string name="instruction_cold_brew_start">Kaffee und Wasser mischen, umrühren, bis alles Mahlgut benetzt ist</string>
-    <string name="instruction_cold_brew_steep">Abdecken und ziehen lassen; das Mahlgut vollständig gesättigt halten</string>
-    <string name="instruction_cold_brew_filter">Konzentrat filtern und zum Servieren kühlen oder verdünnen</string>
 
     <!-- Warnings -->
 <!-- Taste Feedback -->
@@ -758,7 +750,6 @@
     <string name="screen_learning_title">Lernen</string>
     <string name="msg_learning_subtitle">Anschauliche Schritt-für-Schritt-Brühanleitungen</string>
     <string name="msg_learning_intro">Wähle einen Brühbereiter und ein Rezept und gehe dann einen klaren Schritt nach dem anderen durch.</string>
-    <string name="msg_learning_empty">Noch sind keine Lernanleitungen verfügbar.</string>
     <string name="action_show_details">Details anzeigen</string>
     <string name="action_hide_details">Details ausblenden</string>
 </resources>

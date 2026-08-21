@@ -15,19 +15,18 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
-// Resolve credentials for the Mindlayer GitHub Packages Maven repo. The repo is
-// public, but GitHub Packages still requires a token for Maven reads (any GitHub
-// account works), so we look up: local.properties -> -P project property ->
-// environment variable -> `gh auth token`.
-val mindlayerProps = java.util.Properties().apply {
+// Resolve credentials for public GitHub Packages Maven repositories. GitHub
+// still requires a token for Maven reads, so look up: local.properties ->
+// -P project property -> environment variable -> `gh auth token`.
+val packageProps = java.util.Properties().apply {
     val localPropsFile = rootDir.resolve("local.properties")
     if (localPropsFile.exists()) {
         localPropsFile.inputStream().use { load(it) }
     }
 }
 
-fun mindlayerCredential(key: String, fallback: String = ""): String {
-    mindlayerProps.getProperty(key)?.takeIf { it.isNotBlank() }?.let { return it }
+fun packageCredential(key: String, fallback: String = ""): String {
+    packageProps.getProperty(key)?.takeIf { it.isNotBlank() }?.let { return it }
     settings.providers.gradleProperty(key).orNull?.takeIf { it.isNotBlank() }?.let { return it }
     System.getenv(key)?.takeIf { it.isNotBlank() }?.let { return it }
     return fallback
@@ -36,7 +35,7 @@ fun mindlayerCredential(key: String, fallback: String = ""): String {
 // Resolve a GitHub token. If no explicit token is configured, try `gh auth token`
 // so developers with the GitHub CLI authenticated don't need to manage a PAT.
 fun resolveGitHubToken(): String {
-    val explicit = mindlayerCredential("GITHUB_TOKEN")
+    val explicit = packageCredential("GITHUB_TOKEN")
     if (explicit.isNotBlank()) return explicit
     return try {
         val process = ProcessBuilder("gh", "auth", "token")
@@ -57,7 +56,7 @@ dependencyResolutionManagement {
         mavenLocal()
         maven {
             name = "MindlayerGitHubPackages"
-            val ghOwner = mindlayerCredential("GITHUB_OWNER", "adsamcik")
+            val ghOwner = packageCredential("GITHUB_OWNER", "adsamcik")
             val ghToken = resolveGitHubToken()
             url = uri("https://maven.pkg.github.com/$ghOwner/Mindlayer")
             credentials {
@@ -66,6 +65,19 @@ dependencyResolutionManagement {
             }
             content {
                 includeGroup("com.adsamcik.mindlayer")
+            }
+        }
+        maven {
+            name = "TraceboxGitHubPackages"
+            val ghOwner = packageCredential("GITHUB_OWNER", "adsamcik")
+            val ghToken = resolveGitHubToken()
+            url = uri("https://maven.pkg.github.com/$ghOwner/Tracebox")
+            credentials {
+                username = ghOwner
+                password = ghToken
+            }
+            content {
+                includeGroup("io.github.tracebox")
             }
         }
     }

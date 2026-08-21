@@ -9,6 +9,7 @@ import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.domain.brewing.StageId
 import com.adsamcik.starlitcoffee.domain.brewing.session.BrewSessionStatus
 import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStageAction
+import com.adsamcik.starlitcoffee.domain.brewing.session.CompiledBrewStage
 import com.adsamcik.starlitcoffee.domain.brewing.session.SessionRuntimeState
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageActuals
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageCompletionMode
@@ -18,6 +19,7 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.StageReferenceTargets
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageMarkerId
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageObservationId
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageRunStatus
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageRuntimeProgress
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetyMessage
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetySeverity
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageTargetQualifier
@@ -113,6 +115,8 @@ data class CurrentBrewStagePresentation(
     val runStatus: StageRunStatus,
     val elapsedActiveMillis: Long,
     val completion: BrewStageCompletionPresentation,
+    val advanceConstraint: BrewStageAdvanceConstraintPresentation =
+        BrewStageAdvanceConstraintPresentation(),
     /** Render outside guidance-density filtering. */
     val safetyMessages: List<StageSafetyMessage>,
     /** Informational values only; [completion] remains the sole stage trigger. */
@@ -120,6 +124,15 @@ data class CurrentBrewStagePresentation(
 ) {
     val stageId: StageId
         get() = stageInstanceId.sourceStageId
+}
+
+/** Remaining source-defined boundaries before the next stage may begin. */
+data class BrewStageAdvanceConstraintPresentation(
+    val stageRemainingMillis: Long = 0L,
+    val brewRemainingMillis: Long = 0L,
+) {
+    val isSatisfied: Boolean
+        get() = stageRemainingMillis == 0L && brewRemainingMillis == 0L
 }
 
 /**
@@ -313,29 +326,13 @@ object ActiveBrewSessionPresentationMapper {
         val elapsedDelta = runningWallClockDelta(runtime, nowWallClockMillis)
         val totalElapsed = saturatingAdd(runtime.totalActiveElapsedMillis, elapsedDelta)
         val safetyMessages = currentStage?.definition?.safetyMessages?.toList().orEmpty()
-        val presentedCurrentStage = if (currentStage != null && currentProgress != null) {
-            val elapsed = saturatingAdd(currentProgress.elapsedActiveMillis, elapsedDelta)
-            CurrentBrewStagePresentation(
-                stageInstanceId = currentStage.instanceId,
-                action = currentStage.definition.action,
-                contentId = currentStage.definition.contentId,
-                instructionAssetId = currentStage.definition.instructionAssetId,
-                requiresIllustration = currentStage.definition.requiresIllustration,
-                runStatus = currentProgress.status,
-                elapsedActiveMillis = elapsed,
-                completion = completionPresentation(
-                    completionMode = currentStage.definition.completionMode,
-                    actuals = currentProgress.actuals,
-                    elapsedActiveMillis = elapsed,
-                ),
-                safetyMessages = safetyMessages,
-                referenceCues = referenceCuePresentations(
-                    currentStage.definition.referenceTargets,
-                ),
-            )
-        } else {
-            null
-        }
+        val presentedCurrentStage = currentStagePresentation(
+            currentStage = currentStage,
+            currentProgress = currentProgress,
+            elapsedDelta = elapsedDelta,
+            totalElapsed = totalElapsed,
+            safetyMessages = safetyMessages,
+        )
         val actions = actionAvailability(
             runtime = runtime,
             currentStage = presentedCurrentStage,
@@ -365,6 +362,42 @@ object ActiveBrewSessionPresentationMapper {
                 countdownRemainingMillis = presentedCurrentStage?.completion?.countdownRemainingMillis(),
                 safetyMessages = safetyMessages,
             ),
+        )
+    }
+
+    private fun currentStagePresentation(
+        currentStage: CompiledBrewStage?,
+        currentProgress: StageRuntimeProgress?,
+        elapsedDelta: Long,
+        totalElapsed: Long,
+        safetyMessages: List<StageSafetyMessage>,
+    ): CurrentBrewStagePresentation? {
+        if (currentStage == null || currentProgress == null) return null
+        val elapsed = saturatingAdd(currentProgress.elapsedActiveMillis, elapsedDelta)
+        val constraint = currentStage.definition.advanceConstraint
+        return CurrentBrewStagePresentation(
+            stageInstanceId = currentStage.instanceId,
+            action = currentStage.definition.action,
+            contentId = currentStage.definition.contentId,
+            instructionAssetId = currentStage.definition.instructionAssetId,
+            requiresIllustration = currentStage.definition.requiresIllustration,
+            runStatus = currentProgress.status,
+            elapsedActiveMillis = elapsed,
+            completion = completionPresentation(
+                completionMode = currentStage.definition.completionMode,
+                actuals = currentProgress.actuals,
+                elapsedActiveMillis = elapsed,
+            ),
+            advanceConstraint = BrewStageAdvanceConstraintPresentation(
+                stageRemainingMillis = constraint.notBeforeStageElapsedMillis
+                    ?.let { boundary -> remaining(boundary, elapsed) }
+                    ?: 0L,
+                brewRemainingMillis = constraint.notBeforeBrewElapsedMillis
+                    ?.let { boundary -> remaining(boundary, totalElapsed) }
+                    ?: 0L,
+            ),
+            safetyMessages = safetyMessages,
+            referenceCues = referenceCuePresentations(currentStage.definition.referenceTargets),
         )
     }
 
@@ -513,7 +546,9 @@ object ActiveBrewSessionPresentationMapper {
     ): BrewSessionActionAvailability {
         val activeStage = currentStage?.runStatus == StageRunStatus.ACTIVE
         val canOperate = runtime.status in ACTIVE_SESSION_STATUSES && activeStage
-        val canManualAdvance = canOperate && currentStage.completion.allowsManualAdvance()
+        val canManualAdvance = canOperate &&
+            currentStage.completion.allowsManualAdvance() &&
+            currentStage.advanceConstraint.isSatisfied
         return BrewSessionActionAvailability(
             canStart = runtime.status == BrewSessionStatus.READY &&
                 currentStage?.runStatus == StageRunStatus.PENDING,

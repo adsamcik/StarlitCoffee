@@ -7,13 +7,13 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.adsamcik.starlitcoffee.MainActivity
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.work.BagReviewContext
+import dev.tracebox.Tracebox
 
 /**
  * Posts the "bag analysis complete" notification after the user sent the AI
@@ -93,11 +93,11 @@ class AndroidBagAnalysisNotifier(
         reviewContext: BagReviewContext?,
     ): Boolean {
         if (!hasPostNotificationPermission()) {
-            Log.w(TAG, "POST_NOTIFICATIONS not granted — cannot post bag analysis notification")
+            Tracebox.log.warn("POST_NOTIFICATIONS not granted — cannot post bag analysis notification")
             return false
         }
         if (!NotificationManagerCompat.from(context).areNotificationsEnabled()) {
-            Log.w(TAG, "Notifications are disabled — cannot post bag analysis notification")
+            Tracebox.log.warn("Notifications are disabled — cannot post bag analysis notification")
             return false
         }
         NotificationChannels.ensureBagAnalysisChannel(context)
@@ -105,7 +105,7 @@ class AndroidBagAnalysisNotifier(
             ?.getNotificationChannel(NotificationChannels.BAG_ANALYSIS_ID)
             ?.importance
         if (!isNotificationChannelEnabled(channelImportance)) {
-            Log.w(TAG, "Bag analysis notification channel is disabled")
+            Tracebox.log.warn("Bag analysis notification channel is disabled")
             return false
         }
 
@@ -140,7 +140,7 @@ class AndroidBagAnalysisNotifier(
             )
             true
         }.onFailure { error ->
-            Log.e(TAG, "Failed to post bag analysis notification", error)
+            Tracebox.log.error(error, "Failed to post bag analysis notification")
         }.getOrDefault(false)
     }
 
@@ -158,7 +158,6 @@ class AndroidBagAnalysisNotifier(
     }
 
     companion object {
-        private const val TAG = "BagAnalysisNotifier"
         private const val NOTIFICATION_ID = 1
         private const val NOTIFICATION_REQUEST_CODE = 0
         private const val NOTIFICATION_TIMEOUT_MS = 6L * 24L * 60L * 60L * 1_000L

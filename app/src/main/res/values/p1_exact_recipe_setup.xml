@@ -14,6 +14,28 @@
     <string name="label_exact_recipe_unavailable">Unavailable</string>
     <string name="format_exact_recipe_ratio">1:%1$s · dry coffee : %2$s</string>
     <string name="separator_exact_recipe_quantity_roles"> + </string>
+    <string name="separator_exact_recipe_equipment_alternatives" translatable="false"> or </string>
+    <string name="heading_exact_learn_recipe_summary" translatable="false">Recipe at a glance</string>
+    <string name="heading_exact_learn_stage_targets" translatable="false">Exact targets</string>
+    <string name="label_exact_learn_grind" translatable="false">Grind</string>
+    <string name="msg_exact_learn_grind_source_scoped" translatable="false">Follow the source description; an exact grinder setting and particle size are not specified.</string>
+    <string name="label_exact_learn_completion" translatable="false">Finish by</string>
+    <string name="label_exact_learn_provenance" translatable="false">Source scope</string>
+    <string name="label_exact_learn_start" translatable="false">Start</string>
+    <string name="label_exact_learn_timing" translatable="false">Timing</string>
+    <string name="label_exact_learn_added_water" translatable="false">Add this step</string>
+    <string name="label_exact_learn_cumulative_water" translatable="false">Brew-water total</string>
+    <string name="label_exact_learn_beverage_yield" translatable="false">Beverage yield</string>
+    <string name="label_exact_learn_equipment_state" translatable="false">Equipment state</string>
+    <string name="exact_completion_drawdown" translatable="false">Observed drawdown</string>
+    <string name="exact_completion_ice_drawdown" translatable="false">Drawdown over brew ice</string>
+    <string name="exact_completion_valve_drawdown" translatable="false">Valve release and observed drawdown</string>
+    <string name="exact_completion_first_rise" translatable="false">First controlled foam rise, before boiling</string>
+    <string name="exact_completion_second_rise" translatable="false">Second bounded foam rise, before boiling</string>
+    <string name="exact_completion_machine_mix" translatable="false">Machine cycle, basket drainage, then carafe mixing</string>
+    <string name="exact_completion_machine_drain" translatable="false">Machine cycle and residual drainage</string>
+    <string name="exact_completion_first_last_drip" translatable="false">First- and last-drip cues without forced pressure</string>
+    <string name="exact_completion_gravity_drip" translatable="false">Gravity drip without forced pressure</string>
 
     <string name="format_exact_recipe_temperature">%1$s °C</string>
     <string name="format_exact_recipe_temperature_range">%1$s–%2$s °C</string>
@@ -38,6 +60,7 @@
     <string name="separator_exact_recipe_equipment_parts"> · </string>
     <string name="label_exact_equipment_unfiltered">Intentionally unfiltered</string>
     <string name="label_exact_equipment_cone_paper">Conical paper filter</string>
+    <string name="label_exact_equipment_moccamaster_number_four_paper" translatable="false">Moccamaster #4 conical paper</string>
     <string name="label_exact_equipment_wave_paper">Wave 185 paper filter</string>
     <string name="label_exact_equipment_wedge_paper">Wedge paper filter</string>
     <string name="label_exact_equipment_chemex_paper">Six-cup bonded paper filter</string>
@@ -47,7 +70,11 @@
     <string name="label_exact_equipment_cone_basket">Cone basket</string>
     <string name="label_exact_equipment_flat_basket">Flat basket</string>
     <string name="label_exact_equipment_number_one_basket">#1 single-cup basket</string>
+    <string name="label_exact_equipment_moccamaster_kbgv_basket" translatable="false">KBGV Select #4 cone basket</string>
     <string name="label_exact_equipment_phin_screw_insert">Screw-down phin insert</string>
+    <string name="label_exact_equipment_moccamaster_glass_carafe" translatable="false">KBGV Select glass carafe with lid</string>
+    <string name="label_exact_equipment_moccamaster_drip_stop" translatable="false">Automatic drip stop</string>
+    <string name="label_exact_equipment_moccamaster_selector" translatable="false">Half/full-carafe selector</string>
     <string name="format_exact_recipe_capacity_too_small">Capacity must be at least %1$s for this recipe.</string>
     <string name="msg_exact_recipe_cezve_choices_hint">Sugar is optional. The selected recipe owns the number of foam rises.</string>
 
@@ -57,6 +84,7 @@
     <string name="label_brewer_profile_wedge">Wedge dripper</string>
     <string name="label_brewer_profile_thick_paper_carafe">Thick-paper carafe brewer</string>
     <string name="label_brewer_profile_conical">Generic conical dripper</string>
+    <string name="label_brewer_profile_moccamaster_kbgv_select" translatable="false">Moccamaster KBGV Select</string>
     <string name="label_brewer_profile_family_manual_gravity">Manual gravity</string>
 
     <string name="recipe_p1_v60_official_15_250">Hario official · 15 g / 250 g</string>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_settings_section_support">支持与隐私</string>
+    <string name="label_diagnostics">诊断</string>
+    <string name="msg_diagnostics_summary">查看、分享、保存或删除本地故障排除数据</string>
+    <string name="label_privacy_policy">隐私政策</string>
+    <string name="msg_privacy_policy_summary">了解 Starlit Coffee 如何处理数据</string>
+    <string name="msg_privacy_policy_open_failed">无法打开隐私政策。</string>
+    <string name="screen_diagnostics_title">诊断</string>
+    <string name="msg_diagnostics_unavailable">此进程中无法使用诊断功能。</string>
+    <string name="msg_diagnostics_support_description">将最近的应用错误和性能上下文打包，用于排查问题。</string>
+</resources>

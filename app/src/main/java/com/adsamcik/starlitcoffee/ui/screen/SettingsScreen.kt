@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
+import android.content.ActivityNotFoundException
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
@@ -9,6 +10,8 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,24 +21,33 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Restore
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LargeFlexibleTopAppBar
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -53,6 +65,7 @@ import androidx.core.graphics.toColorInt
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.adsamcik.starlitcoffee.data.model.BrewVibrationTheme
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
@@ -64,7 +77,6 @@ import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.data.repository.CupPresetRepository
-import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.ui.component.SettingsGroup
 import com.adsamcik.starlitcoffee.ui.component.SettingsNavigationRow
 import com.adsamcik.starlitcoffee.ui.component.SettingsRowDivider
@@ -73,6 +85,7 @@ import com.adsamcik.starlitcoffee.ui.component.SettingsSelectorBlock
 import com.adsamcik.starlitcoffee.ui.component.SettingsSwitchRow
 import com.adsamcik.starlitcoffee.ui.util.PresetIcon
 import com.adsamcik.starlitcoffee.ui.util.localizedDisplayName
+import com.adsamcik.starlitcoffee.util.VibrationHelper
 import com.adsamcik.starlitcoffee.BuildConfig
 import android.Manifest
 import android.content.Intent
@@ -87,6 +100,7 @@ import com.adsamcik.starlitcoffee.scan.observability.ScanBugReporter
 import com.adsamcik.starlitcoffee.scan.observability.ScanLlmDiagnosticsStore
 import com.adsamcik.starlitcoffee.scan.observability.ScanSessionRingBuffer
 import com.adsamcik.starlitcoffee.ui.component.DestructiveActionDialog
+import com.adsamcik.starlitcoffee.ui.component.MindlayerDiagnosticsCard
 import com.adsamcik.starlitcoffee.ui.component.MindlayerSettingsCard
 import com.adsamcik.starlitcoffee.ui.component.ScanHistoryDialog
 import com.adsamcik.starlitcoffee.ui.component.formatSessionForShare
@@ -96,11 +110,13 @@ import com.adsamcik.starlitcoffee.viewmodel.SettingsOperation
 import com.adsamcik.starlitcoffee.viewmodel.SettingsUiState
 import com.adsamcik.starlitcoffee.viewmodel.SettingsViewModel
 
+private const val PRIVACY_POLICY_URL = "https://adsamcik.github.io/StarlitCoffee/privacy/"
+
 private val checkIcon: @Composable () -> Unit = {
     Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize))
 }
 
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
     viewModel: SettingsViewModel,
@@ -108,6 +124,7 @@ fun SettingsScreen(
     onNavigateToBloomAnimationSettings: () -> Unit,
     onNavigateToDisplaySettings: () -> Unit,
     onNavigateToCupPresetEditor: (presetId: Long?) -> Unit,
+    onNavigateToDiagnostics: () -> Unit,
     onBack: () -> Unit,
 ){
     val prefs by viewModel.userPreferences.collectAsStateWithLifecycle(
@@ -120,6 +137,7 @@ fun SettingsScreen(
     val isBusy = operationState.operation != SettingsOperation.IDLE
     val isResettingPresets = operationState.operation == SettingsOperation.RESETTING_CUP_PRESETS
     val requestBack = { if (!isBusy) onBack() }
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     BackHandler(onBack = requestBack)
 
@@ -156,22 +174,43 @@ fun SettingsScreen(
         )
     }
 
-    Column(
+    Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 24.dp),
-    ) {
-        ScreenTopBar(
-            title = stringResource(R.string.screen_settings_title),
-            onBack = requestBack,
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        topBar = {
+            LargeFlexibleTopAppBar(
+                title = { Text(stringResource(R.string.screen_settings_title)) },
+                navigationIcon = {
+                    IconButton(
+                        onClick = requestBack,
+                        enabled = !isBusy,
+                        modifier = Modifier.testTag("back_button"),
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.action_back),
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainer,
+                    navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+                    titleContentColor = MaterialTheme.colorScheme.onSurface,
+                ),
+                scrollBehavior = scrollBehavior,
+            )
+        },
+    ) { innerPadding ->
         Column(
             modifier = Modifier
-                .weight(1f)
-                .verticalScroll(rememberScrollState()),
+                .fillMaxSize()
+                .padding(innerPadding)
+                .consumeWindowInsets(innerPadding)
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             // ---------- Brewing ----------
@@ -179,7 +218,7 @@ fun SettingsScreen(
 
             // Cup presets — keeps its add/reset actions and tappable list.
             SettingsGroup {
-                Column(modifier = Modifier.padding(16.dp)) {
+                Column(modifier = Modifier.padding(20.dp)) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -190,8 +229,8 @@ fun SettingsScreen(
                             style = MaterialTheme.typography.titleMedium,
                             modifier = Modifier.semantics { heading() },
                         )
-                        Row {
-                            IconButton(
+                        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                            FilledTonalIconButton(
                                 onClick = {
                                     if (!isBusy) onNavigateToCupPresetEditor(null)
                                 },
@@ -212,6 +251,7 @@ fun SettingsScreen(
                                 Icon(
                                     Icons.Filled.Restore,
                                     contentDescription = stringResource(R.string.action_reset_defaults),
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                     modifier = Modifier.size(24.dp),
                                 )
                             }
@@ -230,7 +270,7 @@ fun SettingsScreen(
                                 .clickable(enabled = !isBusy) {
                                     onNavigateToCupPresetEditor(preset.id)
                                 }
-                                .padding(vertical = 4.dp),
+                                .padding(vertical = 8.dp),
                             horizontalArrangement = Arrangement.spacedBy(12.dp),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
@@ -238,7 +278,12 @@ fun SettingsScreen(
                                 try { Color(it.toColorInt()) } catch (_: IllegalArgumentException) { null }
                             } ?: MaterialTheme.colorScheme.secondaryContainer
                             Box(
-                                modifier = Modifier.size(28.dp),
+                                modifier = Modifier
+                                    .size(40.dp)
+                                    .background(
+                                        MaterialTheme.colorScheme.surfaceContainerHighest,
+                                        CircleShape,
+                                    ),
                                 contentAlignment = Alignment.Center,
                             ) {
                                 PresetIcon(
@@ -252,13 +297,17 @@ fun SettingsScreen(
                                         .size(8.dp)
                                         .clip(CircleShape)
                                         .background(dotColor)
-                                        .border(1.dp, MaterialTheme.colorScheme.surface, CircleShape),
+                                        .border(
+                                            1.dp,
+                                            MaterialTheme.colorScheme.surfaceContainerLow,
+                                            CircleShape,
+                                        ),
                                 )
                             }
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
                                     text = preset.name,
-                                    style = MaterialTheme.typography.bodyLarge,
+                                    style = MaterialTheme.typography.titleMedium,
                                 )
                                 Text(
                                     text = "${preset.waterMl.toInt()} ${stringResource(R.string.unit_ml)}",
@@ -266,18 +315,11 @@ fun SettingsScreen(
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
                             }
-                            IconButton(
-                                onClick = { onNavigateToCupPresetEditor(preset.id) },
-                                enabled = !isBusy,
-                                modifier = Modifier.size(48.dp),
-                            ) {
-                                Icon(
-                                    Icons.Filled.Edit,
-                                    contentDescription = stringResource(R.string.format_edit_preset, preset.name),
-                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    modifier = Modifier.size(24.dp),
-                                )
-                            }
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
                         }
                     }
                 }
@@ -448,28 +490,67 @@ fun SettingsScreen(
                 )
             }
 
-            MindlayerSettingsCard(showDiagnostics = BuildConfig.DEBUG)
+            // AI setup is a normal product setting. Debug-only connection
+            // details live below with the other developer tools.
+            SettingsSectionHeader(stringResource(R.string.label_ai_service))
+            MindlayerSettingsCard()
+
+            // Diagnostics are a user-controlled support feature in every build.
+            SettingsSectionHeader(stringResource(R.string.label_settings_section_support))
+            SettingsGroup {
+                SettingsNavigationRow(
+                    title = stringResource(R.string.label_diagnostics),
+                    summary = stringResource(R.string.msg_diagnostics_summary),
+                    onClick = { if (!isBusy) onNavigateToDiagnostics() },
+                )
+                SettingsRowDivider()
+                SettingsNavigationRow(
+                    title = stringResource(R.string.label_privacy_policy),
+                    summary = stringResource(R.string.msg_privacy_policy_summary),
+                    onClick = {
+                        if (!isBusy) {
+                            try {
+                                context.startActivity(
+                                    Intent(Intent.ACTION_VIEW, Uri.parse(PRIVACY_POLICY_URL)),
+                                )
+                            } catch (_: ActivityNotFoundException) {
+                                Toast.makeText(
+                                    context,
+                                    R.string.msg_privacy_policy_open_failed,
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                            }
+                        }
+                    },
+                )
+            }
 
             // ---------- Developer (debug only) ----------
             if (BuildConfig.DEBUG) {
                 SettingsSectionHeader(stringResource(R.string.label_settings_section_developer))
+                MindlayerDiagnosticsCard()
                 ScanDebugCard(viewModel = viewModel, operationState = operationState)
                 // Phase 3 — opt-in, on-device capture of model-vs-user field
                 // corrections, used to measure extraction quality on real bags.
                 // Debug-only + default off: the flag never activates in release,
                 // so there is no release-time data-collection surface.
-                SettingsSwitchRow(
-                    title = stringResource(R.string.label_log_scan_corrections),
-                    summary = stringResource(R.string.msg_log_scan_corrections),
-                    checked = prefs.scanCorrectionLoggingEnabled,
-                    enabled = !isBusy,
-                    onCheckedChange = viewModel::updateScanCorrectionLoggingEnabled,
-                )
+                SettingsGroup {
+                    SettingsSwitchRow(
+                        title = stringResource(R.string.label_log_scan_corrections),
+                        summary = stringResource(R.string.msg_log_scan_corrections),
+                        checked = prefs.scanCorrectionLoggingEnabled,
+                        enabled = !isBusy,
+                        onCheckedChange = viewModel::updateScanCorrectionLoggingEnabled,
+                    )
+                }
             }
+
+            Spacer(modifier = Modifier.height(24.dp))
         }
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ScanDebugCard(
     viewModel: SettingsViewModel,
@@ -513,8 +594,8 @@ private fun ScanDebugCard(
         )
     }
 
-    ElevatedCard(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(16.dp)) {
+    SettingsGroup {
+        Column(modifier = Modifier.padding(20.dp)) {
             Text(
                 text = stringResource(R.string.label_scan_debug),
                 style = MaterialTheme.typography.titleMedium,
@@ -529,26 +610,29 @@ private fun ScanDebugCard(
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            Spacer(modifier = Modifier.height(12.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Spacer(modifier = Modifier.height(16.dp))
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
                 FilledTonalButton(
                     onClick = { showHistory = true },
                     enabled = operationsEnabled,
-                    modifier = Modifier.weight(1f),
                 ) {
                     Text(stringResource(R.string.action_view_history))
                 }
-                FilledTonalButton(
+                OutlinedButton(
                     onClick = { ScanBugReporter.shareReport(context) },
                     enabled = operationsEnabled,
-                    modifier = Modifier.weight(1f),
                 ) {
                     Text(stringResource(R.string.action_share_report))
                 }
-                FilledTonalButton(
+                TextButton(
                     onClick = { showClearDialog = true },
                     enabled = operationsEnabled,
-                    modifier = Modifier.weight(1f),
+                    colors = ButtonDefaults.textButtonColors(
+                        contentColor = MaterialTheme.colorScheme.error,
+                    ),
                 ) {
                     Text(stringResource(R.string.action_clear))
                 }
@@ -685,19 +769,28 @@ private fun BrewVibrationThemeSelector(
     enabled: Boolean,
     onThemeSelected: (BrewVibrationTheme) -> Unit,
 ) {
+    val context = LocalContext.current
     SettingsSelectorBlock(
         title = stringResource(R.string.label_brew_vibration_theme),
         summary = stringResource(R.string.msg_brew_vibration_theme_hint),
     ) {
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            BrewVibrationTheme.entries.forEach { theme ->
-                FilterChip(
+        SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
+            BrewVibrationTheme.entries.forEachIndexed { index, theme ->
+                SegmentedButton(
                     selected = selectedTheme == theme,
-                    onClick = { onThemeSelected(theme) },
+                    onClick = {
+                        onThemeSelected(theme)
+                        VibrationHelper.previewBrewTheme(context, theme)
+                    },
                     enabled = enabled,
-                    label = { Text(vibrationThemeLabel(theme)) },
-                    leadingIcon = if (selectedTheme == theme) checkIcon else null,
-                )
+                    shape = SegmentedButtonDefaults.itemShape(
+                        index = index,
+                        count = BrewVibrationTheme.entries.size,
+                    ),
+                    modifier = Modifier.weight(1f),
+                ) {
+                    Text(vibrationThemeLabel(theme))
+                }
             }
         }
     }

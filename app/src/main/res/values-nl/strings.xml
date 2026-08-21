@@ -112,10 +112,8 @@
     <string name="prep_tip_pulsar_40k">Spoel het 40K metalen filter om de cilinder voor te verwarmen. Plaats de cilinder, voeg de maling toe, egaliseer het bed en plaats de dispersiedop. Tarreer de weegschaal.</string>
     <string name="prep_tip_pour_over_paper">Plaats het papieren filter en spoel met heet water om voor te verwarmen en papiersmaak te verwijderen. Voeg gemalen koffie toe en tarreer de weegschaal.</string>
     <string name="prep_tip_french_press">Verwarm de pers voor en leeg hem. Voeg gemalen koffie toe, zet op de weegschaal en tarreer voordat je water toevoegt.</string>
-    <string name="prep_tip_aeropress">Plaats een gespoeld filter in de dop. Voeg gemalen koffie toe, zet de brewer op een stevige mok of server en tarreer de weegschaal.</string>
     <string name="prep_tip_espresso">Veeg de portafilter droog. Doseer, verdeel en tamp vlak voordat je hem vastzet.</string>
     <string name="prep_tip_moka">Vul de onderste kamer tot het ventiel. Vul het mandje met gemalen koffie, strijk vlak — niet tampen. Zet voorzichtig in elkaar.</string>
-    <string name="prep_tip_cold_brew">Doe gemalen koffie in het vat, tarreer de weegschaal, voeg water op kamertemperatuur of koud water toe en dek af.</string>
     <string name="format_prep_grind_specific">Maal %1$s — stel %2$s in op %3$s</string>
     <string name="format_prep_grind_generic">Maal %1$s — %2$s (%3$s)</string>
 
@@ -355,18 +353,12 @@
     <string name="instruction_french_press_start">Voeg al het water toe, roer zacht en plaats het deksel erop</string>
     <string name="instruction_french_press_steep">Laat ongestoord trekken tot de doeltijd</string>
     <string name="instruction_french_press_plunge">Druk langzaam omlaag en schenk de koffie daarna uit</string>
-    <string name="instruction_aeropress_start">Voeg water toe, roer en start het trekken</string>
-    <string name="instruction_aeropress_steep">Laat trekken met de dop erop; maak je klaar om te persen</string>
-    <string name="instruction_aeropress_press">Druk gelijkmatig tot het sissen en stop dan</string>
     <string name="instruction_espresso_start">Klik de portafilter vast en start de shot</string>
     <string name="instruction_espresso_pull">Let op flow en opbrengst; laat het kopje op de weegschaal</string>
     <string name="instruction_espresso_stop">Stop bij doelopbrengst of wanneer de shot blond wordt</string>
     <string name="instruction_moka_start">Zet de pot in elkaar en verwarm rustig met het deksel open</string>
     <string name="instruction_moka_flow">Let op koffie die in de bovenste kamer stroomt</string>
     <string name="instruction_moka_remove">Haal van het vuur wanneer de flow bleek wordt of begint te sputteren</string>
-    <string name="instruction_cold_brew_start">Meng koffie en water, roer zodat alle maling nat wordt</string>
-    <string name="instruction_cold_brew_steep">Dek af en laat trekken; houd de maling volledig verzadigd</string>
-    <string name="instruction_cold_brew_filter">Filter het concentraat en koel of verdun om te serveren</string>
 
     <!-- Warnings -->
 <!-- Taste Feedback -->
@@ -757,7 +749,6 @@
     <string name="screen_learning_title">Leren</string>
     <string name="msg_learning_subtitle">Visuele zetgidsen, stap voor stap</string>
     <string name="msg_learning_intro">Kies een koffiezetter en recept en doorloop steeds één duidelijke stap.</string>
-    <string name="msg_learning_empty">Er zijn nog geen leergidsen beschikbaar.</string>
     <string name="action_show_details">Details tonen</string>
     <string name="action_hide_details">Details verbergen</string>
 </resources>

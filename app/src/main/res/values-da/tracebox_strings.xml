@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_settings_section_support">Support og privatliv</string>
+    <string name="label_diagnostics">Diagnostik</string>
+    <string name="msg_diagnostics_summary">Gennemse, del, gem eller slet lokale fejlfindingsdata</string>
+    <string name="label_privacy_policy">Privatlivspolitik</string>
+    <string name="msg_privacy_policy_summary">Læs, hvordan Starlit Coffee håndterer data</string>
+    <string name="msg_privacy_policy_open_failed">Privatlivspolitikken kunne ikke åbnes.</string>
+    <string name="screen_diagnostics_title">Diagnostik</string>
+    <string name="msg_diagnostics_unavailable">Diagnostik er ikke tilgængelig i denne proces.</string>
+    <string name="msg_diagnostics_support_description">Samler de seneste appfejl og ydelseskontekst i en pakke til fejlfinding.</string>
+</resources>

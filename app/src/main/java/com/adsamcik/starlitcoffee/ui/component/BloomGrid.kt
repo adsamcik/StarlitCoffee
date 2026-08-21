@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.ui.component
 
-import android.util.Log
+import dev.tracebox.Tracebox
+
 
 /**
  * Geometric description of how a spritesheet image maps to animation frames.
@@ -138,10 +139,13 @@ internal fun resolveBloomGridOrLog(
 ) {
     is BloomGridParseResult.Success -> result.grid
     is BloomGridParseResult.Failure -> {
-        Log.w(
-            "BloomGrid",
-            "Rejected spritesheet '$spritesheetId' (${imageWidth}x${imageHeight}, " +
-                "frameSizePx=$frameSizePx): ${result.error.reason}",
+        Tracebox.log.warn(
+            "Rejected spritesheet '{}' ({}x{}, frameSizePx={}): {}",
+            spritesheetId,
+            imageWidth,
+            imageHeight,
+            frameSizePx,
+            result.error.reason,
         )
         null
     }

@@ -114,10 +114,8 @@
     <string name="prep_tip_pulsar_40k">Clătiți filtrul metalic 40K ca să preîncălziți cilindrul. Montați cilindrul, adăugați cafeaua măcinată, nivelați patul de cafea, așezați capacul de dispersie. Tarați cântarul.</string>
     <string name="prep_tip_pour_over_paper">Așezați filtrul de hârtie și clătiți cu apă fierbinte pentru preîncălzire și pentru a elimina gustul de hârtie. Adăugați cafeaua măcinată, tarați cântarul.</string>
     <string name="prep_tip_french_press">Preîncălziți presa, apoi goliți-o. Adăugați cafeaua măcinată, puneți pe cântar și tarați înainte de a adăuga apa.</string>
-    <string name="prep_tip_aeropress">Introduceți un filtru clătit în capac. Adăugați cafeaua măcinată, așezați dispozitivul pe o cană sau un server stabil și tarați cântarul.</string>
     <string name="prep_tip_espresso">Ștergeți portafiltrul până este uscat. Dozați, distribuiți și tasați drept înainte de cuplare.</string>
     <string name="prep_tip_moka">Umpleți camera inferioară până la supapă. Umpleți coșul cu cafea măcinată, nivelați — nu tasați. Asamblați cu grijă.</string>
-    <string name="prep_tip_cold_brew">Adăugați cafeaua măcinată în vas, tarați cântarul, apoi adăugați apă la temperatura camerei sau rece și acoperiți.</string>
     <string name="format_prep_grind_specific">Măcinați %1$s — setați %2$s la %3$s</string>
     <string name="format_prep_grind_generic">Măcinați %1$s — %2$s (%3$s)</string>
 
@@ -358,18 +356,12 @@
     <string name="instruction_french_press_start">Adăugați toată apa, amestecați ușor și puneți capacul deasupra</string>
     <string name="instruction_french_press_steep">Lăsați la infuzat nemișcat până la timpul țintă</string>
     <string name="instruction_french_press_plunge">Apăsați lent pistonul, apoi turnați cafeaua</string>
-    <string name="instruction_aeropress_start">Adăugați apa, amestecați și porniți infuzarea</string>
-    <string name="instruction_aeropress_steep">Infuzați cu capacul pus; pregătiți-vă să presați</string>
-    <string name="instruction_aeropress_press">Presați constant până la șuierat, apoi opriți-vă</string>
     <string name="instruction_espresso_start">Cuplați portafiltrul și porniți shot-ul</string>
     <string name="instruction_espresso_pull">Urmăriți fluxul și randamentul; țineți ceașca pe cântar</string>
     <string name="instruction_espresso_stop">Opriți la randamentul țintă sau când shot-ul devine blond</string>
     <string name="instruction_moka_start">Asamblați ibricul Moka Pot și încălziți ușor cu capacul deschis</string>
     <string name="instruction_moka_flow">Urmăriți cafeaua curgând în camera superioară</string>
     <string name="instruction_moka_remove">Luați de pe foc când fluxul devine pal sau începe să stropească</string>
-    <string name="instruction_cold_brew_start">Combinați cafeaua și apa, amestecați pentru a umezi fiecare particulă</string>
-    <string name="instruction_cold_brew_steep">Acoperiți și lăsați la infuzat; păstrați cafeaua măcinată complet saturată</string>
-    <string name="instruction_cold_brew_filter">Filtrați concentratul și răciți-l sau diluați-l pentru servire</string>
 
     <!-- Warnings -->
     <!-- Taste Feedback -->
@@ -760,7 +752,6 @@
     <string name="screen_learning_title">Învață</string>
     <string name="msg_learning_subtitle">Ghiduri vizuale de preparare pas cu pas</string>
     <string name="msg_learning_intro">Alege un dispozitiv și o rețetă, apoi parcurge câte un pas clar.</string>
-    <string name="msg_learning_empty">Nu există încă ghiduri de învățare disponibile.</string>
     <string name="action_show_details">Afișează detaliile</string>
     <string name="action_hide_details">Ascunde detaliile</string>
 </resources>

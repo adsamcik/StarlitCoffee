@@ -252,8 +252,9 @@ object LegacyBuiltInGuidanceCatalog {
         ),
         StageContentId("v60_manual_brew") to InstructionCopy(
             primaryInstruction =
-                "Pour the remaining water in calm, controlled additions and let the bed draw down between pours as your selected recipe directs.",
-            conciseInstruction = "Pour calmly to the selected target and let it draw down.",
+                "Pour the remaining water in calm, controlled additions. Follow the selected " +
+                    "recipe's cadence, pausing for drainage only where that recipe calls for it.",
+            conciseInstruction = "Pour calmly to the target, following the selected recipe's cadence.",
             explanation =
                 "A steady pour helps avoid disturbing the coffee bed or filling the brewer faster than it can drain.",
             tip = "Pause pouring before the liquid nears the rim.",
@@ -278,17 +279,18 @@ object LegacyBuiltInGuidanceCatalog {
         ),
         StageContentId("aeropress_steep") to InstructionCopy(
             primaryInstruction =
-                "With the chamber stable in the selected orientation, let the coffee steep for the time in your selected recipe.",
-            conciseInstruction = "Keep the chamber stable and steep to the recipe time.",
+                "Use the standard upright AeroPress orientation on a sturdy, stable mug or server, then steep for the time in your selected recipe.",
+            conciseInstruction = "Steep upright on a sturdy, stable vessel to the recipe time.",
             explanation =
                 "The recipe and equipment arrangement determine the amount and time; this stage only keeps the active brew visible and deliberate.",
-            tip = "Keep the filter cap and serving vessel ready before the press stage.",
-            altText = "A stable AeroPress chamber steeping beside its prepared filter cap and serving vessel.",
+            tip = "Do not use the inverted method or a thin glass vessel for this legacy guide.",
+            altText = "An upright AeroPress chamber steeping securely on a sturdy, stable serving vessel.",
         ),
         StageContentId("aeropress_press") to InstructionCopy(
             primaryInstruction =
-                "Place the AeroPress securely on a stable cup or server, then press steadily without forcing the plunger.",
-            conciseInstruction = "Set it securely and press steadily without forcing.",
+                "Keep the upright AeroPress centered on a sturdy, stable mug or server. Keep " +
+                    "hands clear of the outlet and press steadily without forcing the plunger.",
+            conciseInstruction = "Keep it upright and centered; keep hands clear and press steadily.",
             explanation =
                 "A stable base and a gradual press make it easier to notice resistance before it becomes unsafe.",
             altText = "An AeroPress centered securely on a sturdy server while a hand presses the plunger steadily.",
@@ -321,8 +323,9 @@ object LegacyBuiltInGuidanceCatalog {
         ),
         StageContentId("cold_brew_steep") to InstructionCopy(
             primaryInstruction =
-                "Combine the measured coffee and water in a clean vessel, cover it, and let it steep for the selected recipe countdown.",
-            conciseInstruction = "Combine coffee and water, cover, and steep to the recipe countdown.",
+                "Combine the measured coffee and water in a clean vessel, cover it, refrigerate " +
+                    "at 4 °C or colder, and steep for the selected recipe countdown.",
+            conciseInstruction = "Combine, cover, and steep refrigerated at 4 °C or colder.",
             explanation =
                 "Cold brew is the one passive legacy stage: the durable countdown can complete while the vessel remains undisturbed.",
             tip = "Label the vessel if more than one coffee is steeping nearby.",
@@ -330,8 +333,9 @@ object LegacyBuiltInGuidanceCatalog {
         ),
         StageContentId("cold_brew_filter") to InstructionCopy(
             primaryInstruction =
-                "Filter the brewed coffee slowly into a clean server, then remove and discard the grounds.",
-            conciseInstruction = "Filter into a clean server and remove the grounds.",
+                "Filter the brewed coffee slowly into a clean covered server, discard the " +
+                    "grounds, and refrigerate promptly at 4 °C or colder unless serving immediately.",
+            conciseInstruction = "Filter cleanly, then serve or refrigerate promptly at 4 °C or colder.",
             explanation =
                 "Filtering is a manual final step so you can confirm that the vessel and receiving server are stable.",
             altText = "Cold brew passing through a filter into a clean server on a stable surface.",
@@ -346,11 +350,19 @@ object LegacyBuiltInGuidanceCatalog {
                 "Hot coffee can surge if the plunger is forced. Stop pressing if the press shifts, binds, or feels unsafe.",
             altText = "A French press held securely on a level surface while the plunger is lowered slowly.",
         ),
+        StageContentId("aeropress_steep") to InstructionCopy(
+            primaryInstruction = "Use only the standard upright orientation on a sturdy, stable mug or server.",
+            conciseInstruction = "Use the standard upright orientation on a sturdy vessel.",
+            warning =
+                "Do not use the inverted method or thin glass. Hot water can spill if the brewer or receiving vessel tips.",
+            altText = "An upright AeroPress centered on a sturdy vessel with hands clear of the outlet.",
+        ),
         StageContentId("aeropress_press") to InstructionCopy(
             primaryInstruction = "Keep the chamber and serving vessel stable throughout the press.",
             conciseInstruction = "Keep the chamber and vessel stable.",
             warning =
-                "Hot coffee can escape if the chamber or cup is unstable. Never force the plunger; stop if resistance suddenly increases.",
+                "Hot coffee can escape if the chamber or cup is unstable. Keep hands clear of " +
+                    "the outlet, never force the plunger, and stop if resistance suddenly increases.",
             altText = "A stable AeroPress and sturdy serving vessel with hands clear of the outlet.",
         ),
         StageContentId("espresso_pull") to InstructionCopy(
@@ -374,6 +386,20 @@ object LegacyBuiltInGuidanceCatalog {
             warning =
                 "Metal, steam, and coffee can burn. Do not open the pot until it has cooled and pressure has settled.",
             altText = "A hand holding only the moka pot handle while hot coffee flow and steam remain clear of hands.",
+        ),
+        StageContentId("cold_brew_steep") to InstructionCopy(
+            primaryInstruction = "Keep the covered vessel refrigerated at 4 °C or colder for the full steep.",
+            conciseInstruction = "Steep covered at 4 °C or colder.",
+            warning =
+                "Do not steep this legacy cold brew at room temperature. Keep it refrigerated at 4 °C or colder.",
+            altText = "A covered cold-brew vessel stored in a refrigerator at 4 degrees Celsius or colder.",
+        ),
+        StageContentId("cold_brew_filter") to InstructionCopy(
+            primaryInstruction = "After filtering, serve immediately or cover and refrigerate promptly at 4 °C or colder.",
+            conciseInstruction = "Serve or refrigerate promptly at 4 °C or colder.",
+            warning =
+                "Do not leave filtered cold brew at room temperature; refrigerate promptly at 4 °C or colder.",
+            altText = "Filtered cold brew in a clean covered server ready for prompt refrigeration.",
         ),
     )
 
@@ -529,8 +555,8 @@ object LegacyBuiltInGuidanceCatalog {
                 altText = "A clean cold-brew vessel, filter, and receiving server ready beside measured coffee and water.",
             ),
             completion = InstructionCopy(
-                primaryInstruction = "After filtering, store or serve the coffee using your usual food-safety practice and clean the vessel.",
-                conciseInstruction = "Store or serve safely, then clean the vessel.",
+                primaryInstruction = "After filtering, serve immediately or cover and refrigerate promptly at 4 °C or colder, then clean the vessel.",
+                conciseInstruction = "Serve or refrigerate promptly at 4 °C or colder, then clean.",
                 altText = "Filtered cold brew in a clean covered server beside the rinsed steeping vessel.",
             ),
             utility = InstructionCopy(
@@ -540,10 +566,10 @@ object LegacyBuiltInGuidanceCatalog {
                 altText = "A covered cold-brew vessel beside visible coffee, water, and long-steep countdown targets.",
             ),
             globalSafety = InstructionCopy(
-                primaryInstruction = "Use clean, food-safe equipment and inspect the brewed coffee before serving.",
-                conciseInstruction = "Use clean equipment and inspect before serving.",
+                primaryInstruction = "Use clean, food-safe equipment and keep the covered brew at 4 °C or colder during steeping and storage.",
+                conciseInstruction = "Use clean equipment and keep the covered brew at 4 °C or colder.",
                 warning =
-                    "Follow local food-safety guidance for storage and discard coffee with an unexpected odor, visible spoilage, or a damaged container.",
+                    "Refrigerate promptly at 4 °C or colder. Do not rely on smell alone to determine whether a stored brew is safe.",
                 altText = "A clean covered cold-brew container being inspected before serving.",
             ),
         ),

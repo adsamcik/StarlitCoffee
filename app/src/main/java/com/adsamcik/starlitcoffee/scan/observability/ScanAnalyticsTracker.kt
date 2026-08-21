@@ -1,28 +1,25 @@
 package com.adsamcik.starlitcoffee.scan.observability
 
-import android.util.Log
+import dev.tracebox.Tracebox
+
 
 /**
- * Lightweight analytics wrapper for scan pipeline events.
- *
- * Firebase Analytics is not currently a dependency, so all events are logged
- * to Logcat. When Firebase is added, replace the log calls with
- * FirebaseAnalytics.logEvent() and FirebaseCrashlytics custom keys.
+ * Lightweight, privacy-classified Tracebox events for useful scan boundaries.
+ * Values stay behind Tracebox's runtime level gate and strings are redacted by
+ * default before they can reach durable storage or optional Logcat mirroring.
  */
 object ScanAnalyticsTracker {
 
-    private const val TAG = "ScanAnalytics"
-
     fun trackScanStarted() {
-        Log.d(TAG, "event=scan_started")
+        Tracebox.log.debug("event=scan_started")
     }
 
     fun trackLlmFired(callNumber: Int, fieldsNeeded: Int) {
-        Log.d(TAG, "event=llm_fired call_number=$callNumber fields_needed=$fieldsNeeded")
+        Tracebox.log.debug("event=llm_fired call_number={} fields_needed={}", callNumber, fieldsNeeded)
     }
 
     fun trackDraftShown(latencyMs: Long, fieldsResolved: Int) {
-        Log.d(TAG, "event=draft_shown latency_ms=$latencyMs fields_resolved=$fieldsResolved")
+        Tracebox.log.debug("event=draft_shown latency_ms={} fields_resolved={}", latencyMs, fieldsResolved)
     }
 
     fun trackScanCompleted(
@@ -31,15 +28,17 @@ object ScanAnalyticsTracker {
         fieldsResolved: Int,
         fieldsTotal: Int,
     ) {
-        Log.d(
-            TAG,
-            "event=scan_completed outcome=$outcome duration_ms=$durationMs " +
-                "fields_resolved=$fieldsResolved fields_total=$fieldsTotal",
+        Tracebox.log.debug(
+            "event=scan_completed outcome={} duration_ms={} fields_resolved={} fields_total={}",
+            outcome,
+            durationMs,
+            fieldsResolved,
+            fieldsTotal,
         )
     }
 
     fun trackUserEdited(fieldName: String) {
-        Log.d(TAG, "event=user_edited field_name=$fieldName")
+        Tracebox.log.debug("event=user_edited field_name={}", fieldName)
     }
 
     /**
@@ -48,33 +47,20 @@ object ScanAnalyticsTracker {
      * confidence. Feeds the on-device [ScanCorrectionLog] quality signal.
      */
     fun trackFieldReview(fieldName: String, wasEdited: Boolean, modelConfidence: String?) {
-        Log.d(
-            TAG,
-            "event=field_review field_name=$fieldName was_edited=$wasEdited " +
-                "model_confidence=${modelConfidence ?: "unknown"}",
+        Tracebox.log.debug(
+            "event=field_review field_name={} was_edited={} model_confidence={}",
+            fieldName,
+            wasEdited,
+            modelConfidence ?: "unknown",
         )
     }
 
     fun trackScanAbandoned(durationMs: Long, fieldsResolved: Int) {
-        Log.d(TAG, "event=scan_abandoned duration_ms=$durationMs fields_resolved=$fieldsResolved")
+        Tracebox.log.debug("event=scan_abandoned duration_ms={} fields_resolved={}", durationMs, fieldsResolved)
     }
 
     fun trackScanError(error: String) {
-        Log.e(TAG, "event=scan_error error_message=$error")
+        Tracebox.log.error("event=scan_error error_message={}", error)
     }
 
-    /**
-     * Set Crashlytics custom keys for scan context.
-     * Currently a no-op — activate when Firebase Crashlytics is added.
-     */
-    fun setCrashlyticsContext(
-        deviceModel: String,
-        appVersion: String,
-        modelVersion: String,
-    ) {
-        Log.d(
-            TAG,
-            "crashlytics_context device=$deviceModel app=$appVersion model=$modelVersion",
-        )
-    }
 }

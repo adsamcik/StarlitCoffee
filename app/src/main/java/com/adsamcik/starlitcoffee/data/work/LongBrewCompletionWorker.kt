@@ -2,7 +2,6 @@ package com.adsamcik.starlitcoffee.data.work
 
 import android.content.Context
 import android.database.sqlite.SQLiteException
-import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.WorkerParameters
@@ -17,6 +16,7 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.SessionId
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageInstanceId
 import java.io.IOException
 import kotlinx.coroutines.CancellationException
+import dev.tracebox.Tracebox
 
 /**
  * WorkManager is an inexact wake-up prompt, not the source of truth for a
@@ -32,7 +32,7 @@ class LongBrewCompletionWorker(
     override suspend fun doWork(): Result {
         val request = when (val decoded = decodeLongBrewCompletionWork(inputData)) {
             is LongBrewCompletionWorkInput.Invalid -> {
-                Log.w(TAG, "Ignoring malformed brew deadline work: ${decoded.reason}")
+                Tracebox.log.warn("Ignoring malformed brew deadline work: {}", decoded.reason)
                 return Result.failure()
             }
 
@@ -61,13 +61,9 @@ class LongBrewCompletionWorker(
         } catch (error: CancellationException) {
             throw error
         } catch (error: Exception) {
-            Log.e(TAG, "Brew deadline reconciliation failed", error)
+            Tracebox.log.error(error, "Brew deadline reconciliation failed")
             if (isRetryableLongBrewCompletionFailure(error)) Result.retry() else Result.failure()
         }
-    }
-
-    private companion object {
-        private const val TAG = "LongBrewCompletionWorker"
     }
 }
 

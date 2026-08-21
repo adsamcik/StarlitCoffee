@@ -2,15 +2,14 @@ package com.adsamcik.starlitcoffee.util
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import androidx.core.net.toUri
 import java.io.File
 import java.util.Locale
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import dev.tracebox.Tracebox
 
 object BagPhotoImportSupport {
-    private const val TAG = "BagPhotoImportSupport"
     private const val DEFAULT_EXTENSION = "jpg"
     private const val MAX_IMPORTED_PHOTOS = 2
     private val KNOWN_IMAGE_EXTENSIONS = setOf("jpg", "jpeg", "png", "webp", "heic", "heif")
@@ -71,7 +70,7 @@ object BagPhotoImportSupport {
                 } ?: return@mapIndexedNotNull null
                 importedPhoto.toUri()
             } catch (error: Exception) {
-                Log.w(TAG, "Failed to import gallery photo: $sourceUri", error)
+                Tracebox.log.error(error, "Failed to import gallery photo: {}", sourceUri)
                 null
             }
         }

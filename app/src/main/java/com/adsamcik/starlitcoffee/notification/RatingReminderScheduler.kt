@@ -4,11 +4,11 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.getSystemService
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
+import dev.tracebox.Tracebox
 
 /**
  * Schedules and cancels rating-reminder notifications for completed brews.
@@ -36,14 +36,14 @@ class RatingReminderScheduler(private val context: Context) : RatingReminders {
 
     override fun scheduleReminder(brewLogId: Long, methodLabel: String?, delay: Duration) {
         val alarmManager = context.getSystemService<AlarmManager>() ?: run {
-            Log.w(TAG, "AlarmManager unavailable — cannot schedule rating reminder")
+            Tracebox.log.warn("AlarmManager unavailable — cannot schedule rating reminder")
             return
         }
         NotificationChannels.ensureRatingReminderChannel(context)
         val triggerAt = System.currentTimeMillis() + delay.inWholeMilliseconds
         val pendingIntent = buildPendingIntent(brewLogId, methodLabel)
         alarmManager.set(AlarmManager.RTC_WAKEUP, triggerAt, pendingIntent)
-        Log.d(TAG, "Scheduled rating reminder for brew $brewLogId in $delay")
+        Tracebox.log.debug("Scheduled rating reminder for brew {} in {}", brewLogId, delay)
     }
 
     override fun cancelReminder(brewLogId: Long) {
@@ -76,7 +76,6 @@ class RatingReminderScheduler(private val context: Context) : RatingReminders {
         (this and 0x7FFFFFFFL).toInt()
 
     companion object {
-        private const val TAG = "RatingReminder"
         const val ACTION_RATING_REMINDER = "com.adsamcik.starlitcoffee.action.RATING_REMINDER"
         const val EXTRA_BREW_LOG_ID = "brew_log_id"
         const val EXTRA_METHOD_LABEL = "method_label"

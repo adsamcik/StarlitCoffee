@@ -114,10 +114,8 @@
     <string name="prep_tip_pulsar_40k">Sciacqua il filtro metallico 40K per preriscaldare il cilindro. Monta il cilindro, aggiungi il caffè macinato, livella il letto, posiziona il tappo di dispersione. Tara la bilancia.</string>
     <string name="prep_tip_pour_over_paper">Inserisci il filtro di carta e sciacqualo con acqua calda per preriscaldare e rimuovere il gusto di carta. Aggiungi il caffè macinato e tara la bilancia.</string>
     <string name="prep_tip_french_press">Preriscalda la pressa, poi svuotala. Aggiungi il caffè macinato, metti sulla bilancia e tara prima di aggiungere acqua.</string>
-    <string name="prep_tip_aeropress">Inserisci un filtro sciacquato nel tappo. Aggiungi il caffè macinato, appoggia l\'AeroPress su una tazza o server stabile e tara la bilancia.</string>
     <string name="prep_tip_espresso">Asciuga il portafiltro. Dosa, distribuisci e pressa in piano prima di agganciare.</string>
     <string name="prep_tip_moka">Riempi la camera inferiore fino alla valvola. Riempi il filtro con il caffè macinato, livella — non pressare. Assembla con attenzione.</string>
-    <string name="prep_tip_cold_brew">Aggiungi il caffè macinato al recipiente, tara la bilancia, poi aggiungi acqua fredda o a temperatura ambiente e copri.</string>
     <string name="format_prep_grind_specific">Macina %1$s — imposta %2$s su %3$s</string>
     <string name="format_prep_grind_generic">Macina %1$s — %2$s (%3$s)</string>
 
@@ -358,18 +356,12 @@
     <string name="instruction_french_press_start">Aggiungi tutta l\'acqua, mescola delicatamente e appoggia il coperchio sopra</string>
     <string name="instruction_french_press_steep">Lascia in infusione senza disturbare fino al tempo target</string>
     <string name="instruction_french_press_plunge">Abbassa lentamente il pistone, poi versa il caffè</string>
-    <string name="instruction_aeropress_start">Aggiungi acqua, mescola e avvia l\'infusione</string>
-    <string name="instruction_aeropress_steep">Lascia in infusione con il tappo; preparati a premere</string>
-    <string name="instruction_aeropress_press">Premi con costanza fino al sibilo, poi fermati</string>
     <string name="instruction_espresso_start">Aggancia il portafiltro e avvia lo shot</string>
     <string name="instruction_espresso_pull">Osserva flusso e resa; tieni la tazza sulla bilancia</string>
     <string name="instruction_espresso_stop">Ferma alla resa target o quando lo shot schiarisce</string>
     <string name="instruction_moka_start">Assembla la moka e scalda dolcemente con il coperchio aperto</string>
     <string name="instruction_moka_flow">Osserva il caffè che sale nella camera superiore</string>
     <string name="instruction_moka_remove">Togli dal calore quando il flusso diventa chiaro o borbotta</string>
-    <string name="instruction_cold_brew_start">Unisci caffè e acqua, mescola per bagnare tutta la macinatura</string>
-    <string name="instruction_cold_brew_steep">Copri e lascia in infusione; tieni il caffè completamente saturo</string>
-    <string name="instruction_cold_brew_filter">Filtra il concentrato e servi freddo o diluito</string>
 
     <!-- Warnings -->
 <!-- Taste Feedback -->
@@ -760,7 +752,6 @@
     <string name="screen_learning_title">Impara</string>
     <string name="msg_learning_subtitle">Guide visive alla preparazione passo dopo passo</string>
     <string name="msg_learning_intro">Scegli una caffettiera e una ricetta, poi scopri un passaggio chiaro alla volta.</string>
-    <string name="msg_learning_empty">Non sono ancora disponibili guide didattiche.</string>
     <string name="action_show_details">Mostra dettagli</string>
     <string name="action_hide_details">Nascondi dettagli</string>
 </resources>

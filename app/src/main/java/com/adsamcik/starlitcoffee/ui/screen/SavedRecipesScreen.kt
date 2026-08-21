@@ -1,6 +1,5 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -51,6 +50,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import dev.tracebox.Tracebox
 
 internal fun normalizeSavedRecipeDecafFilter(
     selected: DecafFilter,
@@ -110,7 +110,7 @@ fun SavedRecipesScreen(
                         } catch (error: CancellationException) {
                             throw error
                         } catch (error: Exception) {
-                            Log.e("SavedRecipesScreen", "Failed to delete recipe", error)
+                            Tracebox.log.error(error, "Failed to delete recipe")
                             Toast.makeText(context, R.string.msg_could_not_delete, Toast.LENGTH_LONG).show()
                         } finally {
                             isDeleting = false

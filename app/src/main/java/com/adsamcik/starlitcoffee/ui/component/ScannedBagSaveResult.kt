@@ -1,7 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.component
 
 import android.content.Context
-import android.util.Log
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.util.BagPhotoRect
 import com.adsamcik.starlitcoffee.util.BagPhotoOwnership
@@ -12,6 +11,7 @@ import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.withContext
+import dev.tracebox.Tracebox
 
 internal sealed interface ScannedBagSaveResult {
     data class Saved(val bagId: Long) : ScannedBagSaveResult
@@ -324,11 +324,7 @@ private suspend fun recoverPendingSave(
 ): PendingSaveRecovery {
     val ownership = runCatching { findOwnedBagId() }
     ownership.exceptionOrNull()?.let { error ->
-        Log.w(
-            "ScannedBagSaveResult",
-            "Could not verify Room ownership for pending scan-photo save; journal retained",
-            error,
-        )
+        Tracebox.log.error(error, "Could not verify Room ownership for pending scan-photo save; journal retained")
         return PendingSaveRecovery.Deferred(error as? Exception ?: IllegalStateException(error))
     }
     ownership.getOrNull()?.let { bagId ->
@@ -344,11 +340,14 @@ private suspend fun recoverPendingSave(
         return PendingSaveRecovery.Deleted
     }
     val error = deletion.exceptionOrNull()
-    Log.w(
-        "ScannedBagSaveResult",
-        "Could not durably remove unowned scan photos; save journal retained for retry",
-        error,
-    )
+    if (error != null) {
+        Tracebox.log.error(
+            error,
+            "Could not durably remove unowned scan photos; save journal retained for retry",
+        )
+    } else {
+        Tracebox.log.warn("Could not durably remove unowned scan photos; save journal retained for retry")
+    }
     return PendingSaveRecovery.Deferred(error as? Exception)
 }
 
@@ -404,6 +403,6 @@ private suspend fun cleanupReplacedBagPhotos(
             ScanPhotoStorage.clearPendingBagPhotoDeletion(context, deletion.deletionId)
         }
     }.onFailure { error ->
-        Log.w("ScannedBagSaveResult", "Old bag-photo cleanup deferred; journal retained", error)
+        Tracebox.log.error(error, "Old bag-photo cleanup deferred; journal retained")
     }
 }

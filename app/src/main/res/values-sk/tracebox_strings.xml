@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_settings_section_support">Podpora a súkromie</string>
+    <string name="label_diagnostics">Diagnostika</string>
+    <string name="msg_diagnostics_summary">Skontrolujte, zdieľajte, uložte alebo odstráňte miestne údaje na riešenie problémov</string>
+    <string name="label_privacy_policy">Zásady ochrany súkromia</string>
+    <string name="msg_privacy_policy_summary">Prečítajte si, ako Starlit Coffee spracúva údaje</string>
+    <string name="msg_privacy_policy_open_failed">Zásady ochrany súkromia sa nepodarilo otvoriť.</string>
+    <string name="screen_diagnostics_title">Diagnostika</string>
+    <string name="msg_diagnostics_unavailable">Diagnostika nie je v tomto procese dostupná.</string>
+    <string name="msg_diagnostics_support_description">Pripraví balík s nedávnymi chybami aplikácie a kontextom výkonu na riešenie problémov.</string>
+</resources>

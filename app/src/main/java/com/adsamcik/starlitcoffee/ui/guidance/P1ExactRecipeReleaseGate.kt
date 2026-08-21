@@ -8,13 +8,15 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStageDefinition
 import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStagePlan
 import com.adsamcik.starlitcoffee.domain.brewing.session.BuiltInP1ExactStagePlanCatalog
 import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanNode
+import java.time.LocalDate
 
 /**
  * Audited translation coverage for exact P1 guidance.
  *
- * The packaged research manifest is canonical English source copy, not an
- * Android localization catalogue. Production therefore remains empty until a
- * recipe has complete, released copy for every locale declared by the app.
+ * The packaged research manifest is canonical English source copy, not proof
+ * that every translation has received technical review. Eligibility is
+ * evaluated for the active locale, and production coverage names only locale
+ * packs that have completed that review.
  */
 data class P1ExactRecipeLocalizationCoverage(
     val supportedLocaleTags: Set<String>,
@@ -52,14 +54,90 @@ data class P1ExactRecipeLocalizationCoverage(
         val supportedAppLocaleTags: Set<String> =
             P1ExactGuidanceLocaleResolver.supportedLanguageTags
 
-        /** Every packaged app locale has complete, released exact guidance. */
+        /** Only canonical English has completed independent technical review. */
         val production: P1ExactRecipeLocalizationCoverage =
             P1ExactRecipeLocalizationCoverage(
                 supportedLocaleTags = supportedAppLocaleTags,
                 coveredLocaleTagsByRecipe = BuiltInP1RecipeCatalog.recipes.associate { recipe ->
-                    recipe.id to supportedAppLocaleTags
+                    recipe.id to setOf("en")
                 },
             )
+    }
+}
+
+/** Machine-readable factual or hardware blockers that must be cleared before release. */
+data class P1ExactRecipeReleaseReadiness(
+    val openBlockerCodesByRecipe: Map<BuiltInRecipeId, Set<String>>,
+) {
+    init {
+        require(openBlockerCodesByRecipe.values.flatten().all(BLOCKER_CODE_PATTERN::matches)) {
+            "Exact-recipe blocker codes must use stable uppercase identifiers"
+        }
+    }
+
+    fun isUnblocked(recipeId: BuiltInRecipeId): Boolean =
+        openBlockerCodesByRecipe[recipeId].isNullOrEmpty()
+
+    companion object {
+        val production = P1ExactRecipeReleaseReadiness(
+            openBlockerCodesByRecipe = mapOf(
+                BuiltInRecipeId("v60_kasuya_4_6_20_300") to setOf("BLOCK-V60-VARIANT"),
+                BuiltInRecipeId("v60_kurasu_flash_16_150_70") to setOf("BLOCK-V60-VARIANT"),
+                BuiltInRecipeId("cezve_turkish_single_rise_6_65") to setOf("BLOCK-CEZVE-HARDWARE"),
+                BuiltInRecipeId("cezve_bounded_repeated_rise_12_130") to setOf("BLOCK-CEZVE-HARDWARE"),
+                BuiltInRecipeId("phin_screw_18_120") to setOf("BLOCK-PHIN-PRIMARY-HARDWARE-EVIDENCE"),
+            ),
+        )
+
+        val allClear = P1ExactRecipeReleaseReadiness(emptyMap())
+    }
+}
+
+/** Independent, pixel-level verdict bound to the exact packaged drawable bytes. */
+data class P1ExactInstructionVisualReview(
+    val assetId: com.adsamcik.starlitcoffee.domain.brewing.InstructionAssetId,
+    val resourceSha256: String,
+    val reviewer: String,
+    val reviewedOn: LocalDate,
+    val fullResolutionReviewed: Boolean,
+    val phoneScaleReviewed: Boolean,
+    val mechanicsReviewed: Boolean,
+    val altTextReviewed: Boolean,
+) {
+    init {
+        require(resourceSha256.matches(SHA256_PATTERN)) {
+            "Visual-review hashes must be lowercase SHA-256 values"
+        }
+        require(reviewer.isNotBlank()) { "Visual reviews require an independent reviewer" }
+    }
+
+    val isApproved: Boolean
+        get() = fullResolutionReviewed && phoneScaleReviewed && mechanicsReviewed && altTextReviewed
+}
+
+class P1ExactVisualReviewLedger(
+    reviews: List<P1ExactInstructionVisualReview>,
+) {
+    private val reviewsByAssetId = reviews.associateBy(P1ExactInstructionVisualReview::assetId)
+
+    init {
+        require(reviewsByAssetId.size == reviews.size) { "Visual reviews must use unique asset IDs" }
+    }
+
+    fun approvedReviewFor(asset: InstructionAssetRecord): P1ExactInstructionVisualReview? {
+        val review = reviewsByAssetId[asset.id] ?: return null
+        return review.takeIf {
+            it.isApproved &&
+                it.resourceSha256 == asset.resourceSha256 &&
+                it.reviewer != asset.review.reviewer
+        }
+    }
+
+    companion object {
+        /** Independent pixel verdicts, bound to the final packaged drawable hashes. */
+        val production = P1ExactVisualReviewLedger(
+            P1ExactIndependentVisualReviewCatalog.reviews,
+        )
     }
 }
 
@@ -77,6 +155,10 @@ class P1ExactRecipeReleaseGate(
     terminologyLoadResult: BuiltInP1ExactTerminologyLoadResult? = null,
     private val localizationCoverage: P1ExactRecipeLocalizationCoverage =
         P1ExactRecipeLocalizationCoverage.production,
+    private val releaseReadiness: P1ExactRecipeReleaseReadiness =
+        P1ExactRecipeReleaseReadiness.production,
+    private val visualReviewLedger: P1ExactVisualReviewLedger =
+        P1ExactVisualReviewLedger.production,
     private val stagePlanFor: (BuiltInRecipeId) -> BrewStagePlan? =
         BuiltInP1ExactStagePlanCatalog::find,
 ) {
@@ -118,6 +200,7 @@ class P1ExactRecipeReleaseGate(
                 localeTag = activeLocaleTag,
             ),
             activeLocaleTag == "en" || terminologyMatchesActiveLocale,
+            releaseReadiness.isUnblocked(recipeId),
             plan.id.value == "builtin_recipe_${recipeId.value}",
             planStages.size == plan.nodes.size,
             planStages.size == definition.orderedStageCount,
@@ -192,6 +275,7 @@ class P1ExactRecipeReleaseGate(
         val safetyReviewMatches =
             guidance.visualPriority != P1ExactVisualPriority.SAFETY_CRITICAL ||
                 asset.safetySensitive
+        val independentVisualReview = visualReviewLedger.approvedReviewFor(asset)
         return listOf(
             asset.review.isApproved,
             asset.mandatoryForFullGuidance,
@@ -201,9 +285,13 @@ class P1ExactRecipeReleaseGate(
             asset.profileId == guidance.brewerProfileId,
             asset.stageId == guidance.stageId,
             asset.contentId == guidance.contentId,
+            asset.resourceSha256 != null,
+            independentVisualReview != null,
             safetyReviewMatches,
         ).all { propertyMatches -> propertyMatches }
     }
 }
 
 private val LOCALE_TAG_PATTERN = Regex("[a-z]{2,3}(?:-[A-Z]{2})?")
+private val BLOCKER_CODE_PATTERN = Regex("BLOCK-[A-Z0-9-]+")
+private val SHA256_PATTERN = Regex("[0-9a-f]{64}")

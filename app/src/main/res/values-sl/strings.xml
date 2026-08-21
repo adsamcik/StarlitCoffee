@@ -116,10 +116,8 @@
     <string name="prep_tip_pulsar_40k">Sperite kovinski filter 40K, da ogrejete valj. Namestite valj, dodajte mleto kavo, poravnajte plast, namestite razpršilni pokrovček. Tarirajte tehtnico.</string>
     <string name="prep_tip_pour_over_paper">Vstavite papirnati filter in ga sperite z vročo vodo, da ga ogrejete in odstranite okus po papirju. Dodajte mleto kavo, tarirajte tehtnico.</string>
     <string name="prep_tip_french_press">Ogrejte posodo in jo nato izpraznite. Dodajte mleto kavo, postavite na tehtnico in tarirajte, preden dolijete vodo.</string>
-    <string name="prep_tip_aeropress">V pokrovček vstavite spran filter. Dodajte mleto kavo, postavite napravo na trdno skodelico ali vrč in tarirajte tehtnico.</string>
     <string name="prep_tip_espresso">Obrišite ročko do suhega. Odmerite, porazdelite in enakomerno potlačite, preden jo vpnete.</string>
     <string name="prep_tip_moka">Napolnite spodnji del do ventila. Košarico napolnite z mleto kavo, poravnajte — ne tlačite. Previdno sestavite.</string>
-    <string name="prep_tip_cold_brew">V posodo dodajte mleto kavo, tarirajte tehtnico, nato dolijte vodo sobne temperature ali hladno vodo in pokrijte.</string>
     <string name="format_prep_grind_specific">Mletje %1$s — nastavite %2$s na %3$s</string>
     <string name="format_prep_grind_generic">Mletje %1$s — %2$s (%3$s)</string>
 
@@ -360,18 +358,12 @@
     <string name="instruction_french_press_start">Dolijte vso vodo, nežno premešajte in namestite pokrov</string>
     <string name="instruction_french_press_steep">Pustite namakati nedotaknjeno do ciljnega časa</string>
     <string name="instruction_french_press_plunge">Počasi potisnite bat navzdol, nato odlijte kavo</string>
-    <string name="instruction_aeropress_start">Dolijte vodo, premešajte in začnite namakanje</string>
-    <string name="instruction_aeropress_steep">Namakajte s pokrovčkom; pripravite se na stiskanje</string>
-    <string name="instruction_aeropress_press">Enakomerno pritiskajte do sikanja, nato ustavite</string>
     <string name="instruction_espresso_start">Vpnite ročko in začnite ekstrakcijo</string>
     <string name="instruction_espresso_pull">Spremljajte pretok in donos; skodelico pustite na tehtnici</string>
     <string name="instruction_espresso_stop">Ustavite pri ciljnem donosu ali ko postane pretok svetel</string>
     <string name="instruction_moka_start">Sestavite kotliček in ga nežno segrevajte z odprtim pokrovom</string>
     <string name="instruction_moka_flow">Opazujte, kdaj kava priteče v zgornji del</string>
     <string name="instruction_moka_remove">Odstavite z vira toplote, ko pretok obledi ali zapršči</string>
-    <string name="instruction_cold_brew_start">Združite kavo in vodo, premešajte, da zmočite vso mleto kavo</string>
-    <string name="instruction_cold_brew_steep">Pokrijte in pustite namakati; mleta kava naj bo popolnoma prepojena</string>
-    <string name="instruction_cold_brew_filter">Precedite koncentrat ter ohladite ali razredčite za serviranje</string>
 
     <!-- Warnings -->
     <!-- Taste Feedback -->
@@ -762,7 +754,6 @@
     <string name="screen_learning_title">Nauči se</string>
     <string name="msg_learning_subtitle">Slikovni vodniki za pripravo po korakih</string>
     <string name="msg_learning_intro">Izberite pripravljalnik in recept, nato pa raziščite en jasen korak naenkrat.</string>
-    <string name="msg_learning_empty">Vodniki za učenje še niso na voljo.</string>
     <string name="action_show_details">Pokaži podrobnosti</string>
     <string name="action_hide_details">Skrij podrobnosti</string>
 </resources>

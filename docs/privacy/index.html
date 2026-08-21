@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy — Starlit Coffee</title>
-    <meta name="description" content="Privacy Policy for the Starlit Coffee Android app. What data stays on your device, what data leaves it, and your rights under GDPR.">
+    <meta name="description" content="Privacy Policy for Starlit Coffee for Android: what stays on your device, the few times data leaves it, and the choices you have.">
     <meta name="theme-color" content="#6F4E37">
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="../assets/style.css">
@@ -22,256 +22,197 @@
 <main class="prose">
     <h1>Privacy Policy</h1>
     <p class="last-updated">
-        <strong>Effective date:</strong> 24 May 2026 ·
-        <strong>Applies to:</strong> Starlit Coffee for Android (all versions)
+        <strong>Effective date:</strong> 21 August 2026 ·
+        <strong>Applies to:</strong> the current release of Starlit Coffee for Android and this website
     </p>
 
     <div class="callout">
-        <strong>The short version.</strong> Starlit Coffee is a brewing companion built by one person.
-        Your beans, brew logs, photos, ratings, and notes live in a database on your phone — I never see them.
-        The app does not use analytics, advertising, or crash reporting. It connects to the internet for one thing only:
-        looking up coffee-bag information by barcode at Open Food Facts when you scan a bag. Everything else
-        — barcode reading, label OCR, voice transcription dictionaries — runs entirely on your device.
+        <strong>In short:</strong> Your coffee data stays on your device, and I cannot see it. Starlit Coffee
+        has no accounts, ads, analytics, tracking, or automatic crash upload. A small amount of data leaves
+        your device only when a feature needs it or when you choose to share it. Those cases are listed below.
     </div>
 
     <nav class="toc" aria-label="Table of contents">
         <h2>Contents</h2>
         <ol>
-            <li><a href="#who">Who I am</a></li>
-            <li><a href="#scope">Scope of this policy</a></li>
-            <li><a href="#on-device">Data stored on your device</a></li>
-            <li><a href="#camera">Camera, scanning &amp; on-device AI</a></li>
-            <li><a href="#openfoodfacts">Barcode lookup (Open Food Facts)</a></li>
-            <li><a href="#qr">QR code product links</a></li>
-            <li><a href="#backup">Android Auto Backup</a></li>
-            <li><a href="#sharing">Sharing brew cards</a></li>
-            <li><a href="#third-parties">SDKs &amp; third parties</a></li>
-            <li><a href="#legal-basis">Legal basis (GDPR)</a></li>
-            <li><a href="#retention">Retention &amp; deletion</a></li>
-            <li><a href="#rights">Your rights</a></li>
-            <li><a href="#children">Children</a></li>
+            <li><a href="#about">About this policy</a></li>
+            <li><a href="#device">Data on your device</a></li>
+            <li><a href="#outside">When data leaves your device</a></li>
+            <li><a href="#permissions">Permissions</a></li>
+            <li><a href="#deletion">Retention and deletion</a></li>
+            <li><a href="#gdpr">GDPR and your rights</a></li>
             <li><a href="#security">Security</a></li>
-            <li><a href="#international">International transfers</a></li>
-            <li><a href="#california">California &amp; other US privacy rights</a></li>
-            <li><a href="#changes">Changes to this policy</a></li>
-            <li><a href="#contact">Contact &amp; complaints</a></li>
+            <li><a href="#contact">Changes, contact, and complaints</a></li>
         </ol>
     </nav>
 
-    <h2 id="who">1. Who I am</h2>
+    <h2 id="about">1. About this policy</h2>
     <p>
-        Starlit Coffee is developed and operated by <strong>Adam Novak</strong> (GitHub:
-        <a href="https://github.com/adsamcik"><code>adsamcik</code></a>), a private individual residing
-        in the Czech Republic. I am the <em>data controller</em> for any personal data processed in
-        connection with the app.
+        Starlit Coffee is developed and published by <strong>Adam Novak</strong> (GitHub:
+        <a href="https://github.com/adsamcik"><code>adsamcik</code></a>) in the Czech Republic. This policy
+        covers the Starlit Coffee Android app and this website. For privacy questions, email
+        <a href="mailto:play@adsamcik.com">play@adsamcik.com</a>.
     </p>
     <p>
-        Because I am a sole individual, I am not required to appoint a Data Protection Officer under
-        Article 37 GDPR. You can reach me at <a href="mailto:play@adsamcik.com">play@adsamcik.com</a> for
-        any privacy question.
-    </p>
-
-    <h2 id="scope">2. Scope of this policy</h2>
-    <p>
-        This policy covers the Starlit Coffee Android app and this website
-        (<code>adsamcik.github.io/StarlitCoffee</code>). It does not cover third-party services you choose
-        to visit from inside the app (for example, opening a QR code's destination URL).
+        The app has no developer-operated backend and does not create an account for you. I am the data
+        controller only where data-protection law makes me responsible for a processing operation. Services
+        such as Google, GitHub, Open Food Facts, and websites you choose to contact are responsible for their
+        own processing under their privacy notices.
     </p>
 
-    <h2 id="on-device">3. Data stored on your device</h2>
+    <h2 id="device">2. Data on your device</h2>
     <p>
-        The app keeps everything you create in a local database (<code>starlit_coffee.db</code>) and a
-        few preference files inside the app's private storage on your phone. This data is not transmitted
-        anywhere by the app itself. It includes:
+        Starlit Coffee keeps the information you create in its private Android storage. This includes:
     </p>
     <ul>
-        <li><strong>Coffee bags</strong> you've scanned or entered — name, roaster, roast date, origin, tasting notes, photo references, barcode.</li>
-        <li><strong>Brew logs</strong> — date, recipe, ratings, tasting notes, optional voice-transcription text.</li>
-        <li><strong>Saved recipes</strong> — your custom brew presets.</li>
-        <li><strong>Grinder profiles, ratio presets, cup presets, flavour tags</strong> — configuration you've added.</li>
-        <li><strong>Bag photos</strong> — image files stored in the app's private <code>files/bag_photos/</code> directory. Photo paths only are referenced from the database.</li>
-        <li><strong>Preferences</strong> — onboarding state, enabled brew methods, default method/filter, selected grinder, last-used ratio, input direction, opt-in flags such as QR link explorer.</li>
-        <li><strong>Recent scan-session metadata</strong> — short history of the last 10 barcode scans (locally, never uploaded).</li>
+        <li>coffee bags, barcodes, photos, roasters, origins, roast dates, and notes;</li>
+        <li>brew logs, recipes, ratings, flavour tags, grinders, and presets;</li>
+        <li>your settings and recent scan history; and</li>
+        <li>local troubleshooting records, such as app logs, crash stacks, unresponsive-app events, and
+            Android process-exit reasons.</li>
     </ul>
     <p>
-        Other apps on your phone cannot read this data because Android isolates it inside the app's
-        private storage sandbox.
+        I cannot remotely access, retrieve, change, or delete this data. Camera images used for barcode and
+        label recognition are processed on your device and discarded after analysis unless you choose to keep
+        a photo. Label recognition and smart fill use the Mindlayer service installed on the same device.
+        Images and extracted text are not sent to an online AI service.
+    </p>
+    <p>
+        Diagnostics are also local. They use limited storage, exclude text and unknown values by default, and
+        have no automatic uploader. In <em>Settings → Support &amp; privacy → Diagnostics</em>, you can change
+        capture options, delete all diagnostic data, or review a support package before choosing where to
+        share or save it.
+    </p>
+    <p>
+        The app does not request your name, email address, contacts, advertising ID, or device location. It
+        does not include advertising, analytics, attribution, Firebase Analytics, or Crashlytics.
     </p>
 
-    <h2 id="camera">4. Camera, scanning &amp; on-device AI</h2>
-    <p>
-        When you tap "Scan bag," the app asks for the <code>CAMERA</code> permission. The camera is used
-        only while the scanner screen is open and only for these purposes:
-    </p>
+    <h2 id="outside">3. When data leaves your device</h2>
+    <p>These are the only app and website features that send or expose data outside your device:</p>
     <ul>
-        <li><strong>Barcode reading</strong> via Google ML Kit Barcode Scanning — runs entirely on your device.</li>
-        <li><strong>Label OCR</strong> (reading printed text on bags) via Google ML Kit Text Recognition — runs entirely on your device.</li>
-        <li><strong>Optional smart-fill assistance</strong> via Mindlayer's on-device machine-learning SDK — runs entirely on your device through a local bound service, with no network calls.</li>
+        <li>
+            <strong>Barcode lookup.</strong> When the app recognizes a product barcode during a bag scan,
+            it sends the barcode digits to <a href="https://world.openfoodfacts.org/">Open Food Facts</a>
+            to request product details. Open Food Facts also receives the IP address needed for the connection
+            and the app's User-Agent. It does not receive your photos, notes, coffee history, advertising ID,
+            or device location. I do not receive the request.
+        </li>
+        <li>
+            <strong>QR website lookup.</strong> The app asks before requesting information from a website
+            found in a bag's QR code. If you approve, that website receives its requested URL, your IP address,
+            and the app's User-Agent. The app accepts only checked public HTTPS destinations. The website's
+            own privacy policy applies.
+        </li>
+        <li>
+            <strong>Android backup.</strong> If device backup is enabled, Android may copy the app database
+            and preferences to your private system backup, commonly managed by Google, and restore them later.
+            Bag photos, pending scan work, and diagnostics are excluded. I cannot access your backup account.
+        </li>
+        <li>
+            <strong>Sharing and support.</strong> A brew card or reviewed diagnostic package leaves the app
+            only after you choose a recipient or save location in Android. The recipient's privacy terms then
+            apply. If you send a package to me, I receive that package and your accompanying message.
+        </li>
+        <li>
+            <strong>Website and email.</strong> This website has no analytics or advertising code added by
+            me. GitHub Pages may process normal web request information such as your IP address, browser
+            details, and requested page. If you email me, the email providers involved process your address,
+            message, and attachments to deliver and store the conversation.
+        </li>
     </ul>
     <p>
-        Camera frames are processed in memory and discarded after analysis. The app never streams video,
-        and frames are never uploaded. The only things that may be persisted from a scan are the bag photos
-        you choose to save and the structured fields (text, barcode) that the scanner extracts for you to
-        confirm.
+        Relevant notices: <a href="https://world.openfoodfacts.org/cgi/privacy.pl">Open Food Facts</a>,
+        <a href="https://policies.google.com/privacy">Google</a>, and
+        <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub</a>.
+        These services and recipients you choose may process data outside the European Economic Area under
+        the transfer safeguards described in their notices.
     </p>
 
-    <h2 id="openfoodfacts">5. Barcode lookup (Open Food Facts)</h2>
-    <p>
-        When you scan a barcode, the app queries the public
-        <a href="https://world.openfoodfacts.org/">Open Food Facts</a> database to look up product
-        information. This is the <em>only</em> outbound network call the app makes on its own behalf.
-    </p>
+    <h2 id="permissions">4. Permissions</h2>
     <ul>
-        <li><strong>What is sent:</strong> the scanned barcode digits, the User-Agent <code>StarlitCoffee/1.0 (Android)</code>, and (necessarily) your IP address.</li>
-        <li><strong>What is <em>not</em> sent:</strong> any account identifier, advertising ID, device ID, your other bag/brew/log data, or any location data.</li>
-        <li><strong>Where it goes:</strong> Open Food Facts is operated by the non-profit association Open Food Facts based in France (EU). Their privacy practices are published at <a href="https://world.openfoodfacts.org/cgi/privacy.pl">their site</a>.</li>
-        <li><strong>How it is used:</strong> the response (product name, brand, image URL) is fetched once per scan and shown to you to accept or edit. Nothing is logged to a Starlit Coffee server, because there is no Starlit Coffee server.</li>
-    </ul>
-
-    <h2 id="qr">6. QR code product links</h2>
-    <p>
-        Some coffee bags carry QR codes that link to roaster websites. The app's "QR Link Explorer" feature
-        is <strong>opt-in</strong> (off by default). If you enable it and scan such a code, the app fetches
-        the destination URL's metadata so it can pre-fill bag fields for you. The request goes to whatever
-        server the QR code points to; the destination operator can see your IP address and the requested URL.
-        The app blocks requests to private/internal network ranges as a safety measure. You can disable this
-        feature at any time in Settings.
-    </p>
-
-    <h2 id="backup">7. Android Auto Backup</h2>
-    <p>
-        Like most Android apps, Starlit Coffee participates in Android's <strong>Auto Backup</strong>
-        feature. If you have backup enabled in your system settings, Android may periodically copy
-        a subset of the app's private files — your <strong>brew database and preferences</strong>
-        — to your personal Google Drive backup space (up to 25 MB per app, end-to-end encrypted by
-        your device PIN/pattern/password on Android 9+).
-    </p>
-    <p>
-        I deliberately <strong>exclude your bag photos and internal scan diagnostics</strong> from
-        cloud backup (and from device-to-device transfer) via the app's
-        <code>data_extraction_rules.xml</code>. Photos stay on your device only; if you reinstall or
-        switch phones, your brew history comes back but you'll need to re-take or re-import bag
-        photos.
-    </p>
-    <p>
-        This backup is managed by Google and Android, not by me. Starlit Coffee never accesses your Google
-        account. You can disable backup for this app via <em>Android Settings → Google → Backup →
-        App data</em> (location varies by device). Uninstalling the app and disabling backup beforehand
-        wipes the local data; existing cloud-backup snapshots are retained by Google according to their
-        own policy.
-    </p>
-
-    <h2 id="sharing">8. Sharing brew cards</h2>
-    <p>
-        When you tap "Share" on a brew, the app builds a short plain-text summary of that brew and hands
-        it to Android's standard share sheet. From there, you choose the destination (a messaging app, a
-        notes app, etc.). The app does not have a built-in social network, server, or feed.
-    </p>
-
-    <h2 id="third-parties">9. SDKs &amp; third parties</h2>
-    <p>The app includes the following libraries that touch user data, and only in the ways described:</p>
-    <ul>
-        <li><strong>Google ML Kit (Barcode Scanning, Text Recognition)</strong> — on-device only; per Google's <a href="https://developers.google.com/ml-kit/terms">ML Kit terms</a>, models bundled with the app do not send images to Google.</li>
-        <li><strong>Android CameraX (Jetpack)</strong> — camera plumbing only; no network.</li>
-        <li><strong>OpenCV</strong> — local image preprocessing for OCR; no network.</li>
-        <li><strong>Mindlayer SDK</strong> — bound to a local AIDL service on your device; no network calls.</li>
-        <li><strong>AndroidX Room, DataStore, Compose, Navigation, Lifecycle</strong> — local storage and UI plumbing; no network.</li>
-        <li><strong>OkHttp / Kotlinx Serialization</strong> — used solely for the Open Food Facts call described in section 5.</li>
+        <li><strong>Camera:</strong> scans barcodes and bag labels while a scanner is active.</li>
+        <li><strong>Notifications:</strong> shows brew timers, reminders, and progress for long-running
+            on-device bag analysis if you allow notifications.</li>
+        <li><strong>Mindlayer app visibility:</strong> checks only whether a supported Mindlayer service is
+            installed. The app does not inspect or transmit your general installed-app list.</li>
     </ul>
     <p>
-        The app does <strong>not</strong> include Firebase Analytics, Crashlytics, Google AdMob, Facebook SDK,
-        or any other analytics, advertising, or attribution SDK. There is no third-party crash reporter.
+        You can revoke camera or notification access in Android Settings. An Android permission is a device
+        control, not consent to unrelated data use and not, by itself, GDPR consent.
     </p>
 
-    <h2 id="legal-basis">10. Legal basis (GDPR)</h2>
-    <p>If you are in the European Economic Area, the United Kingdom, or Switzerland, my legal bases under the General Data Protection Regulation are:</p>
+    <h2 id="deletion">5. Retention and deletion</h2>
     <ul>
-        <li><strong>Performance of a contract — Article 6(1)(b) GDPR.</strong> To provide the brewing-companion service you installed (storing your data on your device, looking up barcodes you scan).</li>
-        <li><strong>Legitimate interests — Article 6(1)(f) GDPR.</strong> For limited security measures such as blocking SSRF-style requests in the QR Link Explorer.</li>
-        <li><strong>Consent — Article 6(1)(a) GDPR.</strong> Granted via Android's runtime permission prompts for camera and, where required, system-level features. You can revoke this at any time in Android Settings.</li>
-    </ul>
-    <p>The app does not rely on consent banners because it does not process data for advertising, profiling, or analytics.</p>
-
-    <h2 id="retention">11. Retention &amp; deletion</h2>
-    <ul>
-        <li><strong>On your device:</strong> data is kept for as long as you use the app. You can delete individual bags, brews, recipes, or photos from within the app at any time.</li>
-        <li><strong>Full wipe:</strong> uninstalling the app removes the private database, preferences, and photo files. (Items already copied into Android Auto Backup remain in your Google Drive backup per Google's retention rules — see section 7.)</li>
-        <li><strong>Open Food Facts queries:</strong> handled per Open Food Facts' own logs and policies. I do not retain a copy.</li>
-        <li><strong>This website:</strong> served by GitHub Pages. GitHub keeps standard request logs for security/abuse-prevention purposes; see <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub's privacy statement</a>.</li>
+        <li><strong>Local records:</strong> remain until you delete them in the app or uninstall the app.</li>
+        <li><strong>Diagnostics:</strong> can be deleted from the Diagnostics screen. They are also removed
+            when you uninstall the app and are excluded from backup.</li>
+        <li><strong>Android backup:</strong> may remain after uninstalling. Manage it through Android or your
+            backup provider.</li>
+        <li><strong>Email and support packages I receive:</strong> are kept only as long as needed to answer
+            you, investigate the issue, protect the app and its users, or meet a legal obligation.</li>
+        <li><strong>Outside services:</strong> keep data under their own retention rules. I cannot delete
+            data held only by them.</li>
     </ul>
 
-    <h2 id="rights">12. Your rights</h2>
-    <p>Under the GDPR you have the right to:</p>
-    <ul>
-        <li><strong>Access</strong> the personal data I hold about you (in practice: it lives on your device; you can read it directly).</li>
-        <li><strong>Rectify</strong> inaccurate data — edit bags/brews/notes in the app.</li>
-        <li><strong>Erase</strong> your data — delete individual records or uninstall the app.</li>
-        <li><strong>Restrict</strong> or <strong>object to</strong> processing.</li>
-        <li><strong>Portability</strong> — request an export of any data I might hold about you (because everything is on your device, an explicit export request is rarely necessary, but you can ask).</li>
-        <li><strong>Withdraw consent</strong> — revoke the camera or any other permission in Android Settings.</li>
-        <li><strong>Lodge a complaint</strong> with a supervisory authority (see section 18).</li>
-    </ul>
-    <p>To exercise any of these rights, email <a href="mailto:play@adsamcik.com">play@adsamcik.com</a>. I will respond within 30 days.</p>
-
-    <h2 id="children">13. Children</h2>
+    <h2 id="gdpr">6. GDPR and your rights</h2>
     <p>
-        Starlit Coffee is intended for adults brewing coffee. It is not directed at children under 13 (or
-        under 16, where applicable under local law). I do not knowingly collect personal data from
-        children. If you believe a child has used the app in a way that requires action, please contact me.
+        <strong>Why mention GDPR if the data is local?</strong> Because GDPR is about processing personal data,
+        not just uploading it to a developer's server. Keeping data on your device greatly limits my access
+        and the privacy risk, but it does not automatically settle who is legally responsible for every
+        operation. Your own purely personal or household use does not give you business GDPR obligations.
     </p>
-
-    <h2 id="security">14. Security</h2>
-    <p>I take reasonable, proportionate measures appropriate to the limited data the app handles:</p>
+    <p>
+        In practice, I do not possess your local coffee records and cannot identify, retrieve, or delete them
+        for you. GDPR remains relevant to processing for which I am legally responsible, including the limited
+        network features and personal data you send me for support.
+    </p>
+    <p>Where I am the controller, the legal bases are:</p>
     <ul>
-        <li>The Open Food Facts call uses HTTPS (TLS 1.2+).</li>
-        <li>App data lives in Android's per-app sandbox, isolated from other apps.</li>
-        <li>QR Link Explorer enforces an allow-list of public IP ranges to mitigate server-side request forgery against private networks.</li>
+        <li><strong>Article 6(1)(b):</strong> providing an app feature or support you request;</li>
+        <li><strong>Article 6(1)(f):</strong> answering messages, investigating problems, and protecting the
+            app and its users, where those interests do not override your rights; and</li>
+        <li><strong>Article 6(1)(c):</strong> meeting a legal obligation.</li>
     </ul>
     <p>
-        No system is perfectly secure. Please keep your phone updated and lock-screen-protected; that is the
-        single most effective protection for the data Starlit Coffee stores.
+        For personal data I hold, you may have rights to access, correct, delete, restrict, or receive it, and
+        to object to some processing. Email <a href="mailto:play@adsamcik.com">play@adsamcik.com</a>. I will
+        normally respond within one month and may ask only for information reasonably needed to verify your
+        request. For data held only on your device, use the app's controls or uninstall the app. For data held
+        by another service, contact that service.
+    </p>
+    <p>
+        I do not sell personal data or use it for advertising, profiling, data brokerage, or automated
+        decisions about people. Starlit Coffee is a coffee-brewing tool and is not designed for children.
     </p>
 
-    <h2 id="international">15. International transfers</h2>
+    <h2 id="security">7. Security</h2>
     <p>
-        Open Food Facts is hosted in France (EU), so barcode lookups stay within the EEA. If you have
-        Android Auto Backup enabled, Google may store backups on servers outside the EEA; Google relies on
-        the EU–US Data Privacy Framework and standard contractual clauses for those transfers. This
-        website is served by GitHub (a US company) via global CDN.
+        Android provides app-private storage, permission controls, and backup protection. Starlit Coffee also
+        minimizes stored data, uses HTTPS for network requests, checks QR destinations, excludes photos and
+        diagnostics from backup, and requires your review before sharing diagnostics.
+    </p>
+    <p>
+        No software can be perfectly secure. Keep Android updated and use a secure screen lock. Anyone who
+        can unlock or compromise your device may be able to reach data stored on it.
     </p>
 
-    <h2 id="california">16. California &amp; other US privacy rights</h2>
+    <h2 id="contact">8. Changes, contact, and complaints</h2>
     <p>
-        Starlit Coffee does not meet the CCPA/CPRA business thresholds (no $25M+ revenue, fewer than
-        100,000 California residents, no sale or sharing of personal information for cross-context
-        behavioural advertising). Nevertheless, if you are a California resident: I do not sell or share
-        your personal information, I do not use sensitive personal information for any purpose, and the
-        rights described in section 12 apply to you in practice. Similar rights exist under Colorado,
-        Virginia, Connecticut, Utah, Texas and other US state laws — they are honoured the same way.
-    </p>
-
-    <h2 id="changes">17. Changes to this policy</h2>
-    <p>
-        I may update this policy as the app changes. The "Effective date" at the top will be updated, and
-        material changes will be announced in the app or release notes. The full history of edits is
-        public in the GitHub repository under
-        <a href="https://github.com/adsamcik/StarlitCoffee/commits/main/docs/privacy/index.html"><code>docs/privacy/index.html</code></a>.
-    </p>
-
-    <h2 id="contact">18. Contact &amp; complaints</h2>
-    <p>
-        For any privacy question, request, or concern, email
-        <a href="mailto:play@adsamcik.com">play@adsamcik.com</a>. I aim to reply within a few working days
-        and within 30 days at the latest.
+        I may update this policy when the app changes. The effective date will change, and material changes
+        will be announced in the app or release notes where appropriate. The
+        <a href="https://github.com/adsamcik/StarlitCoffee/commits/main/docs/privacy/index.html">edit history</a>
+        is public.
     </p>
     <p>
-        If you believe I have processed your personal data unlawfully, you have the right to complain to a
-        supervisory authority. For most users this will be:
+        Contact <a href="mailto:play@adsamcik.com">play@adsamcik.com</a> with a privacy question or request.
+        You may also complain to the data-protection authority where you live or work, or where an issue
+        occurred:
     </p>
     <ul>
-        <li><strong>Czech Republic (lead authority):</strong> Úřad pro ochranu osobních údajů (ÚOOÚ) — <a href="https://uoou.gov.cz">uoou.gov.cz</a>.</li>
+        <li><strong>Czech Republic:</strong> Úřad pro ochranu osobních údajů (ÚOOÚ) — <a href="https://uoou.gov.cz">uoou.gov.cz</a>.</li>
         <li><strong>United Kingdom:</strong> Information Commissioner's Office (ICO) — <a href="https://ico.org.uk">ico.org.uk</a>.</li>
-        <li><strong>Other EEA countries:</strong> your national Data Protection Authority. <a href="https://edpb.europa.eu/about-edpb/about-edpb/members_en">List of EU DPAs</a>.</li>
+        <li><strong>EEA:</strong> <a href="https://www.edpb.europa.eu/about-edpb/about-edpb/members_en">list of national data-protection authorities</a>.</li>
     </ul>
 
 </main>

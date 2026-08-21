@@ -1,7 +1,6 @@
 package com.adsamcik.starlitcoffee.viewmodel
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -19,6 +18,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import dev.tracebox.Tracebox
 
 enum class SettingsOperation {
     IDLE,
@@ -186,7 +186,7 @@ class SettingsViewModel(
             } catch (error: CancellationException) {
                 throw error
             } catch (error: Exception) {
-                Log.e(TAG, "Settings persistence operation failed", error)
+                Tracebox.log.error(error, "Settings persistence operation failed")
                 _uiState.update {
                     it.copy(
                         operation = SettingsOperation.IDLE,
@@ -197,9 +197,6 @@ class SettingsViewModel(
         }
     }
 
-    companion object {
-        private const val TAG = "SettingsViewModel"
-    }
 }
 
 class SettingsViewModelFactory(

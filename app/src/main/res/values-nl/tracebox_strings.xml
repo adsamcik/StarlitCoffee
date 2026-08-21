@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_settings_section_support">Ondersteuning en privacy</string>
+    <string name="label_diagnostics">Diagnostiek</string>
+    <string name="msg_diagnostics_summary">Bekijk, deel, bewaar of verwijder lokale probleemoplossingsgegevens</string>
+    <string name="label_privacy_policy">Privacybeleid</string>
+    <string name="msg_privacy_policy_summary">Lees hoe Starlit Coffee met gegevens omgaat</string>
+    <string name="msg_privacy_policy_open_failed">Het privacybeleid kon niet worden geopend.</string>
+    <string name="screen_diagnostics_title">Diagnostiek</string>
+    <string name="msg_diagnostics_unavailable">Diagnostiek is niet beschikbaar in dit proces.</string>
+    <string name="msg_diagnostics_support_description">Bundelt recente appfouten en prestatiecontext voor probleemoplossing.</string>
+</resources>

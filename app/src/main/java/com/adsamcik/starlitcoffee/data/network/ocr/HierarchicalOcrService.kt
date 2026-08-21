@@ -2,12 +2,10 @@ package com.adsamcik.starlitcoffee.data.network.ocr
 
 import android.graphics.Bitmap
 import android.graphics.Rect
-import android.util.Log
 import androidx.core.graphics.scale
 import kotlin.math.max
 import kotlin.math.min
-
-private const val TAG = "HierarchicalOcr"
+import dev.tracebox.Tracebox
 
 /**
  * OCR wrapper that adds region-targeted re-recognition on top of
@@ -89,15 +87,16 @@ class HierarchicalOcrService(
         val initial = delegate.recognize(bitmap) ?: return null
         val problemBlocks = initial.blocks.filter(classifier::isProblem)
         if (problemBlocks.isEmpty()) {
-            Log.d(TAG, "No problem regions detected; skipping refinement")
+            Tracebox.log.debug("No problem regions detected; skipping refinement")
             return initial
         }
 
         val candidates = problemBlocks.take(maxRefineRegions)
-        Log.d(
-            TAG,
-            "Refining ${candidates.size}/${problemBlocks.size} problem region(s) " +
-                "(cap=$maxRefineRegions)",
+        Tracebox.log.debug(
+            "Refining {}/{} problem region(s) (cap={})",
+            candidates.size,
+            problemBlocks.size,
+            maxRefineRegions,
         )
 
         val refinedBlocks = mutableListOf<RecognizedTextBlock>()
@@ -107,7 +106,7 @@ class HierarchicalOcrService(
         }
 
         if (refinedBlocks.isEmpty()) {
-            Log.d(TAG, "Refinement produced no usable tokens; returning initial result")
+            Tracebox.log.debug("Refinement produced no usable tokens; returning initial result")
             return initial
         }
 
@@ -120,11 +119,7 @@ class HierarchicalOcrService(
         } else {
             (initial.fullText + "\n" + refinedText).trim()
         }
-        Log.d(
-            TAG,
-            "Refinement added ${refinedBlocks.size} block(s) " +
-                "(${refinedText.length} chars)",
-        )
+        Tracebox.log.debug("Refinement added {} block(s) ({} chars)", refinedBlocks.size, refinedText.length)
         return RecognizedText(
             fullText = combinedFullText,
             blocks = initial.blocks + refinedBlocks,

@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 from dataclasses import dataclass
@@ -39,6 +40,7 @@ class ExactStage:
 class AcceptedAsset:
     stage: ExactStage
     revision: str
+    resource_sha256: str
 
 
 def parse_args() -> argparse.Namespace:
@@ -115,10 +117,17 @@ def accepted_assets(tracker: dict, stages: dict[str, ExactStage], root: Path) ->
         drawable_path = root / "app/src/main/res/drawable-nodpi" / f"{asset_id}.webp"
         if not drawable_path.is_file():
             raise GenerationError(f"Accepted candidate lacks matching packaged drawable: {drawable_path}")
+        candidate_sha256 = hashlib.sha256(candidate_path.read_bytes()).hexdigest()
+        resource_sha256 = hashlib.sha256(drawable_path.read_bytes()).hexdigest()
+        if candidate_sha256 != resource_sha256:
+            raise GenerationError(
+                f"Packaged drawable bytes differ from the accepted candidate: {asset_id}"
+            )
         accepted.append(
             AcceptedAsset(
                 stage=stage,
                 revision=require_text(tracker_asset, "accepted_revision"),
+                resource_sha256=resource_sha256,
             ),
         )
     if not accepted:
@@ -146,6 +155,7 @@ def render(tracker: dict, accepted: list[AcceptedAsset]) -> str:
         "import androidx.annotation.DrawableRes",
         "import com.adsamcik.starlitcoffee.R",
         "import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileId",
+        "import com.adsamcik.starlitcoffee.domain.brewing.BuiltInP1RecipeCatalog",
         "import com.adsamcik.starlitcoffee.domain.brewing.BuiltInRecipeId",
         "import com.adsamcik.starlitcoffee.domain.brewing.InstructionAssetId",
         "import com.adsamcik.starlitcoffee.domain.brewing.MethodFamilyId",
@@ -169,6 +179,7 @@ def render(tracker: dict, accepted: list[AcceptedAsset]) -> str:
         "    val visualPriority: P1ExactVisualPriority,",
         "    @param:DrawableRes val drawableRes: Int,",
         "    val trackerRevision: String,",
+        "    val resourceSha256: String,",
         ") {",
         "    init {",
         "        require(id.value == \"instruction_${contentId.value}_default\") {",
@@ -194,6 +205,7 @@ def render(tracker: dict, accepted: list[AcceptedAsset]) -> str:
                 f"        visualPriority = P1ExactVisualPriority.{priority},",
                 f"        drawableRes = R.drawable.{stage.asset_id},",
                 f"        trackerRevision = {kotlin_string(item.revision)},",
+                f"        resourceSha256 = {kotlin_string(item.resource_sha256)},",
                 "    ),",
             ],
         )
@@ -209,14 +221,29 @@ def render(tracker: dict, accepted: list[AcceptedAsset]) -> str:
             "",
             "    /** Accepted art is safe metadata; localized copy is enforced by the recipe gate. */",
             "    fun runtimeAssets(): List<InstructionAssetRecord> = assets.map { candidate ->",
-            "        candidate.toRuntimeAsset()",
+            "        val definition = requireNotNull(BuiltInP1RecipeCatalog.find(candidate.recipeId)) {",
+            "            \"Accepted art references an unknown exact recipe: ${candidate.recipeId.value}\"",
+            "        }",
+            "        require(candidate.familyId.value == definition.sourceMethodFamilyId) {",
+            "            \"Accepted art source family differs for ${candidate.recipeId.value}\"",
+            "        }",
+            "        require(candidate.profileId.value == definition.sourceBrewerProfileId.value) {",
+            "            \"Accepted art source profile differs for ${candidate.recipeId.value}\"",
+            "        }",
+            "        candidate.toRuntimeAsset(",
+            "            runtimeFamilyId = definition.methodFamilyId,",
+            "            runtimeProfileId = definition.brewerProfileId,",
+            "        )",
             "    }",
             "",
-            "    private fun P1TrackerAcceptedInstructionAsset.toRuntimeAsset(): InstructionAssetRecord =",
+            "    private fun P1TrackerAcceptedInstructionAsset.toRuntimeAsset(",
+            "        runtimeFamilyId: MethodFamilyId,",
+            "        runtimeProfileId: BrewerProfileId,",
+            "    ): InstructionAssetRecord =",
             "        InstructionAssetRecord(",
             "            id = id,",
-            "            familyId = familyId,",
-            "            profileId = profileId,",
+            "            familyId = runtimeFamilyId,",
+            "            profileId = runtimeProfileId,",
             "            stageId = stageId,",
             "            contentId = contentId,",
             "            namingConvention = InstructionAssetNamingConvention.EXACT_CONTENT_ID,",
@@ -232,6 +259,7 @@ def render(tracker: dict, accepted: list[AcceptedAsset]) -> str:
             "                reviewer = \"Starlit tactile production tracker\",",
             "                reviewedOn = LocalDate.parse(TRACKER_UPDATED_ON),",
             "            ),",
+            "            resourceSha256 = resourceSha256,",
             "        )",
             "}",
             "",

@@ -3,7 +3,6 @@ package com.adsamcik.starlitcoffee.viewmodel
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.core.content.edit
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
@@ -101,6 +100,7 @@ import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.coroutines.withTimeout
 import java.util.Locale
 import java.util.UUID
+import dev.tracebox.Tracebox
 
 sealed class GrindResult {
     data class Generic(val descriptor: GrindDescriptor) : GrindResult()
@@ -1194,11 +1194,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                     val currentOwner = runCatching {
                         repository.findByScanSessionId(sessionId)
                     }.onFailure { error ->
-                        Log.w(
-                            "BrewViewModel",
-                            "Could not verify pending scan-photo ownership; journal retained",
-                            error,
-                        )
+                        Tracebox.log.error(error, "Could not verify pending scan-photo ownership; journal retained")
                     }.getOrElse {
                         return@forEach
                     }
@@ -1207,10 +1203,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                     ) {
                         ScanPhotoStorage.clearPendingSave(app, sessionId)
                     } else {
-                        Log.w(
-                            "BrewViewModel",
-                            "Could not durably remove unowned scan photos; journal retained",
-                        )
+                        Tracebox.log.warn("Could not durably remove unowned scan photos; journal retained")
                     }
                 } finally {
                     finishScannedBagSave(sessionId)
@@ -1290,7 +1283,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 } catch (error: CancellationException) {
                     throw error
                 } catch (error: Exception) {
-                    Log.w("BrewViewModel", "Failed to learn barcode stem after saving bag", error)
+                    Tracebox.log.error(error, "Failed to learn barcode stem after saving bag")
                 }
             }
         }
@@ -1363,11 +1356,14 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 }
             },
             onCleanupFailure = { error ->
-                Log.w(
-                    "BrewViewModel",
-                    "Coffee bag photo cleanup deferred; journal retained for retry",
-                    error,
-                )
+                if (error != null) {
+                    Tracebox.log.error(
+                        error,
+                        "Coffee bag photo cleanup deferred; journal retained for retry",
+                    )
+                } else {
+                    Tracebox.log.warn("Coffee bag photo cleanup deferred; journal retained for retry")
+                }
             },
         )
     }
@@ -1409,7 +1405,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             val result = try {
                 repository.logUse(bagId = bagId, amountG = amountG)
             } catch (error: Exception) {
-                Log.e("BrewViewModel", "Failed to log coffee use", error)
+                Tracebox.log.error(error, "Failed to log coffee use")
                 CoffeeUsageLogResult.Failed
             }
             onResult(result)
@@ -1429,7 +1425,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             val undone = try {
                 repository.undo(logged)
             } catch (error: Exception) {
-                Log.e("BrewViewModel", "Failed to undo coffee use", error)
+                Tracebox.log.error(error, "Failed to undo coffee use")
                 false
             }
             onResult(undone)
@@ -1629,7 +1625,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             } catch (error: CancellationException) {
                 throw error
             } catch (error: Exception) {
-                Log.e("BrewViewModel", "Could not enqueue bag extraction", error)
+                Tracebox.log.error(error, "Could not enqueue bag extraction")
                 if (isLatestBagExtractionGeneration(context.sessionId, context.generationId)) {
                     deliverBagPhotoFailure(
                         workId = IN_MEMORY_WORK_ID,
@@ -1939,7 +1935,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                     is QrLinkExploreResult.Skipped -> onResult(null)
                 }
             } catch (e: Exception) {
-                Log.w("BrewViewModel", "QR link exploration failed", e)
+                Tracebox.log.error(e, "QR link exploration failed")
                 onResult(null)
             }
         }
@@ -2144,7 +2140,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             } catch (error: CancellationException) {
                 throw error
             } catch (error: Exception) {
-                Log.w("BrewViewModel", "Could not open Mindlayer model setup", error)
+                Tracebox.log.error(error, "Could not open Mindlayer model setup")
             }
         }
     }
@@ -2179,7 +2175,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 try {
                     updateBagAnalysisPreview(decodeBagExtractionResult(previewJson))
                 } catch (error: Exception) {
-                    Log.w("BrewViewModel", "Failed to decode bag extraction preview", error)
+                    Tracebox.log.error(error, "Failed to decode bag extraction preview")
                 }
             }
         val stageName = workInfo.progress.getString(BagExtractionWorker.KEY_PROGRESS_STAGE) ?: return
@@ -2227,7 +2223,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 reviewContext = reviewContext,
             )
         } catch (error: Exception) {
-            Log.e("BrewViewModel", "Failed to decode bag extraction result", error)
+            Tracebox.log.error(error, "Failed to decode bag extraction result")
             deliverBagPhotoFailure(
                 workId = workId,
                 sessionId = sessionId,
@@ -2429,7 +2425,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             return
         }
         if (!BagExtractionScheduler.isValidWorkId(workId)) {
-            Log.w("BrewViewModel", "Ignoring invalid bag-analysis work ID")
+            Tracebox.log.warn("Ignoring invalid bag-analysis work ID")
             return
         }
         pendingBagReviewLoaderJob?.cancel()
@@ -2643,7 +2639,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         return try {
             decodeBagExtractionResult(json)
         } catch (error: Exception) {
-            Log.e("BrewViewModel", "Failed to decode deep-link bag result", error)
+            Tracebox.log.error(error, "Failed to decode deep-link bag result")
             BagPhotoProcessingResult(llmStatus = LlmEnrichmentStatus.UNAVAILABLE)
         }
     }

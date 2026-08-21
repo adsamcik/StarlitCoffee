@@ -174,8 +174,7 @@ class BuiltInP1RecipeCatalogTest {
     @Test
     fun `automatic alternatives keep matching paper and basket paired`() {
         val expectedBatchPairs = setOf(
-            "cone_paper" to "automatic_cone_basket",
-            "flat_basket_paper" to "automatic_flat_basket",
+            "moccamaster_number_four_cone_paper" to "moccamaster_kbgv_select_cone_basket",
         )
         listOf("auto_batch_500_30", "auto_batch_1000_60").forEach { id ->
             val pairs = recipe(id).equipmentOptions.mapTo(mutableSetOf()) { option ->
@@ -242,6 +241,11 @@ class BuiltInP1RecipeCatalogTest {
         val genericCone = recipe("generic_conical_low_agitation_20_320")
         assertEquals(P1TimeBasis.GEOMETRY_DEPENDENT, genericCone.expectedTime.basis)
         assertNull(genericCone.expectedTime.minimumSeconds)
+
+        val cleverWaterFirst = recipe("clever_water_first_15_250")
+        assertEquals(P1TimeBasis.APPROXIMATE, cleverWaterFirst.expectedTime.basis)
+        assertEquals(210, cleverWaterFirst.expectedTime.minimumSeconds)
+        assertEquals(210, cleverWaterFirst.expectedTime.maximumSeconds)
 
         val switchOfficial = recipe("switch_official_20_240")
         assertEquals(P1TemperatureBasis.HOT_UNSPECIFIED, switchOfficial.temperature.basis)

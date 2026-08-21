@@ -1,7 +1,6 @@
 package com.adsamcik.starlitcoffee.data.work
 
 import android.content.Context
-import android.util.Log
 import com.adsamcik.starlitcoffee.util.AndroidDirectorySync
 import com.adsamcik.starlitcoffee.util.AndroidFileSync
 import com.adsamcik.starlitcoffee.util.BagPhotoProcessingResult
@@ -13,10 +12,10 @@ import java.nio.file.Files
 import java.nio.file.LinkOption
 import java.nio.file.StandardCopyOption
 import java.util.UUID
+import dev.tracebox.Tracebox
 
 /** Latest deterministic scan result, retained only while its worker is active. */
 object BagExtractionCheckpointStore {
-    private const val TAG = "BagExtractionCheckpoint"
     private const val CHECKPOINT_DIR = "bag_extraction_checkpoints"
 
     fun write(context: Context, workId: String, resultJson: String) = write(
@@ -62,7 +61,7 @@ object BagExtractionCheckpointStore {
     internal fun read(directory: File, workId: String): String? {
         val file = checkpointFile(directory, workId).takeIf(::isSafeRegularFile) ?: return null
         return runCatching(file::readText)
-            .onFailure { error -> Log.e(TAG, "Failed to read bag extraction checkpoint", error) }
+            .onFailure { error -> Tracebox.log.error(error, "Failed to read bag extraction checkpoint") }
             .getOrNull()
     }
 

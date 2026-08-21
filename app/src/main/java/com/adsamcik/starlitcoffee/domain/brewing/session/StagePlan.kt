@@ -235,6 +235,30 @@ data class StageReferenceTargets(
 }
 
 /**
+ * A source-defined lower time boundary for normal stage advancement.
+ *
+ * This remains independent from [StageCompletionMode]: a measured or observed
+ * trigger can be recorded while an ordered recipe schedule prevents the next
+ * stage from starting early.
+ */
+data class StageAdvanceConstraint(
+    val notBeforeStageElapsedMillis: Long? = null,
+    val notBeforeBrewElapsedMillis: Long? = null,
+) {
+    init {
+        require(notBeforeStageElapsedMillis == null || notBeforeStageElapsedMillis >= 0L) {
+            "Stage advance boundary cannot be negative"
+        }
+        require(notBeforeBrewElapsedMillis == null || notBeforeBrewElapsedMillis >= 0L) {
+            "Brew-clock advance boundary cannot be negative"
+        }
+    }
+
+    val isConstrained: Boolean
+        get() = notBeforeStageElapsedMillis != null || notBeforeBrewElapsedMillis != null
+}
+
+/**
  * A completion rule has all data for its single trigger in one immutable
  * value. Additional source reference targets stay in [StageReferenceTargets],
  * preventing a timer cue from being interpreted as a mass trigger by a
@@ -279,6 +303,7 @@ data class BrewStageDefinition(
     val equipmentRequirement: StageEquipmentRequirement? = null,
     val completionMode: StageCompletionMode,
     val referenceTargets: StageReferenceTargets = StageReferenceTargets(),
+    val advanceConstraint: StageAdvanceConstraint = StageAdvanceConstraint(),
     val alertPolicy: StageAlertPolicy = StageAlertPolicy(),
     val isSkippable: Boolean = false,
 )

@@ -114,10 +114,8 @@
     <string name="prep_tip_pulsar_40k">Rincez le filtre métallique 40K pour préchauffer le cylindre. Montez le cylindre, ajoutez la mouture, nivelez le lit et placez le couvercle de dispersion. Tarez la balance.</string>
     <string name="prep_tip_pour_over_paper">Placez le filtre papier et rincez-le à l\'eau chaude pour préchauffer et enlever le goût de papier. Ajoutez la mouture, puis tarez la balance.</string>
     <string name="prep_tip_french_press">Préchauffez la French Press, puis videz-la. Ajoutez la mouture, placez-la sur la balance et tarez avant d\'ajouter l\'eau.</string>
-    <string name="prep_tip_aeropress">Insérez un filtre rincé dans le porte-filtre. Ajoutez la mouture, posez l\'AeroPress sur une tasse ou un serveur stable, puis tarez la balance.</string>
     <string name="prep_tip_espresso">Essuyez le porte-filtre. Dosez, répartissez et tassez à niveau avant de verrouiller.</string>
     <string name="prep_tip_moka">Remplissez la chambre inférieure jusqu\'à la valve. Remplissez le panier de mouture, nivelez — ne tassez pas. Assemblez avec précaution.</string>
-    <string name="prep_tip_cold_brew">Ajoutez la mouture dans le récipient, tarez la balance, puis ajoutez de l\'eau froide ou à température ambiante et couvrez.</string>
     <string name="format_prep_grind_specific">Moulez %1$s — réglez %2$s sur %3$s</string>
     <string name="format_prep_grind_generic">Moulez %1$s — %2$s (%3$s)</string>
 
@@ -358,18 +356,12 @@
     <string name="instruction_french_press_start">Ajouter toute l\'eau, mélanger doucement et poser le couvercle</string>
     <string name="instruction_french_press_steep">Laisser infuser sans remuer jusqu\'au temps cible</string>
     <string name="instruction_french_press_plunge">Presser lentement, puis verser le café</string>
-    <string name="instruction_aeropress_start">Ajouter l\'eau, mélanger et démarrer l\'infusion</string>
-    <string name="instruction_aeropress_steep">Infuser avec le bouchon en place ; préparez-vous à presser</string>
-    <string name="instruction_aeropress_press">Presser régulièrement jusqu\'au sifflement, puis arrêter</string>
     <string name="instruction_espresso_start">Verrouiller le porte-filtre et lancer le shot</string>
     <string name="instruction_espresso_pull">Surveiller le débit et le rendement ; garder la tasse sur la balance</string>
     <string name="instruction_espresso_stop">Arrêter au rendement cible ou quand le shot blondit</string>
     <string name="instruction_moka_start">Assembler la cafetière et chauffer doucement avec le couvercle ouvert</string>
     <string name="instruction_moka_flow">Surveiller le café qui coule dans la chambre supérieure</string>
     <string name="instruction_moka_remove">Retirer du feu quand le flux pâlit ou crépite</string>
-    <string name="instruction_cold_brew_start">Mélanger café et eau, remuer pour mouiller toute la mouture</string>
-    <string name="instruction_cold_brew_steep">Couvrir et laisser infuser ; garder toute la mouture saturée</string>
-    <string name="instruction_cold_brew_filter">Filtrer le concentré et le refroidir ou le diluer pour servir</string>
 
     <!-- Warnings -->
 <!-- Taste Feedback -->
@@ -760,7 +752,6 @@
     <string name="screen_learning_title">Apprendre</string>
     <string name="msg_learning_subtitle">Guides visuels de préparation étape par étape</string>
     <string name="msg_learning_intro">Choisissez une cafetière et une recette, puis avancez clairement étape par étape.</string>
-    <string name="msg_learning_empty">Aucun guide pédagogique disponible pour le moment.</string>
     <string name="action_show_details">Afficher les détails</string>
     <string name="action_hide_details">Masquer les détails</string>
 </resources>

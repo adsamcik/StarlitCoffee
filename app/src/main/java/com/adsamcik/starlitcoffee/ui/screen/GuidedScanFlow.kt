@@ -1,6 +1,5 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -41,6 +40,7 @@ import com.adsamcik.starlitcoffee.viewmodel.BagScanPhase
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
+import dev.tracebox.Tracebox
 
 private const val THUMBNAIL_TARGET_PX = 512
 
@@ -372,7 +372,7 @@ fun ScanAddBagReview(
                             Toast.makeText(context, couldNotReadLabel, Toast.LENGTH_LONG).show()
                         }
                         is ScannedBagSaveResult.Failed -> {
-                            Log.e("ScanAddBagReview", "Failed to save scanned coffee bag", saveResult.error)
+                            Tracebox.log.error(saveResult.error, "Failed to save scanned coffee bag")
                             Toast.makeText(context, couldNotSaveBag, Toast.LENGTH_LONG).show()
                         }
                         is ScannedBagSaveResult.Saved -> {
@@ -454,11 +454,7 @@ fun ScanRescanReview(
                             Toast.makeText(context, R.string.msg_could_not_read_label, Toast.LENGTH_LONG).show()
                         }
                         is ScannedBagSaveResult.Failed -> {
-                            Log.e(
-                                "ScanRescanReview",
-                                "Failed to update rescanned coffee bag",
-                                updateResult.error,
-                            )
+                            Tracebox.log.error(updateResult.error, "Failed to update rescanned coffee bag")
                             Toast.makeText(
                                 context,
                                 R.string.msg_could_not_save_changes,
@@ -470,7 +466,7 @@ fun ScanRescanReview(
                 } catch (error: CancellationException) {
                     throw error
                 } catch (error: Exception) {
-                    Log.e("ScanRescanReview", "Failed to update rescanned coffee bag", error)
+                    Tracebox.log.error(error, "Failed to update rescanned coffee bag")
                     Toast.makeText(context, R.string.msg_could_not_save_changes, Toast.LENGTH_LONG).show()
                 } finally {
                     brewViewModel.finishScannedBagSave(saveSessionId)

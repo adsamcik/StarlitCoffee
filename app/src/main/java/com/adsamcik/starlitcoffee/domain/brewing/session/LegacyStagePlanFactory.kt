@@ -35,8 +35,26 @@ object LegacyStagePlanFactory {
 
         BrewMethod.AEROPRESS -> plan(
             method = method,
-            manualStage("aeropress_steep", BrewStageAction.STEEP),
-            manualStage("aeropress_press", BrewStageAction.PRESS),
+            manualStage(
+                id = "aeropress_steep",
+                action = BrewStageAction.STEEP,
+                safetyMessages = listOf(
+                    StageSafetyMessage(
+                        code = "aeropress_standard_orientation_sturdy_vessel",
+                        severity = StageSafetySeverity.CRITICAL,
+                    ),
+                ),
+            ),
+            manualStage(
+                id = "aeropress_press",
+                action = BrewStageAction.PRESS,
+                safetyMessages = listOf(
+                    StageSafetyMessage(
+                        code = "aeropress_sturdy_vessel_hands_clear",
+                        severity = StageSafetySeverity.CRITICAL,
+                    ),
+                ),
+            ),
         )
 
         BrewMethod.ESPRESSO -> plan(
@@ -70,8 +88,23 @@ object LegacyStagePlanFactory {
                 id = "cold_brew_steep",
                 action = BrewStageAction.STEEP,
                 durationMillis = secondsToMillis(method.timeTargetLow),
+                safetyMessages = listOf(
+                    StageSafetyMessage(
+                        code = "food_refrigerate_4c_during_steep",
+                        severity = StageSafetySeverity.WARNING,
+                    ),
+                ),
             ),
-            manualStage("cold_brew_filter", BrewStageAction.FILTER),
+            manualStage(
+                id = "cold_brew_filter",
+                action = BrewStageAction.FILTER,
+                safetyMessages = listOf(
+                    StageSafetyMessage(
+                        code = "food_refrigerate_4c_promptly_after_filtering",
+                        severity = StageSafetySeverity.WARNING,
+                    ),
+                ),
+            ),
         )
     }
 
@@ -110,10 +143,12 @@ object LegacyStagePlanFactory {
         id: String,
         action: BrewStageAction,
         durationMillis: Long,
+        safetyMessages: List<StageSafetyMessage> = emptyList(),
     ): BrewStageDefinition = BrewStageDefinition(
         id = StageId(id),
         action = action,
         contentId = StageContentId(id),
+        safetyMessages = safetyMessages,
         completionMode = StageCompletionMode.Countdown(durationMillis),
         alertPolicy = StageAlertPolicy(alertOnStart = true),
     )

@@ -240,6 +240,7 @@ object P1BrewerProfileSetupStateFactory {
         BrewerProfileId("clever_style"),
         HARIO_SWITCH_PROFILE_ID,
         BrewerProfileId("cezve_generic"),
+        BrewerProfileId("moccamaster_kbgv_select"),
         BrewerProfileId("automatic_batch_generic"),
         BrewerProfileId("automatic_single_cup_generic"),
         BrewerProfileId("vietnamese_phin"),

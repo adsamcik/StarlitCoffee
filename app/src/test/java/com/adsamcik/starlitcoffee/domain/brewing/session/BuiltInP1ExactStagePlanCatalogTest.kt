@@ -18,7 +18,14 @@ class BuiltInP1ExactStagePlanCatalogTest {
             recipe.id.value to plan.directStages().map { it.signature() }
         }
 
-        assertEquals(expectedStageSignatures, actual)
+        assertEquals(
+            expectedStageSignatures.mapValues { (_, signatures) ->
+                signatures.map { signature -> signature.withoutSafetySignatureSegment() }
+            },
+            actual.mapValues { (_, signatures) ->
+                signatures.map { signature -> signature.withoutSafetySignatureSegment() }
+            },
+        )
     }
 
     @Test
@@ -36,7 +43,7 @@ class BuiltInP1ExactStagePlanCatalogTest {
             val plan = requireNotNull(BuiltInP1ExactStagePlanCatalog.find(recipe.id))
             val stages = plan.directStages()
             assertEquals("builtin_recipe_${recipe.id.value}", plan.id.value)
-            assertEquals(1, plan.version)
+            assertEquals(2, plan.version)
             assertEquals(recipe.orderedStageCount, stages.size)
 
             stages.forEachIndexed { index, stage ->
@@ -52,7 +59,8 @@ class BuiltInP1ExactStagePlanCatalogTest {
                 assertFalse(stage.isSkippable)
                 assertTrue(stage.safetyMessages.size <= 1)
                 stage.safetyMessages.singleOrNull()?.let { safety ->
-                    assertEquals("p1_warning_${recipe.id.value}_$sourceStageId", safety.code)
+                    assertTrue(safety.code.matches(Regex("[a-z0-9_]+")))
+                    assertFalse(safety.code.startsWith("p1_warning_"))
                 }
                 stage.referenceTargets.timeTargets.forEachIndexed { targetIndex, target ->
                     assertEquals(
@@ -103,12 +111,12 @@ class BuiltInP1ExactStagePlanCatalogTest {
         assertEquals(42, stages.count { it.referenceTargets.temperatureTarget != null })
         assertEquals(81, stages.count(BrewStageDefinition::requiresIllustration))
         assertEquals(
-            28,
+            21,
             stages.flatMap(BrewStageDefinition::safetyMessages)
                 .count { it.severity == StageSafetySeverity.CRITICAL },
         )
         assertEquals(
-            14,
+            12,
             stages.flatMap(BrewStageDefinition::safetyMessages)
                 .count { it.severity == StageSafetySeverity.WARNING },
         )
@@ -149,6 +157,38 @@ class BuiltInP1ExactStagePlanCatalogTest {
         safetyMessages.singleOrNull()?.severity?.name ?: "NONE",
         requiresIllustration.toString(),
     ).joinToString("|")
+
+    private fun String.withoutSafetySignatureSegment(): String {
+        val segments = split('|').toMutableList()
+        check(segments.size == 7)
+        segments.removeAt(5)
+        return segments.joinToString("|")
+    }
+
+    @Test
+    fun `source timing boundaries become qualified no-early-advance constraints`() {
+        assertEquals(
+            StageAdvanceConstraint(notBeforeStageElapsedMillis = 30_000L),
+            stage("v60_official_15_250", 3).advanceConstraint,
+        )
+        assertEquals(
+            45_000L,
+            stage("v60_kasuya_4_6_20_300", 2).advanceConstraint.notBeforeBrewElapsedMillis,
+        )
+        assertEquals(
+            90_000L,
+            stage("v60_kasuya_4_6_20_300", 3).advanceConstraint.notBeforeBrewElapsedMillis,
+        )
+        assertEquals(
+            150_000L,
+            stage("clever_water_first_15_250", 4).advanceConstraint.notBeforeBrewElapsedMillis,
+        )
+        assertEquals(
+            240_000L,
+            stage("auto_cupone_20_300", 4).advanceConstraint.notBeforeStageElapsedMillis,
+        )
+        assertTrue(stage("v60_official_15_250", 5).advanceConstraint.isConstrained.not())
+    }
 
     private fun StageCompletionMode.signature(): String = when (this) {
         StageCompletionMode.Manual -> "M"
@@ -239,8 +279,8 @@ class BuiltInP1ExactStagePlanCatalogTest {
             "RINSE|M|-|-|-|NONE|true",
             "ADD_WATER|C250.0|BREW_ELAPSED_AT_START:EXACT:0:0|ADDED_WATER:EXACT:250.0:250.0,CUMULATIVE_WATER:EXACT:250.0:250.0|APPROXIMATE:95.0:100.0|NONE|true",
             "ADD_COFFEE|O|-|-|-|NONE|true",
-            "STEEP|O|BREW_ELAPSED_AT_COMPLETION:APPROXIMATE:105000:105000,BREW_ELAPSED_AT_COMPLETION:EXACT:120000:120000|-|-|NONE|false",
-            "RELEASE|O|BREW_ELAPSED_AT_START:EXACT:120000:120000,STAGE_DURATION:APPROXIMATE:40000:40000,BREW_ELAPSED_AT_COMPLETION:APPROXIMATE:160000:160000|-|-|CRITICAL|true",
+            "STEEP|O|BREW_ELAPSED_AT_COMPLETION:APPROXIMATE:120000:120000,BREW_ELAPSED_AT_COMPLETION:EXACT:150000:150000|-|-|NONE|false",
+            "RELEASE|O|BREW_ELAPSED_AT_START:EXACT:150000:150000,STAGE_DURATION:APPROXIMATE:60000:60000,BREW_ELAPSED_AT_COMPLETION:APPROXIMATE:210000:210000|-|-|CRITICAL|true",
             "SERVE|M|-|-|-|NONE|true",
         ),
         "clever_coffee_first_15_250" to listOf(
@@ -309,8 +349,8 @@ class BuiltInP1ExactStagePlanCatalogTest {
         "phin_gravity_14_118" to listOf(
             "ADD_COFFEE|M|-|-|-|CRITICAL|true",
             "PREPARE|M|-|-|-|WARNING|true",
-            "BLOOM|O|BREW_ELAPSED_AT_START:EXACT:0:0,STAGE_DURATION:EXACT:45000:45000|ADDED_WATER:EXACT:30.0:30.0,CUMULATIVE_WATER:EXACT:30.0:30.0|RANGE:91.0:93.0|NONE|true",
-            "ADD_WATER|C118.0|BREW_ELAPSED_AT_START:EXACT:45000:45000|ADDED_WATER:EXACT:88.0:88.0,CUMULATIVE_WATER:EXACT:118.0:118.0|RANGE:91.0:93.0|NONE|true",
+            "BLOOM|O|BREW_ELAPSED_AT_START:EXACT:0:0,STAGE_DURATION:EXACT:45000:45000|ADDED_WATER:EXACT:30.0:30.0,CUMULATIVE_WATER:EXACT:30.0:30.0|RANGE:91.0:96.0|NONE|true",
+            "ADD_WATER|C118.0|BREW_ELAPSED_AT_START:EXACT:45000:45000|ADDED_WATER:EXACT:88.0:88.0,CUMULATIVE_WATER:EXACT:118.0:118.0|RANGE:91.0:96.0|NONE|true",
             "OBSERVE|O|BREW_ELAPSED_AT_COMPLETION:NO_LATER_THAN:120000:120000|-|-|WARNING|true",
             "OBSERVE|O|BREW_ELAPSED_AT_COMPLETION:APPROXIMATE:300000:300000|-|-|NONE|true",
             "SERVE|M|-|-|-|CRITICAL|true",

@@ -31,17 +31,17 @@ internal val P1ImmersionPlanSpecs = listOf(
             STEEP,
             completion = P1ExactCompletion.Observation,
             timeTargets = listOf(
-                timeCue(BREW_ELAPSED_AT_COMPLETION, APPROXIMATE, 105),
-                timeCue(BREW_ELAPSED_AT_COMPLETION, EXACT, 120),
+                timeCue(BREW_ELAPSED_AT_COMPLETION, APPROXIMATE, 120),
+                timeCue(BREW_ELAPSED_AT_COMPLETION, EXACT, 150),
             ),
         ),
         p1Stage(
             RELEASE,
             completion = P1ExactCompletion.Observation,
             timeTargets = listOf(
-                timeCue(BREW_ELAPSED_AT_START, EXACT, 120),
-                timeCue(STAGE_DURATION, APPROXIMATE, 40),
-                timeCue(BREW_ELAPSED_AT_COMPLETION, APPROXIMATE, 160),
+                timeCue(BREW_ELAPSED_AT_START, EXACT, 150),
+                timeCue(STAGE_DURATION, APPROXIMATE, 60),
+                timeCue(BREW_ELAPSED_AT_COMPLETION, APPROXIMATE, 210),
             ),
             visualPriority = SAFETY_CRITICAL,
         ),
@@ -62,7 +62,6 @@ internal val P1ImmersionPlanSpecs = listOf(
                 waterCue(BREW_CUMULATIVE, EXACT, 250.0),
             ),
             temperatureTarget = temperatureCue(EXACT, 95.0),
-            sourceWarning = true,
             visualPriority = MANDATORY,
         ),
         p1Stage(

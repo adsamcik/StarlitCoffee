@@ -112,7 +112,10 @@ internal object AndroidValuesParityVerifier {
             .forEach { file ->
                 parseXml(file).documentElement.childNodes
                     .asElementSequence()
-                    .filter { it.tagName in STRING_LIKE_RESOURCE_TAGS }
+                    .filter { element ->
+                        element.tagName in STRING_LIKE_RESOURCE_TAGS &&
+                            element.getAttribute(TRANSLATABLE_ATTRIBUTE).lowercase() != TRANSLATABLE_FALSE
+                    }
                     .forEach { element ->
                         val name = element.getAttribute(NAME_ATTRIBUTE)
                         if (name.isBlank()) return@forEach
@@ -195,6 +198,8 @@ internal object AndroidValuesParityVerifier {
     private const val NAME_ATTRIBUTE = "name"
     private const val FORMATTED_ATTRIBUTE = "formatted"
     private const val FORMATTED_FALSE = "false"
+    private const val TRANSLATABLE_ATTRIBUTE = "translatable"
+    private const val TRANSLATABLE_FALSE = "false"
     private const val LOCALE_TAG = "locale"
     private const val STRING_TAG = "string"
     private const val STRING_ARRAY_TAG = "string-array"

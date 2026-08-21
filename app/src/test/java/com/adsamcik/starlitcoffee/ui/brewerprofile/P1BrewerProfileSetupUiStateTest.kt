@@ -28,7 +28,7 @@ class P1BrewerProfileSetupUiStateTest {
                 "clever_style",
                 "hario_switch",
                 "cezve_generic",
-                "automatic_batch_generic",
+                "moccamaster_kbgv_select",
                 "automatic_single_cup_generic",
                 "vietnamese_phin",
             ),
@@ -79,24 +79,21 @@ class P1BrewerProfileSetupUiStateTest {
     }
 
     @Test
-    fun `automatic basket and filter alternatives remain indivisible`() {
+    fun `exact KBGV basket and filter remain one model-specific configuration`() {
         val recipeId = BuiltInRecipeId("auto_batch_500_30")
-        val recipeSelected = selected("automatic_batch_generic")
+        val recipeSelected = selected("moccamaster_kbgv_select")
             .selectRecipe(recipeId)
             .updateEquipmentCapacity("700")
 
-        assertNull(recipeSelected.selectedEquipmentOption)
-        assertFalse(recipeSelected.canStart)
-
-        val cone = recipeSelected.selectEquipmentOption(0)
-        val flat = recipeSelected.selectEquipmentOption(1)
-
-        assertEquals("automatic_cone_basket", cone.selectedEquipmentOption?.basketId?.value)
-        assertEquals("cone_paper", cone.selectedEquipmentOption.singleFilterId())
-        assertEquals("automatic_flat_basket", flat.selectedEquipmentOption?.basketId?.value)
-        assertEquals("flat_basket_paper", flat.selectedEquipmentOption.singleFilterId())
-        assertTrue(cone.canStart)
-        assertTrue(flat.canStart)
+        assertEquals(
+            "moccamaster_kbgv_select_cone_basket",
+            recipeSelected.selectedEquipmentOption?.basketId?.value,
+        )
+        assertEquals(
+            "moccamaster_number_four_cone_paper",
+            recipeSelected.selectedEquipmentOption.singleFilterId(),
+        )
+        assertTrue(recipeSelected.canStart)
     }
 
     @Test

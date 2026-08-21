@@ -23,6 +23,7 @@ object Learning
 data class LearnBrewer(
     val brewerProfileId: String,
     val builtInRecipeId: String? = null,
+    val standaloneGuideId: String? = null,
     val harioSwitchWorkflow: String? = null,
 )
 
@@ -58,6 +59,9 @@ object OnboardingPersonalize
 
 @Serializable
 object Settings
+
+@Serializable
+object Diagnostics
 
 @Serializable
 object BloomAnimationSettings

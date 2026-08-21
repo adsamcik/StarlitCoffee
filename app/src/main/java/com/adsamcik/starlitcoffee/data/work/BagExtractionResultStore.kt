@@ -1,7 +1,6 @@
 package com.adsamcik.starlitcoffee.data.work
 
 import android.content.Context
-import android.util.Log
 import com.adsamcik.starlitcoffee.util.AndroidDirectorySync
 import com.adsamcik.starlitcoffee.util.AndroidFileSync
 import com.adsamcik.starlitcoffee.util.DirectorySync
@@ -15,6 +14,7 @@ import java.nio.file.Files
 import java.nio.file.LinkOption
 import java.nio.file.StandardCopyOption
 import java.util.UUID
+import dev.tracebox.Tracebox
 
 @Serializable
 data class StoredBagExtractionResult(
@@ -25,7 +25,6 @@ data class StoredBagExtractionResult(
 )
 
 object BagExtractionResultStore {
-    private const val TAG = "BagExtractionResult"
     private const val RESULT_DIR = "bag_extraction_results"
     private const val RESULT_RETENTION_MILLIS = 7L * 24L * 60L * 60L * 1_000L
     private val json = Json {
@@ -149,7 +148,7 @@ object BagExtractionResultStore {
         return runCatching {
             json.decodeFromString<StoredBagExtractionResult>(file.readText())
         }.onFailure { error ->
-            Log.e(TAG, "Failed to read stored bag extraction result", error)
+            Tracebox.log.error(error, "Failed to read stored bag extraction result")
         }.getOrNull()
     }
 

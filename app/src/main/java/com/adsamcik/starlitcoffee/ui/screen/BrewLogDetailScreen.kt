@@ -1,6 +1,5 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
@@ -75,8 +74,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-
-private const val TAG = "BrewLogDetailScreen"
+import dev.tracebox.Tracebox
 
 private val FlavorDescriptorSetSaver: Saver<MutableState<Set<FlavorDescriptor>>, ArrayList<String>> = Saver(
     save = { state -> ArrayList(state.value.map { it.name }) },
@@ -268,7 +266,7 @@ fun BrewLogDetailScreen(
                                     onBack()
                                 },
                                 onFailure = { error ->
-                                    Log.e(TAG, "Failed to delete brew log", error)
+                                    Tracebox.log.error(error, "Failed to delete brew log")
                                     Toast.makeText(
                                         context,
                                         R.string.msg_could_not_delete,
@@ -433,7 +431,7 @@ fun BrewLogDetailScreen(
                                         log = entity.copy(coffeeBagId = bagId)
                                     },
                                     onFailure = { error ->
-                                        Log.e(TAG, "Failed to update brew log coffee bag", error)
+                                        Tracebox.log.error(error, "Failed to update brew log coffee bag")
                                         Toast.makeText(
                                             context,
                                             R.string.msg_could_not_save_changes,
@@ -454,7 +452,7 @@ fun BrewLogDetailScreen(
                                         log = entity.copy(coffeeBagId = null)
                                     },
                                     onFailure = { error ->
-                                        Log.e(TAG, "Failed to clear brew log coffee bag", error)
+                                        Tracebox.log.error(error, "Failed to clear brew log coffee bag")
                                         Toast.makeText(
                                             context,
                                             R.string.msg_could_not_save_changes,
@@ -492,7 +490,7 @@ fun BrewLogDetailScreen(
                         val feedback = try {
                             TasteFeedbackModel.valueOf(entity.tasteFeedback)
                         } catch (e: Exception) {
-                            Log.w(TAG, "Failed to parse taste feedback", e)
+                            Tracebox.log.error(e, "Failed to parse taste feedback")
                             null
                         }
                         if (feedback != null) {

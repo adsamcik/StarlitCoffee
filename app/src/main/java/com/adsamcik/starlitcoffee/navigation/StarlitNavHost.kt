@@ -84,6 +84,7 @@ import com.adsamcik.starlitcoffee.ui.guidance.GuidancePresentationLevel
 import com.adsamcik.starlitcoffee.ui.guidance.P1ExactRecipeReleaseGate
 import com.adsamcik.starlitcoffee.ui.screen.CupPresetEditorScreen
 import com.adsamcik.starlitcoffee.ui.screen.DisplaySettingsScreen
+import com.adsamcik.starlitcoffee.ui.screen.DiagnosticsScreen
 import com.adsamcik.starlitcoffee.ui.screen.GrindPrepScreen
 import com.adsamcik.starlitcoffee.ui.screen.GuidedScanFlow
 import com.adsamcik.starlitcoffee.ui.screen.MoreScreen
@@ -763,8 +764,14 @@ fun StarlitNavHost() {
                         onNavigateToCupPresetEditor = { presetId ->
                             navController.navigate(CupPresetEditor(presetId = presetId))
                         },
+                        onNavigateToDiagnostics = {
+                            navController.navigate(Diagnostics)
+                        },
                         onBack = { navController.popBackStack() },
                     )
+                }
+                composable<Diagnostics> {
+                    DiagnosticsScreen(onBack = { navController.popBackStack() })
                 }
                 composable<BloomAnimationSettings> { backStackEntry ->
                     val settingsViewModel: SettingsViewModel = viewModel(

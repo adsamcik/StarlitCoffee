@@ -112,10 +112,8 @@
     <string name="prep_tip_pulsar_40k">Öblítse át a 40K fémszűrőt a henger előmelegítéséhez. Helyezze fel a hengert, adja hozzá az őrleményt, egyengesse el a kávéágyat, tegye fel az elosztósapkát. Nullázza a mérleget.</string>
     <string name="prep_tip_pour_over_paper">Helyezze be a papírszűrőt, és öblítse át forró vízzel az előmelegítéshez és a papírízek eltávolításához. Adja hozzá az őrleményt, nullázza a mérleget.</string>
     <string name="prep_tip_french_press">Melegítse elő a French presst, majd öntse ki. Adja hozzá az őrleményt, tegye a mérlegre, és nullázza a víz hozzáadása előtt.</string>
-    <string name="prep_tip_aeropress">Tegyen egy átöblített szűrőt a kupakba. Adja hozzá az őrleményt, helyezze a készüléket egy stabil bögrére vagy kancsóra, és nullázza a mérleget.</string>
     <string name="prep_tip_espresso">Törölje szárazra a szűrőkart. Adagolja be, ossza el egyenletesen, és tömörítse laposra a rögzítés előtt.</string>
     <string name="prep_tip_moka">Töltse fel az alsó kamrát a szelepig. Töltse meg a kosarat őrleménnyel, egyengesse el — ne tömörítse. Óvatosan szerelje össze.</string>
-    <string name="prep_tip_cold_brew">Adja az őrleményt az edénybe, nullázza a mérleget, majd öntsön hozzá szobahőmérsékletű vagy hideg vizet, és fedje le.</string>
     <string name="format_prep_grind_specific">Őrlés: %1$s — %2$s beállítása: %3$s</string>
     <string name="format_prep_grind_generic">Őrlés: %1$s — %2$s (%3$s)</string>
 
@@ -356,18 +354,12 @@
     <string name="instruction_french_press_start">Adja hozzá az összes vizet, keverje meg finoman, és tegye rá a fedelet</string>
     <string name="instruction_french_press_steep">Hagyja állni háborítatlanul a célidő eléréséig</string>
     <string name="instruction_french_press_plunge">Nyomja le lassan a szűrőt, majd öntse le a kávét</string>
-    <string name="instruction_aeropress_start">Adja hozzá a vizet, keverje meg, és kezdje meg az áztatást</string>
-    <string name="instruction_aeropress_steep">Áztassa lezárt kupakkal; készüljön a lenyomásra</string>
-    <string name="instruction_aeropress_press">Nyomja egyenletesen a sziszegésig, majd álljon meg</string>
     <string name="instruction_espresso_start">Rögzítse a szűrőkart, és indítsa el a lövetet</string>
     <string name="instruction_espresso_pull">Figyelje a folyást és a hozamot; hagyja a csészét a mérlegen</string>
     <string name="instruction_espresso_stop">Álljon meg a célhozamnál, vagy amikor a lövet kivilágosodik</string>
     <string name="instruction_moka_start">Szerelje össze a kannát, és melegítse óvatosan nyitott fedéllel</string>
     <string name="instruction_moka_flow">Figyelje, ahogy a kávé a felső kamrába folyik</string>
     <string name="instruction_moka_remove">Vegye le a tűzről, amikor a folyás kivilágosodik vagy prüszkölni kezd</string>
-    <string name="instruction_cold_brew_start">Keverje össze a kávét és a vizet, hogy minden szemcse átnedvesedjen</string>
-    <string name="instruction_cold_brew_steep">Fedje le és áztassa; tartsa az őrleményt teljesen átitatva</string>
-    <string name="instruction_cold_brew_filter">Szűrje le a koncentrátumot, majd tálaláshoz hűtse le vagy hígítsa</string>
 
     <!-- Warnings -->
     <!-- Taste Feedback -->
@@ -758,7 +750,6 @@
     <string name="screen_learning_title">Tanulás</string>
     <string name="msg_learning_subtitle">Szemléletes, lépésről lépésre haladó útmutatók</string>
     <string name="msg_learning_intro">Válasszon kávékészítőt és receptet, majd haladjon végig egyértelműen, lépésről lépésre.</string>
-    <string name="msg_learning_empty">Még nem érhetők el tanulási útmutatók.</string>
     <string name="action_show_details">Részletek megjelenítése</string>
     <string name="action_hide_details">Részletek elrejtése</string>
 </resources>

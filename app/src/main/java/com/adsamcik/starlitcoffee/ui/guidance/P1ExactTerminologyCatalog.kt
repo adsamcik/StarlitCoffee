@@ -1,13 +1,13 @@
 package com.adsamcik.starlitcoffee.ui.guidance
 
 import android.content.Context
-import android.util.Log
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import java.io.IOException
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import dev.tracebox.Tracebox
 
 enum class P1ExactLocalizationStatus {
     RELEASED,
@@ -236,7 +236,6 @@ object BuiltInP1ExactTerminologyCatalog {
 }
 
 object BuiltInP1ExactTerminologyLoader {
-    private const val TAG = "P1ExactTerminology"
     private val cacheByLocale = mutableMapOf<String, BuiltInP1ExactTerminologyLoadResult>()
 
     fun getInstance(context: Context): BuiltInP1ExactTerminologyLoadResult {
@@ -277,7 +276,7 @@ object BuiltInP1ExactTerminologyLoader {
     }
 
     private fun unavailable(exception: Exception): BuiltInP1ExactTerminologyLoadResult.Unavailable {
-        Log.e(TAG, "Exact P1 terminology is unavailable; references will remain hidden", exception)
+        Tracebox.log.error(exception, "Exact P1 terminology is unavailable; references will remain hidden")
         return BuiltInP1ExactTerminologyLoadResult.Unavailable(
             reason = exception.message ?: exception::class.java.simpleName,
         )

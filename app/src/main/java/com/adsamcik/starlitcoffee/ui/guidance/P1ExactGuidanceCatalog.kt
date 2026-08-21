@@ -1,7 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.guidance
 
 import android.content.Context
-import android.util.Log
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileId
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltInP1RecipeCatalog
@@ -19,6 +18,7 @@ import java.io.IOException
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import dev.tracebox.Tracebox
 
 /** Canonical illustration importance. It does not imply review approval. */
 enum class P1ExactVisualPriority {
@@ -92,6 +92,7 @@ data class P1ExactStageGuidance(
     val observableSigns: String,
     val evidenceSourceIds: List<String>,
     val visualPriority: P1ExactVisualPriority,
+    val safetySeverity: StageSafetySeverity?,
     val full: P1ExactFullGuidance,
     val concise: P1ExactConciseGuidance,
     val focused: P1ExactFocusedGuidance,
@@ -109,12 +110,12 @@ data class P1ExactStageGuidance(
         -> P1ExactGuidancePresentation(
             level = level,
             instruction = full.imperativeInstruction,
-            target = null,
+            target = concise.currentTarget,
             completionCue = full.observableCompletionCue,
-            explanation = full.conciseExplanation,
+            explanation = null,
             practicalTip = full.optionalPracticalTip,
             nextAction = null,
-            controlRequirements = emptyList(),
+            controlRequirements = operationalCues,
             warning = warning,
             utilities = emptyList(),
             accessibleAltText = full.accessibleAltText,
@@ -178,7 +179,7 @@ data class P1ExactStageGuidance(
         text = GuidanceTextMetadata(
             primaryInstruction = full.imperativeInstruction,
             conciseInstruction = concise.currentAction,
-            explanation = full.conciseExplanation,
+            explanation = null,
             tip = full.optionalPracticalTip,
             warning = warning,
             altText = full.accessibleAltText,
@@ -187,7 +188,8 @@ data class P1ExactStageGuidance(
             visibleIn = GuidancePresentationLevel.entries.toSet(),
             alwaysVisible = isAuthoredCriticalWarning,
         ),
-        safetyCritical = isAuthoredCriticalWarning,
+        // The routine instruction remains primary; structured stage safety is rendered separately.
+        safetyCritical = false,
         authoredPresentations = GuidancePresentationLevel.entries.associateWith { level ->
             presentation(level).toAuthoredPresentation(
                 warningOverride = warning,
@@ -212,7 +214,7 @@ data class P1ExactStageGuidance(
         )
 
     private val isAuthoredCriticalWarning: Boolean
-        get() = requiresSafetyCriticalExpertReview && warning != null
+        get() = safetySeverity == StageSafetySeverity.CRITICAL && warning != null
 }
 
 data class P1ExactRecipeGuidance(
@@ -293,7 +295,6 @@ sealed interface BuiltInP1ExactGuidanceLoadResult {
 
 /** Application-scoped, fail-closed loader for the packaged exact guidance. */
 object BuiltInP1ExactGuidanceLoader {
-    private const val TAG = "P1ExactGuidance"
 
     private val cacheByLocale = mutableMapOf<String, BuiltInP1ExactGuidanceLoadResult>()
 
@@ -328,7 +329,7 @@ object BuiltInP1ExactGuidanceLoader {
     }
 
     private fun unavailable(exception: Exception): BuiltInP1ExactGuidanceLoadResult.Unavailable {
-        Log.e(TAG, "Exact P1 guidance is unavailable; no fallback will be used", exception)
+        Tracebox.log.error(exception, "Exact P1 guidance is unavailable; no fallback will be used")
         return BuiltInP1ExactGuidanceLoadResult.Unavailable(
             reason = exception.message ?: exception::class.java.simpleName,
         )
@@ -398,7 +399,7 @@ private fun P1ExactGuidanceManifestDto.toCatalog(): P1ExactGuidanceCatalog {
                     planStage = planStage,
                 )
             },
-        )
+        ).applyVerifiedFactualErrata()
     }
     require(mappedRecipes.sumOf { recipe -> recipe.stages.size } == stageCount) {
         "Exact P1 guidance stage total differs from its manifest"
@@ -490,13 +491,12 @@ private fun P1ExactStageDto.toDomain(
     require(planStage.requiresIllustration == (priority != P1ExactVisualPriority.OPTIONAL)) {
         "Illustration requirement differs for ${recipeId.value}/$stageId"
     }
-    val expectedSafety = when {
-        priority == P1ExactVisualPriority.SAFETY_CRITICAL -> StageSafetySeverity.CRITICAL
-        normalizedWarning != null -> StageSafetySeverity.WARNING
-        else -> null
+    require(planStage.safetyMessages.size <= 1) {
+        "Exact stages support at most one action-local safety message for ${recipeId.value}/$stageId"
     }
-    require(planStage.safetyMessages.singleOrNull()?.severity == expectedSafety) {
-        "Safety classification differs for ${recipeId.value}/$stageId"
+    val safetySeverity = planStage.safetyMessages.singleOrNull()?.severity
+    require(safetySeverity == null || normalizedWarning != null) {
+        "Action-local safety requires authored warning copy for ${recipeId.value}/$stageId"
     }
 
     return P1ExactStageGuidance(
@@ -519,6 +519,7 @@ private fun P1ExactStageDto.toDomain(
         observableSigns = observableSigns,
         evidenceSourceIds = evidenceSources,
         visualPriority = priority,
+        safetySeverity = safetySeverity,
         full = P1ExactFullGuidance(
             imperativeInstruction = full.imperativeInstruction,
             conciseExplanation = full.conciseExplanation,
@@ -541,7 +542,7 @@ private fun P1ExactStageDto.toDomain(
             timerOrStageControlRequirement = focused.timerOrStageControlRequirement,
         ),
         utilitiesOnly = utilitiesOnly,
-    )
+    ).applyVerifiedFactualErrata()
 }
 
 private fun P1ExactStageDto.requireStageCopy(recipeId: BuiltInRecipeId) {

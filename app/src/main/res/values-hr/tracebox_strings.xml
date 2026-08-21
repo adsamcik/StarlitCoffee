@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_settings_section_support">Podrška i privatnost</string>
+    <string name="label_diagnostics">Dijagnostika</string>
+    <string name="msg_diagnostics_summary">Pregledajte, podijelite, spremite ili izbrišite lokalne podatke za rješavanje problema</string>
+    <string name="label_privacy_policy">Pravila privatnosti</string>
+    <string name="msg_privacy_policy_summary">Pročitajte kako Starlit Coffee postupa s podacima</string>
+    <string name="msg_privacy_policy_open_failed">Pravila privatnosti nije moguće otvoriti.</string>
+    <string name="screen_diagnostics_title">Dijagnostika</string>
+    <string name="msg_diagnostics_unavailable">Dijagnostika nije dostupna u ovom procesu.</string>
+    <string name="msg_diagnostics_support_description">Pakira nedavne pogreške aplikacije i kontekst performansi za rješavanje problema.</string>
+</resources>

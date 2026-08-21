@@ -23,9 +23,11 @@ internal fun localizedProfileName(profileId: BrewerProfileId, fallback: String):
     "clever_style" -> stringResource(R.string.label_brewer_profile_clever_style)
     "hario_switch" -> stringResource(R.string.label_brewer_profile_hario_switch)
     "cezve_generic" -> stringResource(R.string.label_brewer_profile_cezve_generic)
+    "moccamaster_kbgv_select" -> stringResource(R.string.label_brewer_profile_moccamaster_kbgv_select)
     "automatic_batch_generic" -> stringResource(R.string.label_brewer_profile_automatic_batch_generic)
     "automatic_single_cup_generic" -> stringResource(R.string.label_brewer_profile_automatic_single_cup_generic)
     "vietnamese_phin" -> stringResource(R.string.label_brewer_profile_vietnamese_phin)
+    "pulsar_standard" -> stringResource(R.string.label_brewer_profile_pulsar)
     else -> fallback
 }
 
@@ -40,11 +42,14 @@ internal fun localizedMethodFamilyName(profileId: BrewerProfileId, fallback: Str
     -> stringResource(R.string.label_brewer_profile_family_manual_gravity)
     "clever_style", "hario_switch" -> stringResource(R.string.label_brewer_profile_family_steep_and_release)
     "cezve_generic" -> stringResource(R.string.label_brewer_profile_family_heated_unfiltered)
-    "automatic_batch_generic", "automatic_single_cup_generic" -> stringResource(
+    "moccamaster_kbgv_select", "automatic_batch_generic", "automatic_single_cup_generic" -> stringResource(
         R.string.label_brewer_profile_family_automatic_batch,
     )
     "vietnamese_phin" -> stringResource(
         R.string.label_brewer_profile_family_restricted_flow_gravity_concentrate,
+    )
+    "pulsar_standard" -> stringResource(
+        R.string.label_brewer_profile_family_valve_controlled_no_bypass,
     )
     else -> fallback
 }

@@ -114,10 +114,8 @@
     <string name="prep_tip_pulsar_40k">Noskalojiet 40K metāla filtru, lai uzsildītu cilindru. Uzlieciet cilindru, pievienojiet malto kafiju, izlīdziniet slāni, uzlieciet dispersijas vāciņu. Nulējiet svarus.</string>
     <string name="prep_tip_pour_over_paper">Ievietojiet papīra filtru un izskalojiet ar karstu ūdeni, lai uzsildītu un noņemtu papīra garšu. Pievienojiet malto kafiju, nulējiet svarus.</string>
     <string name="prep_tip_french_press">Uzsildiet preskannu, tad izlejiet ūdeni. Pievienojiet malto kafiju, novietojiet uz svariem un nulējiet pirms ūdens pievienošanas.</string>
-    <string name="prep_tip_aeropress">Ievietojiet noskalotu filtru vāciņā. Pievienojiet malto kafiju, novietojiet gatavotāju uz stabilas krūzes vai servēšanas trauka un nulējiet svarus.</string>
     <string name="prep_tip_espresso">Nosusiniet portafiltru. Ievietojiet devu, vienmērīgi sadaliet un līdzeni tampējiet pirms nostiprināšanas grupā.</string>
     <string name="prep_tip_moka">Piepildiet apakšējo kameru līdz vārstam. Piepildiet groziņu ar maltu kafiju, izlīdziniet — netampējiet. Salieciet uzmanīgi.</string>
-    <string name="prep_tip_cold_brew">Pievienojiet malto kafiju traukā, nulējiet svarus, tad pievienojiet istabas temperatūras vai aukstu ūdeni un pārklājiet.</string>
     <string name="format_prep_grind_specific">Samaļiet %1$s — iestatiet %2$s uz %3$s</string>
     <string name="format_prep_grind_generic">Samaļiet %1$s — %2$s (%3$s)</string>
 
@@ -358,18 +356,12 @@
     <string name="instruction_french_press_start">Pievienojiet visu ūdeni, maigi apmaisiet un uzlieciet vāku</string>
     <string name="instruction_french_press_steep">Ļaujiet ievilkties netraucēti līdz mērķa laikam</string>
     <string name="instruction_french_press_plunge">Lēni nospiediet virzuli, tad nolejiet kafiju</string>
-    <string name="instruction_aeropress_start">Pievienojiet ūdeni, apmaisiet un sāciet ievilkšanu</string>
-    <string name="instruction_aeropress_steep">Ļaujiet ievilkties ar uzliktu vāciņu; gatavojieties spiest</string>
-    <string name="instruction_aeropress_press">Spiediet vienmērīgi līdz šņākoņai, tad apstājieties</string>
     <string name="instruction_espresso_start">Nostipriniet portafiltru un sāciet šotu</string>
     <string name="instruction_espresso_pull">Vērojiet plūsmu un iznākumu; turiet tasi uz svariem</string>
     <string name="instruction_espresso_stop">Apstājieties pie mērķa iznākuma vai kad šots kļūst gaišs</string>
     <string name="instruction_moka_start">Salieciet kanniņu un karsējiet maigi ar atvērtu vāku</string>
     <string name="instruction_moka_flow">Vērojiet, kad kafija sāk plūst augšējā kamerā</string>
     <string name="instruction_moka_remove">Noņemiet no karstuma, kad plūsma kļūst bāla vai sāk šļakstīties</string>
-    <string name="instruction_cold_brew_start">Sajauciet kafiju un ūdeni, apmaisiet, lai samitrinātu katru daļiņu</string>
-    <string name="instruction_cold_brew_steep">Pārklājiet un ļaujiet ievilkties; turiet biezumus pilnībā piesātinātus</string>
-    <string name="instruction_cold_brew_filter">Filtrējiet koncentrātu un atdzesējiet vai atšķaidiet pasniegšanai</string>
 
     <!-- Warnings -->
 <!-- Taste Feedback -->
@@ -760,7 +752,6 @@
     <string name="screen_learning_title">Mācies</string>
     <string name="msg_learning_subtitle">Vizuālas pakāpeniskas kafijas pagatavošanas pamācības</string>
     <string name="msg_learning_intro">Izvēlieties pagatavošanas ierīci un recepti, pēc tam izpētiet katru skaidro soli atsevišķi.</string>
-    <string name="msg_learning_empty">Mācību pamācības vēl nav pieejamas.</string>
     <string name="action_show_details">Rādīt informāciju</string>
     <string name="action_hide_details">Paslēpt informāciju</string>
 </resources>

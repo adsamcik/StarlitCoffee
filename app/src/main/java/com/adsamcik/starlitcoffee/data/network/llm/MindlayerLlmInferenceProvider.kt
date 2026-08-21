@@ -41,8 +41,7 @@ import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
 import kotlinx.serialization.json.putJsonObject
 import kotlin.time.Duration.Companion.seconds
-
-private const val MINDLAYER_LLM_TAG = "MindlayerLlm"
+import dev.tracebox.Tracebox
 
 private fun MindlayerException.isRetryableForScan(): Boolean = codeName in setOf(
     "ENGINE_BUSY",
@@ -181,7 +180,7 @@ class MindlayerLlmInferenceProvider(
                 (handle as InferenceHandle.Text).awaitText()
             }.trim()
             val normalized = out.ifBlank { ocrText }
-            android.util.Log.d(MINDLAYER_LLM_TAG, "Translate complete: ${out.length} chars")
+            Tracebox.log.debug("Translate complete: {} chars", out.length)
             if (com.adsamcik.starlitcoffee.BuildConfig.DEBUG) {
                 logLongDebug("Translate output (debug)", normalized)
             }
@@ -297,10 +296,7 @@ class MindlayerLlmInferenceProvider(
                 }
                 (handle as InferenceHandle.Text).awaitText()
             }
-            android.util.Log.d(
-                MINDLAYER_LLM_TAG,
-                "LLM inference complete: ${responseText.length} chars",
-            )
+            Tracebox.log.debug("LLM inference complete: {} chars", responseText.length)
             if (com.adsamcik.starlitcoffee.BuildConfig.DEBUG) {
                 logLongDebug("LLM prompt (debug)", prompt)
                 logLongDebug("LLM response (debug)", responseText)
@@ -472,7 +468,7 @@ class MindlayerLlmInferenceProvider(
                 }
                 (handle as InferenceHandle.Text).awaitText()
             }
-            android.util.Log.d(MINDLAYER_LLM_TAG, "Vision inference complete: ${responseText.length} chars")
+            Tracebox.log.debug("Vision inference complete: {} chars", responseText.length)
             recordPass(LlmPassDiagnostic.Pass.VISION, LlmPassDiagnostic.Status.SUCCESS, startMs, prompt.length, output = responseText)
             parseResponse(responseText, request.fieldsNeeded, requireEvidenceFor = EVIDENCE_REQUIRED_FIELDS)
         } catch (_: TimeoutCancellationException) {
@@ -551,7 +547,7 @@ class MindlayerLlmInferenceProvider(
                 }
                 (handle as InferenceHandle.Text).awaitText()
             }
-            android.util.Log.d(MINDLAYER_LLM_TAG, "Combine inference complete: ${responseText.length} chars")
+            Tracebox.log.debug("Combine inference complete: {} chars", responseText.length)
             if (com.adsamcik.starlitcoffee.BuildConfig.DEBUG) {
                 logLongDebug("Combine prompt (debug)", prompt)
                 logLongDebug("Combine response (debug)", responseText)
@@ -624,7 +620,7 @@ class MindlayerLlmInferenceProvider(
                 }
                 (handle as InferenceHandle.Text).awaitText()
             }
-            android.util.Log.d(MINDLAYER_LLM_TAG, "Refine inference complete: ${responseText.length} chars")
+            Tracebox.log.debug("Refine inference complete: {} chars", responseText.length)
             if (com.adsamcik.starlitcoffee.BuildConfig.DEBUG) {
                 logLongDebug("Refine prompt (debug)", prompt)
                 logLongDebug("Refine response (debug)", responseText)
@@ -712,12 +708,12 @@ class MindlayerLlmInferenceProvider(
     private fun logLongDebug(label: String, payload: String) {
         val maxChunk = 3500
         if (payload.length <= maxChunk) {
-            android.util.Log.d(MINDLAYER_LLM_TAG, "$label: $payload")
+            Tracebox.log.debug("{}: {}", label, payload)
             return
         }
         val chunks = (payload.length + maxChunk - 1) / maxChunk
         payload.chunked(maxChunk).forEachIndexed { index, chunk ->
-            android.util.Log.d(MINDLAYER_LLM_TAG, "$label (${index + 1}/$chunks): $chunk")
+            Tracebox.log.debug("{} ({}/{}): {}", label, index + 1, chunks, chunk)
         }
     }
 

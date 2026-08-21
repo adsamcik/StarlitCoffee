@@ -112,10 +112,8 @@
     <string name="prep_tip_pulsar_40k">Skölj 40K-metallfiltret för att förvärma cylindern. Montera cylindern, tillsätt kaffet, jämna till bädden och lägg på spridningslocket. Nollställ vågen.</string>
     <string name="prep_tip_pour_over_paper">Sätt i pappersfiltret och skölj med varmt vatten för att förvärma och ta bort papperssmak. Tillsätt kaffet och nollställ vågen.</string>
     <string name="prep_tip_french_press">Förvärm presskannan och töm den. Tillsätt kaffet, ställ på vågen och nollställ innan du häller i vatten.</string>
-    <string name="prep_tip_aeropress">Sätt ett sköljt filter i locket. Tillsätt kaffet, ställ bryggaren på en stabil mugg eller server och nollställ vågen.</string>
     <string name="prep_tip_espresso">Torka portafiltret torrt. Dosera, fördela och tampa jämnt innan du låser fast det.</string>
     <string name="prep_tip_moka">Fyll underdelen upp till ventilen. Fyll korgen med kaffe och jämna till — tampa inte. Skruva ihop försiktigt.</string>
-    <string name="prep_tip_cold_brew">Tillsätt kaffet i kärlet, nollställ vågen och häll sedan i rumstempererat eller kallt vatten. Täck över.</string>
     <string name="format_prep_grind_specific">Mal %1$s — ställ %2$s på %3$s</string>
     <string name="format_prep_grind_generic">Mal %1$s — %2$s (%3$s)</string>
 
@@ -356,18 +354,12 @@
     <string name="instruction_french_press_start">Häll i allt vatten, rör försiktigt och lägg locket ovanpå</string>
     <string name="instruction_french_press_steep">Låt dra ostört till den angivna tiden</string>
     <string name="instruction_french_press_plunge">Pressa långsamt och häll sedan upp kaffet</string>
-    <string name="instruction_aeropress_start">Häll i vatten, rör om och starta dragningen</string>
-    <string name="instruction_aeropress_steep">Låt dra med locket på och gör dig redo att pressa</string>
-    <string name="instruction_aeropress_press">Pressa jämnt tills det fräser, stoppa sedan</string>
     <string name="instruction_espresso_start">Lås fast portafiltret och starta shoten</string>
     <string name="instruction_espresso_pull">Håll koll på flöde och utbyte; låt koppen stå kvar på vågen</string>
     <string name="instruction_espresso_stop">Stoppa vid målutbyte eller när shoten blondar</string>
     <string name="instruction_moka_start">Sätt ihop kannan och värm försiktigt med locket öppet</string>
     <string name="instruction_moka_flow">Titta efter kaffe som flödar upp i den övre kammaren</string>
     <string name="instruction_moka_remove">Ta bort från värmen när flödet blir ljust eller börjar spotta</string>
-    <string name="instruction_cold_brew_start">Blanda kaffe och vatten, rör så att allt kaffe blir genomvått</string>
-    <string name="instruction_cold_brew_steep">Täck över och låt dra; håll kaffet helt mättat</string>
-    <string name="instruction_cold_brew_filter">Filtrera koncentratet och kyl eller späd för servering</string>
 
     <!-- Warnings -->
 <!-- Taste Feedback -->
@@ -758,7 +750,6 @@
     <string name="screen_learning_title">Lär dig</string>
     <string name="msg_learning_subtitle">Visuella brygguider steg för steg</string>
     <string name="msg_learning_intro">Välj en bryggare och ett recept och utforska ett tydligt steg i taget.</string>
-    <string name="msg_learning_empty">Det finns inga lärguider ännu.</string>
     <string name="action_show_details">Visa detaljer</string>
     <string name="action_hide_details">Dölj detaljer</string>
 </resources>

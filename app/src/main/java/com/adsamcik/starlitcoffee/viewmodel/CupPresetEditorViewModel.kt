@@ -1,6 +1,5 @@
 package com.adsamcik.starlitcoffee.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -12,6 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import dev.tracebox.Tracebox
 
 enum class CupPresetEditorOperation { IDLE, SAVING, DELETING }
 
@@ -54,7 +54,7 @@ class CupPresetEditorViewModel(
             } catch (error: CancellationException) {
                 throw error
             } catch (error: Exception) {
-                Log.e(TAG, "Failed to save cup preset", error)
+                Tracebox.log.error(error, "Failed to save cup preset")
                 _uiState.update {
                     it.copy(
                         operation = CupPresetEditorOperation.IDLE,
@@ -86,7 +86,7 @@ class CupPresetEditorViewModel(
             } catch (error: CancellationException) {
                 throw error
             } catch (error: Exception) {
-                Log.e(TAG, "Failed to delete cup preset", error)
+                Tracebox.log.error(error, "Failed to delete cup preset")
                 _uiState.update {
                     it.copy(
                         operation = CupPresetEditorOperation.IDLE,
@@ -105,9 +105,6 @@ class CupPresetEditorViewModel(
         _uiState.update { it.copy(failure = null) }
     }
 
-    companion object {
-        private const val TAG = "CupPresetEditorVM"
-    }
 }
 
 class CupPresetEditorViewModelFactory(

@@ -323,7 +323,7 @@ internal class BuiltinBrewerExactRecipeResolver {
 
     private companion object {
         const val EXACT_RECIPE_PLAN_ID_PREFIX = "builtin_recipe_"
-        const val EXACT_STAGE_PLAN_VERSION = 1
+        const val EXACT_STAGE_PLAN_VERSION = 2
         const val EXACT_QUANTITY_TOLERANCE = 1e-6
 
         val HARIO_SWITCH = BrewerProfileId("hario_switch")

@@ -74,6 +74,22 @@ class AndroidValuesParityVerifierTest {
         assertEquals(ValueResourceKey("string", "format_weight"), mismatch.key)
     }
 
+    @Test
+    fun `base-only unreviewed copy may be explicitly non-translatable`() =
+        withTemporaryResourceTree(
+            englishFiles = mapOf(
+                "strings.xml" to resources(
+                    "<string name=\"label_base\">Base</string>",
+                    "<string name=\"technical_copy\" translatable=\"false\">Reviewed English only</string>",
+                ),
+            ),
+            localizedFiles = mapOf(
+                "strings.xml" to resources("<string name=\"label_base\">Přehled</string>"),
+            ),
+        ) { resourceRoot ->
+            assertTrue(AndroidValuesParityVerifier.verify(resourceRoot).isValid)
+        }
+
     private fun resourceRoot(): File = listOf(
         File("src/main/res"),
         File("app/src/main/res"),

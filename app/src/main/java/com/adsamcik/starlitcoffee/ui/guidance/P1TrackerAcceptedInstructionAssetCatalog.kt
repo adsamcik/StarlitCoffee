@@ -4,6 +4,7 @@ package com.adsamcik.starlitcoffee.ui.guidance
 import androidx.annotation.DrawableRes
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileId
+import com.adsamcik.starlitcoffee.domain.brewing.BuiltInP1RecipeCatalog
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltInRecipeId
 import com.adsamcik.starlitcoffee.domain.brewing.InstructionAssetId
 import com.adsamcik.starlitcoffee.domain.brewing.MethodFamilyId
@@ -27,6 +28,7 @@ data class P1TrackerAcceptedInstructionAsset(
     val visualPriority: P1ExactVisualPriority,
     @param:DrawableRes val drawableRes: Int,
     val trackerRevision: String,
+    val resourceSha256: String,
 ) {
     init {
         require(id.value == "instruction_${contentId.value}_default") {
@@ -46,6 +48,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_auto_batch_1000_60_stage_01_instruction_default,
         trackerRevision = "starlit_tactile_v1",
+        resourceSha256 = "3ec5da28044ae8c3fdad881a6b3348b1fcc9261235343f0340efe0f472e85e97",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("auto_batch_1000_60"),
@@ -57,6 +60,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_auto_batch_1000_60_stage_02_instruction_default,
         trackerRevision = "starlit_tactile_v3",
+        resourceSha256 = "2e3bf8e61a9c267539e322edf9b46206875bc9aa8dd8822d0c75476f08e54d17",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("auto_batch_1000_60"),
@@ -68,6 +72,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_auto_batch_1000_60_stage_03_instruction_default,
         trackerRevision = "starlit_tactile_v3",
+        resourceSha256 = "e21ed28da230cfec60bbdc67e6081b9e3cf91adba66baaa378191d3df85bba45",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("auto_batch_1000_60"),
@@ -79,6 +84,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_auto_batch_1000_60_stage_04_instruction_default,
         trackerRevision = "starlit_tactile_v4",
+        resourceSha256 = "57d134288e5ef85ddf5da45ce6eebb93828203fd34a51503dbeb7a796509cfaa",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("auto_batch_500_30"),
@@ -90,6 +96,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_auto_batch_500_30_stage_01_instruction_default,
         trackerRevision = "starlit_tactile_v4",
+        resourceSha256 = "114794db6d910723b91f1240c5b100c09a329128f8ceed287df47bbec4e9d18f",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("auto_batch_500_30"),
@@ -101,6 +108,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_auto_batch_500_30_stage_02_instruction_default,
         trackerRevision = "starlit_tactile_v6",
+        resourceSha256 = "4468ca2464ba23b320fcfad0d031247d1d5ad552d8924b8c18cdd78b094925be",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("auto_batch_500_30"),
@@ -112,6 +120,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_auto_batch_500_30_stage_03_instruction_default,
         trackerRevision = "starlit_tactile_v4",
+        resourceSha256 = "c2b482532cc98f3c39480912cf7f1595a68c521437aff1fd1a888b2fce0574e3",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("auto_batch_500_30"),
@@ -123,6 +132,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_auto_batch_500_30_stage_04_instruction_default,
         trackerRevision = "starlit_tactile_v1",
+        resourceSha256 = "68534f7e98da28ab531d1ef24ab0eb443ea27c1fefc15738ecc1c7d67a7bdd74",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("auto_batch_500_30"),
@@ -134,6 +144,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_auto_batch_500_30_stage_05_instruction_default,
         trackerRevision = "starlit_tactile_v5",
+        resourceSha256 = "39d58c976a19fe495cf2fb0f879d6facd94ff88a4067cd7fed4144ea3b9c47b8",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("auto_cupone_20_300"),
@@ -145,6 +156,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_auto_cupone_20_300_stage_01_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "5fe94721b160581ac85ccca8a62d180bbbc4aeb49aecb9c021eb22f3c73eb6aa",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("auto_cupone_20_300"),
@@ -156,6 +168,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_auto_cupone_20_300_stage_02_instruction_default,
         trackerRevision = "starlit_tactile_v4",
+        resourceSha256 = "b244800be02653abe61c78008cf31f9f5650b918ab153a057410ca815c7b7875",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("auto_cupone_20_300"),
@@ -167,6 +180,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_auto_cupone_20_300_stage_03_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "192f736fb81af9334606da96458404bd3936062f7d8b34a8b8a61a2b2bf98060",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("auto_cupone_20_300"),
@@ -178,6 +192,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_auto_cupone_20_300_stage_04_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "7a905b6a634db7848a9800bf0ccf467fd2d60b22452f6b9ef93abd7a1b3753dc",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("auto_cupone_20_300"),
@@ -189,6 +204,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_auto_cupone_20_300_stage_05_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "f520f23978807d9c3aaf602b55170c25cea96abf9b9ac0decf3de0accc426c4f",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("auto_cupone_20_300"),
@@ -200,6 +216,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_auto_cupone_20_300_stage_06_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "2b0aa3b7e394806dcea74f958a8c51e6f595a24b45a46458d3267ebd02f1daf3",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("cezve_bounded_repeated_rise_12_130"),
@@ -211,6 +228,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_cezve_bounded_repeated_rise_12_130_stage_01_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "85d046c63f4415180fe96f24b774cfbb31f529ce0d1f4eb67eac9acd061c5cc2",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("cezve_bounded_repeated_rise_12_130"),
@@ -222,6 +240,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_cezve_bounded_repeated_rise_12_130_stage_02_instruction_default,
         trackerRevision = "v3",
+        resourceSha256 = "26948823bc79e155808588fd39d37156638b760b1353b7abd5cc39f899d71f9c",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("cezve_bounded_repeated_rise_12_130"),
@@ -233,6 +252,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_cezve_bounded_repeated_rise_12_130_stage_03_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "0d5bad4c856253f88ecabad676c5958b634b714d73c58dff8d3e4f188a426f03",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("cezve_bounded_repeated_rise_12_130"),
@@ -244,6 +264,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_cezve_bounded_repeated_rise_12_130_stage_04_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "55c236aa92828b02e5cd8dd145f344ad7b52b323f60b7583357d0c2bedd1a970",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("cezve_bounded_repeated_rise_12_130"),
@@ -255,6 +276,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_cezve_bounded_repeated_rise_12_130_stage_05_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "0d5bad4c856253f88ecabad676c5958b634b714d73c58dff8d3e4f188a426f03",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("cezve_bounded_repeated_rise_12_130"),
@@ -266,6 +288,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_cezve_bounded_repeated_rise_12_130_stage_06_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "e150b21d3b49aeef551407c780c99b39c2c0db50587bc8c475448a544363fa75",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("cezve_turkish_single_rise_6_65"),
@@ -277,6 +300,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_cezve_turkish_single_rise_6_65_stage_01_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "3c553131d1df04bb7c097128c6864377aaa0b3efea76b500a92d0aff2a23d23f",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("cezve_turkish_single_rise_6_65"),
@@ -288,6 +312,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_cezve_turkish_single_rise_6_65_stage_02_instruction_default,
         trackerRevision = "v3",
+        resourceSha256 = "afe4d116699994d0d4a22c53057ea054e6f85c01565061f2d906a073cbc3bd72",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("cezve_turkish_single_rise_6_65"),
@@ -299,6 +324,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_cezve_turkish_single_rise_6_65_stage_03_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "e7ce406e9bc1061e9990d7980ecd7f18cb0e3e3b58189463754799be773e3483",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("cezve_turkish_single_rise_6_65"),
@@ -310,6 +336,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_cezve_turkish_single_rise_6_65_stage_04_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "67b311c28541c9e2f6f78b2ddaf98596bcb5b8f0b102ce8b48bde5628f6f127f",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("cezve_turkish_single_rise_6_65"),
@@ -321,6 +348,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_cezve_turkish_single_rise_6_65_stage_05_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "a733f367497ca2e42b3ca932a44e3a98e5bd8f9c8023b8b7d5452a81e02ee6a0",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("cezve_turkish_single_rise_6_65"),
@@ -332,6 +360,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_cezve_turkish_single_rise_6_65_stage_06_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "6083f7cde7264c434638c576f48ddf1f2233da1dd8c48b4c3005db8c9e38b53b",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("chemex_42_700"),
@@ -343,6 +372,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_chemex_42_700_stage_01_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "1c12b9f8cede4e3f21d8bf3b57a47f4e56328c3b3bbf731b73d5646377325f5e",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("chemex_42_700"),
@@ -354,6 +384,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_chemex_42_700_stage_02_instruction_default,
         trackerRevision = "starlit_tactile_v1",
+        resourceSha256 = "1d63a8df04253bcb7bdf480c3b1ba8f640b3587a477cde4adce87ac5505d5ea6",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("chemex_42_700"),
@@ -365,6 +396,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_chemex_42_700_stage_03_instruction_default,
         trackerRevision = "starlit_tactile_v2",
+        resourceSha256 = "ee6e2cf90feda0fa6d92c5d0789aac5054cdeb16bd4c66871377a44611290e3c",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("chemex_42_700"),
@@ -376,6 +408,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_chemex_42_700_stage_04_instruction_default,
         trackerRevision = "starlit_tactile_v1",
+        resourceSha256 = "195e416467ea65e5294b97449ce6f24ee7ff38570f760a89ff37bb2fc2b6c32d",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("chemex_42_700"),
@@ -387,6 +420,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_chemex_42_700_stage_05_instruction_default,
         trackerRevision = "starlit_tactile_v2",
+        resourceSha256 = "d3dc2e0af6083266c0edd1ae2cb2e3e294c05db5d5d8b623b9647fc4a1257edf",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("chemex_42_700"),
@@ -398,6 +432,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_chemex_42_700_stage_06_instruction_default,
         trackerRevision = "starlit_tactile_v1",
+        resourceSha256 = "e6e4c7666c016e3ab8d597db351d3f9143823091ab11833498dda22c42d9e729",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("chemex_42_700"),
@@ -409,6 +444,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_chemex_42_700_stage_07_instruction_default,
         trackerRevision = "starlit_tactile_v2",
+        resourceSha256 = "0fc6f4b8d42c4f6498661d761bfffda388c005332cc887e90911030a84ce8135",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("clever_coffee_first_15_250"),
@@ -420,6 +456,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_clever_coffee_first_15_250_stage_01_instruction_default,
         trackerRevision = "starlit_tactile_v3",
+        resourceSha256 = "10a2579c643b6173a76f918cc4d4398d751bf3d869a5b650415c48d798384d37",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("clever_coffee_first_15_250"),
@@ -431,6 +468,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_clever_coffee_first_15_250_stage_02_instruction_default,
         trackerRevision = "starlit_tactile_v1",
+        resourceSha256 = "becd2e413ced78ab0d76000218cf4bf560b66c43e16908a05ba858a07734d68f",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("clever_coffee_first_15_250"),
@@ -442,6 +480,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_clever_coffee_first_15_250_stage_03_instruction_default,
         trackerRevision = "starlit_tactile_v2",
+        resourceSha256 = "b1eda94bed092b24ed048a4c4e50469130ddc7f200656e94813273de592d9664",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("clever_coffee_first_15_250"),
@@ -453,6 +492,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_clever_coffee_first_15_250_stage_04_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "5377ccb0545febb43f0674a8572d42ef1883f4bc80b40071be5472b69173ccee",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("clever_water_first_15_250"),
@@ -464,6 +504,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_clever_water_first_15_250_stage_01_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "2a9c7bcb90b2244cd9a2a2dd7cda1b5026b4991194f44a0065b8af67cb88a04e",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("clever_water_first_15_250"),
@@ -475,6 +516,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_clever_water_first_15_250_stage_02_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "e9bacb8d5f539b1453f329f9b3449cd3c06a9558e2e17aef42fdd5f79e217bf1",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("clever_water_first_15_250"),
@@ -486,6 +528,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_clever_water_first_15_250_stage_03_instruction_default,
         trackerRevision = "starlit_tactile_v1",
+        resourceSha256 = "573f1fb25a2f4ce317d7ba95cd577d49178efc37b7163d302e3d82711b890b45",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("clever_water_first_15_250"),
@@ -497,6 +540,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_clever_water_first_15_250_stage_04_instruction_default,
         trackerRevision = "starlit_tactile_v1",
+        resourceSha256 = "134214136b10c4373c7bd114ef82a5801db5230d91e84709d677b950776f7663",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("clever_water_first_15_250"),
@@ -508,6 +552,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_clever_water_first_15_250_stage_05_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "5377ccb0545febb43f0674a8572d42ef1883f4bc80b40071be5472b69173ccee",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("clever_water_first_15_250"),
@@ -519,6 +564,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_clever_water_first_15_250_stage_06_instruction_default,
         trackerRevision = "starlit_tactile_v3",
+        resourceSha256 = "90d6f17db8c3c1726fcfd8bcb775f4e7ce4680c47b89610bd7d6007eeb0e224a",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("generic_conical_low_agitation_20_320"),
@@ -530,6 +576,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_generic_conical_low_agitation_20_320_stage_01_instruction_default,
         trackerRevision = "starlit_tactile_v1",
+        resourceSha256 = "f73821d7819b1dcbe870d42fe4f126bca056d114e6bfe4136a7462c61a2a8acc",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("generic_conical_low_agitation_20_320"),
@@ -541,6 +588,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_generic_conical_low_agitation_20_320_stage_02_instruction_default,
         trackerRevision = "starlit_tactile_v2",
+        resourceSha256 = "4f0013ec831c0555d0b21f76a195e9b2f16c03918254759bf7659f4d66aa80fb",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("generic_conical_low_agitation_20_320"),
@@ -552,6 +600,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_generic_conical_low_agitation_20_320_stage_03_instruction_default,
         trackerRevision = "starlit_tactile_v1",
+        resourceSha256 = "6b26f954a7eac51787a9e794887627ef6ee10373ebb08c9ae9d080b5bfec9ea1",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("generic_conical_low_agitation_20_320"),
@@ -563,6 +612,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_generic_conical_low_agitation_20_320_stage_04_instruction_default,
         trackerRevision = "starlit_tactile_v1",
+        resourceSha256 = "5c698d638d6f50a4b49d26f6bb7ce7550b34ebeece43ce4a4fd715fd8677a291",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("generic_conical_low_agitation_20_320"),
@@ -574,6 +624,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_generic_conical_low_agitation_20_320_stage_05_instruction_default,
         trackerRevision = "starlit_tactile_v1",
+        resourceSha256 = "f2b2c67c9118fd836e7710f30523301e3518133798867c689fbc806a8dd1cb5c",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("phin_gravity_14_118"),
@@ -585,6 +636,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_phin_gravity_14_118_stage_01_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "6cc6936206e2266f4a49233ae2b1c1d311b2a59882f25d8af5a64c167974d803",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("phin_gravity_14_118"),
@@ -596,6 +648,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_phin_gravity_14_118_stage_02_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "95bff7d208c70c73fdacd3cdfcf868d307829a375e9bb039fc411b5e7f22036a",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("phin_gravity_14_118"),
@@ -607,6 +660,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_phin_gravity_14_118_stage_03_instruction_default,
         trackerRevision = "4",
+        resourceSha256 = "85b5c2af7ea58d42aad6fd6ef8ac04b6d88a151526776ac3ef0057078c8ad149",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("phin_gravity_14_118"),
@@ -618,6 +672,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_phin_gravity_14_118_stage_04_instruction_default,
         trackerRevision = "3",
+        resourceSha256 = "74f86b896524e9e234a709fea00aa65eb4dff6c8ffa42100376e422d1410dd33",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("phin_gravity_14_118"),
@@ -629,6 +684,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_phin_gravity_14_118_stage_05_instruction_default,
         trackerRevision = "starlit_tactile_v1",
+        resourceSha256 = "8cee0e6d97357cd2947775d08ad95ae1b1118eddaabeb7a208e5ccc0f43d8a32",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("phin_gravity_14_118"),
@@ -640,6 +696,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_phin_gravity_14_118_stage_06_instruction_default,
         trackerRevision = "starlit_tactile_v1",
+        resourceSha256 = "7c95ea55631193a440280ba6ced1d0a03a2b387607bc39c2625df3c09eb95af4",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("phin_gravity_14_118"),
@@ -651,6 +708,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_phin_gravity_14_118_stage_07_instruction_default,
         trackerRevision = "v4",
+        resourceSha256 = "37541b72c2c1a5821ed872a619a0ec7ef945eaa2caeb7982aac0ab7dcda41413",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("phin_screw_18_120"),
@@ -662,6 +720,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_phin_screw_18_120_stage_01_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "de916a2998cd1b2c9c55abe7b3ad0bef60d5145cba4fe8040ff09afe607167cb",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("phin_screw_18_120"),
@@ -673,6 +732,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_phin_screw_18_120_stage_02_instruction_default,
         trackerRevision = "v3",
+        resourceSha256 = "e3ce5be87501976bb757e0f83343633e140bf24f7111e277c2a34cc79ffcc773",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("phin_screw_18_120"),
@@ -684,6 +744,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_phin_screw_18_120_stage_03_instruction_default,
         trackerRevision = "8",
+        resourceSha256 = "6594bb2ea8ef42447d23df5d593398eda4b325c33225f9cc2c6cc6187e1998a8",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("phin_screw_18_120"),
@@ -695,6 +756,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_phin_screw_18_120_stage_04_instruction_default,
         trackerRevision = "5",
+        resourceSha256 = "e084442183ef02c2defa3f8a473c76aea118c40089d5e6395102fa9dec4ea556",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("phin_screw_18_120"),
@@ -706,6 +768,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_phin_screw_18_120_stage_05_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "115e57346091ba6a0f150b7d2f9c0a03c2a0c4e321e1edd8af9cc1cab21196aa",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("phin_screw_18_120"),
@@ -717,6 +780,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_phin_screw_18_120_stage_06_instruction_default,
         trackerRevision = "3",
+        resourceSha256 = "23576971cfd9ce7ecbd439ed2a45600df390fcd0513c9324fd32143708c0d1cf",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("switch_gravity_15_250"),
@@ -728,6 +792,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_switch_gravity_15_250_stage_01_instruction_default,
         trackerRevision = "v3",
+        resourceSha256 = "adba82b05292d216b86780f3664fd0d6a7a1046084a66673f64e1a7fcb851808",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("switch_gravity_15_250"),
@@ -739,6 +804,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_switch_gravity_15_250_stage_02_instruction_default,
         trackerRevision = "starlit_tactile_v1",
+        resourceSha256 = "5eff219316ef166577c55ea5c6fff1b151e09ba9f32529d9bddceee3da3e515e",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("switch_gravity_15_250"),
@@ -750,6 +816,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_switch_gravity_15_250_stage_03_instruction_default,
         trackerRevision = "starlit_tactile_v5",
+        resourceSha256 = "6badafba4a95a2510d5418a78d32dcda1d8dd8c4b505d2696fc3a633d4fc25db",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("switch_gravity_15_250"),
@@ -761,6 +828,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_switch_gravity_15_250_stage_04_instruction_default,
         trackerRevision = "starlit_tactile_v2",
+        resourceSha256 = "a41f247a9d6d070365ecb4a5de3bef24f3bbf520a6921195b90401ae08aeca77",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("switch_official_20_240"),
@@ -772,6 +840,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_switch_official_20_240_stage_01_instruction_default,
         trackerRevision = "v3",
+        resourceSha256 = "dc23d56bc15fea052a659ba1436c6a14c19ec4a4377c2a4ae3074081086aac77",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("switch_official_20_240"),
@@ -783,6 +852,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_switch_official_20_240_stage_02_instruction_default,
         trackerRevision = "starlit_tactile_v3",
+        resourceSha256 = "869c4dff62f9e28680f61537bff950988ac7e4080ab9d57b71667c55247aa76f",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("switch_official_20_240"),
@@ -794,6 +864,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_switch_official_20_240_stage_03_instruction_default,
         trackerRevision = "starlit_tactile_v1",
+        resourceSha256 = "2b88996ddff36b7fc9b38c5e77a37cee9fc38e4af813139297f14830153fd6cf",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("switch_official_20_240"),
@@ -805,6 +876,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_switch_official_20_240_stage_04_instruction_default,
         trackerRevision = "v9",
+        resourceSha256 = "17e443be3c46e986a4eeadb03f1180d79290db10ca806268f6b0ffe5c5e720d2",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("switch_official_20_240"),
@@ -816,6 +888,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_switch_official_20_240_stage_05_instruction_default,
         trackerRevision = "starlit_tactile_v4",
+        resourceSha256 = "a41f247a9d6d070365ecb4a5de3bef24f3bbf520a6921195b90401ae08aeca77",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("switch_ole_boen_hybrid_16_5_240"),
@@ -827,6 +900,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_01_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "fdb74f907c323e806f620bf428ef6927cb138cbc208c86b6152ae37786ae0496",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("switch_ole_boen_hybrid_16_5_240"),
@@ -838,6 +912,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_02_instruction_default,
         trackerRevision = "starlit_tactile_v1",
+        resourceSha256 = "2a8ede8c047d4415b8672ff0f219fc82a52b6b20c2de9a396e0627a34f3f54a1",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("switch_ole_boen_hybrid_16_5_240"),
@@ -849,6 +924,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_03_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "acc4b9a0d297cc70f2cea3b0f950a123c5c8155bcd4817c03dc18d4c9e2360f8",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("switch_ole_boen_hybrid_16_5_240"),
@@ -860,6 +936,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.SAFETY_CRITICAL,
         drawableRes = R.drawable.instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_04_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "17e443be3c46e986a4eeadb03f1180d79290db10ca806268f6b0ffe5c5e720d2",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("switch_ole_boen_hybrid_16_5_240"),
@@ -871,6 +948,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_05_instruction_default,
         trackerRevision = "starlit_tactile_v4",
+        resourceSha256 = "a41f247a9d6d070365ecb4a5de3bef24f3bbf520a6921195b90401ae08aeca77",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_kasuya_4_6_20_300"),
@@ -882,6 +960,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_v60_kasuya_4_6_20_300_stage_01_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "cf016da6744424a9b1067e0269631dc184e1c062bef7e0e8539025fe6c422e7b",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_kasuya_4_6_20_300"),
@@ -893,6 +972,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_v60_kasuya_4_6_20_300_stage_02_instruction_default,
         trackerRevision = "v5",
+        resourceSha256 = "8e19f64df2420db850ebf9db19f1ec5b93a9c5910c037fd83e906245f0fd7dc6",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_kasuya_4_6_20_300"),
@@ -904,6 +984,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_v60_kasuya_4_6_20_300_stage_03_instruction_default,
         trackerRevision = "v5",
+        resourceSha256 = "31ff35acfee213642f760c99205d185b960e7e83075ca3d81ca48816d2f4d862",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_kasuya_4_6_20_300"),
@@ -915,6 +996,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_v60_kasuya_4_6_20_300_stage_04_instruction_default,
         trackerRevision = "v3",
+        resourceSha256 = "6b7cc9dbde2a8294df15ab99229159dd13da24d117520a136118f2d01846aec9",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_kasuya_4_6_20_300"),
@@ -926,6 +1008,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_v60_kasuya_4_6_20_300_stage_05_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "cccd50d46d326728eda0cdae80d6a6b976010d1c6b2aae9370399876eb378646",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_kasuya_4_6_20_300"),
@@ -937,6 +1020,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_v60_kasuya_4_6_20_300_stage_06_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "4050c06610762ddea24a1c2de129879bfcff800809d0e10c40e99000db2af087",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_kasuya_4_6_20_300"),
@@ -948,6 +1032,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_v60_kasuya_4_6_20_300_stage_07_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "6e2a9b455fca0213573c0c2702f7224554dc1a8539ed26c52104423be01db842",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_kurasu_flash_16_150_70"),
@@ -959,6 +1044,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_v60_kurasu_flash_16_150_70_stage_01_instruction_default,
         trackerRevision = "v4",
+        resourceSha256 = "40aebbd158f68951e6cc1c7ad06b778a0e1ea80ae407c569f53382143d249d3b",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_kurasu_flash_16_150_70"),
@@ -970,6 +1056,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_v60_kurasu_flash_16_150_70_stage_02_instruction_default,
         trackerRevision = "v4",
+        resourceSha256 = "d2399d6bbea8b58ede9aac851fce0dfdfcb10e27d96cfff695bd5bd155183346",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_kurasu_flash_16_150_70"),
@@ -981,6 +1068,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_v60_kurasu_flash_16_150_70_stage_03_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "b65c344aa138a8403e66699963dd21cef0aad7c2724456d1af48953fedc38923",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_kurasu_flash_16_150_70"),
@@ -992,6 +1080,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_v60_kurasu_flash_16_150_70_stage_04_instruction_default,
         trackerRevision = "v4",
+        resourceSha256 = "7c46b8c437ad2f3702c439540a34b20f1e099fc976e0f239ec8b3c41ead7ef2f",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_kurasu_flash_16_150_70"),
@@ -1003,6 +1092,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_v60_kurasu_flash_16_150_70_stage_05_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "c81697840a0a63a1b5172884459ea7bd16ce6389208f752aee80f316e1e91ce1",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_kurasu_flash_16_150_70"),
@@ -1014,6 +1104,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_v60_kurasu_flash_16_150_70_stage_06_instruction_default,
         trackerRevision = "v3",
+        resourceSha256 = "1893d29ff6df4732c447da69b09e7697724d7e09ed5241ae15d7702cc8afeb40",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_official_15_250"),
@@ -1025,6 +1116,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_v60_official_15_250_stage_01_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "062f919801fed18e942632326c21d42c8285a080e94c3ecc614f031ada953b88",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_official_15_250"),
@@ -1036,6 +1128,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_v60_official_15_250_stage_02_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "17396461cb744e82f86e08fb3a5959049cd546fd98741695e2e46e52f76fb066",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_official_15_250"),
@@ -1047,6 +1140,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_v60_official_15_250_stage_03_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "f0e55314cda6cd59b5e88c5d7985f50a33d1c9f76c41ca1780d03a0cccd0b16c",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_official_15_250"),
@@ -1058,6 +1152,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_v60_official_15_250_stage_04_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "9eb929d743c9e567972f6b45b08cba025d2ca28c09b275bd093b4b319e29e293",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_official_15_250"),
@@ -1069,6 +1164,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_v60_official_15_250_stage_05_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "ea3528abdb57e4bcaca2a840d7e98db14870ba2e62bafb05fb45e5f20c8c3a36",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_rao_20_330"),
@@ -1080,6 +1176,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_v60_rao_20_330_stage_01_instruction_default,
         trackerRevision = "v3",
+        resourceSha256 = "1154d0387fa8a0f7762902c9478c7432c7f4b0f3383650fe858f7bc20aff7478",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_rao_20_330"),
@@ -1091,6 +1188,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_v60_rao_20_330_stage_02_instruction_default,
         trackerRevision = "v3",
+        resourceSha256 = "3ff976a1fbcf289239c145fedc8b1a3de462bdd485d844f4f96cfd2431a47a36",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_rao_20_330"),
@@ -1102,6 +1200,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_v60_rao_20_330_stage_03_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "e45c478b96d64b40e71f02a3b38babe80f994ca2fc66538f7ef334e265a245b9",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_rao_20_330"),
@@ -1113,6 +1212,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_v60_rao_20_330_stage_04_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "b9b1b133953ffadf8cb045aa45769d76514f43c78d6cef8ebceb6d0512d2f4d2",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_rao_20_330"),
@@ -1124,6 +1224,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_v60_rao_20_330_stage_05_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "dc1b47bd2ecf8fa3abc7047b39b914980ec3701c788c040f788bbf8121bd5e3d",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("v60_rao_20_330"),
@@ -1135,6 +1236,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_v60_rao_20_330_stage_06_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "da790e3a945b5709a2c43474c8b5c2162bf28a29582bec01373393dcd82ebb82",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("wave185_ozone_25_400"),
@@ -1146,6 +1248,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_wave185_ozone_25_400_stage_01_instruction_default,
         trackerRevision = "v6",
+        resourceSha256 = "1bb269fe50b14e1db141918031a447588f2d5f981c86d58eb36679cda77ed9af",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("wave185_ozone_25_400"),
@@ -1157,6 +1260,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_wave185_ozone_25_400_stage_02_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "ec25ed118e53d51df83b6036c0643b203aa9ccbb6caa572a88d77fe109695b77",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("wave185_ozone_25_400"),
@@ -1168,6 +1272,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_wave185_ozone_25_400_stage_03_instruction_default,
         trackerRevision = "v3",
+        resourceSha256 = "50cd451f0424f650b424b6dd11ed1da1e95f540ff7194e1704f269d895b788c0",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("wave185_ozone_25_400"),
@@ -1179,6 +1284,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_wave185_ozone_25_400_stage_04_instruction_default,
         trackerRevision = "v3",
+        resourceSha256 = "80028cebec25f807f1a2d6c544579e88f24bd1da33a685d322395dd0a9202ae0",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("wave185_ozone_25_400"),
@@ -1190,6 +1296,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_wave185_ozone_25_400_stage_05_instruction_default,
         trackerRevision = "v4",
+        resourceSha256 = "778be8d51c26ba914820c0e5476f08fc9f0bf6caf4b131b6c13545b9df4d2d7b",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("wave185_ozone_25_400"),
@@ -1201,6 +1308,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_wave185_ozone_25_400_stage_06_instruction_default,
         trackerRevision = "v3",
+        resourceSha256 = "7984de0286d5b8642aa60992606d437ca103c16aa4efaafa2d45d29c7a6a75dd",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("wave185_ozone_25_400"),
@@ -1212,6 +1320,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_wave185_ozone_25_400_stage_07_instruction_default,
         trackerRevision = "v3",
+        resourceSha256 = "a1335fd6b794f95233b8f1a6018ec3b5fad9a212685ef1afe8b130442f8c2525",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("wave185_ozone_25_400"),
@@ -1223,6 +1332,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_wave185_ozone_25_400_stage_08_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "beac0c510fac51cc7c8414a7c3afaf6b456f50d059b7491314aae142c78c2559",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("wedge_pulse_23_5_400"),
@@ -1234,6 +1344,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_wedge_pulse_23_5_400_stage_01_instruction_default,
         trackerRevision = "v3",
+        resourceSha256 = "54c71922466274d90fb99142b3b4a400014832019ad0200b7a0f43734167c230",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("wedge_pulse_23_5_400"),
@@ -1245,6 +1356,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_wedge_pulse_23_5_400_stage_02_instruction_default,
         trackerRevision = "v2",
+        resourceSha256 = "267210636cc2a99113c037916b1cc67c3a5be7cc90006785f589c4364a08fffb",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("wedge_pulse_23_5_400"),
@@ -1256,6 +1368,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_wedge_pulse_23_5_400_stage_03_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "e96202de3fa3bbff1c40b9accfc37067592dc1f5f100c403e40114b77b920af6",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("wedge_pulse_23_5_400"),
@@ -1267,6 +1380,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_wedge_pulse_23_5_400_stage_04_instruction_default,
         trackerRevision = "starlit_tactile_v5",
+        resourceSha256 = "67edc9251dc02a2bdbc6a7a4a2919c6c40d5898c13d33022adae21a74a01bb87",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("wedge_pulse_23_5_400"),
@@ -1278,6 +1392,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.OPTIONAL,
         drawableRes = R.drawable.instruction_p1_wedge_pulse_23_5_400_stage_05_instruction_default,
         trackerRevision = "v1",
+        resourceSha256 = "60464c63363ace01bb7c86f04d127832968712d20e0a6a79d020f5eec9372ead",
     ),
     P1TrackerAcceptedInstructionAsset(
         recipeId = BuiltInRecipeId("wedge_pulse_23_5_400"),
@@ -1289,6 +1404,7 @@ private val trackerAcceptedAssets: List<P1TrackerAcceptedInstructionAsset> = lis
         visualPriority = P1ExactVisualPriority.MANDATORY,
         drawableRes = R.drawable.instruction_p1_wedge_pulse_23_5_400_stage_06_instruction_default,
         trackerRevision = "starlit_tactile_v5",
+        resourceSha256 = "9557aca342f6a82fb36377f6870b864dd03a5323a8308658ecad1febb98bca40",
     ),
 )
 
@@ -1300,14 +1416,29 @@ object P1TrackerAcceptedInstructionAssetCatalog {
 
     /** Accepted art is safe metadata; localized copy is enforced by the recipe gate. */
     fun runtimeAssets(): List<InstructionAssetRecord> = assets.map { candidate ->
-        candidate.toRuntimeAsset()
+        val definition = requireNotNull(BuiltInP1RecipeCatalog.find(candidate.recipeId)) {
+            "Accepted art references an unknown exact recipe: ${candidate.recipeId.value}"
+        }
+        require(candidate.familyId.value == definition.sourceMethodFamilyId) {
+            "Accepted art source family differs for ${candidate.recipeId.value}"
+        }
+        require(candidate.profileId.value == definition.sourceBrewerProfileId.value) {
+            "Accepted art source profile differs for ${candidate.recipeId.value}"
+        }
+        candidate.toRuntimeAsset(
+            runtimeFamilyId = definition.methodFamilyId,
+            runtimeProfileId = definition.brewerProfileId,
+        )
     }
 
-    private fun P1TrackerAcceptedInstructionAsset.toRuntimeAsset(): InstructionAssetRecord =
+    private fun P1TrackerAcceptedInstructionAsset.toRuntimeAsset(
+        runtimeFamilyId: MethodFamilyId,
+        runtimeProfileId: BrewerProfileId,
+    ): InstructionAssetRecord =
         InstructionAssetRecord(
             id = id,
-            familyId = familyId,
-            profileId = profileId,
+            familyId = runtimeFamilyId,
+            profileId = runtimeProfileId,
             stageId = stageId,
             contentId = contentId,
             namingConvention = InstructionAssetNamingConvention.EXACT_CONTENT_ID,
@@ -1323,5 +1454,6 @@ object P1TrackerAcceptedInstructionAssetCatalog {
                 reviewer = "Starlit tactile production tracker",
                 reviewedOn = LocalDate.parse(TRACKER_UPDATED_ON),
             ),
+            resourceSha256 = resourceSha256,
         )
 }

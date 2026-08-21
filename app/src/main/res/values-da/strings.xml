@@ -112,10 +112,8 @@
     <string name="prep_tip_pulsar_40k">Skyl 40K-metalfilteret for at forvarme cylinderen. Monter cylinderen, tilsæt kaffe, jævn bedet, og sæt dispersionslåget på. Tarér vægten.</string>
     <string name="prep_tip_pour_over_paper">Sæt papirfilteret i, og skyl med varmt vand for at forvarme og fjerne papirsmag. Tilsæt kaffe, og tarér vægten.</string>
     <string name="prep_tip_french_press">Forvarm stempelkanden, og tøm den. Tilsæt kaffe, sæt den på vægten, og tarér, før du tilsætter vand.</string>
-    <string name="prep_tip_aeropress">Sæt et skyllet filter i låget. Tilsæt kaffe, stil bryggeren på et solidt krus eller en server, og tarér vægten.</string>
     <string name="prep_tip_espresso">Tør portafilteret af. Doser, fordel, og tamp plant, før du låser det i.</string>
     <string name="prep_tip_moka">Fyld bundkammeret op til ventilen. Fyld kurven med kaffe, jævn — tamp ikke. Saml forsigtigt.</string>
-    <string name="prep_tip_cold_brew">Tilsæt kaffe i beholderen, tarér vægten, tilsæt vand ved stuetemperatur eller koldt vand, og dæk til.</string>
     <string name="format_prep_grind_specific">Mal %1$s — indstil %2$s til %3$s</string>
     <string name="format_prep_grind_generic">Mal %1$s — %2$s (%3$s)</string>
 
@@ -355,18 +353,12 @@
     <string name="instruction_french_press_start">Tilsæt alt vandet, rør forsigtigt, og læg låget på</string>
     <string name="instruction_french_press_steep">Lad trække uforstyrret til den ønskede tid</string>
     <string name="instruction_french_press_plunge">Pres langsomt ned, og hæld derefter kaffen fra</string>
-    <string name="instruction_aeropress_start">Tilsæt vand, rør, og start trækketiden</string>
-    <string name="instruction_aeropress_steep">Lad trække med låget på; gør klar til at presse</string>
-    <string name="instruction_aeropress_press">Pres jævnt, indtil det hvæser, og stop så</string>
     <string name="instruction_espresso_start">Lås portafilteret i, og start shottet</string>
     <string name="instruction_espresso_pull">Hold øje med flow og yield; behold koppen på vægten</string>
     <string name="instruction_espresso_stop">Stop ved ønsket yield, eller når shottet bliver lyst</string>
     <string name="instruction_moka_start">Saml kanden, og varm forsigtigt med åbent låg</string>
     <string name="instruction_moka_flow">Hold øje med kaffe, der løber op i det øverste kammer</string>
     <string name="instruction_moka_remove">Tag af varmen, når flowet bliver lyst eller sprutter</string>
-    <string name="instruction_cold_brew_start">Bland kaffe og vand, og rør, så alt grums bliver vådt</string>
-    <string name="instruction_cold_brew_steep">Dæk til, og lad trække; hold kaffen helt mættet</string>
-    <string name="instruction_cold_brew_filter">Filtrer koncentratet, og køl eller fortynd ved servering</string>
 
     <!-- Warnings -->
 <!-- Taste Feedback -->
@@ -757,7 +749,6 @@
     <string name="screen_learning_title">Lær</string>
     <string name="msg_learning_subtitle">Visuelle bryggeguides trin for trin</string>
     <string name="msg_learning_intro">Vælg en brygger og en opskrift, og gennemgå derefter ét tydeligt trin ad gangen.</string>
-    <string name="msg_learning_empty">Der er endnu ingen læringsguider.</string>
     <string name="action_show_details">Vis detaljer</string>
     <string name="action_hide_details">Skjul detaljer</string>
 </resources>

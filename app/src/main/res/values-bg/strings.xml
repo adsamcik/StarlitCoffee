@@ -112,10 +112,8 @@
     <string name="prep_tip_pulsar_40k">Изплакнете 40K металния филтър, за да подгреете цилиндъра. Монтирайте цилиндъра, добавете смляното кафе, изравнете леглото и поставете дисперсионната капачка. Тарирайте везната.</string>
     <string name="prep_tip_pour_over_paper">Поставете хартиения филтър и го изплакнете с гореща вода, за да подгреете и да премахнете хартиения вкус. Добавете смляното кафе и тарирайте везната.</string>
     <string name="prep_tip_french_press">Подгрейте френската преса и я изпразнете. Добавете смляното кафе, поставете върху везната и тарирайте преди да добавите вода.</string>
-    <string name="prep_tip_aeropress">Поставете изплакнат филтър в капачката. Добавете смляното кафе, сложете уреда върху стабилна чаша или сървър и тарирайте везната.</string>
     <string name="prep_tip_espresso">Подсушете портафилтъра. Дозирайте, разпределете и тампирайте равномерно преди да го заключите.</string>
     <string name="prep_tip_moka">Напълнете долната камера до клапана. Напълнете кошничката със смляно кафе, изравнете — не тампирайте. Сглобете внимателно.</string>
-    <string name="prep_tip_cold_brew">Добавете смляното кафе в съда, тарирайте везната, после добавете вода със стайна температура или студена вода и покрийте.</string>
     <string name="format_prep_grind_specific">Смелете %1$s — настройте %2$s на %3$s</string>
     <string name="format_prep_grind_generic">Смелете %1$s — %2$s (%3$s)</string>
 
@@ -356,18 +354,12 @@
     <string name="instruction_french_press_start">Добавете цялата вода, разбъркайте внимателно и поставете капака отгоре</string>
     <string name="instruction_french_press_steep">Оставете да се запарва необезпокоявано до целевото време</string>
     <string name="instruction_french_press_plunge">Натиснете бавно, после излейте кафето</string>
-    <string name="instruction_aeropress_start">Добавете вода, разбъркайте и започнете запарката</string>
-    <string name="instruction_aeropress_steep">Запарвайте с капачката; подгответе се да натиснете</string>
-    <string name="instruction_aeropress_press">Натискайте равномерно до съскането, после спрете</string>
     <string name="instruction_espresso_start">Заключете портафилтъра и стартирайте шота</string>
     <string name="instruction_espresso_pull">Следете потока и добива; дръжте чашата върху везната</string>
     <string name="instruction_espresso_stop">Спрете при целевия добив или когато шотът изсветлее</string>
     <string name="instruction_moka_start">Сглобете Moka Pot и загрявайте леко с отворен капак</string>
     <string name="instruction_moka_flow">Следете как кафето тече в горната камера</string>
     <string name="instruction_moka_remove">Махнете от котлона, когато потокът избледнее или започне да пръска</string>
-    <string name="instruction_cold_brew_start">Смесете кафе и вода, разбъркайте, за да намокрите всяка частица</string>
-    <string name="instruction_cold_brew_steep">Покрийте и оставете да се запарва; дръжте кафето напълно наситено</string>
-    <string name="instruction_cold_brew_filter">Филтрирайте концентрата и охладете или разредете за сервиране</string>
 
     <!-- Warnings -->
 <!-- Taste Feedback -->
@@ -758,7 +750,6 @@
     <string name="screen_learning_title">Научи</string>
     <string name="msg_learning_subtitle">Нагледни ръководства стъпка по стъпка</string>
     <string name="msg_learning_intro">Изберете уред и рецепта, след което разгледайте всяка ясна стъпка поотделно.</string>
-    <string name="msg_learning_empty">Все още няма налични учебни ръководства.</string>
     <string name="action_show_details">Покажи подробности</string>
     <string name="action_hide_details">Скрий подробностите</string>
 </resources>

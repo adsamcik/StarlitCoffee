@@ -4,6 +4,12 @@
 **Branch:** `main`
 **App version:** 1.4.0 (development remains under `Unreleased`)
 
+> **2026-08-21 review update:** This historical implementation report predates
+> the independent hash-bound pixel audit. That audit approves 103 of 114 final
+> drawables and rejects 11, so the earlier statements that every illustration
+> and exact recipe is enabled are superseded by the production release gate and
+> `docs/brewing/p1-exact-independent-visual-review-2026-08-21.json`.
+
 ## Outcome
 
 The brewing-platform architecture and the complete exact-stage illustration

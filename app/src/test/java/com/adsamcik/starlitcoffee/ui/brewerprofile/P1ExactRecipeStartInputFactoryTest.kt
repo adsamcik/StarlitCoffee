@@ -41,7 +41,7 @@ class P1ExactRecipeStartInputFactoryTest {
     fun `temperature ranges machine control and cold observation never become invented settings`() {
         val rangeInput = readyInput(selection("v60_02", "v60_official_15_250", 300.0))
         val machineInput = readyInput(
-            selection("automatic_batch_generic", "auto_batch_500_30", 600.0, equipmentIndex = 0),
+            selection("moccamaster_kbgv_select", "auto_batch_500_30", 600.0),
         )
         val coldInput = readyInput(
             selection(
@@ -59,17 +59,16 @@ class P1ExactRecipeStartInputFactoryTest {
     }
 
     @Test
-    fun `selected automatic equipment option is transferred as one indivisible configuration`() {
+    fun `selected KBGV equipment is transferred as one indivisible configuration`() {
         val selection = selection(
-            "automatic_batch_generic",
+            "moccamaster_kbgv_select",
             "auto_batch_500_30",
             capacityG = 600.0,
-            equipmentIndex = 1,
         )
         val input = readyInput(selection)
 
         assertSame(selection.equipmentOption.filterSelection, input.equipment.filterSelection)
-        assertEquals("automatic_flat_basket", input.equipment.basketId?.value)
+        assertEquals("moccamaster_kbgv_select_cone_basket", input.equipment.basketId?.value)
         assertEquals(selection.equipmentOption.accessoryIds, input.equipment.accessoryIds)
     }
 

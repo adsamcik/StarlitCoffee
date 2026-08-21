@@ -1,8 +1,8 @@
 package com.adsamcik.starlitcoffee
 
 import android.app.Application
+import android.content.Context
 import android.graphics.Bitmap
-import android.util.Log
 import com.adsamcik.mindlayer.sdk.Mindlayer
 import com.adsamcik.starlitcoffee.data.brewing.session.BrewSessionRuntime
 import com.adsamcik.starlitcoffee.data.network.llm.LlmCombineRequest
@@ -17,6 +17,7 @@ import com.adsamcik.starlitcoffee.data.network.ocr.OcrService
 import com.adsamcik.starlitcoffee.data.network.ocr.RecognizedText
 import com.adsamcik.starlitcoffee.data.work.BagExtractionScheduler
 import com.adsamcik.starlitcoffee.data.work.BagExtractionStartupRecovery
+import com.adsamcik.starlitcoffee.diagnostics.StarlitTracebox
 import com.adsamcik.starlitcoffee.scan.observability.PersistentLlmDiagnosticsRecorder
 import com.adsamcik.starlitcoffee.util.MindlayerAvailability
 import kotlinx.coroutines.CancellationException
@@ -28,8 +29,11 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlin.time.Duration.Companion.seconds
+import dev.tracebox.Tracebox
 
 class StarlitCoffeeApp : Application() {
+
+    private var traceboxHandlerProcess = false
 
     val llmProvider: LlmInferenceProvider = RefreshingMindlayerLlmProvider(this)
     val ocrService: OcrService = RefreshingMindlayerOcrService(this)
@@ -71,13 +75,22 @@ class StarlitCoffeeApp : Application() {
             awaitSuccessfulMindlayerReconnect(
                 awaitConnection = { services.client.awaitConnected(RECONNECT_TIMEOUT) },
                 checkAvailability = { services.llmProvider.isAvailable() },
-                onFailure = { error -> Log.w(TAG, "Mindlayer reconnect failed", error) },
+                onFailure = { error -> Tracebox.log.error(error, "Mindlayer reconnect failed") },
             )
+        }
+    }
+
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
+        traceboxHandlerProcess = StarlitTracebox.isHandlerProcess(base)
+        if (!traceboxHandlerProcess) {
+            StarlitTracebox.install(base)
         }
     }
 
     override fun onCreate() {
         super.onCreate()
+        if (traceboxHandlerProcess) return
         warmupScope.launch {
             awaitBagExtractionStartupRecovery()
         }
@@ -88,11 +101,11 @@ class StarlitCoffeeApp : Application() {
             } catch (error: CancellationException) {
                 throw error
             } catch (error: Exception) {
-                Log.w(TAG, "Durable brew-session recovery failed", error)
+                Tracebox.log.error(error, "Durable brew-session recovery failed")
             }
         }
         if (!MindlayerAvailability.isInstalled(this)) {
-            Log.i(TAG, "Mindlayer is not installed; skipping connection warmup")
+            Tracebox.log.info("Mindlayer is not installed; skipping connection warmup")
             return
         }
 
@@ -119,6 +132,9 @@ class StarlitCoffeeApp : Application() {
      * are released by process death in that path.
      */
     override fun onTerminate() {
+        if (!traceboxHandlerProcess) {
+            Tracebox.current()?.close()
+        }
         synchronized(mindlayerServicesLock) {
             mindlayerServices = null
             Mindlayer.disconnectShared()
@@ -141,7 +157,7 @@ class StarlitCoffeeApp : Application() {
                     ocrService = HierarchicalOcrService(MindlayerOcrService(client)),
                 ).also { mindlayerServices = it }
             } catch (error: Exception) {
-                Log.e(TAG, "Mindlayer service initialization failed", error)
+                Tracebox.log.error(error, "Mindlayer service initialization failed")
                 null
             }
         }
@@ -157,7 +173,6 @@ class StarlitCoffeeApp : Application() {
         }
 
     private companion object {
-        private const val TAG = "StarlitCoffeeApp"
         private val RECONNECT_TIMEOUT = 10.seconds
     }
 

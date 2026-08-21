@@ -116,10 +116,8 @@
     <string name="prep_tip_pulsar_40k">Przepłucz metalowy filtr 40K, aby rozgrzać cylinder. Zamontuj cylinder, wsyp kawę, wyrównaj złoże, załóż pokrywkę dyspersyjną. Wytaruj wagę.</string>
     <string name="prep_tip_pour_over_paper">Załóż papierowy filtr i przepłucz go gorącą wodą, aby rozgrzać dripper i usunąć papierowy posmak. Wsyp kawę, wytaruj wagę.</string>
     <string name="prep_tip_french_press">Rozgrzej French Press, potem wylej wodę. Wsyp kawę, postaw na wadze i wytaruj przed dodaniem wody.</string>
-    <string name="prep_tip_aeropress">Włóż przepłukany filtr do sitka. Wsyp kawę, postaw AeroPress na stabilnym kubku lub serwerze i wytaruj wagę.</string>
     <string name="prep_tip_espresso">Wytrzyj kolbę do sucha. Odmierz dawkę, rozprowadź ją równo i ubij poziomo przed zapięciem.</string>
     <string name="prep_tip_moka">Napełnij dolną komorę do zaworu. Wsyp kawę do sitka, wyrównaj — nie ubijaj. Ostrożnie skręć kawiarkę.</string>
-    <string name="prep_tip_cold_brew">Wsyp kawę do naczynia, wytaruj wagę, dodaj zimną wodę lub wodę w temperaturze pokojowej i przykryj.</string>
     <string name="format_prep_grind_specific">Zmiel %1$s — ustaw %2$s na %3$s</string>
     <string name="format_prep_grind_generic">Zmiel %1$s — %2$s (%3$s)</string>
 
@@ -359,18 +357,12 @@
     <string name="instruction_french_press_start">Wlej całą wodę, delikatnie zamieszaj i załóż pokrywkę</string>
     <string name="instruction_french_press_steep">Parz bez ruszania do docelowego czasu</string>
     <string name="instruction_french_press_plunge">Powoli opuść tłok, potem przelej kawę</string>
-    <string name="instruction_aeropress_start">Dodaj wodę, zamieszaj i rozpocznij parzenie</string>
-    <string name="instruction_aeropress_steep">Parz z założonym sitkiem; przygotuj się do przeciskania</string>
-    <string name="instruction_aeropress_press">Przeciskaj równomiernie do syku, potem zatrzymaj</string>
     <string name="instruction_espresso_start">Zapnij kolbę i rozpocznij ekstrakcję</string>
     <string name="instruction_espresso_pull">Obserwuj przepływ i uzysk; trzymaj filiżankę na wadze</string>
     <string name="instruction_espresso_stop">Zatrzymaj przy docelowym uzysku albo gdy strumień zacznie blednąć</string>
     <string name="instruction_moka_start">Skręć kawiarkę i podgrzewaj delikatnie z otwartą pokrywką</string>
     <string name="instruction_moka_flow">Obserwuj, kiedy kawa zacznie płynąć do górnej komory</string>
     <string name="instruction_moka_remove">Zdejmij z ognia, gdy strumień zblednie lub zacznie pryskać</string>
-    <string name="instruction_cold_brew_start">Połącz kawę z wodą i wymieszaj, aby zwilżyć każde drobiny</string>
-    <string name="instruction_cold_brew_steep">Przykryj i maceruj; kawa ma być całkowicie zanurzona</string>
-    <string name="instruction_cold_brew_filter">Przefiltruj koncentrat i podawaj schłodzony albo rozcieńczony</string>
 
     <!-- Warnings -->
 <!-- Taste Feedback -->
@@ -761,7 +753,6 @@
     <string name="screen_learning_title">Nauka</string>
     <string name="msg_learning_subtitle">Ilustrowane instrukcje parzenia krok po kroku</string>
     <string name="msg_learning_intro">Wybierz zaparzacz i przepis, a następnie poznawaj kolejne jasne kroki.</string>
-    <string name="msg_learning_empty">Materiały edukacyjne nie są jeszcze dostępne.</string>
     <string name="action_show_details">Pokaż szczegóły</string>
     <string name="action_hide_details">Ukryj szczegóły</string>
 </resources>

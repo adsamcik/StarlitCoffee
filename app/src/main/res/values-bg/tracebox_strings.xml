@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_settings_section_support">Поддръжка и поверителност</string>
+    <string name="label_diagnostics">Диагностика</string>
+    <string name="msg_diagnostics_summary">Прегледайте, споделете, запазете или изтрийте локалните данни за отстраняване на неизправности</string>
+    <string name="label_privacy_policy">Политика за поверителност</string>
+    <string name="msg_privacy_policy_summary">Прочетете как Starlit Coffee обработва данните</string>
+    <string name="msg_privacy_policy_open_failed">Политиката за поверителност не можа да бъде отворена.</string>
+    <string name="screen_diagnostics_title">Диагностика</string>
+    <string name="msg_diagnostics_unavailable">Диагностиката не е налична в този процес.</string>
+    <string name="msg_diagnostics_support_description">Подготвя пакет със скорошни грешки в приложението и контекст за производителността за отстраняване на неизправности.</string>
+</resources>

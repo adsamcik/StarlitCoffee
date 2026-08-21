@@ -3,13 +3,13 @@ package com.adsamcik.starlitcoffee.notification
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import com.adsamcik.starlitcoffee.data.db.AppDatabase
 import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import dev.tracebox.Tracebox
 
 /**
  * Handles taps on the emoji rating buttons inside the rating-reminder
@@ -26,7 +26,11 @@ class RatingActionReceiver : BroadcastReceiver() {
         val brewLogId = intent.getLongExtra(EXTRA_BREW_LOG_ID, -1L)
         val ratingValue = intent.getIntExtra(EXTRA_RATING_VALUE, -1)
         if (brewLogId <= 0L || ratingValue !in 1..4) {
-            Log.w(TAG, "Ignoring quick-rate broadcast with invalid payload: id=$brewLogId rating=$ratingValue")
+            Tracebox.log.warn(
+                "Ignoring quick-rate broadcast with invalid payload: id={} rating={}",
+                brewLogId,
+                ratingValue,
+            )
             return
         }
         val appContext = context.applicationContext
@@ -37,7 +41,7 @@ class RatingActionReceiver : BroadcastReceiver() {
                     RatingReminderScheduler(appContext).cancelReminder(brewLogId)
                 }
             } catch (error: Exception) {
-                Log.e(TAG, "Failed to apply quick rating $ratingValue for brew $brewLogId", error)
+                Tracebox.log.error(error, "Failed to apply quick rating {} for brew {}", ratingValue, brewLogId)
             } finally {
                 pending.finish()
             }
@@ -52,7 +56,7 @@ class RatingActionReceiver : BroadcastReceiver() {
             flavorTagDao = database.flavorTagDao(),
         )
         val existing = repository.getLogById(brewLogId) ?: run {
-            Log.w(TAG, "Brew log $brewLogId no longer exists — skipping quick rating")
+            Tracebox.log.warn("Brew log {} no longer exists — skipping quick rating", brewLogId)
             return false
         }
         // Preserve any freeform notes the user may have already written; only
@@ -62,7 +66,6 @@ class RatingActionReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        private const val TAG = "RatingActionRecv"
         const val ACTION_QUICK_RATE = "com.adsamcik.starlitcoffee.action.QUICK_RATE"
         const val EXTRA_BREW_LOG_ID = "brew_log_id"
         const val EXTRA_RATING_VALUE = "rating_value"

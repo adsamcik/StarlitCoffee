@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_settings_section_support">Pagalba ir privatumas</string>
+    <string name="label_diagnostics">Diagnostika</string>
+    <string name="msg_diagnostics_summary">Peržiūrėkite, bendrinkite, išsaugokite arba ištrinkite vietinius trikčių šalinimo duomenis</string>
+    <string name="label_privacy_policy">Privatumo politika</string>
+    <string name="msg_privacy_policy_summary">Sužinokite, kaip „Starlit Coffee“ tvarko duomenis</string>
+    <string name="msg_privacy_policy_open_failed">Nepavyko atidaryti privatumo politikos.</string>
+    <string name="screen_diagnostics_title">Diagnostika</string>
+    <string name="msg_diagnostics_unavailable">Diagnostika šiame procese nepasiekiama.</string>
+    <string name="msg_diagnostics_support_description">Supakuoja naujausias programos klaidas ir našumo kontekstą trikčių šalinimui.</string>
+</resources>

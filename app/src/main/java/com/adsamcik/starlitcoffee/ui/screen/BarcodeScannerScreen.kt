@@ -1,7 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import android.Manifest
-import android.util.Log
 import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -47,8 +46,7 @@ import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.Executors
-
-private const val TAG = "BarcodeScannerScreen"
+import dev.tracebox.Tracebox
 
 @Composable
 fun BarcodeScannerScreen(
@@ -205,7 +203,7 @@ private fun analyzeBarcode(
                     imageProxy.close()
                 }
         } catch (error: Exception) {
-            Log.w(TAG, "Failed to process barcode frame", error)
+            Tracebox.log.error(error, "Failed to process barcode frame")
             imageProxy.close()
         }
     } else {
@@ -294,11 +292,11 @@ private fun releaseCameraResources(
     scanner: com.google.mlkit.vision.barcode.BarcodeScanner?,
 ) {
     runCatching { imageAnalysis?.clearAnalyzer() }
-        .onFailure { Log.w(TAG, "Failed to clear barcode analyzer", it) }
+        .onFailure { Tracebox.log.error(it, "Failed to clear barcode analyzer") }
     runCatching { cameraProvider?.unbindAll() }
-        .onFailure { Log.w(TAG, "Failed to unbind barcode camera", it) }
+        .onFailure { Tracebox.log.error(it, "Failed to unbind barcode camera") }
     runCatching { scanner?.close() }
-        .onFailure { Log.w(TAG, "Failed to close barcode scanner", it) }
+        .onFailure { Tracebox.log.error(it, "Failed to close barcode scanner") }
 }
 
 /**
@@ -449,7 +447,7 @@ private fun installBarcodeAnalyzer(
 } catch (error: Exception) {
     releaseCameraResources(cameraProvider, analysis, barcodeScanner)
     if (lifecyclePolicy.isActive) {
-        Log.w(TAG, "Failed to install barcode analyzer", error)
+        Tracebox.log.error(error, "Failed to install barcode analyzer")
     }
     false
 }
@@ -498,6 +496,6 @@ private fun bindActiveBarcodeCamera(
         }
     } catch (error: Exception) {
         resources.release()
-        Log.w(TAG, "Failed to bind camera for barcode scanning", error)
+        Tracebox.log.error(error, "Failed to bind camera for barcode scanning")
     }
 }

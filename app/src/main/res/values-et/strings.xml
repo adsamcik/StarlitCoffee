@@ -112,10 +112,8 @@
     <string name="prep_tip_pulsar_40k">Loputa 40K metallfilter, et silinder soojeneks. Paigalda silinder, lisa kohvipuru, tasanda kiht, aseta hajutuskork. Nulli kaal.</string>
     <string name="prep_tip_pour_over_paper">Aseta paberfilter ja loputa kuuma veega, et see soojeneks ja paberimaitse kaoks. Lisa kohvipuru, nulli kaal.</string>
     <string name="prep_tip_french_press">Soojenda press ja vala tühjaks. Lisa kohvipuru, aseta kaalule ja nulli enne vee lisamist.</string>
-    <string name="prep_tip_aeropress">Aseta loputatud filter korgi sisse. Lisa kohvipuru, aseta seade kindlale tassile või kannule ja nulli kaal.</string>
     <string name="prep_tip_espresso">Pühi portafilter kuivaks. Doseeri, jaota ja tampi ühtlaselt enne lukustamist.</string>
     <string name="prep_tip_moka">Täida alumine kamber ventiilini. Täida korv kohvipuruga, tasanda — ära tampi. Pane hoolikalt kokku.</string>
-    <string name="prep_tip_cold_brew">Lisa kohvipuru anumasse, nulli kaal, seejärel lisa toasooja või külma vett ja kata kinni.</string>
     <string name="format_prep_grind_specific">Jahvata %1$s — sea %2$s väärtusele %3$s</string>
     <string name="format_prep_grind_generic">Jahvata %1$s — %2$s (%3$s)</string>
 
@@ -356,18 +354,12 @@
     <string name="instruction_french_press_start">Lisa kogu vesi, sega õrnalt ja aseta kaas peale</string>
     <string name="instruction_french_press_steep">Lase segamatult tõmmata kuni sihtajani</string>
     <string name="instruction_french_press_plunge">Vajuta kolb aeglaselt alla, seejärel vala kohv välja</string>
-    <string name="instruction_aeropress_start">Lisa vesi, sega ja alusta tõmbamist</string>
-    <string name="instruction_aeropress_steep">Lase tõmmata kork peal; valmistu pressimiseks</string>
-    <string name="instruction_aeropress_press">Pressi ühtlaselt kuni sisinani, seejärel peata</string>
     <string name="instruction_espresso_start">Lukusta portafilter ja alusta ekstraktsiooni</string>
     <string name="instruction_espresso_pull">Jälgi voolu ja saagist; hoia tass kaalul</string>
     <string name="instruction_espresso_stop">Peata sihtsaagise juures või kui vool heledaks muutub</string>
     <string name="instruction_moka_start">Pane kann kokku ja soojenda õrnalt, kaas lahti</string>
     <string name="instruction_moka_flow">Jälgi kohvi voolamist ülemisse kambrisse</string>
     <string name="instruction_moka_remove">Tõsta tulelt, kui vool muutub heledaks või pahiseb</string>
-    <string name="instruction_cold_brew_start">Sega kohv ja vesi kokku, sega, et kogu puru saaks märjaks</string>
-    <string name="instruction_cold_brew_steep">Kata kinni ja lase tõmmata; hoia puru täielikult niiskena</string>
-    <string name="instruction_cold_brew_filter">Filtreeri kontsentraat ja jahuta või lahjenda serveerimiseks</string>
 
     <!-- Warnings -->
 <!-- Taste Feedback -->
@@ -758,7 +750,6 @@
     <string name="screen_learning_title">Õpi</string>
     <string name="msg_learning_subtitle">Visuaalsed samm-sammulised valmistamisjuhendid</string>
     <string name="msg_learning_intro">Vali valmistaja ja retsept ning tutvu ühe selge sammuga korraga.</string>
-    <string name="msg_learning_empty">Õppejuhendeid pole veel saadaval.</string>
     <string name="action_show_details">Kuva üksikasjad</string>
     <string name="action_hide_details">Peida üksikasjad</string>
 </resources>

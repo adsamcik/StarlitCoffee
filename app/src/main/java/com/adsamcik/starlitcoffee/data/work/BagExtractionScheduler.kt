@@ -1,7 +1,6 @@
 package com.adsamcik.starlitcoffee.data.work
 
 import android.content.Context
-import android.util.Log
 import androidx.core.content.edit
 import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
@@ -26,6 +25,7 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.util.UUID
 import java.util.concurrent.TimeUnit
+import dev.tracebox.Tracebox
 
 internal enum class ManifestReconciliationState {
     PRESENT,
@@ -466,7 +466,7 @@ object BagExtractionScheduler {
                 putString(KEY_ACTIVE_WORK_ID, workId)
             }
         ) {
-            Log.w(TAG, "Durable enqueue succeeded but active state promotion did not commit")
+            Tracebox.log.warn("Durable enqueue succeeded but active state promotion did not commit")
         }
     }
 
@@ -485,10 +485,10 @@ object BagExtractionScheduler {
                     .await()
             }
         }.onFailure { error ->
-            Log.w(TAG, "Could not cancel failed extraction enqueue", error)
+            Tracebox.log.error(error, "Could not cancel failed extraction enqueue")
         }
         runCatching { BagExtractionInputStore.delete(context, manifestPath) }
-            .onFailure { error -> Log.w(TAG, "Could not roll back failed extraction manifest", error) }
+            .onFailure { error -> Tracebox.log.error(error, "Could not roll back failed extraction manifest") }
         clearWorkState(context, workId, preserveLatestGeneration = false)
         if (failedGenerationWasLatest) {
             rememberLatestGeneration(context, input.sessionId, input.generationId)
@@ -506,13 +506,13 @@ object BagExtractionScheduler {
         return try {
             BagExtractionInputStore.delete(context, manifestPath)
             if (!preferences.commitSynchronously { remove(manifestKey) }) {
-                Log.w(TAG, "Could not clear bag extraction input manifest metadata")
+                Tracebox.log.warn("Could not clear bag extraction input manifest metadata")
                 false
             } else {
                 true
             }
         } catch (error: Exception) {
-            Log.w(TAG, "Could not delete bag extraction input manifest", error)
+            Tracebox.log.error(error, "Could not delete bag extraction input manifest")
             false
         }
     }
@@ -521,7 +521,7 @@ object BagExtractionScheduler {
         val inputs = activeInputManifestPaths(context).mapNotNull { path ->
             runCatching { BagExtractionInputStore.read(context, path) }
                 .onFailure { error ->
-                    Log.w(TAG, "Could not read active bag extraction input manifest", error)
+                    Tracebox.log.error(error, "Could not read active bag extraction input manifest")
                 }
                 .getOrNull()
         }
@@ -529,7 +529,7 @@ object BagExtractionScheduler {
             BagExtractionResultStore.read(context, workId)?.resultJson?.let { resultJson ->
                 runCatching { decodeBagExtractionResult(resultJson).capturedPhotoUris }
                     .onFailure { error ->
-                        Log.w(TAG, "Could not decode pending bag extraction result", error)
+                        Tracebox.log.error(error, "Could not decode pending bag extraction result")
                     }
                     .getOrNull()
             }
@@ -622,7 +622,7 @@ object BagExtractionScheduler {
                 } catch (error: CancellationException) {
                     throw error
                 } catch (error: Exception) {
-                    Log.e(TAG, "Could not reschedule missing WorkManager extraction", error)
+                    Tracebox.log.error(error, "Could not reschedule missing WorkManager extraction")
                     surfaceRecoverableWorkFailure(context, workId, resolvedInput, manifestPath)
                 }
             }
@@ -648,7 +648,7 @@ object BagExtractionScheduler {
         val input = path?.let { manifestPath ->
             runCatching { BagExtractionInputStore.read(context, manifestPath) }
                 .onFailure { error ->
-                    Log.w(TAG, "Could not read persisted bag extraction manifest", error)
+                    Tracebox.log.error(error, "Could not read persisted bag extraction manifest")
                 }
                 .getOrNull()
         }
@@ -761,7 +761,7 @@ object BagExtractionScheduler {
                 cancelNotification = { AndroidBagAnalysisNotifier.cancel(context, workId) },
             ),
             onFailure = { error ->
-                Log.w(TAG, "Could not fully discard cancelled bag extraction $workId", error)
+                Tracebox.log.error(error, "Could not fully discard cancelled bag extraction {}", workId)
             },
         )
     }
@@ -866,7 +866,7 @@ object BagExtractionScheduler {
                 cancelNotification = { AndroidBagAnalysisNotifier.cancel(context, workId) },
             ),
             onFailure = { error ->
-                Log.w(TAG, "Could not fully expire bag extraction $workId", error)
+                Tracebox.log.error(error, "Could not fully expire bag extraction {}", workId)
             },
         )
     }
@@ -1036,7 +1036,7 @@ object BagExtractionScheduler {
             }
         }
         if (!cleared) {
-            Log.w(TAG, "Could not clear expired extraction metadata for $workId")
+            Tracebox.log.warn("Could not clear expired extraction metadata for {}", workId)
         }
         forgetLegacyWorkSession(context, workId)
     }
@@ -1064,7 +1064,6 @@ object BagExtractionScheduler {
     private const val RESULT_RETENTION_DAYS = 7L
     private const val NOTIFICATION_INITIAL_DELAY_MS = 500L
     private const val NOTIFICATION_CLAIM_TIMEOUT_MS = 2L * 60L * 1_000L
-    private const val TAG = "BagExtractionScheduler"
     private val deliveryStateLock = Any()
     private val reconciliationMutex = Mutex()
     const val SESSION_TAG_PREFIX = "bag_session:"

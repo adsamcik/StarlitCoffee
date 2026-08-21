@@ -110,10 +110,8 @@
     <string name="prep_tip_pulsar_40k">冲洗40K金属滤网以预热筒身。装上筒身，加入咖啡粉，铺平粉层，放上分水盖。将秤归零。</string>
     <string name="prep_tip_pour_over_paper">放入纸滤纸并用热水冲洗，以预热并去除纸味。加入咖啡粉，将秤归零。</string>
     <string name="prep_tip_french_press">预热法压壶后倒掉热水。加入咖啡粉，放到秤上，注水前归零。</string>
-    <string name="prep_tip_aeropress">把冲洗过的滤纸装入滤盖。加入咖啡粉，将AeroPress放在稳固的杯子或分享壶上，并将秤归零。</string>
     <string name="prep_tip_espresso">擦干粉碗手柄。称量粉量、均匀布粉并水平压粉后再扣上。</string>
     <string name="prep_tip_moka">下壶加水到阀门处。粉杯装入咖啡粉并刮平—不要压粉。小心拧紧组装。</string>
-    <string name="prep_tip_cold_brew">将咖啡粉加入容器，秤归零，再加入常温或冷水并盖好。</string>
     <string name="format_prep_grind_specific">研磨 %1$s — 将 %2$s 设为 %3$s</string>
     <string name="format_prep_grind_generic">研磨 %1$s — %2$s（%3$s）</string>
 
@@ -352,18 +350,12 @@
     <string name="instruction_french_press_start">加入全部水，轻轻搅拌，然后盖上盖子</string>
     <string name="instruction_french_press_steep">静置浸泡至目标时间</string>
     <string name="instruction_french_press_plunge">缓慢下压，再倒出咖啡</string>
-    <string name="instruction_aeropress_start">加水、搅拌，开始浸泡</string>
-    <string name="instruction_aeropress_steep">盖上滤盖浸泡；准备下压</string>
-    <string name="instruction_aeropress_press">稳定下压直到听到嘶声，然后停止</string>
     <string name="instruction_espresso_start">扣上手柄并开始萃取</string>
     <string name="instruction_espresso_pull">观察流速和出液量；让杯子留在秤上</string>
     <string name="instruction_espresso_stop">达到目标出液量或液流变浅时停止</string>
     <string name="instruction_moka_start">组装摩卡壶，开盖小火加热</string>
     <string name="instruction_moka_flow">观察咖啡流入上壶</string>
     <string name="instruction_moka_remove">液流变浅或喷溅时离火</string>
-    <string name="instruction_cold_brew_start">混合咖啡粉和水，搅拌至所有咖啡粉湿润</string>
-    <string name="instruction_cold_brew_steep">盖好并浸泡；保持咖啡粉充分浸没</string>
-    <string name="instruction_cold_brew_filter">过滤浓缩液，冷藏或稀释后饮用</string>
 
     <!-- Warnings -->
 <!-- Taste Feedback -->
@@ -754,7 +746,6 @@
     <string name="screen_learning_title">学习</string>
     <string name="msg_learning_subtitle">图解分步冲煮指南</string>
     <string name="msg_learning_intro">选择冲煮器具和配方，然后逐步查看清晰的操作说明。</string>
-    <string name="msg_learning_empty">暂时没有可用的学习指南。</string>
     <string name="action_show_details">显示详细信息</string>
     <string name="action_hide_details">隐藏详细信息</string>
 </resources>

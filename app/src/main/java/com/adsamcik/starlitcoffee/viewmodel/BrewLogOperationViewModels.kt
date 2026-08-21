@@ -1,6 +1,5 @@
 package com.adsamcik.starlitcoffee.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -11,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import dev.tracebox.Tracebox
 
 data class BrewLogDeleteUiState(
     val deletingLogId: Long? = null,
@@ -49,7 +49,7 @@ class BrewLogListViewModel(
             } catch (error: CancellationException) {
                 throw error
             } catch (error: Exception) {
-                Log.e(TAG, "Failed to delete brew log", error)
+                Tracebox.log.error(error, "Failed to delete brew log")
                 _uiState.update {
                     it.copy(
                         deletingLogId = null,
@@ -64,9 +64,6 @@ class BrewLogListViewModel(
         _uiState.update { it.copy(deletedLogId = null, failedLogId = null) }
     }
 
-    companion object {
-        private const val TAG = "BrewLogListViewModel"
-    }
 }
 
 data class BrewLogFeedbackSubmission(
@@ -137,7 +134,7 @@ class BrewLogFeedbackViewModel(
             } catch (error: CancellationException) {
                 throw error
             } catch (error: Exception) {
-                Log.e(TAG, "Failed to save brew feedback", error)
+                Tracebox.log.error(error, "Failed to save brew feedback")
                 val failedTarget = _uiState.value.pendingTarget
                 _uiState.update {
                     it.copy(
@@ -158,9 +155,6 @@ class BrewLogFeedbackViewModel(
         _uiState.update { it.copy(failure = null) }
     }
 
-    companion object {
-        private const val TAG = "BrewLogFeedbackVM"
-    }
 }
 
 internal fun requiresFollowUpFeedbackSave(

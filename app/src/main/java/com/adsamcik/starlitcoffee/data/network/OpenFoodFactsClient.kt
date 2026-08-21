@@ -1,19 +1,18 @@
 package com.adsamcik.starlitcoffee.data.network
 
-import android.util.Log
 import java.net.HttpURLConnection
 import java.net.URL
 import kotlinx.coroutines.CancellationException
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import dev.tracebox.Tracebox
 
 /**
  * Client for Open Food Facts free product lookup API.
  * No API key required. Rate limit: ~100 req/min.
  */
 object OpenFoodFactsClient {
-    private const val TAG = "OpenFoodFactsClient"
     private const val BASE_URL = "https://world.openfoodfacts.org/api/v0/product"
     private const val USER_AGENT = "StarlitCoffee/1.0 (Android)"
 
@@ -65,7 +64,7 @@ object OpenFoodFactsClient {
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Log.w(TAG, "Failed to fetch product info from OpenFoodFacts", e)
+            Tracebox.log.error(e, "Failed to fetch product info from OpenFoodFacts")
             null
         }
     }

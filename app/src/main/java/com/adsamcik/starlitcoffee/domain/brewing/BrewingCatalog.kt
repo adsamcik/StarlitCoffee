@@ -95,6 +95,14 @@ object BuiltinBrewingCatalog {
                 evidenceConfidence = EvidenceConfidence.HIGH,
             ),
             FilterProfile(FilterProfileId("cone_paper"), FilterMedium.PAPER, FilterGeometry.CONE),
+            FilterProfile(
+                id = FilterProfileId("moccamaster_number_four_cone_paper"),
+                medium = FilterMedium.PAPER,
+                geometry = FilterGeometry.CONE,
+                size = "#4",
+                disposable = true,
+                evidenceConfidence = EvidenceConfidence.HIGH,
+            ),
             FilterProfile(FilterProfileId("wave_paper"), FilterMedium.PAPER, FilterGeometry.WAVE),
             FilterProfile(FilterProfileId("wedge_paper"), FilterMedium.PAPER, FilterGeometry.WEDGE),
             FilterProfile(
@@ -135,6 +143,15 @@ object BuiltinBrewingCatalog {
                 AccessoryProfileId("phin_screw_insert"),
                 setOf(AccessoryBehavior.MANUAL_FLOW_CONTROL),
             ),
+            AccessoryProfile(AccessoryProfileId("moccamaster_kbgv_glass_carafe"), emptySet()),
+            AccessoryProfile(
+                AccessoryProfileId("moccamaster_automatic_drip_stop"),
+                setOf(AccessoryBehavior.PREVENTS_PASSIVE_DRIP),
+            ),
+            AccessoryProfile(
+                AccessoryProfileId("moccamaster_half_full_selector"),
+                setOf(AccessoryBehavior.DISTRIBUTES_WATER),
+            ),
         ),
         basketProfiles = listOf(
             BasketProfile(BasketProfileId("espresso_generic_single"), pressurised = null, geometry = "single"),
@@ -142,6 +159,10 @@ object BuiltinBrewingCatalog {
             BasketProfile(BasketProfileId("automatic_cone_basket"), geometry = "cone"),
             BasketProfile(BasketProfileId("automatic_flat_basket"), geometry = "flat"),
             BasketProfile(BasketProfileId("automatic_number_one_basket"), geometry = "wedge_number_one"),
+            BasketProfile(
+                BasketProfileId("moccamaster_kbgv_select_cone_basket"),
+                geometry = "number_four_cone",
+            ),
         ),
         brewerProfiles = listOf(
             profile(
@@ -320,6 +341,20 @@ object BuiltinBrewingCatalog {
                 setOf("cone_paper", "flat_basket_paper", "wave_paper"),
                 baskets = setOf("automatic_cone_basket", "automatic_flat_basket"),
                 safety = setOf(SafetyTag.HOT_LIQUID),
+            ),
+            profile(
+                "moccamaster_kbgv_select",
+                "automatic_batch",
+                "Moccamaster KBGV Select",
+                OutputModel.ReservoirToEstimatedOutput(),
+                filters = setOf("moccamaster_number_four_cone_paper"),
+                baskets = setOf("moccamaster_kbgv_select_cone_basket"),
+                accessories = setOf(
+                    "moccamaster_kbgv_glass_carafe",
+                    "moccamaster_automatic_drip_stop",
+                    "moccamaster_half_full_selector",
+                ),
+                safety = setOf(SafetyTag.HOT_LIQUID, SafetyTag.HOT_GLASS, SafetyTag.OVERFLOW),
             ),
             profile(
                 "automatic_single_cup_generic",

@@ -1,7 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import android.content.res.Resources
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -100,6 +99,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import dev.tracebox.Tracebox
 
 // Longest-side pixel target for the focused square thumbnail baked at save time.
 // Comfortably covers the 68.dp list-card slot on high-density screens.
@@ -1005,7 +1005,7 @@ fun BagInventoryScreen(
                             Toast.makeText(context, couldNotReadLabel, Toast.LENGTH_LONG).show()
                         }
                         is ScannedBagSaveResult.Failed -> {
-                            Log.e("BagInventoryScreen", "Failed to save coffee bag", saveResult.error)
+                            Tracebox.log.error(saveResult.error, "Failed to save coffee bag")
                             Toast.makeText(context, couldNotSaveBag, Toast.LENGTH_LONG).show()
                         }
                         is ScannedBagSaveResult.Saved -> {
@@ -1122,7 +1122,7 @@ fun BagInventoryScreen(
                         } catch (error: CancellationException) {
                             throw error
                         } catch (error: Exception) {
-                            Log.e("BagInventoryScreen", "Failed to delete coffee bag", error)
+                            Tracebox.log.error(error, "Failed to delete coffee bag")
                             Toast.makeText(
                                 context,
                                 R.string.msg_could_not_delete,
@@ -1192,7 +1192,7 @@ fun BagInventoryScreen(
                     } catch (error: CancellationException) {
                         throw error
                     } catch (error: Exception) {
-                        Log.e("BagInventoryScreen", "Failed to update coffee bag", error)
+                        Tracebox.log.error(error, "Failed to update coffee bag")
                         Toast.makeText(context, R.string.msg_could_not_save_changes, Toast.LENGTH_LONG).show()
                     } finally {
                         isUpdatingBag = false

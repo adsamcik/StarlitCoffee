@@ -23,14 +23,12 @@ internal val P1CezveAndAutomaticPlanSpecs = listOf(
         ),
         p1Stage(
             SERVE,
-            sourceWarning = true,
             visualPriority = MANDATORY,
         ),
         p1Stage(
             OBSERVE,
             completion = P1ExactCompletion.Observation,
             timeTargets = listOf(timeCue(STAGE_DURATION, APPROXIMATE, 60, 120)),
-            sourceWarning = true,
         ),
     ),
     p1Plan(
@@ -55,7 +53,6 @@ internal val P1CezveAndAutomaticPlanSpecs = listOf(
         p1Stage(
             SERVE,
             completion = P1ExactCompletion.Observation,
-            sourceWarning = true,
             visualPriority = MANDATORY,
         ),
     ),
@@ -64,7 +61,6 @@ internal val P1CezveAndAutomaticPlanSpecs = listOf(
         p1Stage(ADD_COFFEE, visualPriority = SAFETY_CRITICAL),
         p1Stage(
             ADD_WATER,
-            sourceWarning = true,
             visualPriority = MANDATORY,
         ),
         p1Stage(
@@ -79,7 +75,6 @@ internal val P1CezveAndAutomaticPlanSpecs = listOf(
         ),
         p1Stage(
             AGITATE,
-            sourceWarning = true,
             visualPriority = MANDATORY,
         ),
     ),
@@ -94,7 +89,6 @@ internal val P1CezveAndAutomaticPlanSpecs = listOf(
         ),
         p1Stage(
             AGITATE,
-            sourceWarning = true,
             visualPriority = MANDATORY,
         ),
     ),
@@ -113,7 +107,6 @@ internal val P1CezveAndAutomaticPlanSpecs = listOf(
         p1Stage(
             OBSERVE,
             completion = P1ExactCompletion.Observation,
-            sourceWarning = true,
             visualPriority = MANDATORY,
         ),
         p1Stage(CLEAN_UP, visualPriority = SAFETY_CRITICAL),

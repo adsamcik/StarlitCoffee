@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
+import com.adsamcik.starlitcoffee.data.model.BrewVibrationTheme
 
 /**
  * Phase-specific vibration patterns for the brew timer.
@@ -34,6 +35,17 @@ object VibrationHelper {
         val vibrator = vibrator(context) ?: return
         val effect = buildEffect(haptic) ?: return
         vibrator.vibrate(effect)
+    }
+
+    /** Plays the same representative alert pattern used by the selected brew theme. */
+    fun previewBrewTheme(context: Context, theme: BrewVibrationTheme) {
+        val vibrator = vibrator(context) ?: return
+        try {
+            vibrator.cancel()
+            vibrator.vibrate(VibrationEffect.createWaveform(theme.alertChannelPattern(), -1))
+        } catch (_: Exception) {
+            // A missing or unavailable vibrator must not prevent changing the setting.
+        }
     }
 
     private fun vibrator(context: Context): Vibrator? {

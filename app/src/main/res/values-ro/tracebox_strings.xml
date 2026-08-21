@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_settings_section_support">Asistență și confidențialitate</string>
+    <string name="label_diagnostics">Diagnosticare</string>
+    <string name="msg_diagnostics_summary">Examinați, distribuiți, salvați sau ștergeți datele locale pentru depanare</string>
+    <string name="label_privacy_policy">Politica de confidențialitate</string>
+    <string name="msg_privacy_policy_summary">Aflați cum gestionează Starlit Coffee datele</string>
+    <string name="msg_privacy_policy_open_failed">Politica de confidențialitate nu a putut fi deschisă.</string>
+    <string name="screen_diagnostics_title">Diagnosticare</string>
+    <string name="msg_diagnostics_unavailable">Diagnosticarea nu este disponibilă în acest proces.</string>
+    <string name="msg_diagnostics_support_description">Grupează erorile recente ale aplicației și contextul de performanță pentru depanare.</string>
+</resources>

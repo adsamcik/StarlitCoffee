@@ -1,7 +1,6 @@
 package com.adsamcik.starlitcoffee.util
 
 import android.graphics.Bitmap
-import android.util.Log
 import android.graphics.Matrix
 import android.graphics.Rect
 import androidx.core.graphics.createBitmap
@@ -22,14 +21,13 @@ import kotlin.math.atan2
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
+import dev.tracebox.Tracebox
 
 /**
  * Preprocesses camera photos to improve ML Kit OCR accuracy.
  * Pipeline: EXIF rotation → text-based alignment (deskew + crop) → CLAHE enhancement.
  */
 object ImagePreprocessor {
-
-    private const val TAG = "ImagePreprocessor"
     private var initialized = false
 
     private fun ensureInitialized() {
@@ -57,7 +55,7 @@ object ImagePreprocessor {
             )
             return applyExifOrientation(bitmap, orientation)
         } catch (e: Exception) {
-            Log.w(TAG, "Failed to apply EXIF rotation", e)
+            Tracebox.log.error(e, "Failed to apply EXIF rotation")
             return bitmap
         }
     }
@@ -155,7 +153,7 @@ object ImagePreprocessor {
 
             return result
         } catch (e: Exception) {
-            Log.w(TAG, "Failed to apply text alignment", e)
+            Tracebox.log.error(e, "Failed to apply text alignment")
             return bitmap
         }
     }
@@ -254,7 +252,7 @@ object ImagePreprocessor {
 
             return result
         } catch (e: Exception) {
-            Log.w(TAG, "Failed to preprocess image for OCR", e)
+            Tracebox.log.error(e, "Failed to preprocess image for OCR")
             return bitmap
         }
     }

@@ -4,7 +4,6 @@ import android.app.Notification
 import android.content.Context
 import android.content.pm.ServiceInfo
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.CoroutineWorker
@@ -26,6 +25,7 @@ import com.adsamcik.starlitcoffee.util.BagPhotoProcessingResult
 import com.adsamcik.starlitcoffee.util.ScanProgress
 import com.adsamcik.starlitcoffee.util.ScanStage
 import kotlinx.coroutines.CancellationException
+import dev.tracebox.Tracebox
 
 class BagExtractionWorker(
     appContext: Context,
@@ -122,7 +122,7 @@ class BagExtractionWorker(
         } catch (error: CancellationException) {
             throw error
         } catch (error: Exception) {
-            Log.e(TAG, "Bag extraction worker failed", error)
+            Tracebox.log.error(error, "Bag extraction worker failed")
             val failureResult = BagPhotoProcessingResult(
                 capturedPhotoUris = photosCsv,
                 llmStatus = com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus.UNAVAILABLE,
@@ -140,7 +140,7 @@ class BagExtractionWorker(
                     replay = storedResult.toTerminalReplay(reviewContext),
                 )
             } catch (persistenceError: Exception) {
-                Log.e(TAG, "Could not persist failed bag extraction result", persistenceError)
+                Tracebox.log.error(persistenceError, "Could not persist failed bag extraction result")
                 Result.retry()
             }
         }
@@ -151,7 +151,7 @@ class BagExtractionWorker(
         replay: BagExtractionTerminalReplay,
     ): Result {
         runCatching { BagExtractionCheckpointStore.delete(applicationContext, workId) }
-            .onFailure { error -> Log.w(TAG, "Could not delete terminal scan checkpoint", error) }
+            .onFailure { error -> Tracebox.log.error(error, "Could not delete terminal scan checkpoint") }
         BagExtractionScheduler.enqueueCompletionNotification(
             applicationContext,
             workId,
@@ -175,11 +175,9 @@ class BagExtractionWorker(
         try {
             setForeground(getForegroundInfo())
         } catch (error: Exception) {
-            Log.w(
-                TAG,
-                "Could not promote bag extraction to a foreground service; " +
-                    "continuing as background work",
+            Tracebox.log.error(
                 error,
+                "Could not promote bag extraction to a foreground service; continuing as background work",
             )
         }
     }
@@ -199,9 +197,9 @@ class BagExtractionWorker(
             NotificationManagerCompat.from(applicationContext)
                 .notify(foregroundNotificationId, buildProgressNotification(progress))
         } catch (security: SecurityException) {
-            Log.w(TAG, "Missing notification permission for scan progress update", security)
+            Tracebox.log.error(security, "Missing notification permission for scan progress update")
         } catch (error: Exception) {
-            Log.w(TAG, "Failed to update scan progress notification", error)
+            Tracebox.log.error(error, "Failed to update scan progress notification")
         }
     }
 
@@ -214,12 +212,12 @@ class BagExtractionWorker(
                     result.encodeToStoredJson(),
                 )
             }.onFailure { error ->
-                Log.w(TAG, "Could not persist bag analysis checkpoint", error)
+                Tracebox.log.error(error, "Could not persist bag analysis checkpoint")
             }
         }
         latestPreviewJson = result.encodeForProgressJson()
         if (latestPreviewJson == null) {
-            Log.w(TAG, "Bag analysis preview is too large for WorkManager progress data")
+            Tracebox.log.warn("Bag analysis preview is too large for WorkManager progress data")
         }
         latestProgress?.let(::publishWorkProgress)
     }
@@ -314,7 +312,6 @@ class BagExtractionWorker(
         const val KEY_PROGRESS_INDEX = "progress_index"
         const val KEY_PROGRESS_COUNT = "progress_count"
         const val KEY_PROGRESS_PREVIEW_JSON = "progress_preview_json"
-        private const val TAG = "BagExtractionWorker"
         private const val FOREGROUND_NOTIFICATION_ID_NAMESPACE = 0x20000000
         private const val FOREGROUND_NOTIFICATION_ID_MASK = 0x1FFFFFFF
 

@@ -14,7 +14,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -39,15 +40,15 @@ import androidx.compose.ui.unit.dp
  * row tappable — instead of every option shouting a full paragraph of help text.
  */
 
-private val RowHorizontalPadding = 16.dp
-private val RowVerticalPadding = 14.dp
-private val RowMinHeight = 56.dp
+private val RowHorizontalPadding = 20.dp
+private val RowVerticalPadding = 16.dp
+private val RowMinHeight = 64.dp
 private val RowTrailingGap = 16.dp
 private const val DisabledAlpha = 0.38f
 
 /**
- * Small section label that introduces a [SettingsGroup], mirroring the tinted
- * category headers in the system Settings app.
+ * Section label that introduces a [SettingsGroup]. The generous top spacing
+ * separates categories without adding another container or decorative rule.
  */
 @Composable
 fun SettingsSectionHeader(
@@ -56,10 +57,10 @@ fun SettingsSectionHeader(
 ) {
     Text(
         text = title,
-        style = MaterialTheme.typography.titleSmall,
-        color = MaterialTheme.colorScheme.primary,
+        style = MaterialTheme.typography.titleMedium,
+        color = MaterialTheme.colorScheme.onSurface,
         modifier = modifier
-            .padding(start = 8.dp, top = 12.dp, bottom = 8.dp)
+            .padding(start = 4.dp, top = 24.dp, bottom = 4.dp)
             .semantics { heading() },
     )
 }
@@ -74,7 +75,13 @@ fun SettingsGroup(
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    ElevatedCard(modifier = modifier.fillMaxWidth()) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.extraLarge,
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+        ),
+    ) {
         Column(content = content)
     }
 }
@@ -83,7 +90,7 @@ fun SettingsGroup(
 @Composable
 fun SettingsRowDivider(modifier: Modifier = Modifier) {
     HorizontalDivider(
-        modifier = modifier.padding(start = RowHorizontalPadding),
+        modifier = modifier.padding(horizontal = RowHorizontalPadding),
         color = MaterialTheme.colorScheme.outlineVariant,
     )
 }
@@ -195,7 +202,7 @@ fun SettingsSelectorBlock(
         Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.semantics { heading() },
             )
             if (summary != null) {
@@ -223,7 +230,7 @@ private fun SettingsRowText(
     ) {
         Text(
             text = title,
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = contentAlpha),
         )
         if (summary != null) {

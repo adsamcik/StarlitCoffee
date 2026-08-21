@@ -1,20 +1,26 @@
 package com.adsamcik.starlitcoffee.navigation
 
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.adsamcik.starlitcoffee.data.brewing.session.BrewSessionOperationResult
 import com.adsamcik.starlitcoffee.data.brewing.session.BrewSessionRuntime
+import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileId
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltInP1RecipeCatalog
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltInRecipeId
+import com.adsamcik.starlitcoffee.domain.brewing.session.BuiltInP1ExactStagePlanCatalog
 import com.adsamcik.starlitcoffee.ui.brewerprofile.P1BrewerProfileSetupStateFactory
 import com.adsamcik.starlitcoffee.ui.brewerprofile.P1BrewerProfileStartSelection
 import com.adsamcik.starlitcoffee.ui.brewerprofile.P1ExactRecipeStartInputFactory
@@ -26,10 +32,16 @@ import com.adsamcik.starlitcoffee.ui.guidance.GuidancePresentationLevel
 import com.adsamcik.starlitcoffee.ui.guidance.LearnGuidanceCatalogRequest
 import com.adsamcik.starlitcoffee.ui.guidance.LearnGuidanceCatalogResolver
 import com.adsamcik.starlitcoffee.ui.guidance.P1ExactRecipeReleaseGate
+import com.adsamcik.starlitcoffee.ui.guidance.P1ExactLearnGuideFactory
+import com.adsamcik.starlitcoffee.ui.guidance.PulsarLearnGuideCatalog
 import com.adsamcik.starlitcoffee.ui.screen.LearnBrewerScreen
+import com.adsamcik.starlitcoffee.ui.screen.LearningLibraryGuideOption
+import com.adsamcik.starlitcoffee.ui.screen.LearningLibraryProfileOption
 import com.adsamcik.starlitcoffee.ui.screen.LearningLibraryScreen
 import com.adsamcik.starlitcoffee.ui.screen.P1BrewerProfileSetupScreen
 import com.adsamcik.starlitcoffee.ui.screen.exactRecipeName
+import com.adsamcik.starlitcoffee.ui.screen.resolveLearningLibraryAvailability
+import com.adsamcik.starlitcoffee.ui.screen.toLearningLibraryProfile
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.BuiltinBrewerSessionStartFactory
 import com.adsamcik.starlitcoffee.viewmodel.BuiltinBrewerSessionStartResult
@@ -172,20 +184,32 @@ private fun NavGraphBuilder.p1LearningLibraryRoute(
 ) {
     composable<Learning> {
         val eligibleRecipeIds = exactRecipeReleaseGate.eligibleRecipeIds
-        val profiles = remember(eligibleRecipeIds) {
+        val exactProfiles = remember(eligibleRecipeIds) {
             P1BrewerProfileSetupStateFactory.create(
                 executableRecipeIds = eligibleRecipeIds,
             ).profiles
         }
+        val profiles = remember(exactProfiles) {
+            exactProfiles.map { profile -> profile.toLearningLibraryProfile() } +
+                PULSAR_LEARNING_PROFILE
+        }
         LearningLibraryScreen(
             profiles = profiles,
-            onOpenRecipe = { profile, recipe ->
-                navController.navigate(
-                    LearnBrewer(
+            availability = resolveLearningLibraryAvailability(
+                hasProfiles = profiles.isNotEmpty(),
+            ),
+            onOpenGuide = { profile, guide ->
+                val destination = when (guide) {
+                    is LearningLibraryGuideOption.ExactRecipe -> LearnBrewer(
                         brewerProfileId = profile.profileId.value,
-                        builtInRecipeId = recipe.id.value,
-                    ),
-                )
+                        builtInRecipeId = guide.recipe.id.value,
+                    )
+                    is LearningLibraryGuideOption.Standalone -> LearnBrewer(
+                        brewerProfileId = profile.profileId.value,
+                        standaloneGuideId = guide.stableId,
+                    )
+                }
+                navController.navigate(destination)
             },
             onBack = { navController.popBackStack() },
         )
@@ -199,6 +223,17 @@ private fun NavGraphBuilder.p1LearnBrewerRoute(
 ) {
     composable<LearnBrewer> learnRoute@{ backStackEntry ->
         val route = backStackEntry.toRoute<LearnBrewer>()
+        val isPulsarGuide = route.builtInRecipeId == null &&
+            route.standaloneGuideId == PulsarLearnGuideCatalog.GUIDE_ID &&
+            route.brewerProfileId == PulsarLearnGuideCatalog.profileId.value
+        if (isPulsarGuide) {
+            PulsarLearnDestination(
+                route = route,
+                guidancePreferences = guidancePreferences,
+                onBack = { navController.popBackStack() },
+            )
+            return@learnRoute
+        }
         val recipeId = remember(route.builtInRecipeId) {
             route.builtInRecipeId?.let { rawId -> runCatching { BuiltInRecipeId(rawId) }.getOrNull() }
         }
@@ -212,6 +247,7 @@ private fun NavGraphBuilder.p1LearnBrewerRoute(
         val routeIsReleaseEligible = recipe != null &&
             exactGuidance != null &&
             recipeGuidanceCatalog != null &&
+            route.standaloneGuideId == null &&
             recipe.brewerProfileId.value == route.brewerProfileId
         if (!routeIsReleaseEligible) {
             LaunchedEffect(route) { navController.popBackStack() }
@@ -219,6 +255,16 @@ private fun NavGraphBuilder.p1LearnBrewerRoute(
         }
         val exactRecipe = requireNotNull(recipe)
         val exactRecipeGuidance = requireNotNull(exactGuidance)
+        val exactPlan = remember(recipeId) {
+            requireNotNull(BuiltInP1ExactStagePlanCatalog.find(exactRecipe.id))
+        }
+        val exactLearnGuide = remember(exactRecipe, exactRecipeGuidance, exactPlan) {
+            P1ExactLearnGuideFactory.create(
+                recipe = exactRecipe,
+                guidance = exactRecipeGuidance,
+                plan = exactPlan,
+            )
+        }
         val resolver = remember(recipeGuidanceCatalog) {
             LearnGuidanceCatalogResolver(
                 guidanceCatalogs = listOf(requireNotNull(recipeGuidanceCatalog)),
@@ -244,6 +290,52 @@ private fun NavGraphBuilder.p1LearnBrewerRoute(
             resolution = resolution,
             onBack = { navController.popBackStack() },
             instructionAssets = BuiltInInstructionAssetCatalog.catalog,
+            exactGuide = exactLearnGuide,
         )
     }
 }
+
+@Composable
+private fun PulsarLearnDestination(
+    route: LearnBrewer,
+    guidancePreferences: DurableBrewSessionGuidancePreferences,
+    onBack: () -> Unit,
+) {
+    val context = LocalContext.current
+    val localizedCatalog = remember(context) { PulsarLearnGuideCatalog.load(context) }
+    val resolver = remember(localizedCatalog) {
+        LearnGuidanceCatalogResolver(
+            guidanceCatalogs = listOf(localizedCatalog),
+        )
+    }
+    val resolution = remember(route, guidancePreferences, resolver) {
+        resolver.resolve(
+            LearnGuidanceCatalogRequest(
+                methodFamilyId = PulsarLearnGuideCatalog.familyId.value,
+                brewerProfileId = PulsarLearnGuideCatalog.profileId.value,
+                preferences = guidancePreferences.copy(
+                    sessionOverride = GuidancePresentationLevel.FULL,
+                ),
+                exactStageOrder = PulsarLearnGuideCatalog.stageIds,
+            ),
+        )
+    }
+    LearnBrewerScreen(
+        title = stringResource(R.string.recipe_pulsar_gagne_20_340),
+        resolution = resolution,
+        onBack = onBack,
+        instructionAssets = BuiltInInstructionAssetCatalog.catalog,
+    )
+}
+
+private val PULSAR_LEARNING_PROFILE = LearningLibraryProfileOption(
+    profileId = BrewerProfileId("pulsar_standard"),
+    displayName = "Pulsar",
+    methodFamilyName = "Valve-controlled no-bypass",
+    guides = listOf(
+        LearningLibraryGuideOption.Standalone(
+            stableId = PulsarLearnGuideCatalog.GUIDE_ID,
+            labelRes = R.string.recipe_pulsar_gagne_20_340,
+        ),
+    ),
+)

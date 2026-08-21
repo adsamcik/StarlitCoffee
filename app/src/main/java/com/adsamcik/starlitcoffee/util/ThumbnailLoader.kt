@@ -2,13 +2,13 @@ package com.adsamcik.starlitcoffee.util
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.util.Log
 import android.util.LruCache
 import androidx.core.graphics.scale
 import androidx.core.net.toUri
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.withContext
+import dev.tracebox.Tracebox
 
 /**
  * Off-main bitmap loader for bag photo thumbnails.
@@ -45,8 +45,6 @@ import kotlinx.coroutines.withContext
  *    crop / preprocess steps).
  */
 object ThumbnailLoader {
-
-    private const val TAG = "ThumbnailLoader"
 
     /**
      * Maximum decode parallelism. JPEG decoding is CPU-bound and not
@@ -142,10 +140,10 @@ object ThumbnailLoader {
             if (resized !== oriented && !oriented.isRecycled) oriented.recycle()
             resized
         } catch (error: OutOfMemoryError) {
-            Log.w(TAG, "Insufficient memory to load thumbnail for $filePath", error)
+            Tracebox.log.error(error, "Insufficient memory to load thumbnail for {}", filePath)
             null
         } catch (e: Exception) {
-            Log.w(TAG, "Failed to load thumbnail for $filePath", e)
+            Tracebox.log.error(e, "Failed to load thumbnail for {}", filePath)
             null
         }
     }

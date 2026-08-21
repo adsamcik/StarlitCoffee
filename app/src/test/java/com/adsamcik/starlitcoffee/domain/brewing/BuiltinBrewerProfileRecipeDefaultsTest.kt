@@ -24,6 +24,7 @@ class BuiltinBrewerProfileRecipeDefaultsTest {
             "valve_release_generic",
             "cezve_generic",
             "automatic_batch_generic",
+            "moccamaster_kbgv_select",
             "automatic_single_cup_generic",
             "vietnamese_phin",
         )

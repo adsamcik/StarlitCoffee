@@ -172,6 +172,7 @@ object BuiltinBrewerProfileRecipeDefaults {
             }
             put(CEZVE_GENERIC, cezveDefaults())
             put(AUTOMATIC_BATCH_GENERIC, automaticDefaults(AUTOMATIC_BATCH_GENERIC))
+            put(MOCCAMASTER_KBGV_SELECT, automaticDefaults(MOCCAMASTER_KBGV_SELECT))
             put(AUTOMATIC_SINGLE_CUP_GENERIC, automaticDefaults(AUTOMATIC_SINGLE_CUP_GENERIC))
             put(VIETNAMESE_PHIN, vietnamesePhinDefaults())
         }
@@ -291,6 +292,7 @@ object BuiltinBrewerProfileRecipeDefaults {
     )
     private val CEZVE_GENERIC = BrewerProfileId("cezve_generic")
     private val AUTOMATIC_BATCH_GENERIC = BrewerProfileId("automatic_batch_generic")
+    private val MOCCAMASTER_KBGV_SELECT = BrewerProfileId("moccamaster_kbgv_select")
     private val AUTOMATIC_SINGLE_CUP_GENERIC = BrewerProfileId("automatic_single_cup_generic")
     private val VIETNAMESE_PHIN = BrewerProfileId("vietnamese_phin")
 }

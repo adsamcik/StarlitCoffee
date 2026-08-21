@@ -80,6 +80,7 @@ extensions.configure<ApplicationExtension>("android") {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+        isCoreLibraryDesugaringEnabled = true
     }
 
     buildFeatures {
@@ -450,6 +451,13 @@ dependencies {
 
     // Mindlayer on-device LLM SDK
     implementation(libs.mindlayer.sdk)
+
+    // Tracebox owns production logging, failure capture, local diagnostics,
+    // and the reviewed share/save flow. Native capture stays an explicit opt-in.
+    implementation(libs.tracebox.runtime)
+    implementation(libs.tracebox.native)
+    implementation(libs.tracebox.ui.compose)
+    coreLibraryDesugaring(libs.desugar.jdk.libs.nio)
 
     // Testing
     testImplementation(libs.junit)

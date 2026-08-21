@@ -116,10 +116,8 @@
     <string name="prep_tip_pulsar_40k">Prepláchnite kovový filter 40K, aby sa predhrial valec. Nasaďte valec, pridajte kávu, zarovnajte lôžko a položte disperzný kryt. Vytárujte váhu.</string>
     <string name="prep_tip_pour_over_paper">Vložte papierový filter a prepláchnite horúcou vodou, aby sa predhrial a odstránila sa papierová chuť. Pridajte kávu a vytárujte váhu.</string>
     <string name="prep_tip_french_press">Predhrejte French Press a potom ho vyprázdnite. Pridajte kávu, položte na váhu a pred pridaním vody vytárujte.</string>
-    <string name="prep_tip_aeropress">Vložte prepláchnutý filter do viečka. Pridajte kávu, postavte AeroPress na pevnú šálku alebo server a vytárujte váhu.</string>
     <string name="prep_tip_espresso">Utrite páku dosucha. Nadávkujte, rovnomerne rozprestrite a utlačte do roviny pred nasadením.</string>
     <string name="prep_tip_moka">Naplňte spodnú komoru po ventil. Naplňte košík kávou, zarovnajte — neutláčajte. Opatrne zložte.</string>
-    <string name="prep_tip_cold_brew">Nasypte kávu do nádoby, vytárujte váhu, potom pridajte vodu izbovej teploty alebo studenú vodu a zakryte.</string>
     <string name="format_prep_grind_specific">Pomeľte %1$s — nastavte %2$s na %3$s</string>
     <string name="format_prep_grind_generic">Pomeľte %1$s — %2$s (%3$s)</string>
 
@@ -359,18 +357,12 @@
     <string name="instruction_french_press_start">Pridajte všetku vodu, jemne premiešajte a položte viečko navrch</string>
     <string name="instruction_french_press_steep">Nechajte nerušene lúhovať do cieľového času</string>
     <string name="instruction_french_press_plunge">Pomaly stlačte piest a potom kávu zlejte</string>
-    <string name="instruction_aeropress_start">Pridajte vodu, premiešajte a začnite lúhovanie</string>
-    <string name="instruction_aeropress_steep">Lúhujte s nasadeným viečkom; pripravte sa na stláčanie</string>
-    <string name="instruction_aeropress_press">Plynulo stláčajte až po zasyčanie, potom zastavte</string>
     <string name="instruction_espresso_start">Nasaďte páku a spustite shot</string>
     <string name="instruction_espresso_pull">Sledujte prietok a výťažok; nechajte šálku na váhe</string>
     <string name="instruction_espresso_stop">Zastavte pri cieľovom výťažku alebo keď shot začne blednúť</string>
     <string name="instruction_moka_start">Zostavte kanvičku a jemne zahrievajte s otvoreným viečkom</string>
     <string name="instruction_moka_flow">Sledujte, kedy káva začne tiecť do hornej komory</string>
     <string name="instruction_moka_remove">Odstavte z tepla, keď prúd zbledne alebo začne prskať</string>
-    <string name="instruction_cold_brew_start">Skombinujte kávu a vodu, premiešajte, aby sa navlhčila všetka káva</string>
-    <string name="instruction_cold_brew_steep">Zakryte a lúhujte; udržiavajte kávu úplne nasýtenú</string>
-    <string name="instruction_cold_brew_filter">Prefiltrujte koncentrát a podávajte vychladený alebo zriedený</string>
 
     <!-- Warnings -->
 <!-- Taste Feedback -->
@@ -761,7 +753,6 @@
     <string name="screen_learning_title">Naučiť sa</string>
     <string name="msg_learning_subtitle">Názorné návody na prípravu krok za krokom</string>
     <string name="msg_learning_intro">Vyberte si zariadenie a recept a potom postupujte po jednom jasnom kroku.</string>
-    <string name="msg_learning_empty">Zatiaľ nie sú k dispozícii žiadne vzdelávacie návody.</string>
     <string name="action_show_details">Zobraziť podrobnosti</string>
     <string name="action_hide_details">Skryť podrobnosti</string>
 </resources>

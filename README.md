@@ -27,13 +27,13 @@ pass its automated localization and release validation. See
 - Android Studio with Android SDK 37
 - JDK 17
 - Git
-- Access to the public Mindlayer GitHub Packages dependency
+- Access to the public Mindlayer and Tracebox GitHub Packages dependencies
 
 GitHub Packages requires authentication even for public Maven packages. The
 build checks `GITHUB_TOKEN` and then an authenticated GitHub CLI session
 (`gh auth token`). A token used for package downloads needs `read:packages`.
-Local Maven artifacts remain available through `mavenLocal()` for Mindlayer
-contributors.
+Local Maven artifacts remain available through `mavenLocal()` for Mindlayer and
+Tracebox contributors.
 
 The repository includes a one-time setup helper. It signs in through GitHub CLI,
 requests only package-read access, and keeps the token in GitHub CLI's credential
@@ -96,6 +96,9 @@ implementation report in
 
 The baseline-free quality and exception policy is documented in
 [docs/code-quality.md](docs/code-quality.md).
+
+The production diagnostics architecture and privacy boundary are documented in
+[docs/tracebox-integration.md](docs/tracebox-integration.md).
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) before proposing changes. Report
 security or privacy issues through the process in [SECURITY.md](SECURITY.md),

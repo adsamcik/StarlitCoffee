@@ -58,7 +58,6 @@ internal data class P1ExactStageSpec(
     val timeTargets: List<P1TimeCue> = emptyList(),
     val massTargets: List<P1WaterCue> = emptyList(),
     val temperatureTarget: StageTemperatureTarget? = null,
-    val sourceWarning: Boolean = false,
     val visualPriority: P1VisualPriority = P1VisualPriority.OPTIONAL,
 )
 
@@ -106,7 +105,6 @@ internal fun p1Stage(
     timeTargets: List<P1TimeCue> = emptyList(),
     massTargets: List<P1WaterCue> = emptyList(),
     temperatureTarget: StageTemperatureTarget? = null,
-    sourceWarning: Boolean = false,
     visualPriority: P1VisualPriority = P1VisualPriority.OPTIONAL,
 ): P1ExactStageSpec = P1ExactStageSpec(
     action = action,
@@ -114,7 +112,6 @@ internal fun p1Stage(
     timeTargets = timeTargets,
     massTargets = massTargets,
     temperatureTarget = temperatureTarget,
-    sourceWarning = sourceWarning,
     visualPriority = visualPriority,
 )
 
@@ -146,15 +143,23 @@ internal fun temperatureCue(
 
 private fun buildStagePlan(spec: P1ExactPlanSpec): BrewStagePlan = BrewStagePlan(
     id = StagePlanId("builtin_recipe_${spec.recipeId.value}"),
-    version = 1,
+    version = 2,
     nodes = spec.stages.mapIndexed { index, stage ->
-        StagePlanNode.Stage(buildStage(spec.recipeId, stage, index))
+        StagePlanNode.Stage(
+            buildStage(
+                recipeId = spec.recipeId,
+                spec = stage,
+                nextSpec = spec.stages.getOrNull(index + 1),
+                index = index,
+            ),
+        )
     },
 )
 
 private fun buildStage(
     recipeId: BuiltInRecipeId,
     spec: P1ExactStageSpec,
+    nextSpec: P1ExactStageSpec?,
     index: Int,
 ): BrewStageDefinition {
     val sourceStageId = "stage_${(index + 1).toString().padStart(2, '0')}"
@@ -165,7 +170,7 @@ private fun buildStage(
         contentId = StageContentId("${identity}_instruction"),
         instructionAssetId = InstructionAssetId("instruction_${identity}_instruction_default"),
         requiresIllustration = spec.visualPriority != P1VisualPriority.OPTIONAL,
-        safetyMessages = safetyMessages(identity, spec),
+        safetyMessages = P1ExactStageSafetyCatalog.messagesFor(identity),
         equipmentRequirement = StageEquipmentRequirement(
             StageEquipmentStateId("p1_equipment_${recipeId.value}_$sourceStageId"),
         ),
@@ -179,6 +184,40 @@ private fun buildStage(
             },
             temperatureTarget = spec.temperatureTarget,
         ),
+        advanceConstraint = advanceConstraint(spec, nextSpec),
+    )
+}
+
+private fun advanceConstraint(
+    spec: P1ExactStageSpec,
+    nextSpec: P1ExactStageSpec?,
+): StageAdvanceConstraint {
+    val notBeforeStageElapsedMillis = spec.timeTargets
+        .filter { cue ->
+            cue.reference == StageTimeReference.STAGE_DURATION && cue.qualifier in STAGE_MINIMUM_QUALIFIERS
+        }
+        .maxOfOrNull(P1TimeCue::minimumSeconds)
+        ?.times(MILLIS_PER_SECOND)
+    val currentBrewBoundarySeconds = spec.timeTargets
+        .filter { cue ->
+            cue.reference == StageTimeReference.BREW_ELAPSED_AT_COMPLETION &&
+                cue.qualifier in BREW_MINIMUM_QUALIFIERS
+        }
+        .maxOfOrNull(P1TimeCue::minimumSeconds)
+    val nextBrewBoundarySeconds = nextSpec?.timeTargets
+        ?.filter { cue ->
+            cue.reference == StageTimeReference.BREW_ELAPSED_AT_START &&
+                cue.qualifier in BREW_MINIMUM_QUALIFIERS
+        }
+        ?.maxOfOrNull(P1TimeCue::minimumSeconds)
+    val notBeforeBrewElapsedMillis = listOfNotNull(
+        currentBrewBoundarySeconds,
+        nextBrewBoundarySeconds,
+    ).maxOrNull()?.times(MILLIS_PER_SECOND)
+
+    return StageAdvanceConstraint(
+        notBeforeStageElapsedMillis = notBeforeStageElapsedMillis,
+        notBeforeBrewElapsedMillis = notBeforeBrewElapsedMillis,
     )
 }
 
@@ -196,20 +235,6 @@ private fun completionMode(
     is P1ExactCompletion.CumulativeWater -> StageCompletionMode.CumulativeAmount(
         completion.targetGrams,
     )
-}
-
-private fun safetyMessages(
-    identity: String,
-    spec: P1ExactStageSpec,
-): List<StageSafetyMessage> {
-    val severity = when {
-        spec.visualPriority == P1VisualPriority.SAFETY_CRITICAL -> StageSafetySeverity.CRITICAL
-        spec.sourceWarning -> StageSafetySeverity.WARNING
-        else -> null
-    }
-    return severity?.let {
-        listOf(StageSafetyMessage(code = "p1_warning_${identity.removePrefix("p1_")}", severity = it))
-    }.orEmpty()
 }
 
 private fun P1TimeCue.toTarget(identity: String, index: Int): StageTimeTarget = StageTimeTarget(
@@ -230,3 +255,99 @@ private fun P1WaterCue.toTarget(identity: String, index: Int): StageMassTarget =
 )
 
 private const val MILLIS_PER_SECOND = 1_000L
+private val STAGE_MINIMUM_QUALIFIERS = setOf(
+    StageTargetQualifier.EXACT,
+    StageTargetQualifier.APPROXIMATE,
+    StageTargetQualifier.RANGE,
+    StageTargetQualifier.NO_EARLIER_THAN,
+)
+private val BREW_MINIMUM_QUALIFIERS = setOf(
+    StageTargetQualifier.EXACT,
+    StageTargetQualifier.RANGE,
+    StageTargetQualifier.NO_EARLIER_THAN,
+)
+
+/** Safety is authored independently from illustration-review importance. */
+private object P1ExactStageSafetyCatalog {
+    private val messagesByStageId: Map<String, StageSafetyMessage> = buildMap {
+        critical("filter_air_channel_hot_liquid_overflow", "p1_chemex_42_700_stage_01")
+        critical(
+            "stable_server_hot_liquid",
+            "p1_clever_water_first_15_250_stage_05",
+            "p1_clever_coffee_first_15_250_stage_04",
+        )
+        critical("hot_metal_valve", "p1_switch_official_20_240_stage_04")
+
+        critical("cezve_overflow", "p1_cezve_turkish_single_rise_6_65_stage_01")
+        critical("open_flame_unattended_hot_metal", "p1_cezve_turkish_single_rise_6_65_stage_03")
+        critical("cezve_boil_over_hot_liquid", "p1_cezve_turkish_single_rise_6_65_stage_04")
+        warning(
+            "hot_liquid",
+            "p1_cezve_turkish_single_rise_6_65_stage_05",
+            "p1_cezve_turkish_single_rise_6_65_stage_06",
+        )
+
+        critical("cezve_overflow", "p1_cezve_bounded_repeated_rise_12_130_stage_01")
+        critical("cezve_boil_over_hot_liquid", "p1_cezve_bounded_repeated_rise_12_130_stage_03")
+        warning("hot_metal", "p1_cezve_bounded_repeated_rise_12_130_stage_04")
+        critical("cezve_boil_over_hot_liquid", "p1_cezve_bounded_repeated_rise_12_130_stage_05")
+        warning("hot_liquid", "p1_cezve_bounded_repeated_rise_12_130_stage_06")
+
+        critical(
+            "basket_overflow",
+            "p1_auto_batch_500_30_stage_01",
+            "p1_auto_batch_1000_60_stage_01",
+        )
+        warning("reservoir_overflow", "p1_auto_batch_500_30_stage_02")
+        critical("hot_liquid_machine_cycle", "p1_auto_batch_500_30_stage_03")
+        warning(
+            "hot_glass_hotplate",
+            "p1_auto_batch_500_30_stage_05",
+            "p1_auto_batch_1000_60_stage_04",
+        )
+
+        critical("power_off_unplug_outlet_overflow", "p1_auto_cupone_20_300_stage_01")
+        critical(
+            "hot_outlet_machine_cycle",
+            "p1_auto_cupone_20_300_stage_03",
+            "p1_auto_cupone_20_300_stage_04",
+        )
+        warning("hot_outlet_hot_liquid", "p1_auto_cupone_20_300_stage_05")
+        critical("power_off_unplug_hot_outlet_electrical", "p1_auto_cupone_20_300_stage_06")
+
+        critical("stable_cup_hot_liquid", "p1_phin_gravity_14_118_stage_01")
+        warning(
+            "gravity_brewer_no_pressure",
+            "p1_phin_gravity_14_118_stage_02",
+            "p1_phin_gravity_14_118_stage_05",
+        )
+        warning("hot_metal", "p1_phin_gravity_14_118_stage_07")
+        critical("stable_cup_hot_metal", "p1_phin_screw_18_120_stage_01")
+        critical("gravity_brewer_no_pressure", "p1_phin_screw_18_120_stage_02")
+        critical("hot_metal_gravity_brewer_no_pressure", "p1_phin_screw_18_120_stage_05")
+        warning("hot_metal", "p1_phin_screw_18_120_stage_06")
+    }
+
+    fun messagesFor(stageId: String): List<StageSafetyMessage> =
+        listOfNotNull(messagesByStageId[stageId])
+
+    private fun MutableMap<String, StageSafetyMessage>.critical(code: String, vararg stageIds: String) {
+        add(code, StageSafetySeverity.CRITICAL, stageIds)
+    }
+
+    private fun MutableMap<String, StageSafetyMessage>.warning(code: String, vararg stageIds: String) {
+        add(code, StageSafetySeverity.WARNING, stageIds)
+    }
+
+    private fun MutableMap<String, StageSafetyMessage>.add(
+        code: String,
+        severity: StageSafetySeverity,
+        stageIds: Array<out String>,
+    ) {
+        stageIds.forEach { stageId ->
+            check(put(stageId, StageSafetyMessage(code, severity)) == null) {
+                "Duplicate exact-stage safety mapping: $stageId"
+            }
+        }
+    }
+}

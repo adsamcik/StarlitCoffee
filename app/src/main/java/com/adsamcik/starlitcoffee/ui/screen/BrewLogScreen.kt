@@ -1,6 +1,5 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -81,8 +80,7 @@ import com.adsamcik.starlitcoffee.viewmodel.BrewLogListViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-
-private const val TAG = "BrewLogScreen"
+import dev.tracebox.Tracebox
 
 // List-detail pane split used on Expanded windows: the log list keeps a compact
 // master column while the selected entry gets the larger detail pane.
@@ -363,7 +361,7 @@ private fun BrewLogCard(
         try {
             TasteFeedbackModel.valueOf(name).emoji()
         } catch (e: Exception) {
-            Log.w(TAG, "Failed to parse taste feedback", e)
+            Tracebox.log.error(e, "Failed to parse taste feedback")
             null
         }
     }

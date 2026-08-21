@@ -13,7 +13,6 @@ internal val P1PhinPlanSpecs = listOf(
         p1Stage(ADD_COFFEE, visualPriority = SAFETY_CRITICAL),
         p1Stage(
             PREPARE,
-            sourceWarning = true,
             visualPriority = MANDATORY,
         ),
         p1Stage(
@@ -27,7 +26,7 @@ internal val P1PhinPlanSpecs = listOf(
                 waterCue(STAGE_ADDED, EXACT, 30.0),
                 waterCue(BREW_CUMULATIVE, EXACT, 30.0),
             ),
-            temperatureTarget = temperatureCue(RANGE, 91.0, 93.0),
+            temperatureTarget = temperatureCue(RANGE, 91.0, 96.0),
             visualPriority = MANDATORY,
         ),
         p1Stage(
@@ -38,14 +37,13 @@ internal val P1PhinPlanSpecs = listOf(
                 waterCue(STAGE_ADDED, EXACT, 88.0),
                 waterCue(BREW_CUMULATIVE, EXACT, 118.0),
             ),
-            temperatureTarget = temperatureCue(RANGE, 91.0, 93.0),
+            temperatureTarget = temperatureCue(RANGE, 91.0, 96.0),
             visualPriority = MANDATORY,
         ),
         p1Stage(
             OBSERVE,
             completion = P1ExactCompletion.Observation,
             timeTargets = listOf(timeCue(BREW_ELAPSED_AT_COMPLETION, NO_LATER_THAN, 120)),
-            sourceWarning = true,
             visualPriority = MANDATORY,
         ),
         p1Stage(
@@ -91,7 +89,6 @@ internal val P1PhinPlanSpecs = listOf(
         ),
         p1Stage(
             SERVE,
-            sourceWarning = true,
             visualPriority = MANDATORY,
         ),
     ),

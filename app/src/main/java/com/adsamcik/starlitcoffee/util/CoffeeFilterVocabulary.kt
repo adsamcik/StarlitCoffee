@@ -1,9 +1,9 @@
 package com.adsamcik.starlitcoffee.util
 
 import android.content.Context
-import android.util.Log
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import dev.tracebox.Tracebox
 
 /**
  * A single curated filter value with OCR/spelling [aliases]. Sourced from the
@@ -56,7 +56,6 @@ data class CoffeeFilterVocabulary(
  */
 object CoffeeFilterVocabularyLoader {
     private const val ASSET_NAME = "coffee_filter_vocabulary.json"
-    private const val TAG = "CoffeeFilterVocab"
 
     private val json = Json { ignoreUnknownKeys = true }
 
@@ -73,7 +72,7 @@ object CoffeeFilterVocabularyLoader {
             val raw = context.assets.open(ASSET_NAME).bufferedReader().use { it.readText() }
             json.decodeFromString<CoffeeFilterVocabulary>(raw)
         } catch (e: Exception) {
-            Log.w(TAG, "Failed to load $ASSET_NAME; scan will run without vocabulary hints", e)
+            Tracebox.log.error(e, "Failed to load {}; scan will run without vocabulary hints", ASSET_NAME)
             CoffeeFilterVocabulary.EMPTY
         }
 }

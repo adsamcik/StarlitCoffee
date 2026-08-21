@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_settings_section_support">Supporto e privacy</string>
+    <string name="label_diagnostics">Diagnostica</string>
+    <string name="msg_diagnostics_summary">Esamina, condividi, salva o elimina i dati locali per la risoluzione dei problemi</string>
+    <string name="label_privacy_policy">Informativa sulla privacy</string>
+    <string name="msg_privacy_policy_summary">Scopri come Starlit Coffee gestisce i dati</string>
+    <string name="msg_privacy_policy_open_failed">Impossibile aprire l’informativa sulla privacy.</string>
+    <string name="screen_diagnostics_title">Diagnostica</string>
+    <string name="msg_diagnostics_unavailable">La diagnostica non è disponibile in questo processo.</string>
+    <string name="msg_diagnostics_support_description">Raccoglie gli errori recenti dell’app e il contesto delle prestazioni per la risoluzione dei problemi.</string>
+</resources>

@@ -50,8 +50,15 @@ data class BrewStageDefinitionSnapshotV1(
     val requiredEquipmentStateId: String? = null,
     val completion: StageCompletionModeSnapshotV1,
     val referenceTargets: StageReferenceTargetsSnapshotV1 = StageReferenceTargetsSnapshotV1(),
+    val advanceConstraint: StageAdvanceConstraintSnapshotV1 = StageAdvanceConstraintSnapshotV1(),
     val alertPolicy: StageAlertPolicySnapshotV1 = StageAlertPolicySnapshotV1(),
     val isSkippable: Boolean = false,
+)
+
+@Serializable
+data class StageAdvanceConstraintSnapshotV1(
+    val notBeforeStageElapsedMillis: Long? = null,
+    val notBeforeBrewElapsedMillis: Long? = null,
 )
 
 @Serializable

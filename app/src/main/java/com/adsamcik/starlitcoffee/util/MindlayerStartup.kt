@@ -7,9 +7,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
-import android.util.Log
 import androidx.core.net.toUri
 import com.adsamcik.starlitcoffee.BuildConfig
+import dev.tracebox.Tracebox
 
 object MindlayerAvailability {
     private val packageNames: List<String>
@@ -31,15 +31,14 @@ object MindlayerAvailability {
         } catch (_: PackageManager.NameNotFoundException) {
             false
         } catch (error: SecurityException) {
-            Log.w(TAG, "Mindlayer package lookup was blocked", error)
+            Tracebox.log.error(error, "Mindlayer package lookup was blocked")
             false
         } catch (error: RuntimeException) {
-            Log.w(TAG, "Mindlayer package lookup failed", error)
+            Tracebox.log.error(error, "Mindlayer package lookup failed")
             false
         }
     }
 
-    private const val TAG = "MindlayerAvailability"
 }
 
 object MindlayerInstallLink {
@@ -58,9 +57,9 @@ object MindlayerInstallLink {
                 return true
             }
         } catch (error: SecurityException) {
-            Log.w(TAG, "Mindlayer market link resolution was blocked", error)
+            Tracebox.log.error(error, "Mindlayer market link resolution was blocked")
         } catch (error: RuntimeException) {
-            Log.w(TAG, "Mindlayer market link resolution failed", error)
+            Tracebox.log.error(error, "Mindlayer market link resolution failed")
         }
         return tryStartActivity(context, Intent(Intent.ACTION_VIEW, webStoreUri))
     }
@@ -73,18 +72,17 @@ object MindlayerInstallLink {
             context.startActivity(intent)
             true
         } catch (error: ActivityNotFoundException) {
-            Log.w(TAG, "No activity can open the Mindlayer install link", error)
+            Tracebox.log.error(error, "No activity can open the Mindlayer install link")
             false
         } catch (error: SecurityException) {
-            Log.w(TAG, "Mindlayer install link was blocked", error)
+            Tracebox.log.error(error, "Mindlayer install link was blocked")
             false
         } catch (error: RuntimeException) {
-            Log.w(TAG, "Mindlayer install link failed", error)
+            Tracebox.log.error(error, "Mindlayer install link failed")
             false
         }
     }
 
-    private const val TAG = "MindlayerInstallLink"
 }
 
 internal fun shouldOfferMindlayerConnection(
