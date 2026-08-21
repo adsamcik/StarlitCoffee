@@ -287,11 +287,6 @@
     <string name="cd_notif_rating_4">Оценете като страхотно</string>
 
     <!-- Bag analysis screen + notification -->
-    <string name="screen_analyzing_bag_title">Анализ на Вашия пакет</string>
-    <string name="msg_analyzing_bag_subtitle">ИИ чете етикета, за да попълни подробностите. Това може да отнеме малко време.</string>
-    <string name="msg_analyzing_bag_background_hint">Можете да продължите да използвате приложението — ще Ви уведомим, когато приключи.</string>
-    <string name="action_skip_ai">Пропуснете ИИ</string>
-    <string name="action_run_in_background">Продължете във фонов режим</string>
     <string name="notif_channel_bag_analysis">Анализ на пакет</string>
     <string name="notif_channel_bag_analysis_desc">Уведомява Ви, когато ИИ приключи с четенето на етикета на пакет кафе.</string>
     <string name="notif_scan_progress_title">Четене на етикета на пакета…</string>
@@ -420,14 +415,11 @@
     <string name="msg_decaf_grind_adjustment">Избрано е безкофеиново кафе. Препоръката за смилане по-долу е коригирана към по-едро, когато този метод има полза от това.</string>
     <string name="label_decaf_process_optional">Процес на декофеинизиране (по избор)</string>
     <string name="msg_decaf_process_hint">Позволява на правилото за приготвяне леко да насочи смилането: декафите с воден процес и CO₂ обикновено имат нужда от по-малко поедряване от тези с разтворител.</string>
-    <string name="cd_captured_bag_photo">Заснета снимка на пакета</string>
 <string name="label_detected_details">Открити подробности</string>
     <string name="msg_tap_chip_to_edit">Докоснете който и да е чип, за да редактирате</string>
     <string name="label_needs_review">Нуждае се от преглед</string>
 <string name="action_edit_all_fields">Редактирайте всички полета</string>
     <string name="action_add_more_details">Добавете още подробности</string>
-    <string name="msg_analyzing_label">Анализ на снимките на етикета</string>
-    <string name="msg_analyzing_label_detail">Проверяваме размазване, обединяваме текста от предната и задната страна и подготвяме най-надеждните полета.</string>
     <string name="label_review_fields">Прегледайте тези полета</string>
     <string name="label_qr_website">QR уебсайт</string>
     <string name="action_open_website">Отворете уебсайта</string>
@@ -456,9 +448,7 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">ИИ услуга (Mindlayer)</string>
-    <string name="action_connect_mindlayer">Свързване на Mindlayer</string>
     <string name="action_mindlayer_google_play">Вземете Mindlayer от Google Play</string>
-    <string name="msg_mindlayer_connection_offer">Mindlayer е инсталиран. Искате ли да го свържете за личен ИИ на устройството?</string>
     <string name="msg_mindlayer_install_recommendation">Инсталирайте Mindlayer от Google Play, за да четете етикети на кафени пакети с личен ИИ на устройството. Можете да го направите по-късно в Настройки.</string>
     <string name="action_test_connection">Тествайте връзката</string>
     <string name="action_run_test_prompt">Пуснете тестова подкана</string>
@@ -518,10 +508,6 @@
     <string name="msg_could_not_read_label">Етикетът не можа да бъде разчетен</string>
     <string name="action_retake_photo">Заснемете отново</string>
     <string name="action_add_details_manually">Добавете подробности ръчно</string>
-    <string name="msg_llm_enrichment_succeeded">ИИ обогатяването подобри това сканиране на етикет.</string>
-    <string name="msg_llm_enrichment_failed">ИИ не успя да дочете този етикет този път — изтече времето или възникна временна грешка (автоматичният повторен опит вече е направен). Докоснете повторен опит, за да опитате още веднъж, или просто попълнете полетата по-долу.</string>
-    <string name="msg_llm_enrichment_unavailable">ИИ обогатяването не е налично в момента. Можете да опитате отново или да продължите да редактирате ръчно.</string>
-    <string name="action_retry_llm_enrichment">Опитайте ИИ обогатяване отново</string>
 
     <!-- BrewLogDetailScreen -->
     <string name="action_share_brew">Споделете приготвянето</string>

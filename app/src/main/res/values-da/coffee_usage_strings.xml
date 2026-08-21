@@ -12,7 +12,4 @@
     <string name="msg_could_not_undo_coffee_use">Kunne ikke fortryde, fordi denne pose er blevet ændret</string>
     <string name="label_coffee_use_history">Kaffeforbrug</string>
     <string name="format_grams_used">%1$.0f g brugt</string>
-    <string name="msg_llm_model_setup_required">Mindlayer skal bruge sin model på enheden, før AI kan læse denne etiket. Åbn opsætningen, og prøv derefter igen; de felter, der allerede er fundet, kan trygt redigeres.</string>
-    <string name="msg_llm_enrichment_timed_out">Scanningen nåede grænsen på fem minutter. Du kan bruge de felter, der allerede er fundet, redigere dem eller prøve igen.</string>
-    <string name="action_set_up_ai">Åbn modelopsætning</string>
 </resources>

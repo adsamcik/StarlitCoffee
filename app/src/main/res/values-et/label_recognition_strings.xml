@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_settings_section_scanning">Skaneerimine</string>
+    <string name="label_enhanced_label_recognition">Täiustatud sildituvastus</string>
+    <string name="msg_enhanced_label_recognition">Vaadake lisateavet selle seadme kohviubade kotist, kui see on saadaval. Põhiline seadmesisene tekstilugemine etiketilt jääb kättesaadavaks.</string>
+    <string name="label_label_recognition_privacy">Sildi tuvastamine ja privaatsus</string>
+    <string name="msg_label_recognition_privacy">Siit saate teada, mis teie seadmesse jääb ja millal võrguotsingut kasutatakse.</string>
+    <string name="msg_could_not_open_privacy_policy">Privaatsuspoliitikat ei saanud avada.</string>
+    <string name="cd_front_label_photo">Esikülje sildi foto</string>
+    <string name="cd_back_label_photo">Tagumise sildi foto</string>
+    <string name="format_cd_additional_label_photo">Lisasildi foto %1$d</string>
+    <string name="label_label_evidence">Teabeallikad etiketilt</string>
+    <string name="evidence_from_label">Etiketilt</string>
+    <string name="evidence_confirmed_on_label">Kinnitatud etiketil</string>
+    <string name="evidence_from_qr_website">QR veebisaidilt</string>
+    <string name="evidence_from_label_code">Sildi koodist</string>
+    <string name="evidence_from_saved_bag">Varem salvestatud kohvidetailidest</string>
+    <string name="evidence_from_barcode_lookup">Vöötkoodi otsingust</string>
+    <string name="evidence_suggested_from_label_context">Soovitatud sildi kontekstist</string>
+    <string name="evidence_front_photo">Esifoto</string>
+    <string name="evidence_back_photo">Tagumine foto</string>
+    <string name="msg_checking_label">Sildi kontrollimine…</string>
+    <string name="msg_checking_more_details">Täpsema teabe otsimine…</string>
+    <plurals name="format_label_details_need_review">
+        <item quantity="one">Ülevaatamist vajavad üksikasjad: %1$d</item>
+        <item quantity="other">Ülevaatamist vajavad üksikasjad: %1$d</item>
+    </plurals>
+    <string name="msg_could_not_read_more_details">Rohkem üksikasju lugeda ei saanud. Saate redigeerimist jätkata või uuesti proovida.</string>
+    <string name="action_set_up_label_recognition">Seadistage sildituvastus</string>
+    <string name="action_use_label_recognition">Kasutage sildituvastust</string>
+    <string name="action_finish_label_recognition_setup">Lõpetage seadistamine</string>
+    <string name="action_always_enter_manually">Sisestage alati käsitsi</string>
+    <string name="action_apply_suggestion">Rakenda soovitus</string>
+    <string name="format_new_label_suggestion">Uus soovitus %1$s jaoks: %2$s</string>
+    <string name="msg_label_recognition_offer">Valikuline: kasutage selles seadmes Mindlayerit, et leida rohkem üksikasju kohvikoti sildilt. Enne salvestamist vaadake kõik üle.</string>
+    <string name="action_try_label_again">Proovi uuesti</string>
+    <string name="action_retake_label_photo">Tehke foto uuesti</string>
+    <string name="label_coffee_draft">Lõpetamata kohvidetailid</string>
+    <string name="action_review_coffee_draft">Vaadake üle lõpetamata kohvi üksikasjad</string>
+    <string name="msg_draft_needs_attention">Need kohvi üksikasjad vajavad teie ülevaatamist</string>
+    <string name="action_discard_draft">Visake ära lõpetamata kohvidetailid</string>
+    <string name="cd_open_coffee_draft">Avage %1$s lõpetamata kohvi üksikasjad. %2$s</string>
+    <string name="action_save_coffee">Salvestage kohvi üksikasjad</string>
+    <string name="screen_add_coffee_title">Lisa kohv</string>
+    <string name="screen_edit_coffee_title">Muuda kohvi</string>
+    <string name="screen_review_coffee_title">Vaadake üle kohvi üksikasjad</string>
+    <string name="msg_camera_permission_alternatives">Saate lubada kaamerale juurdepääsu, valida kohvikoti sildilt fotod või sisestada ise kohvikotile prinditud andmed.</string>
+    <string name="action_choose_photos">Valige fotod</string>
+    <string name="action_enter_manually">Sisestage käsitsi</string>
+    <string name="action_ok">OK</string>
+    <string name="action_set_roast_date">Määrake kohvi röstimise kuupäev</string>
+    <string name="action_change_roast_date">Muuda kohvi röstimise kuupäeva</string>
+    <string name="action_set_best_before">Määrake parim enne kuupäev</string>
+    <string name="action_change_best_before">Muuda parim enne kuupäeva</string>
+    <string name="action_show_optional_details">Kuva valikulised üksikasjad</string>
+    <string name="action_hide_optional_details">Peida valikulised üksikasjad</string>
+</resources>

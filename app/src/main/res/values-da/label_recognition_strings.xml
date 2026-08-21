@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_settings_section_scanning">Scanning</string>
+    <string name="label_enhanced_label_recognition">Forbedret etiketgenkendelse</string>
+    <string name="msg_enhanced_label_recognition">Se efter flere detaljer fra posen med kaffebønner på denne enhed, når den er tilgængelig. Grundlæggende tekstlæsning på enheden fra etiketten forbliver tilgængelig.</string>
+    <string name="label_label_recognition_privacy">Etiketgenkendelse og privatliv</string>
+    <string name="msg_label_recognition_privacy">Lær, hvad der bliver på din enhed, og hvornår netværksopslag bruges.</string>
+    <string name="msg_could_not_open_privacy_policy">Kunne ikke åbne privatlivspolitikken.</string>
+    <string name="cd_front_label_photo">Etiketfoto foran</string>
+    <string name="cd_back_label_photo">Bagside etiket foto</string>
+    <string name="format_cd_additional_label_photo">Yderligere etiketfoto %1$d</string>
+    <string name="label_label_evidence">Informationskilder fra mærket</string>
+    <string name="evidence_from_label">Fra etiketten</string>
+    <string name="evidence_confirmed_on_label">Bekræftet på etiketten</string>
+    <string name="evidence_from_qr_website">Fra QR-hjemmesiden</string>
+    <string name="evidence_from_label_code">Fra etiketkoden</string>
+    <string name="evidence_from_saved_bag">Fra kaffedetaljer gemt tidligere</string>
+    <string name="evidence_from_barcode_lookup">Fra stregkodeopslaget</string>
+    <string name="evidence_suggested_from_label_context">Foreslået fra etiketkontekst</string>
+    <string name="evidence_front_photo">Forside foto</string>
+    <string name="evidence_back_photo">Bagside foto</string>
+    <string name="msg_checking_label">Kontrollerer etiketten…</string>
+    <string name="msg_checking_more_details">Søger efter flere detaljer…</string>
+    <plurals name="format_label_details_need_review">
+        <item quantity="one">Detaljer, der kræver gennemgang: %1$d</item>
+        <item quantity="other">Detaljer, der kræver gennemgang: %1$d</item>
+    </plurals>
+    <string name="msg_could_not_read_more_details">Kunne ikke læse flere detaljer. Du kan fortsætte med at redigere eller prøve igen.</string>
+    <string name="action_set_up_label_recognition">Konfigurer etiketgenkendelse</string>
+    <string name="action_use_label_recognition">Brug etiketgenkendelse</string>
+    <string name="action_finish_label_recognition_setup">Afslut opsætningen</string>
+    <string name="action_always_enter_manually">Indtast altid manuelt</string>
+    <string name="action_apply_suggestion">Anvend forslaget</string>
+    <string name="format_new_label_suggestion">Nyt forslag til %1$s: %2$s</string>
+    <string name="msg_label_recognition_offer">Valgfrit: Brug Mindlayer på denne enhed for at finde flere detaljer fra kaffeposens etiket. Gennemgå alt, før du gemmer.</string>
+    <string name="action_try_label_again">Prøv igen</string>
+    <string name="action_retake_label_photo">Tag billede igen</string>
+    <string name="label_coffee_draft">Ufærdige kaffedetaljer</string>
+    <string name="action_review_coffee_draft">Gennemgå ufærdige kaffedetaljer</string>
+    <string name="msg_draft_needs_attention">Disse kaffedetaljer har brug for din anmeldelse</string>
+    <string name="action_discard_draft">Kassér ufærdige kaffedetaljer</string>
+    <string name="cd_open_coffee_draft">Åbn ufærdige kaffedetaljer for %1$s. %2$s</string>
+    <string name="action_save_coffee">Gem kaffedetaljer</string>
+    <string name="screen_add_coffee_title">Tilsæt kaffe</string>
+    <string name="screen_edit_coffee_title">Rediger kaffe</string>
+    <string name="screen_review_coffee_title">Gennemgå kaffedetaljer</string>
+    <string name="msg_camera_permission_alternatives">Du kan tillade kameraadgang, vælge fotos af kaffeposens etiket eller selv indtaste detaljerne trykt på kaffeposen.</string>
+    <string name="action_choose_photos">Vælg fotos</string>
+    <string name="action_enter_manually">Indtast manuelt</string>
+    <string name="action_ok">OK</string>
+    <string name="action_set_roast_date">Indstil kafferistedatoen</string>
+    <string name="action_change_roast_date">Skift kafferistedato</string>
+    <string name="action_set_best_before">Indstil bedst-før-datoen</string>
+    <string name="action_change_best_before">Skift bedst-før-dato</string>
+    <string name="action_show_optional_details">Vis valgfri detaljer</string>
+    <string name="action_hide_optional_details">Skjul valgfri detaljer</string>
+</resources>

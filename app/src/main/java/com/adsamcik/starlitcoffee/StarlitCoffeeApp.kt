@@ -11,19 +11,24 @@ import com.adsamcik.starlitcoffee.data.network.llm.LlmExtractionResult
 import com.adsamcik.starlitcoffee.data.network.llm.LlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.network.llm.LlmRefineRequest
 import com.adsamcik.starlitcoffee.data.network.llm.MindlayerLlmInferenceProvider
+import com.adsamcik.starlitcoffee.data.network.ocr.FallbackOcrService
 import com.adsamcik.starlitcoffee.data.network.ocr.HierarchicalOcrService
+import com.adsamcik.starlitcoffee.data.network.ocr.MlKitOcrService
 import com.adsamcik.starlitcoffee.data.network.ocr.MindlayerOcrService
 import com.adsamcik.starlitcoffee.data.network.ocr.OcrService
 import com.adsamcik.starlitcoffee.data.network.ocr.RecognizedText
+import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.data.work.BagExtractionScheduler
 import com.adsamcik.starlitcoffee.data.work.BagExtractionStartupRecovery
 import com.adsamcik.starlitcoffee.scan.observability.PersistentLlmDiagnosticsRecorder
 import com.adsamcik.starlitcoffee.util.MindlayerAvailability
+import com.adsamcik.starlitcoffee.util.RecognitionPreference
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
@@ -32,7 +37,11 @@ import kotlin.time.Duration.Companion.seconds
 class StarlitCoffeeApp : Application() {
 
     val llmProvider: LlmInferenceProvider = RefreshingMindlayerLlmProvider(this)
-    val ocrService: OcrService = RefreshingMindlayerOcrService(this)
+    private val bundledOcrService: OcrService = MlKitOcrService()
+    val ocrService: OcrService = PreferenceAwareOcrService(this, bundledOcrService)
+
+    @Volatile
+    private var recognitionPreference: RecognitionPreference = RecognitionPreference.UNDECIDED
 
     @Volatile
     private var mindlayerServices: MindlayerServices? = null
@@ -76,6 +85,19 @@ class StarlitCoffeeApp : Application() {
         }
     }
 
+    /** Makes an explicit, contextual user opt-in effective before DataStore emits it. */
+    fun enableMindlayerForCurrentSession() {
+        recognitionPreference = RecognitionPreference.ENABLED
+    }
+
+    /** Stops new Mindlayer calls immediately while DataStore persists the opt-out. */
+    fun disableMindlayerForCurrentSession() {
+        recognitionPreference = RecognitionPreference.DISABLED
+    }
+
+    internal fun isMindlayerEnrichmentEnabled(): Boolean =
+        recognitionPreference == RecognitionPreference.ENABLED
+
     override fun onCreate() {
         super.onCreate()
         warmupScope.launch {
@@ -91,21 +113,17 @@ class StarlitCoffeeApp : Application() {
                 Log.w(TAG, "Durable brew-session recovery failed", error)
             }
         }
-        if (!MindlayerAvailability.isInstalled(this)) {
-            Log.i(TAG, "Mindlayer is not installed; skipping connection warmup")
-            return
-        }
-
-        // Eagerly warm the Mindlayer SDK off the main thread. Initialization
-        // triggers Mindlayer.connect() → HistoryStore →
-        // Room/SQLCipher open. SQLCipher PBKDF2 key derivation is
-        // intentionally slow (~100–500 ms on cold start); doing it
-        // synchronously from BrewViewModelFactory.create() (which runs
-        // on Main when Compose first resolves the BrewViewModel) caused
-        // visible main-thread hitches and Choreographer frame skips on
-        // first navigation to the scan flow.
+        // Warm Mindlayer only after the user has enabled label recognition.
+        // The bundled recognizer remains available without this connection.
         warmupScope.launch {
-            getOrCreateMindlayerServices()
+            UserPreferencesRepository(applicationContext).userPreferences.collectLatest { preferences ->
+                recognitionPreference = preferences.labelRecognitionPreference
+                if (recognitionPreference == RecognitionPreference.ENABLED &&
+                    MindlayerAvailability.isInstalled(this@StarlitCoffeeApp)
+                ) {
+                    getOrCreateMindlayerServices()
+                }
+            }
         }
     }
 
@@ -119,6 +137,7 @@ class StarlitCoffeeApp : Application() {
      * are released by process death in that path.
      */
     override fun onTerminate() {
+        bundledOcrService.close()
         synchronized(mindlayerServicesLock) {
             mindlayerServices = null
             Mindlayer.disconnectShared()
@@ -172,6 +191,9 @@ class StarlitCoffeeApp : Application() {
     ) : LlmInferenceProvider {
         override suspend fun extractBagFields(request: LlmExtractionRequest): LlmExtractionResult =
             withContext(Dispatchers.IO) {
+                if (!app.isMindlayerEnrichmentEnabled()) {
+                    return@withContext LlmExtractionResult.Unavailable("Label recognition enrichment is disabled")
+                }
                 app.getOrCreateMindlayerServices()
                     ?.llmProvider
                     ?.extractBagFields(request)
@@ -179,12 +201,17 @@ class StarlitCoffeeApp : Application() {
             }
 
         override fun supportsVision(): Boolean =
-            app.currentMindlayerServices()?.llmProvider?.supportsVision()
+            app.isMindlayerEnrichmentEnabled() && (
+                app.currentMindlayerServices()?.llmProvider?.supportsVision()
                 ?: MindlayerAvailability.isInstalled(app)
+                )
 
         override suspend fun extractBagFieldsWithVision(
             request: LlmExtractionRequest,
         ): LlmExtractionResult = withContext(Dispatchers.IO) {
+            if (!app.isMindlayerEnrichmentEnabled()) {
+                return@withContext LlmExtractionResult.Unavailable("Label recognition enrichment is disabled")
+            }
             app.getOrCreateMindlayerServices()
                 ?.llmProvider
                 ?.extractBagFieldsWithVision(request)
@@ -192,11 +219,16 @@ class StarlitCoffeeApp : Application() {
         }
 
         override fun supportsCombine(): Boolean =
-            app.currentMindlayerServices()?.llmProvider?.supportsCombine()
+            app.isMindlayerEnrichmentEnabled() && (
+                app.currentMindlayerServices()?.llmProvider?.supportsCombine()
                 ?: MindlayerAvailability.isInstalled(app)
+                )
 
         override suspend fun combineBagFields(request: LlmCombineRequest): LlmExtractionResult =
             withContext(Dispatchers.IO) {
+                if (!app.isMindlayerEnrichmentEnabled()) {
+                    return@withContext LlmExtractionResult.Unavailable("Label recognition enrichment is disabled")
+                }
                 app.getOrCreateMindlayerServices()
                     ?.llmProvider
                     ?.combineBagFields(request)
@@ -204,11 +236,16 @@ class StarlitCoffeeApp : Application() {
             }
 
         override fun supportsRefine(): Boolean =
-            app.currentMindlayerServices()?.llmProvider?.supportsRefine()
+            app.isMindlayerEnrichmentEnabled() && (
+                app.currentMindlayerServices()?.llmProvider?.supportsRefine()
                 ?: MindlayerAvailability.isInstalled(app)
+                )
 
         override suspend fun refineBagFields(request: LlmRefineRequest): LlmExtractionResult =
             withContext(Dispatchers.IO) {
+                if (!app.isMindlayerEnrichmentEnabled()) {
+                    return@withContext LlmExtractionResult.Unavailable("Label recognition enrichment is disabled")
+                }
                 app.getOrCreateMindlayerServices()
                     ?.llmProvider
                     ?.refineBagFields(request)
@@ -216,28 +253,38 @@ class StarlitCoffeeApp : Application() {
             }
 
         override fun isAvailable(): Boolean {
+            if (!app.isMindlayerEnrichmentEnabled()) return false
             if (!MindlayerAvailability.isInstalled(app)) return false
             return app.currentMindlayerServices()?.llmProvider?.isAvailable() ?: true
         }
 
         override suspend fun prewarm() {
+            if (!app.isMindlayerEnrichmentEnabled()) return
             withContext(Dispatchers.IO) {
                 app.getOrCreateMindlayerServices()?.llmProvider?.prewarm()
             }
         }
     }
 
-    private class RefreshingMindlayerOcrService(
+    private class PreferenceAwareOcrService(
         private val app: StarlitCoffeeApp,
+        private val fallback: OcrService,
     ) : OcrService {
-        override fun close() = Unit
+        override fun close() = fallback.close()
 
-        override suspend fun isAvailable(): Boolean = withContext(Dispatchers.IO) {
-            app.getOrCreateMindlayerServices()?.ocrService?.isAvailable() == true
-        }
+        override suspend fun isAvailable(): Boolean = fallback.isAvailable()
 
         override suspend fun recognize(bitmap: Bitmap): RecognizedText? = withContext(Dispatchers.IO) {
-            app.getOrCreateMindlayerServices()?.ocrService?.recognize(bitmap)
+            val primary = if (app.isMindlayerEnrichmentEnabled()) {
+                app.getOrCreateMindlayerServices()?.ocrService
+            } else {
+                null
+            }
+            if (primary == null) {
+                fallback.recognize(bitmap)
+            } else {
+                FallbackOcrService(primary, fallback).recognize(bitmap)
+            }
         }
     }
 }

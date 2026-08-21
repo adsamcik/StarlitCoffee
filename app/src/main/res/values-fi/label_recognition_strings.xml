@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_settings_section_scanning">Skannaus</string>
+    <string name="label_enhanced_label_recognition">Parannettu etiketin tunnistus</string>
+    <string name="msg_enhanced_label_recognition">Katso lisätietoja tämän laitteen kahvipapupussista, kun se on saatavilla. Laitteen perustekstin lukeminen tarrasta on edelleen käytettävissä.</string>
+    <string name="label_label_recognition_privacy">Tarran tunnistus ja yksityisyys</string>
+    <string name="msg_label_recognition_privacy">Opi, mitä laitteellesi jää ja milloin verkkohakuja käytetään.</string>
+    <string name="msg_could_not_open_privacy_policy">Tietosuojakäytäntöä ei voitu avata.</string>
+    <string name="cd_front_label_photo">Edessä etikettikuva</string>
+    <string name="cd_back_label_photo">Takana etikettikuva</string>
+    <string name="format_cd_additional_label_photo">Lisätarrakuva %1$d</string>
+    <string name="label_label_evidence">Tietolähteet etiketistä</string>
+    <string name="evidence_from_label">Etiketistä</string>
+    <string name="evidence_confirmed_on_label">Vahvistettu etiketissä</string>
+    <string name="evidence_from_qr_website">QR-sivustolta</string>
+    <string name="evidence_from_label_code">Etiketin koodista</string>
+    <string name="evidence_from_saved_bag">Aiemmin tallennetuista kahvin yksityiskohdista</string>
+    <string name="evidence_from_barcode_lookup">Viivakoodihausta</string>
+    <string name="evidence_suggested_from_label_context">Ehdotettu etiketin kontekstista</string>
+    <string name="evidence_front_photo">Etukuva</string>
+    <string name="evidence_back_photo">Takakuva</string>
+    <string name="msg_checking_label">Tarraa tarkistetaan…</string>
+    <string name="msg_checking_more_details">Tarkempia tietoja etsitään…</string>
+    <plurals name="format_label_details_need_review">
+        <item quantity="one">Tarkistettavat tiedot: %1$d</item>
+        <item quantity="other">Tarkistettavat tiedot: %1$d</item>
+    </plurals>
+    <string name="msg_could_not_read_more_details">Tarkempia tietoja ei voinut lukea. Voit jatkaa muokkaamista tai yrittää uudelleen.</string>
+    <string name="action_set_up_label_recognition">Määritä tarran tunnistus</string>
+    <string name="action_use_label_recognition">Käytä etiketin tunnistusta</string>
+    <string name="action_finish_label_recognition_setup">Viimeistele asennus</string>
+    <string name="action_always_enter_manually">Syötä aina manuaalisesti</string>
+    <string name="action_apply_suggestion">Käytä ehdotusta</string>
+    <string name="format_new_label_suggestion">Uusi ehdotus mallille %1$s: %2$s</string>
+    <string name="msg_label_recognition_offer">Valinnainen: käytä Mindlayeria tässä laitteessa saadaksesi lisätietoja kahvipussin etiketistä. Tarkista kaikki ennen tallentamista.</string>
+    <string name="action_try_label_again">Yritä uudelleen</string>
+    <string name="action_retake_label_photo">Ota valokuva uudelleen</string>
+    <string name="label_coffee_draft">Keskeneräiset kahvin yksityiskohdat</string>
+    <string name="action_review_coffee_draft">Tarkista keskeneräiset kahvin tiedot</string>
+    <string name="msg_draft_needs_attention">Nämä kahvin tiedot tarvitsevat arviosi</string>
+    <string name="action_discard_draft">Hävitä keskeneräiset kahvin tiedot</string>
+    <string name="cd_open_coffee_draft">Avaa keskeneräiset kahvitiedot %1$s:lle. %2$s</string>
+    <string name="action_save_coffee">Tallenna kahvin tiedot</string>
+    <string name="screen_add_coffee_title">Lisää kahvi</string>
+    <string name="screen_edit_coffee_title">Muokkaa kahvia</string>
+    <string name="screen_review_coffee_title">Tarkista kahvin tiedot</string>
+    <string name="msg_camera_permission_alternatives">Voit sallia kameran käytön, valita kuvia kahvipussin etiketistä tai syöttää itse kahvipussiin painetut tiedot.</string>
+    <string name="action_choose_photos">Valitse valokuvat</string>
+    <string name="action_enter_manually">Syötä manuaalisesti</string>
+    <string name="action_ok">OK</string>
+    <string name="action_set_roast_date">Aseta kahvin paahtopäivämäärä</string>
+    <string name="action_change_roast_date">Muuta kahvin paahtopäivämäärää</string>
+    <string name="action_set_best_before">Aseta parasta ennen -päiväys</string>
+    <string name="action_change_best_before">Vaihda parasta ennen -päivämäärä</string>
+    <string name="action_show_optional_details">Näytä valinnaiset tiedot</string>
+    <string name="action_hide_optional_details">Piilota valinnaiset tiedot</string>
+</resources>

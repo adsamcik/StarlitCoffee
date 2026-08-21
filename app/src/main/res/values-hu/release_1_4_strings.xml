@@ -57,11 +57,6 @@
     <string name="format_notif_brew_target_reached_body">A recepted %1$s célját elérte. Érintse meg a főzet ellenőrzéséhez.</string>
     <string name="action_add_coffee">Adjunk hozzá kávét</string>
     <string name="action_read_bag_photos">Olvassa el a táska fotóit</string>
-    <string name="action_scan_bag_ai">Scan bag · AI kitölti a részleteket</string>
     <string name="action_scan_first_bag">Vizsgálja át az első táskámat</string>
     <string name="msg_scan_first_coffee_hint">Olvassa be az elejét és a hátulját, hogy automatikusan kitöltse az adatokat. A fotók az eszközön maradnak.</string>
-    <string name="dialog_ai_scan_setup_title">Saját címke szkennelésének beállítása</string>
-    <string name="msg_ai_scan_setup">A Starlit Coffee a Mindlayer segítségével privát módon olvassa el a kávécímkéket az eszközön. Telepítse egyszer, majd a vizsgálat automatikusan folytatódik.</string>
-    <string name="dialog_ai_scan_unsupported_title">Az automatikus keresés nem támogatott</string>
-    <string name="msg_ai_scan_unsupported">Az automatikus címkebeolvasáshoz Android 12 vagy újabb rendszer szükséges. Továbbra is hozzáadhatja a táskát manuálisan, vagy beolvashatja a vonalkódját.</string>
 </resources>

@@ -52,6 +52,8 @@ import com.adsamcik.starlitcoffee.data.work.BagExtractionScheduler
 import com.adsamcik.starlitcoffee.data.work.BagExtractionCheckpointStore
 import com.adsamcik.starlitcoffee.data.work.BagExtractionResultStore
 import com.adsamcik.starlitcoffee.data.work.BagExtractionWorker
+import com.adsamcik.starlitcoffee.data.work.BagDraftPhase
+import com.adsamcik.starlitcoffee.data.work.BagDraftStore
 import com.adsamcik.starlitcoffee.data.work.BagReviewContext
 import com.adsamcik.starlitcoffee.data.work.BagReviewQueue
 import com.adsamcik.starlitcoffee.data.work.decodeBagReviewContext
@@ -78,6 +80,7 @@ import com.adsamcik.starlitcoffee.util.PendingBagPhotoDeletion
 import com.adsamcik.starlitcoffee.util.ScanProgress
 import com.adsamcik.starlitcoffee.util.ScanPhotoStorage
 import com.adsamcik.starlitcoffee.util.ScanStage
+import com.adsamcik.starlitcoffee.util.RecognitionPreference
 import com.adsamcik.starlitcoffee.util.commitDeletionWithDeferredCleanup
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Deferred
@@ -308,6 +311,10 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     val bagPhotoProgress: StateFlow<ScanProgress?> = _bagPhotoProgress.asStateFlow()
     private val _bagAnalysisPreview = MutableStateFlow<BagAnalysisPreview?>(null)
     val bagAnalysisPreview: StateFlow<BagAnalysisPreview?> = _bagAnalysisPreview.asStateFlow()
+    @Volatile
+    private var latestRecognitionPreference: RecognitionPreference = RecognitionPreference.UNDECIDED
+    private val _recognitionPreference = MutableStateFlow(RecognitionPreference.UNDECIDED)
+    val recognitionPreference: StateFlow<RecognitionPreference> = _recognitionPreference.asStateFlow()
 
     // Holds a bag-photo result that finished while the user had sent the AI
     // extraction to the background. It is NOT pushed into [bagPhotoResult] (which
@@ -379,6 +386,12 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     private var ratioPresetJob: Job? = null
 
     init {
+        viewModelScope.launch {
+            userPreferencesRepository?.userPreferences?.collect { preferences ->
+                latestRecognitionPreference = preferences.labelRecognitionPreference
+                _recognitionPreference.value = preferences.labelRecognitionPreference
+            }
+        }
         viewModelScope.launch {
             recipeRepository?.getAllRecipes()?.collect { recipes ->
                 _savedRecipes.value = recipes
@@ -1179,7 +1192,8 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             } else {
                 emptySet()
             }
-            val protectedStagedUris = protectedBeforeReconciliation + if (useWorkManager) {
+            val protectedDraftUris = BagDraftStore.readActive(app).flatMap { it.photoUris }.toSet()
+            val protectedStagedUris = protectedBeforeReconciliation + protectedDraftUris + if (useWorkManager) {
                 BagExtractionScheduler.protectedStagedPhotoUris(app)
             } else {
                 emptySet()
@@ -1470,6 +1484,16 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         _bagPhotoProgress.value = null
 
         val photoUriList = photosCsv.split(",").map(String::trim).filter(String::isNotBlank)
+        application?.let { app ->
+            BagDraftStore.ensure(
+                context = app,
+                sessionId = sessionId,
+                photoUris = photoUriList,
+                reviewContext = reviewContext,
+                preference = latestRecognitionPreference,
+            )
+            BagDraftStore.beginGeneration(app, sessionId, generationId)
+        }
         cancelBagPhotoProcessJob()
         bagPhotoLlmDeferred?.cancel()
         bagPhotoLlmDeferred = null
@@ -1516,6 +1540,41 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         activeBagExtractionGenerationId = generationId
         activeBagExtractionReviewContext = reviewContext
         runBagPhotoProcessingInViewModel(retryContext, runLlm = !bagPhotoSkipRequested)
+    }
+
+    fun ensureBagDraft(
+        sessionId: String,
+        photosCsv: String,
+        reviewContext: BagReviewContext,
+    ) {
+        val app = application ?: return
+        BagDraftStore.ensure(
+            context = app,
+            sessionId = sessionId,
+            photoUris = photosCsv.split(',').map(String::trim).filter(String::isNotBlank),
+            reviewContext = reviewContext,
+            preference = latestRecognitionPreference,
+        )
+    }
+
+    fun enableLabelRecognition() {
+        latestRecognitionPreference = RecognitionPreference.ENABLED
+        _recognitionPreference.value = RecognitionPreference.ENABLED
+        (application as? com.adsamcik.starlitcoffee.StarlitCoffeeApp)
+            ?.enableMindlayerForCurrentSession()
+        viewModelScope.launch {
+            userPreferencesRepository?.updateLabelRecognitionPreference(RecognitionPreference.ENABLED)
+        }
+    }
+
+    fun disableLabelRecognition() {
+        latestRecognitionPreference = RecognitionPreference.DISABLED
+        _recognitionPreference.value = RecognitionPreference.DISABLED
+        (application as? com.adsamcik.starlitcoffee.StarlitCoffeeApp)
+            ?.disableMindlayerForCurrentSession()
+        viewModelScope.launch {
+            userPreferencesRepository?.updateLabelRecognitionPreference(RecognitionPreference.DISABLED)
+        }
     }
 
     private fun startNewBagExtractionGeneration(sessionId: String): String {
@@ -1624,6 +1683,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 activeBagExtractionGenerationId = context.generationId
                 activeBagExtractionReviewContext = context.reviewContext
                 bagExtractionWorkIdsBySession[context.sessionId] = workId
+                BagDraftStore.attachWork(app, context.sessionId, context.generationId, workId)
                 rememberBagExtractionSession(workId, context.sessionId)
                 observeBagExtractionWork(workId, context.sessionId, context.generationId)
             } catch (error: CancellationException) {
@@ -1692,9 +1752,23 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         generationId: String = activeBagExtractionGenerationId ?: workId,
         reviewContext: BagReviewContext? = activeBagExtractionReviewContext,
     ) {
-        if (!isLatestBagExtractionGeneration(sessionId, generationId)) {
+        val durableDraftAcceptsResult = application?.let { app ->
+            val draft = BagDraftStore.read(app, sessionId)
+            draft == null || BagDraftStore.isAcceptingResult(app, sessionId, generationId)
+        } ?: true
+        if (!isLatestBagExtractionGeneration(sessionId, generationId) || !durableDraftAcceptsResult) {
             if (workId != IN_MEMORY_WORK_ID) markBagExtractionReviewAccepted(workId)
             return
+        }
+        application?.let { app ->
+            BagDraftStore.applyResult(
+                context = app,
+                sessionId = sessionId,
+                generationId = generationId,
+                workId = workId.takeUnless { it == IN_MEMORY_WORK_ID },
+                result = result,
+                terminal = true,
+            )
         }
         restoreBagPhotoRetryContext(result, sessionId, generationId, reviewContext)
         if (bagPhotoRetrySessionId == sessionId) {
@@ -1769,7 +1843,11 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         generationId: String = activeBagExtractionGenerationId ?: workId,
         reviewContext: BagReviewContext? = activeBagExtractionReviewContext,
     ) {
-        if (!isLatestBagExtractionGeneration(sessionId, generationId)) {
+        val durableDraftAcceptsResult = application?.let { app ->
+            val draft = BagDraftStore.read(app, sessionId)
+            draft == null || BagDraftStore.isAcceptingResult(app, sessionId, generationId)
+        } ?: true
+        if (!isLatestBagExtractionGeneration(sessionId, generationId) || !durableDraftAcceptsResult) {
             if (workId != IN_MEMORY_WORK_ID) markBagExtractionReviewAccepted(workId)
             return
         }
@@ -1777,6 +1855,16 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             result.copy(capturedPhotoUris = bagPhotoLlmRetryContexts[sessionId]?.photosCsv)
         } else {
             result
+        }
+        application?.let { app ->
+            BagDraftStore.applyResult(
+                context = app,
+                sessionId = sessionId,
+                generationId = generationId,
+                workId = workId.takeUnless { it == IN_MEMORY_WORK_ID },
+                result = resolvedResult,
+                terminal = true,
+            )
         }
         restoreBagPhotoRetryContext(resolvedResult, sessionId, generationId, reviewContext)
         if (bagPhotoRetrySessionId == sessionId) {
@@ -1988,6 +2076,24 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             suppressRetainedForegroundLoading = false
             loadRetainedForegroundReview()
         }
+    }
+
+    /** Close a saved draft before cancelling work so late callbacks become no-ops. */
+    fun markBagDraftSaved(sessionId: String) {
+        application?.let { BagDraftStore.markPhase(it, sessionId, BagDraftPhase.SAVED) }
+    }
+
+    /** Explicit discard is the only path that removes an unfinished draft. */
+    fun markBagDraftDiscarded(sessionId: String) {
+        application?.let { BagDraftStore.markPhase(it, sessionId, BagDraftPhase.DISCARDED) }
+    }
+
+    fun markBagDraftReviewing(sessionId: String) {
+        application?.let { BagDraftStore.markPhase(it, sessionId, BagDraftPhase.REVIEWING) }
+    }
+
+    fun markBagDraftBackgrounded(sessionId: String) {
+        application?.let { BagDraftStore.markPhase(it, sessionId, BagDraftPhase.BACKGROUND) }
     }
 
     private fun cancelBagPhotoProcessJob() {
@@ -2324,18 +2430,29 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
      * keeps running; when it completes the result is delivered through a
      * notification ([deliverBagPhotoResult]) instead of auto-opening the form.
      */
-    fun continueBagAnalysisInBackground() {
+    fun continueBagAnalysisInBackground(requestedSessionId: String? = null) {
         if (!useWorkManager) {
             bagAnalysisBackgrounded = true
+            requestedSessionId?.let { sessionId ->
+                application?.let { app ->
+                    BagDraftStore.markPhase(app, sessionId, BagDraftPhase.BACKGROUND)
+                }
+            }
             return
         }
 
         val app = requireNotNull(application)
+        val activeSessionId = activeBagExtractionSessionId
+        if (requestedSessionId != null && requestedSessionId != activeSessionId) {
+            BagDraftStore.markPhase(app, requestedSessionId, BagDraftPhase.BACKGROUND)
+            return
+        }
         val workId = activeBagExtractionWorkId ?: return
-        val sessionId = activeBagExtractionSessionId ?: workId
+        val sessionId = activeSessionId ?: workId
         val generationId = activeBagExtractionGenerationId ?: workId
         val reviewContext = activeBagExtractionReviewContext
         bagAnalysisBackgrounded = true
+        BagDraftStore.markPhase(app, sessionId, BagDraftPhase.BACKGROUND)
         BagExtractionScheduler.requestCompletionNotification(app, workId)
         viewModelScope.launch {
             val workInfo = withContext(Dispatchers.IO) {

@@ -25,12 +25,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -48,6 +49,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -68,6 +73,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLocale
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import com.adsamcik.starlitcoffee.R
 import androidx.compose.ui.Alignment
@@ -86,11 +92,14 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.adsamcik.starlitcoffee.util.BagFieldConfidence
+import com.adsamcik.starlitcoffee.util.BagCaptureSide
 import com.adsamcik.starlitcoffee.scan.observability.ScanCorrectionLog
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.data.model.CoffeeOrigin
@@ -111,7 +120,10 @@ import com.adsamcik.starlitcoffee.util.CoffeeInputSuggestionEngine
 import com.adsamcik.starlitcoffee.util.CoffeeMetadataNormalizer
 import com.adsamcik.starlitcoffee.util.CoffeeVocabularyEntry
 import com.adsamcik.starlitcoffee.util.DateParser
-import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
+import com.adsamcik.starlitcoffee.util.RecognitionOffer
+import com.adsamcik.starlitcoffee.util.RecognitionPresentation
+import com.adsamcik.starlitcoffee.util.RecognitionRecoveryAction
+import com.adsamcik.starlitcoffee.util.RecognitionStatusText
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
 import com.adsamcik.starlitcoffee.util.ThumbnailLoader
 import kotlinx.coroutines.Dispatchers
@@ -183,7 +195,7 @@ fun AddBagSheet(
     capturedPhotoUris: String? = null,
     fieldEvidence: Map<String, BagFieldEvidence> = emptyMap(),
     reviewHints: List<BagPhotoReviewHint> = emptyList(),
-    llmStatus: LlmEnrichmentStatus = LlmEnrichmentStatus.NOT_RUN,
+    recognition: RecognitionPresentation = RecognitionPresentation(),
     isProcessing: Boolean = false,
     isSaving: Boolean = false,
     existingBags: List<CoffeeBagEntity> = emptyList(),
@@ -213,12 +225,22 @@ fun AddBagSheet(
     onExploreQrUrl: ((String, (QrCoffeeMetadata?) -> Unit) -> Unit)? = null,
     onRetryLlmEnrichment: (() -> Unit)? = null,
     onEnableAi: (() -> Unit)? = null,
+    onInstallLabelRecognition: (() -> Unit)? = null,
     onSetupAi: (() -> Unit)? = null,
+    onDisableLabelRecognition: (() -> Unit)? = null,
     onScanMorePhotos: (() -> Unit)? = null,
+    initialFormOverride: BagFormSnapshot? = null,
+    onUserFieldChange: ((fieldName: String, value: String?) -> Unit)? = null,
+    onFieldFocusChange: ((fieldName: String, focused: Boolean) -> Unit)? = null,
+    pendingSuggestions: Map<String, String> = emptyMap(),
+    onAcceptSuggestion: ((fieldName: String) -> Unit)? = null,
+    preserveDraftOnDismiss: Boolean = false,
+    onDiscardDraft: (() -> Unit)? = null,
 ) {
     val uriHandler = LocalUriHandler.current
     val focusManager = LocalFocusManager.current
     val correctionContext = LocalContext.current
+    val suggestionSnackbarHostState = remember { SnackbarHostState() }
     val locale = LocalLocale.current.platformLocale
     val vocabulary = remember(correctionContext) {
         CoffeeFilterVocabularyLoader.getInstance(correctionContext)
@@ -351,8 +373,16 @@ fun AddBagSheet(
 
     val isEditMode = bagToEdit != null
     val correctionScope = rememberCoroutineScope()
-    val initialForm = remember(ocrPrefill, initialName, initialRoaster, initialBarcode, bagToEdit, editBagMetadata) {
-        BagFormSnapshot(
+    val initialForm = remember(
+        ocrPrefill,
+        initialName,
+        initialRoaster,
+        initialBarcode,
+        bagToEdit,
+        editBagMetadata,
+        initialFormOverride,
+    ) {
+        initialFormOverride ?: BagFormSnapshot(
             name = bagToEdit?.name ?: ocrPrefill?.name ?: initialName ?: "",
             roaster = bagToEdit?.roaster ?: ocrPrefill?.roaster ?: initialRoaster ?: "",
             originCountry = editBagMetadata?.origin ?: ocrPrefill?.origin ?: "",
@@ -479,7 +509,7 @@ fun AddBagSheet(
     var showMoreDetails by rememberSaveable(bagToEdit) { mutableStateOf(isEditMode || !isProcessing) }
     var selectedEvidenceField by rememberSaveable(fieldEvidence) { mutableStateOf(fieldEvidence.keys.firstOrNull()) }
     var snapApproveMode by rememberSaveable(bagToEdit) {
-        mutableStateOf(ocrPrefill != null && !isProcessing && bagToEdit == null)
+        mutableStateOf(false)
     }
     var pendingScrollField by rememberSaveable { mutableStateOf<String?>(null) }
     // Transient: tracks an in-flight async QR exploration. Intentionally not saved across
@@ -491,7 +521,34 @@ fun AddBagSheet(
         mutableStateOf<QrCoffeeMetadata?>(null)
     }
     var pendingDiscardAction by remember { mutableStateOf<(() -> Unit)?>(null) }
+    var showDiscardDraftDialog by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
+    val pendingSuggestion = pendingSuggestions.entries.firstOrNull()
+    val pendingSuggestionFieldLabel = pendingSuggestion?.key?.let { fieldName ->
+        localizedBagFieldLabel(fieldName)
+    }
+    val pendingSuggestionMessage = pendingSuggestion?.let { suggestion ->
+        pendingSuggestionFieldLabel?.let { fieldLabel ->
+            stringResource(
+                R.string.format_new_label_suggestion,
+                fieldLabel,
+                suggestion.value,
+            )
+        }
+    }
+    val applySuggestionLabel = stringResource(R.string.action_apply_suggestion)
+    LaunchedEffect(pendingSuggestion, pendingSuggestionMessage) {
+        val suggestion = pendingSuggestion ?: return@LaunchedEffect
+        val message = pendingSuggestionMessage ?: return@LaunchedEffect
+        val result = suggestionSnackbarHostState.showSnackbar(
+            message = message,
+            actionLabel = applySuggestionLabel,
+            duration = SnackbarDuration.Indefinite,
+        )
+        if (result == SnackbarResult.ActionPerformed) {
+            onAcceptSuggestion?.invoke(suggestion.key)
+        }
+    }
     val weightValidation = remember(weight) { validateBagWeightInput(weight) }
     val currentForm = BagFormSnapshot(
         name = name,
@@ -547,7 +604,16 @@ fun AddBagSheet(
     fun requestPotentiallyDestructiveAction(action: () -> Unit) {
         if (confirmDismiss) pendingDiscardAction = action else action()
     }
-    fun requestDismiss() = requestPotentiallyDestructiveAction(onDismiss)
+    fun requestDismiss() {
+        if (preserveDraftOnDismiss) onDismiss() else requestPotentiallyDestructiveAction(onDismiss)
+    }
+    fun reportUserEdit(fieldName: String, value: String?) {
+        onUserFieldChange?.invoke(fieldName, value)
+    }
+    fun reportFocus(fieldName: String, focused: Boolean) {
+        onFieldFocusChange?.invoke(fieldName, focused)
+        if (focused) selectedEvidenceField = fieldName
+    }
 
     LaunchedEffect(isSaving) {
         if (isSaving) {
@@ -591,12 +657,9 @@ fun AddBagSheet(
         tastingNotes,
         weight,
     ).any { it.isBlank() } || roastDateMillis == null || expiryDateMillis == null
-    val saveButtonLabel = when {
-        isEditMode -> "Save Changes"
-        snapApproveMode && reviewDetectedFields.isEmpty() && snapDetectedFields.isNotEmpty() -> "✅ Looks Good — Save"
-        snapApproveMode -> "Accept & Save"
-        else -> "Save"
-    }
+    val saveButtonLabel = stringResource(
+        if (isEditMode) R.string.action_save else R.string.action_save_coffee,
+    )
     val saveButtonColors = if (snapApproveMode && reviewDetectedFields.isEmpty() && snapDetectedFields.isNotEmpty()) {
         ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.tertiary,
@@ -645,6 +708,18 @@ fun AddBagSheet(
                 onDismiss = { pendingDiscardAction = null },
             )
         }
+        if (showDiscardDraftDialog && onDiscardDraft != null) {
+            DestructiveActionDialog(
+                titleRes = R.string.dialog_discard_scan_title,
+                messageRes = R.string.msg_discard_scan_body,
+                confirmLabelRes = R.string.action_discard,
+                onConfirm = {
+                    showDiscardDraftDialog = false
+                    onDiscardDraft()
+                },
+                onDismiss = { showDiscardDraftDialog = false },
+            )
+        }
         BackHandler {
             if (!isSaving) requestDismiss()
         }
@@ -667,11 +742,14 @@ fun AddBagSheet(
             TopAppBar(
                 title = {
                     Text(
-                        text = when {
-                            isEditMode -> "Edit Coffee Bag"
-                            snapApproveMode -> "Review Bag"
-                            else -> "Add Coffee Bag"
-                        },
+                        text = stringResource(
+                            when {
+                                isEditMode -> R.string.screen_edit_coffee_title
+                                preserveDraftOnDismiss || capturedPhotoUris != null || ocrPrefill != null ->
+                                    R.string.screen_review_coffee_title
+                                else -> R.string.screen_add_coffee_title
+                            },
+                        ),
                         modifier = Modifier.semantics { heading() },
                     )
                 },
@@ -684,9 +762,26 @@ fun AddBagSheet(
                     }
                 },
                 actions = {
+                    if (onDiscardDraft != null) {
+                        IconButton(
+                            onClick = { showDiscardDraftDialog = true },
+                            enabled = !isSaving,
+                        ) {
+                            Icon(
+                                Icons.Filled.DeleteOutline,
+                                contentDescription = stringResource(R.string.action_discard),
+                            )
+                        }
+                    }
                     if (onScanMorePhotos != null) {
                         IconButton(
-                            onClick = { requestPotentiallyDestructiveAction(onScanMorePhotos) },
+                            onClick = {
+                                if (preserveDraftOnDismiss) {
+                                    onScanMorePhotos()
+                                } else {
+                                    requestPotentiallyDestructiveAction(onScanMorePhotos)
+                                }
+                            },
                             enabled = !isSaving,
                         ) {
                             Icon(
@@ -706,24 +801,20 @@ fun AddBagSheet(
                 state = listState,
             ) {
                 item {
-                    if (isProcessing && !isEditMode) {
-                        ProcessingStatusCard()
-                    } else {
-                        CapturedPhotoReviewStrip(capturedPhotoUris)
-                        if (reviewHints.isNotEmpty()) {
-                            ReviewHintsCard(reviewHints = reviewHints)
-                        }
-                        val hasLlmEvidence = fieldEvidence.values.any {
-                            it.sourceType == BagFieldSourceType.LLM
-                        }
-                        LlmEnrichmentStatusCard(
-                            status = llmStatus,
-                            hasLlmEvidence = hasLlmEvidence,
-                            onRetry = onRetryLlmEnrichment,
-                            onEnableAi = onEnableAi,
-                            onSetupAi = onSetupAi,
-                        )
-                        if (!snapApproveMode) {
+                    CapturedPhotoReviewStrip(capturedPhotoUris)
+                    RecognitionStatusRow(
+                        presentation = recognition,
+                        onRetry = onRetryLlmEnrichment,
+                        onEnable = onEnableAi,
+                        onInstall = onInstallLabelRecognition,
+                        onSetup = onSetupAi,
+                        onDisable = onDisableLabelRecognition,
+                        onRetake = onScanMorePhotos,
+                    )
+                    if (reviewHints.isNotEmpty()) {
+                        ReviewHintsCard(reviewHints = reviewHints)
+                    }
+                    if (!snapApproveMode) {
                             selectedEvidence?.let { evidence ->
                                 FieldEvidencePreviewCard(
                                     evidence = evidence,
@@ -748,12 +839,30 @@ fun AddBagSheet(
                                                     isExploringQr = false
                                                     qrExploredMetadata = metadata
                                                     if (metadata != null) {
-                                                        if (name.isBlank() && metadata.name != null) name = metadata.name
-                                                        if (roaster.isBlank() && metadata.roaster != null) roaster = metadata.roaster
-                                                        if (originCountry.isBlank() && metadata.origin != null) originCountry = metadata.origin
-                                                        if (originRegion.isBlank() && metadata.region != null) originRegion = metadata.region
-                                                        if (processType.isBlank() && metadata.processType != null) processType = metadata.processType
-                                                        if (tastingNotes.isBlank() && metadata.tastingNotes != null) tastingNotes = metadata.tastingNotes
+                                                        if (name.isBlank() && metadata.name != null) {
+                                                            name = metadata.name
+                                                            reportUserEdit("name", metadata.name)
+                                                        }
+                                                        if (roaster.isBlank() && metadata.roaster != null) {
+                                                            roaster = metadata.roaster
+                                                            reportUserEdit("roaster", metadata.roaster)
+                                                        }
+                                                        if (originCountry.isBlank() && metadata.origin != null) {
+                                                            originCountry = metadata.origin
+                                                            reportUserEdit("origin", metadata.origin)
+                                                        }
+                                                        if (originRegion.isBlank() && metadata.region != null) {
+                                                            originRegion = metadata.region
+                                                            reportUserEdit("region", metadata.region)
+                                                        }
+                                                        if (processType.isBlank() && metadata.processType != null) {
+                                                            processType = metadata.processType
+                                                            reportUserEdit("processType", metadata.processType)
+                                                        }
+                                                        if (tastingNotes.isBlank() && metadata.tastingNotes != null) {
+                                                            tastingNotes = metadata.tastingNotes
+                                                            reportUserEdit("tastingNotes", metadata.tastingNotes)
+                                                        }
                                                     }
                                                 }
                                             }
@@ -762,25 +871,23 @@ fun AddBagSheet(
                                     )
                                 }
                             }
-                        }
                     }
                 }
 
-                if (isProcessing && !isEditMode) {
-                    item {
-                        ProcessingTextFieldSkeleton(label = stringResource(R.string.label_name))
-                    }
-                    item { ProcessingTextFieldSkeleton(label = stringResource(R.string.label_roaster)) }
-                    item { ProcessingTextFieldSkeleton(label = stringResource(R.string.label_origin)) }
-                    item { ProcessingTextFieldSkeleton(label = "Weight") }
-                } else if (snapApproveMode) {
+                if (snapApproveMode) {
                     item {
                         SnapApproveSection(
                             name = name,
-                            onNameChange = { name = it },
+                            onNameChange = {
+                                name = it
+                                reportUserEdit("name", it)
+                            },
                             nameSuggestions = nameSuggestions,
                             roaster = roaster,
-                            onRoasterChange = { roaster = it },
+                            onRoasterChange = {
+                                roaster = it
+                                reportUserEdit("roaster", it)
+                            },
                             roasterSuggestions = roasterSuggestions,
                             confidentFields = confidentDetectedFields,
                             reviewFields = reviewDetectedFields,
@@ -809,7 +916,10 @@ fun AddBagSheet(
                         item {
                             OutlinedTextField(
                                 value = barcode,
-                                onValueChange = { barcode = it },
+                                onValueChange = {
+                                    barcode = it
+                                    reportUserEdit("barcode", it)
+                                },
                                 label = { Text(stringResource(R.string.label_barcode_ean)) },
                                 shape = MaterialTheme.shapes.small,
                                 singleLine = true,
@@ -835,7 +945,10 @@ fun AddBagSheet(
                         item {
                             OutlinedTextField(
                                 value = barcode,
-                                onValueChange = { barcode = it },
+                                onValueChange = {
+                                    barcode = it
+                                    reportUserEdit("barcode", it)
+                                },
                                 label = { Text(stringResource(R.string.label_barcode_ean)) },
                                 shape = MaterialTheme.shapes.small,
                                 singleLine = true,
@@ -859,13 +972,16 @@ fun AddBagSheet(
                     item {
                         SuggestingTextField(
                             value = name,
-                            onValueChange = { name = it },
+                            onValueChange = {
+                                name = it
+                                reportUserEdit("name", it)
+                            },
                             label = stringResource(R.string.label_name_required),
                             suggestions = nameSuggestions,
                             enabled = !isSaving,
                             modifier = Modifier.padding(bottom = 4.dp),
                             onFocusChanged = { focused ->
-                                if (focused) selectedEvidenceField = "name"
+                                reportFocus("name", focused)
                             },
                         )
                         FieldEvidenceAssist(
@@ -876,13 +992,16 @@ fun AddBagSheet(
                     item {
                         SuggestingTextField(
                             value = roaster,
-                            onValueChange = { roaster = it },
+                            onValueChange = {
+                                roaster = it
+                                reportUserEdit("roaster", it)
+                            },
                             label = stringResource(R.string.label_roaster),
                             suggestions = roasterSuggestions,
                             enabled = !isSaving,
                             modifier = Modifier.padding(bottom = 4.dp),
                             onFocusChanged = { focused ->
-                                if (focused) selectedEvidenceField = "roaster"
+                                reportFocus("roaster", focused)
                             },
                         )
                         FieldEvidenceAssist(
@@ -893,13 +1012,16 @@ fun AddBagSheet(
                     item {
                         SuggestingTextField(
                             value = originCountry,
-                            onValueChange = { originCountry = it },
+                            onValueChange = {
+                                originCountry = it
+                                reportUserEdit("origin", it)
+                            },
                             label = stringResource(R.string.label_origin),
                             suggestions = originSuggestions,
                             enabled = !isSaving,
                             modifier = Modifier.padding(bottom = 4.dp),
                             onFocusChanged = { focused ->
-                                if (focused) selectedEvidenceField = "origin"
+                                reportFocus("origin", focused)
                             },
                         )
                         FieldEvidenceAssist(
@@ -910,13 +1032,16 @@ fun AddBagSheet(
                     item {
                         SuggestingTextField(
                             value = originRegion,
-                            onValueChange = { originRegion = it },
+                            onValueChange = {
+                                originRegion = it
+                                reportUserEdit("region", it)
+                            },
                             label = stringResource(R.string.label_region),
                             suggestions = regionSuggestions,
                             enabled = !isSaving,
                             modifier = Modifier.padding(bottom = 4.dp),
                             onFocusChanged = { focused ->
-                                if (focused) selectedEvidenceField = "region"
+                                reportFocus("region", focused)
                             },
                         )
                         FieldEvidenceAssist(
@@ -927,7 +1052,10 @@ fun AddBagSheet(
                     item {
                         OutlinedTextField(
                             value = weight,
-                            onValueChange = { weight = it },
+                            onValueChange = {
+                                weight = it
+                                reportUserEdit("weight", it)
+                            },
                             label = { Text(stringResource(R.string.label_weight_grams)) },
                             shape = MaterialTheme.shapes.small,
                             singleLine = true,
@@ -946,7 +1074,7 @@ fun AddBagSheet(
                                 .fillMaxWidth()
                                 .padding(bottom = 4.dp)
                                 .onFocusChanged {
-                                    if (it.isFocused) selectedEvidenceField = "weight"
+                                    reportFocus("weight", it.isFocused)
                                 },
                         )
                         FlowRow(
@@ -960,6 +1088,7 @@ fun AddBagSheet(
                                     onClick = {
                                         selectedEvidenceField = "weight"
                                         weight = preset
+                                        reportUserEdit("weight", preset)
                                     },
                                     label = { Text("${preset}g") },
                                 )
@@ -984,8 +1113,14 @@ fun AddBagSheet(
                                 .padding(bottom = 8.dp),
                             trailingIcon = {
                                 if (roastDateMillis != null) {
-                                    IconButton(onClick = { roastDateMillis = null }) {
-                                        Icon(Icons.Filled.Close, "Clear")
+                                    IconButton(onClick = {
+                                        roastDateMillis = null
+                                        reportUserEdit("roastDate", null)
+                                    }) {
+                                        Icon(
+                                            Icons.Filled.Close,
+                                            stringResource(R.string.action_clear),
+                                        )
                                     }
                                 }
                             },
@@ -1005,7 +1140,15 @@ fun AddBagSheet(
                                 .fillMaxWidth()
                                 .padding(bottom = 4.dp),
                         ) {
-                            Text(if (roastDateMillis != null) "Change roast date" else "Set roast date")
+                            Text(
+                                stringResource(
+                                    if (roastDateMillis != null) {
+                                        R.string.action_change_roast_date
+                                    } else {
+                                        R.string.action_set_roast_date
+                                    },
+                                ),
+                            )
                         }
                         FieldEvidenceAssist(
                             evidence = fieldEvidence["roastDate"],
@@ -1019,8 +1162,9 @@ fun AddBagSheet(
                                 confirmButton = {
                                     TextButton(onClick = {
                                         roastDateMillis = datePickerState.selectedDateMillis
+                                        reportUserEdit("roastDate", roastDateMillis?.toString())
                                         showRoastDatePicker = false
-                                    }) { Text("OK") }
+                                    }) { Text(stringResource(R.string.action_ok)) }
                                 },
                                 dismissButton = {
                                     TextButton(onClick = { showRoastDatePicker = false }) { Text(stringResource(R.string.action_cancel)) }
@@ -1037,7 +1181,15 @@ fun AddBagSheet(
                                 .fillMaxWidth()
                                 .padding(bottom = 12.dp),
                         ) {
-                            Text(if (showMoreDetails) "Hide optional details" else "Show optional details")
+                            Text(
+                                stringResource(
+                                    if (showMoreDetails) {
+                                        R.string.action_hide_optional_details
+                                    } else {
+                                        R.string.action_show_optional_details
+                                    },
+                                ),
+                            )
                         }
                     }
 
@@ -1045,14 +1197,17 @@ fun AddBagSheet(
                         item {
                             SuggestingTextField(
                                 value = roastLevel,
-                                onValueChange = { roastLevel = it },
+                                onValueChange = {
+                                    roastLevel = it
+                                    reportUserEdit("roastLevel", it)
+                                },
                                 label = stringResource(R.string.label_roast_level),
                                 suggestions = roastLevelSuggestions,
                                 enabled = !isSaving,
                                 multiValue = true,
                                 modifier = Modifier.padding(bottom = 4.dp),
                                 onFocusChanged = { focused ->
-                                    if (focused) selectedEvidenceField = "roastLevel"
+                                    reportFocus("roastLevel", focused)
                                 },
                             )
                             FieldEvidenceAssist(
@@ -1063,14 +1218,17 @@ fun AddBagSheet(
                         item {
                             SuggestingTextField(
                                 value = variety,
-                                onValueChange = { variety = it },
+                                onValueChange = {
+                                    variety = it
+                                    reportUserEdit("variety", it)
+                                },
                                 label = stringResource(R.string.label_variety),
                                 suggestions = varietySuggestions,
                                 multiValue = true,
                                 enabled = !isSaving,
                                 modifier = Modifier.padding(bottom = 4.dp),
                                 onFocusChanged = { focused ->
-                                    if (focused) selectedEvidenceField = "variety"
+                                    reportFocus("variety", focused)
                                 },
                             )
                             FieldEvidenceAssist(
@@ -1081,13 +1239,16 @@ fun AddBagSheet(
                         item {
                             SuggestingTextField(
                                 value = farm,
-                                onValueChange = { farm = it },
+                                onValueChange = {
+                                    farm = it
+                                    reportUserEdit("farm", it)
+                                },
                                 label = stringResource(R.string.label_farm),
                                 suggestions = farmSuggestions,
                                 enabled = !isSaving,
                                 modifier = Modifier.padding(bottom = 4.dp),
                                 onFocusChanged = { focused ->
-                                    if (focused) selectedEvidenceField = "farm"
+                                    reportFocus("farm", focused)
                                 },
                             )
                             FieldEvidenceAssist(
@@ -1098,13 +1259,16 @@ fun AddBagSheet(
                         item {
                             SuggestingTextField(
                                 value = altitude,
-                                onValueChange = { altitude = it },
+                                onValueChange = {
+                                    altitude = it
+                                    reportUserEdit("altitude", it)
+                                },
                                 label = stringResource(R.string.label_altitude),
                                 suggestions = altitudeSuggestions,
                                 enabled = !isSaving,
                                 modifier = Modifier.padding(bottom = 4.dp),
                                 onFocusChanged = { focused ->
-                                    if (focused) selectedEvidenceField = "altitude"
+                                    reportFocus("altitude", focused)
                                 },
                             )
                             FieldEvidenceAssist(
@@ -1115,13 +1279,16 @@ fun AddBagSheet(
                         item {
                             SuggestingTextField(
                                 value = processType,
-                                onValueChange = { processType = it },
+                                onValueChange = {
+                                    processType = it
+                                    reportUserEdit("processType", it)
+                                },
                                 label = stringResource(R.string.label_process),
                                 suggestions = processSuggestions,
                                 enabled = !isSaving,
                                 modifier = Modifier.padding(bottom = 4.dp),
                                 onFocusChanged = { focused ->
-                                    if (focused) selectedEvidenceField = "processType"
+                                    reportFocus("processType", focused)
                                 },
                             )
                             FieldEvidenceAssist(
@@ -1132,14 +1299,17 @@ fun AddBagSheet(
                         item {
                             SuggestingTextField(
                                 value = tastingNotes,
-                                onValueChange = { tastingNotes = it },
+                                onValueChange = {
+                                    tastingNotes = it
+                                    reportUserEdit("tastingNotes", it)
+                                },
                                 label = stringResource(R.string.label_tasting_notes),
                                 suggestions = tastingNoteSuggestions,
                                 multiValue = true,
                                 enabled = !isSaving,
                                 modifier = Modifier.padding(bottom = 4.dp),
                                 onFocusChanged = { focused ->
-                                    if (focused) selectedEvidenceField = "tastingNotes"
+                                    reportFocus("tastingNotes", focused)
                                 },
                             )
                             FieldEvidenceAssist(
@@ -1161,8 +1331,14 @@ fun AddBagSheet(
                                     .padding(bottom = 8.dp),
                                 trailingIcon = {
                                     if (expiryDateMillis != null) {
-                                        IconButton(onClick = { expiryDateMillis = null }) {
-                                            Icon(Icons.Filled.Close, "Clear")
+                                        IconButton(onClick = {
+                                            expiryDateMillis = null
+                                            reportUserEdit("expiryDate", null)
+                                        }) {
+                                            Icon(
+                                                Icons.Filled.Close,
+                                                stringResource(R.string.action_clear),
+                                            )
                                         }
                                     }
                                 },
@@ -1182,7 +1358,15 @@ fun AddBagSheet(
                                     .fillMaxWidth()
                                     .padding(bottom = 4.dp),
                             ) {
-                                Text(if (expiryDateMillis != null) "Change best before" else "Set best before")
+                                Text(
+                                    stringResource(
+                                        if (expiryDateMillis != null) {
+                                            R.string.action_change_best_before
+                                        } else {
+                                            R.string.action_set_best_before
+                                        },
+                                    ),
+                                )
                             }
                             FieldEvidenceAssist(
                                 evidence = fieldEvidence["expiryDate"],
@@ -1196,8 +1380,9 @@ fun AddBagSheet(
                                     confirmButton = {
                                         TextButton(onClick = {
                                             expiryDateMillis = datePickerState.selectedDateMillis
+                                            reportUserEdit("expiryDate", expiryDateMillis?.toString())
                                             showExpiryDatePicker = false
-                                        }) { Text("OK") }
+                                        }) { Text(stringResource(R.string.action_ok)) }
                                     },
                                     dismissButton = {
                                         TextButton(onClick = { showExpiryDatePicker = false }) { Text(stringResource(R.string.action_cancel)) }
@@ -1220,7 +1405,10 @@ fun AddBagSheet(
                                         .toggleable(
                                             value = isDecaf,
                                             role = Role.Checkbox,
-                                            onValueChange = { isDecaf = it },
+                                            onValueChange = {
+                                                isDecaf = it
+                                                reportUserEdit("isDecaf", it.toString())
+                                            },
                                         )
                                         .padding(horizontal = 16.dp, vertical = 12.dp),
                                     verticalAlignment = Alignment.CenterVertically,
@@ -1273,6 +1461,7 @@ fun AddBagSheet(
                                                     selected = selected,
                                                     onClick = {
                                                         decafProcess = if (process == DecafProcess.UNKNOWN) null else key
+                                                        reportUserEdit("decafProcess", decafProcess)
                                                     },
                                                     label = { Text(process.shortLabel) },
                                                 )
@@ -1285,7 +1474,10 @@ fun AddBagSheet(
                         item {
                             OutlinedTextField(
                                 value = notes,
-                                onValueChange = { notes = it },
+                                onValueChange = {
+                                    notes = it
+                                    reportUserEdit("notes", it)
+                                },
                                 label = { Text(stringResource(R.string.label_notes)) },
                                 shape = MaterialTheme.shapes.small,
                                 minLines = 2,
@@ -1391,7 +1583,6 @@ fun AddBagSheet(
                 enabled = name.isNotBlank() &&
                     weightValidation.isValid &&
                     !isExploringQr &&
-                    !isProcessing &&
                     !isSaving,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -1416,9 +1607,38 @@ fun AddBagSheet(
                         .clearAndSetSemantics { disabled() },
                 )
             }
+            SnackbarHost(
+                hostState = suggestionSnackbarHostState,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(horizontal = 16.dp, vertical = 84.dp),
+            )
         }
     }
 }
+
+@Composable
+private fun localizedBagFieldLabel(fieldName: String): String = stringResource(
+    when (fieldName) {
+        "name" -> R.string.label_name_required
+        "roaster" -> R.string.label_roaster
+        "origin" -> R.string.label_origin
+        "region" -> R.string.label_region
+        "farm" -> R.string.label_farm
+        "altitude" -> R.string.label_altitude
+        "roastLevel" -> R.string.label_roast_level
+        "barcode" -> R.string.label_barcode_ean
+        "weight" -> R.string.label_weight_grams
+        "notes" -> R.string.label_notes
+        "variety" -> R.string.label_variety
+        "processType" -> R.string.label_process
+        "tastingNotes" -> R.string.label_tasting_notes
+        "isDecaf" -> R.string.label_decaf_coffee
+        "roastDate" -> R.string.label_roast_date
+        "expiryDate" -> R.string.label_best_before
+        else -> R.string.label_coffee
+    },
+)
 
 private data class SnapApproveFieldItem(
     val fieldName: String,
@@ -1578,7 +1798,7 @@ private fun CapturedPhotoReviewStrip(capturedPhotoUris: String?) {
             .fillMaxWidth()
             .padding(bottom = 16.dp),
     ) {
-        items(items = photoUris, key = { it }) { uri ->
+        itemsIndexed(items = photoUris, key = { _, uri -> uri }) { index, uri ->
             BagThumbnail(
                 uri = uri,
                 modifier = Modifier
@@ -1586,7 +1806,11 @@ private fun CapturedPhotoReviewStrip(capturedPhotoUris: String?) {
                     .clickable { fullScreenPhotoUri = uri },
                 downsampleTarget = 168.dp,
                 shape = MaterialTheme.shapes.medium,
-                contentDescription = stringResource(R.string.cd_captured_bag_photo),
+                contentDescription = when (index) {
+                    0 -> stringResource(R.string.cd_front_label_photo)
+                    1 -> stringResource(R.string.cd_back_label_photo)
+                    else -> stringResource(R.string.format_cd_additional_label_photo, index - 1)
+                },
             )
         }
     }
@@ -1755,130 +1979,93 @@ private fun FieldEvidenceAssist(
     if (evidence == null) return
     AssistChip(
         onClick = onClick,
-        label = { Text(evidence.summaryLabel()) },
+        label = { Text(evidence.localizedSummaryLabel()) },
         modifier = Modifier.padding(bottom = 8.dp),
     )
 }
 
 @Composable
-private fun ProcessingStatusCard() {
-    ElevatedCard(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 12.dp),
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
-                LoadingIndicator(modifier = Modifier.size(20.dp))
-                Text(
-                    text = stringResource(R.string.msg_analyzing_label),
-                    style = MaterialTheme.typography.titleMedium,
-                )
-            }
-            LoadingIndicator(modifier = Modifier.fillMaxWidth())
-            Text(
-                text = stringResource(R.string.msg_analyzing_label_detail),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-    }
-}
-
-@Composable
-private fun LlmEnrichmentStatusCard(
-    status: LlmEnrichmentStatus,
-    hasLlmEvidence: Boolean,
+private fun RecognitionStatusRow(
+    presentation: RecognitionPresentation,
     onRetry: (() -> Unit)?,
-    onEnableAi: (() -> Unit)? = null,
-    onSetupAi: (() -> Unit)? = null,
+    onEnable: (() -> Unit)?,
+    onInstall: (() -> Unit)?,
+    onSetup: (() -> Unit)?,
+    onDisable: (() -> Unit)?,
+    onRetake: (() -> Unit)?,
 ) {
-    // NOT_RUN has nothing to say, and a SUCCEEDED pass with no actual LLM evidence is
-    // indistinguishable from "didn't run" — both stay silent. FAILED IS surfaced, but
-    // because the pipeline already auto-retried before delivering it, we present it as a
-    // calm, informative note (not an alarming error): it explains the likely cause and
-    // lets the user retry once more or just keep the fields the photo text produced.
-    val staySilent = status == LlmEnrichmentStatus.NOT_RUN ||
-        (status == LlmEnrichmentStatus.SUCCEEDED && !hasLlmEvidence)
-    if (staySilent) {
-        return
+    val message = when (presentation.status) {
+        RecognitionStatusText.CHECKING_LABEL -> stringResource(R.string.msg_checking_label)
+        RecognitionStatusText.CHECKING_MORE_DETAILS -> stringResource(R.string.msg_checking_more_details)
+        RecognitionStatusText.DETAILS_NEED_REVIEW -> pluralStringResource(
+            R.plurals.format_label_details_need_review,
+            presentation.unresolvedCount,
+            presentation.unresolvedCount,
+        )
+        RecognitionStatusText.COULD_NOT_READ_MORE -> stringResource(R.string.msg_could_not_read_more_details)
+        null -> null
     }
-    val message = when (status) {
-        LlmEnrichmentStatus.SUCCEEDED -> R.string.msg_llm_enrichment_succeeded
-        LlmEnrichmentStatus.FAILED -> R.string.msg_llm_enrichment_failed
-        LlmEnrichmentStatus.UNAVAILABLE -> R.string.msg_llm_enrichment_unavailable
-        LlmEnrichmentStatus.SETUP_REQUIRED -> R.string.msg_llm_model_setup_required
-        LlmEnrichmentStatus.TIMED_OUT -> R.string.msg_llm_enrichment_timed_out
-        LlmEnrichmentStatus.NOT_RUN -> return
-    }
-    // Both FAILED and UNAVAILABLE offer a retry, but only UNAVAILABLE ("AI not set up
-    // yet") gets attention colour; FAILED stays calm because it self-heals on retry.
-    val canRetry = status == LlmEnrichmentStatus.FAILED ||
-        status == LlmEnrichmentStatus.UNAVAILABLE ||
-        status == LlmEnrichmentStatus.TIMED_OUT
-    val emphasize = status == LlmEnrichmentStatus.UNAVAILABLE ||
-        status == LlmEnrichmentStatus.SETUP_REQUIRED
+    if (message == null && presentation.offer == null && presentation.recoveryAction == null) return
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 12.dp),
+            .padding(bottom = 12.dp)
+            .semantics {
+                if (presentation.announceUpdate) liveRegion = LiveRegionMode.Polite
+            },
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            Text(
-                text = stringResource(message),
-                style = MaterialTheme.typography.bodyMedium,
-                color = if (emphasize) {
-                    MaterialTheme.colorScheme.error
-                } else {
-                    MaterialTheme.colorScheme.onSurfaceVariant
-                },
-            )
+            message?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            if (presentation.offer != null) {
+                Text(
+                    text = stringResource(R.string.msg_label_recognition_offer),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
             when {
-                status == LlmEnrichmentStatus.SETUP_REQUIRED && onSetupAi != null -> {
-                    TextButton(onClick = onSetupAi) {
-                        Text(stringResource(R.string.action_set_up_ai))
+                presentation.offer == RecognitionOffer.FINISH_SETUP && onSetup != null -> {
+                    TextButton(onClick = onSetup) {
+                        Text(stringResource(R.string.action_finish_label_recognition_setup))
                     }
                 }
-                // "Unavailable" is usually "Mindlayer is installed but this app
-                // was never authorised". Offer an explicit authorization prompt
-                // instead of a retry that can't succeed without consent;
-                // requestConsent also covers the already-approved + service-down
-                // cases (it just rebinds and re-runs).
-                status == LlmEnrichmentStatus.UNAVAILABLE && onEnableAi != null -> {
-                    TextButton(onClick = onEnableAi) {
-                        Text(stringResource(R.string.action_enable_ai))
+                presentation.offer == RecognitionOffer.INSTALL && onInstall != null -> {
+                    TextButton(onClick = onInstall) {
+                        Text(stringResource(R.string.action_set_up_label_recognition))
                     }
                 }
-                canRetry && onRetry != null -> {
+                presentation.offer == RecognitionOffer.ENABLE && onEnable != null -> {
+                    TextButton(onClick = onEnable) {
+                        Text(stringResource(R.string.action_use_label_recognition))
+                    }
+                }
+                presentation.recoveryAction == RecognitionRecoveryAction.RETRY && onRetry != null -> {
                     TextButton(onClick = onRetry) {
-                        Text(stringResource(R.string.action_retry_llm_enrichment))
+                        Text(stringResource(R.string.action_try_label_again))
                     }
+                }
+                presentation.recoveryAction == RecognitionRecoveryAction.RETAKE && onRetake != null -> {
+                    TextButton(onClick = onRetake) {
+                        Text(stringResource(R.string.action_retake_label_photo))
+                    }
+                }
+            }
+            if (presentation.offer != null && onDisable != null) {
+                TextButton(onClick = onDisable) {
+                    Text(stringResource(R.string.action_always_enter_manually))
                 }
             }
         }
     }
-}
-
-@Composable
-private fun ProcessingTextFieldSkeleton(label: String) {
-    OutlinedTextField(
-        value = "",
-        onValueChange = {},
-        enabled = false,
-        label = { Text(label) },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 8.dp),
-    )
 }
 
 @Composable
@@ -1991,7 +2178,7 @@ private fun QrApprovalCard(
                         Text(stringResource(R.string.action_explore_extract))
                     }
                     TextButton(onClick = onSkip) {
-                        Text("Skip")
+                        Text(stringResource(R.string.action_skip))
                     }
                 }
             }
@@ -2034,11 +2221,11 @@ private fun FieldEvidencePreviewCard(
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Text(
-                text = "Detected ${evidence.fieldName.replaceFirstChar { it.uppercase() }}",
+                text = stringResource(R.string.label_label_evidence),
                 style = MaterialTheme.typography.titleMedium,
             )
             Text(
-                text = evidence.summaryLabel(),
+                text = evidence.localizedSummaryLabel(),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -2068,6 +2255,36 @@ private fun FieldEvidencePreviewCard(
             }
         }
     }
+}
+
+@Composable
+private fun BagFieldEvidence.localizedSummaryLabel(): String {
+    val sourceLabel = stringResource(
+        when (sourceType) {
+            BagFieldSourceType.OCR -> R.string.evidence_from_label
+            BagFieldSourceType.CONSENSUS -> R.string.evidence_confirmed_on_label
+            BagFieldSourceType.QR_LINK_LOOKUP -> R.string.evidence_from_qr_website
+            BagFieldSourceType.OBSERVED_BARCODE_STEM -> R.string.evidence_from_label_code
+            BagFieldSourceType.LOCAL_BARCODE_MATCH -> R.string.evidence_from_saved_bag
+            BagFieldSourceType.BARCODE_LOOKUP -> R.string.evidence_from_barcode_lookup
+            BagFieldSourceType.LLM -> R.string.evidence_suggested_from_label_context
+        },
+    )
+    val sideLabel = side?.let { side ->
+        stringResource(
+            if (side == BagCaptureSide.FRONT) {
+                R.string.evidence_front_photo
+            } else {
+                R.string.evidence_back_photo
+            },
+        )
+    }
+    val reviewLabel = if (confidence == BagFieldConfidence.HIGH) {
+        null
+    } else {
+        stringResource(R.string.label_needs_review)
+    }
+    return listOfNotNull(sourceLabel, sideLabel, reviewLabel).joinToString(" · ")
 }
 
 private fun loadEvidenceBitmap(

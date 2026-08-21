@@ -57,11 +57,6 @@
     <string name="format_notif_brew_target_reached_body">Das %1$s-Ziel Ihres Rezepts wurde erreicht. Tippen Sie, um den Sud zu überprüfen.</string>
     <string name="action_add_coffee">Kaffee hinzufügen</string>
     <string name="action_read_bag_photos">Taschenfotos lesen</string>
-    <string name="action_scan_bag_ai">Tasche scannen · KI füllt Details aus</string>
     <string name="action_scan_first_bag">Scannen Sie meine erste Tasche</string>
     <string name="msg_scan_first_coffee_hint">Scannen Sie die Vorder- und Rückseite, um die Details automatisch einzugeben. Fotos bleiben auf Ihrem Gerät.</string>
-    <string name="dialog_ai_scan_setup_title">Richten Sie das Scannen privater Etiketten ein</string>
-    <string name="msg_ai_scan_setup">Starlit Coffee verwendet Mindlayer, um Kaffeeetiketten privat auf Ihrem Gerät zu lesen. Installieren Sie es einmal, dann wird dieser Scan automatisch fortgesetzt.</string>
-    <string name="dialog_ai_scan_unsupported_title">Automatisches Scannen wird nicht unterstützt</string>
-    <string name="msg_ai_scan_unsupported">Für das automatische Scannen von Etiketten ist Android 12 oder neuer erforderlich. Sie können die Tasche weiterhin manuell hinzufügen oder ihren Barcode scannen.</string>
 </resources>

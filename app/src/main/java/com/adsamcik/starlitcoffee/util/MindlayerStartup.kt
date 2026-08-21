@@ -86,10 +86,3 @@ object MindlayerInstallLink {
 
     private const val TAG = "MindlayerInstallLink"
 }
-
-internal fun shouldOfferMindlayerConnection(
-    isInstalled: Boolean,
-    connectionAttemptFinished: Boolean,
-    isConnected: Boolean,
-    offerHandled: Boolean,
-): Boolean = isInstalled && connectionAttemptFinished && !isConnected && !offerHandled

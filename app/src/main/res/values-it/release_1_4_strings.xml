@@ -57,11 +57,6 @@
     <string name="format_notif_brew_target_reached_body">L\'obiettivo %1$s della tua ricetta è stato raggiunto. Tocca per controllare la birra.</string>
     <string name="action_add_coffee">Aggiungi il caffè</string>
     <string name="action_read_bag_photos">Leggi le foto della borsa</string>
-    <string name="action_scan_bag_ai">Scansiona la borsa · L\'intelligenza artificiale riempie i dettagli</string>
     <string name="action_scan_first_bag">Scansiona la mia prima borsa</string>
     <string name="msg_scan_first_coffee_hint">Scansione fronte e retro per inserire automaticamente i dettagli. Le foto rimangono sul tuo dispositivo.</string>
-    <string name="dialog_ai_scan_setup_title">Configura la scansione dell\'etichetta privata</string>
-    <string name="msg_ai_scan_setup">Starlit Coffee utilizza Mindlayer per leggere le etichette del caffè in privato sul tuo dispositivo. Installalo una volta, quindi la scansione continuerà automaticamente.</string>
-    <string name="dialog_ai_scan_unsupported_title">La scansione automatica non è supportata</string>
-    <string name="msg_ai_scan_unsupported">La scansione automatica delle etichette richiede Android 12 o versioni successive. Puoi comunque aggiungere la borsa manualmente o scansionarne il codice a barre.</string>
 </resources>

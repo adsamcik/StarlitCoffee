@@ -12,7 +12,4 @@
     <string name="msg_could_not_undo_coffee_use">Změnu nelze vrátit, protože se tento sáček změnil</string>
     <string name="label_coffee_use_history">Spotřeba kávy</string>
     <string name="format_grams_used">Použito %1$.0f g</string>
-    <string name="msg_llm_model_setup_required">Mindlayer potřebuje svůj model v zařízení, než umělá inteligence dokáže přečíst tento štítek. Otevřete nastavení a pak to zkuste znovu; již nalezená pole můžete bezpečně upravit.</string>
-    <string name="msg_llm_enrichment_timed_out">Skenování dosáhlo pětiminutového limitu. Můžete použít již nalezená pole, upravit je nebo skenování zopakovat.</string>
-    <string name="action_set_up_ai">Otevřít nastavení modelu</string>
 </resources>

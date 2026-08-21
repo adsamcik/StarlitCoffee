@@ -57,11 +57,6 @@
     <string name="format_notif_brew_target_reached_body">您的食谱的 %1$s 目标已达到。点击以检查冲泡情况。</string>
     <string name="action_add_coffee">添加咖啡</string>
     <string name="action_read_bag_photos">阅读包包照片</string>
-    <string name="action_scan_bag_ai">扫包·AI填写详情</string>
     <string name="action_scan_first_bag">扫描我的第一个包</string>
     <string name="msg_scan_first_coffee_hint">扫描正面和背面以自动填写详细信息。照片保留在您的设备上。</string>
-    <string name="dialog_ai_scan_setup_title">设置自有标签扫描</string>
-    <string name="msg_ai_scan_setup">Starlit Coffee 使用 Mindlayer 在您的设备上私密地读取咖啡标签。安装一次，扫描将自动继续。</string>
-    <string name="dialog_ai_scan_unsupported_title">不支持自动扫描</string>
-    <string name="msg_ai_scan_unsupported">自动标签扫描需要 Android 12 或更高版本。您仍然可以手动添加行李或扫描其条形码。</string>
 </resources>

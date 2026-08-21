@@ -273,33 +273,11 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         onPartialResult: (BagPhotoProcessingResult) -> Unit,
     ): BagPhotoProcessingResult {
         reporter.report(ScanStage.BARCODE_LOOKUP)
-        val photoAnalyses = processedPhotos.map { photo ->
-            BagPhotoAnalysis(
-                uri = photo.uri,
-                side = photo.side,
-                quality = photo.quality,
-                extractedText = photo.fullText,
-            )
-        }
-        val combinedOcrText = combineOcrTextBySide(processedPhotos)
-        val allCandidates = processedPhotos
-            .flatMap { photo -> buildFieldCandidates(photo) }
-            .toMutableList()
-        val ocrFieldEvidence = resolveBagPhotoFieldEvidence(allCandidates)
-        onPartialResult(
-            BagPhotoProcessingResult(
-                ocrPrefill = ocrFieldEvidence
-                    .takeIf { it.isNotEmpty() }
-                    ?.let(BagPhotoScanSupport::buildPrefill),
-                capturedPhotoUris = photoUriList.joinToString(","),
-                fieldEvidence = ocrFieldEvidence,
-                photoAnalyses = photoAnalyses,
-                llmStatus = LlmEnrichmentStatus.NOT_RUN,
-                thumbnailFocus = computeThumbnailFocus(processedPhotos),
-            ),
-        )
-        val rawDetectedQrUrl = processedPhotos.firstNotNullOfOrNull { it.detectedQrUrl }
-        val detectedBarcode = resolveDetectedBarcode(processedPhotos, combinedOcrText, allCandidates)
+        val initial = buildInitialOcrContext(photoUriList, processedPhotos, onPartialResult)
+        val photoAnalyses = initial.photoAnalyses
+        val combinedOcrText = initial.combinedOcrText
+        val allCandidates = initial.allCandidates
+        val detectedBarcode = initial.detectedBarcode
 
         val matchedBagByBarcode = findLocalBagByBarcode(detectedBarcode)
         val inferredLocale = inferLocaleFromBarcode(detectedBarcode)
@@ -314,7 +292,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         boostKnownFieldValuesFromVocabulary(combinedOcrText)
 
         val offSummary = addOpenFoodFactsCandidates(allCandidates, detectedBarcode)
-        val qrEnrichment = buildQrLinkEnrichment(rawDetectedQrUrl)
+        val qrEnrichment = buildQrLinkEnrichment(initial.detectedQrUrl)
         allCandidates += qrEnrichment.candidates
         onPartialResult(
             buildBagPhotoProcessingResult(
@@ -341,6 +319,21 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             runLlm = runLlm,
             reporter = reporter,
             allCandidates = allCandidates,
+            onStageResult = { stageStatus ->
+                onPartialResult(
+                    buildBagPhotoProcessingResult(
+                        photoUriList = photoUriList,
+                        processedPhotos = processedPhotos,
+                        photoAnalyses = photoAnalyses,
+                        detectedBarcode = detectedBarcode,
+                        qrEnrichment = qrEnrichment,
+                        offSummary = offSummary,
+                        matchedBagByBarcode = matchedBagByBarcode,
+                        allCandidates = allCandidates,
+                        llmStatus = stageStatus,
+                    ),
+                )
+            },
         )
 
         reporter.report(ScanStage.FINALIZING)
@@ -354,6 +347,45 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             matchedBagByBarcode = matchedBagByBarcode,
             allCandidates = allCandidates,
             llmStatus = llmOutcome.status,
+        )
+    }
+
+    private suspend fun buildInitialOcrContext(
+        photoUriList: List<String>,
+        processedPhotos: List<ProcessedBagPhoto>,
+        onPartialResult: (BagPhotoProcessingResult) -> Unit,
+    ): InitialOcrContext {
+        val photoAnalyses = processedPhotos.map { photo ->
+            BagPhotoAnalysis(
+                uri = photo.uri,
+                side = photo.side,
+                quality = photo.quality,
+                extractedText = photo.fullText,
+            )
+        }
+        val combinedOcrText = combineOcrTextBySide(processedPhotos)
+        val allCandidates = processedPhotos
+            .flatMap { photo -> buildFieldCandidates(photo) }
+            .toMutableList()
+        val ocrFieldEvidence = resolveBagPhotoFieldEvidence(allCandidates)
+        onPartialResult(
+            BagPhotoProcessingResult(
+                ocrPrefill = ocrFieldEvidence
+                    .takeIf { it.isNotEmpty() }
+                    ?.let(BagPhotoScanSupport::buildPrefill),
+                capturedPhotoUris = photoUriList.joinToString(","),
+                fieldEvidence = ocrFieldEvidence,
+                photoAnalyses = photoAnalyses,
+                llmStatus = LlmEnrichmentStatus.NOT_RUN,
+                thumbnailFocus = computeThumbnailFocus(processedPhotos),
+            ),
+        )
+        return InitialOcrContext(
+            photoAnalyses = photoAnalyses,
+            combinedOcrText = combinedOcrText,
+            allCandidates = allCandidates,
+            detectedBarcode = resolveDetectedBarcode(processedPhotos, combinedOcrText, allCandidates),
+            detectedQrUrl = processedPhotos.firstNotNullOfOrNull { it.detectedQrUrl },
         )
     }
 
@@ -1219,6 +1251,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         runLlm: Boolean,
         reporter: ScanProgressReporter,
         allCandidates: MutableList<BagFieldCandidate>,
+        onStageResult: (LlmEnrichmentStatus) -> Unit,
     ): LlmEnrichmentOutcome {
         if (!runLlm) return LlmEnrichmentOutcome(status = LlmEnrichmentStatus.NOT_RUN)
 
@@ -1238,6 +1271,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         )
         val textCandidates = attenuateLlmConfidenceForQuality(llmOutcome.candidates, goldenQuality)
         allCandidates += textCandidates
+        onStageResult(llmOutcome.status)
         if (llmOutcome.status == LlmEnrichmentStatus.SETUP_REQUIRED) return llmOutcome
 
         reporter.report(ScanStage.VISION)
@@ -1250,6 +1284,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             goldenQuality,
         )
         allCandidates += visionCandidates
+        onStageResult(llmOutcome.status)
 
         reporter.report(ScanStage.COMBINING)
         allCandidates += runCombineEnrichmentIfNeeded(
@@ -1259,12 +1294,14 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             knownFieldValues = currentKnownValues,
             combinedOcrText = combinedOcrText,
         )
+        onStageResult(llmOutcome.status)
         // Post-translation refinement: offer the LLM close vocabulary candidates
         // for the now-English concept fields and let it keep or canonicalize.
         allCandidates += runRefineEnrichmentIfNeeded(
             allCandidates = allCandidates.toList(),
             combinedOcrText = combinedOcrText,
         )
+        onStageResult(llmOutcome.status)
         return llmOutcome
     }
 
@@ -1662,6 +1699,14 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         val quality: BagCaptureQuality,
         val passes: List<ScanPass>,
         val fullText: String,
+        val detectedBarcode: String?,
+        val detectedQrUrl: String?,
+    )
+
+    private data class InitialOcrContext(
+        val photoAnalyses: List<BagPhotoAnalysis>,
+        val combinedOcrText: String,
+        val allCandidates: MutableList<BagFieldCandidate>,
         val detectedBarcode: String?,
         val detectedQrUrl: String?,
     )

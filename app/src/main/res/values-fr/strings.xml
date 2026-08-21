@@ -289,11 +289,6 @@
     <string name="cd_notif_rating_4">Noter comme excellent</string>
 
     <!-- Bag analysis screen + notification -->
-    <string name="screen_analyzing_bag_title">Analyse de votre paquet</string>
-    <string name="msg_analyzing_bag_subtitle">L\'IA lit l\'étiquette pour remplir les détails. Cela peut prendre un instant.</string>
-    <string name="msg_analyzing_bag_background_hint">Vous pouvez continuer à utiliser l\'app — nous vous préviendrons une fois terminé.</string>
-    <string name="action_skip_ai">Ignorer l\'IA</string>
-    <string name="action_run_in_background">Continuer en arrière-plan</string>
     <string name="notif_channel_bag_analysis">Analyse de paquet</string>
     <string name="notif_channel_bag_analysis_desc">Vous prévient quand l\'IA a fini de lire l\'étiquette d\'un paquet de café.</string>
     <string name="notif_scan_progress_title">Lecture de l’étiquette du paquet…</string>
@@ -422,14 +417,11 @@
     <string name="msg_decaf_grind_adjustment">Le décaféiné est sélectionné. Le réglage de mouture ci-dessous est ajusté plus grossièrement lorsque cette méthode en bénéficie.</string>
     <string name="label_decaf_process_optional">Procédé de décaféination (facultatif)</string>
     <string name="msg_decaf_process_hint">Permet à la règle de préparation d\'orienter légèrement la mouture : les décas Swiss Water, Mountain Water et CO₂ demandent généralement moins de grossissement que ceux aux solvants.</string>
-    <string name="cd_captured_bag_photo">Photo du paquet capturée</string>
 <string name="label_detected_details">Détails détectés</string>
     <string name="msg_tap_chip_to_edit">Touchez une puce pour modifier</string>
     <string name="label_needs_review">À vérifier</string>
 <string name="action_edit_all_fields">Modifier tous les champs</string>
     <string name="action_add_more_details">Ajouter plus de détails</string>
-    <string name="msg_analyzing_label">Analyse des photos d\'étiquette</string>
-    <string name="msg_analyzing_label_detail">Nous vérifions le flou, fusionnons le texte recto/verso et préparons les champs les plus fiables.</string>
     <string name="label_review_fields">Vérifier ces champs</string>
     <string name="label_qr_website">Site web QR</string>
     <string name="action_open_website">Ouvrir le site web</string>
@@ -458,9 +450,7 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">Service IA (Mindlayer)</string>
-    <string name="action_connect_mindlayer">Connecter Mindlayer</string>
     <string name="action_mindlayer_google_play">Télécharger Mindlayer sur Google Play</string>
-    <string name="msg_mindlayer_connection_offer">Mindlayer est installé. Voulez-vous le connecter pour utiliser une IA privée sur l’appareil ?</string>
     <string name="msg_mindlayer_install_recommendation">Installez Mindlayer depuis Google Play pour lire les étiquettes des paquets de café avec une IA privée sur l’appareil. Vous pourrez le faire plus tard dans Paramètres.</string>
     <string name="action_test_connection">Tester la connexion</string>
     <string name="action_run_test_prompt">Lancer le prompt de test</string>
@@ -520,10 +510,6 @@
     <string name="msg_could_not_read_label">Impossible de lire l\'étiquette</string>
     <string name="action_retake_photo">Reprendre la photo</string>
     <string name="action_add_details_manually">Ajouter les détails manuellement</string>
-    <string name="msg_llm_enrichment_succeeded">L\'enrichissement IA a amélioré ce scan d\'étiquette.</string>
-    <string name="msg_llm_enrichment_failed">L\'IA n\'a pas pu terminer la lecture de cette étiquette cette fois — délai dépassé ou erreur temporaire (une nouvelle tentative automatique n\'a pas aidé). Touchez Réessayer pour relancer, ou remplissez simplement les champs ci-dessous.</string>
-    <string name="msg_llm_enrichment_unavailable">L\'enrichissement IA n\'est pas disponible pour le moment. Vous pouvez réessayer ou continuer la modification manuelle.</string>
-    <string name="action_retry_llm_enrichment">Réessayer l\'enrichissement IA</string>
 
     <!-- BrewLogDetailScreen -->
     <string name="action_share_brew">Partager la préparation</string>

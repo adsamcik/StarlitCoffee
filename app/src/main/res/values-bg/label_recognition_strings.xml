@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_settings_section_scanning">Сканиране</string>
+    <string name="label_enhanced_label_recognition">Подобрено разпознаване на етикети</string>
+    <string name="msg_enhanced_label_recognition">Потърсете повече подробности от торбичката с кафе на зърна на това устройство, когато са налични. Основното четене на текст на устройството от етикета остава налично.</string>
+    <string name="label_label_recognition_privacy">Разпознаване на етикети и поверителност</string>
+    <string name="msg_label_recognition_privacy">Научете какво остава на вашето устройство и кога се използват търсения в мрежата.</string>
+    <string name="msg_could_not_open_privacy_policy">Политиката за поверителност не можа да се отвори.</string>
+    <string name="cd_front_label_photo">Снимка на предния етикет</string>
+    <string name="cd_back_label_photo">Снимка на задния етикет</string>
+    <string name="format_cd_additional_label_photo">Допълнителна снимка на етикета %1$d</string>
+    <string name="label_label_evidence">Източници на информация от етикета</string>
+    <string name="evidence_from_label">От етикета</string>
+    <string name="evidence_confirmed_on_label">Потвърдено на етикета</string>
+    <string name="evidence_from_qr_website">От уебсайта на QR</string>
+    <string name="evidence_from_label_code">От кода на етикета</string>
+    <string name="evidence_from_saved_bag">От детайли за кафе, запазени по-рано</string>
+    <string name="evidence_from_barcode_lookup">От търсенето на баркод</string>
+    <string name="evidence_suggested_from_label_context">Предложено от контекста на етикета</string>
+    <string name="evidence_front_photo">Предна снимка</string>
+    <string name="evidence_back_photo">Задна снимка</string>
+    <string name="msg_checking_label">Проверка на етикета…</string>
+    <string name="msg_checking_more_details">Проверява се за повече подробности…</string>
+    <plurals name="format_label_details_need_review">
+        <item quantity="one">Подробности, изискващи преглед: %1$d</item>
+        <item quantity="other">Подробности, изискващи преглед: %1$d</item>
+    </plurals>
+    <string name="msg_could_not_read_more_details">Не можах да прочета повече подробности. Можете да продължите да редактирате или да опитате отново.</string>
+    <string name="action_set_up_label_recognition">Настройте разпознаването на етикети</string>
+    <string name="action_use_label_recognition">Използвайте разпознаване на етикети</string>
+    <string name="action_finish_label_recognition_setup">Завършете настройката</string>
+    <string name="action_always_enter_manually">Винаги въвеждайте ръчно</string>
+    <string name="action_apply_suggestion">Приложете предложение</string>
+    <string name="format_new_label_suggestion">Ново предложение за %1$s: %2$s</string>
+    <string name="msg_label_recognition_offer">По избор: използвайте Mindlayer на това устройство, за да намерите повече подробности от етикета на торбичката за кафе. Прегледайте всичко, преди да запазите.</string>
+    <string name="action_try_label_again">Опитайте отново</string>
+    <string name="action_retake_label_photo">Направете отново снимка</string>
+    <string name="label_coffee_draft">Недовършени детайли за кафе</string>
+    <string name="action_review_coffee_draft">Прегледайте подробностите за недовършеното кафе</string>
+    <string name="msg_draft_needs_attention">Тези подробности за кафето се нуждаят от преглед</string>
+    <string name="action_discard_draft">Изхвърлете недовършените детайли за кафе</string>
+    <string name="cd_open_coffee_draft">Отворете подробности за недовършено кафе за %1$s. %2$s</string>
+    <string name="action_save_coffee">Запазете подробности за кафето</string>
+    <string name="screen_add_coffee_title">Добавете кафе</string>
+    <string name="screen_edit_coffee_title">Редактиране на кафе</string>
+    <string name="screen_review_coffee_title">Прегледайте подробностите за кафето</string>
+    <string name="msg_camera_permission_alternatives">Можете да разрешите достъп до камерата, да изберете снимки на етикета на чантата за кафе или сами да въведете данните, отпечатани на чантата за кафе.</string>
+    <string name="action_choose_photos">Изберете снимки</string>
+    <string name="action_enter_manually">Въведете ръчно</string>
+    <string name="action_ok">добре</string>
+    <string name="action_set_roast_date">Задайте дата на печене на кафе</string>
+    <string name="action_change_roast_date">Промяна на датата на печене на кафе</string>
+    <string name="action_set_best_before">Задайте най-добър срок до</string>
+    <string name="action_change_best_before">Променете срока на годност</string>
+    <string name="action_show_optional_details">Показване на незадължителни подробности</string>
+    <string name="action_hide_optional_details">Скриване на незадължителни подробности</string>
+</resources>

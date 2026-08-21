@@ -65,19 +65,4 @@ class BagInventoryScreenPolicyTest {
         )
     }
 
-    @Test
-    fun `AI scan setup is needed only when runtime is unsupported or missing`() {
-        assertFalse(needsAiScanSetup(isSupported = true, isInstalled = true))
-        assertTrue(needsAiScanSetup(isSupported = true, isInstalled = false))
-        assertTrue(needsAiScanSetup(isSupported = false, isInstalled = true))
-    }
-
-    @Test
-    fun `pending scan resumes only after a successful install return`() {
-        assertTrue(shouldResumePendingAiScan(true, true, true))
-        assertFalse(shouldResumePendingAiScan(false, true, true))
-        assertFalse(shouldResumePendingAiScan(true, false, true))
-        assertFalse(shouldResumePendingAiScan(true, true, false))
-    }
-
 }

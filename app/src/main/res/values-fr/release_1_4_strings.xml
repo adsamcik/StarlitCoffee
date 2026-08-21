@@ -57,11 +57,6 @@
     <string name="format_notif_brew_target_reached_body">L\'objectif %1$s de votre recette a été atteint. Appuyez pour vérifier l\'infusion.</string>
     <string name="action_add_coffee">Ajouter du café</string>
     <string name="action_read_bag_photos">Lire les photos du sac</string>
-    <string name="action_scan_bag_ai">Scanner le sac · L\'IA remplit les détails</string>
     <string name="action_scan_first_bag">Scanner mon premier sac</string>
     <string name="msg_scan_first_coffee_hint">Scannez le recto et le verso pour remplir automatiquement les détails. Les photos restent sur votre appareil.</string>
-    <string name="dialog_ai_scan_setup_title">Configurer la numérisation de marques privées</string>
-    <string name="msg_ai_scan_setup">Starlit Coffee utilise Mindlayer pour lire les étiquettes de café en privé sur votre appareil. Installez-le une fois, puis cette analyse se poursuivra automatiquement.</string>
-    <string name="dialog_ai_scan_unsupported_title">L\'analyse automatique n\'est pas prise en charge</string>
-    <string name="msg_ai_scan_unsupported">La numérisation automatique des étiquettes nécessite Android 12 ou une version ultérieure. Vous pouvez toujours ajouter le sac manuellement ou scanner son code-barres.</string>
 </resources>

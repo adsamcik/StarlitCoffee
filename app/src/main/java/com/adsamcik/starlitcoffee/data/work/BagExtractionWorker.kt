@@ -34,10 +34,15 @@ class BagExtractionWorker(
 
     private var latestProgress: ScanProgress? = null
     private var latestPreviewJson: String? = null
+    private var activeSessionId: String? = null
+    private var activeGenerationId: String? = null
     private val foregroundNotificationId = foregroundNotificationId(id)
 
     override suspend fun doWork(): Result {
         val workId = id.toString()
+        activeSessionId = inputData.getString(KEY_SESSION_ID)?.takeIf(String::isNotBlank)
+        activeGenerationId = inputData.getString(KEY_GENERATION_ID)?.takeIf(String::isNotBlank)
+        if (!draftAcceptsResult()) return Result.success()
         val manifestPath = inputData.getString(KEY_INPUT_MANIFEST)
         val fallbackReviewContext =
             decodeBagReviewContext(inputData.getString(KEY_REVIEW_CONTEXT_JSON))
@@ -71,21 +76,13 @@ class BagExtractionWorker(
                 checkNotNull(manifestPath) { "Bag extraction input manifest is missing" },
             )
             photosCsv = input.photoUrisCsv
+            activeSessionId = input.sessionId.takeIf(String::isNotBlank) ?: activeSessionId
+            activeGenerationId = input.generationId.takeIf(String::isNotBlank) ?: activeGenerationId
+            if (!draftAcceptsResult()) return Result.success()
             reviewContext = input.reviewContext ?: reviewContext
             val photoUris = photosCsv.split(",").map(String::trim).filter(String::isNotBlank)
             if (photoUris.isEmpty()) {
-                val emptyResult = BagPhotoProcessingResult(capturedPhotoUris = photosCsv)
-                val storedResult = BagExtractionResultStore.writeIfAbsent(
-                    applicationContext,
-                    workId,
-                    successful = true,
-                    resultJson = emptyResult.encodeToStoredJson(),
-                    reviewContext = reviewContext,
-                )
-                return completeTerminalResult(
-                    workId = workId,
-                    replay = storedResult.toTerminalReplay(reviewContext),
-                )
+                return completeEmptyExtraction(workId, photosCsv, reviewContext)
             }
             publishPreview(BagPhotoProcessingResult(capturedPhotoUris = photosCsv))
 
@@ -108,6 +105,8 @@ class BagExtractionWorker(
                     onPartialResult = ::publishPreview,
                 )
                 .copy(capturedPhotoUris = photosCsv)
+            if (!draftAcceptsResult()) return Result.success()
+            persistDraftResult(result, workId, terminal = true)
             val storedResult = BagExtractionResultStore.writeIfAbsent(
                 applicationContext,
                 workId,
@@ -128,6 +127,8 @@ class BagExtractionWorker(
                 llmStatus = com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus.UNAVAILABLE,
             )
             try {
+                if (!draftAcceptsResult()) return Result.success()
+                persistDraftResult(failureResult, workId, terminal = true)
                 val storedResult = BagExtractionResultStore.writeIfAbsent(
                     applicationContext,
                     workId,
@@ -146,17 +147,38 @@ class BagExtractionWorker(
         }
     }
 
+    private fun completeEmptyExtraction(
+        workId: String,
+        photosCsv: String,
+        reviewContext: BagReviewContext?,
+    ): Result {
+        val emptyResult = BagPhotoProcessingResult(capturedPhotoUris = photosCsv)
+        val storedResult = BagExtractionResultStore.writeIfAbsent(
+            applicationContext,
+            workId,
+            successful = true,
+            resultJson = emptyResult.encodeToStoredJson(),
+            reviewContext = reviewContext,
+        )
+        return completeTerminalResult(
+            workId = workId,
+            replay = storedResult.toTerminalReplay(reviewContext),
+        )
+    }
+
     private fun completeTerminalResult(
         workId: String,
         replay: BagExtractionTerminalReplay,
     ): Result {
         runCatching { BagExtractionCheckpointStore.delete(applicationContext, workId) }
             .onFailure { error -> Log.w(TAG, "Could not delete terminal scan checkpoint", error) }
-        BagExtractionScheduler.enqueueCompletionNotification(
-            applicationContext,
-            workId,
-            waitForTerminal = true,
-        )
+        if (draftAcceptsResult()) {
+            BagExtractionScheduler.enqueueCompletionNotification(
+                applicationContext,
+                workId,
+                waitForTerminal = true,
+            )
+        }
         return if (replay.successful) {
             Result.success(replay.outputData)
         } else {
@@ -206,6 +228,8 @@ class BagExtractionWorker(
     }
 
     private fun publishPreview(result: BagPhotoProcessingResult) {
+        if (!draftAcceptsResult()) return
+        persistDraftResult(result, id.toString(), terminal = false)
         if (result.hasDeterministicScanData()) {
             runCatching {
                 BagExtractionCheckpointStore.write(
@@ -222,6 +246,34 @@ class BagExtractionWorker(
             Log.w(TAG, "Bag analysis preview is too large for WorkManager progress data")
         }
         latestProgress?.let(::publishWorkProgress)
+    }
+
+    private fun draftAcceptsResult(): Boolean {
+        val sessionId = activeSessionId ?: return true
+        val generationId = activeGenerationId ?: return true
+        val draft = BagDraftStore.read(applicationContext, sessionId) ?: return true
+        return draft.isActive && (draft.generationId == null || draft.generationId == generationId)
+    }
+
+    private fun persistDraftResult(
+        result: BagPhotoProcessingResult,
+        workId: String,
+        terminal: Boolean,
+    ) {
+        val sessionId = activeSessionId ?: return
+        val generationId = activeGenerationId ?: return
+        runCatching {
+            BagDraftStore.applyResult(
+                context = applicationContext,
+                sessionId = sessionId,
+                generationId = generationId,
+                workId = workId,
+                result = result,
+                terminal = terminal,
+            )
+        }.onFailure { error ->
+            Log.w(TAG, "Could not persist coffee draft preview", error)
+        }
     }
 
     private fun publishWorkProgress(progress: ScanProgress) {

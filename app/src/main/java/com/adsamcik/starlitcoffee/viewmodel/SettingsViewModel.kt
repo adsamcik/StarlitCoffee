@@ -11,6 +11,7 @@ import com.adsamcik.starlitcoffee.data.repository.CupPresetResetter
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesStore
 import com.adsamcik.starlitcoffee.scan.observability.ScanLlmDiagnosticsStore
 import com.adsamcik.starlitcoffee.scan.observability.ScanSessionRingBuffer
+import com.adsamcik.starlitcoffee.util.RecognitionPreference
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -106,6 +107,10 @@ class SettingsViewModel(
 
     fun updateScanCorrectionLoggingEnabled(enabled: Boolean) {
         persist { preferences.updateScanCorrectionLoggingEnabled(enabled) }
+    }
+
+    fun updateLabelRecognitionPreference(preference: RecognitionPreference) {
+        persist { preferences.updateLabelRecognitionPreference(preference) }
     }
 
     fun updateDimModeEnabled(enabled: Boolean) {

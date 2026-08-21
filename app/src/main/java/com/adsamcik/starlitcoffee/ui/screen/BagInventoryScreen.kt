@@ -66,13 +66,16 @@ import com.adsamcik.starlitcoffee.data.repository.CoffeeUsageLogResult
 import com.adsamcik.starlitcoffee.navigation.ScanDraftTransfer
 import com.adsamcik.starlitcoffee.StarlitCoffeeApp
 import com.adsamcik.starlitcoffee.data.work.isAddNewBagReview
+import com.adsamcik.starlitcoffee.data.work.BagDraftPhase
+import com.adsamcik.starlitcoffee.data.work.BagDraftStore
 import com.adsamcik.starlitcoffee.ui.component.AddBagSheet
-import com.adsamcik.starlitcoffee.ui.component.BagAnalysisPreviewCard
+import com.adsamcik.starlitcoffee.ui.component.BagDraftCard
 import com.adsamcik.starlitcoffee.ui.component.BagCard
 import com.adsamcik.starlitcoffee.ui.component.BagDetailSheet
 import com.adsamcik.starlitcoffee.ui.component.averageLoggedCoffeeAmount
 import com.adsamcik.starlitcoffee.ui.component.ConsentOutcome
 import com.adsamcik.starlitcoffee.ui.component.DecafFilter
+import com.adsamcik.starlitcoffee.ui.component.DestructiveActionDialog
 import com.adsamcik.starlitcoffee.ui.component.EmptyStateBox
 import com.adsamcik.starlitcoffee.ui.component.ScannedBagSaveResult
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
@@ -89,6 +92,7 @@ import com.adsamcik.starlitcoffee.util.CoffeeBagInsights
 import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
 import com.adsamcik.starlitcoffee.util.MindlayerAvailability
 import com.adsamcik.starlitcoffee.util.MindlayerInstallLink
+import com.adsamcik.starlitcoffee.util.RecognitionUiStateMapper
 import com.adsamcik.starlitcoffee.util.ScanPhotoStorage
 import com.adsamcik.starlitcoffee.util.ScanFieldSupport
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
@@ -136,6 +140,7 @@ fun BagInventoryScreen(
     onNavigateToBarcode: () -> Unit = {},
     onNavigateToBrewWithBag: (Long) -> Unit,
     onNavigateToRescan: (Long) -> Unit = {},
+    onOpenDraft: (String) -> Unit = {},
     onBack: () -> Unit = {},
     capturedPhotosResult: String? = null,
     scanFieldsResult: HashMap<String, String>? = null,
@@ -153,6 +158,7 @@ fun BagInventoryScreen(
     val knownFieldValues by brewViewModel.knownFieldValues.collectAsStateWithLifecycle()
     val bagAnalysisPreview by brewViewModel.bagAnalysisPreview.collectAsStateWithLifecycle()
     val bagPhotoRetryResult by brewViewModel.bagPhotoRetryResult.collectAsStateWithLifecycle()
+    val recognitionPreference by brewViewModel.recognitionPreference.collectAsStateWithLifecycle()
     val dateFormat = remember { SimpleDateFormat("MMM d, yyyy", Locale.getDefault()) }
 
     val activeBags = remember(bags) { bags.filter { it.status != "FINISHED" } }
@@ -220,17 +226,15 @@ fun BagInventoryScreen(
     var isDeletingBag by remember { mutableStateOf(false) }
     var showRetakeDialog by remember { mutableStateOf(false) }
     var fabExpanded by remember { mutableStateOf(false) }
-    var pendingAiScanAction by rememberSaveable { mutableStateOf<String?>(null) }
-    var showAiSetupDialog by rememberSaveable { mutableStateOf(false) }
-    var resumeAiSetupAfterInstall by rememberSaveable { mutableStateOf(false) }
     var bagDraftSessionId by rememberSaveable { mutableStateOf(UUID.randomUUID().toString()) }
     var bagDraftGenerationId by rememberSaveable { mutableStateOf<String?>(null) }
     val context = LocalContext.current
+    val activeDrafts by remember(context) {
+        BagDraftStore.observeActive(context.applicationContext)
+    }.collectAsStateWithLifecycle(initialValue = emptyList())
     val resources = LocalResources.current
     val mindlayerInstalled = rememberMindlayerInstalled()
-    val mindlayerSupported = remember { MindlayerAvailability.isSupported() }
     val couldNotReadLabel = stringResource(R.string.msg_could_not_read_label)
-    val couldNotOpenAppStore = stringResource(R.string.msg_could_not_open_app_store)
     val couldNotSaveBag = stringResource(R.string.msg_could_not_save_bag)
     val bagSaved = stringResource(R.string.msg_bag_saved)
     val consentMessages = ConsentOutcome.entries.associateWith { outcome ->
@@ -238,6 +242,28 @@ fun BagInventoryScreen(
     }
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
+    var pendingDiscardDraftSessionId by rememberSaveable { mutableStateOf<String?>(null) }
+
+    pendingDiscardDraftSessionId?.let { sessionId ->
+        val draft = activeDrafts.firstOrNull { it.sessionId == sessionId }
+        DestructiveActionDialog(
+            titleRes = R.string.dialog_discard_scan_title,
+            messageRes = R.string.msg_discard_scan_body,
+            confirmLabelRes = R.string.action_discard,
+            onConfirm = {
+                BagDraftStore.markPhase(context.applicationContext, sessionId, BagDraftPhase.DISCARDED)
+                brewViewModel.markBagDraftDiscarded(sessionId)
+                brewViewModel.cancelBagPhotoProcessing(sessionId)
+                draft?.photoUris?.joinToString(",")?.let { photos ->
+                    coroutineScope.launch(Dispatchers.IO) {
+                        ScanPhotoStorage.deleteStagedCaptures(context.applicationContext, photos)
+                    }
+                }
+                pendingDiscardDraftSessionId = null
+            },
+            onDismiss = { pendingDiscardDraftSessionId = null },
+        )
+    }
 
     // Photo picker launcher for "From photo" option. Uses
     // PickMultipleVisualMedia(maxItems = 2) so the user can pick front + back
@@ -291,18 +317,16 @@ fun BagInventoryScreen(
                 brewViewModel.processNewBagPhotos(
                     photosCsv = photosCsv,
                     knownFieldValues = knownFieldValues,
-                    deliverInBackground = true,
+                    deliverInBackground = false,
                     sessionId = bagDraftSessionId,
                 )
+                onOpenDraft(bagDraftSessionId)
             }
         }
     }
 
     fun openManualBagEntry() {
         fabExpanded = false
-        pendingAiScanAction = null
-        showAiSetupDialog = false
-        resumeAiSetupAfterInstall = false
         bagDraftSessionId = UUID.randomUUID().toString()
         detectedBarcode = null
         detectedQrUrl = null
@@ -318,9 +342,6 @@ fun BagInventoryScreen(
     }
 
     fun launchAiScanAction(action: AiScanAction) {
-        pendingAiScanAction = null
-        showAiSetupDialog = false
-        resumeAiSetupAfterInstall = false
         bagDraftSessionId = UUID.randomUUID().toString()
         when (action) {
             AiScanAction.CAMERA -> onNavigateToCamera()
@@ -330,31 +351,16 @@ fun BagInventoryScreen(
         }
     }
 
-    // Consent is requested in context, only after the user chooses a label-reading
-    // action. Already-approved users continue without seeing a consent screen.
-    // The same flow still supports retrying AI enrichment from the review form.
+    // Optional enrichment consent is requested only from the review form. It
+    // never blocks camera capture, photo selection, basic OCR, or manual entry.
     val aiConsentFlow = rememberMindlayerConsentFlow { outcome ->
         when (outcome) {
             ConsentOutcome.GRANTED, ConsentOutcome.ALREADY_APPROVED -> coroutineScope.launch {
-                val connected = (context.applicationContext as? StarlitCoffeeApp)
-                    ?.reconnectMindlayer() == true
-                val pendingAction = pendingAiScanAction
-                    ?.let { runCatching { AiScanAction.valueOf(it) }.getOrNull() }
-                when {
-                    !connected -> {
-                        pendingAiScanAction = null
-                        Toast.makeText(
-                            context,
-                            R.string.consent_still_unavailable,
-                            Toast.LENGTH_LONG,
-                        ).show()
-                    }
-                    pendingAction != null -> launchAiScanAction(pendingAction)
-                    else -> isProcessingScan = brewViewModel.retryBagPhotoLlm(bagDraftSessionId)
-                }
+                brewViewModel.enableLabelRecognition()
+                (context.applicationContext as? StarlitCoffeeApp)?.reconnectMindlayer()
+                isProcessingScan = brewViewModel.retryBagPhotoLlm(bagDraftSessionId)
             }
             else -> {
-                pendingAiScanAction = null
                 Toast.makeText(
                     context,
                     consentMessages.getValue(outcome),
@@ -362,49 +368,6 @@ fun BagInventoryScreen(
                 ).show()
             }
         }
-    }
-
-    fun requestAiScan(action: AiScanAction) {
-        fabExpanded = false
-        pendingAiScanAction = action.name
-        if (!needsAiScanSetup(mindlayerSupported, mindlayerInstalled)) {
-            aiConsentFlow.request()
-        } else {
-            showAiSetupDialog = true
-        }
-    }
-
-    LaunchedEffect(mindlayerInstalled, resumeAiSetupAfterInstall) {
-        if (
-            shouldResumePendingAiScan(
-                isInstalled = mindlayerInstalled,
-                resumeAfterInstall = resumeAiSetupAfterInstall,
-                hasPendingAction = pendingAiScanAction != null,
-            )
-        ) {
-            resumeAiSetupAfterInstall = false
-            aiConsentFlow.request()
-        }
-    }
-
-    if (showAiSetupDialog) {
-        AiScanSetupDialog(
-            isSupported = mindlayerSupported,
-            onDismiss = {
-                showAiSetupDialog = false
-                pendingAiScanAction = null
-            },
-            onInstall = {
-                showAiSetupDialog = false
-                resumeAiSetupAfterInstall = true
-                if (!MindlayerInstallLink.open(context)) {
-                    resumeAiSetupAfterInstall = false
-                    pendingAiScanAction = null
-                    Toast.makeText(context, couldNotOpenAppStore, Toast.LENGTH_LONG).show()
-                }
-            },
-            onManualEntry = ::openManualBagEntry,
-        )
     }
 
     // Handle captured photos result (from CameraCaptureScreen)
@@ -415,6 +378,7 @@ fun BagInventoryScreen(
     LaunchedEffect(bagPhotoResult, showAddSheet, bagDraftSessionId) {
         val sessionResult = bagPhotoResult ?: return@LaunchedEffect
         if (!isAddNewBagReview(sessionResult.reviewContext)) return@LaunchedEffect
+        if (activeDrafts.any { it.sessionId == sessionResult.sessionId }) return@LaunchedEffect
         if (!shouldApplyBagResultToDraft(showAddSheet, bagDraftSessionId, sessionResult.sessionId)) {
             return@LaunchedEffect
         }
@@ -443,6 +407,7 @@ fun BagInventoryScreen(
     LaunchedEffect(bagPhotoRetryResult, bagDraftSessionId) {
         val sessionResult = bagPhotoRetryResult ?: return@LaunchedEffect
         if (!isAddNewBagReview(sessionResult.reviewContext)) return@LaunchedEffect
+        if (activeDrafts.any { it.sessionId == sessionResult.sessionId }) return@LaunchedEffect
         if (sessionResult.sessionId != bagDraftSessionId) return@LaunchedEffect
         bagDraftGenerationId = sessionResult.generationId.takeIf(String::isNotBlank)
             ?: bagDraftGenerationId
@@ -468,6 +433,7 @@ fun BagInventoryScreen(
     LaunchedEffect(pendingScanReview, showAddSheet, bagDraftSessionId) {
         val sessionResult = pendingScanReview ?: return@LaunchedEffect
         if (!isAddNewBagReview(sessionResult.reviewContext)) return@LaunchedEffect
+        if (activeDrafts.any { it.sessionId == sessionResult.sessionId }) return@LaunchedEffect
         if (!shouldApplyBagResultToDraft(showAddSheet, bagDraftSessionId, sessionResult.sessionId)) {
             return@LaunchedEffect
         }
@@ -622,7 +588,7 @@ fun BagInventoryScreen(
                                 )
                             }
                             SmallFloatingActionButton(
-                                onClick = { requestAiScan(AiScanAction.GALLERY) },
+                                onClick = { launchAiScanAction(AiScanAction.GALLERY) },
                                 containerColor = MaterialTheme.colorScheme.secondaryContainer,
                                 modifier = Modifier.testTag("fab_from_photo"),
                             ) {
@@ -638,14 +604,14 @@ fun BagInventoryScreen(
                                 shape = MaterialTheme.shapes.small,
                             ) {
                                 Text(
-                                    text = stringResource(R.string.action_scan_bag_ai),
+                                    text = stringResource(R.string.action_scan_label),
                                     style = MaterialTheme.typography.labelLarge,
                                     color = MaterialTheme.colorScheme.onSecondaryContainer,
                                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                                 )
                             }
                             SmallFloatingActionButton(
-                                onClick = { requestAiScan(AiScanAction.CAMERA) },
+                                onClick = { launchAiScanAction(AiScanAction.CAMERA) },
                                 containerColor = MaterialTheme.colorScheme.secondaryContainer,
                                 modifier = Modifier.testTag("fab_scan_label"),
                             ) {
@@ -736,7 +702,7 @@ fun BagInventoryScreen(
         ) {
             ScreenTopBar(title = stringResource(R.string.label_your_beans), onBack = onBack)
 
-            if (bags.isEmpty() && bagAnalysisPreview == null) {
+            if (bags.isEmpty() && activeDrafts.isEmpty()) {
                 EmptyStateBox(
                     icon = Icons.Filled.ShoppingBag,
                     message = stringResource(R.string.msg_no_beans_yet),
@@ -745,7 +711,7 @@ fun BagInventoryScreen(
                     action = {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Button(
-                                onClick = { requestAiScan(AiScanAction.CAMERA) },
+                                onClick = { launchAiScanAction(AiScanAction.CAMERA) },
                                 modifier = Modifier.testTag("empty_scan_bag"),
                             ) {
                                 Icon(
@@ -772,13 +738,12 @@ fun BagInventoryScreen(
                     bottom = 88.dp,
                 ),
             ) {
-                bagAnalysisPreview?.let { preview ->
-                    item(key = "bag_analysis_preview") {
-                        BagAnalysisPreviewCard(
-                            result = preview.result,
-                            progress = preview.progress,
-                        )
-                    }
+                items(activeDrafts, key = { "bag_draft_${it.sessionId}" }) { draft ->
+                    BagDraftCard(
+                        draft = draft,
+                        onOpen = { onOpenDraft(draft.sessionId) },
+                        onDiscard = { pendingDiscardDraftSessionId = draft.sessionId },
+                    )
                 }
                 item {
                     Column(
@@ -880,6 +845,17 @@ fun BagInventoryScreen(
     // Add bag sheet
     val brewNowLabel = stringResource(R.string.action_brew_now)
     if (showAddSheet) {
+        val recognitionPresentation = RecognitionUiStateMapper.fromPipeline(
+            pipelineStatus = llmStatus,
+            isProcessing = isProcessingScan,
+            hasValues = fieldEvidence.isNotEmpty() || ocrPrefill != null,
+            unresolvedCount = fieldEvidence.values.count {
+                it.confidence != com.adsamcik.starlitcoffee.util.BagFieldConfidence.HIGH
+            },
+            preference = recognitionPreference,
+            mindlayerSupported = MindlayerAvailability.isSupported(),
+            mindlayerInstalled = mindlayerInstalled,
+        )
         AddBagSheet(
             initialBarcode = detectedBarcode,
             ocrPrefill = ocrPrefill,
@@ -889,7 +865,7 @@ fun BagInventoryScreen(
             capturedPhotoUris = capturedPhotoUris,
             fieldEvidence = fieldEvidence,
             reviewHints = reviewHints,
-            llmStatus = llmStatus,
+            recognition = recognitionPresentation,
             isProcessing = isProcessingScan,
             isSaving = isSavingBag,
             existingBags = bags,
@@ -913,7 +889,13 @@ fun BagInventoryScreen(
                 isProcessingScan = brewViewModel.retryBagPhotoLlm(bagDraftSessionId)
             },
             onEnableAi = aiConsentFlow.request,
+            onInstallLabelRecognition = {
+                if (!MindlayerInstallLink.open(context)) {
+                    Toast.makeText(context, R.string.msg_could_not_open_app_store, Toast.LENGTH_LONG).show()
+                }
+            },
             onSetupAi = brewViewModel::openMindlayerModelSetup,
+            onDisableLabelRecognition = brewViewModel::disableLabelRecognition,
             onDismiss = {
                 val discardedPhotoUris = capturedPhotoUris
                 val discardedSessionId = bagDraftSessionId
@@ -1246,71 +1228,6 @@ private suspend fun showCoffeeUsageResult(
         null
     }
 }
-
-@Composable
-private fun AiScanSetupDialog(
-    isSupported: Boolean,
-    onDismiss: () -> Unit,
-    onInstall: () -> Unit,
-    onManualEntry: () -> Unit,
-) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        icon = {
-            Icon(
-                imageVector = Icons.Filled.CameraAlt,
-                contentDescription = null,
-            )
-        },
-        title = {
-            Text(
-                stringResource(
-                    if (isSupported) R.string.dialog_ai_scan_setup_title
-                    else R.string.dialog_ai_scan_unsupported_title,
-                ),
-            )
-        },
-        text = {
-            Text(
-                stringResource(
-                    if (isSupported) R.string.msg_ai_scan_setup
-                    else R.string.msg_ai_scan_unsupported,
-                ),
-            )
-        },
-        confirmButton = {
-            TextButton(onClick = if (isSupported) onInstall else onManualEntry) {
-                Text(
-                    stringResource(
-                        if (isSupported) R.string.action_mindlayer_google_play
-                        else R.string.action_add_bag_manual,
-                    ),
-                )
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = if (isSupported) onManualEntry else onDismiss) {
-                Text(
-                    stringResource(
-                        if (isSupported) R.string.action_add_bag_manual
-                        else R.string.action_cancel,
-                    ),
-                )
-            }
-        },
-    )
-}
-
-internal fun needsAiScanSetup(
-    isSupported: Boolean,
-    isInstalled: Boolean,
-): Boolean = !isSupported || !isInstalled
-
-internal fun shouldResumePendingAiScan(
-    isInstalled: Boolean,
-    resumeAfterInstall: Boolean,
-    hasPendingAction: Boolean,
-): Boolean = isInstalled && resumeAfterInstall && hasPendingAction
 
 internal fun selectedInventoryBag(
     bags: List<CoffeeBagEntity>,

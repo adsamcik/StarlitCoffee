@@ -92,35 +92,7 @@ data class BagFieldEvidence(
     val supportingText: String? = null,
     val previewUri: String? = null,
     val previewRect: BagPhotoRect? = null,
-) {
-    fun summaryLabel(): String {
-        val sourceLabel = when (sourceType) {
-            BagFieldSourceType.OCR -> "Detected"
-            BagFieldSourceType.CONSENSUS -> "Confirmed"
-            BagFieldSourceType.QR_LINK_LOOKUP -> "QR website"
-            BagFieldSourceType.OBSERVED_BARCODE_STEM -> "Observed stem"
-            BagFieldSourceType.LOCAL_BARCODE_MATCH -> "Saved bag match"
-            BagFieldSourceType.BARCODE_LOOKUP -> "Barcode lookup"
-            BagFieldSourceType.LLM -> "AI analysis"
-        }
-        val confidenceLabel = when (confidence) {
-            BagFieldConfidence.HIGH -> "high confidence"
-            BagFieldConfidence.MEDIUM -> "medium confidence"
-            BagFieldConfidence.LOW -> "low confidence"
-            BagFieldConfidence.NEEDS_REVIEW -> "needs review"
-        }
-        val strategyLabel = when (matchStrategy) {
-            CoffeeMetadataMatchStrategy.RELATION_INFERENCE -> "canonical inference"
-            CoffeeMetadataMatchStrategy.EXACT_ALIAS,
-            CoffeeMetadataMatchStrategy.CONTAINS_ALIAS,
-            CoffeeMetadataMatchStrategy.RAW_FALLBACK,
-            null,
-            -> null
-        }
-        val sideLabel = side?.name?.lowercase()
-        return listOfNotNull(sourceLabel, strategyLabel, sideLabel, confidenceLabel).joinToString(" · ")
-    }
-}
+)
 
 data class BagPhotoAnalysis(
     val uri: String,

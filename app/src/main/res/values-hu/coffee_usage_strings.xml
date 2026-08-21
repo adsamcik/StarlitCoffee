@@ -12,7 +12,4 @@
     <string name="msg_could_not_undo_coffee_use">Nem vonható vissza, mert ez a csomag megváltozott</string>
     <string name="label_coffee_use_history">Kávéfogyasztás</string>
     <string name="format_grams_used">%1$.0f g felhasználva</string>
-    <string name="msg_llm_model_setup_required">A Mindlayer eszközön tárolt modelljére van szükség, mielőtt az AI el tudja olvasni ezt a címkét. Nyisd meg a beállítást, majd próbáld újra; a már megtalált mezők biztonságosan szerkeszthetők.</string>
-    <string name="msg_llm_enrichment_timed_out">A beolvasás elérte az ötperces korlátot. Használhatod vagy szerkesztheted a már megtalált mezőket, illetve újra próbálkozhatsz.</string>
-    <string name="action_set_up_ai">Modellbeállítás megnyitása</string>
 </resources>

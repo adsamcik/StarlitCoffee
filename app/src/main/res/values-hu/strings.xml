@@ -287,11 +287,6 @@
     <string name="cd_notif_rating_4">Értékelés: szuper</string>
 
     <!-- Bag analysis screen + notification -->
-    <string name="screen_analyzing_bag_title">Zacskó elemzése</string>
-    <string name="msg_analyzing_bag_subtitle">Az MI beolvassa a címkét, hogy kitöltse a részleteket. Ez eltarthat egy ideig.</string>
-    <string name="msg_analyzing_bag_background_hint">Közben tovább használhatja az alkalmazást — értesítjük, amint elkészült.</string>
-    <string name="action_skip_ai">MI kihagyása</string>
-    <string name="action_run_in_background">Folytatás a háttérben</string>
     <string name="notif_channel_bag_analysis">Zacskóelemzés</string>
     <string name="notif_channel_bag_analysis_desc">Jelzi, amikor az MI befejezte egy kávézacskó címkéjének beolvasását.</string>
     <string name="notif_scan_progress_title">Zacskócímke beolvasása…</string>
@@ -420,14 +415,11 @@
     <string name="msg_decaf_grind_adjustment">Koffeinmentes kávé van kiválasztva. Az alábbi őrlési ajánlás durvábbra módosul, amikor ez előnyös az elkészítési módnak.</string>
     <string name="label_decaf_process_optional">Koffeinmentesítési eljárás (nem kötelező)</string>
     <string name="msg_decaf_process_hint">Lehetővé teszi, hogy a főzési szabály finoman igazítsa az őrlést: a vizes és CO₂-eljárású koffeinmentes kávék általában kevesebb durvítást igényelnek, mint az oldószeresek.</string>
-    <string name="cd_captured_bag_photo">Rögzített zacskófotó</string>
     <string name="label_detected_details">Felismert részletek</string>
     <string name="msg_tap_chip_to_edit">Koppintson bármelyik elemre a szerkesztéshez</string>
     <string name="label_needs_review">Ellenőrzést igényel</string>
     <string name="action_edit_all_fields">Összes mező szerkesztése</string>
     <string name="action_add_more_details">További részletek hozzáadása</string>
-    <string name="msg_analyzing_label">Címkefotók elemzése</string>
-    <string name="msg_analyzing_label_detail">Ellenőrizzük az elmosódottságot, összefésüljük az elülső és hátsó szöveget, és előkészítjük a legmegbízhatóbb mezőket.</string>
     <string name="label_review_fields">Ellenőrizze ezeket a mezőket</string>
     <string name="label_qr_website">QR-weboldal</string>
     <string name="action_open_website">Weboldal megnyitása</string>
@@ -456,9 +448,7 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">MI-szolgáltatás (Mindlayer)</string>
-    <string name="action_connect_mindlayer">Mindlayer csatlakoztatása</string>
     <string name="action_mindlayer_google_play">Mindlayer beszerzése a Google Playről</string>
-    <string name="msg_mindlayer_connection_offer">A Mindlayer telepítve van. Szeretné csatlakoztatni privát, eszközön futó MI-hez?</string>
     <string name="msg_mindlayer_install_recommendation">Telepítse a Mindlayert a Google Playről, hogy privát, eszközön futó MI-vel olvashassa a kávécsomagok címkéit. Ezt később a Beállításokban is megteheti.</string>
     <string name="action_test_connection">Kapcsolat tesztelése</string>
     <string name="action_run_test_prompt">Tesztkérés futtatása</string>
@@ -518,10 +508,6 @@
     <string name="msg_could_not_read_label">A címkét nem sikerült beolvasni</string>
     <string name="action_retake_photo">Fotó újrakészítése</string>
     <string name="action_add_details_manually">Részletek kézi hozzáadása</string>
-    <string name="msg_llm_enrichment_succeeded">Az MI-kiegészítés javította ezt a címkebeolvasást.</string>
-    <string name="msg_llm_enrichment_failed">Az MI ezúttal nem tudta befejezni a címke beolvasását — időtúllépés vagy átmeneti hiba történt (automatikusan újra is próbálkozott). Koppintson az újrapróbálkozásra, vagy egyszerűen töltse ki az alábbi mezőket.</string>
-    <string name="msg_llm_enrichment_unavailable">Az MI-kiegészítés jelenleg nem érhető el. Újrapróbálkozhat, vagy folytathatja a szerkesztést kézzel.</string>
-    <string name="action_retry_llm_enrichment">MI-kiegészítés újrapróbálása</string>
 
     <!-- BrewLogDetailScreen -->
     <string name="action_share_brew">Főzés megosztása</string>

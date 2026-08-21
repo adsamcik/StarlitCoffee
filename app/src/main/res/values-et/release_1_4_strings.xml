@@ -57,11 +57,6 @@
     <string name="format_notif_brew_target_reached_body">Teie retsepti %1$s eesmärk on saavutatud. Joogi kontrollimiseks puudutage.</string>
     <string name="action_add_coffee">Lisa kohv</string>
     <string name="action_read_bag_photos">Lugege koti fotosid</string>
-    <string name="action_scan_bag_ai">Skaneerimiskott · AI täidab üksikasjad</string>
     <string name="action_scan_first_bag">Skaneeri mu esimene kott</string>
     <string name="msg_scan_first_coffee_hint">Skannige esi- ja tagakülg, et andmed automaatselt täita. Fotod jäävad teie seadmesse.</string>
-    <string name="dialog_ai_scan_setup_title">Seadistage privaatsiltide skannimine</string>
-    <string name="msg_ai_scan_setup">Starlit Coffee kasutab Mindlayerit kohvisiltide privaatseks lugemiseks teie seadmes. Installige see üks kord, siis skannimine jätkub automaatselt.</string>
-    <string name="dialog_ai_scan_unsupported_title">Automaatset skannimist ei toetata</string>
-    <string name="msg_ai_scan_unsupported">Automaatne siltide skannimine vajab Android 12 või uuemat versiooni. Saate siiski koti käsitsi lisada või selle vöötkoodi skannida.</string>
 </resources>
