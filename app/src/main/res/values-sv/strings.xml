@@ -287,11 +287,6 @@
     <string name="cd_notif_rating_4">Betygsätt som fantastisk</string>
 
     <!-- Bag analysis screen + notification -->
-    <string name="screen_analyzing_bag_title">Analyserar din påse</string>
-    <string name="msg_analyzing_bag_subtitle">AI läser etiketten för att fylla i detaljerna. Det kan ta en stund.</string>
-    <string name="msg_analyzing_bag_background_hint">Du kan fortsätta använda appen — vi meddelar dig när det är klart.</string>
-    <string name="action_skip_ai">Hoppa över AI</string>
-    <string name="action_run_in_background">Fortsätt i bakgrunden</string>
     <string name="notif_channel_bag_analysis">Påsanalys</string>
     <string name="notif_channel_bag_analysis_desc">Meddelar dig när AI har läst klart en kaffepåses etikett.</string>
     <string name="notif_scan_progress_title">Läser påsetikett…</string>
@@ -420,14 +415,11 @@
     <string name="msg_decaf_grind_adjustment">Koffeinfritt är valt. Malningsrekommendationen nedan justeras grövre när den här bryggmetoden har nytta av det.</string>
     <string name="label_decaf_process_optional">Decaf-process (valfritt)</string>
     <string name="msg_decaf_process_hint">Låter bryggreglerna nyansera malningsrådet: vattenprocessade och CO₂-decaf behöver oftast mindre grov malning än lösningsmedelsprocessade.</string>
-    <string name="cd_captured_bag_photo">Tagen bild av påsen</string>
 <string name="label_detected_details">Upptäckta detaljer</string>
     <string name="msg_tap_chip_to_edit">Tryck på valfri tagg för att redigera</string>
     <string name="label_needs_review">Behöver granskas</string>
 <string name="action_edit_all_fields">Redigera alla fält</string>
     <string name="action_add_more_details">Lägg till fler detaljer</string>
-    <string name="msg_analyzing_label">Analyserar etikettbilder</string>
-    <string name="msg_analyzing_label_detail">Vi kontrollerar oskärpa, sammanfogar text från fram- och baksida och förbereder de mest tillförlitliga fälten.</string>
     <string name="label_review_fields">Granska dessa fält</string>
     <string name="label_qr_website">QR-webbplats</string>
     <string name="action_open_website">Öppna webbplats</string>
@@ -456,9 +448,7 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">AI-tjänst (Mindlayer)</string>
-    <string name="action_connect_mindlayer">Anslut Mindlayer</string>
     <string name="action_mindlayer_google_play">Hämta Mindlayer på Google Play</string>
-    <string name="msg_mindlayer_connection_offer">Mindlayer är installerat. Vill du ansluta det för privat AI på enheten?</string>
     <string name="msg_mindlayer_install_recommendation">Installera Mindlayer från Google Play för att läsa kaffepåseetiketter med privat AI på enheten. Du kan göra det senare i Inställningar.</string>
     <string name="action_test_connection">Testa anslutning</string>
     <string name="action_run_test_prompt">Kör testprompt</string>
@@ -518,10 +508,6 @@
     <string name="msg_could_not_read_label">Kunde inte läsa etiketten</string>
     <string name="action_retake_photo">Ta om foto</string>
     <string name="action_add_details_manually">Lägg till detaljer manuellt</string>
-    <string name="msg_llm_enrichment_succeeded">AI-berikning förbättrade den här etikettskanningen.</string>
-    <string name="msg_llm_enrichment_failed">AI kunde inte läsa klart etiketten den här gången — den fick timeout eller ett tillfälligt fel (den försökte redan automatiskt igen). Tryck på försök igen för ett nytt försök, eller fyll bara i fälten nedan.</string>
-    <string name="msg_llm_enrichment_unavailable">AI-berikning är inte tillgänglig just nu. Du kan försöka igen eller fortsätta redigera manuellt.</string>
-    <string name="action_retry_llm_enrichment">Försök med AI-berikning igen</string>
 
     <!-- BrewLogDetailScreen -->
     <string name="action_share_brew">Dela bryggning</string>

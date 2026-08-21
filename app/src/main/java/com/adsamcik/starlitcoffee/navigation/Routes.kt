@@ -51,6 +51,12 @@ object BarcodeScanner
 object GuidedScan
 
 @Serializable
+data class GuidedScanDraft(val sessionId: String)
+
+@Serializable
+data class BagDraft(val sessionId: String)
+
+@Serializable
 object OnboardingMethods
 
 @Serializable

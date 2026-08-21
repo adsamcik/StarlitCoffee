@@ -57,11 +57,6 @@
     <string name="format_notif_brew_target_reached_body">Dosegnut je cilj %1$s vašeg recepta. Dodirnite za provjeru napitka.</string>
     <string name="action_add_coffee">Dodajte kavu</string>
     <string name="action_read_bag_photos">Pročitajte fotografije torbe</string>
-    <string name="action_scan_bag_ai">Skenirana vrećica · AI ispunjava detalje</string>
     <string name="action_scan_first_bag">Skeniraj moju prvu torbu</string>
     <string name="msg_scan_first_coffee_hint">Skenirajte prednju i stražnju stranu kako biste automatski ispunili detalje. Fotografije ostaju na vašem uređaju.</string>
-    <string name="dialog_ai_scan_setup_title">Postavite skeniranje privatnih oznaka</string>
-    <string name="msg_ai_scan_setup">Starlit Coffee koristi Mindlayer za privatno čitanje etiketa kave na vašem uređaju. Instalirajte ga jednom, a zatim će se ovo skeniranje automatski nastaviti.</string>
-    <string name="dialog_ai_scan_unsupported_title">Automatsko skeniranje nije podržano</string>
-    <string name="msg_ai_scan_unsupported">Za automatsko skeniranje naljepnica potreban je Android 12 ili noviji. I dalje možete dodati vrećicu ručno ili skenirati njezin crtični kod.</string>
 </resources>

@@ -15,6 +15,7 @@ import com.adsamcik.starlitcoffee.domain.brewing.CatalogResolution
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.BrewVibrationTheme
 import com.adsamcik.starlitcoffee.data.model.FilterType
+import com.adsamcik.starlitcoffee.util.RecognitionPreference
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -56,6 +57,9 @@ data class UserPreferences(
     // privacy-sensitive quality signal (it captures edited label metadata), so
     // it is strictly opt-in and stays on the device — nothing is uploaded.
     val scanCorrectionLoggingEnabled: Boolean = false,
+    // A product preference, independent from Mindlayer's authorization state.
+    // UNDECIDED allows one contextual offer; DISABLED suppresses all offers.
+    val labelRecognitionPreference: RecognitionPreference = RecognitionPreference.UNDECIDED,
 )
 
 data class MethodSelection(
@@ -101,6 +105,7 @@ interface UserPreferencesStore {
     suspend fun updateDimModeReduceBrightness(enabled: Boolean)
     suspend fun updateDimModeFullscreen(enabled: Boolean)
     suspend fun updateDimModeForceDarkInLight(enabled: Boolean)
+    suspend fun updateLabelRecognitionPreference(preference: RecognitionPreference) = Unit
 }
 
 private object UserPreferenceKeys {
@@ -131,6 +136,7 @@ private object UserPreferenceKeys {
     val GUIDANCE_BY_METHOD_FAMILY = stringSetPreferencesKey("guidance_by_method_family")
     val GUIDANCE_BY_BREWER_PROFILE = stringSetPreferencesKey("guidance_by_brewer_profile")
     val UTILITY_MODULES_BY_METHOD_FAMILY = stringSetPreferencesKey("utility_modules_by_method_family")
+    val LABEL_RECOGNITION_PREFERENCE = stringPreferencesKey("label_recognition_preference")
 }
 abstract class UserPreferencesWriter protected constructor(
     protected val context: Context,
@@ -260,6 +266,12 @@ abstract class UserPreferencesWriter protected constructor(
             prefs[UserPreferenceKeys.SCAN_CORRECTION_LOGGING_ENABLED] = enabled
         }
     }
+
+    override suspend fun updateLabelRecognitionPreference(preference: RecognitionPreference) {
+        context.dataStore.edit { prefs ->
+            prefs[UserPreferenceKeys.LABEL_RECOGNITION_PREFERENCE] = preference.name
+        }
+    }
 }
 class UserPreferencesRepository(context: Context) :
     UserPreferencesWriter(context),
@@ -317,6 +329,9 @@ class UserPreferencesRepository(context: Context) :
                     ?.let { name -> BrewVibrationTheme.entries.find { it.name == name } }
                     ?: BrewVibrationTheme.CLASSIC,
                 scanCorrectionLoggingEnabled = prefs[UserPreferenceKeys.SCAN_CORRECTION_LOGGING_ENABLED] ?: false,
+                labelRecognitionPreference = prefs[UserPreferenceKeys.LABEL_RECOGNITION_PREFERENCE]
+                    ?.let { name -> RecognitionPreference.entries.firstOrNull { it.name == name } }
+                    ?: RecognitionPreference.UNDECIDED,
             )
         }
         .distinctUntilChanged()

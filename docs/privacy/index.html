@@ -22,7 +22,7 @@
 <main class="prose">
     <h1>Privacy Policy</h1>
     <p class="last-updated">
-        <strong>Effective date:</strong> 24 May 2026 ·
+        <strong>Effective date:</strong> 21 August 2026 ·
         <strong>Applies to:</strong> Starlit Coffee for Android (all versions)
     </p>
 
@@ -90,6 +90,7 @@
         <li><strong>Saved recipes</strong> — your custom brew presets.</li>
         <li><strong>Grinder profiles, ratio presets, cup presets, flavour tags</strong> — configuration you've added.</li>
         <li><strong>Bag photos</strong> — image files stored in the app's private <code>files/bag_photos/</code> directory. Photo paths only are referenced from the database.</li>
+        <li><strong>Unfinished coffee drafts</strong> — captured or imported label photos, partial structured fields, and your edits are kept in private, no-backup storage until you save or explicitly discard the draft.</li>
         <li><strong>Preferences</strong> — onboarding state, enabled brew methods, default method/filter, selected grinder, last-used ratio, input direction, opt-in flags such as QR link explorer.</li>
         <li><strong>Recent scan-session metadata</strong> — short history of the last 10 barcode scans (locally, never uploaded).</li>
     </ul>
@@ -100,19 +101,22 @@
 
     <h2 id="camera">4. Camera, scanning &amp; on-device AI</h2>
     <p>
-        When you tap "Scan bag," the app asks for the <code>CAMERA</code> permission. The camera is used
-        only while the scanner screen is open and only for these purposes:
+        When you tap "Scan bag," the app asks for the <code>CAMERA</code> permission. If you decline,
+        you can choose existing photos or enter details manually. The camera is used only while the
+        scanner screen is open and only for these purposes:
     </p>
     <ul>
         <li><strong>Barcode reading</strong> via Google ML Kit Barcode Scanning — runs entirely on your device.</li>
         <li><strong>Label OCR</strong> (reading printed text on bags) via Google ML Kit Text Recognition — runs entirely on your device.</li>
-        <li><strong>Optional smart-fill assistance</strong> via Mindlayer's on-device machine-learning SDK — runs entirely on your device through a local bound service, with no network calls.</li>
+        <li><strong>Optional enhanced label recognition</strong> via Mindlayer's on-device machine-learning SDK — used only when enabled, runs entirely on your device through a local bound service, and makes no network calls.</li>
     </ul>
     <p>
-        Camera frames are processed in memory and discarded after analysis. The app never streams video,
-        and frames are never uploaded. The only things that may be persisted from a scan are the bag photos
-        you choose to save and the structured fields (text, barcode) that the scanner extracts for you to
-        confirm.
+        Camera preview frames are processed in memory and discarded after analysis. The app never streams
+        video, and frames are never uploaded. Photos you capture or import for a coffee draft are staged in
+        private, no-backup storage so you can resume reviewing them after leaving the screen or after process
+        recreation. The staged photos and structured fields remain until you save the bag or explicitly
+        discard that draft. The app then keeps only a minimal ownership marker so late background work cannot
+        recreate it; label details and staged-photo references are removed from that marker.
     </p>
 
     <h2 id="openfoodfacts">5. Barcode lookup (Open Food Facts)</h2>
@@ -147,7 +151,7 @@
         your device PIN/pattern/password on Android 9+).
     </p>
     <p>
-        I deliberately <strong>exclude your bag photos and internal scan diagnostics</strong> from
+        I deliberately <strong>exclude your bag photos, unfinished coffee drafts, and internal scan diagnostics</strong> from
         cloud backup (and from device-to-device transfer) via the app's
         <code>data_extraction_rules.xml</code>. Photos stay on your device only; if you reinstall or
         switch phones, your brew history comes back but you'll need to re-take or re-import bag
@@ -195,6 +199,7 @@
     <h2 id="retention">11. Retention &amp; deletion</h2>
     <ul>
         <li><strong>On your device:</strong> data is kept for as long as you use the app. You can delete individual bags, brews, recipes, or photos from within the app at any time.</li>
+        <li><strong>Unfinished coffee drafts:</strong> active drafts do not expire silently. Use Discard in the draft or its bean-list card to remove the staged photos and close the draft.</li>
         <li><strong>Full wipe:</strong> uninstalling the app removes the private database, preferences, and photo files. (Items already copied into Android Auto Backup remain in your Google Drive backup per Google's retention rules — see section 7.)</li>
         <li><strong>Open Food Facts queries:</strong> handled per Open Food Facts' own logs and policies. I do not retain a copy.</li>
         <li><strong>This website:</strong> served by GitHub Pages. GitHub keeps standard request logs for security/abuse-prevention purposes; see <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub's privacy statement</a>.</li>

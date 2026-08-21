@@ -83,6 +83,7 @@ import android.provider.Settings as AndroidSettings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import com.adsamcik.starlitcoffee.scan.observability.ScanBugReporter
 import com.adsamcik.starlitcoffee.scan.observability.ScanLlmDiagnosticsStore
 import com.adsamcik.starlitcoffee.scan.observability.ScanSessionRingBuffer
@@ -90,6 +91,7 @@ import com.adsamcik.starlitcoffee.ui.component.DestructiveActionDialog
 import com.adsamcik.starlitcoffee.ui.component.MindlayerSettingsCard
 import com.adsamcik.starlitcoffee.ui.component.ScanHistoryDialog
 import com.adsamcik.starlitcoffee.ui.component.formatSessionForShare
+import com.adsamcik.starlitcoffee.util.RecognitionPreference
 import com.adsamcik.starlitcoffee.viewmodel.SettingsCompletion
 import com.adsamcik.starlitcoffee.viewmodel.SettingsFailure
 import com.adsamcik.starlitcoffee.viewmodel.SettingsOperation
@@ -432,6 +434,43 @@ fun SettingsScreen(
                 )
             }
 
+            // ---------- Scanning ----------
+            SettingsSectionHeader(stringResource(R.string.label_settings_section_scanning))
+            SettingsGroup {
+                SettingsSwitchRow(
+                    title = stringResource(R.string.label_enhanced_label_recognition),
+                    summary = stringResource(R.string.msg_enhanced_label_recognition),
+                    checked = prefs.labelRecognitionPreference == RecognitionPreference.ENABLED,
+                    enabled = !isBusy,
+                    onCheckedChange = { enabled ->
+                        viewModel.updateLabelRecognitionPreference(
+                            if (enabled) RecognitionPreference.ENABLED else RecognitionPreference.DISABLED,
+                        )
+                    },
+                )
+                SettingsRowDivider()
+                SettingsNavigationRow(
+                    title = stringResource(R.string.label_label_recognition_privacy),
+                    summary = stringResource(R.string.msg_label_recognition_privacy),
+                    onClick = {
+                        runCatching {
+                            context.startActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW,
+                                    "https://adsamcik.github.io/StarlitCoffee/privacy/".toUri(),
+                                ),
+                            )
+                        }.onFailure {
+                            Toast.makeText(
+                                context,
+                                R.string.msg_could_not_open_privacy_policy,
+                                Toast.LENGTH_LONG,
+                            ).show()
+                        }
+                    },
+                )
+            }
+
             // ---------- Notifications ----------
             SettingsSectionHeader(stringResource(R.string.label_settings_section_notifications))
             SettingsGroup {
@@ -448,11 +487,10 @@ fun SettingsScreen(
                 )
             }
 
-            MindlayerSettingsCard(showDiagnostics = BuildConfig.DEBUG)
-
             // ---------- Developer (debug only) ----------
             if (BuildConfig.DEBUG) {
                 SettingsSectionHeader(stringResource(R.string.label_settings_section_developer))
+                MindlayerSettingsCard(showDiagnostics = true)
                 ScanDebugCard(viewModel = viewModel, operationState = operationState)
                 // Phase 3 — opt-in, on-device capture of model-vs-user field
                 // corrections, used to measure extraction quality on real bags.

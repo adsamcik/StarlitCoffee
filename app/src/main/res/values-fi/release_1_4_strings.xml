@@ -57,11 +57,6 @@
     <string name="format_notif_brew_target_reached_body">Reseptisi %1$s tavoite on saavutettu. Tarkista keitto napauttamalla.</string>
     <string name="action_add_coffee">Lisää kahvi</string>
     <string name="action_read_bag_photos">Lue laukkukuvia</string>
-    <string name="action_scan_bag_ai">Skannauspussi · AI täyttää yksityiskohdat</string>
     <string name="action_scan_first_bag">Skannaa ensimmäinen laukkuni</string>
     <string name="msg_scan_first_coffee_hint">Skannaa etu- ja takapuoli täyttääksesi tiedot automaattisesti. Valokuvat pysyvät laitteessasi.</string>
-    <string name="dialog_ai_scan_setup_title">Määritä yksityisten tarrojen skannaus</string>
-    <string name="msg_ai_scan_setup">Starlit Coffee käyttää Mindlayeria kahvitarrojen lukemiseen laitteestasi yksityisesti. Asenna se kerran, niin tämä tarkistus jatkuu automaattisesti.</string>
-    <string name="dialog_ai_scan_unsupported_title">Automaattista skannausta ei tueta</string>
-    <string name="msg_ai_scan_unsupported">Automaattinen tarraskannaus vaatii Android 12:n tai uudemman. Voit silti lisätä pussin manuaalisesti tai skannata sen viivakoodin.</string>
 </resources>

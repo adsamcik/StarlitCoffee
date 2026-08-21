@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.navigation
 
 import android.app.Application
+import androidx.annotation.StringRes
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
@@ -57,6 +58,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.db.AppDatabase
 import com.adsamcik.starlitcoffee.data.brewing.session.ActiveBrewSessionEntityMapper
 import com.adsamcik.starlitcoffee.data.brewing.session.ActiveBrewSessionRestoreResult
@@ -67,6 +69,7 @@ import com.adsamcik.starlitcoffee.data.repository.CupPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.data.repository.StableBrewingPreferences
 import com.adsamcik.starlitcoffee.data.work.BagReviewContext
+import com.adsamcik.starlitcoffee.data.work.BagDraftStore
 import com.adsamcik.starlitcoffee.notification.DeepLinkBus
 import com.adsamcik.starlitcoffee.ui.adaptive.LocalWindowWidthClass
 import com.adsamcik.starlitcoffee.ui.screen.BagInventoryScreen
@@ -88,6 +91,7 @@ import com.adsamcik.starlitcoffee.ui.screen.CupPresetEditorScreen
 import com.adsamcik.starlitcoffee.ui.screen.DisplaySettingsScreen
 import com.adsamcik.starlitcoffee.ui.screen.GrindPrepScreen
 import com.adsamcik.starlitcoffee.ui.screen.GuidedScanFlow
+import com.adsamcik.starlitcoffee.ui.screen.BagDraftReviewRoute
 import com.adsamcik.starlitcoffee.ui.screen.MoreScreen
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingMethodsScreen
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingPersonalizeScreen
@@ -96,6 +100,8 @@ import com.adsamcik.starlitcoffee.ui.screen.ScanAddBagReview
 import com.adsamcik.starlitcoffee.ui.screen.ScanRescanReview
 import com.adsamcik.starlitcoffee.ui.screen.SettingsScreen
 import com.adsamcik.starlitcoffee.viewmodel.BagScanCaptureViewModel
+import com.adsamcik.starlitcoffee.viewmodel.BagScanDraftViewModel
+import com.adsamcik.starlitcoffee.viewmodel.BagScanDraftViewModelFactory
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModelFactory
 import com.adsamcik.starlitcoffee.viewmodel.BrewLogFeedbackViewModel
@@ -110,9 +116,6 @@ import com.adsamcik.starlitcoffee.viewmodel.OnboardingViewModel
 import com.adsamcik.starlitcoffee.viewmodel.OnboardingViewModelFactory
 import com.adsamcik.starlitcoffee.viewmodel.SettingsViewModel
 import com.adsamcik.starlitcoffee.viewmodel.SettingsViewModelFactory
-import androidx.annotation.StringRes
-import androidx.compose.ui.res.stringResource
-import com.adsamcik.starlitcoffee.R
 import java.util.HashMap
 import kotlinx.coroutines.launch
 
@@ -185,6 +188,10 @@ fun StarlitNavHost() {
         ?.takeIf { it.destination.hasRoute(RescanBag::class) }
         ?.toRoute<RescanBag>()
         ?.bagId
+    val currentBagDraftSessionId = navBackStackEntry
+        ?.takeIf { it.destination.hasRoute(BagDraft::class) }
+        ?.toRoute<BagDraft>()
+        ?.sessionId
 
     val userPrefs by userPreferencesRepository.userPreferences.collectAsStateWithLifecycle(
         initialValue = null,
@@ -312,6 +319,7 @@ fun StarlitNavHost() {
         foregroundScanReview,
         prefs.onboardingCompleted,
         currentRescanBagId,
+        currentBagDraftSessionId,
     ) {
         if (!prefs.onboardingCompleted) return@LaunchedEffect
         val request = pendingBagAnalysis
@@ -324,23 +332,34 @@ fun StarlitNavHost() {
                 }
         } ?: return@LaunchedEffect
         val reviewKey = review.workId ?: "${review.sessionId}:${review.generationId}"
-        val destination = bagReviewDestination(review.reviewContext)
-        val navigationPlan = bagReviewNavigationPlan(
-            destination = destination,
-            requiresInventoryBackStack = request != null || review.requiresInventoryBackStack,
-        )
-        val alreadyShowingRescan = shouldSuppressBagReviewNavigation(
-            hasExplicitRequest = request != null,
-            currentRescanBagId = currentRescanBagId,
-            destination = destination,
-        )
         if (routedBagReviewKey != reviewKey) {
             routedBagReviewKey = reviewKey
-            when {
-                alreadyShowingRescan -> Unit
-                else -> navigationPlan.routes.forEach { route ->
-                    navController.navigate(route) {
+            val durableDraft = BagDraftStore.read(context, review.sessionId)?.takeIf { it.isActive }
+            if (durableDraft != null) {
+                if (request != null || review.requiresInventoryBackStack) {
+                    navController.navigate(BagInventory) {
                         launchSingleTop = true
+                    }
+                }
+                if (currentBagDraftSessionId != review.sessionId) {
+                    navController.navigate(BagDraft(review.sessionId)) {
+                        launchSingleTop = true
+                    }
+                }
+            } else {
+                val destination = bagReviewDestination(review.reviewContext)
+                val navigationPlan = bagReviewNavigationPlan(
+                    destination = destination,
+                    requiresInventoryBackStack = request != null || review.requiresInventoryBackStack,
+                )
+                val alreadyShowingRescan = shouldSuppressBagReviewNavigation(
+                    hasExplicitRequest = request != null,
+                    currentRescanBagId = currentRescanBagId,
+                    destination = destination,
+                )
+                if (!alreadyShowingRescan) {
+                    navigationPlan.routes.forEach { route ->
+                        navController.navigate(route) { launchSingleTop = true }
                     }
                 }
             }
@@ -732,6 +751,9 @@ fun StarlitNavHost() {
                         onNavigateToRescan = { bagId ->
                             navController.navigate(RescanBag(bagId))
                         },
+                        onOpenDraft = { sessionId ->
+                            navController.navigate(BagDraft(sessionId))
+                        },
                         capturedPhotosResult = capturedPhotos,
                         scanFieldsResult = scanFields,
                         scannedBarcodeResult = scannedBarcode,
@@ -886,6 +908,12 @@ fun StarlitNavHost() {
                         brewViewModel = brewViewModel,
                         onExit = { navController.popBackStack() },
                         reviewContext = BagReviewContext.addNew(),
+                        onReviewReady = { sessionId ->
+                            navController.navigate(BagDraft(sessionId)) {
+                                popUpTo<GuidedScan> { inclusive = true }
+                                launchSingleTop = true
+                            }
+                        },
                     ) { data, callbacks ->
                         ScanAddBagReview(
                             brewViewModel = brewViewModel,
@@ -894,6 +922,72 @@ fun StarlitNavHost() {
                             existingBags = bags,
                         )
                     }
+                }
+                composable<GuidedScanDraft> { backStackEntry ->
+                    val route = backStackEntry.toRoute<GuidedScanDraft>()
+                    val captureViewModel: BagScanCaptureViewModel = viewModel()
+                    val draft = remember(route.sessionId) {
+                        BagDraftStore.read(context, route.sessionId)
+                    }
+                    if (draft == null || !draft.isActive) {
+                        LaunchedEffect(route.sessionId) { navController.popBackStack() }
+                        return@composable
+                    }
+                    LaunchedEffect(route.sessionId, draft.photoUris) {
+                        captureViewModel.resumeCapture(
+                            route.sessionId,
+                            draft.photoUris.joinToString(","),
+                        )
+                    }
+                    val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
+                    GuidedScanFlow(
+                        captureViewModel = captureViewModel,
+                        brewViewModel = brewViewModel,
+                        onExit = { navController.popBackStack() },
+                        reviewContext = draft.reviewContext,
+                        onReviewReady = { sessionId ->
+                            navController.navigate(BagDraft(sessionId)) {
+                                popUpTo<GuidedScanDraft> { inclusive = true }
+                                launchSingleTop = true
+                            }
+                        },
+                    ) { data, callbacks ->
+                        ScanAddBagReview(
+                            brewViewModel = brewViewModel,
+                            data = data,
+                            callbacks = callbacks,
+                            existingBags = bags,
+                        )
+                    }
+                }
+                composable<BagDraft> { backStackEntry ->
+                    val route = backStackEntry.toRoute<BagDraft>()
+                    val draftViewModel: BagScanDraftViewModel = viewModel(
+                        viewModelStoreOwner = backStackEntry,
+                        factory = remember(route.sessionId, context) {
+                            BagScanDraftViewModelFactory(context, route.sessionId)
+                        },
+                    )
+                    val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
+                    BagDraftReviewRoute(
+                        draftViewModel = draftViewModel,
+                        brewViewModel = brewViewModel,
+                        existingBags = bags,
+                        onExit = { navController.popBackStack() },
+                        onScanMore = { sessionId ->
+                            navController.navigate(GuidedScanDraft(sessionId))
+                        },
+                        onMissing = { navController.popBackStack() },
+                        onNewBagTransfer = { transfer ->
+                            navController.previousBackStackEntry
+                                ?.savedStateHandle
+                                ?.set(
+                                    SCAN_DRAFT_TRANSFER_RESULT_KEY,
+                                    ScanDraftTransferCodec.encode(transfer),
+                                )
+                            navController.popBackStack()
+                        },
+                    )
                 }
                 composable<RescanBag> { backStackEntry ->
                     val route = backStackEntry.toRoute<RescanBag>()
@@ -925,6 +1019,12 @@ fun StarlitNavHost() {
                         brewViewModel = brewViewModel,
                         onExit = { navController.popBackStack() },
                         reviewContext = BagReviewContext.rescan(route.bagId),
+                        onReviewReady = { sessionId ->
+                            navController.navigate(BagDraft(sessionId)) {
+                                popUpTo<RescanBag> { inclusive = true }
+                                launchSingleTop = true
+                            }
+                        },
                     ) { data, callbacks ->
                         ScanRescanReview(
                             brewViewModel = brewViewModel,

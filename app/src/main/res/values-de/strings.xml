@@ -287,11 +287,6 @@
     <string name="cd_notif_rating_4">Als großartig bewerten</string>
 
     <!-- Bag analysis screen + notification -->
-    <string name="screen_analyzing_bag_title">Tüte wird analysiert</string>
-    <string name="msg_analyzing_bag_subtitle">Die KI liest das Etikett, um die Details auszufüllen. Das kann einen Moment dauern.</string>
-    <string name="msg_analyzing_bag_background_hint">Sie können die App weiter nutzen — wir benachrichtigen Sie, sobald es fertig ist.</string>
-    <string name="action_skip_ai">KI überspringen</string>
-    <string name="action_run_in_background">Im Hintergrund fortsetzen</string>
     <string name="notif_channel_bag_analysis">Tütenanalyse</string>
     <string name="notif_channel_bag_analysis_desc">Informiert Sie, wenn die KI ein Kaffeetüten-Etikett fertig gelesen hat.</string>
     <string name="notif_scan_progress_title">Etikett der Tüte wird gelesen…</string>
@@ -420,14 +415,11 @@
     <string name="msg_decaf_grind_adjustment">Entkoffeiniert ist ausgewählt. Die Mahlgradeinstellung unten wird gröber angepasst, wenn diese Brühmethode davon profitiert.</string>
     <string name="label_decaf_process_optional">Entkoffeinierungsverfahren (optional)</string>
     <string name="msg_decaf_process_hint">Erlaubt der Brühregel, den Mahlgrad sanft zu beeinflussen: Wasserprozess- und CO₂-Decafs brauchen typischerweise weniger Vergröberung als lösungsmittelbasierte Verfahren.</string>
-    <string name="cd_captured_bag_photo">Aufgenommenes Foto der Packung</string>
 <string name="label_detected_details">Erkannte Details</string>
     <string name="msg_tap_chip_to_edit">Tippen Sie auf einen Chip, um ihn zu bearbeiten</string>
     <string name="label_needs_review">Prüfung nötig</string>
 <string name="action_edit_all_fields">Alle Felder bearbeiten</string>
     <string name="action_add_more_details">Weitere Details hinzufügen</string>
-    <string name="msg_analyzing_label">Etikettfotos werden analysiert</string>
-    <string name="msg_analyzing_label_detail">Wir prüfen Unschärfe, führen Vorder- und Rückseitentext zusammen und bereiten die zuverlässigsten Felder vor.</string>
     <string name="label_review_fields">Diese Felder prüfen</string>
     <string name="label_qr_website">QR-Website</string>
     <string name="action_open_website">Website öffnen</string>
@@ -456,9 +448,7 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">KI-Dienst (Mindlayer)</string>
-    <string name="action_connect_mindlayer">Mindlayer verbinden</string>
     <string name="action_mindlayer_google_play">Mindlayer bei Google Play holen</string>
-    <string name="msg_mindlayer_connection_offer">Mindlayer ist installiert. Möchtest du es für private KI auf dem Gerät verbinden?</string>
     <string name="msg_mindlayer_install_recommendation">Installiere Mindlayer über Google Play, um Kaffeebeutel-Etiketten mit privater KI auf dem Gerät zu lesen. Das kannst du später in den Einstellungen tun.</string>
     <string name="action_test_connection">Verbindung testen</string>
     <string name="action_run_test_prompt">Test-Prompt ausführen</string>
@@ -518,10 +508,6 @@
     <string name="msg_could_not_read_label">Etikett konnte nicht gelesen werden</string>
     <string name="action_retake_photo">Foto erneut aufnehmen</string>
     <string name="action_add_details_manually">Details manuell hinzufügen</string>
-    <string name="msg_llm_enrichment_succeeded">KI-Anreicherung hat diesen Etikettscan verbessert.</string>
-    <string name="msg_llm_enrichment_failed">Die KI konnte dieses Etikett diesmal nicht fertig lesen — Zeitüberschreitung oder vorübergehender Fehler (automatischer erneuter Versuch hat nicht geholfen). Tippe auf Wiederholen, oder fülle einfach die Felder unten aus.</string>
-    <string name="msg_llm_enrichment_unavailable">KI-Anreicherung ist derzeit nicht verfügbar. Sie können es erneut versuchen oder manuell weiterbearbeiten.</string>
-    <string name="action_retry_llm_enrichment">KI-Anreicherung erneut versuchen</string>
 
     <!-- BrewLogDetailScreen -->
     <string name="action_share_brew">Zubereitung teilen</string>

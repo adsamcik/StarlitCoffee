@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_settings_section_scanning">扫描</string>
+    <string name="label_enhanced_label_recognition">增强的标签识别</string>
+    <string name="msg_enhanced_label_recognition">在此设备上查找咖啡豆袋的更多详细信息（如果有）。从标签上读取基本的设备文本仍然可用。</string>
+    <string name="label_label_recognition_privacy">标签识别和隐私</string>
+    <string name="msg_label_recognition_privacy">了解您的设备上保留的内容以及何时使用网络查找。</string>
+    <string name="msg_could_not_open_privacy_policy">无法打开隐私政策。</string>
+    <string name="cd_front_label_photo">正面标签照片</string>
+    <string name="cd_back_label_photo">背标照片</string>
+    <string name="format_cd_additional_label_photo">附加标签照片 %1$d</string>
+    <string name="label_label_evidence">标签信息来源</string>
+    <string name="evidence_from_label">从标签上看</string>
+    <string name="evidence_confirmed_on_label">已在标签上确认</string>
+    <string name="evidence_from_qr_website">来自二维码网站</string>
+    <string name="evidence_from_label_code">从标签代码</string>
+    <string name="evidence_from_saved_bag">来自之前保存的咖啡详细信息</string>
+    <string name="evidence_from_barcode_lookup">从条形码查找</string>
+    <string name="evidence_suggested_from_label_context">根据标签上下文建议</string>
+    <string name="evidence_front_photo">正面照片</string>
+    <string name="evidence_back_photo">背面照片</string>
+    <string name="msg_checking_label">检查标签…</string>
+    <string name="msg_checking_more_details">正在检查更多详细信息…</string>
+    <plurals name="format_label_details_need_review">
+        <item quantity="other">需要审核的详细信息：%1$d</item>
+    </plurals>
+    <string name="msg_could_not_read_more_details">无法阅读更多详细信息。您可以继续编辑或重试。</string>
+    <string name="action_set_up_label_recognition">设置标签识别</string>
+    <string name="action_use_label_recognition">使用标签识别</string>
+    <string name="action_finish_label_recognition_setup">完成设置</string>
+    <string name="action_always_enter_manually">始终手动输入</string>
+    <string name="action_apply_suggestion">采纳建议</string>
+    <string name="format_new_label_suggestion">%1$s的新建议：%2$s</string>
+    <string name="msg_label_recognition_offer">可选：在此设备上使用 Mindlayer 从咖啡袋标签中查找更多详细信息。保存前检查所有内容。</string>
+    <string name="action_try_label_again">再试一次</string>
+    <string name="action_retake_label_photo">重拍照片</string>
+    <string name="label_coffee_draft">未完成的咖啡细节</string>
+    <string name="action_review_coffee_draft">查看未完成的咖啡细节</string>
+    <string name="msg_draft_needs_attention">这些咖啡细节需要您的审查</string>
+    <string name="action_discard_draft">丢弃未完成的咖啡细节</string>
+    <string name="cd_open_coffee_draft">打开 %1$s 未完成的咖啡详细信息。 %2$s</string>
+    <string name="action_save_coffee">保存咖啡详细信息</string>
+    <string name="screen_add_coffee_title">添加咖啡</string>
+    <string name="screen_edit_coffee_title">编辑咖啡</string>
+    <string name="screen_review_coffee_title">查看咖啡详情</string>
+    <string name="msg_camera_permission_alternatives">您可以允许相机访问、选择咖啡袋标签的照片或自行输入咖啡袋上打印的详细信息。</string>
+    <string name="action_choose_photos">选择照片</string>
+    <string name="action_enter_manually">手动输入</string>
+    <string name="action_ok">好的</string>
+    <string name="action_set_roast_date">设置咖啡烘焙日期</string>
+    <string name="action_change_roast_date">更改咖啡烘焙日期</string>
+    <string name="action_set_best_before">设置最佳食用日期</string>
+    <string name="action_change_best_before">更改最佳食用日期</string>
+    <string name="action_show_optional_details">显示可选详细信息</string>
+    <string name="action_hide_optional_details">隐藏可选详细信息</string>
+</resources>

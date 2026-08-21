@@ -46,7 +46,7 @@ Core feature layers:
 | `data/db` | Room database, converters, DAOs, entities, migrations. | `AppDatabase.kt`, `dao/*Dao.kt`, `entity/*Entity.kt` |
 | `data/brewing` | Legacy adapters plus versioned recipe, log, stage-plan, and active-session persistence mapping. | `LegacyBrewingAdapter.kt`, `snapshot/*`, `session/*` |
 | `data/model` | Legacy brew-method compatibility, grinder data, coffee metadata, scan models, UI domain models. | `BrewMethod.kt`, `FilterType.kt`, `DefaultGrinders.kt` |
-| `data/network` | Coffee metadata lookups and on-device LLM abstraction. | `OpenFoodFactsClient.kt`, `QrLinkMetadataExplorer.kt`, `llm/*` |
+| `data/network` | Coffee metadata lookups plus bundled and optional on-device recognition abstractions. | `OpenFoodFactsClient.kt`, `QrLinkMetadataExplorer.kt`, `ocr/*`, `llm/*` |
 | `data/repository` | Thin wrappers over DAOs/DataStore with domain mapping where needed. | `BrewLogRepository.kt`, `CoffeeBagRepository.kt`, `UserPreferencesRepository.kt` |
 | `domain` | Pure calculation plus stable brewing taxonomy, equipment, recipes, stage plans, clocks, and session reducer. | `BrewCalculator.kt`, `brewing/*`, `brewing/session/*` |
 | `navigation` | Type-safe routes and single NavHost. | `Routes.kt`, `StarlitNavHost.kt` |
@@ -65,7 +65,7 @@ Core feature layers:
 
 - `StarlitNavHost.kt` creates `AppDatabase`, `UserPreferencesRepository`, `CupPresetRepository`, `BrewViewModel`, and `CalculatorViewModel`.
 - Bottom navigation roots are `CalculatorBrew`, `BrewLogList`, and `More`.
-- Nested routes include `GrindPrep`, `BloomTimer`, `BrewTimer`, `BagInventory`, `BarcodeScanner`, `LiveScan`, `BrewLogDetail`, `Settings`, onboarding, and `RescanBag`.
+- Nested routes include `GrindPrep`, `BloomTimer`, `BrewTimer`, `BagInventory`, `GuidedScan`, `GuidedScanDraft`, `BagDraft`, `BarcodeScanner`, `LiveScan`, `BrewLogDetail`, `Settings`, onboarding, and `RescanBag`.
 - Results between scan screens and inventory move through `savedStateHandle` keys such as `scan_fields`, `scanned_barcode`, and `rescan_fields`.
 
 ### BrewViewModel
@@ -102,6 +102,27 @@ Key properties:
 - Regular frames use a conflated channel; golden frames and enrichments use unlimited channels.
 - Consensus uses OCR medoid clustering, Bayesian priors from known coffee fields, and quality-weighted voting.
 - The user must review/save; live scan results are not auto-saved.
+
+### Still-photo label draft pipeline
+
+```text
+GuidedCaptureScreen or gallery picker
+  -> BagDraftStore.ensure(...) creates the user-owned draft
+  -> BagDraft(sessionId) opens an editable review immediately
+  -> BagExtractionWorker / BagPhotoExtractor publish staged results
+      -> bundled ML Kit OCR is the guaranteed baseline
+      -> optional Mindlayer OCR/LLM enrichment may add more detail
+      -> BagDraftStore merges only into untouched, unfocused fields
+  -> user Save or Discard writes a terminal draft tombstone
+      -> late work, recovery, and notifications are suppressed
+```
+
+`BagDraftStore` uses atomic JSON files under the app's no-backup directory.
+Active drafts do not expire automatically. `BagScanDraftViewModel` owns the
+exact-session review route, while `SavedStateHandle` stores only lightweight
+route identity. WorkManager remains responsible for durable execution, not for
+form ownership. Background notifications resolve their work ID back to the
+matching draft session before navigating.
 
 ### Persistence
 
@@ -149,10 +170,11 @@ generic recipe, instruction, or illustration.
 
 ```text
 BagInventoryScreen
-  -> manual add, photo picker, barcode scanner, or LiveScan
+  -> manual add, photo picker, guided capture, barcode scanner, or LiveScan
   -> BrewViewModel.processNewBagPhotos(...) for still images
+  -> BagDraft(sessionId) for resumable still-photo review
   -> LiveScanScreen for continuous camera consensus
-  -> AddBagSheet / RescanDeltaDialog
+  -> AddBagSheet / RescanDeltaDialog, always requiring user save
   -> CoffeeBagRepository persists bags
   -> selectBagForBrewing(...) returns to CalculatorBrew
 ```

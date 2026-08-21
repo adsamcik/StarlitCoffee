@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_settings_section_scanning">Szkennelés</string>
+    <string name="label_enhanced_label_recognition">Továbbfejlesztett címkefelismerés</string>
+    <string name="msg_enhanced_label_recognition">Ha rendelkezésre áll, keressen további részleteket az eszközön lévő kávébabzsákban. Az eszközön található alapvető szövegolvasás a címkéről továbbra is elérhető.</string>
+    <string name="label_label_recognition_privacy">Címkefelismerés és adatvédelem</string>
+    <string name="msg_label_recognition_privacy">Megtudhatja, mi marad az eszközén, és mikor használják a hálózati kereséseket.</string>
+    <string name="msg_could_not_open_privacy_policy">Nem sikerült megnyitni az adatvédelmi szabályzatot.</string>
+    <string name="cd_front_label_photo">Elülső címkefotó</string>
+    <string name="cd_back_label_photo">Hátsó címkefotó</string>
+    <string name="format_cd_additional_label_photo">További címkefotó %1$d</string>
+    <string name="label_label_evidence">Információforrások a címkéről</string>
+    <string name="evidence_from_label">A címkéről</string>
+    <string name="evidence_confirmed_on_label">A címkén megerősítve</string>
+    <string name="evidence_from_qr_website">A QR webhelyről</string>
+    <string name="evidence_from_label_code">A címkekódból</string>
+    <string name="evidence_from_saved_bag">A korábban mentett kávérészletekből</string>
+    <string name="evidence_from_barcode_lookup">A vonalkód keresésből</string>
+    <string name="evidence_suggested_from_label_context">A címke kontextusából javasolt</string>
+    <string name="evidence_front_photo">Elülső fotó</string>
+    <string name="evidence_back_photo">Hátsó fotó</string>
+    <string name="msg_checking_label">A címke ellenőrzése…</string>
+    <string name="msg_checking_more_details">További részletek keresése…</string>
+    <plurals name="format_label_details_need_review">
+        <item quantity="one">Áttekintést igénylő részletek: %1$d</item>
+        <item quantity="other">Áttekintést igénylő részletek: %1$d</item>
+    </plurals>
+    <string name="msg_could_not_read_more_details">További részleteket nem sikerült elolvasni. Folytathatja a szerkesztést, vagy próbálkozhat újra.</string>
+    <string name="action_set_up_label_recognition">Címkefelismerés beállítása</string>
+    <string name="action_use_label_recognition">Használjon címkefelismerést</string>
+    <string name="action_finish_label_recognition_setup">Fejezze be a beállítást</string>
+    <string name="action_always_enter_manually">Mindig kézzel írja be</string>
+    <string name="action_apply_suggestion">Alkalmazza a javaslatot</string>
+    <string name="format_new_label_suggestion">Új javaslat a %1$s számára: %2$s</string>
+    <string name="msg_label_recognition_offer">Opcionális: használja a Mindlayert ezen az eszközön, hogy további részleteket találjon a kávézacskó címkéjén. Mentés előtt tekintsen át mindent.</string>
+    <string name="action_try_label_again">Próbáld újra</string>
+    <string name="action_retake_label_photo">Fotó újra</string>
+    <string name="label_coffee_draft">Befejezetlen kávé részletek</string>
+    <string name="action_review_coffee_draft">Tekintse át a befejezetlen kávé részleteit</string>
+    <string name="msg_draft_needs_attention">Ezeket a kávéval kapcsolatos részleteket át kell tekinteni</string>
+    <string name="action_discard_draft">Dobja el a befejezetlen kávé részleteit</string>
+    <string name="cd_open_coffee_draft">Nyissa meg a %1$s befejezetlen kávé részleteit. %2$s</string>
+    <string name="action_save_coffee">Mentse el a kávé részleteit</string>
+    <string name="screen_add_coffee_title">Adjunk hozzá kávét</string>
+    <string name="screen_edit_coffee_title">Kávé szerkesztése</string>
+    <string name="screen_review_coffee_title">Tekintse át a kávé részleteit</string>
+    <string name="msg_camera_permission_alternatives">Engedélyezheti a kamera hozzáférését, kiválaszthat fényképeket a kávézacskó címkéjéről, vagy saját maga is megadhatja a kávézacskóra nyomtatott adatokat.</string>
+    <string name="action_choose_photos">Válasszon fényképeket</string>
+    <string name="action_enter_manually">Írja be kézzel</string>
+    <string name="action_ok">OK</string>
+    <string name="action_set_roast_date">Állítsa be a kávépörkölés dátumát</string>
+    <string name="action_change_roast_date">Módosítsa a kávépörkölés dátumát</string>
+    <string name="action_set_best_before">Állítsa be a minőségmegőrzési dátumot</string>
+    <string name="action_change_best_before">Módosítsa a minőségmegőrzési dátumot</string>
+    <string name="action_show_optional_details">Opcionális részletek megjelenítése</string>
+    <string name="action_hide_optional_details">Opcionális részletek elrejtése</string>
+</resources>

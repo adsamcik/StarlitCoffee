@@ -287,11 +287,6 @@
     <string name="cd_notif_rating_4">Beoordeel als geweldig</string>
 
     <!-- Bag analysis screen + notification -->
-    <string name="screen_analyzing_bag_title">Je zak analyseren</string>
-    <string name="msg_analyzing_bag_subtitle">AI leest het etiket om de details in te vullen. Dit kan even duren.</string>
-    <string name="msg_analyzing_bag_background_hint">Je kunt de app blijven gebruiken — we laten het weten zodra het klaar is.</string>
-    <string name="action_skip_ai">AI overslaan</string>
-    <string name="action_run_in_background">Doorgaan op de achtergrond</string>
     <string name="notif_channel_bag_analysis">Zakanalyse</string>
     <string name="notif_channel_bag_analysis_desc">Laat je weten wanneer AI klaar is met het lezen van een koffiezak-etiket.</string>
     <string name="notif_scan_progress_title">Etiket van de zak lezen…</string>
@@ -419,14 +414,11 @@
     <string name="msg_decaf_grind_adjustment">Cafeïnevrij is geselecteerd. Het maaladvies hieronder wordt grover afgesteld wanneer deze zetmethode daar baat bij heeft.</string>
     <string name="label_decaf_process_optional">Decaf-proces (optioneel)</string>
     <string name="msg_decaf_process_hint">Laat de zetregels de maling subtiel bijsturen: decafs met waterproces en CO₂ hoeven meestal minder grof gemalen te worden dan decafs met oplosmiddel.</string>
-    <string name="cd_captured_bag_photo">Vastgelegde zakfoto</string>
 <string name="label_detected_details">Gedetecteerde details</string>
     <string name="msg_tap_chip_to_edit">Tik op een chip om te bewerken</string>
     <string name="label_needs_review">Moet worden gecontroleerd</string>
 <string name="action_edit_all_fields">Alle velden bewerken</string>
     <string name="action_add_more_details">Meer details toevoegen</string>
-    <string name="msg_analyzing_label">Labelfoto\'s analyseren</string>
-    <string name="msg_analyzing_label_detail">We controleren onscherpte, voegen tekst van voor-/achterkant samen en bereiden de betrouwbaarste velden voor.</string>
     <string name="label_review_fields">Controleer deze velden</string>
     <string name="label_qr_website">QR-website</string>
     <string name="action_open_website">Website openen</string>
@@ -455,9 +447,7 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">AI-service (Mindlayer)</string>
-    <string name="action_connect_mindlayer">Mindlayer verbinden</string>
     <string name="action_mindlayer_google_play">Download Mindlayer via Google Play</string>
-    <string name="msg_mindlayer_connection_offer">Mindlayer is geïnstalleerd. Wil je het verbinden voor privé-AI op je apparaat?</string>
     <string name="msg_mindlayer_install_recommendation">Installeer Mindlayer via Google Play om koffiezaketiketten te lezen met privé-AI op je apparaat. Dit kan later in Instellingen.</string>
     <string name="action_test_connection">Verbinding testen</string>
     <string name="action_run_test_prompt">Testprompt uitvoeren</string>
@@ -517,10 +507,6 @@
     <string name="msg_could_not_read_label">Kon label niet lezen</string>
     <string name="action_retake_photo">Foto opnieuw maken</string>
     <string name="action_add_details_manually">Details handmatig toevoegen</string>
-    <string name="msg_llm_enrichment_succeeded">AI-verrijking heeft deze labelscan verbeterd.</string>
-    <string name="msg_llm_enrichment_failed">De AI kon dit etiket deze keer niet helemaal uitlezen — een time-out of tijdelijke fout (automatisch opnieuw proberen hielp niet). Tik op Opnieuw proberen, of vul de velden hieronder gewoon zelf in.</string>
-    <string name="msg_llm_enrichment_unavailable">AI-verrijking is nu niet beschikbaar. Je kunt opnieuw proberen of handmatig verder bewerken.</string>
-    <string name="action_retry_llm_enrichment">AI-verrijking opnieuw proberen</string>
 
     <!-- BrewLogDetailScreen -->
     <string name="action_share_brew">Bereiding delen</string>

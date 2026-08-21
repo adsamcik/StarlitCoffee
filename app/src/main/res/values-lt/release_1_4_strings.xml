@@ -57,11 +57,6 @@
     <string name="format_notif_brew_target_reached_body">Jūsų recepto %1$s tikslas pasiektas. Palieskite, kad patikrintumėte virimą.</string>
     <string name="action_add_coffee">Įpilkite kavos</string>
     <string name="action_read_bag_photos">Skaitykite krepšio nuotraukas</string>
-    <string name="action_scan_bag_ai">Nuskaitymo krepšys · AI užpildo detales</string>
     <string name="action_scan_first_bag">Nuskaitykite mano pirmąjį krepšį</string>
     <string name="msg_scan_first_coffee_hint">Nuskaitykite priekinę ir galinę dalį, kad automatiškai užpildytumėte išsamią informaciją. Nuotraukos lieka jūsų įrenginyje.</string>
-    <string name="dialog_ai_scan_setup_title">Nustatykite privačių etikečių nuskaitymą</string>
-    <string name="msg_ai_scan_setup">„Starlit Coffee“ naudoja Mindlayer, kad privačiai skaitytų kavos etiketes jūsų įrenginyje. Įdiekite jį vieną kartą, tada nuskaitymas bus tęsiamas automatiškai.</string>
-    <string name="dialog_ai_scan_unsupported_title">Automatinis nuskaitymas nepalaikomas</string>
-    <string name="msg_ai_scan_unsupported">Automatiniam etikečių nuskaitymui reikia 12 ar naujesnės versijos „Android“. Vis tiek galite pridėti maišelį rankiniu būdu arba nuskaityti jo brūkšninį kodą.</string>
 </resources>

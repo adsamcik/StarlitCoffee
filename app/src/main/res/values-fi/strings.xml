@@ -287,11 +287,6 @@
     <string name="cd_notif_rating_4">Arvioi mahtavaksi</string>
 
     <!-- Bag analysis screen + notification -->
-    <string name="screen_analyzing_bag_title">Analysoidaan pussia</string>
-    <string name="msg_analyzing_bag_subtitle">Tekoäly lukee etikettiä ja täydentää tiedot. Tämä voi kestää hetken.</string>
-    <string name="msg_analyzing_bag_background_hint">Voit jatkaa sovelluksen käyttöä — ilmoitamme, kun se on valmis.</string>
-    <string name="action_skip_ai">Ohita tekoäly</string>
-    <string name="action_run_in_background">Jatka taustalla</string>
     <string name="notif_channel_bag_analysis">Pussin analysointi</string>
     <string name="notif_channel_bag_analysis_desc">Kertoo, kun tekoäly on lukenut kahvipussin etiketin.</string>
     <string name="notif_scan_progress_title">Luetaan pussin etikettiä…</string>
@@ -420,14 +415,11 @@
     <string name="msg_decaf_grind_adjustment">Kofeiiniton kahvi on valittu. Alla olevaa jauhatussuositusta säädetään karkeammaksi, kun siitä on hyötyä tälle valmistustavalle.</string>
     <string name="label_decaf_process_optional">Kofeiininpoistomenetelmä (valinnainen)</string>
     <string name="msg_decaf_process_hint">Antaa valmistussäännön hienosäätää jauhatusta: vesi- ja CO₂-menetelmän kofeiinittomat vaativat yleensä vähemmän karkeutta kuin liuotinmenetelmällä käsitellyt.</string>
-    <string name="cd_captured_bag_photo">Otettu kuva pussista</string>
 <string name="label_detected_details">Tunnistetut tiedot</string>
     <string name="msg_tap_chip_to_edit">Napauta mitä tahansa kenttää muokataksesi</string>
     <string name="label_needs_review">Vaatii tarkistuksen</string>
 <string name="action_edit_all_fields">Muokkaa kaikkia kenttiä</string>
     <string name="action_add_more_details">Lisää tietoja</string>
-    <string name="msg_analyzing_label">Analysoidaan etikettikuvia</string>
-    <string name="msg_analyzing_label_detail">Tarkistamme sumeutta, yhdistämme etu- ja takapuolen tekstit ja valmistelemme luotettavimmat kentät.</string>
     <string name="label_review_fields">Tarkista nämä kentät</string>
     <string name="label_qr_website">QR-verkkosivusto</string>
     <string name="action_open_website">Avaa verkkosivusto</string>
@@ -456,9 +448,7 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">Tekoälypalvelu (Mindlayer)</string>
-    <string name="action_connect_mindlayer">Yhdistä Mindlayer</string>
     <string name="action_mindlayer_google_play">Hanki Mindlayer Google Playsta</string>
-    <string name="msg_mindlayer_connection_offer">Mindlayer on asennettu. Haluatko yhdistää sen yksityiseen laitteessa toimivaan tekoälyyn?</string>
     <string name="msg_mindlayer_install_recommendation">Asenna Mindlayer Google Playsta, jotta voit lukea kahvipakkausten etiketit yksityisellä laitteessa toimivalla tekoälyllä. Voit tehdä tämän myöhemmin Asetuksissa.</string>
     <string name="action_test_connection">Testaa yhteys</string>
     <string name="action_run_test_prompt">Suorita testikehote</string>
@@ -518,10 +508,6 @@
     <string name="msg_could_not_read_label">Etikettiä ei voitu lukea</string>
     <string name="action_retake_photo">Ota kuva uudelleen</string>
     <string name="action_add_details_manually">Lisää tiedot käsin</string>
-    <string name="msg_llm_enrichment_succeeded">Tekoälyn rikastus paransi tätä etiketin skannausta.</string>
-    <string name="msg_llm_enrichment_failed">Tekoäly ei saanut luettua tätä etikettiä loppuun tällä kertaa — aika loppui tai tuli tilapäinen virhe (se yritti jo automaattisesti uudelleen). Napauta yritä uudelleen kokeillaksesi vielä kerran tai täytä alla olevat kentät itse.</string>
-    <string name="msg_llm_enrichment_unavailable">Tekoälyn rikastus ei ole juuri nyt käytettävissä. Voit yrittää uudelleen tai jatkaa muokkaamista käsin.</string>
-    <string name="action_retry_llm_enrichment">Yritä tekoälyn rikastusta uudelleen</string>
 
     <!-- BrewLogDetailScreen -->
     <string name="action_share_brew">Jaa valmistus</string>

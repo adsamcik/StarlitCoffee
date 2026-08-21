@@ -147,6 +147,21 @@ class BagScanCaptureViewModel(
         }
     }
 
+    fun resumeCapture(sessionId: String, photoUrisCsv: String?) {
+        if (sessionId.isBlank()) return
+        debounceJob?.cancel()
+        debounceJob = null
+        val photos = BagPhotoReviewUris.parse(photoUrisCsv).map(::CapturedBagPhoto)
+        lastRequestedCsv = photos.joinToString(",") { it.uri }.takeIf(String::isNotBlank)
+        updateState {
+            BagScanUiState(
+                sessionId = sessionId,
+                phase = BagScanPhase.CAPTURING,
+                photos = photos,
+            )
+        }
+    }
+
     /** Discard the whole session (clears photos; caller cancels extraction). */
     fun reset() {
         debounceJob?.cancel()

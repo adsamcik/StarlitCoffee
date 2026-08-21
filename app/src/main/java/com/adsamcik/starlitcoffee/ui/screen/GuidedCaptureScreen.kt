@@ -3,8 +3,10 @@ package com.adsamcik.starlitcoffee.ui.screen
 import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -26,7 +28,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -131,6 +133,25 @@ fun GuidedCaptureScreen(
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission(),
     ) { granted -> hasCameraPermission = granted }
+    val photoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickMultipleVisualMedia(maxItems = 2),
+    ) { uris ->
+        if (uris.isEmpty()) return@rememberLauncherForActivityResult
+        scope.launch {
+            val cachedUris = withContext(Dispatchers.IO) {
+                ScanPhotoStorage.copyPhotosToCache(
+                    context = context.applicationContext,
+                    sourceUris = uris.map { it.toString() },
+                )
+            }
+            if (cachedUris == null) {
+                Toast.makeText(context, R.string.msg_could_not_read_label, Toast.LENGTH_LONG).show()
+                return@launch
+            }
+            cachedUris.forEach(captureViewModel::addPhoto)
+            captureViewModel.finishCapturing()
+        }
+    }
     LaunchedEffect(hasCameraPermission) {
         if (!hasCameraPermission) permissionLauncher.launch(Manifest.permission.CAMERA)
     }
@@ -239,11 +260,46 @@ fun GuidedCaptureScreen(
     }
 
     if (!hasCameraPermission) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(32.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
             Text(
                 stringResource(R.string.msg_camera_permission_required),
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.headlineSmall,
+                modifier = Modifier.semantics { heading() },
             )
+            Spacer(Modifier.height(8.dp))
+            Text(
+                stringResource(R.string.msg_camera_permission_alternatives),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Spacer(Modifier.height(24.dp))
+            Button(
+                onClick = {
+                    photoPickerLauncher.launch(
+                        PickVisualMediaRequest(
+                            ActivityResultContracts.PickVisualMedia.ImageOnly,
+                        ),
+                    )
+                },
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(stringResource(R.string.action_choose_photos))
+            }
+            TextButton(
+                onClick = captureViewModel::finishCapturing,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(stringResource(R.string.action_enter_manually))
+            }
+            TextButton(onClick = onBack) {
+                Text(stringResource(R.string.action_cancel))
+            }
         }
         return
     }
@@ -407,8 +463,12 @@ private fun CaptureBottomBar(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier.fillMaxWidth().padding(bottom = 10.dp),
             ) {
-                items(photos, key = { it }) { uri ->
-                    CapturedThumbnail(uri = uri, onRemove = { onRemovePhoto(uri) })
+                itemsIndexed(photos, key = { _, uri -> uri }) { index, uri ->
+                    CapturedThumbnail(
+                        uri = uri,
+                        description = capturedLabelPhotoDescription(index),
+                        onRemove = { onRemovePhoto(uri) },
+                    )
                 }
             }
         }
@@ -472,7 +532,7 @@ private fun ShutterButton(enabled: Boolean, onClick: () -> Unit) {
 }
 
 @Composable
-private fun CapturedThumbnail(uri: String, onRemove: () -> Unit) {
+private fun CapturedThumbnail(uri: String, description: String, onRemove: () -> Unit) {
     Box {
         BagThumbnail(
             uri = uri,
@@ -481,6 +541,7 @@ private fun CapturedThumbnail(uri: String, onRemove: () -> Unit) {
             modifier = Modifier
                 .size(64.dp)
                 .border(1.dp, Color.White.copy(alpha = 0.4f), RoundedCornerShape(10.dp)),
+            contentDescription = description,
         )
         Surface(
             shape = CircleShape,
@@ -497,6 +558,13 @@ private fun CapturedThumbnail(uri: String, onRemove: () -> Unit) {
             }
         }
     }
+}
+
+@Composable
+private fun capturedLabelPhotoDescription(index: Int): String = when (index) {
+    0 -> stringResource(R.string.cd_front_label_photo)
+    1 -> stringResource(R.string.cd_back_label_photo)
+    else -> stringResource(R.string.format_cd_additional_label_photo, index - 1)
 }
 
 // --- Camera helpers ---

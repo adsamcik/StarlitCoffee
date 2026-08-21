@@ -291,11 +291,6 @@
     <string name="cd_notif_rating_4">Oceń jako świetne</string>
 
     <!-- Bag analysis screen + notification -->
-    <string name="screen_analyzing_bag_title">Analiza opakowania</string>
-    <string name="msg_analyzing_bag_subtitle">AI czyta etykietę, aby uzupełnić szczegóły. To może chwilę potrwać.</string>
-    <string name="msg_analyzing_bag_background_hint">Możesz dalej korzystać z aplikacji — powiadomimy Cię, gdy skończy.</string>
-    <string name="action_skip_ai">Pomiń AI</string>
-    <string name="action_run_in_background">Kontynuuj w tle</string>
     <string name="notif_channel_bag_analysis">Analiza opakowania</string>
     <string name="notif_channel_bag_analysis_desc">Powiadamia, gdy AI skończy czytać etykietę opakowania kawy.</string>
     <string name="notif_scan_progress_title">Odczytywanie etykiety opakowania…</string>
@@ -423,14 +418,11 @@
     <string name="msg_decaf_grind_adjustment">Wybrano kawę bezkofeinową. Poniższe zalecenie mielenia jest dostosowywane na grubsze, gdy ta metoda na tym korzysta.</string>
     <string name="label_decaf_process_optional">Proces dekofeinizacji (opcjonalnie)</string>
     <string name="msg_decaf_process_hint">Pozwala regule parzenia lekko skorygować mielenie: decafy wodne i CO₂ zwykle wymagają mniejszego pogrubienia niż te z procesów rozpuszczalnikowych.</string>
-    <string name="cd_captured_bag_photo">Zdjęcie opakowania</string>
 <string name="label_detected_details">Wykryte szczegóły</string>
     <string name="msg_tap_chip_to_edit">Dotknij dowolnego chipa, aby edytować</string>
     <string name="label_needs_review">Wymaga sprawdzenia</string>
 <string name="action_edit_all_fields">Edytuj wszystkie pola</string>
     <string name="action_add_more_details">Dodaj więcej szczegółów</string>
-    <string name="msg_analyzing_label">Analiza zdjęć etykiety</string>
-    <string name="msg_analyzing_label_detail">Sprawdzamy rozmycie, łączymy tekst z przodu i tyłu oraz przygotowujemy najbardziej wiarygodne pola.</string>
     <string name="label_review_fields">Sprawdź te pola</string>
     <string name="label_qr_website">Strona z QR</string>
     <string name="action_open_website">Otwórz stronę</string>
@@ -459,9 +451,7 @@
 
     <!-- MindlayerSettingsCard -->
     <string name="label_ai_service">Usługa AI (Mindlayer)</string>
-    <string name="action_connect_mindlayer">Połącz Mindlayer</string>
     <string name="action_mindlayer_google_play">Pobierz Mindlayer z Google Play</string>
-    <string name="msg_mindlayer_connection_offer">Mindlayer jest zainstalowany. Czy chcesz go połączyć, aby korzystać z prywatnej AI na urządzeniu?</string>
     <string name="msg_mindlayer_install_recommendation">Zainstaluj Mindlayer z Google Play, aby odczytywać etykiety opakowań kawy przy użyciu prywatnej AI na urządzeniu. Możesz to zrobić później w Ustawieniach.</string>
     <string name="action_test_connection">Przetestuj połączenie</string>
     <string name="action_run_test_prompt">Uruchom prompt testowy</string>
@@ -521,10 +511,6 @@
     <string name="msg_could_not_read_label">Nie udało się odczytać etykiety</string>
     <string name="action_retake_photo">Zrób zdjęcie ponownie</string>
     <string name="action_add_details_manually">Dodaj szczegóły ręcznie</string>
-    <string name="msg_llm_enrichment_succeeded">Wzbogacenie AI poprawiło ten skan etykiety.</string>
-    <string name="msg_llm_enrichment_failed">Sztuczna inteligencja nie zdołała tym razem odczytać etykiety do końca — przekroczono limit czasu lub wystąpił chwilowy błąd (automatyczna ponowna próba nie pomogła). Dotknij Ponów, aby spróbować jeszcze raz, albo uzupełnij pola poniżej.</string>
-    <string name="msg_llm_enrichment_unavailable">Wzbogacenie AI jest teraz niedostępne. Możesz spróbować ponownie albo kontynuować ręczną edycję.</string>
-    <string name="action_retry_llm_enrichment">Ponów wzbogacenie AI</string>
 
     <!-- BrewLogDetailScreen -->
     <string name="action_share_brew">Udostępnij parzenie</string>
