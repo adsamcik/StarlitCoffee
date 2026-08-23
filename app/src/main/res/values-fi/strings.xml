@@ -133,11 +133,8 @@
     <string name="action_exit_brew">Poistu</string>
 
     <!-- Calculator Brew Screen -->
-<string name="label_water_to_dose">Vesi → Annos</string>
-    <string name="label_dose_to_water">Annos → Vesi</string>
     <string name="cd_backspace">Askelpalautin</string>
     <string name="action_brew">Aloita</string>
-    <string name="label_total_water">vettä yhteensä</string>
 <!-- Settings Screen -->
     <string name="screen_settings_title">Asetukset</string>
     <string name="label_settings_section_brewing">Valmistus</string>

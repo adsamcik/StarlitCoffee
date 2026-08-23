@@ -135,11 +135,8 @@
     <string name="action_exit_brew">Izađite</string>
 
     <!-- Calculator Brew Screen -->
-    <string name="label_water_to_dose">Voda → doza</string>
-    <string name="label_dose_to_water">Doza → voda</string>
     <string name="cd_backspace">Brisanje unatrag</string>
     <string name="action_brew">Pokrenite</string>
-    <string name="label_total_water">ukupno vode</string>
     <!-- Settings Screen -->
     <string name="screen_settings_title">Postavke</string>
     <string name="label_settings_section_brewing">Priprema</string>

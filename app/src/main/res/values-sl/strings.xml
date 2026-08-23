@@ -137,11 +137,8 @@
     <string name="action_exit_brew">Zapustite</string>
 
     <!-- Calculator Brew Screen -->
-    <string name="label_water_to_dose">Voda → Odmerek</string>
-    <string name="label_dose_to_water">Odmerek → Voda</string>
     <string name="cd_backspace">Vračalka</string>
     <string name="action_brew">Začnite</string>
-    <string name="label_total_water">skupna voda</string>
     <!-- Settings Screen -->
     <string name="screen_settings_title">Nastavitve</string>
     <string name="label_settings_section_brewing">Priprava</string>

@@ -1,10 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -33,14 +29,11 @@ import androidx.compose.material.icons.filled.CoffeeMaker
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.LocalCafe
-import androidx.compose.material.icons.filled.SwapHoriz
 import androidx.compose.material.icons.filled.WaterDrop
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
@@ -80,6 +73,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.calculator.CalcEvaluator.InputDirection
+import com.adsamcik.starlitcoffee.calculator.CalculatorQuantityTarget
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.CalcOp
 import com.adsamcik.starlitcoffee.data.model.CalcToken
@@ -91,6 +85,8 @@ import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.domain.BeverageOutputEstimator
 import com.adsamcik.starlitcoffee.ui.adaptive.LocalWindowWidthClass
+import com.adsamcik.starlitcoffee.ui.component.FluidTriadItem
+import com.adsamcik.starlitcoffee.ui.component.FluidTriadSelector
 import com.adsamcik.starlitcoffee.ui.component.SaveFavoriteDialog
 import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import com.adsamcik.starlitcoffee.ui.util.PresetIcon
@@ -194,7 +190,6 @@ fun CalculatorBrewScreen(
             previewDoseG = state.previewDoseG,
             previewWaterMl = state.previewWaterMl,
             isCompactHeight = isCompactHeight,
-            onToggleDirection = { calculatorViewModel.toggleDirection() },
             onSaveFavorite = {
                 syncCalcDerivedState()
                 showSaveFavoriteDialog = true
@@ -203,35 +198,52 @@ fun CalculatorBrewScreen(
     }
 
     val previewAndConfig: @Composable () -> Unit = {
-        // Live preview card — always visible on regular-height screens so
-        // the direction-swap control between the coffee and water values
-        // is discoverable even before the user has typed a valid
-        // expression. Empty values render as "—" via formatAmount. On
-        // compact heights the inline result in the expression header
-        // replaces this entirely, so the swap stays in the header there.
-        if (!isCompactHeight) {
-            LivePreviewCard(
-                doseG = state.previewDoseG,
-                waterMl = state.previewWaterMl,
-                direction = state.inputDirection,
-                waterAmountMode = state.waterAmountMode,
-                onToggleDirection = { calculatorViewModel.toggleDirection() },
-            )
-        }
-
         val outputModel = BeverageOutputEstimator.modelFor(state.brewMethod)
-        val showOutputEstimate = outputModel != null &&
-            (state.inputDirection == InputDirection.WATER ||
-                (state.hasValidExpression && state.previewBeverageG != null))
-        if (showOutputEstimate) {
-            BeverageOutputControl(
-                direction = state.inputDirection,
-                waterAmountMode = state.waterAmountMode,
+        val cupValue = state.previewBeverageG?.let(::formatAmount) ?: "—"
+        FluidTriadSelector(
+            items = listOf(
+                FluidTriadItem(
+                    target = CalculatorQuantityTarget.COFFEE,
+                    label = stringResource(R.string.label_coffee),
+                    value = formatAmount(state.previewDoseG),
+                    icon = Icons.Filled.LocalCafe,
+                ),
+                FluidTriadItem(
+                    target = CalculatorQuantityTarget.WATER_IN,
+                    label = stringResource(R.string.label_water_in),
+                    value = formatAmount(state.previewWaterMl),
+                    icon = Icons.Filled.WaterDrop,
+                ),
+                FluidTriadItem(
+                    target = CalculatorQuantityTarget.IN_CUP,
+                    label = stringResource(R.string.label_in_cup),
+                    value = cupValue,
+                    spokenValue = if (
+                        state.previewBeverageG != null &&
+                        state.quantityTarget != CalculatorQuantityTarget.IN_CUP
+                    ) {
+                        stringResource(R.string.format_estimated_coffee_out, cupValue)
+                    } else {
+                        cupValue
+                    },
+                    icon = Icons.Filled.CoffeeMaker,
+                    approximate = state.previewBeverageG != null &&
+                        state.quantityTarget != CalculatorQuantityTarget.IN_CUP,
+                    enabled = outputModel != null,
+                ),
+            ),
+            selected = state.quantityTarget,
+            onSelect = calculatorViewModel::selectQuantity,
+            compact = isCompactHeight,
+        )
+        if (
+            outputModel != null &&
+            state.previewBeverageG != null &&
+            state.quantityTarget != CalculatorQuantityTarget.IN_CUP
+        ) {
+            BeverageOutputEstimateNote(
                 methodName = state.brewMethod.displayName,
-                predictedBeverageG = state.previewBeverageG,
-                waterToPourG = state.previewWaterMl,
-                caveat = requireNotNull(outputModel).caveat,
-                onToggleMode = { calculatorViewModel.toggleBeverageOutputMode() },
+                caveat = outputModel.caveat,
             )
         }
 
@@ -383,15 +395,8 @@ private fun ExpressionHeader(
     previewDoseG: Float,
     previewWaterMl: Float,
     isCompactHeight: Boolean,
-    onToggleDirection: () -> Unit,
     onSaveFavorite: () -> Unit,
 ) {
-    val toggleDescription = when {
-        waterAmountMode == WaterAmountMode.BEVERAGE_OUTPUT ->
-            stringResource(R.string.label_coffee_out_to_dose)
-        direction == InputDirection.WATER -> stringResource(R.string.label_water_to_dose)
-        else -> stringResource(R.string.label_dose_to_water)
-    }
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -399,23 +404,6 @@ private fun ExpressionHeader(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        // Direction toggle — only shown on compact heights, where the
-        // LivePreviewCard (which normally hosts this control next to the
-        // values it swaps) is hidden to save vertical space and the inline
-        // result lives here in the expression display instead.
-        if (isCompactHeight) {
-            IconButton(
-                onClick = onToggleDirection,
-                modifier = Modifier.size(40.dp),
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.SwapHoriz,
-                    contentDescription = toggleDescription,
-                    tint = MaterialTheme.colorScheme.primary,
-                )
-            }
-        }
-
         ExpressionDisplay(
             tokens = tokens,
             isCompactHeight = isCompactHeight,
@@ -580,221 +568,23 @@ private fun ExpressionDisplay(
 }
 
 @Composable
-private fun LivePreviewCard(
-    doseG: Float,
-    waterMl: Float,
-    direction: InputDirection,
-    waterAmountMode: WaterAmountMode,
-    onToggleDirection: () -> Unit,
-) {
-    val toggleDescription = when {
-        waterAmountMode == WaterAmountMode.BEVERAGE_OUTPUT ->
-            stringResource(R.string.label_coffee_out_to_dose)
-        direction == InputDirection.WATER -> stringResource(R.string.label_water_to_dose)
-        else -> stringResource(R.string.label_dose_to_water)
-    }
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.large,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
-        ),
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 10.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            // Coffee side — icon pinned to the card's left edge, value flows
-            // to its right toward centre. Weight(1f) reserves an equal half
-            // for this side so the swap button below stays mathematically
-            // centred regardless of which value text is shorter or longer.
-            Row(
-                modifier = Modifier.weight(1f),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Start,
-            ) {
-                PreviewValueInline(
-                    icon = Icons.Filled.LocalCafe,
-                    value = formatAmount(doseG),
-                    tint = MaterialTheme.colorScheme.primary,
-                    emphasised = direction == InputDirection.DOSE,
-                    contentDescription = stringResource(R.string.label_coffee),
-                    iconLeading = true,
-                )
-            }
-
-            // Swap control sits between the two values it swaps so the
-            // affordance is unambiguous: "tap me to switch what these two
-            // numbers mean". Tonal background makes it read as a button
-            // instead of decorative iconography.
-            FilledTonalIconButton(
-                onClick = onToggleDirection,
-                modifier = Modifier.size(36.dp),
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.SwapHoriz,
-                    contentDescription = toggleDescription,
-                )
-            }
-
-            // Water side — mirrors the coffee side: icon pinned to the
-            // card's right edge, value flows to its left toward centre.
-            Row(
-                modifier = Modifier.weight(1f),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.End,
-            ) {
-                PreviewValueInline(
-                    icon = Icons.Filled.WaterDrop,
-                    value = formatAmount(waterMl),
-                    tint = MaterialTheme.colorScheme.secondary,
-                    emphasised = direction == InputDirection.WATER &&
-                        waterAmountMode == WaterAmountMode.WATER_INPUT,
-                    contentDescription = if (waterAmountMode == WaterAmountMode.BEVERAGE_OUTPUT) {
-                        stringResource(R.string.label_water_to_pour)
-                    } else {
-                        stringResource(R.string.label_total_water)
-                    },
-                    iconLeading = false,
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun BeverageOutputControl(
-    direction: InputDirection,
-    waterAmountMode: WaterAmountMode,
+private fun BeverageOutputEstimateNote(
     methodName: String,
-    predictedBeverageG: Float?,
-    waterToPourG: Float,
     caveat: BeverageOutputEstimator.Caveat,
-    onToggleMode: () -> Unit,
 ) {
-    val isOutputMode = waterAmountMode == WaterAmountMode.BEVERAGE_OUTPUT
-    val detail = when {
-        isOutputMode && predictedBeverageG != null ->
-            stringResource(R.string.format_water_to_pour, formatAmount(waterToPourG))
-        isOutputMode -> stringResource(R.string.msg_enter_desired_coffee_out)
-        predictedBeverageG != null ->
-            stringResource(R.string.format_estimated_coffee_out, formatAmount(predictedBeverageG))
-        else -> stringResource(R.string.msg_coffee_output_estimate_empty)
+    val note = if (caveat == BeverageOutputEstimator.Caveat.EXCLUDES_DECANT_RESIDUAL) {
+        stringResource(R.string.msg_french_press_output_estimate_note)
+    } else {
+        stringResource(R.string.format_coffee_output_estimate_note, methodName)
     }
-
-    Column(
+    Text(
+        text = note,
+        style = MaterialTheme.typography.bodySmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 6.dp),
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-        ) {
-            if (direction == InputDirection.WATER) {
-                InputChip(
-                    selected = isOutputMode,
-                    onClick = onToggleMode,
-                    label = { Text(stringResource(R.string.label_target_coffee_out)) },
-                    leadingIcon = if (isOutputMode) {
-                        {
-                            Icon(
-                                imageVector = Icons.Filled.Check,
-                                contentDescription = null,
-                                modifier = Modifier.size(InputChipDefaults.IconSize),
-                            )
-                        }
-                    } else {
-                        null
-                    },
-                    modifier = Modifier.testTag("beverage_output_mode_toggle"),
-                )
-            } else {
-                Icon(
-                    imageVector = Icons.Filled.LocalCafe,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(22.dp),
-                )
-            }
-            Text(
-                text = detail,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier
-                    .weight(1f)
-                    .testTag("beverage_output_estimate"),
-            )
-        }
-
-        if (isOutputMode) {
-            val note = if (caveat == BeverageOutputEstimator.Caveat.EXCLUDES_DECANT_RESIDUAL) {
-                stringResource(R.string.msg_french_press_output_estimate_note)
-            } else {
-                stringResource(R.string.format_coffee_output_estimate_note, methodName)
-            }
-            Text(
-                text = note,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(start = 4.dp, top = 2.dp),
-            )
-        }
-    }
-}
-
-@Composable
-private fun PreviewValueInline(
-    icon: ImageVector,
-    value: String,
-    tint: Color,
-    emphasised: Boolean,
-    contentDescription: String,
-    iconLeading: Boolean = true,
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        val iconContent = @Composable {
-            Icon(
-                imageVector = icon,
-                contentDescription = contentDescription,
-                tint = tint,
-                modifier = Modifier.size(22.dp),
-            )
-        }
-        val valueContent = @Composable {
-            AnimatedContent(
-                targetState = value,
-                transitionSpec = { fadeIn() togetherWith fadeOut() },
-                label = "preview_$contentDescription",
-            ) { displayed ->
-                Text(
-                    text = displayed,
-                    style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.Bold,
-                    color = if (emphasised) {
-                        MaterialTheme.colorScheme.onSurface
-                    } else {
-                        MaterialTheme.colorScheme.onSurfaceVariant
-                    },
-                )
-            }
-        }
-        if (iconLeading) {
-            iconContent()
-            valueContent()
-        } else {
-            valueContent()
-            iconContent()
-        }
-    }
+            .padding(start = 4.dp, end = 4.dp, top = 2.dp),
+    )
 }
 
 @Composable

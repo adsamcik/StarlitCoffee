@@ -135,11 +135,8 @@
     <string name="action_exit_brew">Ieșiți</string>
 
     <!-- Calculator Brew Screen -->
-    <string name="label_water_to_dose">Apă → Doză</string>
-    <string name="label_dose_to_water">Doză → Apă</string>
     <string name="cd_backspace">Ștergere înapoi</string>
     <string name="action_brew">Începeți</string>
-    <string name="label_total_water">apă totală</string>
     <!-- Settings Screen -->
     <string name="screen_settings_title">Setări</string>
     <string name="label_settings_section_brewing">Preparare</string>

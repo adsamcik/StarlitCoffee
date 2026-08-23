@@ -133,11 +133,8 @@
     <string name="action_exit_brew">Avsluta</string>
 
     <!-- Calculator Brew Screen -->
-<string name="label_water_to_dose">Vatten → dos</string>
-    <string name="label_dose_to_water">Dos → vatten</string>
     <string name="cd_backspace">Backsteg</string>
     <string name="action_brew">Starta</string>
-    <string name="label_total_water">totalt vatten</string>
 <!-- Settings Screen -->
     <string name="screen_settings_title">Inställningar</string>
     <string name="label_settings_section_brewing">Bryggning</string>

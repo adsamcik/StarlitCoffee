@@ -390,9 +390,6 @@
     <string name="format_brewing_with">Příprava s balením %1$s</string>
 
     <!-- Calculator -->
-    <string name="label_water_to_dose">Voda → Dávka</string>
-    <string name="label_dose_to_water">Dávka → Voda</string>
-    <string name="label_total_water">celkem vody</string>
     <string name="label_advanced_options">Pokročilé možnosti</string>
 <!-- Bag selection -->
     <string name="label_select_coffee_bag">Vyberte balení kávy</string>

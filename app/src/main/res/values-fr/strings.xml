@@ -135,11 +135,8 @@
     <string name="action_exit_brew">Quitter</string>
 
     <!-- Calculator Brew Screen -->
-<string name="label_water_to_dose">Eau → Dose</string>
-    <string name="label_dose_to_water">Dose → Eau</string>
     <string name="cd_backspace">Retour arrière</string>
     <string name="action_brew">Démarrer</string>
-    <string name="label_total_water">eau totale</string>
 <!-- Settings Screen -->
     <string name="screen_settings_title">Paramètres</string>
     <string name="label_settings_section_brewing">Préparation</string>

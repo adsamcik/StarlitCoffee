@@ -133,11 +133,8 @@
     <string name="action_exit_brew">Излезте</string>
 
     <!-- Calculator Brew Screen -->
-<string name="label_water_to_dose">Вода → Доза</string>
-    <string name="label_dose_to_water">Доза → Вода</string>
     <string name="cd_backspace">Изтриване назад</string>
     <string name="action_brew">Старт</string>
-    <string name="label_total_water">обща вода</string>
 <!-- Settings Screen -->
     <string name="screen_settings_title">Настройки</string>
     <string name="label_settings_section_brewing">Приготвяне</string>

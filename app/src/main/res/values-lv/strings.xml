@@ -135,11 +135,8 @@
     <string name="action_exit_brew">Iziet</string>
 
     <!-- Calculator Brew Screen -->
-<string name="label_water_to_dose">Ūdens → deva</string>
-    <string name="label_dose_to_water">Deva → ūdens</string>
     <string name="cd_backspace">Dzēst pēdējo rakstzīmi</string>
     <string name="action_brew">Sākt</string>
-    <string name="label_total_water">kopējais ūdens</string>
 <!-- Settings Screen -->
     <string name="screen_settings_title">Iestatījumi</string>
     <string name="label_settings_section_brewing">Gatavošana</string>

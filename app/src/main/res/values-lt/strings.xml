@@ -137,11 +137,8 @@
     <string name="action_exit_brew">Išeiti</string>
 
     <!-- Calculator Brew Screen -->
-    <string name="label_water_to_dose">Vanduo → Dozė</string>
-    <string name="label_dose_to_water">Dozė → Vanduo</string>
     <string name="cd_backspace">Trinti</string>
     <string name="action_brew">Pradėti</string>
-    <string name="label_total_water">iš viso vandens</string>
     <!-- Settings Screen -->
     <string name="screen_settings_title">Nustatymai</string>
     <string name="label_settings_section_brewing">Plikymas</string>

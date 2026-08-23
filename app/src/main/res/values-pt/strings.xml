@@ -135,11 +135,8 @@
     <string name="action_exit_brew">Sair</string>
 
     <!-- Calculator Brew Screen -->
-<string name="label_water_to_dose">Água → Dose</string>
-    <string name="label_dose_to_water">Dose → Água</string>
     <string name="cd_backspace">Apagar</string>
     <string name="action_brew">Começar</string>
-    <string name="label_total_water">água total</string>
 <!-- Settings Screen -->
     <string name="screen_settings_title">Definições</string>
     <string name="label_settings_section_brewing">Preparação</string>

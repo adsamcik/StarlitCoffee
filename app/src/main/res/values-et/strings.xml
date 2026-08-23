@@ -133,11 +133,8 @@
     <string name="action_exit_brew">Välju</string>
 
     <!-- Calculator Brew Screen -->
-<string name="label_water_to_dose">Vesi → Kogus</string>
-    <string name="label_dose_to_water">Kogus → Vesi</string>
     <string name="cd_backspace">Tagasilüke</string>
     <string name="action_brew">Alusta</string>
-    <string name="label_total_water">vesi kokku</string>
 <!-- Settings Screen -->
     <string name="screen_settings_title">Seaded</string>
     <string name="label_settings_section_brewing">Valmistamine</string>

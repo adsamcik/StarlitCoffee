@@ -133,11 +133,8 @@
     <string name="action_exit_brew">Kilépés</string>
 
     <!-- Calculator Brew Screen -->
-    <string name="label_water_to_dose">Víz → Adag</string>
-    <string name="label_dose_to_water">Adag → Víz</string>
     <string name="cd_backspace">Visszatörlés</string>
     <string name="action_brew">Indítás</string>
-    <string name="label_total_water">összes víz</string>
     <!-- Settings Screen -->
     <string name="screen_settings_title">Beállítások</string>
     <string name="label_settings_section_brewing">Főzés</string>

@@ -131,11 +131,8 @@
     <string name="action_exit_brew">退出</string>
 
     <!-- Calculator Brew Screen -->
-<string name="label_water_to_dose">水量 → 粉量</string>
-    <string name="label_dose_to_water">粉量 → 水量</string>
     <string name="cd_backspace">退格</string>
     <string name="action_brew">开始</string>
-    <string name="label_total_water">总水量</string>
 <!-- Settings Screen -->
     <string name="screen_settings_title">设置</string>
     <string name="label_settings_section_brewing">冲煮</string>

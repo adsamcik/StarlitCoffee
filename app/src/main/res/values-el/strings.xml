@@ -133,11 +133,8 @@
     <string name="action_exit_brew">Έξοδος</string>
 
     <!-- Calculator Brew Screen -->
-    <string name="label_water_to_dose">Νερό → Δόση</string>
-    <string name="label_dose_to_water">Δόση → Νερό</string>
     <string name="cd_backspace">Διαγραφή χαρακτήρα</string>
     <string name="action_brew">Έναρξη</string>
-    <string name="label_total_water">συνολικό νερό</string>
 <!-- Settings Screen -->
     <string name="screen_settings_title">Ρυθμίσεις</string>
     <string name="label_settings_section_brewing">Παρασκευή</string>

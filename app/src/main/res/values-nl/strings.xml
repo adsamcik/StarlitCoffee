@@ -133,11 +133,8 @@
     <string name="action_exit_brew">Verlaten</string>
 
     <!-- Calculator Brew Screen -->
-<string name="label_water_to_dose">Water → Dosis</string>
-    <string name="label_dose_to_water">Dosis → Water</string>
     <string name="cd_backspace">Backspace</string>
     <string name="action_brew">Starten</string>
-    <string name="label_total_water">totaal water</string>
 <!-- Settings Screen -->
     <string name="screen_settings_title">Instellingen</string>
     <string name="label_settings_section_brewing">Zetten</string>
