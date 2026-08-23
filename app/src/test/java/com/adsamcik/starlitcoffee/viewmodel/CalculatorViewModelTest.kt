@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.viewmodel
 
 import com.adsamcik.starlitcoffee.calculator.CalcEvaluator.InputDirection
+import com.adsamcik.starlitcoffee.calculator.CalculatorQuantityTarget
 import com.adsamcik.starlitcoffee.data.db.dao.CupPresetDao
 import com.adsamcik.starlitcoffee.data.db.entity.CupPresetEntity
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
@@ -236,6 +237,51 @@ class CalculatorViewModelTest {
         assertEquals(InputDirection.WATER, viewModel.uiState.value.inputDirection)
         assertEquals(20f, viewModel.uiState.value.previewWaterMl, 0.01f)
         assertEquals(20f / 17f, viewModel.uiState.value.previewDoseG, 0.01f)
+    }
+
+    @Test
+    fun `quantity target supports all direct transition directions`() {
+        viewModel.setBrewMethod(BrewMethod.V60)
+        val transitions = listOf(
+            CalculatorQuantityTarget.COFFEE to CalculatorQuantityTarget.WATER_IN,
+            CalculatorQuantityTarget.WATER_IN to CalculatorQuantityTarget.COFFEE,
+            CalculatorQuantityTarget.WATER_IN to CalculatorQuantityTarget.IN_CUP,
+            CalculatorQuantityTarget.IN_CUP to CalculatorQuantityTarget.WATER_IN,
+            CalculatorQuantityTarget.COFFEE to CalculatorQuantityTarget.IN_CUP,
+            CalculatorQuantityTarget.IN_CUP to CalculatorQuantityTarget.COFFEE,
+        )
+
+        transitions.forEach { (from, to) ->
+            viewModel.selectQuantity(from)
+            assertEquals(from, viewModel.uiState.value.quantityTarget)
+            viewModel.selectQuantity(to)
+            assertEquals(to, viewModel.uiState.value.quantityTarget)
+        }
+    }
+
+    @Test
+    fun `same quantity selection is logically stable`() {
+        viewModel.setBrewMethod(BrewMethod.V60)
+        viewModel.selectQuantity(CalculatorQuantityTarget.WATER_IN)
+        val before = viewModel.uiState.value
+
+        viewModel.selectQuantity(CalculatorQuantityTarget.WATER_IN)
+
+        assertEquals(before, viewModel.uiState.value)
+    }
+
+    @Test
+    fun `unsupported in cup target is ignored`() {
+        viewModel.setBrewMethod(BrewMethod.MOKA_POT)
+        viewModel.selectQuantity(CalculatorQuantityTarget.WATER_IN)
+
+        viewModel.selectQuantity(CalculatorQuantityTarget.IN_CUP)
+
+        assertEquals(
+            CalculatorQuantityTarget.WATER_IN,
+            viewModel.uiState.value.quantityTarget,
+        )
+        assertEquals(WaterAmountMode.WATER_INPUT, viewModel.uiState.value.waterAmountMode)
     }
 
     @Test

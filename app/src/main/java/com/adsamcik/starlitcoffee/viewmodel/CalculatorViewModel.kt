@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.adsamcik.starlitcoffee.calculator.CalcEvaluator
 import com.adsamcik.starlitcoffee.calculator.CalcEvaluator.InputDirection
+import com.adsamcik.starlitcoffee.calculator.CalculatorQuantityTarget
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.CalcOp
 import com.adsamcik.starlitcoffee.data.model.CalcToken
@@ -34,7 +35,14 @@ data class CalcUiState(
     val brewMethod: BrewMethod = BrewMethod.PULSAR,
     val availablePresets: List<CupPreset> = emptyList(),
     val hasValidExpression: Boolean = false,
-)
+) {
+    val quantityTarget: CalculatorQuantityTarget
+        get() = when {
+            inputDirection == InputDirection.DOSE -> CalculatorQuantityTarget.COFFEE
+            waterAmountMode == WaterAmountMode.BEVERAGE_OUTPUT -> CalculatorQuantityTarget.IN_CUP
+            else -> CalculatorQuantityTarget.WATER_IN
+        }
+}
 
 class CalculatorViewModel(
     private val presetRepository: CupPresetRepository,
@@ -166,37 +174,71 @@ class CalculatorViewModel(
         }
     }
 
-    fun toggleDirection() {
+    /**
+     * Selects the quantity controlled by the existing calculator expression.
+     *
+     * This intentionally maps onto the existing direction/output-mode model
+     * instead of duplicating brew math in the UI selector.
+     */
+    fun selectQuantity(target: CalculatorQuantityTarget) {
+        val previousDirection = _uiState.value.inputDirection
         _uiState.update { state ->
-            val newDirection = when (state.inputDirection) {
-                InputDirection.DOSE -> InputDirection.WATER
-                InputDirection.WATER -> InputDirection.DOSE
+            when (target) {
+                CalculatorQuantityTarget.COFFEE -> recalculate(
+                    state.copy(
+                        inputDirection = InputDirection.DOSE,
+                        waterAmountMode = WaterAmountMode.WATER_INPUT,
+                    ),
+                )
+                CalculatorQuantityTarget.WATER_IN -> recalculate(
+                    state.copy(
+                        inputDirection = InputDirection.WATER,
+                        waterAmountMode = WaterAmountMode.WATER_INPUT,
+                    ),
+                )
+                CalculatorQuantityTarget.IN_CUP -> {
+                    if (BeverageOutputEstimator.modelFor(state.brewMethod) == null) {
+                        state
+                    } else {
+                        recalculate(
+                            state.copy(
+                                inputDirection = InputDirection.WATER,
+                                waterAmountMode = WaterAmountMode.BEVERAGE_OUTPUT,
+                            ),
+                        )
+                    }
+                }
             }
-            recalculate(
-                state.copy(
-                    inputDirection = newDirection,
-                    waterAmountMode = WaterAmountMode.WATER_INPUT,
-                ),
-            )
         }
-        viewModelScope.launch {
-            userPreferencesRepository?.updateDefaultInputDirection(
-                _uiState.value.inputDirection.name,
-            )
+        if (_uiState.value.inputDirection != previousDirection) {
+            viewModelScope.launch {
+                userPreferencesRepository?.updateDefaultInputDirection(
+                    _uiState.value.inputDirection.name,
+                )
+            }
         }
     }
 
-    fun toggleBeverageOutputMode() {
-        _uiState.update { state ->
-            if (state.inputDirection != InputDirection.WATER) return@update state
-            if (BeverageOutputEstimator.modelFor(state.brewMethod) == null) return@update state
+    fun toggleDirection() {
+        selectQuantity(
+            if (_uiState.value.inputDirection == InputDirection.DOSE) {
+                CalculatorQuantityTarget.WATER_IN
+            } else {
+                CalculatorQuantityTarget.COFFEE
+            },
+        )
+    }
 
-            val mode = when (state.waterAmountMode) {
-                WaterAmountMode.WATER_INPUT -> WaterAmountMode.BEVERAGE_OUTPUT
-                WaterAmountMode.BEVERAGE_OUTPUT -> WaterAmountMode.WATER_INPUT
-            }
-            recalculate(state.copy(waterAmountMode = mode))
-        }
+    fun toggleBeverageOutputMode() {
+        val state = _uiState.value
+        if (state.inputDirection != InputDirection.WATER) return
+        selectQuantity(
+            if (state.waterAmountMode == WaterAmountMode.WATER_INPUT) {
+                CalculatorQuantityTarget.IN_CUP
+            } else {
+                CalculatorQuantityTarget.WATER_IN
+            },
+        )
     }
 
     fun setBrewMethod(method: BrewMethod) {
