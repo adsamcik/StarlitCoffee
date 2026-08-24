@@ -25,11 +25,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Backspace
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.CoffeeMaker
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.LocalCafe
-import androidx.compose.material.icons.filled.WaterDrop
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Button
@@ -59,7 +57,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
@@ -85,6 +82,8 @@ import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.domain.BeverageOutputEstimator
 import com.adsamcik.starlitcoffee.ui.adaptive.LocalWindowWidthClass
+import com.adsamcik.starlitcoffee.ui.component.CalculationQuantityIcon
+import com.adsamcik.starlitcoffee.ui.component.CalculationQuantityIconType
 import com.adsamcik.starlitcoffee.ui.component.FluidTriadItem
 import com.adsamcik.starlitcoffee.ui.component.FluidTriadSelector
 import com.adsamcik.starlitcoffee.ui.component.SaveFavoriteDialog
@@ -206,13 +205,13 @@ fun CalculatorBrewScreen(
                     target = CalculatorQuantityTarget.COFFEE,
                     label = stringResource(R.string.label_coffee),
                     value = formatAmount(state.previewDoseG),
-                    icon = Icons.Filled.LocalCafe,
+                    icon = CalculationQuantityIconType.COFFEE_DOSE,
                 ),
                 FluidTriadItem(
                     target = CalculatorQuantityTarget.WATER_IN,
                     label = stringResource(R.string.label_water_in),
                     value = formatAmount(state.previewWaterMl),
-                    icon = Icons.Filled.WaterDrop,
+                    icon = CalculationQuantityIconType.WATER_IN,
                 ),
                 FluidTriadItem(
                     target = CalculatorQuantityTarget.IN_CUP,
@@ -226,7 +225,7 @@ fun CalculatorBrewScreen(
                     } else {
                         cupValue
                     },
-                    icon = Icons.Filled.CoffeeMaker,
+                    icon = CalculationQuantityIconType.CUP_OUTPUT,
                     approximate = state.previewBeverageG != null &&
                         state.quantityTarget != CalculatorQuantityTarget.IN_CUP,
                     enabled = outputModel != null,
@@ -446,7 +445,7 @@ private fun ExpressionHeader(
  * caller needing to thread Material colors through.
  */
 private data class InlineResult(
-    val icon: ImageVector,
+    val icon: CalculationQuantityIconType,
     val value: String,
     val side: ResultSide,
 )
@@ -464,17 +463,17 @@ private fun buildInlineResult(
     waterMl: Float,
 ): InlineResult = when {
     direction == InputDirection.WATER && waterAmountMode == WaterAmountMode.BEVERAGE_OUTPUT -> InlineResult(
-        icon = Icons.Filled.WaterDrop,
+        icon = CalculationQuantityIconType.WATER_IN,
         value = formatAmount(waterMl),
         side = ResultSide.WATER,
     )
     direction == InputDirection.DOSE -> InlineResult(
-        icon = Icons.Filled.WaterDrop,
+        icon = CalculationQuantityIconType.WATER_IN,
         value = formatAmount(waterMl),
         side = ResultSide.WATER,
     )
     else -> InlineResult(
-        icon = Icons.Filled.LocalCafe,
+        icon = CalculationQuantityIconType.COFFEE_DOSE,
         value = formatAmount(doseG),
         side = ResultSide.COFFEE,
     )
@@ -546,8 +545,8 @@ private fun ExpressionDisplay(
                         color = MaterialTheme.colorScheme.outline,
                         fontWeight = FontWeight.Bold,
                     )
-                    Icon(
-                        imageVector = result.icon,
+                    CalculationQuantityIcon(
+                        icon = result.icon,
                         contentDescription = null,
                         tint = when (result.side) {
                             ResultSide.COFFEE -> MaterialTheme.colorScheme.primary

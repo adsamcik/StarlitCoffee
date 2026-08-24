@@ -1,26 +1,26 @@
 package com.adsamcik.starlitcoffee.ui.component
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CoffeeMaker
-import androidx.compose.material.icons.filled.LocalCafe
-import androidx.compose.material.icons.filled.WaterDrop
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.adsamcik.starlitcoffee.calculator.CalculatorQuantityTarget
 import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
+import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.concurrent.atomic.AtomicInteger
 
 @RunWith(AndroidJUnit4::class)
 class FluidTriadSelectorTest {
@@ -65,23 +65,33 @@ class FluidTriadSelectorTest {
                 )
             }
         }
+        composeRule.mainClock.autoAdvance = false
 
         composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.WATER_IN)).performClick()
+        composeRule.mainClock.advanceTimeBy(16L)
+        composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.WATER_IN)).assertIsSelected()
+        composeRule.mainClock.advanceTimeBy(48L)
         composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.IN_CUP)).performClick()
+        composeRule.mainClock.advanceTimeBy(16L)
+        composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.IN_CUP)).assertIsSelected()
+        composeRule.mainClock.advanceTimeBy(48L)
         composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.COFFEE)).performClick()
+        composeRule.mainClock.advanceTimeBy(16L)
+        composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.COFFEE)).assertIsSelected()
+        composeRule.mainClock.advanceTimeBy(2_000L)
         composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.COFFEE)).assertIsSelected()
     }
 
     @Test
     fun tappingSelectedItemDoesNotRestartLogicalSelection() {
+        val callbacks = AtomicInteger(0)
         composeRule.setContent {
             var selected by remember { mutableStateOf(CalculatorQuantityTarget.COFFEE) }
-            var callbacks by remember { mutableIntStateOf(0) }
             StarlitCoffeeTheme(dynamicColor = false) {
                 TestTriad(
                     selected = selected,
                     onSelect = {
-                        callbacks += 1
+                        callbacks.incrementAndGet()
                         selected = it
                     },
                 )
@@ -90,23 +100,45 @@ class FluidTriadSelectorTest {
 
         composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.COFFEE)).performClick()
         composeRule.runOnIdle {
-            // Same-item tap is consumed as a normal press response without a logical retarget.
+            assertEquals(0, callbacks.get())
         }
     }
 
     @Test
     fun unavailableCupTargetIsDisabled() {
+        val callbacks = AtomicInteger(0)
         composeRule.setContent {
             StarlitCoffeeTheme(dynamicColor = false) {
                 TestTriad(
                     selected = CalculatorQuantityTarget.WATER_IN,
-                    onSelect = {},
+                    onSelect = { callbacks.incrementAndGet() },
                     cupEnabled = false,
                 )
             }
         }
 
         composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.IN_CUP)).assertIsNotEnabled()
+        composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.IN_CUP)).performClick()
+        composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.WATER_IN)).assertIsSelected()
+        composeRule.runOnIdle { assertEquals(0, callbacks.get()) }
+    }
+
+    @Test
+    fun rtlKeepsLogicalCellsSelectable() {
+        composeRule.setContent {
+            var selected by remember { mutableStateOf(CalculatorQuantityTarget.COFFEE) }
+            StarlitCoffeeTheme(dynamicColor = false) {
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                    TestTriad(
+                        selected = selected,
+                        onSelect = { selected = it },
+                    )
+                }
+            }
+        }
+
+        composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.IN_CUP)).performClick()
+        composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.IN_CUP)).assertIsSelected()
     }
 
     @Composable
@@ -121,24 +153,25 @@ class FluidTriadSelectorTest {
                     target = CalculatorQuantityTarget.COFFEE,
                     label = "Coffee",
                     value = "20g",
-                    icon = Icons.Filled.LocalCafe,
+                    icon = CalculationQuantityIconType.COFFEE_DOSE,
                 ),
                 FluidTriadItem(
                     target = CalculatorQuantityTarget.WATER_IN,
                     label = "Water in",
                     value = "320g",
-                    icon = Icons.Filled.WaterDrop,
+                    icon = CalculationQuantityIconType.WATER_IN,
                 ),
                 FluidTriadItem(
                     target = CalculatorQuantityTarget.IN_CUP,
                     label = "In cup",
                     value = "≈278g",
-                    icon = Icons.Filled.CoffeeMaker,
+                    icon = CalculationQuantityIconType.CUP_OUTPUT,
                     enabled = cupEnabled,
                 ),
             ),
             selected = selected,
             onSelect = onSelect,
+            idleMotionEnabled = false,
         )
     }
 
