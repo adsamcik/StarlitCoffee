@@ -56,11 +56,7 @@ class FluidTriadShaderBackendTest {
             railTop = 10f,
             railWidth = 360f,
             railHeight = 80f,
-            railCornerRadius = 20f,
             railOutlineWidth = 1f,
-            selectedOutlineWidth = 1f,
-            dividerWidth = 1f,
-            dividerInset = 8f,
             isRtl = false,
         )
 

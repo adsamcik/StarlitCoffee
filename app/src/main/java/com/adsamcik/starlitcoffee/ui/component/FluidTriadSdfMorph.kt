@@ -3,6 +3,7 @@ package com.adsamcik.starlitcoffee.ui.component
 import com.adsamcik.starlitcoffee.calculator.CalculatorQuantityTarget
 import java.util.LinkedHashMap
 import kotlin.math.PI
+import kotlin.math.abs
 import kotlin.math.floor
 import kotlin.math.hypot
 import kotlin.math.roundToInt
@@ -190,6 +191,7 @@ internal class FluidTriadSdfAtlas internal constructor(
     val distanceUnit: FluidTriadSdfDistanceUnit
         get() = FluidTriadSdfDistanceUnit.COMPONENT_HEIGHT
     val includesCupHandleAndHole: Boolean get() = true
+    val includesWholeSelectorEnvelope: Boolean get() = true
 
     fun endpoint(target: CalculatorQuantityTarget): FluidTriadSdfFrame =
         endpoints[targetIndex(target)]
@@ -290,12 +292,29 @@ private class FluidTriadSdfAtlasBuilder(
         body: FloatArray,
         handle: HandlePolylines?,
     ): Float {
-        val bodyDistance = signedDistanceToPolygon(x, y, body, layout.railAspect)
+        val authoredLobeDistance = signedDistanceToPolygon(x, y, body, layout.railAspect)
+        val bodyDistance = minOf(railDistance(x, y), authoredLobeDistance)
         if (handle == null) return bodyDistance.coerceIn(-DistanceClamp, DistanceClamp)
         val outerDistance = signedDistanceToPolygon(x, y, handle.outer, layout.railAspect)
         val innerDistance = signedDistanceToPolygon(x, y, handle.inner, layout.railAspect)
         val handleRingDistance = maxOf(outerDistance, -innerDistance)
         return minOf(bodyDistance, handleRingDistance).coerceIn(-DistanceClamp, DistanceClamp)
+    }
+
+    /** Signed distance to the calm part of the one connected selector envelope. */
+    private fun railDistance(x: Float, y: Float): Float {
+        val halfWidth = layout.railAspect * Half
+        val halfHeight = (FluidTriadWholeControlField.RailBottom -
+            FluidTriadWholeControlField.RailTop) * Half
+        val radius = minOf(
+            FluidTriadWholeControlField.RailCornerRadius,
+            halfHeight,
+        )
+        val horizontal = abs((x - Half) * layout.railAspect) - halfWidth + radius
+        val vertical = abs(y - Half) - halfHeight + radius
+        val outside = hypot(maxOf(horizontal, 0f), maxOf(vertical, 0f))
+        val inside = minOf(maxOf(horizontal, vertical), 0f)
+        return outside + inside - radius
     }
 
     private fun attachedHandle(): HandlePolylines = HandlePolylines(
@@ -316,6 +335,8 @@ private class FluidTriadSdfAtlasBuilder(
                 else -> buildIntermediate(
                     source = sourceFrame,
                     destination = destinationFrame,
+                    sourceHasCupHandle = source == CalculatorQuantityTarget.IN_CUP,
+                    destinationHasCupHandle = destination == CalculatorQuantityTarget.IN_CUP,
                     timeline = frameIndex / (key.frameCount - 1f),
                 )
             }
@@ -344,7 +365,9 @@ private class FluidTriadSdfAtlasBuilder(
         val scratch = FloatArray(layout.valueCount)
         advectWaterGust(calm, phase, field)
         applySurfaceTension(field, scratch, phase)
+        includeCalmRail(field)
         correctArea(field, calm.insideCellCount)
+        includeCalmRail(field)
         return analyze(field)
     }
 
@@ -385,6 +408,8 @@ private class FluidTriadSdfAtlasBuilder(
     private fun buildIntermediate(
         source: FluidTriadSdfFrame,
         destination: FluidTriadSdfFrame,
+        sourceHasCupHandle: Boolean,
+        destinationHasCupHandle: Boolean,
         timeline: Float,
     ): FluidTriadSdfFrame {
         val motion = easeOutCubic(timeline)
@@ -392,10 +417,59 @@ private class FluidTriadSdfAtlasBuilder(
         val scratch = FloatArray(layout.valueCount)
         advectAndBlend(source, destination, motion, field)
         applySurfaceTension(field, scratch, timeline)
-        val targetArea = lerp(source.insideCellCount.toFloat(), destination.insideCellCount.toFloat(), motion)
-            .roundToInt()
+        includeCalmRail(field)
+        val sourceArea = source.insideCoreCellCount(sourceHasCupHandle)
+        val destinationArea = destination.insideCoreCellCount(destinationHasCupHandle)
+        val targetArea = lerp(sourceArea.toFloat(), destinationArea.toFloat(), motion).roundToInt()
         correctArea(field, targetArea)
+        includeCalmRail(field)
+        if (sourceHasCupHandle || destinationHasCupHandle) {
+            // Runtime geometry reconstructs the handle at the exact animated attachment point.
+            // Removing the transported copy prevents a detached SDF island while it collapses.
+            clipCachedCupHandle(field)
+        }
         return analyze(field)
+    }
+
+    private fun FluidTriadSdfFrame.insideCoreCellCount(hasCupHandle: Boolean): Int {
+        if (!hasCupHandle) return insideCellCount
+        var count = 0
+        for (row in 0 until layout.height) {
+            for (column in 0 until layout.width) {
+                if (
+                    layout.xAt(column) <= FluidTriadShaderCupHandleSpec.BodyAttachmentX &&
+                    valueAt(layout.index(column, row)) < 0f
+                ) {
+                    count += 1
+                }
+            }
+        }
+        return count
+    }
+
+    private fun clipCachedCupHandle(field: FloatArray) {
+        for (row in 0 until layout.height) {
+            for (column in 0 until layout.width) {
+                val index = layout.index(column, row)
+                val bodyClip = (
+                    layout.xAt(column) - FluidTriadShaderCupHandleSpec.BodyAttachmentX
+                    ) * layout.railAspect
+                field[index] = maxOf(field[index], bodyClip)
+                    .coerceIn(-DistanceClamp, DistanceClamp)
+            }
+        }
+    }
+
+    /** Every animated state contains the same connected structural core. */
+    private fun includeCalmRail(field: FloatArray) {
+        for (row in 0 until layout.height) {
+            val y = layout.yAt(row)
+            for (column in 0 until layout.width) {
+                val index = layout.index(column, row)
+                field[index] = minOf(field[index], railDistance(layout.xAt(column), y))
+                    .coerceIn(-DistanceClamp, DistanceClamp)
+            }
+        }
     }
 
     private fun advectAndBlend(
@@ -681,7 +755,7 @@ private val Targets = arrayOf(
 
 private const val TargetCount = 3
 private const val RouteSlotCount = TargetCount * TargetCount
-private const val ModelVersion = 1
+private const val ModelVersion = 2
 private const val AspectBucketsPerUnit = 16
 private const val DefaultGridHeight = 48
 private const val DefaultFrameCount = 14

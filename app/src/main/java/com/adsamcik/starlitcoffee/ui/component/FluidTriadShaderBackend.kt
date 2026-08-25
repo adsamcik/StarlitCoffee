@@ -345,11 +345,7 @@ internal data class FluidTriadShaderGeometry(
     val railTop: Float,
     val railWidth: Float,
     val railHeight: Float,
-    val railCornerRadius: Float,
     val railOutlineWidth: Float,
-    val selectedOutlineWidth: Float,
-    val dividerWidth: Float,
-    val dividerInset: Float,
     val isRtl: Boolean,
     val contactShadowOffsetY: Float = 1.5f,
     val contactShadowSoftness: Float = 2f,
@@ -360,9 +356,7 @@ internal data class FluidTriadShaderGeometry(
     init {
         require(componentWidth > 0f && componentHeight > 0f)
         require(railWidth > 0f && railHeight > 0f)
-        require(railCornerRadius >= 0f)
-        require(railOutlineWidth >= 0f && selectedOutlineWidth >= 0f)
-        require(dividerWidth >= 0f && dividerInset >= 0f)
+        require(railOutlineWidth >= 0f)
         require(contactShadowOffsetY >= 0f && contactShadowSoftness > 0f)
         require(penumbraShadowOffsetY >= 0f && penumbraShadowSoftness > 0f)
         require(focusOutlineWidth >= 0f)
@@ -378,7 +372,6 @@ internal data class FluidTriadShaderPalette(
     val neutralTop: Color,
     val neutralBottom: Color,
     val railOutline: Color,
-    val divider: Color,
     val materialTop: Color,
     val materialBottom: Color,
     val materialOutline: Color,
@@ -894,11 +887,7 @@ internal class FluidTriadShaderBackend(
             geometry.railWidth,
             geometry.railHeight,
         )
-        runtimeShader.setFloatUniform(UNIFORM_RAIL_RADIUS, geometry.railCornerRadius)
         runtimeShader.setFloatUniform(UNIFORM_RAIL_OUTLINE, geometry.railOutlineWidth)
-        runtimeShader.setFloatUniform(UNIFORM_SELECTED_OUTLINE, geometry.selectedOutlineWidth)
-        runtimeShader.setFloatUniform(UNIFORM_DIVIDER_WIDTH, geometry.dividerWidth)
-        runtimeShader.setFloatUniform(UNIFORM_DIVIDER_INSET, geometry.dividerInset)
         runtimeShader.setFloatUniform(UNIFORM_IS_RTL, if (geometry.isRtl) 1f else 0f)
         runtimeShader.setFloatUniform(UNIFORM_CONTACT_SHADOW_OFFSET, geometry.contactShadowOffsetY)
         runtimeShader.setFloatUniform(UNIFORM_CONTACT_SHADOW_SOFTNESS, geometry.contactShadowSoftness)
@@ -911,7 +900,6 @@ internal class FluidTriadShaderBackend(
         runtimeShader.setColorUniform(UNIFORM_NEUTRAL_TOP, palette.neutralTop.toArgb())
         runtimeShader.setColorUniform(UNIFORM_NEUTRAL_BOTTOM, palette.neutralBottom.toArgb())
         runtimeShader.setColorUniform(UNIFORM_RAIL_COLOR, palette.railOutline.toArgb())
-        runtimeShader.setColorUniform(UNIFORM_DIVIDER_COLOR, palette.divider.toArgb())
         runtimeShader.setColorUniform(UNIFORM_MATERIAL_TOP, palette.materialTop.toArgb())
         runtimeShader.setColorUniform(UNIFORM_MATERIAL_BOTTOM, palette.materialBottom.toArgb())
         runtimeShader.setColorUniform(UNIFORM_MATERIAL_OUTLINE, palette.materialOutline.toArgb())
@@ -950,11 +938,7 @@ internal class FluidTriadShaderBackend(
         const val UNIFORM_SDF_DOMAIN = "sdfDomain"
         const val UNIFORM_COMPONENT_SIZE = "componentSize"
         const val UNIFORM_RAIL_RECT = "railRect"
-        const val UNIFORM_RAIL_RADIUS = "railRadius"
         const val UNIFORM_RAIL_OUTLINE = "railOutlineWidth"
-        const val UNIFORM_SELECTED_OUTLINE = "selectedOutlineWidth"
-        const val UNIFORM_DIVIDER_WIDTH = "dividerWidth"
-        const val UNIFORM_DIVIDER_INSET = "dividerInset"
         const val UNIFORM_IS_RTL = "isRtl"
         const val UNIFORM_CONTACT_SHADOW_OFFSET = "contactShadowOffset"
         const val UNIFORM_CONTACT_SHADOW_SOFTNESS = "contactShadowSoftness"
@@ -970,7 +954,6 @@ internal class FluidTriadShaderBackend(
         const val UNIFORM_NEUTRAL_TOP = "neutralTop"
         const val UNIFORM_NEUTRAL_BOTTOM = "neutralBottom"
         const val UNIFORM_RAIL_COLOR = "railColor"
-        const val UNIFORM_DIVIDER_COLOR = "dividerColor"
         const val UNIFORM_MATERIAL_TOP = "materialTop"
         const val UNIFORM_MATERIAL_BOTTOM = "materialBottom"
         const val UNIFORM_MATERIAL_OUTLINE = "materialOutline"
@@ -999,11 +982,7 @@ internal class FluidTriadShaderBackend(
 
             uniform float2 componentSize;
             uniform float4 railRect;
-            uniform float railRadius;
             uniform float railOutlineWidth;
-            uniform float selectedOutlineWidth;
-            uniform float dividerWidth;
-            uniform float dividerInset;
             uniform float isRtl;
             uniform float contactShadowOffset;
             uniform float contactShadowSoftness;
@@ -1030,7 +1009,6 @@ internal class FluidTriadShaderBackend(
             layout(color) uniform half4 neutralTop;
             layout(color) uniform half4 neutralBottom;
             layout(color) uniform half4 railColor;
-            layout(color) uniform half4 dividerColor;
             layout(color) uniform half4 materialTop;
             layout(color) uniform half4 materialBottom;
             layout(color) uniform half4 materialOutline;
@@ -1038,12 +1016,6 @@ internal class FluidTriadShaderBackend(
             layout(color) uniform half4 shadowColor;
             layout(color) uniform half4 pressedColor;
             layout(color) uniform half4 focusColor;
-
-            float roundedRectSdf(float2 point, float2 center, float2 halfSize, float radius) {
-                float safeRadius = min(radius, min(halfSize.x, halfSize.y));
-                float2 q = abs(point - center) - halfSize + safeRadius;
-                return length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - safeRadius;
-            }
 
             float2 logicalPosition(float2 point) {
                 float railX = (point.x - railRect.x) / railRect.z;
@@ -1128,7 +1100,7 @@ internal class FluidTriadShaderBackend(
                 return max(outer, -inner);
             }
 
-            float selectedDistance(float2 logical) {
+            float envelopeDistance(float2 logical) {
                 float inverse = 1.0 - frameBlend;
                 float motion = 1.0 - inverse * inverse * inverse;
                 float2 movingCentroid = mix(sourceCentroid, destinationCentroid, motion);
@@ -1161,31 +1133,62 @@ internal class FluidTriadShaderBackend(
                 return distance;
             }
 
-            float2 selectedNormal(float2 logical) {
+            float2 envelopeNormal(float2 logical) {
                 float2 logicalStep = (sdfDomain.zw - sdfDomain.xy) / (gridSize - 1.0);
-                float horizontal = selectedDistance(logical + float2(logicalStep.x, 0.0))
-                    - selectedDistance(logical - float2(logicalStep.x, 0.0));
-                float vertical = selectedDistance(logical + float2(0.0, logicalStep.y))
-                    - selectedDistance(logical - float2(0.0, logicalStep.y));
+                float horizontal = envelopeDistance(logical + float2(logicalStep.x, 0.0))
+                    - envelopeDistance(logical - float2(logicalStep.x, 0.0));
+                float vertical = envelopeDistance(logical + float2(0.0, logicalStep.y))
+                    - envelopeDistance(logical - float2(0.0, logicalStep.y));
                 return normalize(float2(horizontal, vertical) + float2(0.0001));
             }
 
-            float dividerCoverage(float2 point, float railCoverage, float selectedCoverage) {
-                float localX = (point.x - railRect.x) / railRect.z;
-                float localY = point.y - railRect.y;
-                float verticalMask = step(dividerInset, localY)
-                    * step(localY, railRect.w - dividerInset);
-                float first = 1.0 - smoothstep(
-                    dividerWidth * 0.5,
-                    dividerWidth * 0.5 + 1.0,
-                    abs((localX - 0.3333333) * railRect.z)
+            float centerPressure(float logicalY) {
+                float y = clamp(logicalY, 0.0, 1.0);
+                return 4.0 * y * (1.0 - y);
+            }
+
+            float coffeeOwnershipDistance(float2 logical) {
+                float pressure = centerPressure(logical.y);
+                float boundary = ${FluidTriadWholeControlField.CoffeeBoundaryOuter}
+                    - ${FluidTriadWholeControlField.CoffeeBoundaryPinch}
+                    * pressure * pressure;
+                return (logical.x - boundary) * railRect.z;
+            }
+
+            float waterOwnershipDistance(float2 logical) {
+                float pressure = centerPressure(logical.y);
+                float halfWidth = ${FluidTriadWholeControlField.WaterHalfWidthOuter}
+                    - ${FluidTriadWholeControlField.WaterHalfWidthPinch}
+                    * pressure * pressure;
+                return (abs(logical.x - 0.5) - halfWidth) * railRect.z;
+            }
+
+            float cupOwnershipDistance(float2 logical) {
+                float y = clamp(logical.y, 0.0, 1.0);
+                float pressure = centerPressure(y);
+                float lower = smoothstep(0.0, 1.0, clamp((y - 0.5) * 2.0, 0.0, 1.0));
+                float boundary = ${FluidTriadWholeControlField.CupBoundaryOuter}
+                    - ${FluidTriadWholeControlField.CupBoundaryPinch}
+                    * pressure * pressure
+                    - ${FluidTriadWholeControlField.CupLowerSettle} * lower;
+                return (boundary - logical.x) * railRect.z;
+            }
+
+            float phaseCoverage(float distancePx) {
+                return 1.0 - smoothstep(
+                    -${FluidTriadWholeControlField.OwnershipFeatherPx},
+                    ${FluidTriadWholeControlField.OwnershipFeatherPx},
+                    distancePx
                 );
-                float second = 1.0 - smoothstep(
-                    dividerWidth * 0.5,
-                    dividerWidth * 0.5 + 1.0,
-                    abs((localX - 0.6666667) * railRect.z)
+            }
+
+            float materialOwnership(float2 logical) {
+                float3 phases = float3(
+                    phaseCoverage(coffeeOwnershipDistance(logical)),
+                    phaseCoverage(waterOwnershipDistance(logical)),
+                    phaseCoverage(cupOwnershipDistance(logical))
                 );
-                return max(first, second) * verticalMask * railCoverage * (1.0 - selectedCoverage);
+                return clamp(dot(materialWeights, phases), 0.0, 1.0);
             }
 
             float cellFraction(float3 values, float localX) {
@@ -1204,21 +1207,12 @@ internal class FluidTriadShaderBackend(
                 float selectedCoverage,
                 float focusAmount
             ) {
-                float localX = clamp((point.x - railRect.x) / railRect.z, 0.0, 0.99999);
-                float cellPosition = fract(localX * 3.0);
-                float distanceToVerticalEdge = min(cellPosition, 1.0 - cellPosition)
-                    * railRect.z / 3.0;
-                float verticalBand = 1.0 - smoothstep(
-                    focusOutlineWidth - 1.0,
-                    focusOutlineWidth + 1.0,
-                    distanceToVerticalEdge
-                );
                 float outerBand = 1.0 - smoothstep(
                     focusOutlineWidth - 1.0,
                     focusOutlineWidth + 1.0,
                     abs(railDistance)
                 );
-                return max(verticalBand, outerBand) * railCoverage
+                return outerBand * railCoverage
                     * (1.0 - selectedCoverage) * focusAmount;
             }
 
@@ -1226,20 +1220,9 @@ internal class FluidTriadShaderBackend(
                 return 1.0 - smoothstep(-softnessPx, softnessPx, distancePx);
             }
 
-            float selectedShadowCoverage(float2 point, float offsetY, float softnessPx) {
+            float envelopeShadowCoverage(float2 point, float offsetY, float softnessPx) {
                 float2 shadowLogical = logicalPosition(point - float2(0.0, offsetY));
-                return softCoverage(selectedDistance(shadowLogical), softnessPx);
-            }
-
-            float railShadowCoverage(float2 point, float offsetY, float softnessPx) {
-                float2 railCenter = railRect.xy + railRect.zw * 0.5 + float2(0.0, offsetY);
-                float distance = roundedRectSdf(
-                    point,
-                    railCenter,
-                    railRect.zw * 0.5,
-                    railRadius
-                );
-                return softCoverage(distance, softnessPx);
+                return softCoverage(envelopeDistance(shadowLogical), softnessPx);
             }
 
             half4 coveredColor(half4 color, float coverage) {
@@ -1253,35 +1236,11 @@ internal class FluidTriadShaderBackend(
 
             half4 main(float2 point) {
                 float antialiasPx = 1.0;
-                float2 railCenter = railRect.xy + railRect.zw * 0.5;
-                float railDistance = roundedRectSdf(
-                    point,
-                    railCenter,
-                    railRect.zw * 0.5,
-                    railRadius
-                );
-                float railCoverage = 1.0 - smoothstep(-antialiasPx, antialiasPx, railDistance);
-
                 float2 logical = logicalPosition(point);
-                float materialDistance = selectedDistance(logical);
-                float selectedCoverage = 1.0
-                    - smoothstep(-antialiasPx, antialiasPx, materialDistance);
-                // The material edge is an inside-only bevel. A centered abs(distance) stroke
-                // paints half its width over the neutral partition and makes the material read
-                // as a sticker even when no neutral fill exists underneath it.
-                float selectedOutline = (
-                    1.0 - smoothstep(
-                        0.0,
-                        selectedOutlineWidth + antialiasPx,
-                        -materialDistance
-                    )
-                ) * selectedCoverage;
-                float selectedOcclusion = selectedCoverage;
-                // The selected material and the neutral rail are complementary pieces of one
-                // selector.  Do not paint a complete rail and cover it with the material: that
-                // leaves a second surface underneath the selected shape and reads as an overlay.
-                float selectorCoverage = max(railCoverage, selectedCoverage);
-                float neutralCoverage = selectorCoverage - selectedCoverage;
+                float outerDistance = envelopeDistance(logical);
+                float outerCoverage = 1.0
+                    - smoothstep(-antialiasPx, antialiasPx, outerDistance);
+                float ownership = materialOwnership(logical);
 
                 float railY = clamp((point.y - railRect.y) / railRect.w, 0.0, 1.0);
                 half4 neutral = mix(neutralTop, neutralBottom, half(railY));
@@ -1290,19 +1249,19 @@ internal class FluidTriadShaderBackend(
                     materialBottom,
                     half(smoothstep(0.05, 0.95, railY))
                 );
-                float2 materialNormal = selectedNormal(logical);
+                float2 materialNormal = envelopeNormal(logical);
                 float innerBevel = (
-                    1.0 - smoothstep(0.0, max(4.0, selectedOutlineWidth * 2.4), -materialDistance)
-                ) * selectedCoverage;
+                    1.0 - smoothstep(0.0, max(4.0, railOutlineWidth * 3.0), -outerDistance)
+                ) * outerCoverage;
                 float2 keyLight = normalize(float2(-0.38, -0.92));
                 float lightFacing = max(dot(materialNormal, keyLight), 0.0);
                 float shadeFacing = max(dot(materialNormal, -keyLight), 0.0);
                 float lightingStrength = dot(materialWeights, float3(1.0, 0.72, 1.0));
                 float broadTopLight = (1.0 - smoothstep(0.02, 0.68, railY))
-                    * selectedCoverage;
+                    * outerCoverage * ownership;
                 float waterGlint = materialEffects.y * materialEffects.w
-                    * lightFacing * innerBevel;
-                float highlightAmount = lightingStrength * (
+                    * lightFacing * innerBevel * ownership;
+                float highlightAmount = ownership * lightingStrength * (
                     lightFacing * innerBevel * 0.42 +
                     broadTopLight * 0.045 +
                     waterGlint * 0.12
@@ -1315,48 +1274,40 @@ internal class FluidTriadShaderBackend(
                 material = mix(
                     material,
                     materialOutline,
-                    half(clamp(shadeFacing * innerBevel * lightingStrength * 0.10, 0.0, 0.14))
+                    half(clamp(
+                        shadeFacing * innerBevel * lightingStrength * ownership * 0.10,
+                        0.0,
+                        0.14
+                    ))
                 );
                 half4 result = half4(0.0);
 
-                float railPenumbra = railShadowCoverage(
+                float envelopePenumbra = envelopeShadowCoverage(
                     point,
                     penumbraShadowOffset,
                     penumbraShadowSoftness
                 );
-                float railContact = railShadowCoverage(
+                float envelopeContact = envelopeShadowCoverage(
                     point,
                     contactShadowOffset,
                     contactShadowSoftness
                 );
-                float selectedPenumbra = selectedShadowCoverage(
-                    point,
-                    penumbraShadowOffset,
-                    penumbraShadowSoftness
+                result = compositeOver(
+                    result,
+                    coveredColor(
+                        shadowColor,
+                        envelopePenumbra * 0.62 * (1.0 - outerCoverage)
+                    )
                 );
-                float selectedContact = selectedShadowCoverage(
-                    point,
-                    contactShadowOffset,
-                    contactShadowSoftness
+                result = compositeOver(
+                    result,
+                    coveredColor(
+                        shadowColor,
+                        envelopeContact * 0.42 * (1.0 - outerCoverage)
+                    )
                 );
-
-                // The outside shadow belongs to the union silhouette, not to two stacked cards.
-                float selectorPenumbra = max(
-                    railPenumbra * 0.32,
-                    selectedPenumbra * 0.72
-                ) * (1.0 - selectorCoverage);
-                float selectorContact = max(
-                    railContact * 0.22,
-                    selectedContact * 0.48
-                ) * (1.0 - selectorCoverage);
-                result = compositeOver(result, coveredColor(shadowColor, selectorPenumbra));
-                result = compositeOver(result, coveredColor(shadowColor, selectorContact));
-                // The two coverages sum to the union silhouette.  Add their premultiplied
-                // contributions into one base layer so antialiased boundary pixels are neither
-                // stacked nor made translucent by source-over compositing.
-                half4 basePartition = coveredColor(neutral, neutralCoverage)
-                    + coveredColor(material, selectedCoverage);
-                result = compositeOver(result, basePartition);
+                half4 surface = mix(neutral, material, half(ownership));
+                result = compositeOver(result, coveredColor(surface, outerCoverage));
 
                 float localCellX = (point.x - railRect.x) / railRect.z;
                 localCellX = mix(localCellX, 1.0 - localCellX, isRtl);
@@ -1364,47 +1315,43 @@ internal class FluidTriadShaderBackend(
                 float neutralFocusAmount = cellFraction(cellFocus, localCellX);
                 result = compositeOver(
                     result,
-                    coveredColor(pressedColor, neutralCoverage * neutralPressAmount)
+                    coveredColor(pressedColor, outerCoverage * neutralPressAmount)
                 );
                 result = compositeOver(
                     result,
-                    coveredColor(focusColor, neutralCoverage * neutralFocusAmount * 0.08)
+                    coveredColor(focusColor, outerCoverage * neutralFocusAmount * 0.08)
                 );
                 float neutralFocusOutline = neutralFocusBand(
                     point,
-                    railDistance,
-                    railCoverage,
-                    selectedOcclusion,
+                    outerDistance,
+                    outerCoverage,
+                    0.0,
                     neutralFocusAmount
                 );
                 result = compositeOver(result, coveredColor(focusColor, neutralFocusOutline));
 
-                float divider = dividerCoverage(point, railCoverage, selectedOcclusion);
-                result = compositeOver(result, coveredColor(dividerColor, divider));
-
                 result = compositeOver(
                     result,
-                    coveredColor(pressedColor, selectedCoverage * selectedPress)
+                    coveredColor(
+                        pressedColor,
+                        outerCoverage * ownership * selectedPress
+                    )
                 );
 
-                result = compositeOver(result, coveredColor(materialOutline, selectedOutline));
-                float selectedFocusOutline = 1.0 - smoothstep(
-                    selectedOutlineWidth + focusOutlineWidth - antialiasPx,
-                    selectedOutlineWidth + focusOutlineWidth + antialiasPx,
-                    abs(materialDistance)
-                );
-                result = compositeOver(
-                    result,
-                    coveredColor(focusColor, selectedFocusOutline * selectedFocus)
-                );
-
-                float railOutline = 1.0 - smoothstep(
+                float outerOutline = 1.0 - smoothstep(
                     railOutlineWidth - antialiasPx,
                     railOutlineWidth + antialiasPx,
-                    abs(railDistance)
+                    abs(outerDistance)
                 );
-                railOutline *= 1.0 - selectedOcclusion;
-                result = compositeOver(result, coveredColor(railColor, railOutline));
+                half4 outerEdge = mix(railColor, materialOutline, half(ownership));
+                result = compositeOver(result, coveredColor(outerEdge, outerOutline));
+                result = compositeOver(
+                    result,
+                    coveredColor(
+                        focusColor,
+                        outerOutline * ownership * selectedFocus
+                    )
+                );
 
                 // Icons, labels, and values are cached transparent endpoint images. Blending
                 // them here makes foreground and surface one GPU result instead of painting a

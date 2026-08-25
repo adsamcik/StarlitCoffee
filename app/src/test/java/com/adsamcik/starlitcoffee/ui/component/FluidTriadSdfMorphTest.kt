@@ -37,6 +37,28 @@ class FluidTriadSdfMorphTest {
     }
 
     @Test
+    fun `every endpoint is one complete selector with state-local outer deformation`() {
+        val atlas = atlas()
+        assertTrue(atlas.includesWholeSelectorEnvelope)
+
+        Targets.forEach { target ->
+            val endpoint = atlas.endpoint(target)
+            assertTrue(endpoint.sampleLogical(0.04f, 0.50f) < 0f)
+            assertTrue(endpoint.sampleLogical(0.50f, 0.50f) < 0f)
+            assertTrue(endpoint.sampleLogical(0.96f, 0.50f) < 0f)
+        }
+
+        val coffee = atlas.endpoint(CalculatorQuantityTarget.COFFEE)
+        val water = atlas.endpoint(CalculatorQuantityTarget.WATER_IN)
+        val cup = atlas.endpoint(CalculatorQuantityTarget.IN_CUP)
+        assertTrue(coffee.sampleLogical(0.16f, 0.070f) < 0f)
+        assertTrue(water.sampleLogical(0.50f, 0.070f) < 0f)
+        assertTrue(cup.sampleLogical(1.026f, 0.50f) < 0f)
+        assertTrue(water.sampleLogical(0.16f, 0.070f) > 0f)
+        assertTrue(coffee.sampleLogical(0.50f, 0.070f) > 0f)
+    }
+
+    @Test
     fun `cup endpoint contains attached handle ring and preserves its hole`() {
         val atlas = atlas()
         val cup = atlas.endpoint(CalculatorQuantityTarget.IN_CUP)
@@ -53,44 +75,41 @@ class FluidTriadSdfMorphTest {
     fun `cached fields remain finite bounded and one connected mass`() {
         val atlas = atlas()
 
-        uniqueFrames(atlas).forEach { frame ->
-            repeat(frame.layout.valueCount) { index ->
-                val value = frame.valueAt(index)
-                assertTrue(value.isFinite())
-                assertTrue(abs(value) <= frame.layout.distanceClamp + Epsilon)
+        Targets.forEach { target ->
+            assertValidConnectedField("endpoint $target", atlas.endpoint(target))
+        }
+        Targets.forEach { source ->
+            Targets.filterNot { it == source }.forEach { destination ->
+                val route = atlas.route(source, destination)
+                repeat(route.frameCount) { index ->
+                    assertValidConnectedField(
+                        "$source to $destination frame $index",
+                        route.frame(index),
+                    )
+                }
             }
-            assertTrue(frame.insideCellCount > 0)
-            assertEquals(1, negativeComponentCount(frame))
+        }
+        repeat(atlas.waterIdle.frameCount) { index ->
+            assertValidConnectedField("water idle frame $index", atlas.waterIdle.frame(index))
         }
     }
 
     @Test
-    fun `directed transport advances toward its destination`() {
+    fun `directed whole-control transport converges toward its destination field`() {
         val atlas = atlas()
 
         Targets.forEach { source ->
             Targets.filterNot { it == source }.forEach { destination ->
                 val route = atlas.route(source, destination)
-                val sourceFrame = atlas.endpoint(source)
                 val destinationFrame = atlas.endpoint(destination)
-                val deltaX = (destinationFrame.centroidX - sourceFrame.centroidX) *
-                    atlas.layout.railAspect
-                val deltaY = destinationFrame.centroidY - sourceFrame.centroidY
-                val lengthSquared = deltaX * deltaX + deltaY * deltaY
-                var previousProjection = -ProjectionTolerance
-
-                repeat(route.frameCount) { index ->
-                    val frame = route.frame(index)
-                    val offsetX = (frame.centroidX - sourceFrame.centroidX) *
-                        atlas.layout.railAspect
-                    val offsetY = frame.centroidY - sourceFrame.centroidY
-                    val projection = (offsetX * deltaX + offsetY * deltaY) / lengthSquared
-                    assertTrue(projection in -ProjectionTolerance..(1f + ProjectionTolerance))
-                    assertTrue(projection + ProjectionTolerance >= previousProjection)
-                    previousProjection = projection
-                }
-
-                assertEquals(1f, previousProjection, Epsilon)
+                val startError = fieldError(route.frame(0), destinationFrame)
+                val middleError = fieldError(
+                    route.frame(route.frameCount / 2),
+                    destinationFrame,
+                )
+                val endError = fieldError(route.frame(route.frameCount - 1), destinationFrame)
+                assertTrue(middleError < startError)
+                assertEquals(0f, endError, Epsilon)
             }
         }
     }
@@ -288,6 +307,30 @@ class FluidTriadSdfMorphTest {
         return componentCount
     }
 
+    private fun assertValidConnectedField(label: String, frame: FluidTriadSdfFrame) {
+        repeat(frame.layout.valueCount) { index ->
+            val value = frame.valueAt(index)
+            assertTrue("$label contains a non-finite value", value.isFinite())
+            assertTrue(
+                "$label exceeds the authored distance clamp",
+                abs(value) <= frame.layout.distanceClamp + Epsilon,
+            )
+        }
+        assertTrue("$label contains no selector body", frame.insideCellCount > 0)
+        assertEquals("$label is not one connected material body", 1, negativeComponentCount(frame))
+    }
+
+    private fun fieldError(
+        first: FluidTriadSdfFrame,
+        second: FluidTriadSdfFrame,
+    ): Float {
+        var error = 0f
+        repeat(first.layout.valueCount) { index ->
+            error += abs(first.valueAt(index) - second.valueAt(index))
+        }
+        return error
+    }
+
     private fun isGridNeighbor(
         rowOffset: Int,
         columnOffset: Int,
@@ -312,7 +355,6 @@ class FluidTriadSdfMorphTest {
         const val TestFrameCount = 12
         const val ThreadCount = 6
         const val ThreadTimeoutSeconds = 30L
-        const val ProjectionTolerance = 0.08f
         const val AreaToleranceFraction = 0.02f
         const val MinimumAreaToleranceCells = 2f
         const val MinimumVisibleIdleDelta = 0.001f
