@@ -3,6 +3,7 @@ package com.adsamcik.starlitcoffee.ui.component
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.material3.ColorScheme
+import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.CacheDrawScope
 import androidx.compose.ui.draw.drawWithCache
@@ -20,6 +21,8 @@ import androidx.compose.ui.graphics.PathFillType
 import androidx.compose.ui.graphics.PathOperation
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.drawscope.CanvasDrawScope
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.clipPath
@@ -41,10 +44,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.createBitmap
 import com.adsamcik.starlitcoffee.calculator.CalculatorQuantityTarget
 import kotlin.math.PI
 import kotlin.math.abs
+import kotlin.math.ceil
 import kotlin.math.floor
 import kotlin.math.sin
 
@@ -107,6 +113,55 @@ private data class FluidTriadRendererMetrics(
     val penumbraShadowOffset: Float,
 )
 
+private data class FluidTriadShaderContentLayerKey(
+    val pixelWidth: Int,
+    val pixelHeight: Int,
+    val density: Float,
+    val fontScale: Float,
+    val layoutDirection: LayoutDirection,
+    val items: List<FluidTriadItem>,
+    val icons: List<Painter>,
+    val textMeasurer: TextMeasurer,
+    val labelStyle: TextStyle,
+    val valueStyle: TextStyle,
+    val iconSize: Dp,
+    val colors: FluidTriadSurfaceColors,
+    val metrics: FluidTriadRendererMetrics,
+)
+
+/**
+ * Selector-lifetime foreground texture owner.
+ *
+ * The Compose draw cache is intentionally free to rebuild when animation inputs change. This
+ * smaller cache survives those rebuilds and only replaces the three endpoint textures when an
+ * input that changes their pixels changes.
+ */
+internal class FluidTriadShaderContentLayerCache : AutoCloseable {
+    private var key: Any? = null
+    private var layers: FluidTriadShaderContentLayers? = null
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    fun getOrCreate(
+        requestedKey: Any,
+        create: () -> FluidTriadShaderContentLayers,
+    ): FluidTriadShaderContentLayers {
+        val current = layers
+        if (current != null && key == requestedKey) return current
+
+        val replacement = create()
+        replacement.releaseAfterNextBind(current)
+        key = requestedKey
+        layers = replacement
+        return replacement
+    }
+
+    override fun close() {
+        layers?.close()
+        layers = null
+        key = null
+    }
+}
+
 private data class FluidTriadRendererBrushes(
     val rail: Brush,
     val surfaceLight: Brush,
@@ -153,8 +208,9 @@ private class FluidTriadRendererCache {
     val bodyPath = Path()
     val topEdgePath = Path()
     val handlePath = Path().apply { fillType = PathFillType.EvenOdd }
+    val selectedMaterialPath = Path()
+    val selectedMaterialScratchPath = Path()
     val selectorUnionPath = Path()
-    val selectorUnionScratchPath = Path()
     val accentPath = Path()
     val points = FloatArray(FluidTriadVisualSpec.ContourCoordinateCount)
     val waterWaveNodes = FloatArray(WaterWaveNodeCount)
@@ -164,7 +220,7 @@ private class FluidTriadRendererCache {
     val metadata = FluidTriadRenderMetadata()
     lateinit var contentGroups: Array<FluidTriadContentGroupVisual>
 
-    fun updateContentDrawOrder() {
+    fun updateContentDrawOrder(metadata: FluidTriadRenderMetadata) {
         contentDrawOrder.indices.forEach { contentDrawOrder[it] = it }
         for (index in 1 until contentDrawOrder.size) {
             val candidate = contentDrawOrder[index]
@@ -189,6 +245,7 @@ internal fun Modifier.fluidTriadRenderer(
     animation: FluidTriadRendererAnimation,
     colors: FluidTriadSurfaceColors,
     baseInset: Dp,
+    shaderContentLayerCache: FluidTriadShaderContentLayerCache,
 ): Modifier = drawWithCache {
     val cache = FluidTriadRendererCache()
     val metrics = FluidTriadRendererCachePreparer.resolveMetrics(
@@ -201,6 +258,20 @@ internal fun Modifier.fluidTriadRenderer(
     FluidTriadRendererCachePreparer.prepareContentGroups(cache, content, layouts, colors)
     FluidTriadRendererCachePreparer.prepareNeutralPaths(cache, metrics, size.height)
     val brushes = FluidTriadRendererCachePreparer.createBrushes(this, colors, metrics)
+    val shaderContentLayers = if (
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+        animation.shaderResources != null
+    ) {
+        resolveShaderContentLayers(
+            layerCache = shaderContentLayerCache,
+            rendererCache = cache,
+            content = content,
+            colors = colors,
+            metrics = metrics,
+        )
+    } else {
+        null
+    }
     val shaderGeometry = FluidTriadShaderGeometry(
         componentWidth = size.width,
         componentHeight = size.height,
@@ -238,6 +309,7 @@ internal fun Modifier.fluidTriadRenderer(
             geometry = shaderGeometry,
             snapshot = snapshot,
             progress = progress,
+            contentLayers = shaderContentLayers,
         )
         if (!usedShader) {
             updateFluidTriadFallbackGeometry(cache, metrics, snapshot, progress)
@@ -250,9 +322,69 @@ internal fun Modifier.fluidTriadRenderer(
                 metrics = metrics,
                 surfaceLightBrush = brushes.surfaceLight,
             )
+            drawIntegralContent(cache, content, colors, metrics, cache.metadata)
+            drawInteractionLayers(cache, animation, colors, metrics)
         }
-        drawIntegralContent(cache, content, colors, metrics)
-        if (!usedShader) drawInteractionLayers(cache, animation, colors, metrics)
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+private fun CacheDrawScope.resolveShaderContentLayers(
+    layerCache: FluidTriadShaderContentLayerCache,
+    rendererCache: FluidTriadRendererCache,
+    content: FluidTriadRendererContent,
+    colors: FluidTriadSurfaceColors,
+    metrics: FluidTriadRendererMetrics,
+): FluidTriadShaderContentLayers {
+    val pixelWidth = ceil(size.width).toInt().coerceAtLeast(1)
+    val pixelHeight = ceil(size.height).toInt().coerceAtLeast(1)
+    val contentKey = FluidTriadShaderContentLayerKey(
+        pixelWidth = pixelWidth,
+        pixelHeight = pixelHeight,
+        density = density,
+        fontScale = fontScale,
+        layoutDirection = layoutDirection,
+        items = content.items.toList(),
+        icons = content.icons.toList(),
+        textMeasurer = content.textMeasurer,
+        labelStyle = content.labelStyle,
+        valueStyle = content.valueStyle,
+        iconSize = content.iconSize,
+        colors = colors,
+        metrics = metrics,
+    )
+    return layerCache.getOrCreate(contentKey) {
+        val canvasDrawScope = CanvasDrawScope()
+        val endpointMetadata = FluidTriadRenderMetadata()
+        val cacheScope = this
+        val layers = Array(FluidTriadTargetOrder.size) { index ->
+            val bitmap = createBitmap(pixelWidth, pixelHeight)
+            FluidTriadFrameResolver.resolveEndpointMetadata(
+                target = FluidTriadTargetOrder[index],
+                out = endpointMetadata,
+            )
+            rendererCache.waterWaveNodes.fill(0f)
+            canvasDrawScope.draw(
+                density = cacheScope,
+                layoutDirection = layoutDirection,
+                canvas = Canvas(bitmap.asImageBitmap()),
+                size = size,
+            ) {
+                drawIntegralContent(
+                    rendererCache,
+                    content,
+                    colors,
+                    metrics,
+                    endpointMetadata,
+                )
+            }
+            bitmap
+        }
+        FluidTriadShaderContentLayers(
+            coffee = layers[0],
+            water = layers[1],
+            cup = layers[2],
+        )
     }
 }
 
@@ -427,6 +559,19 @@ private fun DrawScope.updateFluidTriadFallbackGeometry(
         viewport = metrics.viewport,
         componentHeight = size.height,
     )
+    cache.selectedMaterialPath.reset()
+    cache.selectedMaterialPath.addPath(cache.bodyPath)
+    if (metadata.cupHandle > HandleVisibilityThreshold) {
+        check(
+            cache.selectedMaterialScratchPath.op(
+                cache.bodyPath,
+                cache.handlePath,
+                PathOperation.Union,
+            ),
+        )
+        cache.selectedMaterialPath.reset()
+        cache.selectedMaterialPath.addPath(cache.selectedMaterialScratchPath)
+    }
     cache.railPath.reset()
     cache.railPath.addRoundRect(
         RoundRect(
@@ -439,18 +584,13 @@ private fun DrawScope.updateFluidTriadFallbackGeometry(
             cornerRadius = CornerRadius(metrics.radius, metrics.radius),
         ),
     )
-    check(cache.selectorUnionPath.op(cache.railPath, cache.bodyPath, PathOperation.Union))
-    if (metadata.cupHandle > HandleVisibilityThreshold) {
-        check(
-            cache.selectorUnionScratchPath.op(
-                cache.selectorUnionPath,
-                cache.handlePath,
-                PathOperation.Union,
-            ),
-        )
-        cache.selectorUnionPath.reset()
-        cache.selectorUnionPath.addPath(cache.selectorUnionScratchPath)
-    }
+    check(
+        cache.selectorUnionPath.op(
+            cache.railPath,
+            cache.selectedMaterialPath,
+            PathOperation.Union,
+        ),
+    )
 }
 
 private fun DrawScope.drawShaderPartition(
@@ -460,8 +600,10 @@ private fun DrawScope.drawShaderPartition(
     geometry: FluidTriadShaderGeometry,
     snapshot: FluidTriadTransitionSnapshot,
     progress: Float,
+    contentLayers: FluidTriadShaderContentLayers?,
 ): Boolean {
     val resources = animation.shaderResources ?: return false
+    val resolvedContentLayers = contentLayers ?: return false
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return false
     return drawShaderPartitionApi33(
         resources = resources,
@@ -471,6 +613,7 @@ private fun DrawScope.drawShaderPartition(
         geometry = geometry,
         snapshot = snapshot,
         progress = progress,
+        contentLayers = resolvedContentLayers,
     )
 }
 
@@ -483,6 +626,7 @@ private fun DrawScope.drawShaderPartitionApi33(
     geometry: FluidTriadShaderGeometry,
     snapshot: FluidTriadTransitionSnapshot,
     progress: Float,
+    contentLayers: FluidTriadShaderContentLayers,
 ): Boolean {
     val sourceTarget = snapshot.sourceFrame.stableTarget
     val destinationTarget = snapshot.destinationTarget
@@ -534,6 +678,9 @@ private fun DrawScope.drawShaderPartitionApi33(
         geometry = geometry,
         palette = palette,
         progress = shaderProgress,
+        contentLayers = contentLayers,
+        metadata = metadata,
+        waterGust = animation.waterGust(),
         interaction = resolveShaderInteraction(animation),
     )
     return true
@@ -595,11 +742,9 @@ private fun DrawScope.drawNeutralPartition(
     metrics: FluidTriadRendererMetrics,
     railBrush: Brush,
 ) {
-    clipPath(cache.bodyPath, clipOp = ClipOp.Difference) {
-        clipPath(cache.handlePath, clipOp = ClipOp.Difference) {
-            drawNeutralRail(colors, metrics, railBrush)
-            drawFluidTriadDividers(colors, metrics)
-        }
+    clipPath(cache.selectedMaterialPath, clipOp = ClipOp.Difference) {
+        drawNeutralRail(colors, metrics, railBrush)
+        drawFluidTriadDividers(colors, metrics)
     }
 }
 
@@ -684,26 +829,17 @@ private fun DrawScope.drawMaterial(
     metrics: FluidTriadRendererMetrics,
     surfaceLightBrush: Brush,
 ) {
-    if (cache.metadata.cupHandle > HandleVisibilityThreshold) {
-        drawPath(path = cache.handlePath, color = style.fill)
-        clipPath(cache.handlePath) {
-            drawRect(brush = surfaceLightBrush)
-        }
+    drawPath(path = cache.selectedMaterialPath, color = style.fill)
+    clipPath(cache.selectedMaterialPath) {
+        drawRect(brush = surfaceLightBrush)
+        // Keep the material edge entirely inside its ownership region. A centered stroke leaks
+        // onto the neutral partition and recreates the visual language of an overlay.
         drawPath(
-            path = cache.handlePath,
+            path = cache.selectedMaterialPath,
             color = style.edge.copy(alpha = MaterialOutlineAlpha),
-            style = Stroke(width = metrics.lineWidth, join = StrokeJoin.Round),
+            style = Stroke(width = metrics.lineWidth * 2f, join = StrokeJoin.Round),
         )
     }
-    drawPath(path = cache.bodyPath, color = style.fill)
-    clipPath(cache.bodyPath) {
-        drawRect(brush = surfaceLightBrush)
-    }
-    drawPath(
-        path = cache.bodyPath,
-        color = style.edge.copy(alpha = MaterialOutlineAlpha),
-        style = Stroke(width = metrics.lineWidth, join = StrokeJoin.Round),
-    )
 }
 
 private fun DrawScope.drawLighting(
@@ -784,9 +920,12 @@ private fun DrawScope.drawIntegralContent(
     content: FluidTriadRendererContent,
     colors: FluidTriadSurfaceColors,
     metrics: FluidTriadRendererMetrics,
+    metadata: FluidTriadRenderMetadata,
 ) {
-    val metadata = cache.metadata
-    val centerWave = weightedWaterCenter(cache.waterWaveNodes)
+    val centerNode = cache.waterWaveNodes.lastIndex / 2
+    val centerWave = cache.waterWaveNodes[centerNode] * 0.50f +
+        cache.waterWaveNodes[centerNode - 1] * 0.25f +
+        cache.waterWaveNodes[centerNode + 1] * 0.25f
     val movingState = FluidTriadMovingContentState(
         anchor = Offset(
             x = metrics.viewport.mapLogicalX(metadata.contentAnchorX),
@@ -802,7 +941,7 @@ private fun DrawScope.drawIntegralContent(
         },
         iconScale = metadata.contentIconScale,
     )
-    cache.updateContentDrawOrder()
+    cache.updateContentDrawOrder(metadata)
     cache.contentDrawOrder.forEach { index ->
         val target = FluidTriadTargetOrder[index]
         val item = content.items[index]
@@ -897,24 +1036,16 @@ private fun DrawScope.drawInteractionLayers(
         if (!pressed()) return@forEachIndexed
         if (index == selectedIndex) {
             drawPath(
-                path = cache.bodyPath,
+                path = cache.selectedMaterialPath,
                 color = colors.stateLayer.copy(alpha = PressedStateLayerAlpha),
             )
         } else {
-            clipPath(cache.bodyPath, clipOp = ClipOp.Difference) {
-                clipPath(cache.handlePath, clipOp = ClipOp.Difference) {
-                    drawPath(
-                        path = cache.neutralPaths[index],
-                        color = colors.stateLayer.copy(alpha = PressedStateLayerAlpha),
-                    )
-                }
+            clipPath(cache.selectedMaterialPath, clipOp = ClipOp.Difference) {
+                drawPath(
+                    path = cache.neutralPaths[index],
+                    color = colors.stateLayer.copy(alpha = PressedStateLayerAlpha),
+                )
             }
-        }
-        if (index == selectedIndex && cache.metadata.cupHandle > HandleVisibilityThreshold) {
-            drawPath(
-                path = cache.handlePath,
-                color = colors.stateLayer.copy(alpha = PressedStateLayerAlpha),
-            )
         }
     }
     animation.focused.forEachIndexed { index, focused ->
@@ -924,27 +1055,15 @@ private fun DrawScope.drawInteractionLayers(
             join = StrokeJoin.Round,
         )
         if (index == selectedIndex) {
-            drawPath(path = cache.bodyPath, color = colors.focus, style = focusStroke)
+            drawPath(path = cache.selectedMaterialPath, color = colors.focus, style = focusStroke)
         } else {
-            clipPath(cache.bodyPath, clipOp = ClipOp.Difference) {
-                clipPath(cache.handlePath, clipOp = ClipOp.Difference) {
-                    drawPath(
-                        path = cache.neutralPaths[index],
-                        color = colors.focus,
-                        style = focusStroke,
-                    )
-                }
+            clipPath(cache.selectedMaterialPath, clipOp = ClipOp.Difference) {
+                drawPath(
+                    path = cache.neutralPaths[index],
+                    color = colors.focus,
+                    style = focusStroke,
+                )
             }
-        }
-        if (index == selectedIndex && cache.metadata.cupHandle > HandleVisibilityThreshold) {
-            drawPath(
-                path = cache.handlePath,
-                color = colors.focus,
-                style = Stroke(
-                    width = metrics.lineWidth * FocusOutlineWidthMultiplier,
-                    join = StrokeJoin.Round,
-                ),
-            )
         }
     }
 }
@@ -1177,11 +1296,6 @@ private fun applyWaterDisplacement(
     points[points.lastIndex] = points[1]
 }
 
-private fun weightedWaterCenter(nodes: FloatArray): Float {
-    val center = nodes.lastIndex / 2
-    return nodes[center] * 0.50f + nodes[center - 1] * 0.25f + nodes[center + 1] * 0.25f
-}
-
 internal fun fluidTriadSurfaceColors(scheme: ColorScheme): FluidTriadSurfaceColors {
     val dark = scheme.surface.luminance() < 0.5f
     val coffee = resolveMaterialColors(
@@ -1199,16 +1313,20 @@ internal fun fluidTriadSurfaceColors(scheme: ColorScheme): FluidTriadSurfaceColo
         schemeSeed = scheme.tertiaryContainer,
         dark = dark,
     )
-    val warmRail = if (dark) Color(0xFF242123) else Color(0xFFF3EFEB)
-    val railBase = lerp(scheme.surfaceContainerLow, warmRail, if (dark) 0.30f else 0.58f)
+    val warmRail = if (dark) Color(0xFF242123) else Color(0xFFFAF7F4)
+    val railBase = lerp(scheme.surfaceContainerLow, warmRail, if (dark) 0.30f else 0.78f)
     val neutral = scheme.onSurfaceVariant
     return FluidTriadSurfaceColors(
         coffee = coffee,
         water = water,
         cup = cup,
-        railTop = lerp(railBase, Color.White, if (dark) 0.025f else 0.08f),
-        railBottom = lerp(railBase, Color.Black, if (dark) 0.035f else 0.025f),
-        railOutline = lerp(scheme.outlineVariant, Color(0xFF8F8580), if (dark) 0.15f else 0.22f),
+        railTop = lerp(railBase, Color.White, if (dark) 0.025f else 0.16f),
+        railBottom = lerp(railBase, Color.Black, if (dark) 0.035f else 0.018f),
+        railOutline = lerp(
+            scheme.outlineVariant,
+            Color(0xFFA79E99),
+            if (dark) 0.15f else 0.20f,
+        ),
         neutralContent = neutral,
         neutralCoffeeIcon = lerp(neutral, coffee.edge, 0.36f),
         neutralWaterIcon = lerp(neutral, water.fill, 0.18f),
@@ -1241,9 +1359,9 @@ private fun resolveMaterialColors(
     return FluidTriadMaterialColors(
         fill = fill,
         content = content,
-        edge = lerp(fill, Color.Black, if (dark) 0.22f else 0.18f),
-        highlight = lerp(fill, Color.White, if (dark) 0.24f else 0.34f),
-        shade = lerp(fill, Color.Black, if (dark) 0.24f else 0.28f),
+        edge = lerp(fill, Color.Black, if (dark) 0.18f else 0.10f),
+        highlight = lerp(fill, Color.White, if (dark) 0.24f else 0.30f),
+        shade = lerp(fill, Color.Black, if (dark) 0.20f else 0.16f),
     )
 }
 
@@ -1306,15 +1424,15 @@ private const val ContentVisibilityThreshold = 0.002f
 private const val DisabledContentAlpha = 0.38f
 private const val RailPenumbraAlpha = 0.035f
 private const val RailContactAlpha = 0.075f
-private const val RailOutlineAlpha = 0.70f
+private const val RailOutlineAlpha = 0.50f
 private const val RailTopHighlightAlpha = 0.56f
-private const val DividerAlpha = 0.38f
-private const val MaterialOutlineAlpha = 0.76f
-private const val SurfaceTopLightAlpha = 0.22f
-private const val SurfaceBottomShadeAlpha = 0.070f
-private const val ShaderMaterialTopBlend = 0.12f
-private const val ShaderMaterialBottomBlend = 0.22f
-private const val ShaderShadowAlpha = 0.18f
+private const val DividerAlpha = 0.22f
+private const val MaterialOutlineAlpha = 0.46f
+private const val SurfaceTopLightAlpha = 0.28f
+private const val SurfaceBottomShadeAlpha = 0.050f
+private const val ShaderMaterialTopBlend = 0.18f
+private const val ShaderMaterialBottomBlend = 0.13f
+private const val ShaderShadowAlpha = 0.15f
 private const val PenumbraStrokeMultiplier = 3.2f
 private const val HighlightStrokeMultiplier = 1.8f
 private const val BottomShadeStrokeMultiplier = 1.7f

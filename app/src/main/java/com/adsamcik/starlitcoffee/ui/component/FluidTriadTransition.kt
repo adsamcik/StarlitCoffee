@@ -344,14 +344,21 @@ internal data class FluidTriadTransitionTimingSpec(
     }
 }
 
-/** Motion-study timing: 300 ms with a fast traveling mass and deliberately late cup handle. */
+/**
+ * Motion-study timing: 300 ms with an immediate semantic response and a deliberately late handle.
+ *
+ * Geometry already starts traveling at the first animation frame. Material, foreground, and the
+ * outgoing detail now hand off with it instead of waiting for the middle of the transition. The
+ * cup handle remains a finishing detail so the moving mass resolves into a mug rather than carrying
+ * a fully formed handle across the selector.
+ */
 internal object FluidTriadTransitionTimings {
     val MaterialTravel = FluidTriadTransitionTimingSpec(
         durationMillis = 300,
-        materialMix = FluidTriadProgressWindow(0.38f, 0.78f),
-        contentMix = FluidTriadProgressWindow(0.46f, 0.66f),
-        outgoingEffectFade = FluidTriadProgressWindow(0.34f, 0.68f),
-        incomingEffectReveal = FluidTriadProgressWindow(0.56f, 0.90f),
+        materialMix = FluidTriadProgressWindow(0.00f, 0.60f),
+        contentMix = FluidTriadProgressWindow(0.04f, 0.54f),
+        outgoingEffectFade = FluidTriadProgressWindow(0.00f, 0.34f),
+        incomingEffectReveal = FluidTriadProgressWindow(0.16f, 0.68f),
         outgoingCupHandleCollapse = FluidTriadProgressWindow(0.00f, 0.10f),
         incomingCupHandleReveal = FluidTriadProgressWindow(0.72f, 1.00f),
     )
@@ -415,6 +422,12 @@ internal object FluidTriadFrameResolver {
         CalculatorQuantityTarget.WATER_IN -> waterEndpoint
         CalculatorQuantityTarget.IN_CUP -> cupEndpoint
     }
+
+    /** Copies one stable endpoint into a caller-owned holder without creating a transition. */
+    fun resolveEndpointMetadata(
+        target: CalculatorQuantityTarget,
+        out: FluidTriadRenderMetadata,
+    ): FluidTriadRenderMetadata = copyMetadata(endpoint(target), out)
 
     fun between(
         sourceTarget: CalculatorQuantityTarget,

@@ -18,6 +18,7 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -150,6 +151,10 @@ fun FluidTriadSelector(
 
     val iconPainters = rememberIconPainters(items)
     val textMeasurer = rememberTextMeasurer(cacheSize = TextMeasureCacheSize)
+    val shaderContentLayerCache = remember { FluidTriadShaderContentLayerCache() }
+    DisposableEffect(shaderContentLayerCache) {
+        onDispose(shaderContentLayerCache::close)
+    }
     val scheme = MaterialTheme.colorScheme
     val density = LocalDensity.current
     val fontScale = density.fontScale
@@ -157,7 +162,7 @@ fun FluidTriadSelector(
     val view = LocalView.current
     val controlHeight = when {
         fontScale >= LargeFontScaleThreshold -> 112.dp
-        compact -> 84.dp
+        compact -> 80.dp
         else -> 96.dp
     }
     val baseInset = when {
@@ -248,6 +253,7 @@ fun FluidTriadSelector(
                 ),
                 colors = fluidTriadSurfaceColors(scheme),
                 baseInset = baseInset,
+                shaderContentLayerCache = shaderContentLayerCache,
             ),
     ) {
         Row(modifier = Modifier.fillMaxSize()) {

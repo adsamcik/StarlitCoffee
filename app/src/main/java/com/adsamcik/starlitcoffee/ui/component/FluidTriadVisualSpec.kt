@@ -22,8 +22,8 @@ internal object FluidTriadVisualSpec {
         topFraction = 0.083f,
         bottomFraction = 0.917f,
         logicalTrailingOverflow = 12.dp,
-        cornerRadius = 28.dp,
-        outlineWidth = 1.dp,
+        cornerRadius = 20.dp,
+        outlineWidth = 0.75.dp,
         dividerInset = 12.dp,
     )
 
@@ -57,9 +57,9 @@ internal object FluidTriadVisualSpec {
             0.965f, 0.610f, 0.965f, 0.690f, 0.965f, 0.690f,
         ),
         innerAttached = cubicLoop(
-            0.975f, 0.360f,
-            1.015f, 0.360f, 1.015f, 0.430f, 1.015f, 0.510f,
-            1.015f, 0.610f, 1.015f, 0.690f, 0.975f, 0.690f,
+            0.975f, 0.350f,
+            1.022f, 0.350f, 1.022f, 0.430f, 1.022f, 0.510f,
+            1.022f, 0.610f, 1.022f, 0.705f, 0.975f, 0.705f,
         ),
     )
 
@@ -78,14 +78,14 @@ internal object FluidTriadVisualSpec {
         ),
         selectedContour = contour(
             0.002f, 0.500f,
-            0.002f, 0.320f, 0.015f, 0.145f, 0.070f, 0.100f,
-            0.110f, 0.065f, 0.160f, 0.055f, 0.205f, 0.060f,
+            0.002f, 0.380f, 0.010f, 0.170f, 0.050f, 0.110f,
+            0.090f, 0.050f, 0.160f, 0.055f, 0.205f, 0.060f,
             0.265f, 0.060f, 0.320f, 0.082f, 0.335f, 0.145f,
             0.345f, 0.275f, 0.307f, 0.405f, 0.310f, 0.500f,
             0.307f, 0.600f, 0.340f, 0.730f, 0.320f, 0.830f,
             0.292f, 0.905f, 0.225f, 0.945f, 0.170f, 0.940f,
-            0.110f, 0.940f, 0.055f, 0.900f, 0.035f, 0.830f,
-            0.010f, 0.710f, 0.002f, 0.600f, 0.002f, 0.500f,
+            0.110f, 0.940f, 0.080f, 0.925f, 0.045f, 0.865f,
+            0.010f, 0.805f, 0.002f, 0.620f, 0.002f, 0.500f,
         ),
         content = FluidTriadContentSafeSpec(
             anchorX = 0.160f,
@@ -99,11 +99,11 @@ internal object FluidTriadVisualSpec {
             endpointIconScale = 1.06f,
         ),
         palette = FluidTriadMaterialPaletteSpec(
-            lightFill = Color(0xFFD8BFAE),
+            lightFill = Color(0xFFE1CCBD),
             lightContent = Color(0xFF3A2115),
             darkFill = Color(0xFF684A3A),
             darkContent = Color(0xFFFFE0CF),
-            schemeBlend = 0.90f,
+            schemeBlend = 0.94f,
         ),
         lightingStrength = 1f,
     )
@@ -144,11 +144,11 @@ internal object FluidTriadVisualSpec {
             endpointIconScale = 1.06f,
         ),
         palette = FluidTriadMaterialPaletteSpec(
-            lightFill = Color(0xFF5A74BA),
+            lightFill = Color(0xFF5C72B5),
             lightContent = Color.White,
             darkFill = Color(0xFF405A8C),
             darkContent = Color(0xFFE1E7FF),
-            schemeBlend = 0.90f,
+            schemeBlend = 0.94f,
         ),
         lightingStrength = 0.70f,
     )
@@ -168,9 +168,9 @@ internal object FluidTriadVisualSpec {
         ),
         selectedContour = contour(
             0.645f, 0.500f,
-            0.645f, 0.340f, 0.648f, 0.165f, 0.675f, 0.115f,
-            0.720f, 0.080f, 0.785f, 0.075f, 0.835f, 0.078f,
-            0.895f, 0.075f, 0.965f, 0.085f, 0.985f, 0.125f,
+            0.645f, 0.340f, 0.648f, 0.155f, 0.675f, 0.105f,
+            0.715f, 0.082f, 0.785f, 0.078f, 0.835f, 0.078f,
+            0.895f, 0.078f, 0.965f, 0.082f, 0.985f, 0.108f,
             0.995f, 0.250f, 0.995f, 0.390f, 0.995f, 0.500f,
             0.995f, 0.640f, 0.992f, 0.790f, 0.980f, 0.850f,
             0.940f, 0.895f, 0.875f, 0.910f, 0.830f, 0.910f,
@@ -189,11 +189,11 @@ internal object FluidTriadVisualSpec {
             endpointIconScale = 1.06f,
         ),
         palette = FluidTriadMaterialPaletteSpec(
-            lightFill = Color(0xFF916680),
+            lightFill = Color(0xFF916982),
             lightContent = Color.White,
             darkFill = Color(0xFF70485F),
             darkContent = Color(0xFFFFD9E9),
-            schemeBlend = 0.90f,
+            schemeBlend = 0.94f,
         ),
         lightingStrength = 1f,
     )

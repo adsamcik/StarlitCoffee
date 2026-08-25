@@ -111,17 +111,73 @@ class FluidTriadTransitionTest {
         frames.zipWithNext().forEach { (first, second) ->
             assertTrue(second.contour.centerX() >= first.contour.centerX() - Epsilon)
         }
-        assertTrue(frames[2].material.weights.water > PredominantWeight)
-        assertTrue(frames[2].content.weights.water > PredominantWeight)
-        assertTrue(frames[3].material.weights.water > MinimumVisibleMix)
-        assertTrue(frames[3].material.weights.cup > MinimumVisibleMix)
-        assertTrue(frames[3].content.weights.cup > frames[3].content.weights.water)
-        assertEquals(1f, frames[4].material.weights.cup, Epsilon)
+        assertTrue(frames[1].material.weights.water > frames[1].material.weights.cup)
+        assertTrue(frames[1].content.weights.water > frames[1].content.weights.cup)
+        assertTrue(frames[2].material.weights.water > MinimumVisibleMix)
+        assertTrue(frames[2].material.weights.cup > MinimumVisibleMix)
+        assertTrue(frames[2].content.weights.cup > frames[2].content.weights.water)
+        assertEquals(1f, frames[3].material.weights.cup, Epsilon)
+        assertEquals(1f, frames[3].content.weights.cup, Epsilon)
+        assertEquals(0f, frames[3].effects.cupHandle, Epsilon)
         assertTrue(frames[4].effects.cupHandle in PartialHandleRange)
         assertEquals(1f, frames.last().effects.cupHandle, Epsilon)
         frames.forEach { frame ->
             assertEquals(StableElevation, frame.material.elevation, Epsilon)
         }
+    }
+
+    @Test
+    fun `semantic handoff starts within the first rendered frame while total duration stays authored`() {
+        val timing = FluidTriadTransitionTimings.MaterialTravel
+        assertEquals(AuthoredDurationMillis, timing.durationMillis)
+        assertEquals(0.00f, timing.materialMix.startFraction, Epsilon)
+        assertEquals(0.60f, timing.materialMix.endFraction, Epsilon)
+        assertEquals(0.04f, timing.contentMix.startFraction, Epsilon)
+        assertEquals(0.54f, timing.contentMix.endFraction, Epsilon)
+        assertEquals(0.00f, timing.outgoingEffectFade.startFraction, Epsilon)
+        assertEquals(0.34f, timing.outgoingEffectFade.endFraction, Epsilon)
+        assertEquals(0.16f, timing.incomingEffectReveal.startFraction, Epsilon)
+        assertEquals(0.68f, timing.incomingEffectReveal.endFraction, Epsilon)
+
+        val snapshot = FluidTriadFrameResolver.between(
+            CalculatorQuantityTarget.COFFEE,
+            CalculatorQuantityTarget.IN_CUP,
+        )
+        val firstFrame = FluidTriadFrameResolver.resolve(snapshot, FirstRenderedFrameProgress)
+
+        assertTrue(firstFrame.material.weights.cup > 0f)
+        assertTrue(firstFrame.content.weights.cup > 0f)
+        assertTrue(firstFrame.effects.coffeeCrease < 1f)
+        assertEquals(0f, firstFrame.effects.cupRim, Epsilon)
+
+        val incomingDetail = FluidTriadFrameResolver.resolve(snapshot, EarlyDetailProgress)
+        assertTrue(incomingDetail.effects.cupRim > 0f)
+    }
+
+    @Test
+    fun `cup handle remains a late finishing detail`() {
+        val timing = FluidTriadTransitionTimings.MaterialTravel
+        assertEquals(0.72f, timing.incomingCupHandleReveal.startFraction, Epsilon)
+        assertEquals(1.00f, timing.incomingCupHandleReveal.endFraction, Epsilon)
+
+        val snapshot = FluidTriadFrameResolver.between(
+            CalculatorQuantityTarget.WATER_IN,
+            CalculatorQuantityTarget.IN_CUP,
+        )
+        assertEquals(
+            0f,
+            FluidTriadFrameResolver.resolve(snapshot, HandleRevealStartProgress).effects.cupHandle,
+            Epsilon,
+        )
+        assertTrue(
+            FluidTriadFrameResolver.resolve(snapshot, HandlePartialProgress).effects.cupHandle in
+                PartialHandleRange,
+        )
+        assertEquals(
+            1f,
+            FluidTriadFrameResolver.resolve(snapshot, 1f).effects.cupHandle,
+            Epsilon,
+        )
     }
 
     @Test
@@ -344,11 +400,15 @@ class FluidTriadTransitionTest {
         )
         val DrawingEnvelope = -0.05f..1.05f
         val PartialHandleRange = 0.05f..0.50f
+        const val AuthoredDurationMillis = 300
+        const val FirstRenderedFrameProgress = 16f / AuthoredDurationMillis
+        const val EarlyDetailProgress = 0.20f
+        const val HandleRevealStartProgress = 0.72f
+        const val HandlePartialProgress = 0.80f
         const val MotionStudyFrameCount = 6
         const val CoordinateStride = 2
         const val SampleCount = 100
         const val StableElevation = 1f
-        const val PredominantWeight = 0.90f
         const val MinimumVisibleMix = 0.25f
         const val InterruptedProgress = 0.43f
         const val Epsilon = 0.000_01f

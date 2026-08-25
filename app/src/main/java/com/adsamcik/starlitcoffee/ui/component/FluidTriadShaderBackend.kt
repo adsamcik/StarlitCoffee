@@ -163,9 +163,13 @@ internal class FluidTriadInterruptedShaderFrameSource private constructor(
             require(activeSource.logicalDomain == destination.logicalDomain)
             require(activeBlend.firstFrame in 0 until activeSource.frameCount)
             require(activeBlend.secondFrame in 0 until activeSource.frameCount)
-            val first = activeSource.signedDistances(activeBlend.firstFrame)
-            val second = activeSource.signedDistances(activeBlend.secondFrame)
-            val captured = blendFields(first, second, activeBlend.fraction)
+            val captured = if (activeSource is FluidTriadInterruptedShaderFrameSource) {
+                activeSource.captureDisplayedField(activeBlend)
+            } else {
+                val first = activeSource.signedDistances(activeBlend.firstFrame)
+                val second = activeSource.signedDistances(activeBlend.secondFrame)
+                blendFields(first, second, activeBlend.fraction)
+            }
             val destinationValues = destination.signedDistances(0)
             val sourceCentroid = fieldCentroid(
                 values = captured,
@@ -200,6 +204,97 @@ internal class FluidTriadInterruptedShaderFrameSource private constructor(
                 first[index] + (second[index] - first[index]) * fraction
             }
         }
+
+        /**
+         * Reconstructs the field produced by the interrupted AGSL branch at [activeBlend].
+         *
+         * A nested retarget cannot linearly mix the two stored grids: AGSL first transports both
+         * grids toward an eased moving centroid, samples them at shifted logical coordinates, and
+         * only then blends them. Mirroring those operations here makes the next interruption's
+         * frame zero equal to the field that was visible immediately before the tap.
+         */
+        private fun FluidTriadInterruptedShaderFrameSource.captureDisplayedField(
+            activeBlend: FluidTriadShaderFrameBlend,
+        ): FloatArray {
+            val first = signedDistances(activeBlend.firstFrame)
+            val second = signedDistances(activeBlend.secondFrame)
+            val fraction = activeBlend.fraction
+            if (fraction <= 0f) return first
+            if (fraction >= 1f) return second
+
+            val inverse = 1f - fraction
+            val motion = 1f - inverse * inverse * inverse
+            val movingCentroidX = lerp(sourceCentroidX, destinationCentroidX, motion)
+            val movingCentroidY = lerp(sourceCentroidY, destinationCentroidY, motion)
+            val sourceOffsetX = movingCentroidX - sourceCentroidX
+            val sourceOffsetY = movingCentroidY - sourceCentroidY
+            val destinationOffsetX = movingCentroidX - destinationCentroidX
+            val destinationOffsetY = movingCentroidY - destinationCentroidY
+            val xStep = (logicalDomain.right - logicalDomain.left) / (gridWidth - 1)
+            val yStep = (logicalDomain.bottom - logicalDomain.top) / (gridHeight - 1)
+            val captured = FloatArray(gridWidth * gridHeight)
+
+            for (row in 0 until gridHeight) {
+                val logicalY = logicalDomain.top + row * yStep
+                for (column in 0 until gridWidth) {
+                    val logicalX = logicalDomain.left + column * xStep
+                    val sourceDistance = sampleLogicalField(
+                        values = first,
+                        width = gridWidth,
+                        height = gridHeight,
+                        domain = logicalDomain,
+                        x = logicalX - sourceOffsetX,
+                        y = logicalY - sourceOffsetY,
+                    )
+                    val destinationDistance = sampleLogicalField(
+                        values = second,
+                        width = gridWidth,
+                        height = gridHeight,
+                        domain = logicalDomain,
+                        x = logicalX - destinationOffsetX,
+                        y = logicalY - destinationOffsetY,
+                    )
+                    captured[row * gridWidth + column] =
+                        lerp(sourceDistance, destinationDistance, motion)
+                }
+            }
+            return captured
+        }
+
+        private fun sampleLogicalField(
+            values: FloatArray,
+            width: Int,
+            height: Int,
+            domain: FluidTriadSdfLogicalDomain,
+            x: Float,
+            y: Float,
+        ): Float {
+            require(values.size == width * height)
+            val normalizedX = ((x - domain.left) / (domain.right - domain.left)).coerceIn(0f, 1f)
+            val normalizedY = ((y - domain.top) / (domain.bottom - domain.top)).coerceIn(0f, 1f)
+            val gridX = normalizedX * (width - 1)
+            val gridY = normalizedY * (height - 1)
+            val leftColumn = floor(gridX).toInt().coerceIn(0, width - 1)
+            val topRow = floor(gridY).toInt().coerceIn(0, height - 1)
+            val rightColumn = (leftColumn + 1).coerceAtMost(width - 1)
+            val bottomRow = (topRow + 1).coerceAtMost(height - 1)
+            val horizontal = gridX - leftColumn
+            val vertical = gridY - topRow
+            val top = lerp(
+                values[topRow * width + leftColumn],
+                values[topRow * width + rightColumn],
+                horizontal,
+            )
+            val bottom = lerp(
+                values[bottomRow * width + leftColumn],
+                values[bottomRow * width + rightColumn],
+                horizontal,
+            )
+            return lerp(top, bottom, vertical)
+        }
+
+        private fun lerp(start: Float, stop: Float, fraction: Float): Float =
+            start + (stop - start) * fraction
 
         private fun fieldCentroid(
             values: FloatArray,
@@ -293,6 +388,125 @@ internal data class FluidTriadShaderPalette(
     val focus: Color = Color.White.copy(alpha = 0.72f),
 )
 
+/** Shared bounds contract for the API 33 handle SDF and the authored Canvas handle. */
+internal object FluidTriadShaderCupHandleSpec {
+    const val BodyAttachmentX = 0.995f
+    const val CupContentAnchorX = 5f / 6f
+    const val AttachmentOffsetFromContent = BodyAttachmentX - CupContentAnchorX
+
+    const val OuterCollapsedLeftOffset = -0.030f
+    const val OuterCollapsedRightOffset = -0.030f
+    const val OuterAttachedLeftOffset = -0.030f
+    const val OuterAttachedRightOffset = 0.040f
+    const val OuterTop = 0.270f
+    const val OuterBottom = 0.780f
+
+    const val InnerCollapsedLeftOffset = -0.030f
+    const val InnerCollapsedRightOffset = -0.030f
+    const val InnerAttachedLeftOffset = -0.020f
+    const val InnerAttachedRightOffset = 0.027f
+    const val InnerCollapsedTop = 0.360f
+    const val InnerAttachedTop = 0.350f
+    const val InnerCollapsedBottom = 0.690f
+    const val InnerAttachedBottom = 0.705f
+
+    fun attachmentX(contentAnchorX: Float): Float = contentAnchorX + AttachmentOffsetFromContent
+
+    fun outerBounds(progress: Float, contentAnchorX: Float): FluidTriadShaderHandleBounds {
+        val fraction = progress.coerceIn(0f, 1f)
+        val attachment = attachmentX(contentAnchorX)
+        return FluidTriadShaderHandleBounds(
+            left = attachment + lerp(OuterCollapsedLeftOffset, OuterAttachedLeftOffset, fraction),
+            top = OuterTop,
+            right = attachment + lerp(OuterCollapsedRightOffset, OuterAttachedRightOffset, fraction),
+            bottom = OuterBottom,
+        )
+    }
+
+    fun innerBounds(progress: Float, contentAnchorX: Float): FluidTriadShaderHandleBounds {
+        val fraction = progress.coerceIn(0f, 1f)
+        val attachment = attachmentX(contentAnchorX)
+        return FluidTriadShaderHandleBounds(
+            left = attachment + lerp(InnerCollapsedLeftOffset, InnerAttachedLeftOffset, fraction),
+            top = lerp(InnerCollapsedTop, InnerAttachedTop, fraction),
+            right = attachment + lerp(
+                InnerCollapsedRightOffset,
+                InnerAttachedRightOffset,
+                fraction,
+            ),
+            bottom = lerp(InnerCollapsedBottom, InnerAttachedBottom, fraction),
+        )
+    }
+
+    private fun lerp(start: Float, stop: Float, fraction: Float): Float =
+        start + (stop - start) * fraction
+}
+
+internal data class FluidTriadShaderHandleBounds(
+    val left: Float,
+    val top: Float,
+    val right: Float,
+    val bottom: Float,
+)
+
+/**
+ * Cached transparent foreground endpoints sampled by the same AGSL pass as the selector surface.
+ *
+ * Values, labels, and vector icons only change when Compose invalidates the draw cache. They are
+ * therefore rasterized once per cache generation rather than repainted over the shader every
+ * frame. AGSL blends the three complete endpoint layers using the resolved foreground weights,
+ * keeping interrupted transitions continuous without introducing another visual layer.
+ */
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+internal class FluidTriadShaderContentLayers(
+    coffee: Bitmap,
+    water: Bitmap,
+    cup: Bitmap,
+) : AutoCloseable {
+    private val coffeeShader = BitmapShader(coffee, TileMode.CLAMP, TileMode.CLAMP)
+    private val waterShader = BitmapShader(water, TileMode.CLAMP, TileMode.CLAMP)
+    private val cupShader = BitmapShader(cup, TileMode.CLAMP, TileMode.CLAMP)
+    private var releasedAfterBind: FluidTriadShaderContentLayers? = null
+    private var closed = false
+
+    init {
+        require(coffee.width == water.width && coffee.width == cup.width)
+        require(coffee.height == water.height && coffee.height == cup.height)
+    }
+
+    /** Defers releasing the old layer until this replacement has displaced its shader inputs. */
+    internal fun releaseAfterNextBind(previous: FluidTriadShaderContentLayers?) {
+        if (previous == null || previous === this) return
+        releasedAfterBind?.close()
+        releasedAfterBind = previous
+    }
+
+    internal fun bind(runtimeShader: RuntimeShader) {
+        check(!closed) { "Cannot bind released fluid-triad foreground textures" }
+        runtimeShader.setInputShader(UNIFORM_CONTENT_COFFEE, coffeeShader)
+        runtimeShader.setInputShader(UNIFORM_CONTENT_WATER, waterShader)
+        runtimeShader.setInputShader(UNIFORM_CONTENT_CUP, cupShader)
+        releasedAfterBind?.close()
+        releasedAfterBind = null
+    }
+
+    override fun close() {
+        if (closed) return
+        closed = true
+        releasedAfterBind?.close()
+        releasedAfterBind = null
+        // Do not call Bitmap.recycle(): the hardware renderer may still hold the preceding
+        // frame's display list on RenderThread. Once the cache and backend drop this layer, the
+        // platform releases its bitmap/native texture after both threads are done.
+    }
+
+    private companion object {
+        const val UNIFORM_CONTENT_COFFEE = "contentCoffee"
+        const val UNIFORM_CONTENT_WATER = "contentWater"
+        const val UNIFORM_CONTENT_CUP = "contentCup"
+    }
+}
+
 internal data class FluidTriadShaderCellFractions(
     val coffee: Float,
     val water: Float,
@@ -352,6 +566,19 @@ internal class FluidTriadShaderBackend(
     private var lastGeometry: FluidTriadShaderGeometry? = null
     private var lastPalette: FluidTriadShaderPalette? = null
     private var lastInteraction: FluidTriadShaderInteraction? = null
+    private var lastContentLayers: FluidTriadShaderContentLayers? = null
+    private var lastMaterialCoffeeWeight = Float.NaN
+    private var lastMaterialWaterWeight = Float.NaN
+    private var lastMaterialCupWeight = Float.NaN
+    private var lastContentCoffeeWeight = Float.NaN
+    private var lastContentWaterWeight = Float.NaN
+    private var lastContentCupWeight = Float.NaN
+    private var lastCoffeeCrease = Float.NaN
+    private var lastWaterMotion = Float.NaN
+    private var lastCupRim = Float.NaN
+    private var lastWaterGust = Float.NaN
+    private var lastCupHandle = Float.NaN
+    private var lastContentAnchorX = Float.NaN
     private var lastFirstFrame = -1
     private var lastSecondFrame = -1
     private var lastFrameFraction = Float.NaN
@@ -438,9 +665,19 @@ internal class FluidTriadShaderBackend(
         geometry: FluidTriadShaderGeometry,
         palette: FluidTriadShaderPalette,
         frameBlend: FluidTriadShaderFrameBlend,
+        contentLayers: FluidTriadShaderContentLayers,
+        metadata: FluidTriadRenderMetadata,
+        waterGust: Float,
         interaction: FluidTriadShaderInteraction = FluidTriadShaderInteraction.None,
     ) {
-        updateNonFrameUniforms(geometry, palette, interaction)
+        updateNonFrameUniforms(
+            geometry = geometry,
+            palette = palette,
+            interaction = interaction,
+            contentLayers = contentLayers,
+            metadata = metadata,
+            waterGust = waterGust,
+        )
         updateFrame(
             firstFrame = frameBlend.firstFrame,
             secondFrame = frameBlend.secondFrame,
@@ -453,9 +690,19 @@ internal class FluidTriadShaderBackend(
         geometry: FluidTriadShaderGeometry,
         palette: FluidTriadShaderPalette,
         progress: Float,
+        contentLayers: FluidTriadShaderContentLayers,
+        metadata: FluidTriadRenderMetadata,
+        waterGust: Float,
         interaction: FluidTriadShaderInteraction = FluidTriadShaderInteraction.None,
     ) {
-        updateNonFrameUniforms(geometry, palette, interaction)
+        updateNonFrameUniforms(
+            geometry = geometry,
+            palette = palette,
+            interaction = interaction,
+            contentLayers = contentLayers,
+            metadata = metadata,
+            waterGust = waterGust,
+        )
         val frameCount = checkNotNull(activeFrameSource).frameCount
         val normalized = if (progress.isFinite()) progress.coerceIn(0f, 1f) else 0f
         val scaled = normalized * (frameCount - 1)
@@ -470,9 +717,20 @@ internal class FluidTriadShaderBackend(
         geometry: FluidTriadShaderGeometry,
         palette: FluidTriadShaderPalette,
         frameBlend: FluidTriadShaderFrameBlend,
+        contentLayers: FluidTriadShaderContentLayers,
+        metadata: FluidTriadRenderMetadata,
+        waterGust: Float,
         interaction: FluidTriadShaderInteraction = FluidTriadShaderInteraction.None,
     ) {
-        update(geometry, palette, frameBlend, interaction)
+        update(
+            geometry = geometry,
+            palette = palette,
+            frameBlend = frameBlend,
+            contentLayers = contentLayers,
+            metadata = metadata,
+            waterGust = waterGust,
+            interaction = interaction,
+        )
         with(scope) {
             drawRect(brush = brush)
         }
@@ -484,9 +742,20 @@ internal class FluidTriadShaderBackend(
         geometry: FluidTriadShaderGeometry,
         palette: FluidTriadShaderPalette,
         progress: Float,
+        contentLayers: FluidTriadShaderContentLayers,
+        metadata: FluidTriadRenderMetadata,
+        waterGust: Float,
         interaction: FluidTriadShaderInteraction = FluidTriadShaderInteraction.None,
     ) {
-        update(geometry, palette, progress, interaction)
+        update(
+            geometry = geometry,
+            palette = palette,
+            progress = progress,
+            contentLayers = contentLayers,
+            metadata = metadata,
+            waterGust = waterGust,
+            interaction = interaction,
+        )
         with(scope) {
             drawRect(brush = brush)
         }
@@ -496,6 +765,9 @@ internal class FluidTriadShaderBackend(
         geometry: FluidTriadShaderGeometry,
         palette: FluidTriadShaderPalette,
         interaction: FluidTriadShaderInteraction,
+        contentLayers: FluidTriadShaderContentLayers,
+        metadata: FluidTriadRenderMetadata,
+        waterGust: Float,
     ) {
         if (lastGeometry != geometry) {
             updateGeometry(geometry)
@@ -508,6 +780,80 @@ internal class FluidTriadShaderBackend(
         if (lastInteraction != interaction) {
             updateInteraction(interaction)
         }
+        if (lastContentLayers !== contentLayers) {
+            contentLayers.bind(runtimeShader)
+            lastContentLayers = contentLayers
+        }
+        updateVisualState(metadata, waterGust)
+    }
+
+    private fun updateVisualState(metadata: FluidTriadRenderMetadata, waterGust: Float) {
+        if (
+            lastMaterialCoffeeWeight != metadata.materialCoffeeWeight ||
+            lastMaterialWaterWeight != metadata.materialWaterWeight ||
+            lastMaterialCupWeight != metadata.materialCupWeight
+        ) {
+            runtimeShader.setFloatUniform(
+                UNIFORM_MATERIAL_WEIGHTS,
+                metadata.materialCoffeeWeight,
+                metadata.materialWaterWeight,
+                metadata.materialCupWeight,
+            )
+            lastMaterialCoffeeWeight = metadata.materialCoffeeWeight
+            lastMaterialWaterWeight = metadata.materialWaterWeight
+            lastMaterialCupWeight = metadata.materialCupWeight
+        }
+        if (
+            lastContentCoffeeWeight != metadata.contentCoffeeWeight ||
+            lastContentWaterWeight != metadata.contentWaterWeight ||
+            lastContentCupWeight != metadata.contentCupWeight
+        ) {
+            runtimeShader.setFloatUniform(
+                UNIFORM_CONTENT_WEIGHTS,
+                metadata.contentCoffeeWeight,
+                metadata.contentWaterWeight,
+                metadata.contentCupWeight,
+            )
+            lastContentCoffeeWeight = metadata.contentCoffeeWeight
+            lastContentWaterWeight = metadata.contentWaterWeight
+            lastContentCupWeight = metadata.contentCupWeight
+        }
+        val normalizedGust = if (waterGust.isFinite()) waterGust.coerceIn(0f, 1f) else 0f
+        if (materialEffectsChanged(metadata, normalizedGust)) {
+            runtimeShader.setFloatUniform(
+                UNIFORM_MATERIAL_EFFECTS,
+                metadata.coffeeCrease,
+                metadata.waterMotion,
+                metadata.cupRim,
+                normalizedGust,
+            )
+            lastCoffeeCrease = metadata.coffeeCrease
+            lastWaterMotion = metadata.waterMotion
+            lastCupRim = metadata.cupRim
+            lastWaterGust = normalizedGust
+        }
+        if (
+            lastCupHandle != metadata.cupHandle ||
+            lastContentAnchorX != metadata.contentAnchorX
+        ) {
+            runtimeShader.setFloatUniform(
+                UNIFORM_CUP_HANDLE_GEOMETRY,
+                metadata.cupHandle,
+                metadata.contentAnchorX,
+            )
+            lastCupHandle = metadata.cupHandle
+            lastContentAnchorX = metadata.contentAnchorX
+        }
+    }
+
+    private fun materialEffectsChanged(
+        metadata: FluidTriadRenderMetadata,
+        normalizedGust: Float,
+    ): Boolean {
+        if (lastCoffeeCrease != metadata.coffeeCrease) return true
+        if (lastWaterMotion != metadata.waterMotion) return true
+        if (lastCupRim != metadata.cupRim) return true
+        return lastWaterGust != normalizedGust
     }
 
     /** Primitive frame binding for callers already using an allocation-free SDF resolver. */
@@ -636,10 +982,17 @@ internal class FluidTriadShaderBackend(
         const val UNIFORM_SELECTED_FOCUS = "selectedFocus"
         const val UNIFORM_CELL_PRESS = "cellPress"
         const val UNIFORM_CELL_FOCUS = "cellFocus"
+        const val UNIFORM_MATERIAL_WEIGHTS = "materialWeights"
+        const val UNIFORM_CONTENT_WEIGHTS = "contentWeights"
+        const val UNIFORM_MATERIAL_EFFECTS = "materialEffects"
+        const val UNIFORM_CUP_HANDLE_GEOMETRY = "cupHandleGeometry"
 
         val FLUID_TRIAD_AGSL =
             """
             uniform shader sdfAtlas;
+            uniform shader contentCoffee;
+            uniform shader contentWater;
+            uniform shader contentCup;
             uniform float2 gridSize;
             uniform float distanceRange;
             uniform float4 sdfDomain;
@@ -668,6 +1021,11 @@ internal class FluidTriadShaderBackend(
             uniform float selectedFocus;
             uniform float3 cellPress;
             uniform float3 cellFocus;
+            uniform float3 materialWeights;
+            uniform float3 contentWeights;
+            uniform float4 materialEffects;
+            // x = resolved cupHandle effect, y = moving foreground/body anchor.
+            uniform float2 cupHandleGeometry;
 
             layout(color) uniform half4 neutralTop;
             layout(color) uniform half4 neutralBottom;
@@ -708,6 +1066,68 @@ internal class FluidTriadShaderBackend(
                 return (float(encoded) * 2.0 - 1.0) * distanceRange;
             }
 
+            float ellipseSdf(float2 point, float4 logicalBounds) {
+                float2 minimum = float2(
+                    logicalBounds.x * railRect.z,
+                    logicalBounds.y * componentSize.y
+                );
+                float2 maximum = float2(
+                    logicalBounds.z * railRect.z,
+                    logicalBounds.w * componentSize.y
+                );
+                float2 center = (minimum + maximum) * 0.5;
+                float2 radius = max((maximum - minimum) * 0.5, float2(0.001));
+                float2 normalized = (point - center) / radius;
+                return (length(normalized) - 1.0) * min(radius.x, radius.y);
+            }
+
+            float resolvedCupHandleDistance(float2 logical, float progress, float attachmentX) {
+                float outerLeft = attachmentX + mix(
+                    ${FluidTriadShaderCupHandleSpec.OuterCollapsedLeftOffset},
+                    ${FluidTriadShaderCupHandleSpec.OuterAttachedLeftOffset},
+                    progress
+                );
+                float outerRight = attachmentX + mix(
+                    ${FluidTriadShaderCupHandleSpec.OuterCollapsedRightOffset},
+                    ${FluidTriadShaderCupHandleSpec.OuterAttachedRightOffset},
+                    progress
+                );
+                float innerLeft = attachmentX + mix(
+                    ${FluidTriadShaderCupHandleSpec.InnerCollapsedLeftOffset},
+                    ${FluidTriadShaderCupHandleSpec.InnerAttachedLeftOffset},
+                    progress
+                );
+                float innerRight = attachmentX + mix(
+                    ${FluidTriadShaderCupHandleSpec.InnerCollapsedRightOffset},
+                    ${FluidTriadShaderCupHandleSpec.InnerAttachedRightOffset},
+                    progress
+                );
+                float4 outerBounds = float4(
+                    outerLeft,
+                    ${FluidTriadShaderCupHandleSpec.OuterTop},
+                    outerRight,
+                    ${FluidTriadShaderCupHandleSpec.OuterBottom}
+                );
+                float4 innerBounds = float4(
+                    innerLeft,
+                    mix(
+                        ${FluidTriadShaderCupHandleSpec.InnerCollapsedTop},
+                        ${FluidTriadShaderCupHandleSpec.InnerAttachedTop},
+                        progress
+                    ),
+                    innerRight,
+                    mix(
+                        ${FluidTriadShaderCupHandleSpec.InnerCollapsedBottom},
+                        ${FluidTriadShaderCupHandleSpec.InnerAttachedBottom},
+                        progress
+                    )
+                );
+                float2 point = float2(logical.x * railRect.z, logical.y * componentSize.y);
+                float outer = ellipseSdf(point, outerBounds);
+                float inner = ellipseSdf(point, innerBounds);
+                return max(outer, -inner);
+            }
+
             float selectedDistance(float2 logical) {
                 float inverse = 1.0 - frameBlend;
                 float motion = 1.0 - inverse * inverse * inverse;
@@ -719,19 +1139,35 @@ internal class FluidTriadShaderBackend(
                 float first = decodedDistance(sourceLogical, frameA);
                 float second = decodedDistance(destinationLogical, frameB);
                 float blend = mix(frameBlend, motion, centroidAdvection);
-                return mix(first, second, blend) * componentSize.y;
+                float distance = mix(first, second, blend) * componentSize.y;
+
+                float handleProgress = clamp(cupHandleGeometry.x, 0.0, 1.0);
+                float cupInfluence = materialWeights.z + handleProgress;
+                if (cupInfluence > 0.0001) {
+                    float attachmentX = cupHandleGeometry.y +
+                        ${FluidTriadShaderCupHandleSpec.AttachmentOffsetFromContent};
+                    // The cached cup field contains its attached handle. Intersect it with the
+                    // moving body edge first, then union the handle reconstructed at the exact
+                    // metadata progress used by the Canvas fallback.
+                    float bodyClip = (logical.x - attachmentX) * railRect.z;
+                    distance = max(distance, bodyClip);
+                    if (handleProgress > 0.0001) {
+                        distance = min(
+                            distance,
+                            resolvedCupHandleDistance(logical, handleProgress, attachmentX)
+                        );
+                    }
+                }
+                return distance;
             }
 
-            float selectedEdgeLight(float2 logical, float distancePx) {
+            float2 selectedNormal(float2 logical) {
                 float2 logicalStep = (sdfDomain.zw - sdfDomain.xy) / (gridSize - 1.0);
                 float horizontal = selectedDistance(logical + float2(logicalStep.x, 0.0))
                     - selectedDistance(logical - float2(logicalStep.x, 0.0));
                 float vertical = selectedDistance(logical + float2(0.0, logicalStep.y))
                     - selectedDistance(logical - float2(0.0, logicalStep.y));
-                float2 normal = normalize(float2(horizontal, vertical) + float2(0.0001));
-                float facingLight = max(dot(normal, normalize(float2(-0.42, -0.91))), 0.0);
-                float innerEdge = 1.0 - smoothstep(0.0, 5.0, -distancePx);
-                return facingLight * innerEdge;
+                return normalize(float2(horizontal, vertical) + float2(0.0001));
             }
 
             float dividerCoverage(float2 point, float railCoverage, float selectedCoverage) {
@@ -830,12 +1266,17 @@ internal class FluidTriadShaderBackend(
                 float materialDistance = selectedDistance(logical);
                 float selectedCoverage = 1.0
                     - smoothstep(-antialiasPx, antialiasPx, materialDistance);
-                float selectedOutline = 1.0 - smoothstep(
-                    selectedOutlineWidth - antialiasPx,
-                    selectedOutlineWidth + antialiasPx,
-                    abs(materialDistance)
-                );
-                float selectedOcclusion = max(selectedCoverage, selectedOutline);
+                // The material edge is an inside-only bevel. A centered abs(distance) stroke
+                // paints half its width over the neutral partition and makes the material read
+                // as a sticker even when no neutral fill exists underneath it.
+                float selectedOutline = (
+                    1.0 - smoothstep(
+                        0.0,
+                        selectedOutlineWidth + antialiasPx,
+                        -materialDistance
+                    )
+                ) * selectedCoverage;
+                float selectedOcclusion = selectedCoverage;
                 // The selected material and the neutral rail are complementary pieces of one
                 // selector.  Do not paint a complete rail and cover it with the material: that
                 // leaves a second surface underneath the selected shape and reads as an overlay.
@@ -849,8 +1290,33 @@ internal class FluidTriadShaderBackend(
                     materialBottom,
                     half(smoothstep(0.05, 0.95, railY))
                 );
-                float edgeLight = selectedEdgeLight(logical, materialDistance) * selectedCoverage;
-                material = mix(material, materialHighlight, half(edgeLight * 0.24));
+                float2 materialNormal = selectedNormal(logical);
+                float innerBevel = (
+                    1.0 - smoothstep(0.0, max(4.0, selectedOutlineWidth * 2.4), -materialDistance)
+                ) * selectedCoverage;
+                float2 keyLight = normalize(float2(-0.38, -0.92));
+                float lightFacing = max(dot(materialNormal, keyLight), 0.0);
+                float shadeFacing = max(dot(materialNormal, -keyLight), 0.0);
+                float lightingStrength = dot(materialWeights, float3(1.0, 0.72, 1.0));
+                float broadTopLight = (1.0 - smoothstep(0.02, 0.68, railY))
+                    * selectedCoverage;
+                float waterGlint = materialEffects.y * materialEffects.w
+                    * lightFacing * innerBevel;
+                float highlightAmount = lightingStrength * (
+                    lightFacing * innerBevel * 0.42 +
+                    broadTopLight * 0.045 +
+                    waterGlint * 0.12
+                );
+                material = mix(
+                    material,
+                    materialHighlight,
+                    half(clamp(highlightAmount, 0.0, 0.42))
+                );
+                material = mix(
+                    material,
+                    materialOutline,
+                    half(clamp(shadeFacing * innerBevel * lightingStrength * 0.10, 0.0, 0.14))
+                );
                 half4 result = half4(0.0);
 
                 float railPenumbra = railShadowCoverage(
@@ -893,6 +1359,7 @@ internal class FluidTriadShaderBackend(
                 result = compositeOver(result, basePartition);
 
                 float localCellX = (point.x - railRect.x) / railRect.z;
+                localCellX = mix(localCellX, 1.0 - localCellX, isRtl);
                 float neutralPressAmount = cellFraction(cellPress, localCellX);
                 float neutralFocusAmount = cellFraction(cellFocus, localCellX);
                 result = compositeOver(
@@ -938,6 +1405,14 @@ internal class FluidTriadShaderBackend(
                 );
                 railOutline *= 1.0 - selectedOcclusion;
                 result = compositeOver(result, coveredColor(railColor, railOutline));
+
+                // Icons, labels, and values are cached transparent endpoint images. Blending
+                // them here makes foreground and surface one GPU result instead of painting a
+                // second Canvas layer after the selector has already been rendered.
+                half4 foreground = contentCoffee.eval(point) * half(contentWeights.x)
+                    + contentWater.eval(point) * half(contentWeights.y)
+                    + contentCup.eval(point) * half(contentWeights.z);
+                result = compositeOver(result, foreground);
                 return result;
             }
             """.trimIndent()

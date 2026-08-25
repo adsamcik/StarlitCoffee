@@ -4,12 +4,19 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.calculator.CalculatorQuantityTarget
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class FluidTriadVisualSpecTest {
+    @Test
+    fun `canonical rail uses restrained reference corner and edge proportions`() {
+        assertEquals(20.dp, FluidTriadVisualSpec.Rail.cornerRadius)
+        assertEquals(0.75.dp, FluidTriadVisualSpec.Rail.outlineWidth)
+    }
+
     @Test
     fun `all panel endpoints use one finite closed cubic topology`() {
         CalculatorQuantityTarget.entries.forEach { target ->
@@ -53,6 +60,8 @@ class FluidTriadVisualSpecTest {
         assertTrue((coffee.maxY() - coffee.minY()) / railHeight in 1.06f..1.10f)
         assertTrue(coffee.xAt(RightMidpoint) < coffee.xAt(TopRightEndpoint))
         assertTrue(coffee.xAt(RightMidpoint) < coffee.xAt(BottomRightEndpoint))
+        assertTrue(coffee.xAt(TopLeftEndpoint) <= 0.050f)
+        assertTrue(coffee.xAt(BottomLeftEndpoint) <= 0.050f)
 
         assertTrue(water.minX() in 0.305f..0.310f)
         assertTrue(water.maxX() in 0.688f..0.692f)
@@ -65,6 +74,8 @@ class FluidTriadVisualSpecTest {
         val topWidth = cup.xAt(TopRightEndpoint) - cup.xAt(TopLeftEndpoint)
         val bottomWidth = cup.xAt(BottomRightEndpoint) - cup.xAt(BottomLeftEndpoint)
         assertTrue(bottomWidth >= topWidth)
+        assertTrue(cup.yAt(TopLeftEndpoint) - cup.yAt(TopCenterEndpoint) <= 0.031f)
+        assertTrue(cup.yAt(TopRightEndpoint) - cup.yAt(TopCenterEndpoint) <= 0.031f)
         val cupPixelAspect = (cup.maxX() - cup.minX()) * RepresentativeRailAspect /
             (cup.maxY() - cup.minY())
         assertTrue(cupPixelAspect in 1.85f..1.95f)
