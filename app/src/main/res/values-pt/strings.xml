@@ -154,7 +154,6 @@
     <string name="label_brew_methods">Métodos de preparação</string>
     <string name="msg_methods_hint">Os métodos selecionados aparecem primeiro. Toque para alternar.</string>
     <string name="label_default_method">Método predefinido</string>
-    <string name="format_edit_preset">Editar %1$s</string>
     <string name="label_bloom_animation_settings">Animações de bloom</string>
     <string name="msg_bloom_animation_settings_subtitle">Escolha a frequência com que cada sprite de bloom aparece</string>
     <string name="screen_bloom_animation_settings_title">Animações de bloom</string>

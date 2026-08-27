@@ -1,5 +1,3 @@
 <resources>
     <string name="format_estimated_coffee_out">Circa %1$s nella tazza</string>
-    <string name="format_coffee_output_estimate_note">Stima per %1$s; la quantità effettiva può variare.</string>
-    <string name="msg_french_press_output_estimate_note">La stima non include il caffè lasciato nella pressa francese.</string>
 </resources>

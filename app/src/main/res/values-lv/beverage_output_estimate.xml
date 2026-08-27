@@ -1,5 +1,3 @@
 <resources>
     <string name="format_estimated_coffee_out">Aptuveni %1$s tasē</string>
-    <string name="format_coffee_output_estimate_note">%1$s aprēķins; faktiskais daudzums var atšķirties.</string>
-    <string name="msg_french_press_output_estimate_note">Aprēķinā nav iekļauta kafija, kas paliek franču presē.</string>
 </resources>

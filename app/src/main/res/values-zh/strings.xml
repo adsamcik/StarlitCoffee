@@ -150,7 +150,6 @@
     <string name="label_brew_methods">冲煮方式</string>
     <string name="msg_methods_hint">已选方式会优先显示。点按可切换。</string>
     <string name="label_default_method">默认方式</string>
-    <string name="format_edit_preset">编辑%1$s</string>
     <string name="label_bloom_animation_settings">闷蒸动画</string>
     <string name="msg_bloom_animation_settings_subtitle">选择每个闷蒸精灵出现的频率</string>
     <string name="screen_bloom_animation_settings_title">闷蒸动画</string>

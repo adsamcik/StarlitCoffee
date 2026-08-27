@@ -152,7 +152,6 @@
     <string name="label_brew_methods">Brygmetoder</string>
     <string name="msg_methods_hint">Valgte metoder vises først. Tryk for at slå til eller fra.</string>
     <string name="label_default_method">Standardmetode</string>
-    <string name="format_edit_preset">Rediger %1$s</string>
     <string name="label_bloom_animation_settings">Bloom-animationer</string>
     <string name="msg_bloom_animation_settings_subtitle">Vælg hvor ofte hver bloom-sprite vises</string>
     <string name="screen_bloom_animation_settings_title">Bloom-animationer</string>

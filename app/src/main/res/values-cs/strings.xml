@@ -148,7 +148,6 @@
     <string name="label_brew_methods">Metody přípravy</string>
     <string name="msg_methods_hint">Vybrané metody se zobrazí jako první. Klepněte pro přepnutí.</string>
     <string name="label_default_method">Výchozí metoda</string>
-    <string name="format_edit_preset">Upravit %1$s</string>
     <string name="label_bloom_animation_settings">Animace bloomu</string>
     <string name="msg_bloom_animation_settings_subtitle">Zvolte, jak často se má každá animace bloomu objevit.</string>
     <string name="screen_bloom_animation_settings_title">Animace bloomu</string>

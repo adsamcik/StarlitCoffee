@@ -156,7 +156,6 @@
     <string name="label_brew_methods">Plikymo būdai</string>
     <string name="msg_methods_hint">Pasirinkti būdai rodomi pirmiausia. Bakstelėkite, kad perjungtumėte.</string>
     <string name="label_default_method">Numatytasis būdas</string>
-    <string name="format_edit_preset">Redaguoti %1$s</string>
     <string name="label_bloom_animation_settings">Bloomo animacijos</string>
     <string name="msg_bloom_animation_settings_subtitle">Pasirinkite, kaip dažnai rodomas kiekvienas bloomo vaizdinys</string>
     <string name="screen_bloom_animation_settings_title">Bloomo animacijos</string>

@@ -152,7 +152,6 @@
     <string name="label_brew_methods">Bryggmetoder</string>
     <string name="msg_methods_hint">Valda metoder visas först. Tryck för att växla.</string>
     <string name="label_default_method">Standardmetod</string>
-    <string name="format_edit_preset">Redigera %1$s</string>
     <string name="label_bloom_animation_settings">Bloom-animationer</string>
     <string name="msg_bloom_animation_settings_subtitle">Välj hur ofta varje bloom-sprite visas</string>
     <string name="screen_bloom_animation_settings_title">Bloom-animationer</string>

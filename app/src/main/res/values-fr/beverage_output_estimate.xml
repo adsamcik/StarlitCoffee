@@ -1,5 +1,3 @@
 <resources>
     <string name="format_estimated_coffee_out">Environ %1$s dans la tasse</string>
-    <string name="format_coffee_output_estimate_note">Estimation pour %1$s ; la quantité réelle varie.</string>
-    <string name="msg_french_press_output_estimate_note">Cette estimation exclut le café restant dans la cafetière à piston.</string>
 </resources>

@@ -1,5 +1,3 @@
 <resources>
     <string name="format_estimated_coffee_out">Około %1$s w filiżance</string>
-    <string name="format_coffee_output_estimate_note">Szacunek dla %1$s; rzeczywista ilość może się różnić.</string>
-    <string name="msg_french_press_output_estimate_note">Szacunek nie obejmuje kawy pozostawionej w zaparzaczu tłokowym.</string>
 </resources>

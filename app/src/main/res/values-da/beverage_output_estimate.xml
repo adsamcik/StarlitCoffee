@@ -1,5 +1,3 @@
 <resources>
     <string name="format_estimated_coffee_out">Ca. %1$s i koppen</string>
-    <string name="format_coffee_output_estimate_note">Estimat for %1$s; den faktiske mængde varierer.</string>
-    <string name="msg_french_press_output_estimate_note">Estimatet omfatter ikke kaffe, der efterlades i stempelkanden.</string>
 </resources>

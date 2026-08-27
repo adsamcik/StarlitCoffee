@@ -152,7 +152,6 @@
     <string name="label_brew_methods">Valmistusviisid</string>
     <string name="msg_methods_hint">Valitud viisid kuvatakse esimesena. Puuduta lülitamiseks.</string>
     <string name="label_default_method">Vaikeviis</string>
-    <string name="format_edit_preset">Muuda %1$s</string>
     <string name="label_bloom_animation_settings">Bloomi animatsioonid</string>
     <string name="msg_bloom_animation_settings_subtitle">Vali, kui sageli iga bloomisprait ilmub</string>
     <string name="screen_bloom_animation_settings_title">Bloomi animatsioonid</string>

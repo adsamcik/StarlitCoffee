@@ -152,7 +152,6 @@
     <string name="label_brew_methods">Μέθοδοι παρασκευής</string>
     <string name="msg_methods_hint">Οι επιλεγμένες μέθοδοι εμφανίζονται πρώτες. Πατήστε για εναλλαγή.</string>
     <string name="label_default_method">Προεπιλεγμένη μέθοδος</string>
-    <string name="format_edit_preset">Επεξεργασία %1$s</string>
     <string name="label_bloom_animation_settings">Κινούμενα bloom</string>
     <string name="msg_bloom_animation_settings_subtitle">Επιλέξτε πόσο συχνά εμφανίζεται κάθε γραφικό bloom</string>
     <string name="screen_bloom_animation_settings_title">Κινούμενα bloom</string>

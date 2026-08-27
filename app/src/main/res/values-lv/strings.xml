@@ -154,7 +154,6 @@
     <string name="label_brew_methods">Pagatavošanas metodes</string>
     <string name="msg_methods_hint">Atlasītās metodes parādās pirmās. Pieskarieties, lai pārslēgtu.</string>
     <string name="label_default_method">Noklusējuma metode</string>
-    <string name="format_edit_preset">Rediģēt %1$s</string>
     <string name="label_bloom_animation_settings">Bloom animācijas</string>
     <string name="msg_bloom_animation_settings_subtitle">Izvēlieties, cik bieži parādās katra bloom animācija</string>
     <string name="screen_bloom_animation_settings_title">Bloom animācijas</string>

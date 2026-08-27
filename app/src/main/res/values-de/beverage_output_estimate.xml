@@ -1,5 +1,3 @@
 <resources>
     <string name="format_estimated_coffee_out">Etwa %1$s in der Tasse</string>
-    <string name="format_coffee_output_estimate_note">Schätzung für %1$s; die tatsächliche Menge variiert.</string>
-    <string name="msg_french_press_output_estimate_note">Schätzung ohne Kaffee, der in der French Press verbleibt.</string>
 </resources>

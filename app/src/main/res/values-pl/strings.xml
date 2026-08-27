@@ -156,7 +156,6 @@
     <string name="label_brew_methods">Metody parzenia</string>
     <string name="msg_methods_hint">Wybrane metody pojawiają się jako pierwsze. Dotknij, aby przełączyć.</string>
     <string name="label_default_method">Metoda domyślna</string>
-    <string name="format_edit_preset">Edytuj %1$s</string>
     <string name="label_bloom_animation_settings">Animacje bloom</string>
     <string name="msg_bloom_animation_settings_subtitle">Wybierz, jak często ma pojawiać się każda animacja bloom</string>
     <string name="screen_bloom_animation_settings_title">Animacje bloom</string>

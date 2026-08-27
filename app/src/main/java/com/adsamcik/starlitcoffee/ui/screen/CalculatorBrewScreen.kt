@@ -84,8 +84,8 @@ import com.adsamcik.starlitcoffee.domain.BeverageOutputEstimator
 import com.adsamcik.starlitcoffee.ui.adaptive.LocalWindowWidthClass
 import com.adsamcik.starlitcoffee.ui.component.CalculationQuantityIcon
 import com.adsamcik.starlitcoffee.ui.component.CalculationQuantityIconType
-import com.adsamcik.starlitcoffee.ui.component.FluidTriadItem
-import com.adsamcik.starlitcoffee.ui.component.FluidTriadSelector
+import com.adsamcik.starlitcoffee.ui.component.CalculatorQuantityCardItem
+import com.adsamcik.starlitcoffee.ui.component.CalculatorQuantitySelector
 import com.adsamcik.starlitcoffee.ui.component.SaveFavoriteDialog
 import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import com.adsamcik.starlitcoffee.ui.util.PresetIcon
@@ -198,22 +198,27 @@ fun CalculatorBrewScreen(
 
     val previewAndConfig: @Composable () -> Unit = {
         val outputModel = BeverageOutputEstimator.modelFor(state.brewMethod)
-        val cupValue = state.previewBeverageG?.let(::formatAmount) ?: "—"
-        FluidTriadSelector(
+        val coffeeValue = formatQuantityCardAmount(state.previewDoseG)
+        val waterValue = formatQuantityCardAmount(state.previewWaterMl)
+        val cupValue = state.previewBeverageG?.let(::formatQuantityCardAmount) ?: "—"
+        val gramsUnit = stringResource(R.string.unit_grams)
+        CalculatorQuantitySelector(
             items = listOf(
-                FluidTriadItem(
+                CalculatorQuantityCardItem(
                     target = CalculatorQuantityTarget.COFFEE,
                     label = stringResource(R.string.label_coffee),
-                    value = formatAmount(state.previewDoseG),
+                    value = coffeeValue,
+                    spokenValue = quantityCardSpokenValue(coffeeValue, gramsUnit),
                     icon = CalculationQuantityIconType.COFFEE_DOSE,
                 ),
-                FluidTriadItem(
+                CalculatorQuantityCardItem(
                     target = CalculatorQuantityTarget.WATER_IN,
                     label = stringResource(R.string.label_water_in),
-                    value = formatAmount(state.previewWaterMl),
+                    value = waterValue,
+                    spokenValue = quantityCardSpokenValue(waterValue, gramsUnit),
                     icon = CalculationQuantityIconType.WATER_IN,
                 ),
-                FluidTriadItem(
+                CalculatorQuantityCardItem(
                     target = CalculatorQuantityTarget.IN_CUP,
                     label = stringResource(R.string.label_in_cup),
                     value = cupValue,
@@ -221,9 +226,12 @@ fun CalculatorBrewScreen(
                         state.previewBeverageG != null &&
                         state.quantityTarget != CalculatorQuantityTarget.IN_CUP
                     ) {
-                        stringResource(R.string.format_estimated_coffee_out, cupValue)
+                        stringResource(
+                            R.string.format_estimated_coffee_out,
+                            quantityCardSpokenValue(cupValue, gramsUnit),
+                        )
                     } else {
-                        cupValue
+                        quantityCardSpokenValue(cupValue, gramsUnit)
                     },
                     icon = CalculationQuantityIconType.CUP_OUTPUT,
                     approximate = state.previewBeverageG != null &&
@@ -235,17 +243,6 @@ fun CalculatorBrewScreen(
             onSelect = calculatorViewModel::selectQuantity,
             compact = isCompactHeight,
         )
-        if (
-            outputModel != null &&
-            state.previewBeverageG != null &&
-            state.quantityTarget != CalculatorQuantityTarget.IN_CUP
-        ) {
-            BeverageOutputEstimateNote(
-                methodName = state.brewMethod.displayName,
-                caveat = outputModel.caveat,
-            )
-        }
-
         // Selected bag indicator — visible reminder that a bag is in play,
         // with one-tap clear so the user can switch to brewing without one.
         selectedBag?.let { bag ->
@@ -564,26 +561,6 @@ private fun ExpressionDisplay(
             }
         }
     }
-}
-
-@Composable
-private fun BeverageOutputEstimateNote(
-    methodName: String,
-    caveat: BeverageOutputEstimator.Caveat,
-) {
-    val note = if (caveat == BeverageOutputEstimator.Caveat.EXCLUDES_DECANT_RESIDUAL) {
-        stringResource(R.string.msg_french_press_output_estimate_note)
-    } else {
-        stringResource(R.string.format_coffee_output_estimate_note, methodName)
-    }
-    Text(
-        text = note,
-        style = MaterialTheme.typography.bodySmall,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 4.dp, end = 4.dp, top = 2.dp),
-    )
 }
 
 @Composable
@@ -1034,12 +1011,20 @@ private fun ClearKey(
     }
 }
 
-private fun formatAmount(value: Float): String {
+internal fun formatQuantityCardAmount(value: Float): String {
     return if (value == 0f) {
         "—"
     } else if (value == value.toInt().toFloat()) {
-        "${value.toInt()}g"
+        value.toInt().toString()
     } else {
-        "%.1fg".format(value)
+        "%.1f".format(value)
     }
+}
+
+internal fun quantityCardSpokenValue(value: String, unit: String): String =
+    if (value == "—") value else "$value $unit"
+
+private fun formatAmount(value: Float): String {
+    val amount = formatQuantityCardAmount(value)
+    return if (amount == "—") amount else "${amount}g"
 }

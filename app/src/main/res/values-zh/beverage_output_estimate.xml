@@ -1,5 +1,3 @@
 <resources>
     <string name="format_estimated_coffee_out">杯中约有%1$s</string>
-    <string name="format_coffee_output_estimate_note">%1$s估算值；实际出品量会有差异。</string>
-    <string name="msg_french_press_output_estimate_note">估算值不包括留在法压壶中的咖啡。</string>
 </resources>

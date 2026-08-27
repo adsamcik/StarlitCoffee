@@ -1,5 +1,3 @@
 <resources>
     <string name="format_estimated_coffee_out">Puodelyje apie %1$s</string>
-    <string name="format_coffee_output_estimate_note">%1$s įvertis; tikrasis kiekis gali skirtis.</string>
-    <string name="msg_french_press_output_estimate_note">Įvertis neapima prancūziškame kavinuke likusios kavos.</string>
 </resources>

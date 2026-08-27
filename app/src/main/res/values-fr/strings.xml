@@ -154,7 +154,6 @@
     <string name="label_brew_methods">Méthodes de préparation</string>
     <string name="msg_methods_hint">Les méthodes sélectionnées apparaissent en premier. Touchez pour activer ou désactiver.</string>
     <string name="label_default_method">Méthode par défaut</string>
-    <string name="format_edit_preset">Modifier %1$s</string>
     <string name="label_bloom_animation_settings">Animations de pré-infusion</string>
     <string name="msg_bloom_animation_settings_subtitle">Choisissez la fréquence d\'apparition de chaque sprite de pré-infusion</string>
     <string name="screen_bloom_animation_settings_title">Animations de pré-infusion</string>

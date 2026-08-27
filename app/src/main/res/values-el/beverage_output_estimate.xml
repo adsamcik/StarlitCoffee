@@ -1,5 +1,3 @@
 <resources>
     <string name="format_estimated_coffee_out">Περίπου %1$s στο φλιτζάνι</string>
-    <string name="format_coffee_output_estimate_note">Εκτίμηση για %1$s· η πραγματική ποσότητα διαφέρει.</string>
-    <string name="msg_french_press_output_estimate_note">Η εκτίμηση δεν περιλαμβάνει τον καφέ που μένει στη γαλλική πρέσα.</string>
 </resources>

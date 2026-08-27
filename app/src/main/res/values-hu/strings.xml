@@ -152,7 +152,6 @@
     <string name="label_brew_methods">Főzési módszerek</string>
     <string name="msg_methods_hint">A kijelölt módszerek elöl jelennek meg. Koppintson a be- és kikapcsoláshoz.</string>
     <string name="label_default_method">Alapértelmezett módszer</string>
-    <string name="format_edit_preset">%1$s szerkesztése</string>
     <string name="label_bloom_animation_settings">Bloom animációk</string>
     <string name="msg_bloom_animation_settings_subtitle">Válassza ki, milyen gyakran jelenjen meg az egyes bloom animációk</string>
     <string name="screen_bloom_animation_settings_title">Bloom animációk</string>

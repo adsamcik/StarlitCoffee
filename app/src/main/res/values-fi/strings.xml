@@ -152,7 +152,6 @@
     <string name="label_brew_methods">Valmistustavat</string>
     <string name="msg_methods_hint">Valitut tavat näkyvät ensin. Napauta vaihtaaksesi.</string>
     <string name="label_default_method">Oletusvalmistustapa</string>
-    <string name="format_edit_preset">Muokkaa: %1$s</string>
     <string name="label_bloom_animation_settings">Bloom-animaatiot</string>
     <string name="msg_bloom_animation_settings_subtitle">Valitse, kuinka usein kukin bloom-sprite näkyy</string>
     <string name="screen_bloom_animation_settings_title">Bloom-animaatiot</string>

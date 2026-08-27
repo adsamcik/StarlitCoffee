@@ -1,5 +1,3 @@
 <resources>
     <string name="format_estimated_coffee_out">Približno %1$s v skodelici</string>
-    <string name="format_coffee_output_estimate_note">Ocena za %1$s; dejanska količina se lahko razlikuje.</string>
-    <string name="msg_french_press_output_estimate_note">Ocena ne vključuje kave, ki ostane v francoski stiskalnici.</string>
 </resources>

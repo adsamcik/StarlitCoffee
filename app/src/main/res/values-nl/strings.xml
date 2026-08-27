@@ -152,7 +152,6 @@
     <string name="label_brew_methods">Zetmethoden</string>
     <string name="msg_methods_hint">Geselecteerde methoden verschijnen eerst. Tik om te schakelen.</string>
     <string name="label_default_method">Standaardmethode</string>
-    <string name="format_edit_preset">%1$s bewerken</string>
     <string name="label_bloom_animation_settings">Bloomanimaties</string>
     <string name="msg_bloom_animation_settings_subtitle">Kies hoe vaak elke bloom-sprite verschijnt</string>
     <string name="screen_bloom_animation_settings_title">Bloomanimaties</string>

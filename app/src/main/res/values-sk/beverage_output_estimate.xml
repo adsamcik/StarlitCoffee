@@ -1,5 +1,3 @@
 <resources>
     <string name="format_estimated_coffee_out">Približne %1$s v šálke</string>
-    <string name="format_coffee_output_estimate_note">Odhad pre %1$s; skutočné množstvo sa môže líšiť.</string>
-    <string name="msg_french_press_output_estimate_note">Odhad nezahŕňa kávu ponechanú vo french presse.</string>
 </resources>

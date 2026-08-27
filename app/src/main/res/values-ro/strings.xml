@@ -154,7 +154,6 @@
     <string name="label_brew_methods">Metode de preparare</string>
     <string name="msg_methods_hint">Metodele selectate apar primele. Atingeți pentru comutare.</string>
     <string name="label_default_method">Metodă implicită</string>
-    <string name="format_edit_preset">Editați %1$s</string>
     <string name="label_bloom_animation_settings">Animații de bloom</string>
     <string name="msg_bloom_animation_settings_subtitle">Alegeți cât de des apare fiecare animație de bloom</string>
     <string name="screen_bloom_animation_settings_title">Animații de bloom</string>

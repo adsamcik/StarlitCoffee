@@ -154,7 +154,6 @@
     <string name="label_brew_methods">Metode pripreme</string>
     <string name="msg_methods_hint">Odabrane metode prikazuju se prve. Dodirnite za uključivanje ili isključivanje.</string>
     <string name="label_default_method">Zadana metoda</string>
-    <string name="format_edit_preset">Uredite %1$s</string>
     <string name="label_bloom_animation_settings">Animacije blooma</string>
     <string name="msg_bloom_animation_settings_subtitle">Odaberite koliko se često pojavljuje svaki sprite blooma</string>
     <string name="screen_bloom_animation_settings_title">Animacije blooma</string>

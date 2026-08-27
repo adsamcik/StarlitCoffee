@@ -152,7 +152,6 @@
     <string name="label_brew_methods">Методи за приготвяне</string>
     <string name="msg_methods_hint">Избраните методи се показват първи. Докоснете, за да включите или изключите.</string>
     <string name="label_default_method">Метод по подразбиране</string>
-    <string name="format_edit_preset">Редактирайте %1$s</string>
     <string name="label_bloom_animation_settings">Анимации на блум</string>
     <string name="msg_bloom_animation_settings_subtitle">Изберете колко често да се появява всеки блум спрайт</string>
     <string name="screen_bloom_animation_settings_title">Анимации на блум</string>

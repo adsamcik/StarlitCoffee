@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Labels shared by the calculator quantity cards. -->
+    <string name="label_water_in">Agua de entrada</string>
+    <string name="label_in_cup">En la taza</string>
+</resources>

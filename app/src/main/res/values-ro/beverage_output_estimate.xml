@@ -1,5 +1,3 @@
 <resources>
     <string name="format_estimated_coffee_out">Aproximativ %1$s în ceașcă</string>
-    <string name="format_coffee_output_estimate_note">Estimare pentru %1$s; cantitatea reală poate varia.</string>
-    <string name="msg_french_press_output_estimate_note">Estimarea nu include cafeaua rămasă în presa franceză.</string>
 </resources>

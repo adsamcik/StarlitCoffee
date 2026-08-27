@@ -1,5 +1,3 @@
 <resources>
     <string name="format_estimated_coffee_out">Около %1$s в чашата</string>
-    <string name="format_coffee_output_estimate_note">Оценка за %1$s; действителното количество варира.</string>
-    <string name="msg_french_press_output_estimate_note">Оценката не включва кафето, останало във френската преса.</string>
 </resources>

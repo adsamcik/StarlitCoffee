@@ -1,5 +1,3 @@
 <resources>
     <string name="format_estimated_coffee_out">Oko %1$s u šalici</string>
-    <string name="format_coffee_output_estimate_note">Procjena za %1$s; stvarna količina može varirati.</string>
-    <string name="msg_french_press_output_estimate_note">Procjena ne uključuje kavu ostavljenu u french pressu.</string>
 </resources>

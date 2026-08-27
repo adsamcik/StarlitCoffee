@@ -152,7 +152,6 @@
     <string name="label_brew_methods">Brühmethoden</string>
     <string name="msg_methods_hint">Ausgewählte Methoden erscheinen zuerst. Zum Umschalten tippen.</string>
     <string name="label_default_method">Standardmethode</string>
-    <string name="format_edit_preset">%1$s bearbeiten</string>
     <string name="label_bloom_animation_settings">Bloom-Animationen</string>
     <string name="msg_bloom_animation_settings_subtitle">Legen Sie fest, wie oft jedes Bloom-Sprite erscheint</string>
     <string name="screen_bloom_animation_settings_title">Bloom-Animationen</string>

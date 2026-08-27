@@ -154,7 +154,6 @@
     <string name="label_brew_methods">Metodi di preparazione</string>
     <string name="msg_methods_hint">I metodi selezionati appaiono per primi. Tocca per attivarli o disattivarli.</string>
     <string name="label_default_method">Metodo predefinito</string>
-    <string name="format_edit_preset">Modifica %1$s</string>
     <string name="label_bloom_animation_settings">Animazioni bloom</string>
     <string name="msg_bloom_animation_settings_subtitle">Scegli quanto spesso appare ogni sprite del bloom</string>
     <string name="screen_bloom_animation_settings_title">Animazioni bloom</string>
