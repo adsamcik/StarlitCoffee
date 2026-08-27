@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brew_quantities_title">Množství pro přípravu</string>
+    <string name="brew_quantities_coffee">Káva</string>
+    <string name="brew_quantities_water_in">Voda dovnitř</string>
+    <string name="brew_quantities_in_cup">V šálku</string>
+    <string name="brew_quantities_planned">Plánováno</string>
+    <string name="brew_quantities_estimated">Odhad</string>
+    <string name="brew_quantities_measured">Naměřeno</string>
+    <string name="brew_quantities_unavailable">Není k dispozici</string>
+    <string name="brew_quantities_add_measurements">Přidat měření</string>
+    <string name="brew_quantities_edit_measurements">Upravit měření</string>
+    <string name="brew_quantities_value_grams">%1$s g</string>
+    <string name="brew_quantities_approximate_value">≈%1$s</string>
+    <string name="brew_quantities_measured_planned_value">Naměřeno · plánováno %1$s g</string>
+    <string name="brew_quantities_measured_estimated_value">Naměřeno · odhad %1$s g</string>
+    <string name="brew_quantities_accessibility_planned">%1$s, %2$s gramů, plánováno</string>
+    <string name="brew_quantities_accessibility_estimated">%1$s, přibližně %2$s gramů, odhad</string>
+    <string name="brew_quantities_accessibility_measured">%1$s, %2$s gramů, naměřeno</string>
+    <string name="brew_quantities_accessibility_measured_planned">%1$s, %2$s gramů, naměřeno; plánováno %3$s gramů</string>
+    <string name="brew_quantities_accessibility_measured_estimated">%1$s, %2$s gramů, naměřeno; odhad %3$s gramů</string>
+    <string name="brew_quantities_accessibility_unavailable">%1$s, odhad není k dispozici</string>
+
+    <string name="brew_measurement_title">Skutečně naměřené hodnoty</string>
+    <string name="brew_measurement_explanation">Volitelné. Úplná dvojice pomůže zpřesnit budoucí odhady pro podobné přípravy.</string>
+    <string name="brew_measurement_planned_coffee">Plánovaná káva</string>
+    <string name="brew_measurement_water_in">Voda dovnitř</string>
+    <string name="brew_measurement_in_cup">V šálku</string>
+    <string name="brew_measurement_unit_grams">g</string>
+    <string name="brew_measurement_value_grams">%1$s g</string>
+    <string name="brew_measurement_planned_value">Plánováno %1$s g</string>
+    <string name="brew_measurement_estimated_value">Odhad %1$s g</string>
+    <string name="brew_measurement_estimate_unavailable">Odhad není k dispozici</string>
+    <string name="brew_measurement_error_complete_pair">Zadejte obě měření.</string>
+    <string name="brew_measurement_error_positive_water">Zadejte kladné množství vody.</string>
+    <string name="brew_measurement_error_positive_output">Zadejte kladné množství v šálku.</string>
+    <string name="brew_measurement_error_output_exceeds_water">Množství v šálku nesmí být větší než množství vody dovnitř.</string>
+    <string name="brew_measurement_save">Uložit měření</string>
+    <string name="brew_measurement_saving">Ukládání…</string>
+    <string name="brew_measurement_remove">Odstranit měření</string>
+</resources>

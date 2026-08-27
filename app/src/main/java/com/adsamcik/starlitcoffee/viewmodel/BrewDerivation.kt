@@ -68,6 +68,8 @@ internal object BrewDerivation {
             bloomMultiplier = effectiveBloomMultiplier,
             pulseCount = effectivePulseCount,
             isDecaf = decafState.effectiveIsDecaf,
+            apparentLossGPerCoffeeG = state.beverageOutputCalibration
+                ?.apparentLossGPerCoffeeG,
         )
         val effectiveBloomDurationSeconds = resolveEffectiveBloomDurationSeconds(method, selectedBag, nowMs)
         val grindResult = resolveGrindResult(

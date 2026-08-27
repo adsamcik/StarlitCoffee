@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brew_quantities_title">Valmistuskogused</string>
+    <string name="brew_quantities_coffee">Kohv</string>
+    <string name="brew_quantities_water_in">Sisendvesi</string>
+    <string name="brew_quantities_in_cup">Tassis</string>
+    <string name="brew_quantities_planned">Plaanitud</string>
+    <string name="brew_quantities_estimated">Hinnanguline</string>
+    <string name="brew_quantities_measured">Mõõdetud</string>
+    <string name="brew_quantities_unavailable">Pole saadaval</string>
+    <string name="brew_quantities_add_measurements">Lisa mõõtmised</string>
+    <string name="brew_quantities_edit_measurements">Muuda mõõtmisi</string>
+    <string name="brew_quantities_value_grams">%1$s g</string>
+    <string name="brew_quantities_approximate_value">≈%1$s</string>
+    <string name="brew_quantities_measured_planned_value">Mõõdetud · plaanitud %1$s g</string>
+    <string name="brew_quantities_measured_estimated_value">Mõõdetud · hinnanguline %1$s g</string>
+    <string name="brew_quantities_accessibility_planned">%1$s, %2$s grammi, plaanitud</string>
+    <string name="brew_quantities_accessibility_estimated">%1$s, umbes %2$s grammi, hinnanguline</string>
+    <string name="brew_quantities_accessibility_measured">%1$s, %2$s grammi, mõõdetud</string>
+    <string name="brew_quantities_accessibility_measured_planned">%1$s, %2$s grammi, mõõdetud; plaanitud %3$s grammi</string>
+    <string name="brew_quantities_accessibility_measured_estimated">%1$s, %2$s grammi, mõõdetud; hinnanguline %3$s grammi</string>
+    <string name="brew_quantities_accessibility_unavailable">%1$s, hinnang pole saadaval</string>
+
+    <string name="brew_measurement_title">Tegelikud mõõtmised</string>
+    <string name="brew_measurement_explanation">Valikuline. Täielik mõõtmispaar aitab parandada sarnaste valmistuste tulevasi hinnanguid.</string>
+    <string name="brew_measurement_planned_coffee">Plaanitud kohvikogus</string>
+    <string name="brew_measurement_water_in">Sisendvesi</string>
+    <string name="brew_measurement_in_cup">Tassis</string>
+    <string name="brew_measurement_unit_grams">g</string>
+    <string name="brew_measurement_value_grams">%1$s g</string>
+    <string name="brew_measurement_planned_value">Plaanitud %1$s g</string>
+    <string name="brew_measurement_estimated_value">Hinnanguline %1$s g</string>
+    <string name="brew_measurement_estimate_unavailable">Hinnang pole saadaval</string>
+    <string name="brew_measurement_error_complete_pair">Sisesta mõlemad mõõtmised.</string>
+    <string name="brew_measurement_error_positive_water">Sisesta positiivne veekogus.</string>
+    <string name="brew_measurement_error_positive_output">Sisesta positiivne tassis oleva joogi kogus.</string>
+    <string name="brew_measurement_error_output_exceeds_water">Tassis olev kogus ei saa olla suurem kui sisendvee kogus.</string>
+    <string name="brew_measurement_save">Salvesta mõõtmised</string>
+    <string name="brew_measurement_saving">Salvestamine…</string>
+    <string name="brew_measurement_remove">Eemalda mõõtmised</string>
+</resources>

@@ -97,6 +97,21 @@ internal class FakeBrewLogDao : BrewLogDao {
         }
     }
 
+    override suspend fun updateMeasurements(
+        logId: Long,
+        waterInputG: Float?,
+        beverageOutputG: Float?,
+    ): Int {
+        val index = logs.indexOfFirst { it.id == logId }
+        if (index < 0) return 0
+        logs[index] = logs[index].copy(
+            measuredWaterInputG = waterInputG,
+            measuredBeverageOutputG = beverageOutputG,
+        )
+        flow.value = logs.toList()
+        return 1
+    }
+
     override suspend fun getById(logId: Long): BrewLogEntity? {
         return logs.find { it.id == logId }
     }

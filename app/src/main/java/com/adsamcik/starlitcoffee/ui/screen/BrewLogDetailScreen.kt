@@ -51,12 +51,16 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.data.brewing.BrewLogMeasurementContextResolver
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
+import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.BrewRating
 import com.adsamcik.starlitcoffee.data.model.FlavorDescriptor
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback as TasteFeedbackModel
 import com.adsamcik.starlitcoffee.ui.component.DetailRow
+import com.adsamcik.starlitcoffee.ui.component.BrewMeasurementsBottomSheet
+import com.adsamcik.starlitcoffee.ui.component.BrewQuantitySummary
 import com.adsamcik.starlitcoffee.ui.component.CoffeeBagSelector
 import com.adsamcik.starlitcoffee.ui.component.shareBrewCard
 import com.adsamcik.starlitcoffee.ui.util.displayNameRes
@@ -64,6 +68,7 @@ import com.adsamcik.starlitcoffee.ui.util.emoji
 import com.adsamcik.starlitcoffee.ui.util.localizedDisplayName
 import com.adsamcik.starlitcoffee.ui.component.FlavorTagPicker
 import com.adsamcik.starlitcoffee.ui.component.BrewRatingRow
+import com.adsamcik.starlitcoffee.domain.BeverageOutputEstimator
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
 import com.adsamcik.starlitcoffee.viewmodel.BrewLogFeedbackSubmission
 import com.adsamcik.starlitcoffee.viewmodel.BrewLogFeedbackSaveTarget
@@ -116,6 +121,9 @@ fun BrewLogDetailScreen(
     var notes by rememberSaveable { mutableStateOf("") }
     var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
     var isUpdatingBag by remember { mutableStateOf(false) }
+    var showMeasurementsSheet by rememberSaveable { mutableStateOf(false) }
+    var isUpdatingMeasurements by remember { mutableStateOf(false) }
+    var measurementSaveError by remember { mutableStateOf<String?>(null) }
 
     // Track whether the editable state has been seeded from the loaded entity / flavor tags.
     // Saved across config changes so the entity-load LaunchedEffect doesn't overwrite restored
@@ -292,6 +300,90 @@ fun BrewLogDetailScreen(
         )
     }
 
+    val measurementContext = remember(log) {
+        log?.let(BrewLogMeasurementContextResolver::resolve)
+    }
+    if (showMeasurementsSheet) {
+        log?.let { currentLog ->
+            val currentMeasurementContext = measurementContext ?: return@let
+            BrewMeasurementsBottomSheet(
+                estimatedCoffeeDoseG = currentMeasurementContext.plannedCoffeeG,
+                estimatedWaterInputG = currentMeasurementContext.plannedWaterInputG,
+                estimatedBeverageOutputG = currentMeasurementContext.frozenExpectedOutputG,
+                measuredWaterInputG = currentLog.measuredWaterInputG,
+                measuredBeverageOutputG = currentLog.measuredBeverageOutputG,
+                isSaving = isUpdatingMeasurements,
+                saveError = measurementSaveError,
+                onDismissRequest = {
+                    showMeasurementsSheet = false
+                    measurementSaveError = null
+                },
+                onSaveMeasurements = { waterInputG, beverageOutputG ->
+                    if (!isUpdatingMeasurements) {
+                        isUpdatingMeasurements = true
+                        measurementSaveError = null
+                        scope.launch {
+                            runBrewLogMutation(
+                                action = {
+                                    check(
+                                        brewViewModel.updateBrewLogMeasurementsAndWait(
+                                            logId = currentLog.id,
+                                            waterInputG = waterInputG,
+                                            beverageOutputG = beverageOutputG,
+                                        ),
+                                    ) { "Brew log measurements could not be updated" }
+                                    log = log?.copy(
+                                        measuredWaterInputG = waterInputG,
+                                        measuredBeverageOutputG = beverageOutputG,
+                                    )
+                                    showMeasurementsSheet = false
+                                },
+                                onFailure = { error ->
+                                    Tracebox.log.error(error, "Failed to update brew measurements")
+                                    measurementSaveError = resources.getString(
+                                        R.string.msg_could_not_save_changes,
+                                    )
+                                },
+                                onFinished = { isUpdatingMeasurements = false },
+                            )
+                        }
+                    }
+                },
+                onRemoveMeasurements = {
+                    if (!isUpdatingMeasurements) {
+                        isUpdatingMeasurements = true
+                        measurementSaveError = null
+                        scope.launch {
+                            runBrewLogMutation(
+                                action = {
+                                    check(
+                                        brewViewModel.updateBrewLogMeasurementsAndWait(
+                                            logId = currentLog.id,
+                                            waterInputG = null,
+                                            beverageOutputG = null,
+                                        ),
+                                    ) { "Brew log measurements could not be cleared" }
+                                    log = log?.copy(
+                                        measuredWaterInputG = null,
+                                        measuredBeverageOutputG = null,
+                                    )
+                                    showMeasurementsSheet = false
+                                },
+                                onFailure = { error ->
+                                    Tracebox.log.error(error, "Failed to clear brew measurements")
+                                    measurementSaveError = resources.getString(
+                                        R.string.msg_could_not_save_changes,
+                                    )
+                                },
+                                onFinished = { isUpdatingMeasurements = false },
+                            )
+                        }
+                    }
+                },
+            )
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -379,9 +471,8 @@ fun BrewLogDetailScreen(
         ) {
             // --- Brew Info ---
             val decafSuffix = stringResource(R.string.label_decaf_suffix)
-            val unitGrams = stringResource(R.string.unit_grams)
-            val methodLabel = runCatching { com.adsamcik.starlitcoffee.data.model.BrewMethod.valueOf(entity.method) }
-                .getOrNull()
+            val method = runCatching { BrewMethod.valueOf(entity.method) }.getOrNull()
+            val methodLabel = method
                 ?.localizedDisplayName()
                 ?: entity.method
             Text(
@@ -401,6 +492,40 @@ fun BrewLogDetailScreen(
                 modifier = Modifier.padding(start = 8.dp, bottom = 16.dp),
             )
 
+            val directBeverageYield = BrewLogMeasurementContextResolver
+                .isDirectBeverageYield(entity)
+            val unsupportedLegacyEstimate = method != null &&
+                BeverageOutputEstimator.modelFor(method) == null &&
+                !directBeverageYield
+            val displayedBeverageOutputG = when {
+                directBeverageYield -> entity.expectedBeverageOutputG ?: entity.waterG
+                unsupportedLegacyEstimate -> null
+                else -> entity.expectedBeverageOutputG
+            }
+            BrewQuantitySummary(
+                estimatedCoffeeDoseG = measurementContext?.plannedCoffeeG ?: entity.doseG,
+                estimatedWaterInputG = if (directBeverageYield) {
+                    null
+                } else {
+                    measurementContext?.plannedWaterInputG ?: entity.waterG
+                },
+                estimatedBeverageOutputG = displayedBeverageOutputG,
+                measuredWaterInputG = entity.measuredWaterInputG.takeIf { measurementContext != null },
+                measuredBeverageOutputG = entity.measuredBeverageOutputG.takeIf {
+                    measurementContext != null
+                },
+                measurementsEnabled = !isUpdatingMeasurements && !isDeleting,
+                beverageOutputIsEstimate = !directBeverageYield,
+                onEditMeasurements = measurementContext?.let {
+                    {
+                        measurementSaveError = null
+                        showMeasurementsSheet = true
+                    }
+                },
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
             ElevatedCard(
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier.fillMaxWidth(),
@@ -410,9 +535,6 @@ fun BrewLogDetailScreen(
                         .fillMaxWidth()
                         .padding(20.dp),
                 ) {
-                    DetailRow(stringResource(R.string.label_coffee), "${"%.1f".format(entity.doseG)}$unitGrams")
-                    DetailRow(stringResource(R.string.label_water), "${"%.0f".format(entity.waterG)}$unitGrams")
-
                     Text(
                         text = stringResource(R.string.label_coffee_bag),
                         style = MaterialTheme.typography.labelLarge,

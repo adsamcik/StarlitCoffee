@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brew_quantities_title">Bryggemængder</string>
+    <string name="brew_quantities_coffee">Kaffe</string>
+    <string name="brew_quantities_water_in">Vand ind</string>
+    <string name="brew_quantities_in_cup">I koppen</string>
+    <string name="brew_quantities_planned">Planlagt</string>
+    <string name="brew_quantities_estimated">Estimeret</string>
+    <string name="brew_quantities_measured">Målt</string>
+    <string name="brew_quantities_unavailable">Ikke tilgængelig</string>
+    <string name="brew_quantities_add_measurements">Tilføj målinger</string>
+    <string name="brew_quantities_edit_measurements">Rediger målinger</string>
+    <string name="brew_quantities_value_grams">%1$s g</string>
+    <string name="brew_quantities_approximate_value">≈%1$s</string>
+    <string name="brew_quantities_measured_planned_value">Målt · planlagt %1$s g</string>
+    <string name="brew_quantities_measured_estimated_value">Målt · estimeret %1$s g</string>
+    <string name="brew_quantities_accessibility_planned">%1$s, %2$s gram, planlagt</string>
+    <string name="brew_quantities_accessibility_estimated">%1$s, ca. %2$s gram, estimeret</string>
+    <string name="brew_quantities_accessibility_measured">%1$s, %2$s gram, målt</string>
+    <string name="brew_quantities_accessibility_measured_planned">%1$s, %2$s gram, målt; planlagt %3$s gram</string>
+    <string name="brew_quantities_accessibility_measured_estimated">%1$s, %2$s gram, målt; estimeret %3$s gram</string>
+    <string name="brew_quantities_accessibility_unavailable">%1$s, estimat ikke tilgængeligt</string>
+
+    <string name="brew_measurement_title">Faktiske målinger</string>
+    <string name="brew_measurement_explanation">Valgfrit. Et komplet målepar hjælper med at forbedre fremtidige estimater for lignende brygninger.</string>
+    <string name="brew_measurement_planned_coffee">Planlagt kaffe</string>
+    <string name="brew_measurement_water_in">Vand ind</string>
+    <string name="brew_measurement_in_cup">I koppen</string>
+    <string name="brew_measurement_unit_grams">g</string>
+    <string name="brew_measurement_value_grams">%1$s g</string>
+    <string name="brew_measurement_planned_value">Planlagt %1$s g</string>
+    <string name="brew_measurement_estimated_value">Estimeret %1$s g</string>
+    <string name="brew_measurement_estimate_unavailable">Intet estimat tilgængeligt</string>
+    <string name="brew_measurement_error_complete_pair">Indtast begge målinger.</string>
+    <string name="brew_measurement_error_positive_water">Indtast en positiv vandmængde.</string>
+    <string name="brew_measurement_error_positive_output">Indtast en positiv mængde i koppen.</string>
+    <string name="brew_measurement_error_output_exceeds_water">Mængden i koppen må ikke være større end vandmængden.</string>
+    <string name="brew_measurement_save">Gem målinger</string>
+    <string name="brew_measurement_saving">Gemmer…</string>
+    <string name="brew_measurement_remove">Fjern målinger</string>
+</resources>

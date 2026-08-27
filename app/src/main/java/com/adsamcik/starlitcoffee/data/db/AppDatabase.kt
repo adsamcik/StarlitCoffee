@@ -44,7 +44,7 @@ import com.adsamcik.starlitcoffee.data.db.entity.UserBarcodeStemEntity
         UserBarcodeStemEntity::class,
         CupPresetEntity::class,
     ],
-    version = 19,
+    version = 20,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
@@ -378,6 +378,14 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        internal val MIGRATION_19_20 = object : Migration(19, 20) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE brew_logs ADD COLUMN expectedBeverageOutputG REAL")
+                db.execSQL("ALTER TABLE brew_logs ADD COLUMN measuredWaterInputG REAL")
+                db.execSQL("ALTER TABLE brew_logs ADD COLUMN measuredBeverageOutputG REAL")
+            }
+        }
+
         // Single source of truth for the migration set, shared by the
         // production builder and MigrationTest so the two cannot drift.
         internal val ALL_MIGRATIONS: Array<Migration> = arrayOf(
@@ -395,6 +403,7 @@ abstract class AppDatabase : RoomDatabase() {
             MIGRATION_16_17,
             MIGRATION_17_18,
             MIGRATION_18_19,
+            MIGRATION_19_20,
         )
 
         /**

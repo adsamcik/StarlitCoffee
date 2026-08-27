@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brew_quantities_title">Quantités de préparation</string>
+    <string name="brew_quantities_coffee">Café</string>
+    <string name="brew_quantities_water_in">Eau versée</string>
+    <string name="brew_quantities_in_cup">Dans la tasse</string>
+    <string name="brew_quantities_planned">Prévue</string>
+    <string name="brew_quantities_estimated">Estimée</string>
+    <string name="brew_quantities_measured">Mesurée</string>
+    <string name="brew_quantities_unavailable">Indisponible</string>
+    <string name="brew_quantities_add_measurements">Ajouter des mesures</string>
+    <string name="brew_quantities_edit_measurements">Modifier les mesures</string>
+    <string name="brew_quantities_value_grams">%1$s g</string>
+    <string name="brew_quantities_approximate_value">≈%1$s</string>
+    <string name="brew_quantities_measured_planned_value">Mesurée · prévue %1$s g</string>
+    <string name="brew_quantities_measured_estimated_value">Mesurée · estimée %1$s g</string>
+    <string name="brew_quantities_accessibility_planned">%1$s, %2$s grammes, valeur prévue</string>
+    <string name="brew_quantities_accessibility_estimated">%1$s, environ %2$s grammes, valeur estimée</string>
+    <string name="brew_quantities_accessibility_measured">%1$s, %2$s grammes, valeur mesurée</string>
+    <string name="brew_quantities_accessibility_measured_planned">%1$s, %2$s grammes, valeur mesurée ; valeur prévue %3$s grammes</string>
+    <string name="brew_quantities_accessibility_measured_estimated">%1$s, %2$s grammes, valeur mesurée ; estimation %3$s grammes</string>
+    <string name="brew_quantities_accessibility_unavailable">%1$s, estimation indisponible</string>
+
+    <string name="brew_measurement_title">Mesures réelles</string>
+    <string name="brew_measurement_explanation">Facultatif. Une paire complète permet d’améliorer les estimations futures pour des préparations similaires.</string>
+    <string name="brew_measurement_planned_coffee">Café prévu</string>
+    <string name="brew_measurement_water_in">Eau versée</string>
+    <string name="brew_measurement_in_cup">Dans la tasse</string>
+    <string name="brew_measurement_unit_grams">g</string>
+    <string name="brew_measurement_value_grams">%1$s g</string>
+    <string name="brew_measurement_planned_value">Prévu %1$s g</string>
+    <string name="brew_measurement_estimated_value">Estimé %1$s g</string>
+    <string name="brew_measurement_estimate_unavailable">Aucune estimation disponible</string>
+    <string name="brew_measurement_error_complete_pair">Saisissez les deux mesures.</string>
+    <string name="brew_measurement_error_positive_water">Saisissez une quantité d’eau positive.</string>
+    <string name="brew_measurement_error_positive_output">Saisissez une quantité positive dans la tasse.</string>
+    <string name="brew_measurement_error_output_exceeds_water">La quantité dans la tasse ne peut pas dépasser la quantité d’eau versée.</string>
+    <string name="brew_measurement_save">Enregistrer les mesures</string>
+    <string name="brew_measurement_saving">Enregistrement…</string>
+    <string name="brew_measurement_remove">Supprimer les mesures</string>
+</resources>

@@ -81,6 +81,19 @@ class BrewLogRepository(
     suspend fun updateCoffeeBag(logId: Long, bagId: Long?) =
         brewLogDao.updateCoffeeBag(logId, bagId)
 
+    suspend fun updateMeasurements(
+        logId: Long,
+        waterInputG: Float?,
+        beverageOutputG: Float?,
+    ): Boolean {
+        if (!isValidMeasurementPair(waterInputG, beverageOutputG)) return false
+        return brewLogDao.updateMeasurements(
+            logId = logId,
+            waterInputG = waterInputG,
+            beverageOutputG = beverageOutputG,
+        ) == 1
+    }
+
     suspend fun getLogById(logId: Long): BrewLogEntity? = brewLogDao.getById(logId)
 
     suspend fun getLastUnratedLog(): BrewLogEntity? = brewLogDao.getLastUnrated()
@@ -106,5 +119,17 @@ class BrewLogRepository(
 
     fun getFlavorTagsForBrewLog(brewLogId: Long): Flow<List<FlavorTagEntity>> =
         flavorTagDao.getForBrewLog(brewLogId)
+
+    private fun isValidMeasurementPair(
+        waterInputG: Float?,
+        beverageOutputG: Float?,
+    ): Boolean = when {
+        waterInputG == null && beverageOutputG == null -> true
+        waterInputG == null || beverageOutputG == null -> false
+        !waterInputG.isFinite() || !beverageOutputG.isFinite() -> false
+        waterInputG <= 0f || beverageOutputG <= 0f -> false
+        beverageOutputG > waterInputG -> false
+        else -> true
+    }
 }
 

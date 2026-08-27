@@ -28,6 +28,20 @@ interface BrewLogDao {
     @Query("UPDATE brew_logs SET coffeeBagId = :bagId WHERE id = :logId")
     suspend fun updateCoffeeBag(logId: Long, bagId: Long?)
 
+    @Query(
+        """
+        UPDATE brew_logs
+        SET measuredWaterInputG = :waterInputG,
+            measuredBeverageOutputG = :beverageOutputG
+        WHERE id = :logId
+        """,
+    )
+    suspend fun updateMeasurements(
+        logId: Long,
+        waterInputG: Float?,
+        beverageOutputG: Float?,
+    ): Int
+
     @Query("SELECT * FROM brew_logs WHERE id = :logId")
     suspend fun getById(logId: Long): BrewLogEntity?
 

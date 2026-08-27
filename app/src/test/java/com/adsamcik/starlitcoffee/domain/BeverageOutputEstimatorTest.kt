@@ -63,6 +63,49 @@ class BeverageOutputEstimatorTest {
     }
 
     @Test
+    fun `personalized coefficient is shared by forward and inverse planning`() {
+        val forward = requireNotNull(
+            BeverageOutputEstimator.estimateOutput(
+                method = BrewMethod.V60,
+                coffeeDoseG = 20f,
+                brewWaterG = 320f,
+                apparentLossGPerCoffeeG = 2.5f,
+            ),
+        )
+        val inverse = requireNotNull(
+            BeverageOutputEstimator.planForOutput(
+                method = BrewMethod.V60,
+                beverageOutputG = forward.beverageOutputG,
+                brewRatio = 16f,
+                apparentLossGPerCoffeeG = 2.5f,
+            ),
+        )
+
+        assertEquals(270f, forward.beverageOutputG, 0.001f)
+        assertEquals(20f, inverse.coffeeDoseG, 0.001f)
+        assertEquals(320f, inverse.brewWaterG, 0.001f)
+    }
+
+    @Test
+    fun `nonfinite inputs and coefficients are rejected`() {
+        assertNull(
+            BeverageOutputEstimator.estimateOutput(
+                method = BrewMethod.V60,
+                coffeeDoseG = Float.NaN,
+                brewWaterG = 300f,
+            ),
+        )
+        assertNull(
+            BeverageOutputEstimator.planForOutput(
+                method = BrewMethod.V60,
+                beverageOutputG = 300f,
+                brewRatio = 16f,
+                apparentLossGPerCoffeeG = Float.POSITIVE_INFINITY,
+            ),
+        )
+    }
+
+    @Test
     fun `inverse plan rejects ratios that cannot produce a positive output`() {
         assertNull(
             BeverageOutputEstimator.planForOutput(

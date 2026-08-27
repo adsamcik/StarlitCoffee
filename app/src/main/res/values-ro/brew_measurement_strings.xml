@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brew_quantities_title">Cantități pentru preparare</string>
+    <string name="brew_quantities_coffee">Cafea</string>
+    <string name="brew_quantities_water_in">Apă introdusă</string>
+    <string name="brew_quantities_in_cup">În ceașcă</string>
+    <string name="brew_quantities_planned">Planificat</string>
+    <string name="brew_quantities_estimated">Estimat</string>
+    <string name="brew_quantities_measured">Măsurat</string>
+    <string name="brew_quantities_unavailable">Indisponibil</string>
+    <string name="brew_quantities_add_measurements">Adaugă măsurători</string>
+    <string name="brew_quantities_edit_measurements">Editează măsurătorile</string>
+    <string name="brew_quantities_value_grams">%1$s g</string>
+    <string name="brew_quantities_approximate_value">≈%1$s</string>
+    <string name="brew_quantities_measured_planned_value">Măsurat · planificat %1$s g</string>
+    <string name="brew_quantities_measured_estimated_value">Măsurat · estimare %1$s g</string>
+    <string name="brew_quantities_accessibility_planned">%1$s, %2$s grame, planificat</string>
+    <string name="brew_quantities_accessibility_estimated">%1$s, aproximativ %2$s grame, estimat</string>
+    <string name="brew_quantities_accessibility_measured">%1$s, %2$s grame, măsurat</string>
+    <string name="brew_quantities_accessibility_measured_planned">%1$s, %2$s grame, măsurat; planificat %3$s grame</string>
+    <string name="brew_quantities_accessibility_measured_estimated">%1$s, %2$s grame, măsurat; estimare %3$s grame</string>
+    <string name="brew_quantities_accessibility_unavailable">%1$s, estimarea nu este disponibilă</string>
+
+    <string name="brew_measurement_title">Măsurători reale</string>
+    <string name="brew_measurement_explanation">Opțional. O pereche completă de măsurători ajută la îmbunătățirea estimărilor viitoare pentru preparări similare.</string>
+    <string name="brew_measurement_planned_coffee">Cantitate planificată de cafea</string>
+    <string name="brew_measurement_water_in">Apă introdusă</string>
+    <string name="brew_measurement_in_cup">În ceașcă</string>
+    <string name="brew_measurement_unit_grams">g</string>
+    <string name="brew_measurement_value_grams">%1$s g</string>
+    <string name="brew_measurement_planned_value">Planificat %1$s g</string>
+    <string name="brew_measurement_estimated_value">Estimat %1$s g</string>
+    <string name="brew_measurement_estimate_unavailable">Nu este disponibilă nicio estimare</string>
+    <string name="brew_measurement_error_complete_pair">Introduceți ambele măsurători.</string>
+    <string name="brew_measurement_error_positive_water">Introduceți o cantitate pozitivă de apă.</string>
+    <string name="brew_measurement_error_positive_output">Introduceți o cantitate pozitivă în ceașcă.</string>
+    <string name="brew_measurement_error_output_exceeds_water">Cantitatea din ceașcă nu poate fi mai mare decât cantitatea de apă introdusă.</string>
+    <string name="brew_measurement_save">Salvează măsurătorile</string>
+    <string name="brew_measurement_saving">Se salvează…</string>
+    <string name="brew_measurement_remove">Elimină măsurătorile</string>
+</resources>

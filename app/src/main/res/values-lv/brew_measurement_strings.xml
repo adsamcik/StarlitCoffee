@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brew_quantities_title">Gatavošanas daudzumi</string>
+    <string name="brew_quantities_coffee">Kafija</string>
+    <string name="brew_quantities_water_in">Ielietais ūdens</string>
+    <string name="brew_quantities_in_cup">Tasē</string>
+    <string name="brew_quantities_planned">Plānots</string>
+    <string name="brew_quantities_estimated">Aprēķināts</string>
+    <string name="brew_quantities_measured">Izmērīts</string>
+    <string name="brew_quantities_unavailable">Nav pieejams</string>
+    <string name="brew_quantities_add_measurements">Pievienot mērījumus</string>
+    <string name="brew_quantities_edit_measurements">Rediģēt mērījumus</string>
+    <string name="brew_quantities_value_grams">%1$s g</string>
+    <string name="brew_quantities_approximate_value">≈%1$s</string>
+    <string name="brew_quantities_measured_planned_value">Izmērīts · plānots %1$s g</string>
+    <string name="brew_quantities_measured_estimated_value">Izmērīts · aprēķins %1$s g</string>
+    <string name="brew_quantities_accessibility_planned">%1$s, %2$s grami, plānots</string>
+    <string name="brew_quantities_accessibility_estimated">%1$s, aptuveni %2$s grami, aprēķināts</string>
+    <string name="brew_quantities_accessibility_measured">%1$s, %2$s grami, izmērīts</string>
+    <string name="brew_quantities_accessibility_measured_planned">%1$s, %2$s grami, izmērīts; plānots %3$s grami</string>
+    <string name="brew_quantities_accessibility_measured_estimated">%1$s, %2$s grami, izmērīts; aprēķins %3$s grami</string>
+    <string name="brew_quantities_accessibility_unavailable">%1$s, aprēķins nav pieejams</string>
+
+    <string name="brew_measurement_title">Faktiskie mērījumi</string>
+    <string name="brew_measurement_explanation">Neobligāti. Pilns mērījumu pāris palīdz uzlabot turpmākos aprēķinus līdzīgām gatavošanām.</string>
+    <string name="brew_measurement_planned_coffee">Plānotais kafijas daudzums</string>
+    <string name="brew_measurement_water_in">Ielietais ūdens</string>
+    <string name="brew_measurement_in_cup">Tasē</string>
+    <string name="brew_measurement_unit_grams">g</string>
+    <string name="brew_measurement_value_grams">%1$s g</string>
+    <string name="brew_measurement_planned_value">Plānots %1$s g</string>
+    <string name="brew_measurement_estimated_value">Aprēķināts %1$s g</string>
+    <string name="brew_measurement_estimate_unavailable">Aprēķins nav pieejams</string>
+    <string name="brew_measurement_error_complete_pair">Ievadiet abus mērījumus.</string>
+    <string name="brew_measurement_error_positive_water">Ievadiet pozitīvu ūdens daudzumu.</string>
+    <string name="brew_measurement_error_positive_output">Ievadiet pozitīvu daudzumu tasē.</string>
+    <string name="brew_measurement_error_output_exceeds_water">Daudzums tasē nedrīkst būt lielāks par ielietā ūdens daudzumu.</string>
+    <string name="brew_measurement_save">Saglabāt mērījumus</string>
+    <string name="brew_measurement_saving">Saglabā…</string>
+    <string name="brew_measurement_remove">Noņemt mērījumus</string>
+</resources>

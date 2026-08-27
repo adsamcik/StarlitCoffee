@@ -11,6 +11,7 @@ import com.adsamcik.starlitcoffee.data.model.CalcToken
 import com.adsamcik.starlitcoffee.data.model.CupPreset
 import com.adsamcik.starlitcoffee.data.repository.CupPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
+import com.adsamcik.starlitcoffee.domain.BeverageOutputCalibration
 import com.adsamcik.starlitcoffee.domain.BeverageOutputEstimator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,6 +34,7 @@ data class CalcUiState(
     val inputDirection: InputDirection = InputDirection.DOSE,
     val waterAmountMode: WaterAmountMode = WaterAmountMode.WATER_INPUT,
     val brewMethod: BrewMethod = BrewMethod.PULSAR,
+    val beverageOutputCalibration: BeverageOutputCalibration.Profile? = null,
     val availablePresets: List<CupPreset> = emptyList(),
     val hasValidExpression: Boolean = false,
 ) {
@@ -242,13 +244,26 @@ class CalculatorViewModel(
     }
 
     fun setBrewMethod(method: BrewMethod) {
+        setBrewContext(method, _uiState.value.beverageOutputCalibration)
+    }
+
+    fun setBrewContext(
+        method: BrewMethod,
+        calibration: BeverageOutputCalibration.Profile?,
+    ) {
         _uiState.update { state ->
             val mode = if (BeverageOutputEstimator.modelFor(method) == null) {
                 WaterAmountMode.WATER_INPUT
             } else {
                 state.waterAmountMode
             }
-            recalculate(state.copy(brewMethod = method, waterAmountMode = mode))
+            recalculate(
+                state.copy(
+                    brewMethod = method,
+                    waterAmountMode = mode,
+                    beverageOutputCalibration = calibration?.takeIf { it.method == method },
+                ),
+            )
         }
     }
 
@@ -282,11 +297,15 @@ class CalculatorViewModel(
         val isPlanningForOutput =
             state.inputDirection == InputDirection.WATER &&
             state.waterAmountMode == WaterAmountMode.BEVERAGE_OUTPUT
+        val apparentLossGPerCoffeeG = state.beverageOutputCalibration
+            ?.takeIf { it.method == state.brewMethod }
+            ?.apparentLossGPerCoffeeG
         val plannedOutput = if (isPlanningForOutput) {
             BeverageOutputEstimator.planForOutput(
                 method = state.brewMethod,
                 beverageOutputG = directResult.totalWaterMl,
                 brewRatio = state.ratio,
+                apparentLossGPerCoffeeG = apparentLossGPerCoffeeG,
             )
         } else {
             null
@@ -307,6 +326,7 @@ class CalculatorViewModel(
                 method = state.brewMethod,
                 coffeeDoseG = previewDoseG,
                 brewWaterG = previewWaterMl,
+                apparentLossGPerCoffeeG = apparentLossGPerCoffeeG,
             )
         } else {
             null

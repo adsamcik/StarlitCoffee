@@ -35,8 +35,21 @@ object BrewCalculator {
         bloomMultiplier: Float,
         pulseCount: Int,
         isDecaf: Boolean,
+        apparentLossGPerCoffeeG: Float? = null,
     ): BrewCalculation {
-        val (coffeeG, waterG) = computeCoffeeAndWater(method, inputMode, amount, effectiveRatio)
+        val effectiveApparentLossGPerCoffeeG =
+            apparentLossGPerCoffeeG ?: method.absorptionRatio
+        require(
+            effectiveApparentLossGPerCoffeeG.isFinite() &&
+                effectiveApparentLossGPerCoffeeG >= 0f,
+        ) { "Apparent loss per gram of coffee must be finite and non-negative" }
+        val (coffeeG, waterG) = computeCoffeeAndWater(
+            method = method,
+            inputMode = inputMode,
+            amount = amount,
+            effectiveRatio = effectiveRatio,
+            apparentLossGPerCoffeeG = effectiveApparentLossGPerCoffeeG,
+        )
 
         val bloomG = if (method.hasBloom) coffeeG * bloomMultiplier else 0f
         val remainingWaterG = waterG - bloomG
@@ -65,7 +78,8 @@ object BrewCalculator {
         }
 
         val retainedWaterG = when (method.outputSemantics) {
-            BrewOutputSemantics.WATER_IN_MINUS_ABSORPTION -> coffeeG * method.absorptionRatio
+            BrewOutputSemantics.WATER_IN_MINUS_ABSORPTION ->
+                coffeeG * effectiveApparentLossGPerCoffeeG
             BrewOutputSemantics.BEVERAGE_YIELD -> 0f
         }
         val predictedCupVolumeG = when (method.outputSemantics) {
@@ -104,6 +118,7 @@ object BrewCalculator {
         inputMode: InputMode,
         amount: Float,
         effectiveRatio: Float,
+        apparentLossGPerCoffeeG: Float,
     ): Pair<Float, Float> {
         return when (inputMode) {
             InputMode.COFFEE_TO_WATER -> {
@@ -116,7 +131,12 @@ object BrewCalculator {
                 val coffeeG = if (effectiveRatio != 0f) waterG / effectiveRatio else 0f
                 coffeeG to waterG
             }
-            InputMode.BREW_SIZE_TO_BOTH -> computeFromBrewSize(method, amount, effectiveRatio)
+            InputMode.BREW_SIZE_TO_BOTH -> computeFromBrewSize(
+                method = method,
+                amount = amount,
+                effectiveRatio = effectiveRatio,
+                apparentLossGPerCoffeeG = apparentLossGPerCoffeeG,
+            )
             InputMode.CUP_SIZE_TO_BOTH -> {
                 val waterG = amount
                 val coffeeG = if (effectiveRatio != 0f) waterG / effectiveRatio else 0f
@@ -129,10 +149,11 @@ object BrewCalculator {
         method: BrewMethod,
         amount: Float,
         effectiveRatio: Float,
+        apparentLossGPerCoffeeG: Float,
     ): Pair<Float, Float> = when (method.outputSemantics) {
         BrewOutputSemantics.WATER_IN_MINUS_ABSORPTION -> {
             val brewMl = amount
-            val divisor = effectiveRatio - method.absorptionRatio
+            val divisor = effectiveRatio - apparentLossGPerCoffeeG
             if (divisor > 0f) {
                 val coffeeG = brewMl / divisor
                 val waterG = coffeeG * effectiveRatio

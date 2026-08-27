@@ -30,14 +30,71 @@ class MigrationTest {
      * drift (a forgotten column/index) that would crash on app upgrade.
      */
     @Test
-    fun migrateAll10To19_matchesExportedSchema() {
+    fun migrateAll10To20_matchesExportedSchema() {
         helper.createDatabase(MIGRATION_TEST_DB, 10).close()
         helper.runMigrationsAndValidate(
             MIGRATION_TEST_DB,
-            19,
+            20,
             true,
             *AppDatabase.ALL_MIGRATIONS,
         ).close()
+    }
+
+    @Test
+    fun migrate19to20_preservesLogsAndAddsOptionalOutputMeasurements() {
+        val databaseName = "starlit-test-db-v20"
+        helper.createDatabase(databaseName, 19).apply {
+            execSQL(
+                """
+                INSERT INTO brew_logs (id, method, doseG, waterG, ratio, isDecaf, createdAt)
+                VALUES (4, 'V60', 20.0, 340.0, 17.0, 0, 1735689600000)
+                """.trimIndent(),
+            )
+            close()
+        }
+
+        helper.runMigrationsAndValidate(
+            databaseName,
+            20,
+            true,
+            AppDatabase.MIGRATION_19_20,
+        ).use { db ->
+            db.query(
+                """
+                SELECT doseG, waterG, expectedBeverageOutputG,
+                    measuredWaterInputG, measuredBeverageOutputG
+                FROM brew_logs WHERE id = 4
+                """.trimIndent(),
+            ).use { cursor ->
+                assertTrue(cursor.moveToFirst())
+                assertEquals(20.0, cursor.getDouble(0), 0.001)
+                assertEquals(340.0, cursor.getDouble(1), 0.001)
+                assertTrue(cursor.isNull(2))
+                assertTrue(cursor.isNull(3))
+                assertTrue(cursor.isNull(4))
+            }
+
+            db.execSQL(
+                """
+                UPDATE brew_logs
+                SET expectedBeverageOutputG = 298.0,
+                    measuredWaterInputG = 339.6,
+                    measuredBeverageOutputG = 297.4
+                WHERE id = 4
+                """.trimIndent(),
+            )
+            db.query(
+                """
+                SELECT expectedBeverageOutputG, measuredWaterInputG, measuredBeverageOutputG
+                FROM brew_logs WHERE id = 4
+                """.trimIndent(),
+            ).use { cursor ->
+                assertTrue(cursor.moveToFirst())
+                assertEquals(298.0, cursor.getDouble(0), 0.001)
+                assertEquals(339.6, cursor.getDouble(1), 0.001)
+                assertEquals(297.4, cursor.getDouble(2), 0.001)
+            }
+        }
     }
 
     @Test

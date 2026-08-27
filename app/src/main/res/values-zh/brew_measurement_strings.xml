@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brew_quantities_title">冲煮用量</string>
+    <string name="brew_quantities_coffee">咖啡</string>
+    <string name="brew_quantities_water_in">注入水量</string>
+    <string name="brew_quantities_in_cup">杯中量</string>
+    <string name="brew_quantities_planned">计划值</string>
+    <string name="brew_quantities_estimated">估算值</string>
+    <string name="brew_quantities_measured">实测值</string>
+    <string name="brew_quantities_unavailable">暂无数据</string>
+    <string name="brew_quantities_add_measurements">添加测量值</string>
+    <string name="brew_quantities_edit_measurements">编辑测量值</string>
+    <string name="brew_quantities_value_grams">%1$s g</string>
+    <string name="brew_quantities_approximate_value">≈%1$s</string>
+    <string name="brew_quantities_measured_planned_value">实测值 · 计划值 %1$s g</string>
+    <string name="brew_quantities_measured_estimated_value">实测值 · 估算值 %1$s g</string>
+    <string name="brew_quantities_accessibility_planned">%1$s，%2$s 克，计划值</string>
+    <string name="brew_quantities_accessibility_estimated">%1$s，约 %2$s 克，估算值</string>
+    <string name="brew_quantities_accessibility_measured">%1$s，%2$s 克，实测值</string>
+    <string name="brew_quantities_accessibility_measured_planned">%1$s，%2$s 克，实测值；计划值 %3$s 克</string>
+    <string name="brew_quantities_accessibility_measured_estimated">%1$s，%2$s 克，实测值；估算值 %3$s 克</string>
+    <string name="brew_quantities_accessibility_unavailable">%1$s，暂无估算值</string>
+
+    <string name="brew_measurement_title">实际测量值</string>
+    <string name="brew_measurement_explanation">可选。完整输入一组测量值有助于提高今后类似冲煮的估算准确度。</string>
+    <string name="brew_measurement_planned_coffee">计划咖啡用量</string>
+    <string name="brew_measurement_water_in">注入水量</string>
+    <string name="brew_measurement_in_cup">杯中量</string>
+    <string name="brew_measurement_unit_grams">g</string>
+    <string name="brew_measurement_value_grams">%1$s g</string>
+    <string name="brew_measurement_planned_value">计划值 %1$s g</string>
+    <string name="brew_measurement_estimated_value">估算值 %1$s g</string>
+    <string name="brew_measurement_estimate_unavailable">暂无估算值</string>
+    <string name="brew_measurement_error_complete_pair">请输入两项测量值。</string>
+    <string name="brew_measurement_error_positive_water">请输入大于零的注入水量。</string>
+    <string name="brew_measurement_error_positive_output">请输入大于零的杯中量。</string>
+    <string name="brew_measurement_error_output_exceeds_water">杯中量不能大于注入水量。</string>
+    <string name="brew_measurement_save">保存测量值</string>
+    <string name="brew_measurement_saving">正在保存…</string>
+    <string name="brew_measurement_remove">移除测量值</string>
+</resources>

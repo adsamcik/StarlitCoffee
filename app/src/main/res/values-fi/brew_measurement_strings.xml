@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brew_quantities_title">Valmistuksen määrät</string>
+    <string name="brew_quantities_coffee">Kahvi</string>
+    <string name="brew_quantities_water_in">Sisään tuleva vesi</string>
+    <string name="brew_quantities_in_cup">Kupissa</string>
+    <string name="brew_quantities_planned">Suunniteltu</string>
+    <string name="brew_quantities_estimated">Arvioitu</string>
+    <string name="brew_quantities_measured">Mitattu</string>
+    <string name="brew_quantities_unavailable">Ei saatavilla</string>
+    <string name="brew_quantities_add_measurements">Lisää mittaukset</string>
+    <string name="brew_quantities_edit_measurements">Muokkaa mittauksia</string>
+    <string name="brew_quantities_value_grams">%1$s g</string>
+    <string name="brew_quantities_approximate_value">≈%1$s</string>
+    <string name="brew_quantities_measured_planned_value">Mitattu · suunniteltu %1$s g</string>
+    <string name="brew_quantities_measured_estimated_value">Mitattu · arvioitu %1$s g</string>
+    <string name="brew_quantities_accessibility_planned">%1$s, %2$s grammaa, suunniteltu</string>
+    <string name="brew_quantities_accessibility_estimated">%1$s, noin %2$s grammaa, arvioitu</string>
+    <string name="brew_quantities_accessibility_measured">%1$s, %2$s grammaa, mitattu</string>
+    <string name="brew_quantities_accessibility_measured_planned">%1$s, %2$s grammaa, mitattu; suunniteltu %3$s grammaa</string>
+    <string name="brew_quantities_accessibility_measured_estimated">%1$s, %2$s grammaa, mitattu; arvioitu %3$s grammaa</string>
+    <string name="brew_quantities_accessibility_unavailable">%1$s, arviota ei ole saatavilla</string>
+
+    <string name="brew_measurement_title">Todelliset mittaukset</string>
+    <string name="brew_measurement_explanation">Valinnainen. Molempien arvojen mittaaminen auttaa tarkentamaan samankaltaisten valmistusten tulevia arvioita.</string>
+    <string name="brew_measurement_planned_coffee">Suunniteltu kahvimäärä</string>
+    <string name="brew_measurement_water_in">Sisään tuleva vesi</string>
+    <string name="brew_measurement_in_cup">Kupissa</string>
+    <string name="brew_measurement_unit_grams">g</string>
+    <string name="brew_measurement_value_grams">%1$s g</string>
+    <string name="brew_measurement_planned_value">Suunniteltu %1$s g</string>
+    <string name="brew_measurement_estimated_value">Arvioitu %1$s g</string>
+    <string name="brew_measurement_estimate_unavailable">Arviota ei ole saatavilla</string>
+    <string name="brew_measurement_error_complete_pair">Anna molemmat mittaukset.</string>
+    <string name="brew_measurement_error_positive_water">Anna positiivinen vesimäärä.</string>
+    <string name="brew_measurement_error_positive_output">Anna positiivinen kuppiin päätynyt määrä.</string>
+    <string name="brew_measurement_error_output_exceeds_water">Kupissa oleva määrä ei voi olla suurempi kuin sisään tulevan veden määrä.</string>
+    <string name="brew_measurement_save">Tallenna mittaukset</string>
+    <string name="brew_measurement_saving">Tallennetaan…</string>
+    <string name="brew_measurement_remove">Poista mittaukset</string>
+</resources>

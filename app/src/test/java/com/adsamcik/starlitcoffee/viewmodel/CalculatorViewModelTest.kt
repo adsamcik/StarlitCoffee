@@ -9,6 +9,7 @@ import com.adsamcik.starlitcoffee.data.model.CalcOp
 import com.adsamcik.starlitcoffee.data.model.CalcToken
 import com.adsamcik.starlitcoffee.data.model.CupPreset
 import com.adsamcik.starlitcoffee.data.repository.CupPresetRepository
+import com.adsamcik.starlitcoffee.domain.BeverageOutputCalibration
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -314,6 +315,34 @@ class CalculatorViewModelTest {
         assertEquals(300f, state.previewWaterMl, 0.01f)
         assertEquals(264f, requireNotNull(state.previewBeverageG), 0.01f)
         assertEquals(36f, requireNotNull(state.previewApparentLossG), 0.01f)
+    }
+
+    @Test
+    fun `personalized loss is used consistently for forward and inverse estimates`() {
+        val calibration = BeverageOutputCalibration.Profile(
+            method = BrewMethod.V60,
+            apparentLossGPerCoffeeG = 2.7f,
+            sampleCount = 4,
+            priorSampleCount = 0,
+            scope = BeverageOutputCalibration.Scope.PROCESS_AND_BEAN,
+        )
+        viewModel.setBrewContext(BrewMethod.V60, calibration)
+        viewModel.setRatio(17f)
+        viewModel.appendDigit('2')
+        viewModel.appendDigit('0')
+
+        assertEquals(286f, requireNotNull(viewModel.uiState.value.previewBeverageG), 0.01f)
+
+        viewModel.clear()
+        viewModel.selectQuantity(CalculatorQuantityTarget.IN_CUP)
+        viewModel.appendDigit('2')
+        viewModel.appendDigit('8')
+        viewModel.appendDigit('6')
+
+        val state = viewModel.uiState.value
+        assertEquals(20f, state.previewDoseG, 0.01f)
+        assertEquals(340f, state.previewWaterMl, 0.01f)
+        assertEquals(286f, requireNotNull(state.previewBeverageG), 0.01f)
     }
 
     @Test

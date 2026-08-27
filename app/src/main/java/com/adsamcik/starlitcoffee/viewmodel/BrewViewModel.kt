@@ -15,6 +15,7 @@ import com.adsamcik.starlitcoffee.data.db.entity.CoffeeUsageEntryEntity
 import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
 import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.data.brewing.BrewLogMeasurementContextResolver
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.CalibrationStyle
 import com.adsamcik.starlitcoffee.data.model.DefaultGrinders
@@ -60,6 +61,7 @@ import com.adsamcik.starlitcoffee.data.work.decodeBagExtractionResult
 import com.adsamcik.starlitcoffee.data.work.encodeToJson
 import com.adsamcik.starlitcoffee.data.work.hasDeterministicScanData
 import com.adsamcik.starlitcoffee.domain.pickWeightedBloomSpritesheetId
+import com.adsamcik.starlitcoffee.domain.BeverageOutputCalibration
 import com.adsamcik.starlitcoffee.notification.BagAnalysisNotifier
 import com.adsamcik.starlitcoffee.notification.BrewSessionNotifier
 import com.adsamcik.starlitcoffee.notification.NoOpBagAnalysisNotifier
@@ -163,6 +165,7 @@ data class BrewUiState(
     val effectiveBloomDurationSeconds: Int = BrewMethod.PULSAR.bloomDurationSeconds,
     val retainedWaterG: Float = 0f,
     val predictedCupVolumeG: Float = 0f,
+    val beverageOutputCalibration: BeverageOutputCalibration.Profile? = null,
     // Timer state
     val timerRunning: Boolean = false,
     val elapsedSeconds: Int = 0,
@@ -384,6 +387,9 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         },
     )
     private var ratioPresetJob: Job? = null
+    private var brewLogCalibrationRevision = 0L
+    private var brewLogCalibrationSignature: List<BrewLogCalibrationSignature>? = null
+    private var beverageOutputCalibrationCache: BeverageOutputCalibrationCache? = null
 
     init {
         viewModelScope.launch {
@@ -400,7 +406,14 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         viewModelScope.launch {
             brewLogRepository?.getAllLogs()?.collect { logs ->
                 _brewLogs.value = logs
+                val nextCalibrationSignature = logs.map { log -> log.calibrationSignature() }
+                val calibrationChanged = nextCalibrationSignature != brewLogCalibrationSignature
+                if (calibrationChanged) {
+                    brewLogCalibrationSignature = nextCalibrationSignature
+                    brewLogCalibrationRevision++
+                }
                 refreshInventoryAlerts()
+                if (calibrationChanged) recalculate()
             }
         }
         viewModelScope.launch {
@@ -822,6 +835,9 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         rating = state.rating.takeIf { it > 0 }?.toFloat(),
         freeformNotes = state.feedbackNotes.takeIf { it.isNotBlank() },
         brewTimeSeconds = state.elapsedSeconds.takeIf { it > 0 },
+        expectedBeverageOutputG = state.predictedCupVolumeG.takeIf {
+            state.coffeeG > 0f && state.waterG > 0f
+        },
     )
 
     private data class BrewInventoryPlan(
@@ -1062,6 +1078,35 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         if (bagId != null && _coffeeBags.value.none { it.id == bagId }) return false
         repository.updateCoffeeBag(logId, bagId)
         return true
+    }
+
+    suspend fun updateBrewLogMeasurementsAndWait(
+        logId: Long,
+        waterInputG: Float?,
+        beverageOutputG: Float?,
+    ): Boolean {
+        val repository = brewLogRepository ?: return false
+        if (!validBrewMeasurementPair(waterInputG, beverageOutputG)) return false
+        val log = repository.getLogById(logId) ?: return false
+        if (BrewLogMeasurementContextResolver.resolve(log) == null) return false
+        return repository.updateMeasurements(
+            logId = logId,
+            waterInputG = waterInputG,
+            beverageOutputG = beverageOutputG,
+        )
+    }
+
+    private fun validBrewMeasurementPair(
+        waterInputG: Float?,
+        beverageOutputG: Float?,
+    ): Boolean = when {
+        waterInputG == null && beverageOutputG == null -> true
+        waterInputG == null || beverageOutputG == null -> false
+        else -> waterInputG.isFinite() &&
+            beverageOutputG.isFinite() &&
+            waterInputG > 0f &&
+            beverageOutputG > 0f &&
+            beverageOutputG <= waterInputG
     }
 
     fun updateBrewLogFeedback(
@@ -2854,13 +2899,15 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             val selectedBag = _selectedBagId.value?.let { id ->
                 _coffeeBags.value.find { it.id == id }
             }
+            val calibration = resolveBeverageOutputCalibration(current)
+            val calibratedState = current.copy(beverageOutputCalibration = calibration)
             val derived = BrewDerivation.derive(
-                state = current,
+                state = calibratedState,
                 selectedBag = selectedBag,
                 grinderData = grinderData,
                 nowMs = System.currentTimeMillis(),
             )
-            current.copy(
+            calibratedState.copy(
                 coffeeG = derived.coffeeG,
                 waterG = derived.waterG,
                 effectiveRatio = derived.effectiveRatio,
@@ -2882,6 +2929,94 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             )
         }
     }
+
+    private fun resolveBeverageOutputCalibration(
+        state: BrewUiState,
+    ): BeverageOutputCalibration.Profile? {
+        val processKey = BrewLogMeasurementContextResolver.currentProcessKey(
+            method = state.method,
+            brewerProfileId = null,
+            filterType = state.filterType,
+        ) ?: return null
+        val key = BeverageOutputCalibrationCacheKey(
+            method = state.method,
+            processKey = processKey,
+            coffeeBagId = _selectedBagId.value,
+            logRevision = brewLogCalibrationRevision,
+        )
+        beverageOutputCalibrationCache?.takeIf { it.key == key }?.let { cached ->
+            return cached.profile
+        }
+        val profile = BeverageOutputCalibration.resolve(
+            method = state.method,
+            processKey = processKey,
+            coffeeBagId = _selectedBagId.value,
+            observations = _brewLogs.value.mapNotNull(::calibrationObservation),
+        )
+        beverageOutputCalibrationCache = BeverageOutputCalibrationCache(key, profile)
+        return profile
+    }
+
+    private data class BeverageOutputCalibrationCacheKey(
+        val method: BrewMethod,
+        val processKey: String,
+        val coffeeBagId: Long?,
+        val logRevision: Long,
+    )
+
+    private data class BeverageOutputCalibrationCache(
+        val key: BeverageOutputCalibrationCacheKey,
+        val profile: BeverageOutputCalibration.Profile?,
+    )
+
+    private fun calibrationObservation(log: BrewLogEntity): BeverageOutputCalibration.Observation? {
+        val measuredWater = log.measuredWaterInputG ?: return null
+        val measuredOutput = log.measuredBeverageOutputG ?: return null
+        val context = BrewLogMeasurementContextResolver.resolve(log) ?: return null
+        return BeverageOutputCalibration.Observation(
+            processKey = context.processKey,
+            coffeeBagId = log.coffeeBagId,
+            coffeeDoseG = context.plannedCoffeeG,
+            measuredWaterInputG = measuredWater,
+            measuredBeverageOutputG = measuredOutput,
+            createdAt = log.createdAt,
+        )
+    }
+
+    private data class BrewLogCalibrationSignature(
+        val id: Long,
+        val method: String,
+        val methodFamilyId: String?,
+        val brewerProfileId: String?,
+        val snapshotVersion: Int?,
+        val brewSnapshotJson: String?,
+        val filterType: String?,
+        val coffeeBagId: Long?,
+        val doseG: Float,
+        val waterG: Float,
+        val measuredWaterInputG: Float?,
+        val measuredBeverageOutputG: Float?,
+        val createdAt: Long,
+    )
+
+    private fun BrewLogEntity.calibrationSignature() = BrewLogCalibrationSignature(
+        id = id,
+        method = method,
+        methodFamilyId = methodFamilyId,
+        brewerProfileId = brewerProfileId,
+        snapshotVersion = snapshotVersion,
+        brewSnapshotJson = brewSnapshotJson,
+        filterType = filterType,
+        coffeeBagId = coffeeBagId,
+        doseG = doseG,
+        waterG = waterG,
+        measuredWaterInputG = measuredWaterInputG,
+        measuredBeverageOutputG = measuredBeverageOutputG,
+        createdAt = createdAt,
+    )
+
+    @VisibleForTesting
+    internal fun beverageOutputCalibrationRevisionForTesting(): Long = brewLogCalibrationRevision
 
     @VisibleForTesting
     internal fun setUiStateForTesting(state: BrewUiState) {

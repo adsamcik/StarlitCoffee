@@ -59,11 +59,15 @@ object BeverageOutputEstimator {
         method: BrewMethod,
         coffeeDoseG: Float,
         brewWaterG: Float,
+        apparentLossGPerCoffeeG: Float? = null,
     ): BrewPlan? {
         val model = modelFor(method) ?: return null
+        if (!coffeeDoseG.isFinite() || !brewWaterG.isFinite()) return null
         if (coffeeDoseG < 0f || brewWaterG < 0f) return null
 
-        val apparentLossG = coffeeDoseG * model.apparentLossGPerCoffeeG
+        val coefficient = apparentLossGPerCoffeeG ?: model.apparentLossGPerCoffeeG
+        if (!coefficient.isFinite() || coefficient < 0f) return null
+        val apparentLossG = coffeeDoseG * coefficient
         return BrewPlan(
             coffeeDoseG = coffeeDoseG,
             brewWaterG = brewWaterG,
@@ -76,9 +80,13 @@ object BeverageOutputEstimator {
         method: BrewMethod,
         beverageOutputG: Float,
         brewRatio: Float,
+        apparentLossGPerCoffeeG: Float? = null,
     ): BrewPlan? {
         val model = modelFor(method) ?: return null
-        val outputPerCoffeeG = brewRatio - model.apparentLossGPerCoffeeG
+        if (!beverageOutputG.isFinite() || !brewRatio.isFinite()) return null
+        val coefficient = apparentLossGPerCoffeeG ?: model.apparentLossGPerCoffeeG
+        if (!coefficient.isFinite() || coefficient < 0f) return null
+        val outputPerCoffeeG = brewRatio - coefficient
         if (beverageOutputG < 0f || outputPerCoffeeG <= 0f) return null
 
         val coffeeDoseG = beverageOutputG / outputPerCoffeeG

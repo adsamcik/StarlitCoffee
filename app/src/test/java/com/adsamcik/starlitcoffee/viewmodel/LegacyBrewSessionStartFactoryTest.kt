@@ -7,6 +7,7 @@ import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrindRecommendation
 import com.adsamcik.starlitcoffee.data.model.Grinder
 import com.adsamcik.starlitcoffee.data.model.GrinderScaleType
+import com.adsamcik.starlitcoffee.domain.BeverageOutputCalibration
 import com.adsamcik.starlitcoffee.domain.brewing.CatalogResolution
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -23,6 +24,14 @@ class LegacyBrewSessionStartFactoryTest {
                 method = BrewMethod.PULSAR,
                 coffeeG = 18.5f,
                 waterG = 314.5f,
+                predictedCupVolumeG = 273.8f,
+                beverageOutputCalibration = BeverageOutputCalibration.Profile(
+                    method = BrewMethod.PULSAR,
+                    apparentLossGPerCoffeeG = 2.2f,
+                    sampleCount = 0,
+                    priorSampleCount = 0,
+                    scope = BeverageOutputCalibration.Scope.BUILT_IN,
+                ),
                 effectiveRatio = 17.0f,
                 bloomG = 55.5f,
                 effectivePulseCount = 5,
@@ -59,6 +68,7 @@ class LegacyBrewSessionStartFactoryTest {
         )
         assertEquals(18.5, request.recipe.quantities.dryCoffeeDoseG, 0.001)
         assertEquals(314.5, request.recipe.quantities.brewWaterInputG ?: Double.NaN, 0.001)
+        assertEquals(273.8, request.recipe.quantities.targetBeverageYieldG ?: Double.NaN, 0.001)
         assertEquals("DRY_COFFEE_DOSE", request.recipe.ratioDefinition.numerator)
         assertEquals("BREW_WATER_INPUT", request.recipe.ratioDefinition.denominator)
         assertEquals(17.0, request.recipe.ratioValue ?: Double.NaN, 0.001)
@@ -70,7 +80,7 @@ class LegacyBrewSessionStartFactoryTest {
         assertEquals("PULSED", request.recipe.technique.pourPattern)
         assertEquals(5, request.recipe.technique.pulseCount)
         assertEquals("BREW_WATER_MINUS_RETENTION", request.recipe.outputModel.kind)
-        assertEquals(2.0, request.recipe.outputModel.retainedWaterGPerCoffeeG ?: Double.NaN, 0.001)
+        assertEquals(2.2, request.recipe.outputModel.retainedWaterGPerCoffeeG ?: Double.NaN, 0.001)
         assertTrue(request.recipe.isDecaf)
         assertEquals("Sweet citrus finish", request.recipe.notes)
 
@@ -90,6 +100,26 @@ class LegacyBrewSessionStartFactoryTest {
             listOf("pulsar_bloom_1", "pulsar_manual_brew_1"),
             request.stagePlan.stageIds.map { it.persistentKey },
         )
+    }
+
+    @Test
+    fun `missing UI prediction falls back to the frozen brewer output model`() {
+        val result = LegacyBrewSessionStartFactory().create(
+            state = BrewUiState(
+                method = BrewMethod.COLD_BREW,
+                coffeeG = 20f,
+                waterG = 320f,
+                predictedCupVolumeG = 0f,
+                effectiveRatio = 16f,
+            ),
+            selectedCoffeeBagId = null,
+            sourceRecipeId = null,
+        )
+
+        val quantities = (result as LegacyBrewSessionStartResult.Ready).request.recipe.quantities
+
+        assertEquals(280.0, quantities.targetConcentrateYieldG ?: Double.NaN, 0.001)
+        assertEquals(null, quantities.targetBeverageYieldG)
     }
 
     @Test

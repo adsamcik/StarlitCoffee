@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brew_quantities_title">Főzési mennyiségek</string>
+    <string name="brew_quantities_coffee">Kávé</string>
+    <string name="brew_quantities_water_in">Beöntött víz</string>
+    <string name="brew_quantities_in_cup">A csészében</string>
+    <string name="brew_quantities_planned">Tervezett</string>
+    <string name="brew_quantities_estimated">Becsült</string>
+    <string name="brew_quantities_measured">Mért</string>
+    <string name="brew_quantities_unavailable">Nem érhető el</string>
+    <string name="brew_quantities_add_measurements">Mérések hozzáadása</string>
+    <string name="brew_quantities_edit_measurements">Mérések szerkesztése</string>
+    <string name="brew_quantities_value_grams">%1$s g</string>
+    <string name="brew_quantities_approximate_value">≈%1$s</string>
+    <string name="brew_quantities_measured_planned_value">Mért · tervezett %1$s g</string>
+    <string name="brew_quantities_measured_estimated_value">Mért · becslés %1$s g</string>
+    <string name="brew_quantities_accessibility_planned">%1$s, %2$s gramm, tervezett</string>
+    <string name="brew_quantities_accessibility_estimated">%1$s, körülbelül %2$s gramm, becsült</string>
+    <string name="brew_quantities_accessibility_measured">%1$s, %2$s gramm, mért</string>
+    <string name="brew_quantities_accessibility_measured_planned">%1$s, %2$s gramm, mért; tervezett érték: %3$s gramm</string>
+    <string name="brew_quantities_accessibility_measured_estimated">%1$s, %2$s gramm, mért; becslés: %3$s gramm</string>
+    <string name="brew_quantities_accessibility_unavailable">%1$s, nem áll rendelkezésre becslés</string>
+
+    <string name="brew_measurement_title">Tényleges mérések</string>
+    <string name="brew_measurement_explanation">Nem kötelező. Egy teljes mérési pár segít pontosítani a hasonló főzetek jövőbeli becsléseit.</string>
+    <string name="brew_measurement_planned_coffee">Tervezett kávémennyiség</string>
+    <string name="brew_measurement_water_in">Beöntött víz</string>
+    <string name="brew_measurement_in_cup">A csészében</string>
+    <string name="brew_measurement_unit_grams">g</string>
+    <string name="brew_measurement_value_grams">%1$s g</string>
+    <string name="brew_measurement_planned_value">Tervezett: %1$s g</string>
+    <string name="brew_measurement_estimated_value">Becsült: %1$s g</string>
+    <string name="brew_measurement_estimate_unavailable">Nem áll rendelkezésre becslés</string>
+    <string name="brew_measurement_error_complete_pair">Adja meg mindkét mérési értéket.</string>
+    <string name="brew_measurement_error_positive_water">Adjon meg pozitív vízmennyiséget.</string>
+    <string name="brew_measurement_error_positive_output">Adjon meg pozitív, csészében mért mennyiséget.</string>
+    <string name="brew_measurement_error_output_exceeds_water">A csészében lévő mennyiség nem lehet nagyobb a beöntött víz mennyiségénél.</string>
+    <string name="brew_measurement_save">Mérések mentése</string>
+    <string name="brew_measurement_saving">Mentés…</string>
+    <string name="brew_measurement_remove">Mérések eltávolítása</string>
+</resources>

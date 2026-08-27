@@ -193,7 +193,12 @@ class LegacyBrewSessionStartFactory(
         technique = state.technique(),
         isDecaf = state.isDecafBrew,
         notes = state.feedbackNotes.takeIf(String::isNotBlank),
-        outputModel = profile.outputModel.toSnapshot(),
+        outputModel = profile.outputModel.toSnapshot(
+            apparentLossGPerCoffeeG = state.beverageOutputCalibration
+                ?.takeIf { it.method == state.method }
+                ?.apparentLossGPerCoffeeG
+                ?.toDouble(),
+        ),
     )
 
     private fun quantities(
@@ -202,23 +207,48 @@ class LegacyBrewSessionStartFactory(
     ): BrewQuantitiesSnapshotV1 {
         val doseG = state.coffeeG.toDouble()
         val currentWaterG = state.waterG.toDouble()
+        // The UI state is already fully derived before a durable session starts.
+        // Preserve that exact, potentially calibrated prediction rather than
+        // asking a later catalogue or calibration revision to recreate it.
+        val predictedOutputG = state.predictedCupVolumeG.toDouble().positiveFiniteOrNull()
         return when (outputModel) {
-            is OutputModel.BrewWaterMinusRetention,
-            is OutputModel.CollectedConcentrate,
-            OutputModel.PreparedUnfilteredVolume,
-            -> BrewQuantitiesSnapshotV1(
+            is OutputModel.BrewWaterMinusRetention -> BrewQuantitiesSnapshotV1(
                 dryCoffeeDoseG = doseG,
                 brewWaterInputG = currentWaterG,
+                targetBeverageYieldG = predictedOutputG ?: expectedAfterRetention(
+                    inputG = currentWaterG,
+                    doseG = doseG,
+                    retainedWaterGPerCoffeeG = outputModel.retainedWaterGPerCoffeeG,
+                ),
+            )
+
+            is OutputModel.CollectedConcentrate -> BrewQuantitiesSnapshotV1(
+                dryCoffeeDoseG = doseG,
+                brewWaterInputG = currentWaterG,
+                targetConcentrateYieldG = predictedOutputG ?: expectedAfterRetention(
+                    inputG = currentWaterG,
+                    doseG = doseG,
+                    retainedWaterGPerCoffeeG = outputModel.retainedWaterGPerCoffeeG,
+                ),
+            )
+
+            OutputModel.PreparedUnfilteredVolume -> BrewQuantitiesSnapshotV1(
+                dryCoffeeDoseG = doseG,
+                brewWaterInputG = currentWaterG,
+                finalServedBeverageG = predictedOutputG ?: currentWaterG.positiveFiniteOrNull(),
             )
 
             OutputModel.DirectTargetBeverageYield -> BrewQuantitiesSnapshotV1(
                 dryCoffeeDoseG = doseG,
-                targetBeverageYieldG = currentWaterG,
+                targetBeverageYieldG = predictedOutputG ?: currentWaterG.positiveFiniteOrNull(),
             )
 
             is OutputModel.ReservoirToEstimatedOutput -> BrewQuantitiesSnapshotV1(
                 dryCoffeeDoseG = doseG,
                 reservoirInputG = currentWaterG,
+                targetBeverageYieldG = predictedOutputG ?: (
+                    currentWaterG - outputModel.internalRetentionG
+                ).coerceAtLeast(0.0).positiveFiniteOrNull(),
             )
 
             OutputModel.UserMeasuredOutput -> BrewQuantitiesSnapshotV1(
@@ -231,6 +261,21 @@ class LegacyBrewSessionStartFactory(
             )
         }
     }
+
+    private fun expectedAfterRetention(
+        inputG: Double,
+        doseG: Double,
+        retainedWaterGPerCoffeeG: Double,
+    ): Double? {
+        val safeInputG = inputG.positiveFiniteOrNull() ?: return null
+        val safeDoseG = doseG.positiveFiniteOrNull() ?: return null
+        val safeRetention = retainedWaterGPerCoffeeG.takeIf { it.isFinite() && it >= 0.0 } ?: return null
+        return (safeInputG - safeDoseG * safeRetention)
+            .coerceAtLeast(0.0)
+            .positiveFiniteOrNull()
+    }
+
+    private fun Double.positiveFiniteOrNull(): Double? = takeIf { it.isFinite() && it > 0.0 }
 
     private fun ratioDefinition(outputModel: OutputModel): RatioDefinitionSnapshotV1 = when (outputModel) {
         OutputModel.DirectTargetBeverageYield -> RatioDefinitionSnapshotV1(
@@ -276,10 +321,12 @@ class LegacyBrewSessionStartFactory(
         )
     }
 
-    private fun OutputModel.toSnapshot(): OutputModelSnapshotV1 = when (this) {
+    private fun OutputModel.toSnapshot(
+        apparentLossGPerCoffeeG: Double?,
+    ): OutputModelSnapshotV1 = when (this) {
         is OutputModel.BrewWaterMinusRetention -> OutputModelSnapshotV1(
             kind = OUTPUT_BREW_WATER_MINUS_RETENTION,
-            retainedWaterGPerCoffeeG = retainedWaterGPerCoffeeG,
+            retainedWaterGPerCoffeeG = apparentLossGPerCoffeeG ?: retainedWaterGPerCoffeeG,
         )
 
         OutputModel.DirectTargetBeverageYield -> OutputModelSnapshotV1(
@@ -288,7 +335,7 @@ class LegacyBrewSessionStartFactory(
 
         is OutputModel.CollectedConcentrate -> OutputModelSnapshotV1(
             kind = OUTPUT_COLLECTED_CONCENTRATE,
-            retainedWaterGPerCoffeeG = retainedWaterGPerCoffeeG,
+            retainedWaterGPerCoffeeG = apparentLossGPerCoffeeG ?: retainedWaterGPerCoffeeG,
         )
 
         OutputModel.PreparedUnfilteredVolume -> OutputModelSnapshotV1(

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brew_quantities_title">Bryggmängder</string>
+    <string name="brew_quantities_coffee">Kaffe</string>
+    <string name="brew_quantities_water_in">Vatten in</string>
+    <string name="brew_quantities_in_cup">I koppen</string>
+    <string name="brew_quantities_planned">Planerat</string>
+    <string name="brew_quantities_estimated">Uppskattat</string>
+    <string name="brew_quantities_measured">Uppmätt</string>
+    <string name="brew_quantities_unavailable">Ej tillgängligt</string>
+    <string name="brew_quantities_add_measurements">Lägg till mätningar</string>
+    <string name="brew_quantities_edit_measurements">Redigera mätningar</string>
+    <string name="brew_quantities_value_grams">%1$s g</string>
+    <string name="brew_quantities_approximate_value">≈%1$s</string>
+    <string name="brew_quantities_measured_planned_value">Uppmätt · planerat %1$s g</string>
+    <string name="brew_quantities_measured_estimated_value">Uppmätt · uppskattat %1$s g</string>
+    <string name="brew_quantities_accessibility_planned">%1$s, %2$s gram, planerat</string>
+    <string name="brew_quantities_accessibility_estimated">%1$s, cirka %2$s gram, uppskattat</string>
+    <string name="brew_quantities_accessibility_measured">%1$s, %2$s gram, uppmätt</string>
+    <string name="brew_quantities_accessibility_measured_planned">%1$s, %2$s gram, uppmätt; planerat %3$s gram</string>
+    <string name="brew_quantities_accessibility_measured_estimated">%1$s, %2$s gram, uppmätt; uppskattat %3$s gram</string>
+    <string name="brew_quantities_accessibility_unavailable">%1$s, uppskattning saknas</string>
+
+    <string name="brew_measurement_title">Faktiska mätningar</string>
+    <string name="brew_measurement_explanation">Valfritt. Ett komplett mätpar hjälper till att förbättra framtida uppskattningar för liknande bryggningar.</string>
+    <string name="brew_measurement_planned_coffee">Planerad kaffemängd</string>
+    <string name="brew_measurement_water_in">Vatten in</string>
+    <string name="brew_measurement_in_cup">I koppen</string>
+    <string name="brew_measurement_unit_grams">g</string>
+    <string name="brew_measurement_value_grams">%1$s g</string>
+    <string name="brew_measurement_planned_value">Planerat %1$s g</string>
+    <string name="brew_measurement_estimated_value">Uppskattat %1$s g</string>
+    <string name="brew_measurement_estimate_unavailable">Ingen uppskattning tillgänglig</string>
+    <string name="brew_measurement_error_complete_pair">Ange båda mätningarna.</string>
+    <string name="brew_measurement_error_positive_water">Ange en positiv vattenmängd.</string>
+    <string name="brew_measurement_error_positive_output">Ange en positiv mängd i koppen.</string>
+    <string name="brew_measurement_error_output_exceeds_water">Mängden i koppen får inte vara större än den ingående vattenmängden.</string>
+    <string name="brew_measurement_save">Spara mätningar</string>
+    <string name="brew_measurement_saving">Sparar…</string>
+    <string name="brew_measurement_remove">Ta bort mätningar</string>
+</resources>

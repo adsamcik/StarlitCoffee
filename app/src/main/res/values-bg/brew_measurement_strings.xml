@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brew_quantities_title">Количества за приготвяне</string>
+    <string name="brew_quantities_coffee">Кафе</string>
+    <string name="brew_quantities_water_in">Входяща вода</string>
+    <string name="brew_quantities_in_cup">В чашата</string>
+    <string name="brew_quantities_planned">Планирано</string>
+    <string name="brew_quantities_estimated">По оценка</string>
+    <string name="brew_quantities_measured">Измерено</string>
+    <string name="brew_quantities_unavailable">Няма данни</string>
+    <string name="brew_quantities_add_measurements">Добавете измервания</string>
+    <string name="brew_quantities_edit_measurements">Редактирайте измерванията</string>
+    <string name="brew_quantities_value_grams">%1$s g</string>
+    <string name="brew_quantities_approximate_value">≈%1$s</string>
+    <string name="brew_quantities_measured_planned_value">Измерено · планирано %1$s g</string>
+    <string name="brew_quantities_measured_estimated_value">Измерено · по оценка %1$s g</string>
+    <string name="brew_quantities_accessibility_planned">%1$s, %2$s грама, планирано</string>
+    <string name="brew_quantities_accessibility_estimated">%1$s, около %2$s грама, по оценка</string>
+    <string name="brew_quantities_accessibility_measured">%1$s, %2$s грама, измерено</string>
+    <string name="brew_quantities_accessibility_measured_planned">%1$s, %2$s грама, измерено; планирано %3$s грама</string>
+    <string name="brew_quantities_accessibility_measured_estimated">%1$s, %2$s грама, измерено; по оценка %3$s грама</string>
+    <string name="brew_quantities_accessibility_unavailable">%1$s, няма налична оценка</string>
+
+    <string name="brew_measurement_title">Действителни измервания</string>
+    <string name="brew_measurement_explanation">По избор. Пълната двойка помага за подобряване на бъдещите оценки за подобни приготвяния.</string>
+    <string name="brew_measurement_planned_coffee">Планирано кафе</string>
+    <string name="brew_measurement_water_in">Входяща вода</string>
+    <string name="brew_measurement_in_cup">В чашата</string>
+    <string name="brew_measurement_unit_grams">g</string>
+    <string name="brew_measurement_value_grams">%1$s g</string>
+    <string name="brew_measurement_planned_value">Планирано %1$s g</string>
+    <string name="brew_measurement_estimated_value">По оценка %1$s g</string>
+    <string name="brew_measurement_estimate_unavailable">Няма налична оценка</string>
+    <string name="brew_measurement_error_complete_pair">Въведете и двете измервания.</string>
+    <string name="brew_measurement_error_positive_water">Въведете положително количество вода.</string>
+    <string name="brew_measurement_error_positive_output">Въведете положително количество в чашата.</string>
+    <string name="brew_measurement_error_output_exceeds_water">Количеството в чашата не може да е по-голямо от входящата вода.</string>
+    <string name="brew_measurement_save">Запазете измерванията</string>
+    <string name="brew_measurement_saving">Запазване…</string>
+    <string name="brew_measurement_remove">Премахнете измерванията</string>
+</resources>

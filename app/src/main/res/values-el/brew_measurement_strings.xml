@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brew_quantities_title">Ποσότητες παρασκευής</string>
+    <string name="brew_quantities_coffee">Καφές</string>
+    <string name="brew_quantities_water_in">Νερό εισόδου</string>
+    <string name="brew_quantities_in_cup">Στο φλιτζάνι</string>
+    <string name="brew_quantities_planned">Προγραμματισμένο</string>
+    <string name="brew_quantities_estimated">Εκτιμώμενο</string>
+    <string name="brew_quantities_measured">Μετρημένο</string>
+    <string name="brew_quantities_unavailable">Μη διαθέσιμο</string>
+    <string name="brew_quantities_add_measurements">Προσθήκη μετρήσεων</string>
+    <string name="brew_quantities_edit_measurements">Επεξεργασία μετρήσεων</string>
+    <string name="brew_quantities_value_grams">%1$s g</string>
+    <string name="brew_quantities_approximate_value">≈%1$s</string>
+    <string name="brew_quantities_measured_planned_value">Μετρημένο · προγραμματισμένο %1$s g</string>
+    <string name="brew_quantities_measured_estimated_value">Μετρημένο · εκτιμώμενο %1$s g</string>
+    <string name="brew_quantities_accessibility_planned">%1$s, %2$s γραμμάρια, προγραμματισμένο</string>
+    <string name="brew_quantities_accessibility_estimated">%1$s, περίπου %2$s γραμμάρια, εκτιμώμενο</string>
+    <string name="brew_quantities_accessibility_measured">%1$s, %2$s γραμμάρια, μετρημένο</string>
+    <string name="brew_quantities_accessibility_measured_planned">%1$s, %2$s γραμμάρια, μετρημένο· προγραμματισμένο %3$s γραμμάρια</string>
+    <string name="brew_quantities_accessibility_measured_estimated">%1$s, %2$s γραμμάρια, μετρημένο· εκτιμώμενο %3$s γραμμάρια</string>
+    <string name="brew_quantities_accessibility_unavailable">%1$s, η εκτίμηση δεν είναι διαθέσιμη</string>
+
+    <string name="brew_measurement_title">Πραγματικές μετρήσεις</string>
+    <string name="brew_measurement_explanation">Προαιρετικό. Ένα πλήρες ζεύγος βοηθά στη βελτίωση μελλοντικών εκτιμήσεων για παρόμοιες παρασκευές.</string>
+    <string name="brew_measurement_planned_coffee">Προγραμματισμένη ποσότητα καφέ</string>
+    <string name="brew_measurement_water_in">Νερό εισόδου</string>
+    <string name="brew_measurement_in_cup">Στο φλιτζάνι</string>
+    <string name="brew_measurement_unit_grams">g</string>
+    <string name="brew_measurement_value_grams">%1$s g</string>
+    <string name="brew_measurement_planned_value">Προγραμματισμένο %1$s g</string>
+    <string name="brew_measurement_estimated_value">Εκτιμώμενο %1$s g</string>
+    <string name="brew_measurement_estimate_unavailable">Δεν υπάρχει διαθέσιμη εκτίμηση</string>
+    <string name="brew_measurement_error_complete_pair">Εισαγάγετε και τις δύο μετρήσεις.</string>
+    <string name="brew_measurement_error_positive_water">Εισαγάγετε μια θετική ποσότητα νερού.</string>
+    <string name="brew_measurement_error_positive_output">Εισαγάγετε μια θετική ποσότητα στο φλιτζάνι.</string>
+    <string name="brew_measurement_error_output_exceeds_water">Η ποσότητα στο φλιτζάνι δεν μπορεί να είναι μεγαλύτερη από το νερό εισόδου.</string>
+    <string name="brew_measurement_save">Αποθήκευση μετρήσεων</string>
+    <string name="brew_measurement_saving">Αποθήκευση…</string>
+    <string name="brew_measurement_remove">Κατάργηση μετρήσεων</string>
+</resources>

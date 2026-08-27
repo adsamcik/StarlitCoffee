@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brew_quantities_title">Plikymo kiekiai</string>
+    <string name="brew_quantities_coffee">Kava</string>
+    <string name="brew_quantities_water_in">Pilamas vanduo</string>
+    <string name="brew_quantities_in_cup">Puodelyje</string>
+    <string name="brew_quantities_planned">Suplanuota</string>
+    <string name="brew_quantities_estimated">Apskaičiuota</string>
+    <string name="brew_quantities_measured">Išmatuota</string>
+    <string name="brew_quantities_unavailable">Nėra duomenų</string>
+    <string name="brew_quantities_add_measurements">Pridėti matavimus</string>
+    <string name="brew_quantities_edit_measurements">Redaguoti matavimus</string>
+    <string name="brew_quantities_value_grams">%1$s g</string>
+    <string name="brew_quantities_approximate_value">≈%1$s</string>
+    <string name="brew_quantities_measured_planned_value">Išmatuota · planuota %1$s g</string>
+    <string name="brew_quantities_measured_estimated_value">Išmatuota · įvertis %1$s g</string>
+    <string name="brew_quantities_accessibility_planned">%1$s, %2$s gramų, suplanuota</string>
+    <string name="brew_quantities_accessibility_estimated">%1$s, apie %2$s gramų, apskaičiuota</string>
+    <string name="brew_quantities_accessibility_measured">%1$s, %2$s gramų, išmatuota</string>
+    <string name="brew_quantities_accessibility_measured_planned">%1$s, %2$s gramų, išmatuota; planuota %3$s gramų</string>
+    <string name="brew_quantities_accessibility_measured_estimated">%1$s, %2$s gramų, išmatuota; įvertis %3$s gramų</string>
+    <string name="brew_quantities_accessibility_unavailable">%1$s, įverčio nėra</string>
+
+    <string name="brew_measurement_title">Faktiniai matavimai</string>
+    <string name="brew_measurement_explanation">Neprivaloma. Visa matavimų pora padeda tikslinti panašių plikymų būsimus įverčius.</string>
+    <string name="brew_measurement_planned_coffee">Suplanuotas kavos kiekis</string>
+    <string name="brew_measurement_water_in">Pilamas vanduo</string>
+    <string name="brew_measurement_in_cup">Puodelyje</string>
+    <string name="brew_measurement_unit_grams">g</string>
+    <string name="brew_measurement_value_grams">%1$s g</string>
+    <string name="brew_measurement_planned_value">Planuota %1$s g</string>
+    <string name="brew_measurement_estimated_value">Apskaičiuota %1$s g</string>
+    <string name="brew_measurement_estimate_unavailable">Įverčio nėra</string>
+    <string name="brew_measurement_error_complete_pair">Įveskite abu matavimus.</string>
+    <string name="brew_measurement_error_positive_water">Įveskite teigiamą vandens kiekį.</string>
+    <string name="brew_measurement_error_positive_output">Įveskite teigiamą kiekį puodelyje.</string>
+    <string name="brew_measurement_error_output_exceeds_water">Kiekis puodelyje negali būti didesnis už pilamo vandens kiekį.</string>
+    <string name="brew_measurement_save">Išsaugoti matavimus</string>
+    <string name="brew_measurement_saving">Išsaugoma…</string>
+    <string name="brew_measurement_remove">Pašalinti matavimus</string>
+</resources>

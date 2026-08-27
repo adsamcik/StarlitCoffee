@@ -104,6 +104,7 @@ class BrewSessionCompletionPlannerTest {
         assertTrue(log.isDecaf)
         assertEquals("Record exact session values", log.freeformNotes)
         assertEquals(90, log.brewTimeSeconds)
+        assertEquals(260f, log.expectedBeverageOutputG)
         assertEquals(COMPLETED_AT, log.createdAt)
         val storedRecord = BrewingSnapshotCodec.decodeRecord(requireNotNull(log.brewSnapshotJson))
         assertEquals(plan.brewRecord, (storedRecord as SnapshotDecodeResult.Decoded).value)
@@ -115,6 +116,44 @@ class BrewSessionCompletionPlannerTest {
         assertEquals(10f, updatedBag.weightG)
         assertEquals("6.5", updatedBag.grindSetting)
         assertEquals(null, plan.rotatedToCoffeeBagId)
+    }
+
+    @Test
+    fun `completion plan preserves a frozen target instead of recalculating it`() {
+        val session = completedSession(
+            recipe = recipe(
+                quantities = BrewQuantitiesSnapshotV1(
+                    dryCoffeeDoseG = 20.0,
+                    brewWaterInputG = 300.0,
+                    targetBeverageYieldG = 253.5,
+                ),
+                outputModel = OutputModelSnapshotV1(
+                    kind = "BREW_WATER_MINUS_RETENTION",
+                    retainedWaterGPerCoffeeG = 2.0,
+                ),
+            ),
+        )
+
+        val plan = BrewSessionCompletionPlanner.plan(session, currentCoffeeBag = null)
+
+        assertEquals(253.5f, plan.brewLog.expectedBeverageOutputG)
+    }
+
+    @Test
+    fun `completion plan leaves an unsafe unknown estimate unavailable`() {
+        val session = completedSession(
+            recipe = recipe(
+                quantities = BrewQuantitiesSnapshotV1(
+                    dryCoffeeDoseG = 20.0,
+                    brewWaterInputG = 300.0,
+                ),
+                outputModel = OutputModelSnapshotV1(kind = "FUTURE_OUTPUT_MODEL"),
+            ),
+        )
+
+        val plan = BrewSessionCompletionPlanner.plan(session, currentCoffeeBag = null)
+
+        assertEquals(null, plan.brewLog.expectedBeverageOutputG)
     }
 
     @Test
@@ -262,17 +301,25 @@ class BrewSessionCompletionPlannerTest {
     private fun recipe(
         methodFamilyId: String = "manual_gravity",
         brewerProfileId: String = "v60_02",
+        quantities: BrewQuantitiesSnapshotV1 = BrewQuantitiesSnapshotV1(
+            dryCoffeeDoseG = 20.0,
+            brewWaterInputG = 300.0,
+        ),
+        outputModel: OutputModelSnapshotV1 = OutputModelSnapshotV1(
+            kind = "BREW_WATER_MINUS_RETENTION",
+            retainedWaterGPerCoffeeG = 2.0,
+        ),
     ): BrewRecipeSnapshotV1 = BrewRecipeSnapshotV1(
         methodFamilyId = methodFamilyId,
         brewerProfileId = brewerProfileId,
         equipment = EquipmentConfigurationSnapshotV1(brewerProfileId = brewerProfileId),
-        quantities = BrewQuantitiesSnapshotV1(dryCoffeeDoseG = 20.0, brewWaterInputG = 300.0),
+        quantities = quantities,
         ratioDefinition = RatioDefinitionSnapshotV1(
             numerator = "BREW_WATER_INPUT",
             denominator = "DRY_COFFEE_DOSE",
         ),
         ratioValue = 15.0,
-        outputModel = OutputModelSnapshotV1(kind = "BREW_WATER_MINUS_RETENTION"),
+        outputModel = outputModel,
     )
 
     private fun executionContext(

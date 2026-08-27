@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.data.brewing.session
 
 import com.adsamcik.starlitcoffee.data.brewing.snapshot.BrewRecordSnapshotV1
+import com.adsamcik.starlitcoffee.data.brewing.snapshot.BrewRecipeSnapshotV1
 import com.adsamcik.starlitcoffee.data.brewing.snapshot.BrewingPersistenceMapper
 import com.adsamcik.starlitcoffee.data.brewing.snapshot.StageActualSnapshotV1
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
@@ -67,6 +68,7 @@ object BrewSessionCompletionPlanner {
             isDecaf = presentation.isDecaf,
             freeformNotes = presentation.notes,
             brewTimeSeconds = legacyBrewTimeSeconds(session.runtime.totalActiveElapsedMillis),
+            expectedBeverageOutputG = expectedBeverageOutputG(session.recipe),
             createdAt = completedAtWallClockMillis,
         )
         val brewLog = BrewingPersistenceMapper.withBrewRecordSnapshot(
@@ -129,6 +131,93 @@ object BrewSessionCompletionPlanner {
             .toInt()
             .takeIf { it > 0 }
     }
+
+    /**
+     * Resolves the estimate exclusively from the immutable recipe snapshot.
+     * Explicit targets win over reconstruction so a calibrated value shown at
+     * session start survives future catalogue changes. Older snapshots that do
+     * not carry that target can still use their frozen output-model parameters.
+     */
+    private fun expectedBeverageOutputG(recipe: BrewRecipeSnapshotV1): Float? {
+        val quantities = recipe.quantities
+        quantities.finalServedBeverageG.positiveFiniteOrNull()?.let { explicitFinal ->
+            return explicitFinal.toPositiveFiniteFloatOrNull()
+        }
+
+        val primaryOutput = when (recipe.outputModel.kind) {
+            OUTPUT_BREW_WATER_MINUS_RETENTION ->
+                quantities.targetBeverageYieldG.positiveFiniteOrNull()
+                    ?: expectedAfterRetention(
+                        inputG = quantities.brewWaterInputG,
+                        doseG = quantities.dryCoffeeDoseG,
+                        retainedWaterGPerCoffeeG = recipe.outputModel.retainedWaterGPerCoffeeG,
+                    )
+
+            OUTPUT_DIRECT_TARGET_BEVERAGE_YIELD ->
+                quantities.targetBeverageYieldG.positiveFiniteOrNull()
+                    ?: quantities.measuredOutputG.positiveFiniteOrNull()
+
+            OUTPUT_COLLECTED_CONCENTRATE ->
+                quantities.targetConcentrateYieldG.positiveFiniteOrNull()
+                    ?: expectedAfterRetention(
+                        inputG = quantities.brewWaterInputG,
+                        doseG = quantities.dryCoffeeDoseG,
+                        retainedWaterGPerCoffeeG = recipe.outputModel.retainedWaterGPerCoffeeG,
+                    )
+
+            OUTPUT_PREPARED_UNFILTERED_VOLUME -> quantities.brewWaterInputG.positiveFiniteOrNull()
+
+            OUTPUT_RESERVOIR_TO_ESTIMATED_OUTPUT -> expectedReservoirOutput(
+                frozenTargetG = quantities.targetBeverageYieldG,
+                reservoirInputG = quantities.reservoirInputG,
+                internalRetentionG = recipe.outputModel.internalRetentionG,
+            )
+
+            OUTPUT_USER_MEASURED_OUTPUT -> quantities.measuredOutputG.positiveFiniteOrNull()
+            OUTPUT_NO_MEANINGFUL_BEVERAGE_YIELD -> null
+            else -> quantities.targetBeverageYieldG.positiveFiniteOrNull()
+                ?: quantities.targetConcentrateYieldG.positiveFiniteOrNull()
+                ?: quantities.measuredOutputG.positiveFiniteOrNull()
+        } ?: return null
+
+        val bypassWaterG = quantities.bypassWaterG.nonNegativeFiniteOrNull() ?: return null
+        val dilutionWaterG = quantities.dilutionWaterG.nonNegativeFiniteOrNull() ?: return null
+        return (primaryOutput + bypassWaterG + dilutionWaterG).toPositiveFiniteFloatOrNull()
+    }
+
+    private fun expectedAfterRetention(
+        inputG: Double?,
+        doseG: Double,
+        retainedWaterGPerCoffeeG: Double?,
+    ): Double? {
+        val input = inputG.positiveFiniteOrNull() ?: return null
+        val dose = doseG.positiveFiniteOrNull() ?: return null
+        val retention = retainedWaterGPerCoffeeG?.nonNegativeFiniteOrNull() ?: return null
+        return (input - dose * retention).coerceAtLeast(0.0).positiveFiniteOrNull()
+    }
+
+    private fun expectedReservoirOutput(
+        frozenTargetG: Double?,
+        reservoirInputG: Double?,
+        internalRetentionG: Double?,
+    ): Double? {
+        frozenTargetG.positiveFiniteOrNull()?.let { return it }
+        val reservoir = reservoirInputG.positiveFiniteOrNull() ?: return null
+        val retention = if (internalRetentionG == null) {
+            0.0
+        } else {
+            internalRetentionG.nonNegativeFiniteOrNull() ?: return null
+        }
+        return (reservoir - retention).coerceAtLeast(0.0).positiveFiniteOrNull()
+    }
+
+    private fun Double?.positiveFiniteOrNull(): Double? = this?.takeIf { it.isFinite() && it > 0.0 }
+
+    private fun Double.nonNegativeFiniteOrNull(): Double? = takeIf { it.isFinite() && it >= 0.0 }
+
+    private fun Double.toPositiveFiniteFloatOrNull(): Float? = takeIf {
+        it.isFinite() && it > 0.0 && it <= Float.MAX_VALUE.toDouble()
+    }?.toFloat()
 
     private fun inventoryPlan(
         selectedCoffeeBagId: Long?,
@@ -195,4 +284,11 @@ object BrewSessionCompletionPlanner {
     private const val STATUS_SEALED = "SEALED"
     private const val STATUS_OPEN = "OPEN"
     private const val STATUS_FINISHED = "FINISHED"
+    private const val OUTPUT_BREW_WATER_MINUS_RETENTION = "BREW_WATER_MINUS_RETENTION"
+    private const val OUTPUT_DIRECT_TARGET_BEVERAGE_YIELD = "DIRECT_TARGET_BEVERAGE_YIELD"
+    private const val OUTPUT_COLLECTED_CONCENTRATE = "COLLECTED_CONCENTRATE"
+    private const val OUTPUT_PREPARED_UNFILTERED_VOLUME = "PREPARED_UNFILTERED_VOLUME"
+    private const val OUTPUT_RESERVOIR_TO_ESTIMATED_OUTPUT = "RESERVOIR_TO_ESTIMATED_OUTPUT"
+    private const val OUTPUT_USER_MEASURED_OUTPUT = "USER_MEASURED_OUTPUT"
+    private const val OUTPUT_NO_MEANINGFUL_BEVERAGE_YIELD = "NO_MEANINGFUL_BEVERAGE_YIELD"
 }

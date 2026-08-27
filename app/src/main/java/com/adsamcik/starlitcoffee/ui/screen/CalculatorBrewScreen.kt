@@ -117,8 +117,11 @@ fun CalculatorBrewScreen(
     val selectedFilter = brewState.filterType
     val selectedGrinderId = brewState.selectedGrinderId
 
-    LaunchedEffect(selectedMethod) {
-        calculatorViewModel.setBrewMethod(selectedMethod)
+    LaunchedEffect(selectedMethod, brewState.beverageOutputCalibration) {
+        calculatorViewModel.setBrewContext(
+            method = selectedMethod,
+            calibration = brewState.beverageOutputCalibration,
+        )
     }
 
     val context = LocalContext.current

@@ -107,27 +107,27 @@ class BrewViewModelTest {
     }
 
     @Test
-    fun `brew size accounts for ground absorption`() {
+    fun `brew size accounts for method apparent loss`() {
         viewModel.setMethod(BrewMethod.V60) // ratio 16
         viewModel.setInputMode(InputMode.BREW_SIZE_TO_BOTH)
         viewModel.setAmount("250")
 
         val state = viewModel.uiState.value
-        // 250ml brew: coffeeG = 250 / (16 - 2) = 17.86g, waterG = 17.86 * 16 = 285.71g
-        assertEquals(250f / 14f, state.coffeeG, 0.01f)
-        assertEquals(250f / 14f * 16f, state.waterG, 0.01f)
+        // V60 starts at 2.1g apparent loss per gram of coffee.
+        assertEquals(250f / 13.9f, state.coffeeG, 0.01f)
+        assertEquals(250f / 13.9f * 16f, state.waterG, 0.01f)
     }
 
     @Test
-    fun `brew size with Pulsar accounts for absorption`() {
+    fun `brew size with Pulsar uses method apparent loss`() {
         viewModel.setMethod(BrewMethod.PULSAR) // ratio 17
         viewModel.setInputMode(InputMode.BREW_SIZE_TO_BOTH)
         viewModel.setAmount("300")
 
         val state = viewModel.uiState.value
-        // 300ml brew: coffeeG = 300 / (17 - 2) = 20g, waterG = 20 * 17 = 340g
-        assertEquals(20f, state.coffeeG, 0.01f)
-        assertEquals(340f, state.waterG, 0.01f)
+        // Pulsar starts at 2.2g apparent loss per gram of coffee.
+        assertEquals(300f / 14.8f, state.coffeeG, 0.01f)
+        assertEquals(300f / 14.8f * 17f, state.waterG, 0.01f)
     }
 
     @Test
@@ -1208,8 +1208,101 @@ class BrewViewModelTest {
         assertEquals("V60", logs.first().method)
         assertEquals(20f, logs.first().doseG, 0.01f)
         assertEquals(320f, logs.first().waterG, 0.01f)
+        assertEquals(278f, requireNotNull(logs.first().expectedBeverageOutputG), 0.01f)
         assertEquals("BALANCED", logs.first().tasteFeedback)
         assertEquals(4f, logs.first().rating)
+    }
+
+    @Test
+    fun `complete brew measurements recalibrate future estimates and can be cleared`() = runTest {
+        val persistenceViewModel = createPersistenceViewModel()
+        persistenceViewModel.setMethod(BrewMethod.V60)
+        persistenceViewModel.setAmount("20")
+        persistenceViewModel.logBrew()
+        val log = persistenceViewModel.brewLogs.value.single()
+
+        assertTrue(
+            persistenceViewModel.updateBrewLogMeasurementsAndWait(
+                logId = log.id,
+                waterInputG = 320f,
+                beverageOutputG = 270f,
+            ),
+        )
+
+        val personalized = persistenceViewModel.uiState.value
+        assertEquals(2.3f, requireNotNull(personalized.beverageOutputCalibration)
+            .apparentLossGPerCoffeeG, 0.01f)
+        assertEquals(274f, personalized.predictedCupVolumeG, 0.01f)
+        assertEquals(320f, requireNotNull(persistenceViewModel.brewLogs.value.single().measuredWaterInputG), 0.01f)
+        assertEquals(270f, requireNotNull(persistenceViewModel.brewLogs.value.single().measuredBeverageOutputG), 0.01f)
+
+        assertTrue(
+            persistenceViewModel.updateBrewLogMeasurementsAndWait(
+                logId = log.id,
+                waterInputG = null,
+                beverageOutputG = null,
+            ),
+        )
+
+        val reset = persistenceViewModel.uiState.value
+        assertEquals(2.1f, requireNotNull(reset.beverageOutputCalibration)
+            .apparentLossGPerCoffeeG, 0.01f)
+        assertEquals(278f, reset.predictedCupVolumeG, 0.01f)
+    }
+
+    @Test
+    fun `brew measurement persistence rejects partial or impossible pairs`() = runTest {
+        val persistenceViewModel = createPersistenceViewModel()
+        persistenceViewModel.logBrew()
+        val log = persistenceViewModel.brewLogs.value.single()
+
+        assertFalse(persistenceViewModel.updateBrewLogMeasurementsAndWait(log.id, 340f, null))
+        assertFalse(persistenceViewModel.updateBrewLogMeasurementsAndWait(log.id, 300f, 301f))
+        assertNull(persistenceViewModel.brewLogs.value.single().measuredWaterInputG)
+        assertNull(persistenceViewModel.brewLogs.value.single().measuredBeverageOutputG)
+    }
+
+    @Test
+    fun `brew measurement persistence rejects unsupported espresso logs`() = runTest {
+        val persistenceViewModel = createPersistenceViewModel()
+        persistenceViewModel.setMethod(BrewMethod.ESPRESSO)
+        persistenceViewModel.setAmount("20")
+        persistenceViewModel.logBrew()
+        val log = persistenceViewModel.brewLogs.value.single()
+
+        assertFalse(
+            persistenceViewModel.updateBrewLogMeasurementsAndWait(
+                logId = log.id,
+                waterInputG = 40f,
+                beverageOutputG = 36f,
+            ),
+        )
+        assertNull(persistenceViewModel.brewLogs.value.single().measuredWaterInputG)
+        assertNull(persistenceViewModel.brewLogs.value.single().measuredBeverageOutputG)
+    }
+
+    @Test
+    fun `rating-only log updates do not invalidate calibration history`() = runTest {
+        val persistenceViewModel = createPersistenceViewModel()
+        persistenceViewModel.logBrew()
+        val log = persistenceViewModel.brewLogs.value.single()
+        val revisionBeforeFeedback =
+            persistenceViewModel.beverageOutputCalibrationRevisionForTesting()
+
+        assertTrue(
+            persistenceViewModel.updateBrewLogFeedbackAndWait(
+                logId = log.id,
+                rating = 4f,
+                notes = "Balanced",
+                tasteFeedback = TasteFeedback.BALANCED.name,
+                descriptors = emptyList(),
+            ),
+        )
+
+        assertEquals(
+            revisionBeforeFeedback,
+            persistenceViewModel.beverageOutputCalibrationRevisionForTesting(),
+        )
     }
 
     @Test
@@ -2151,25 +2244,25 @@ class BrewViewModelTest {
     // --- Water Retention ---
 
     @Test
-    fun `retention is calculated as coffeeG times absorptionRatio`() {
+    fun `retained amount uses method apparent loss coefficient`() {
         viewModel.setAmount("20")
         val state = viewModel.uiState.value
-        assertEquals(40f, state.retainedWaterG, 0.01f)
+        assertEquals(44f, state.retainedWaterG, 0.01f)
     }
 
     @Test
     fun `predicted cup volume subtracts retained water from total`() {
         viewModel.setAmount("20")
         val state = viewModel.uiState.value
-        assertEquals(300f, state.predictedCupVolumeG, 0.01f)
+        assertEquals(296f, state.predictedCupVolumeG, 0.01f)
     }
 
     @Test
     fun `retention scales with coffee dose`() {
         viewModel.setAmount("25")
         val state = viewModel.uiState.value
-        assertEquals(50f, state.retainedWaterG, 0.01f)
-        assertEquals(375f, state.predictedCupVolumeG, 0.01f)
+        assertEquals(55f, state.retainedWaterG, 0.01f)
+        assertEquals(370f, state.predictedCupVolumeG, 0.01f)
     }
 
     @Test
@@ -2187,8 +2280,8 @@ class BrewViewModelTest {
         viewModel.setMethod(BrewMethod.FRENCH_PRESS)
         viewModel.setAmount("20")
         val state = viewModel.uiState.value
-        assertEquals(40f, state.retainedWaterG, 0.01f)
-        assertEquals(260f, state.predictedCupVolumeG, 0.01f)
+        assertEquals(44f, state.retainedWaterG, 0.01f)
+        assertEquals(256f, state.predictedCupVolumeG, 0.01f)
     }
 
     @Test

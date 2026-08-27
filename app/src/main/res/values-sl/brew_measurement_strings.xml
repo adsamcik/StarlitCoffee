@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brew_quantities_title">Količine za pripravo</string>
+    <string name="brew_quantities_coffee">Kava</string>
+    <string name="brew_quantities_water_in">Vhodna voda</string>
+    <string name="brew_quantities_in_cup">V skodelici</string>
+    <string name="brew_quantities_planned">Načrtovano</string>
+    <string name="brew_quantities_estimated">Ocenjeno</string>
+    <string name="brew_quantities_measured">Izmerjeno</string>
+    <string name="brew_quantities_unavailable">Ni na voljo</string>
+    <string name="brew_quantities_add_measurements">Dodaj meritve</string>
+    <string name="brew_quantities_edit_measurements">Uredi meritve</string>
+    <string name="brew_quantities_value_grams">%1$s g</string>
+    <string name="brew_quantities_approximate_value">≈%1$s</string>
+    <string name="brew_quantities_measured_planned_value">Izmerjeno · načrtovano %1$s g</string>
+    <string name="brew_quantities_measured_estimated_value">Izmerjeno · ocena %1$s g</string>
+    <string name="brew_quantities_accessibility_planned">%1$s, %2$s gramov, načrtovano</string>
+    <string name="brew_quantities_accessibility_estimated">%1$s, približno %2$s gramov, ocenjeno</string>
+    <string name="brew_quantities_accessibility_measured">%1$s, %2$s gramov, izmerjeno</string>
+    <string name="brew_quantities_accessibility_measured_planned">%1$s, %2$s gramov, izmerjeno; načrtovano %3$s gramov</string>
+    <string name="brew_quantities_accessibility_measured_estimated">%1$s, %2$s gramov, izmerjeno; ocena %3$s gramov</string>
+    <string name="brew_quantities_accessibility_unavailable">%1$s, ocena ni na voljo</string>
+
+    <string name="brew_measurement_title">Dejanske meritve</string>
+    <string name="brew_measurement_explanation">Neobvezno. Popoln par meritev pomaga izboljšati prihodnje ocene za podobne priprave.</string>
+    <string name="brew_measurement_planned_coffee">Načrtovana količina kave</string>
+    <string name="brew_measurement_water_in">Vhodna voda</string>
+    <string name="brew_measurement_in_cup">V skodelici</string>
+    <string name="brew_measurement_unit_grams">g</string>
+    <string name="brew_measurement_value_grams">%1$s g</string>
+    <string name="brew_measurement_planned_value">Načrtovano %1$s g</string>
+    <string name="brew_measurement_estimated_value">Ocenjeno %1$s g</string>
+    <string name="brew_measurement_estimate_unavailable">Ocena ni na voljo</string>
+    <string name="brew_measurement_error_complete_pair">Vnesite obe meritvi.</string>
+    <string name="brew_measurement_error_positive_water">Vnesite pozitivno količino vode.</string>
+    <string name="brew_measurement_error_positive_output">Vnesite pozitivno količino v skodelici.</string>
+    <string name="brew_measurement_error_output_exceeds_water">Količina v skodelici ne sme biti večja od količine vhodne vode.</string>
+    <string name="brew_measurement_save">Shrani meritve</string>
+    <string name="brew_measurement_saving">Shranjevanje…</string>
+    <string name="brew_measurement_remove">Odstrani meritve</string>
+</resources>

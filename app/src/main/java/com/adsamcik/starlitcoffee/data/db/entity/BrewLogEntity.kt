@@ -33,5 +33,10 @@ data class BrewLogEntity(
     val rating: Float? = null,
     val freeformNotes: String? = null,
     val brewTimeSeconds: Int? = null,
+    /** Frozen estimate shown when this brew was planned. */
+    val expectedBeverageOutputG: Float? = null,
+    /** Optional scale reading reported after brewing. Stored only as a complete pair. */
+    val measuredWaterInputG: Float? = null,
+    val measuredBeverageOutputG: Float? = null,
     val createdAt: Long = System.currentTimeMillis(),
 )
