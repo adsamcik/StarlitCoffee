@@ -426,6 +426,23 @@ memory/thermal behavior. Aggregate p50/p95 over an adequate declared sample;
 single-run timings are observations, not percentile evidence. All telemetry stays
 local unless the user explicitly shares diagnostics, with photo/text redaction.
 
+## Design verification
+
+The companion interactive walkthrough was checked in headless Microsoft Edge
+on 2026-09-17. All 22 interaction/layout assertions passed: editing during
+recognition, Back/reopen, preserving explicit edits and cleared fields, freezing
+the saved snapshot, optional-failure recovery, manual completion, conflict
+resolution, invalid input and save retry. All six scenarios fit at 320 px without
+horizontal overflow. Light, dark and narrow screenshots were visually reviewed;
+the completed run reported no JavaScript runtime errors.
+
+The initial walkthrough exposed a preview-sandbox restriction on form submission;
+the local Save interaction was corrected and the checks rerun. This is evidence
+for the illustrative interaction design only. Its recognition, draft retention
+and save operations are simulations; it does not establish Android behavior,
+disk durability, model quality, accessibility acceptance or device performance.
+The delivery gates above remain required for the production implementation.
+
 ## Scope and tradeoffs
 
 The coordinator, typed outcomes and presenter add internal structure to reduce
