@@ -43,24 +43,81 @@ toolbar are needed.
 
 ### Review
 
-The stable layout contains a compact photo preview, coffee name and roaster,
-useful recognized details, an expandable "More details" section, and the Save
-action in the normal bottom action area. Name is the only required identity
-field. Weight remains optional; supplied values must satisfy existing validation.
+The revised layout removes the branding header, introductory slogan, generic
+status paragraph, permanently reserved status gap and routine reassurance below
+Save. Each remaining element supports identifying the coffee, correcting a value,
+checking its source or saving it:
 
-Show one compact status region above the fields. Reserve modest space so updates
-do not shift the user's current input. Use real state, without a stage percentage
-or estimated time that the system cannot support:
+1. A compact navigation bar: Back and "Add coffee".
+2. A small photo strip: open the label and add another photo. Use the actual
+   retained thumbnail in production; the walkthrough uses illustrative evidence.
+3. Coffee name and roaster, directly editable in one quiet group.
+4. Compact property rows with label, value and an edit affordance. The whole row
+   opens an inline editor; users never have to hit a small pencil. Origin and bag
+   weight remain visible. Less-used properties live under "More details".
+5. One primary Save action. Show supporting copy only when it changes the meaning
+   of that action, such as "Weight will be left blank" for an unchosen candidate.
 
-| State | Presentation | Action |
+Name is the only required identity field. Weight remains optional; supplied values
+must satisfy validation. A Save attempt with invalid input focuses the first
+invalid field and explains the problem there. Do not leave an unexplained disabled
+button. Saving may temporarily disable repeat submission while its outcome is
+being reconciled.
+
+### Put each problem where it belongs
+
+Use visual treatment plus an icon and plain-language explanation. Color is never
+the only cue. Distinguish an uncertain machine reading from invalid user input:
+
+| State | Location and appearance | Recovery |
 | --- | --- | --- |
-| Initial recognition | "Reading the label…" with a quiet activity indicator | Editing available; Save available once valid |
-| Useful draft, further work | "Checking a few more details…" | Save remains primary |
-| Ready, no meaningful conflicts | Remove recognition status | Save |
-| A material conflicting suggestion | "Check 1 detail" | Reveal that field and its photo evidence |
-| Stopped with usable partial results | Usually no alert; if an explicitly requested improvement failed, "Couldn't read more details." | Contextual "Try again" when the cause is retryable |
-| No usable fields | "Couldn't read this label. You can enter the details." | Enter name; photo-specific recovery when relevant |
-| Save failed | "Couldn't save this coffee. Try again." | Retry save; keep the exact form and photos |
+| Reading | Small scan/activity treatment beside the source photo; no percentage or stage list | Keep editing and saving available |
+| Useful result, no known issues | Ordinary editable values, no success banner or blanket "verified" checks | Save or edit |
+| Missing optional detail | Neutral "Not set"; no warning or problem count | Edit if wanted |
+| Uncertain/conflicting extraction | Affected row has an amber surface, warning icon and "Check" label; inline evidence and reason | Choose a supported reading, enter another value or leave blank |
+| Invalid user-entered value | Affected editor has an error icon, error styling and specific rule | Correct it or clear it when optional |
+| Unreadable photo | Photo-local warning surface with image icon; preserve readable results from other photos | Retake that photo or enter details |
+| Optional improvement failed | No alert for an automatic best-effort stage; a requested improvement gets a compact notice at its source/More details | Contextual retry if useful |
+| Save failed | Error surface immediately above Save, with a persistence icon and "Coffee wasn't saved" | Same primary button becomes "Retry save"; retain edits |
+
+For a known durable draft, the save error can add "Your draft is still here".
+Do not use that reassurance when draft persistence itself failed. Saving,
+reconciling and uncertain outcomes must not be mislabeled as definite failure.
+
+An extraction problem answers three questions in one place: **what was read,
+why it needs checking, and how to fix it**. For example:
+
+- Bag weight: "Read as 750 g. The first digit could be a 2 or a 7." Show the
+  corresponding original label crop, highlight the ambiguous digit, and offer
+  only the evidence-supported alternatives. Neither is preselected as accepted.
+- Origin: "Read as Netherlands. We may have used the roaster's address." Show
+  the source address and the competing origin region together, in photo context.
+  Keep uncertainty in the explanation; do not assert the inferred cause as fact.
+
+These are illustrative cases, not diagnoses the app should invent. When the
+cause is unknown, say "Check this detail against the label". Do not fabricate
+an image-quality problem, competing reading or explanation from model confidence.
+No warning means no concrete issue was detected, not that the field is verified.
+All accepted values remain inspectable and editable beside their source.
+
+The initial review may open its first relevant issue. Other issues stay visibly
+marked on their own rows; tapping one reveals its explanation. Do not reorder
+fields, steal focus or expand a newly arrived issue while the user is editing.
+Problems inside collapsed More details mark its summary with a warning icon and
+count. Opening it exposes the affected rows, not a separate error dashboard.
+
+Show a compact original image crop inline, with the affected region outlined.
+Tapping it expands the surrounding label context and supports zoom. Bind crops to
+the correct photo revision and mapped source coordinates. If a reliable region
+is unavailable, show the whole source photo without a fabricated highlight. If
+the source was removed/unavailable, state that and offer manual correction or a
+replacement photo. Never render normalized/generated text as photographic proof.
+
+Offer at most two supported candidate choices plus a contextual manual editor and
+Leave blank/Keep mine as appropriate. Opening the manual editor does not accept
+a candidate. Choosing a correction resolves only that field, announces the change
+once, and returns keyboard focus to its stable row. Do not require another
+confirmation or leave permanent success badges on every field.
 
 Keep fields editable while recognition runs. Autofill empty, untouched fields
 only with evidence that passes the acceptance policy. Once a nonempty value has
@@ -68,10 +125,11 @@ been presented, material replacements become suggestions. Identical/canonical
 equivalents may update internal attribution without a visible change. A cleared
 field is an explicit user edit and must stay cleared.
 
-Unknown optional fields do not count as errors or "details to review". A conflict
-is shown at the relevant field, with the existing value and one alternative at a
-time. "Use this" and "Keep mine" resolve it. Do not expose numeric confidence.
-The source image can be enlarged without losing keyboard, scroll, or field state.
+Unknown optional fields do not count as errors or "details to review". When a
+field already contains a user value, show that current value separately from the
+proposal and offer "Keep mine". An empty field with two plausible readings may
+show both alternatives. Do not expose numeric confidence. The source image can
+be enlarged without losing keyboard, scroll, or field state.
 
 Before Save, valid automatic values are ordinary editable draft values. Weak or
 conflicting candidates remain suggestions outside the saved value. Saving does
@@ -151,7 +209,7 @@ flowchart TD
 | `RecognitionRunner` | Execute one plan, checkpoint outcomes, enforce cancellation and resource limits | Extract orchestration from `BagPhotoExtractor`; worker becomes a thin adapter |
 | `FieldResolver` | Validate, normalize, preserve provenance and merge candidates deterministically | Evolve `BagPhotoScanSupport`, parser and field context mapping |
 | `BagSaveService` | Freeze, persist and reconcile one reviewed snapshot | Move `persistScannedBag` and rescan recovery out of UI / `BrewViewModel` coupling |
-| `RecognitionPresenter` | Derive copy, one contextual recovery action and accessible announcements | Consolidate `RecognitionUiStateMapper` and duplicated `GuidedScanFlow` inference |
+| `RecognitionPresenter` | Derive localized photo/field/save issues, evidence views, recovery actions and accessible announcements | Consolidate `RecognitionUiStateMapper` and duplicated `GuidedScanFlow` inference |
 
 Provider adapters remain implementation details under the runner, with typed
 results. ViewModels only expose repository state and dispatch commands. A worker
@@ -272,6 +330,38 @@ Unchosen suggestions cannot change inventory or coffee-specific brew adjustments
 Existing explicit defaults remain the fallback for unknown metadata. Do not
 persist full prompts/token streams in the coffee entity.
 
+### Presentation contract for issues
+
+The resolver produces typed, revision-bound evidence and issue facts; the presenter
+maps them to UI. Do not reconstruct a diagnosis from a generic error string or
+make Compose infer it independently. Extend the existing responsibilities rather
+than adding another state owner:
+
+- **Target:** photo ID/revision, field key, or save operation/revision.
+- **Issue identity:** stable key tied to the candidate and source revision, so a
+  dismissed or resolved issue does not return from another correlated pass.
+- **Reason:** supported ambiguity, conflicting evidence, possible semantic-role
+  mismatch, missing source, invalid user value, unreadable source, or typed save
+  failure. Unknown cause stays unknown.
+- **Values:** accepted/current value separately from unaccepted candidate(s).
+- **Evidence:** original photo references and valid mapped regions, original text
+  when useful, and whether a reason is observed or only a hypothesis.
+- **Resolution:** allowed choices and their commands: accept candidate, edit,
+  retain current value, leave unknown, retake source or retry durable operation.
+
+Weak machine output can create a review suggestion; it cannot become a red user
+validation error or a silently accepted value. Bad response envelopes with no
+trustworthy field attribution remain reading failures, not warnings on every
+field. Invalid or unsupported candidate values must never be offered as one-tap
+accepted alternatives.
+
+Candidate selection, Keep mine and Leave blank use the repository's existing
+atomic revision checks. If the source changed while a suggestion was open, keep
+the user's current value and reject the stale acceptance command. Refresh that
+field's evidence without silently applying a different candidate. The UI can
+truthfully promise a localized correction because accepted values, candidate
+dispositions and issue resolution are committed together.
+
 ## Adaptive execution and performance
 
 Start with one bundled OCR pass per attached photo. Publish each photo's useful
@@ -359,11 +449,13 @@ settles as useful complete/partial/no-result independently of stage failures.
 | User cancellation / new generation | Stop silently; reject late results | No error message |
 | Disk/import/DB failure | Preserve recoverable inputs; fail the affected durable operation explicitly | Retry or intentional alternate action |
 
-Never show a toast for every internal failure. One presenter selects the highest
-priority actionable state: data preservation/save error, invalid user input,
-material field conflict, no-result capture issue, then optional recognition status.
-Logs retain every component outcome. Dismissing a recoverable status does not
-erase the draft or auto-disable the baseline recognizer.
+Never show a toast for every internal failure. One presenter exposes the relevant
+issues at their targets; a save error does not hide an unrelated field problem.
+For competing announcements or a Save-triggered focus move, prioritize data
+preservation/save error, invalid user input, material field conflict, no-result
+capture issue, then optional recognition status. Logs retain every component
+outcome. Dismissing a recoverable status does not erase the draft or auto-disable
+the baseline recognizer.
 
 ## Interaction polish and accessibility
 
@@ -396,7 +488,7 @@ test seams are appropriate; avoid new user-facing configuration for rollout.
 | 2. Consolidate ownership | Repository/coordinator commands; monotonic revisions; persisted Save barrier and snapshot; reuse existing journals | Edit/result, Save/result, remove-photo/result races; duplicate worker and kill/restart recovery; new-bag and rescan idempotency |
 | 3. Deliver baseline first | Bundled OCR partial per photo; extract one shared runner; shared resource arbiter | Mindlayer absent/hung cannot delay baseline; both photo orders; no callback or UI thread dependence |
 | 4. Make enrichment selective | Pure planner, artifacts, full cache fingerprints, stage/attempt budgets, evidence dispositions | Virtual-clock retry/deadline tests; held-out A/B quality; process-repeated scans; unchanged-photo reuse |
-| 5. Unify polished review | Presenter, stable field suggestions, setup/recovery mapping, Back/Save semantics, remove QR save dependency | Real user-flow UI tests, accessibility, IME/large text, all localized layouts, notification deep links |
+| 5. Unify polished review | Compact editable rows, localized issues/evidence, stable suggestions, setup/recovery mapping, Back/Save semantics, remove QR save dependency | Correct photo/region attribution, mixed and hidden issues, stale suggestion rejection, focus/IME/large text, localized layouts, notifications and real user-flow tests |
 | 6. Preserve unknown metadata | Compatible caffeine/provenance persistence; updated filters and consumers | Room and draft migrations, legacy imports, saved-bag behavior; no unknown-to-confirmed promotion |
 | 7. Gate the product | Production-runner corpus harness and device acceptance lane | Final field/save behavior, absent-field abstention, latency/resources, repeated scans and failure scenarios |
 
@@ -428,7 +520,7 @@ local unless the user explicitly shares diagnostics, with photo/text redaction.
 
 ## Design verification
 
-The companion interactive walkthrough was checked in headless Microsoft Edge
+The initial interactive walkthrough was checked in headless Microsoft Edge
 on 2026-09-17. All 22 interaction/layout assertions passed: editing during
 recognition, Back/reopen, preserving explicit edits and cleared fields, freezing
 the saved snapshot, optional-failure recovery, manual completion, conflict
@@ -442,6 +534,23 @@ for the illustrative interaction design only. Its recognition, draft retention
 and save operations are simulations; it does not establish Android behavior,
 disk durability, model quality, accessibility acceptance or device performance.
 The delivery gates above remain required for the production implementation.
+
+The revised field-local design was checked the same day with **50 passing
+assertions** across eight scenarios: ambiguous weight, possible wrong origin,
+multiple field issues, clear results, active reading, unreadable photo, optional
+reading interruption and save failure. Checks cover local evidence disclosure,
+correction/blank choices, omission of unchosen candidates, focus preservation,
+multiple-issue independence, edit preservation, late-result rejection, and Save
+validation/recovery. Visible element bounds were checked at 320 px with ordinary
+and doubled body text. Light/dark, narrow and enlarged-text screenshots were
+reviewed; visual review caught and corrected inherited line spacing at larger
+text sizes. Status icons loaded and the completed run had no JavaScript errors.
+
+The refined walkthrough supersedes the initial layout. Its evidence crops are
+illustrative text facsimiles, not extracted real photos. Production must display
+the actual source pixels and verify region mapping. Browser text scaling and
+keyboard checks do not establish Android large-font, TalkBack, IME or switch-access
+acceptance; those remain production gates.
 
 ## Scope and tradeoffs
 
