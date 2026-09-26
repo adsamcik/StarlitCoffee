@@ -734,7 +734,6 @@
     <string name="guidance_cue_valve_state">Stan zaworu</string>
     <string name="screen_learning_title">Nauka</string>
     <string name="msg_learning_subtitle">Ilustrowane instrukcje parzenia krok po kroku</string>
-    <string name="msg_learning_intro">Wybierz zaparzacz i przepis, a następnie poznawaj kolejne jasne kroki.</string>
     <string name="action_show_details">Pokaż szczegóły</string>
     <string name="action_hide_details">Ukryj szczegóły</string>
 </resources>

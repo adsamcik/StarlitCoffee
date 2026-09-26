@@ -727,7 +727,6 @@
     <string name="guidance_cue_valve_state">阀门状态</string>
     <string name="screen_learning_title">学习</string>
     <string name="msg_learning_subtitle">图解分步冲煮指南</string>
-    <string name="msg_learning_intro">选择冲煮器具和配方，然后逐步查看清晰的操作说明。</string>
     <string name="action_show_details">显示详细信息</string>
     <string name="action_hide_details">隐藏详细信息</string>
 </resources>

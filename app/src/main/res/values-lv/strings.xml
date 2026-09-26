@@ -733,7 +733,6 @@
     <string name="guidance_cue_valve_state">Vārsta stāvoklis</string>
     <string name="screen_learning_title">Mācies</string>
     <string name="msg_learning_subtitle">Vizuālas pakāpeniskas kafijas pagatavošanas pamācības</string>
-    <string name="msg_learning_intro">Izvēlieties pagatavošanas ierīci un recepti, pēc tam izpētiet katru skaidro soli atsevišķi.</string>
     <string name="action_show_details">Rādīt informāciju</string>
     <string name="action_hide_details">Paslēpt informāciju</string>
 </resources>

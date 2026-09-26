@@ -1,7 +1,12 @@
 package com.adsamcik.starlitcoffee.ui.component
 
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+import dev.tracebox.api.argument
 
+private object BloomGridTraceboxTemplates {
+    val REJECTED_SPRITESHEET_X_FRAMESIZEPX = LogTemplate.of("Rejected spritesheet '{}' ({}x{}, frameSizePx={}): {}")
+}
 
 /**
  * Geometric description of how a spritesheet image maps to animation frames.
@@ -140,12 +145,12 @@ internal fun resolveBloomGridOrLog(
     is BloomGridParseResult.Success -> result.grid
     is BloomGridParseResult.Failure -> {
         Tracebox.log.warn(
-            "Rejected spritesheet '{}' ({}x{}, frameSizePx={}): {}",
-            spritesheetId,
-            imageWidth,
-            imageHeight,
-            frameSizePx,
-            result.error.reason,
+            BloomGridTraceboxTemplates.REJECTED_SPRITESHEET_X_FRAMESIZEPX,
+            argument(spritesheetId),
+            argument(imageWidth),
+            argument(imageHeight),
+            argument(frameSizePx),
+            argument(result.error.reason),
         )
         null
     }

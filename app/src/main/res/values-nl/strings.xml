@@ -730,7 +730,6 @@
     <string name="guidance_cue_valve_state">Klepstatus</string>
     <string name="screen_learning_title">Leren</string>
     <string name="msg_learning_subtitle">Visuele zetgidsen, stap voor stap</string>
-    <string name="msg_learning_intro">Kies een koffiezetter en recept en doorloop steeds één duidelijke stap.</string>
     <string name="action_show_details">Details tonen</string>
     <string name="action_hide_details">Details verbergen</string>
 </resources>

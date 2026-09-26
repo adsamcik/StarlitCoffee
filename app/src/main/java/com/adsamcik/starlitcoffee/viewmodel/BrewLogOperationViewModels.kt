@@ -11,6 +11,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+
+private object BrewLogOperationViewModelsTraceboxTemplates {
+    val FAILED_TO_DELETE_BREW_LOG = LogTemplate.of("Failed to delete brew log")
+    val FAILED_TO_SAVE_BREW_FEEDBACK = LogTemplate.of("Failed to save brew feedback")
+}
 
 data class BrewLogDeleteUiState(
     val deletingLogId: Long? = null,
@@ -49,7 +55,7 @@ class BrewLogListViewModel(
             } catch (error: CancellationException) {
                 throw error
             } catch (error: Exception) {
-                Tracebox.log.error(error, "Failed to delete brew log")
+                Tracebox.log.error(error, BrewLogOperationViewModelsTraceboxTemplates.FAILED_TO_DELETE_BREW_LOG)
                 _uiState.update {
                     it.copy(
                         deletingLogId = null,
@@ -134,7 +140,7 @@ class BrewLogFeedbackViewModel(
             } catch (error: CancellationException) {
                 throw error
             } catch (error: Exception) {
-                Tracebox.log.error(error, "Failed to save brew feedback")
+                Tracebox.log.error(error, BrewLogOperationViewModelsTraceboxTemplates.FAILED_TO_SAVE_BREW_FEEDBACK)
                 val failedTarget = _uiState.value.pendingTarget
                 _uiState.update {
                     it.copy(

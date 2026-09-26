@@ -7,6 +7,11 @@ import androidx.work.WorkerParameters
 import com.adsamcik.starlitcoffee.notification.AndroidBagAnalysisNotifier
 import kotlinx.coroutines.flow.first
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+
+private object BagAnalysisNotificationWorkerTraceboxTemplates {
+    val FAILED_TO_DECODE_COMPLETED_BAG_ANALYSIS_FOR = LogTemplate.of("Failed to decode completed bag analysis for notification")
+}
 
 class BagAnalysisNotificationWorker(
     appContext: Context,
@@ -74,7 +79,7 @@ class BagAnalysisNotificationWorker(
                 runCatching {
                     decodeBagExtractionResult(json).fieldEvidence["name"]?.value
                 }.onFailure { error ->
-                    Tracebox.log.error(error, "Failed to decode completed bag analysis for notification")
+                    Tracebox.log.error(error, BagAnalysisNotificationWorkerTraceboxTemplates.FAILED_TO_DECODE_COMPLETED_BAG_ANALYSIS_FOR)
                 }.getOrNull()
             }
                 notifier.notifyComplete(workId, displayName, reviewContext)

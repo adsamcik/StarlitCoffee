@@ -17,6 +17,13 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.StageInstanceId
 import java.io.IOException
 import kotlinx.coroutines.CancellationException
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+import dev.tracebox.api.argument
+
+private object LongBrewCompletionWorkerTraceboxTemplates {
+    val IGNORING_MALFORMED_BREW_DEADLINE_WORK = LogTemplate.of("Ignoring malformed brew deadline work: {}")
+    val BREW_DEADLINE_RECONCILIATION_FAILED = LogTemplate.of("Brew deadline reconciliation failed")
+}
 
 /**
  * WorkManager is an inexact wake-up prompt, not the source of truth for a
@@ -32,7 +39,7 @@ class LongBrewCompletionWorker(
     override suspend fun doWork(): Result {
         val request = when (val decoded = decodeLongBrewCompletionWork(inputData)) {
             is LongBrewCompletionWorkInput.Invalid -> {
-                Tracebox.log.warn("Ignoring malformed brew deadline work: {}", decoded.reason)
+                Tracebox.log.warn(LongBrewCompletionWorkerTraceboxTemplates.IGNORING_MALFORMED_BREW_DEADLINE_WORK, argument(decoded.reason))
                 return Result.failure()
             }
 
@@ -61,7 +68,7 @@ class LongBrewCompletionWorker(
         } catch (error: CancellationException) {
             throw error
         } catch (error: Exception) {
-            Tracebox.log.error(error, "Brew deadline reconciliation failed")
+            Tracebox.log.error(error, LongBrewCompletionWorkerTraceboxTemplates.BREW_DEADLINE_RECONCILIATION_FAILED)
             if (isRetryableLongBrewCompletionFailure(error)) Result.retry() else Result.failure()
         }
     }

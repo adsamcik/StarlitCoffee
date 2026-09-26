@@ -762,7 +762,6 @@
     <string name="guidance_cue_valve_state">Stav ventilu</string>
     <string name="screen_learning_title">Naučit se</string>
     <string name="msg_learning_subtitle">Názorné návody k přípravě krok za krokem</string>
-    <string name="msg_learning_intro">Vyberte zařízení a recept a potom si projděte jeden srozumitelný krok po druhém.</string>
     <string name="action_show_details">Zobrazit podrobnosti</string>
     <string name="action_hide_details">Skrýt podrobnosti</string>
 </resources>

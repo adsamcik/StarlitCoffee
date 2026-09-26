@@ -733,7 +733,6 @@
     <string name="guidance_cue_valve_state">Stanje ventila</string>
     <string name="screen_learning_title">Nauči</string>
     <string name="msg_learning_subtitle">Vizualni vodiči za pripremu korak po korak</string>
-    <string name="msg_learning_intro">Odaberite aparat i recept, a zatim prođite jedan jasan korak odjednom.</string>
     <string name="action_show_details">Prikaži pojedinosti</string>
     <string name="action_hide_details">Sakrij pojedinosti</string>
 </resources>

@@ -12,6 +12,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.withContext
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+
+private object ScannedBagSaveResultTraceboxTemplates {
+    val COULD_NOT_VERIFY_ROOM_OWNERSHIP_FOR_PENDING = LogTemplate.of("Could not verify Room ownership for pending scan-photo save; journal retained")
+    val COULD_NOT_DURABLY_REMOVE_UNOWNED_SCAN_PHOTOS = LogTemplate.of("Could not durably remove unowned scan photos; save journal retained for retry")
+    val OLD_BAG_PHOTO_CLEANUP_DEFERRED_JOURNAL_RETAINED = LogTemplate.of("Old bag-photo cleanup deferred; journal retained")
+}
 
 internal sealed interface ScannedBagSaveResult {
     data class Saved(val bagId: Long) : ScannedBagSaveResult
@@ -324,7 +331,7 @@ private suspend fun recoverPendingSave(
 ): PendingSaveRecovery {
     val ownership = runCatching { findOwnedBagId() }
     ownership.exceptionOrNull()?.let { error ->
-        Tracebox.log.error(error, "Could not verify Room ownership for pending scan-photo save; journal retained")
+        Tracebox.log.error(error, ScannedBagSaveResultTraceboxTemplates.COULD_NOT_VERIFY_ROOM_OWNERSHIP_FOR_PENDING)
         return PendingSaveRecovery.Deferred(error as? Exception ?: IllegalStateException(error))
     }
     ownership.getOrNull()?.let { bagId ->
@@ -343,10 +350,10 @@ private suspend fun recoverPendingSave(
     if (error != null) {
         Tracebox.log.error(
             error,
-            "Could not durably remove unowned scan photos; save journal retained for retry",
+            ScannedBagSaveResultTraceboxTemplates.COULD_NOT_DURABLY_REMOVE_UNOWNED_SCAN_PHOTOS,
         )
     } else {
-        Tracebox.log.warn("Could not durably remove unowned scan photos; save journal retained for retry")
+        Tracebox.log.warn(ScannedBagSaveResultTraceboxTemplates.COULD_NOT_DURABLY_REMOVE_UNOWNED_SCAN_PHOTOS)
     }
     return PendingSaveRecovery.Deferred(error as? Exception)
 }
@@ -403,6 +410,6 @@ private suspend fun cleanupReplacedBagPhotos(
             ScanPhotoStorage.clearPendingBagPhotoDeletion(context, deletion.deletionId)
         }
     }.onFailure { error ->
-        Tracebox.log.error(error, "Old bag-photo cleanup deferred; journal retained")
+        Tracebox.log.error(error, ScannedBagSaveResultTraceboxTemplates.OLD_BAG_PHOTO_CLEANUP_DEFERRED_JOURNAL_RETAINED)
     }
 }

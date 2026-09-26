@@ -7,6 +7,11 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+
+private object OpenFoodFactsClientTraceboxTemplates {
+    val FAILED_TO_FETCH_PRODUCT_INFO_FROM_OPENFOODFACTS = LogTemplate.of("Failed to fetch product info from OpenFoodFacts")
+}
 
 /**
  * Client for Open Food Facts free product lookup API.
@@ -64,7 +69,7 @@ object OpenFoodFactsClient {
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Tracebox.log.error(e, "Failed to fetch product info from OpenFoodFacts")
+            Tracebox.log.error(e, OpenFoodFactsClientTraceboxTemplates.FAILED_TO_FETCH_PRODUCT_INFO_FROM_OPENFOODFACTS)
             null
         }
     }

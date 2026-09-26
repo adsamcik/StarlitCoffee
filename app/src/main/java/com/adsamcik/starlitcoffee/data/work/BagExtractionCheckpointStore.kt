@@ -13,6 +13,11 @@ import java.nio.file.LinkOption
 import java.nio.file.StandardCopyOption
 import java.util.UUID
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+
+private object BagExtractionCheckpointStoreTraceboxTemplates {
+    val FAILED_TO_READ_BAG_EXTRACTION_CHECKPOINT = LogTemplate.of("Failed to read bag extraction checkpoint")
+}
 
 /** Latest deterministic scan result, retained only while its worker is active. */
 object BagExtractionCheckpointStore {
@@ -61,7 +66,7 @@ object BagExtractionCheckpointStore {
     internal fun read(directory: File, workId: String): String? {
         val file = checkpointFile(directory, workId).takeIf(::isSafeRegularFile) ?: return null
         return runCatching(file::readText)
-            .onFailure { error -> Tracebox.log.error(error, "Failed to read bag extraction checkpoint") }
+            .onFailure { error -> Tracebox.log.error(error, BagExtractionCheckpointStoreTraceboxTemplates.FAILED_TO_READ_BAG_EXTRACTION_CHECKPOINT) }
             .getOrNull()
     }
 

@@ -4,6 +4,12 @@ import android.content.Context
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+import dev.tracebox.api.argument
+
+private object CoffeeFilterVocabularyTraceboxTemplates {
+    val FAILED_TO_LOAD_SCAN_WILL_RUN_WITHOUT = LogTemplate.of("Failed to load {}; scan will run without vocabulary hints")
+}
 
 /**
  * A single curated filter value with OCR/spelling [aliases]. Sourced from the
@@ -72,7 +78,7 @@ object CoffeeFilterVocabularyLoader {
             val raw = context.assets.open(ASSET_NAME).bufferedReader().use { it.readText() }
             json.decodeFromString<CoffeeFilterVocabulary>(raw)
         } catch (e: Exception) {
-            Tracebox.log.error(e, "Failed to load {}; scan will run without vocabulary hints", ASSET_NAME)
+            Tracebox.log.error(e, CoffeeFilterVocabularyTraceboxTemplates.FAILED_TO_LOAD_SCAN_WILL_RUN_WITHOUT, argument(ASSET_NAME))
             CoffeeFilterVocabulary.EMPTY
         }
 }

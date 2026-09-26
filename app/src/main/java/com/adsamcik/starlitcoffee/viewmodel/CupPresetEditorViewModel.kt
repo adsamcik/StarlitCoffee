@@ -12,6 +12,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+
+private object CupPresetEditorViewModelTraceboxTemplates {
+    val FAILED_TO_SAVE_CUP_PRESET = LogTemplate.of("Failed to save cup preset")
+    val FAILED_TO_DELETE_CUP_PRESET = LogTemplate.of("Failed to delete cup preset")
+}
 
 enum class CupPresetEditorOperation { IDLE, SAVING, DELETING }
 
@@ -54,7 +60,7 @@ class CupPresetEditorViewModel(
             } catch (error: CancellationException) {
                 throw error
             } catch (error: Exception) {
-                Tracebox.log.error(error, "Failed to save cup preset")
+                Tracebox.log.error(error, CupPresetEditorViewModelTraceboxTemplates.FAILED_TO_SAVE_CUP_PRESET)
                 _uiState.update {
                     it.copy(
                         operation = CupPresetEditorOperation.IDLE,
@@ -86,7 +92,7 @@ class CupPresetEditorViewModel(
             } catch (error: CancellationException) {
                 throw error
             } catch (error: Exception) {
-                Tracebox.log.error(error, "Failed to delete cup preset")
+                Tracebox.log.error(error, CupPresetEditorViewModelTraceboxTemplates.FAILED_TO_DELETE_CUP_PRESET)
                 _uiState.update {
                     it.copy(
                         operation = CupPresetEditorOperation.IDLE,

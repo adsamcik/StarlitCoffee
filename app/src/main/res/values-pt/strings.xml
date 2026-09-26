@@ -733,7 +733,6 @@
     <string name="guidance_cue_valve_state">Estado da válvula</string>
     <string name="screen_learning_title">Aprender</string>
     <string name="msg_learning_subtitle">Guias visuais de preparação passo a passo</string>
-    <string name="msg_learning_intro">Escolha um método e uma receita e explore um passo claro de cada vez.</string>
     <string name="action_show_details">Mostrar detalhes</string>
     <string name="action_hide_details">Ocultar detalhes</string>
 </resources>

@@ -47,6 +47,16 @@ import com.google.mlkit.vision.common.InputImage
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.Executors
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+
+private object BarcodeScannerScreenTraceboxTemplates {
+    val FAILED_TO_PROCESS_BARCODE_FRAME = LogTemplate.of("Failed to process barcode frame")
+    val FAILED_TO_CLEAR_BARCODE_ANALYZER = LogTemplate.of("Failed to clear barcode analyzer")
+    val FAILED_TO_UNBIND_BARCODE_CAMERA = LogTemplate.of("Failed to unbind barcode camera")
+    val FAILED_TO_CLOSE_BARCODE_SCANNER = LogTemplate.of("Failed to close barcode scanner")
+    val FAILED_TO_INSTALL_BARCODE_ANALYZER = LogTemplate.of("Failed to install barcode analyzer")
+    val FAILED_TO_BIND_CAMERA_FOR_BARCODE_SCANNING = LogTemplate.of("Failed to bind camera for barcode scanning")
+}
 
 @Composable
 fun BarcodeScannerScreen(
@@ -203,7 +213,7 @@ private fun analyzeBarcode(
                     imageProxy.close()
                 }
         } catch (error: Exception) {
-            Tracebox.log.error(error, "Failed to process barcode frame")
+            Tracebox.log.error(error, BarcodeScannerScreenTraceboxTemplates.FAILED_TO_PROCESS_BARCODE_FRAME)
             imageProxy.close()
         }
     } else {
@@ -292,11 +302,11 @@ private fun releaseCameraResources(
     scanner: com.google.mlkit.vision.barcode.BarcodeScanner?,
 ) {
     runCatching { imageAnalysis?.clearAnalyzer() }
-        .onFailure { Tracebox.log.error(it, "Failed to clear barcode analyzer") }
+        .onFailure { Tracebox.log.error(it, BarcodeScannerScreenTraceboxTemplates.FAILED_TO_CLEAR_BARCODE_ANALYZER) }
     runCatching { cameraProvider?.unbindAll() }
-        .onFailure { Tracebox.log.error(it, "Failed to unbind barcode camera") }
+        .onFailure { Tracebox.log.error(it, BarcodeScannerScreenTraceboxTemplates.FAILED_TO_UNBIND_BARCODE_CAMERA) }
     runCatching { scanner?.close() }
-        .onFailure { Tracebox.log.error(it, "Failed to close barcode scanner") }
+        .onFailure { Tracebox.log.error(it, BarcodeScannerScreenTraceboxTemplates.FAILED_TO_CLOSE_BARCODE_SCANNER) }
 }
 
 /**
@@ -447,7 +457,7 @@ private fun installBarcodeAnalyzer(
 } catch (error: Exception) {
     releaseCameraResources(cameraProvider, analysis, barcodeScanner)
     if (lifecyclePolicy.isActive) {
-        Tracebox.log.error(error, "Failed to install barcode analyzer")
+        Tracebox.log.error(error, BarcodeScannerScreenTraceboxTemplates.FAILED_TO_INSTALL_BARCODE_ANALYZER)
     }
     false
 }
@@ -496,6 +506,6 @@ private fun bindActiveBarcodeCamera(
         }
     } catch (error: Exception) {
         resources.release()
-        Tracebox.log.error(error, "Failed to bind camera for barcode scanning")
+        Tracebox.log.error(error, BarcodeScannerScreenTraceboxTemplates.FAILED_TO_BIND_CAMERA_FOR_BARCODE_SCANNING)
     }
 }

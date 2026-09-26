@@ -35,6 +35,13 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlin.time.Duration.Companion.seconds
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+
+private object StarlitCoffeeAppTraceboxTemplates {
+    val MINDLAYER_RECONNECT_FAILED = LogTemplate.of("Mindlayer reconnect failed")
+    val DURABLE_BREW_SESSION_RECOVERY_FAILED = LogTemplate.of("Durable brew-session recovery failed")
+    val MINDLAYER_SERVICE_INITIALIZATION_FAILED = LogTemplate.of("Mindlayer service initialization failed")
+}
 
 class StarlitCoffeeApp : Application() {
 
@@ -84,7 +91,7 @@ class StarlitCoffeeApp : Application() {
             awaitSuccessfulMindlayerReconnect(
                 awaitConnection = { services.client.awaitConnected(RECONNECT_TIMEOUT) },
                 checkAvailability = { services.llmProvider.isAvailable() },
-                onFailure = { error -> Tracebox.log.error(error, "Mindlayer reconnect failed") },
+                onFailure = { error -> Tracebox.log.error(error, StarlitCoffeeAppTraceboxTemplates.MINDLAYER_RECONNECT_FAILED) },
             )
         }
     }
@@ -123,7 +130,7 @@ class StarlitCoffeeApp : Application() {
             } catch (error: CancellationException) {
                 throw error
             } catch (error: Exception) {
-                Tracebox.log.error(error, "Durable brew-session recovery failed")
+                Tracebox.log.error(error, StarlitCoffeeAppTraceboxTemplates.DURABLE_BREW_SESSION_RECOVERY_FAILED)
             }
         }
         // Warm Mindlayer only after the user has enabled label recognition.
@@ -178,7 +185,7 @@ class StarlitCoffeeApp : Application() {
                     ocrService = HierarchicalOcrService(MindlayerOcrService(client)),
                 ).also { mindlayerServices = it }
             } catch (error: Exception) {
-                Tracebox.log.error(error, "Mindlayer service initialization failed")
+                Tracebox.log.error(error, StarlitCoffeeAppTraceboxTemplates.MINDLAYER_SERVICE_INITIALIZATION_FAILED)
                 null
             }
         }

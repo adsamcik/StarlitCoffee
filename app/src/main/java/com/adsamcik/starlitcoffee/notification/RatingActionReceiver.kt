@@ -10,6 +10,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+import dev.tracebox.api.argument
+
+private object RatingActionReceiverTraceboxTemplates {
+    val IGNORING_QUICK_RATE_BROADCAST_WITH_INVALID_PAYLOAD = LogTemplate.of("Ignoring quick-rate broadcast with invalid payload: id={} rating={}")
+    val FAILED_TO_APPLY_QUICK_RATING_FOR_BREW = LogTemplate.of("Failed to apply quick rating {} for brew {}")
+    val BREW_LOG_NO_LONGER_EXISTS_SKIPPING_QUICK = LogTemplate.of("Brew log {} no longer exists — skipping quick rating")
+}
 
 /**
  * Handles taps on the emoji rating buttons inside the rating-reminder
@@ -27,9 +35,9 @@ class RatingActionReceiver : BroadcastReceiver() {
         val ratingValue = intent.getIntExtra(EXTRA_RATING_VALUE, -1)
         if (brewLogId <= 0L || ratingValue !in 1..4) {
             Tracebox.log.warn(
-                "Ignoring quick-rate broadcast with invalid payload: id={} rating={}",
-                brewLogId,
-                ratingValue,
+                RatingActionReceiverTraceboxTemplates.IGNORING_QUICK_RATE_BROADCAST_WITH_INVALID_PAYLOAD,
+                argument(brewLogId),
+                argument(ratingValue),
             )
             return
         }
@@ -41,7 +49,12 @@ class RatingActionReceiver : BroadcastReceiver() {
                     RatingReminderScheduler(appContext).cancelReminder(brewLogId)
                 }
             } catch (error: Exception) {
-                Tracebox.log.error(error, "Failed to apply quick rating {} for brew {}", ratingValue, brewLogId)
+                Tracebox.log.error(
+                    error,
+                    RatingActionReceiverTraceboxTemplates.FAILED_TO_APPLY_QUICK_RATING_FOR_BREW,
+                    argument(ratingValue),
+                    argument(brewLogId),
+                )
             } finally {
                 pending.finish()
             }
@@ -56,7 +69,7 @@ class RatingActionReceiver : BroadcastReceiver() {
             flavorTagDao = database.flavorTagDao(),
         )
         val existing = repository.getLogById(brewLogId) ?: run {
-            Tracebox.log.warn("Brew log {} no longer exists — skipping quick rating", brewLogId)
+            Tracebox.log.warn(RatingActionReceiverTraceboxTemplates.BREW_LOG_NO_LONGER_EXISTS_SKIPPING_QUICK, argument(brewLogId))
             return false
         }
         // Preserve any freeform notes the user may have already written; only

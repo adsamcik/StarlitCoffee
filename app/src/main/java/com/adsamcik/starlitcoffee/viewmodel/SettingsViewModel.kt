@@ -20,6 +20,11 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+
+private object SettingsViewModelTraceboxTemplates {
+    val SETTINGS_PERSISTENCE_OPERATION_FAILED = LogTemplate.of("Settings persistence operation failed")
+}
 
 enum class SettingsOperation {
     IDLE,
@@ -191,7 +196,7 @@ class SettingsViewModel(
             } catch (error: CancellationException) {
                 throw error
             } catch (error: Exception) {
-                Tracebox.log.error(error, "Settings persistence operation failed")
+                Tracebox.log.error(error, SettingsViewModelTraceboxTemplates.SETTINGS_PERSISTENCE_OPERATION_FAILED)
                 _uiState.update {
                     it.copy(
                         operation = SettingsOperation.IDLE,

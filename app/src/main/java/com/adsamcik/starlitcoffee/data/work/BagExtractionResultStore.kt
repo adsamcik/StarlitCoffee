@@ -15,6 +15,11 @@ import java.nio.file.LinkOption
 import java.nio.file.StandardCopyOption
 import java.util.UUID
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+
+private object BagExtractionResultStoreTraceboxTemplates {
+    val FAILED_TO_READ_STORED_BAG_EXTRACTION_RESULT = LogTemplate.of("Failed to read stored bag extraction result")
+}
 
 @Serializable
 data class StoredBagExtractionResult(
@@ -148,7 +153,7 @@ object BagExtractionResultStore {
         return runCatching {
             json.decodeFromString<StoredBagExtractionResult>(file.readText())
         }.onFailure { error ->
-            Tracebox.log.error(error, "Failed to read stored bag extraction result")
+            Tracebox.log.error(error, BagExtractionResultStoreTraceboxTemplates.FAILED_TO_READ_STORED_BAG_EXTRACTION_RESULT)
         }.getOrNull()
     }
 

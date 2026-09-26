@@ -731,7 +731,6 @@
     <string name="guidance_cue_valve_state">Szelep állapota</string>
     <string name="screen_learning_title">Tanulás</string>
     <string name="msg_learning_subtitle">Szemléletes, lépésről lépésre haladó útmutatók</string>
-    <string name="msg_learning_intro">Válasszon kávékészítőt és receptet, majd haladjon végig egyértelműen, lépésről lépésre.</string>
     <string name="action_show_details">Részletek megjelenítése</string>
     <string name="action_hide_details">Részletek elrejtése</string>
 </resources>

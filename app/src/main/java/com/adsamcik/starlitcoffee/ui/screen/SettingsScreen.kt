@@ -544,7 +544,7 @@ fun SettingsScreen(
                         if (!isBusy) {
                             try {
                                 context.startActivity(
-                                    Intent(Intent.ACTION_VIEW, Uri.parse(PRIVACY_POLICY_URL)),
+                                    Intent(Intent.ACTION_VIEW, PRIVACY_POLICY_URL.toUri()),
                                 )
                             } catch (_: ActivityNotFoundException) {
                                 Toast.makeText(

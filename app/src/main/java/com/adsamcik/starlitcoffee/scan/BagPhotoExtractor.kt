@@ -76,6 +76,29 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withTimeout
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+import dev.tracebox.api.argument
+
+private object BagPhotoExtractorTraceboxTemplates {
+    val FAILED_TO_FETCH_PRODUCT_INFO_FROM_OPENFOODFACTS = LogTemplate.of("Failed to fetch product info from OpenFoodFacts")
+    val FAILED_TO_PROCESS_BAG_PHOTO_FOR_OCR = LogTemplate.of("Failed to process bag photo for OCR and barcode extraction")
+    val INSUFFICIENT_MEMORY_TO_PROCESS_BAG_PHOTO = LogTemplate.of("Insufficient memory to process bag photo")
+    val CANNOT_DECODE_CONTENT_URI_APPCONTEXT_IS_NULL = LogTemplate.of("Cannot decode content URI: appContext is null in BagPhotoExtractor")
+    val FAILED_TO_READ_CONTENT_URI_EXIF_ORIENTATION = LogTemplate.of("Failed to read content URI EXIF orientation")
+    val SKIPPING_LLM_ENRICHMENT_PHOTO_EXCEEDS_MB = LogTemplate.of("Skipping LLM enrichment: photo exceeds {}MB")
+    val FAILED_TO_CROP_LABEL_FOR_VISION_PASS = LogTemplate.of("Failed to crop label for vision pass")
+    val FAILED_TO_READ_PHOTO_BYTES_FOR_LLM = LogTemplate.of("Failed to read photo bytes for LLM enrichment")
+    val LLM_ENRICHMENT_UNAVAILABLE = LogTemplate.of("LLM enrichment unavailable: {}")
+    val LLM_ENRICHMENT_FAILED = LogTemplate.of("LLM enrichment failed: {}")
+    val LLM_ENRICHMENT_ATTEMPT_FAILED_RETRYABLE_AUTO_RETRYING = LogTemplate.of("LLM enrichment attempt {} failed (retryable): {}; auto-retrying")
+    val COMBINE_ENRICHMENT_UNAVAILABLE = LogTemplate.of("Combine enrichment unavailable: {}")
+    val COMBINE_ENRICHMENT_FAILED = LogTemplate.of("Combine enrichment failed: {}")
+    val REFINE_ENRICHMENT_UNAVAILABLE = LogTemplate.of("Refine enrichment unavailable: {}")
+    val REFINE_ENRICHMENT_FAILED = LogTemplate.of("Refine enrichment failed: {}")
+    val FAILED_TO_READ_PHOTO_BYTES_FOR_VISION = LogTemplate.of("Failed to read photo bytes for vision pass")
+    val VISION_ENRICHMENT_UNAVAILABLE = LogTemplate.of("Vision enrichment unavailable: {}")
+    val VISION_ENRICHMENT_FAILED = LogTemplate.of("Vision enrichment failed: {}")
+}
 
 data class OffLookupSummary(val name: String?, val brand: String?)
 
@@ -583,7 +606,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                 }
             OffLookupSummary(name = lookup.name, brand = lookup.brand)
         } catch (e: Exception) {
-            Tracebox.log.error(e, "Failed to fetch product info from OpenFoodFacts")
+            Tracebox.log.error(e, BagPhotoExtractorTraceboxTemplates.FAILED_TO_FETCH_PRODUCT_INFO_FROM_OPENFOODFACTS)
             OffLookupSummary(name = null, brand = null)
         }
     }
@@ -662,10 +685,10 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         } catch (e: MindlayerModelSetupRequiredException) {
             throw e
         } catch (e: Exception) {
-            Tracebox.log.error(e, "Failed to process bag photo for OCR and barcode extraction")
+            Tracebox.log.error(e, BagPhotoExtractorTraceboxTemplates.FAILED_TO_PROCESS_BAG_PHOTO_FOR_OCR)
             null
         } catch (error: OutOfMemoryError) {
-            Tracebox.log.error(error, "Insufficient memory to process bag photo")
+            Tracebox.log.error(error, BagPhotoExtractorTraceboxTemplates.INSUFFICIENT_MEMORY_TO_PROCESS_BAG_PHOTO)
             null
         } finally {
             listOfNotNull(enhancedBitmap, alignedBitmap, bitmap)
@@ -706,7 +729,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
 
     private fun decodeContentPhoto(uri: android.net.Uri): Bitmap? {
         val resolver = appContext?.contentResolver ?: run {
-            Tracebox.log.warn("Cannot decode content URI: appContext is null in BagPhotoExtractor")
+            Tracebox.log.warn(BagPhotoExtractorTraceboxTemplates.CANNOT_DECODE_CONTENT_URI_APPCONTEXT_IS_NULL)
             return null
         }
         val orientation = try {
@@ -717,7 +740,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                 )
             }
         } catch (error: Exception) {
-            Tracebox.log.error(error, "Failed to read content URI EXIF orientation")
+            Tracebox.log.error(error, BagPhotoExtractorTraceboxTemplates.FAILED_TO_READ_CONTENT_URI_EXIF_ORIENTATION)
             null
         } ?: ExifInterface.ORIENTATION_NORMAL
         val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
@@ -1042,7 +1065,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             if (read < 0) break
             total += read
             if (total > maxBytes) {
-                Tracebox.log.warn("Skipping LLM enrichment: photo exceeds {}MB", maxBytes / (1024 * 1024))
+                Tracebox.log.warn(BagPhotoExtractorTraceboxTemplates.SKIPPING_LLM_ENRICHMENT_PHOTO_EXCEEDS_MB, argument(maxBytes / (1024 * 1024)))
                 return null
             }
             output.write(buffer, 0, read)
@@ -1071,7 +1094,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                     out.toByteArray()
                 }
             } catch (e: Exception) {
-                Tracebox.log.error(e, "Failed to crop label for vision pass")
+                Tracebox.log.error(e, BagPhotoExtractorTraceboxTemplates.FAILED_TO_CROP_LABEL_FOR_VISION_PASS)
                 bitmap.recycle()
                 null
             }
@@ -1118,7 +1141,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
-                Tracebox.log.error(e, "Failed to read photo bytes for LLM enrichment")
+                Tracebox.log.error(e, BagPhotoExtractorTraceboxTemplates.FAILED_TO_READ_PHOTO_BYTES_FOR_LLM)
                 null
             }
         } ?: return LlmEnrichmentOutcome(status = LlmEnrichmentStatus.FAILED)
@@ -1174,7 +1197,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                 )
             }
             is LlmExtractionResult.Unavailable -> {
-                Tracebox.log.warn("LLM enrichment unavailable: {}", result.reason)
+                Tracebox.log.warn(BagPhotoExtractorTraceboxTemplates.LLM_ENRICHMENT_UNAVAILABLE, argument(result.reason))
                 LlmEnrichmentOutcome(
                     status = if (result.setupRequired) {
                         LlmEnrichmentStatus.SETUP_REQUIRED
@@ -1184,7 +1207,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                 )
             }
             is LlmExtractionResult.Failed -> {
-                Tracebox.log.warn("LLM enrichment failed: {}", result.error)
+                Tracebox.log.warn(BagPhotoExtractorTraceboxTemplates.LLM_ENRICHMENT_FAILED, argument(result.error))
                 LlmEnrichmentOutcome(status = LlmEnrichmentStatus.FAILED)
             }
         }
@@ -1224,7 +1247,11 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             if (result !is LlmExtractionResult.Failed || !result.retryable || attempt >= LLM_MAX_ATTEMPTS) {
                 return result
             }
-            Tracebox.log.warn("LLM enrichment attempt {} failed (retryable): {}; auto-retrying", attempt, result.error)
+            Tracebox.log.warn(
+                BagPhotoExtractorTraceboxTemplates.LLM_ENRICHMENT_ATTEMPT_FAILED_RETRYABLE_AUTO_RETRYING,
+                argument(attempt),
+                argument(result.error),
+            )
             val retryDelayMs = result.retryAfterMs
                 ?.coerceIn(0L, MAX_RETRY_HINT_MS)
                 ?: (LLM_RETRY_BACKOFF_MS * attempt)
@@ -1394,11 +1421,11 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                 result.fieldCandidates
             }
             is LlmExtractionResult.Unavailable -> {
-                Tracebox.log.warn("Combine enrichment unavailable: {}", result.reason)
+                Tracebox.log.warn(BagPhotoExtractorTraceboxTemplates.COMBINE_ENRICHMENT_UNAVAILABLE, argument(result.reason))
                 emptyList()
             }
             is LlmExtractionResult.Failed -> {
-                Tracebox.log.warn("Combine enrichment failed: {}", result.error)
+                Tracebox.log.warn(BagPhotoExtractorTraceboxTemplates.COMBINE_ENRICHMENT_FAILED, argument(result.error))
                 emptyList()
             }
         }
@@ -1528,11 +1555,11 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                 result.fieldCandidates
             }
             is LlmExtractionResult.Unavailable -> {
-                Tracebox.log.warn("Refine enrichment unavailable: {}", result.reason)
+                Tracebox.log.warn(BagPhotoExtractorTraceboxTemplates.REFINE_ENRICHMENT_UNAVAILABLE, argument(result.reason))
                 emptyList()
             }
             is LlmExtractionResult.Failed -> {
-                Tracebox.log.warn("Refine enrichment failed: {}", result.error)
+                Tracebox.log.warn(BagPhotoExtractorTraceboxTemplates.REFINE_ENRICHMENT_FAILED, argument(result.error))
                 emptyList()
             }
         }
@@ -1578,7 +1605,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Tracebox.log.error(e, "Failed to read photo bytes for vision pass")
+            Tracebox.log.error(e, BagPhotoExtractorTraceboxTemplates.FAILED_TO_READ_PHOTO_BYTES_FOR_VISION)
             null
         } ?: return LlmEnrichmentOutcome(status = LlmEnrichmentStatus.FAILED)
 
@@ -1627,11 +1654,11 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                 )
             }
             is LlmExtractionResult.Unavailable -> {
-                Tracebox.log.warn("Vision enrichment unavailable: {}", result.reason)
+                Tracebox.log.warn(BagPhotoExtractorTraceboxTemplates.VISION_ENRICHMENT_UNAVAILABLE, argument(result.reason))
                 LlmEnrichmentOutcome(status = LlmEnrichmentStatus.UNAVAILABLE)
             }
             is LlmExtractionResult.Failed -> {
-                Tracebox.log.warn("Vision enrichment failed: {}", result.error)
+                Tracebox.log.warn(BagPhotoExtractorTraceboxTemplates.VISION_ENRICHMENT_FAILED, argument(result.error))
                 LlmEnrichmentOutcome(status = LlmEnrichmentStatus.FAILED)
             }
         }

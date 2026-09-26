@@ -106,6 +106,23 @@ import kotlinx.coroutines.withTimeout
 import java.util.Locale
 import java.util.UUID
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+
+private object BrewViewModelTraceboxTemplates {
+    val COULD_NOT_VERIFY_PENDING_SCAN_PHOTO_OWNERSHIP = LogTemplate.of("Could not verify pending scan-photo ownership; journal retained")
+    val COULD_NOT_DURABLY_REMOVE_UNOWNED_SCAN_PHOTOS = LogTemplate.of("Could not durably remove unowned scan photos; journal retained")
+    val FAILED_TO_LEARN_BARCODE_STEM_AFTER_SAVING = LogTemplate.of("Failed to learn barcode stem after saving bag")
+    val COFFEE_BAG_PHOTO_CLEANUP_DEFERRED_JOURNAL_RETAINED = LogTemplate.of("Coffee bag photo cleanup deferred; journal retained for retry")
+    val FAILED_TO_LOG_COFFEE_USE = LogTemplate.of("Failed to log coffee use")
+    val FAILED_TO_UNDO_COFFEE_USE = LogTemplate.of("Failed to undo coffee use")
+    val COULD_NOT_ENQUEUE_BAG_EXTRACTION = LogTemplate.of("Could not enqueue bag extraction")
+    val QR_LINK_EXPLORATION_FAILED = LogTemplate.of("QR link exploration failed")
+    val COULD_NOT_OPEN_MINDLAYER_MODEL_SETUP = LogTemplate.of("Could not open Mindlayer model setup")
+    val FAILED_TO_DECODE_BAG_EXTRACTION_PREVIEW = LogTemplate.of("Failed to decode bag extraction preview")
+    val FAILED_TO_DECODE_BAG_EXTRACTION_RESULT = LogTemplate.of("Failed to decode bag extraction result")
+    val IGNORING_INVALID_BAG_ANALYSIS_WORK_ID = LogTemplate.of("Ignoring invalid bag-analysis work ID")
+    val FAILED_TO_DECODE_DEEP_LINK_BAG_RESULT = LogTemplate.of("Failed to decode deep-link bag result")
+}
 
 sealed class GrindResult {
     data class Generic(val descriptor: GrindDescriptor) : GrindResult()
@@ -1253,7 +1270,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                     val currentOwner = runCatching {
                         repository.findByScanSessionId(sessionId)
                     }.onFailure { error ->
-                        Tracebox.log.error(error, "Could not verify pending scan-photo ownership; journal retained")
+                        Tracebox.log.error(error, BrewViewModelTraceboxTemplates.COULD_NOT_VERIFY_PENDING_SCAN_PHOTO_OWNERSHIP)
                     }.getOrElse {
                         return@forEach
                     }
@@ -1262,7 +1279,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                     ) {
                         ScanPhotoStorage.clearPendingSave(app, sessionId)
                     } else {
-                        Tracebox.log.warn("Could not durably remove unowned scan photos; journal retained")
+                        Tracebox.log.warn(BrewViewModelTraceboxTemplates.COULD_NOT_DURABLY_REMOVE_UNOWNED_SCAN_PHOTOS)
                     }
                 } finally {
                     finishScannedBagSave(sessionId)
@@ -1342,7 +1359,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 } catch (error: CancellationException) {
                     throw error
                 } catch (error: Exception) {
-                    Tracebox.log.error(error, "Failed to learn barcode stem after saving bag")
+                    Tracebox.log.error(error, BrewViewModelTraceboxTemplates.FAILED_TO_LEARN_BARCODE_STEM_AFTER_SAVING)
                 }
             }
         }
@@ -1418,10 +1435,10 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 if (error != null) {
                     Tracebox.log.error(
                         error,
-                        "Coffee bag photo cleanup deferred; journal retained for retry",
+                        BrewViewModelTraceboxTemplates.COFFEE_BAG_PHOTO_CLEANUP_DEFERRED_JOURNAL_RETAINED,
                     )
                 } else {
-                    Tracebox.log.warn("Coffee bag photo cleanup deferred; journal retained for retry")
+                    Tracebox.log.warn(BrewViewModelTraceboxTemplates.COFFEE_BAG_PHOTO_CLEANUP_DEFERRED_JOURNAL_RETAINED)
                 }
             },
         )
@@ -1464,7 +1481,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             val result = try {
                 repository.logUse(bagId = bagId, amountG = amountG)
             } catch (error: Exception) {
-                Tracebox.log.error(error, "Failed to log coffee use")
+                Tracebox.log.error(error, BrewViewModelTraceboxTemplates.FAILED_TO_LOG_COFFEE_USE)
                 CoffeeUsageLogResult.Failed
             }
             onResult(result)
@@ -1484,7 +1501,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             val undone = try {
                 repository.undo(logged)
             } catch (error: Exception) {
-                Tracebox.log.error(error, "Failed to undo coffee use")
+                Tracebox.log.error(error, BrewViewModelTraceboxTemplates.FAILED_TO_UNDO_COFFEE_USE)
                 false
             }
             onResult(undone)
@@ -1730,7 +1747,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             } catch (error: CancellationException) {
                 throw error
             } catch (error: Exception) {
-                Tracebox.log.error(error, "Could not enqueue bag extraction")
+                Tracebox.log.error(error, BrewViewModelTraceboxTemplates.COULD_NOT_ENQUEUE_BAG_EXTRACTION)
                 if (isLatestBagExtractionGeneration(context.sessionId, context.generationId)) {
                     deliverBagPhotoFailure(
                         workId = IN_MEMORY_WORK_ID,
@@ -2068,7 +2085,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                     is QrLinkExploreResult.Skipped -> onResult(null)
                 }
             } catch (e: Exception) {
-                Tracebox.log.error(e, "QR link exploration failed")
+                Tracebox.log.error(e, BrewViewModelTraceboxTemplates.QR_LINK_EXPLORATION_FAILED)
                 onResult(null)
             }
         }
@@ -2291,7 +2308,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             } catch (error: CancellationException) {
                 throw error
             } catch (error: Exception) {
-                Tracebox.log.error(error, "Could not open Mindlayer model setup")
+                Tracebox.log.error(error, BrewViewModelTraceboxTemplates.COULD_NOT_OPEN_MINDLAYER_MODEL_SETUP)
             }
         }
     }
@@ -2326,7 +2343,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 try {
                     updateBagAnalysisPreview(decodeBagExtractionResult(previewJson))
                 } catch (error: Exception) {
-                    Tracebox.log.error(error, "Failed to decode bag extraction preview")
+                    Tracebox.log.error(error, BrewViewModelTraceboxTemplates.FAILED_TO_DECODE_BAG_EXTRACTION_PREVIEW)
                 }
             }
         val stageName = workInfo.progress.getString(BagExtractionWorker.KEY_PROGRESS_STAGE) ?: return
@@ -2374,7 +2391,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 reviewContext = reviewContext,
             )
         } catch (error: Exception) {
-            Tracebox.log.error(error, "Failed to decode bag extraction result")
+            Tracebox.log.error(error, BrewViewModelTraceboxTemplates.FAILED_TO_DECODE_BAG_EXTRACTION_RESULT)
             deliverBagPhotoFailure(
                 workId = workId,
                 sessionId = sessionId,
@@ -2587,7 +2604,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             return
         }
         if (!BagExtractionScheduler.isValidWorkId(workId)) {
-            Tracebox.log.warn("Ignoring invalid bag-analysis work ID")
+            Tracebox.log.warn(BrewViewModelTraceboxTemplates.IGNORING_INVALID_BAG_ANALYSIS_WORK_ID)
             return
         }
         pendingBagReviewLoaderJob?.cancel()
@@ -2801,7 +2818,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         return try {
             decodeBagExtractionResult(json)
         } catch (error: Exception) {
-            Tracebox.log.error(error, "Failed to decode deep-link bag result")
+            Tracebox.log.error(error, BrewViewModelTraceboxTemplates.FAILED_TO_DECODE_DEEP_LINK_BAG_RESULT)
             BagPhotoProcessingResult(llmStatus = LlmEnrichmentStatus.UNAVAILABLE)
         }
     }

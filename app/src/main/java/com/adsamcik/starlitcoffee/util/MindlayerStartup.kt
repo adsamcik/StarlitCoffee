@@ -10,6 +10,17 @@ import android.os.Build
 import androidx.core.net.toUri
 import com.adsamcik.starlitcoffee.BuildConfig
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+
+private object MindlayerStartupTraceboxTemplates {
+    val MINDLAYER_PACKAGE_LOOKUP_WAS_BLOCKED = LogTemplate.of("Mindlayer package lookup was blocked")
+    val MINDLAYER_PACKAGE_LOOKUP_FAILED = LogTemplate.of("Mindlayer package lookup failed")
+    val MINDLAYER_MARKET_LINK_RESOLUTION_WAS_BLOCKED = LogTemplate.of("Mindlayer market link resolution was blocked")
+    val MINDLAYER_MARKET_LINK_RESOLUTION_FAILED = LogTemplate.of("Mindlayer market link resolution failed")
+    val NO_ACTIVITY_CAN_OPEN_THE_MINDLAYER_INSTALL = LogTemplate.of("No activity can open the Mindlayer install link")
+    val MINDLAYER_INSTALL_LINK_WAS_BLOCKED = LogTemplate.of("Mindlayer install link was blocked")
+    val MINDLAYER_INSTALL_LINK_FAILED = LogTemplate.of("Mindlayer install link failed")
+}
 
 object MindlayerAvailability {
     private val packageNames: List<String>
@@ -31,10 +42,10 @@ object MindlayerAvailability {
         } catch (_: PackageManager.NameNotFoundException) {
             false
         } catch (error: SecurityException) {
-            Tracebox.log.error(error, "Mindlayer package lookup was blocked")
+            Tracebox.log.error(error, MindlayerStartupTraceboxTemplates.MINDLAYER_PACKAGE_LOOKUP_WAS_BLOCKED)
             false
         } catch (error: RuntimeException) {
-            Tracebox.log.error(error, "Mindlayer package lookup failed")
+            Tracebox.log.error(error, MindlayerStartupTraceboxTemplates.MINDLAYER_PACKAGE_LOOKUP_FAILED)
             false
         }
     }
@@ -57,9 +68,9 @@ object MindlayerInstallLink {
                 return true
             }
         } catch (error: SecurityException) {
-            Tracebox.log.error(error, "Mindlayer market link resolution was blocked")
+            Tracebox.log.error(error, MindlayerStartupTraceboxTemplates.MINDLAYER_MARKET_LINK_RESOLUTION_WAS_BLOCKED)
         } catch (error: RuntimeException) {
-            Tracebox.log.error(error, "Mindlayer market link resolution failed")
+            Tracebox.log.error(error, MindlayerStartupTraceboxTemplates.MINDLAYER_MARKET_LINK_RESOLUTION_FAILED)
         }
         return tryStartActivity(context, Intent(Intent.ACTION_VIEW, webStoreUri))
     }
@@ -72,13 +83,13 @@ object MindlayerInstallLink {
             context.startActivity(intent)
             true
         } catch (error: ActivityNotFoundException) {
-            Tracebox.log.error(error, "No activity can open the Mindlayer install link")
+            Tracebox.log.error(error, MindlayerStartupTraceboxTemplates.NO_ACTIVITY_CAN_OPEN_THE_MINDLAYER_INSTALL)
             false
         } catch (error: SecurityException) {
-            Tracebox.log.error(error, "Mindlayer install link was blocked")
+            Tracebox.log.error(error, MindlayerStartupTraceboxTemplates.MINDLAYER_INSTALL_LINK_WAS_BLOCKED)
             false
         } catch (error: RuntimeException) {
-            Tracebox.log.error(error, "Mindlayer install link failed")
+            Tracebox.log.error(error, MindlayerStartupTraceboxTemplates.MINDLAYER_INSTALL_LINK_FAILED)
             false
         }
     }

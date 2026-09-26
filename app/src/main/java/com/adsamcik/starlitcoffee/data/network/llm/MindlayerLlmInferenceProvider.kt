@@ -42,6 +42,18 @@ import kotlinx.serialization.json.put
 import kotlinx.serialization.json.putJsonObject
 import kotlin.time.Duration.Companion.seconds
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+import dev.tracebox.api.argument
+
+private object MindlayerLlmInferenceProviderTraceboxTemplates {
+    val TRANSLATE_COMPLETE_CHARS = LogTemplate.of("Translate complete: {} chars")
+    val LLM_INFERENCE_COMPLETE_CHARS = LogTemplate.of("LLM inference complete: {} chars")
+    val VISION_INFERENCE_COMPLETE_CHARS = LogTemplate.of("Vision inference complete: {} chars")
+    val COMBINE_INFERENCE_COMPLETE_CHARS = LogTemplate.of("Combine inference complete: {} chars")
+    val REFINE_INFERENCE_COMPLETE_CHARS = LogTemplate.of("Refine inference complete: {} chars")
+    val EVENT = LogTemplate.of("{}: {}")
+    val EVENT_2 = LogTemplate.of("{} ({}/{}): {}")
+}
 
 private fun MindlayerException.isRetryableForScan(): Boolean = codeName in setOf(
     "ENGINE_BUSY",
@@ -180,7 +192,7 @@ class MindlayerLlmInferenceProvider(
                 (handle as InferenceHandle.Text).awaitText()
             }.trim()
             val normalized = out.ifBlank { ocrText }
-            Tracebox.log.debug("Translate complete: {} chars", out.length)
+            Tracebox.log.debug(MindlayerLlmInferenceProviderTraceboxTemplates.TRANSLATE_COMPLETE_CHARS, argument(out.length))
             if (com.adsamcik.starlitcoffee.BuildConfig.DEBUG) {
                 logLongDebug("Translate output (debug)", normalized)
             }
@@ -296,7 +308,7 @@ class MindlayerLlmInferenceProvider(
                 }
                 (handle as InferenceHandle.Text).awaitText()
             }
-            Tracebox.log.debug("LLM inference complete: {} chars", responseText.length)
+            Tracebox.log.debug(MindlayerLlmInferenceProviderTraceboxTemplates.LLM_INFERENCE_COMPLETE_CHARS, argument(responseText.length))
             if (com.adsamcik.starlitcoffee.BuildConfig.DEBUG) {
                 logLongDebug("LLM prompt (debug)", prompt)
                 logLongDebug("LLM response (debug)", responseText)
@@ -468,7 +480,7 @@ class MindlayerLlmInferenceProvider(
                 }
                 (handle as InferenceHandle.Text).awaitText()
             }
-            Tracebox.log.debug("Vision inference complete: {} chars", responseText.length)
+            Tracebox.log.debug(MindlayerLlmInferenceProviderTraceboxTemplates.VISION_INFERENCE_COMPLETE_CHARS, argument(responseText.length))
             recordPass(LlmPassDiagnostic.Pass.VISION, LlmPassDiagnostic.Status.SUCCESS, startMs, prompt.length, output = responseText)
             parseResponse(responseText, request.fieldsNeeded, requireEvidenceFor = EVIDENCE_REQUIRED_FIELDS)
         } catch (_: TimeoutCancellationException) {
@@ -547,7 +559,7 @@ class MindlayerLlmInferenceProvider(
                 }
                 (handle as InferenceHandle.Text).awaitText()
             }
-            Tracebox.log.debug("Combine inference complete: {} chars", responseText.length)
+            Tracebox.log.debug(MindlayerLlmInferenceProviderTraceboxTemplates.COMBINE_INFERENCE_COMPLETE_CHARS, argument(responseText.length))
             if (com.adsamcik.starlitcoffee.BuildConfig.DEBUG) {
                 logLongDebug("Combine prompt (debug)", prompt)
                 logLongDebug("Combine response (debug)", responseText)
@@ -620,7 +632,7 @@ class MindlayerLlmInferenceProvider(
                 }
                 (handle as InferenceHandle.Text).awaitText()
             }
-            Tracebox.log.debug("Refine inference complete: {} chars", responseText.length)
+            Tracebox.log.debug(MindlayerLlmInferenceProviderTraceboxTemplates.REFINE_INFERENCE_COMPLETE_CHARS, argument(responseText.length))
             if (com.adsamcik.starlitcoffee.BuildConfig.DEBUG) {
                 logLongDebug("Refine prompt (debug)", prompt)
                 logLongDebug("Refine response (debug)", responseText)
@@ -708,12 +720,12 @@ class MindlayerLlmInferenceProvider(
     private fun logLongDebug(label: String, payload: String) {
         val maxChunk = 3500
         if (payload.length <= maxChunk) {
-            Tracebox.log.debug("{}: {}", label, payload)
+            Tracebox.log.debug(MindlayerLlmInferenceProviderTraceboxTemplates.EVENT, argument(label), argument(payload))
             return
         }
         val chunks = (payload.length + maxChunk - 1) / maxChunk
         payload.chunked(maxChunk).forEachIndexed { index, chunk ->
-            Tracebox.log.debug("{} ({}/{}): {}", label, index + 1, chunks, chunk)
+            Tracebox.log.debug(MindlayerLlmInferenceProviderTraceboxTemplates.EVENT_2, argument(label), argument(index + 1), argument(chunks), argument(chunk))
         }
     }
 

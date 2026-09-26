@@ -733,7 +733,6 @@
     <string name="guidance_cue_valve_state">Stato della valvola</string>
     <string name="screen_learning_title">Impara</string>
     <string name="msg_learning_subtitle">Guide visive alla preparazione passo dopo passo</string>
-    <string name="msg_learning_intro">Scegli una caffettiera e una ricetta, poi scopri un passaggio chiaro alla volta.</string>
     <string name="action_show_details">Mostra dettagli</string>
     <string name="action_hide_details">Nascondi dettagli</string>
 </resources>

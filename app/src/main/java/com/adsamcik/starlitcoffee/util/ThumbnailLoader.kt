@@ -9,6 +9,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.withContext
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+import dev.tracebox.api.argument
+
+private object ThumbnailLoaderTraceboxTemplates {
+    val INSUFFICIENT_MEMORY_TO_LOAD_THUMBNAIL_FOR = LogTemplate.of("Insufficient memory to load thumbnail for {}")
+    val FAILED_TO_LOAD_THUMBNAIL_FOR = LogTemplate.of("Failed to load thumbnail for {}")
+}
 
 /**
  * Off-main bitmap loader for bag photo thumbnails.
@@ -140,10 +147,10 @@ object ThumbnailLoader {
             if (resized !== oriented && !oriented.isRecycled) oriented.recycle()
             resized
         } catch (error: OutOfMemoryError) {
-            Tracebox.log.error(error, "Insufficient memory to load thumbnail for {}", filePath)
+            Tracebox.log.error(error, ThumbnailLoaderTraceboxTemplates.INSUFFICIENT_MEMORY_TO_LOAD_THUMBNAIL_FOR, argument(filePath))
             null
         } catch (e: Exception) {
-            Tracebox.log.error(e, "Failed to load thumbnail for {}", filePath)
+            Tracebox.log.error(e, ThumbnailLoaderTraceboxTemplates.FAILED_TO_LOAD_THUMBNAIL_FOR, argument(filePath))
             null
         }
     }

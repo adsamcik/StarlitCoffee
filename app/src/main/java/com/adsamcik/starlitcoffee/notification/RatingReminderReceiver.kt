@@ -22,6 +22,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+import dev.tracebox.api.argument
+
+private object RatingReminderReceiverTraceboxTemplates {
+    val REMINDER_FIRED_WITHOUT_A_VALID_BREW_LOG = LogTemplate.of("Reminder fired without a valid brew log id — skipping")
+    val POST_NOTIFICATIONS_NOT_GRANTED_CANNOT_POST_RATING = LogTemplate.of("POST_NOTIFICATIONS not granted — cannot post rating reminder for {}")
+    val FAILED_TO_VALIDATE_RATING_REMINDER_FOR = LogTemplate.of("Failed to validate rating reminder for {}")
+    val FAILED_TO_POST_RATING_REMINDER_FOR = LogTemplate.of("Failed to post rating reminder for {}")
+}
 
 /**
  * Receives the scheduled alarm broadcast and posts the rating-reminder
@@ -36,7 +45,7 @@ class RatingReminderReceiver : BroadcastReceiver() {
         if (intent.action != RatingReminderScheduler.ACTION_RATING_REMINDER) return
         val brewLogId = intent.getLongExtra(RatingReminderScheduler.EXTRA_BREW_LOG_ID, -1L)
         if (brewLogId <= 0L) {
-            Tracebox.log.warn("Reminder fired without a valid brew log id — skipping")
+            Tracebox.log.warn(RatingReminderReceiverTraceboxTemplates.REMINDER_FIRED_WITHOUT_A_VALID_BREW_LOG)
             return
         }
         val appContext = context.applicationContext
@@ -45,7 +54,7 @@ class RatingReminderReceiver : BroadcastReceiver() {
         scope.launch {
             try {
                 if (!hasPostNotificationPermission(appContext)) {
-                    Tracebox.log.warn("POST_NOTIFICATIONS not granted — cannot post rating reminder for {}", brewLogId)
+                    Tracebox.log.warn(RatingReminderReceiverTraceboxTemplates.POST_NOTIFICATIONS_NOT_GRANTED_CANNOT_POST_RATING, argument(brewLogId))
                     return@launch
                 }
                 NotificationChannels.ensureRatingReminderChannel(appContext)
@@ -56,7 +65,7 @@ class RatingReminderReceiver : BroadcastReceiver() {
                 }
                 postNotification(appContext, brewLogId, methodLabel)
             } catch (error: Exception) {
-                Tracebox.log.error(error, "Failed to validate rating reminder for {}", brewLogId)
+                Tracebox.log.error(error, RatingReminderReceiverTraceboxTemplates.FAILED_TO_VALIDATE_RATING_REMINDER_FOR, argument(brewLogId))
             } finally {
                 pending.finish()
             }
@@ -113,7 +122,7 @@ class RatingReminderReceiver : BroadcastReceiver() {
             // helper boundaries).
             NotificationManagerCompat.from(context).notify(notificationId(brewLogId), notification)
         }.onFailure { error ->
-            Tracebox.log.error(error, "Failed to post rating reminder for {}", brewLogId)
+            Tracebox.log.error(error, RatingReminderReceiverTraceboxTemplates.FAILED_TO_POST_RATING_REMINDER_FOR, argument(brewLogId))
         }
     }
 

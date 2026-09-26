@@ -26,6 +26,19 @@ import com.adsamcik.starlitcoffee.util.ScanProgress
 import com.adsamcik.starlitcoffee.util.ScanStage
 import kotlinx.coroutines.CancellationException
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+
+private object BagExtractionWorkerTraceboxTemplates {
+    val BAG_EXTRACTION_WORKER_FAILED = LogTemplate.of("Bag extraction worker failed")
+    val COULD_NOT_PERSIST_FAILED_BAG_EXTRACTION_RESULT = LogTemplate.of("Could not persist failed bag extraction result")
+    val COULD_NOT_DELETE_TERMINAL_SCAN_CHECKPOINT = LogTemplate.of("Could not delete terminal scan checkpoint")
+    val COULD_NOT_PROMOTE_BAG_EXTRACTION_TO_A = LogTemplate.of("Could not promote bag extraction to a foreground service; continuing as background work")
+    val MISSING_NOTIFICATION_PERMISSION_FOR_SCAN_PROGRESS_UPDATE = LogTemplate.of("Missing notification permission for scan progress update")
+    val FAILED_TO_UPDATE_SCAN_PROGRESS_NOTIFICATION = LogTemplate.of("Failed to update scan progress notification")
+    val COULD_NOT_PERSIST_BAG_ANALYSIS_CHECKPOINT = LogTemplate.of("Could not persist bag analysis checkpoint")
+    val BAG_ANALYSIS_PREVIEW_IS_TOO_LARGE_FOR = LogTemplate.of("Bag analysis preview is too large for WorkManager progress data")
+    val COULD_NOT_PERSIST_COFFEE_DRAFT_PREVIEW = LogTemplate.of("Could not persist coffee draft preview")
+}
 
 class BagExtractionWorker(
     appContext: Context,
@@ -121,7 +134,7 @@ class BagExtractionWorker(
         } catch (error: CancellationException) {
             throw error
         } catch (error: Exception) {
-            Tracebox.log.error(error, "Bag extraction worker failed")
+            Tracebox.log.error(error, BagExtractionWorkerTraceboxTemplates.BAG_EXTRACTION_WORKER_FAILED)
             val failureResult = BagPhotoProcessingResult(
                 capturedPhotoUris = photosCsv,
                 llmStatus = com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus.UNAVAILABLE,
@@ -141,7 +154,7 @@ class BagExtractionWorker(
                     replay = storedResult.toTerminalReplay(reviewContext),
                 )
             } catch (persistenceError: Exception) {
-                Tracebox.log.error(persistenceError, "Could not persist failed bag extraction result")
+                Tracebox.log.error(persistenceError, BagExtractionWorkerTraceboxTemplates.COULD_NOT_PERSIST_FAILED_BAG_EXTRACTION_RESULT)
                 Result.retry()
             }
         }
@@ -171,7 +184,7 @@ class BagExtractionWorker(
         replay: BagExtractionTerminalReplay,
     ): Result {
         runCatching { BagExtractionCheckpointStore.delete(applicationContext, workId) }
-            .onFailure { error -> Tracebox.log.error(error, "Could not delete terminal scan checkpoint") }
+            .onFailure { error -> Tracebox.log.error(error, BagExtractionWorkerTraceboxTemplates.COULD_NOT_DELETE_TERMINAL_SCAN_CHECKPOINT) }
         if (draftAcceptsResult()) {
             BagExtractionScheduler.enqueueCompletionNotification(
                 applicationContext,
@@ -199,7 +212,7 @@ class BagExtractionWorker(
         } catch (error: Exception) {
             Tracebox.log.error(
                 error,
-                "Could not promote bag extraction to a foreground service; continuing as background work",
+                BagExtractionWorkerTraceboxTemplates.COULD_NOT_PROMOTE_BAG_EXTRACTION_TO_A,
             )
         }
     }
@@ -219,9 +232,9 @@ class BagExtractionWorker(
             NotificationManagerCompat.from(applicationContext)
                 .notify(foregroundNotificationId, buildProgressNotification(progress))
         } catch (security: SecurityException) {
-            Tracebox.log.error(security, "Missing notification permission for scan progress update")
+            Tracebox.log.error(security, BagExtractionWorkerTraceboxTemplates.MISSING_NOTIFICATION_PERMISSION_FOR_SCAN_PROGRESS_UPDATE)
         } catch (error: Exception) {
-            Tracebox.log.error(error, "Failed to update scan progress notification")
+            Tracebox.log.error(error, BagExtractionWorkerTraceboxTemplates.FAILED_TO_UPDATE_SCAN_PROGRESS_NOTIFICATION)
         }
     }
 
@@ -236,12 +249,12 @@ class BagExtractionWorker(
                     result.encodeToStoredJson(),
                 )
             }.onFailure { error ->
-                Tracebox.log.error(error, "Could not persist bag analysis checkpoint")
+                Tracebox.log.error(error, BagExtractionWorkerTraceboxTemplates.COULD_NOT_PERSIST_BAG_ANALYSIS_CHECKPOINT)
             }
         }
         latestPreviewJson = result.encodeForProgressJson()
         if (latestPreviewJson == null) {
-            Tracebox.log.warn("Bag analysis preview is too large for WorkManager progress data")
+            Tracebox.log.warn(BagExtractionWorkerTraceboxTemplates.BAG_ANALYSIS_PREVIEW_IS_TOO_LARGE_FOR)
         }
         latestProgress?.let(::publishWorkProgress)
     }
@@ -270,7 +283,7 @@ class BagExtractionWorker(
                 terminal = terminal,
             )
         }.onFailure { error ->
-            Tracebox.log.error(error, "Could not persist coffee draft preview")
+            Tracebox.log.error(error, BagExtractionWorkerTraceboxTemplates.COULD_NOT_PERSIST_COFFEE_DRAFT_PREVIEW)
         }
     }
 

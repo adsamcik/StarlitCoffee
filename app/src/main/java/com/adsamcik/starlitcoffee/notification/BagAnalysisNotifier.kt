@@ -14,6 +14,14 @@ import com.adsamcik.starlitcoffee.MainActivity
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.work.BagReviewContext
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+
+private object BagAnalysisNotifierTraceboxTemplates {
+    val POST_NOTIFICATIONS_NOT_GRANTED_CANNOT_POST_BAG = LogTemplate.of("POST_NOTIFICATIONS not granted — cannot post bag analysis notification")
+    val NOTIFICATIONS_ARE_DISABLED_CANNOT_POST_BAG_ANALYSIS = LogTemplate.of("Notifications are disabled — cannot post bag analysis notification")
+    val BAG_ANALYSIS_NOTIFICATION_CHANNEL_IS_DISABLED = LogTemplate.of("Bag analysis notification channel is disabled")
+    val FAILED_TO_POST_BAG_ANALYSIS_NOTIFICATION = LogTemplate.of("Failed to post bag analysis notification")
+}
 
 /**
  * Posts the "bag analysis complete" notification after the user sent the AI
@@ -93,11 +101,11 @@ class AndroidBagAnalysisNotifier(
         reviewContext: BagReviewContext?,
     ): Boolean {
         if (!hasPostNotificationPermission()) {
-            Tracebox.log.warn("POST_NOTIFICATIONS not granted — cannot post bag analysis notification")
+            Tracebox.log.warn(BagAnalysisNotifierTraceboxTemplates.POST_NOTIFICATIONS_NOT_GRANTED_CANNOT_POST_BAG)
             return false
         }
         if (!NotificationManagerCompat.from(context).areNotificationsEnabled()) {
-            Tracebox.log.warn("Notifications are disabled — cannot post bag analysis notification")
+            Tracebox.log.warn(BagAnalysisNotifierTraceboxTemplates.NOTIFICATIONS_ARE_DISABLED_CANNOT_POST_BAG_ANALYSIS)
             return false
         }
         NotificationChannels.ensureBagAnalysisChannel(context)
@@ -105,7 +113,7 @@ class AndroidBagAnalysisNotifier(
             ?.getNotificationChannel(NotificationChannels.BAG_ANALYSIS_ID)
             ?.importance
         if (!isNotificationChannelEnabled(channelImportance)) {
-            Tracebox.log.warn("Bag analysis notification channel is disabled")
+            Tracebox.log.warn(BagAnalysisNotifierTraceboxTemplates.BAG_ANALYSIS_NOTIFICATION_CHANNEL_IS_DISABLED)
             return false
         }
 
@@ -140,7 +148,7 @@ class AndroidBagAnalysisNotifier(
             )
             true
         }.onFailure { error ->
-            Tracebox.log.error(error, "Failed to post bag analysis notification")
+            Tracebox.log.error(error, BagAnalysisNotifierTraceboxTemplates.FAILED_TO_POST_BAG_ANALYSIS_NOTIFICATION)
         }.getOrDefault(false)
     }
 

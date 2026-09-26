@@ -731,7 +731,6 @@
     <string name="guidance_cue_valve_state">Klapi olek</string>
     <string name="screen_learning_title">Õpi</string>
     <string name="msg_learning_subtitle">Visuaalsed samm-sammulised valmistamisjuhendid</string>
-    <string name="msg_learning_intro">Vali valmistaja ja retsept ning tutvu ühe selge sammuga korraga.</string>
     <string name="action_show_details">Kuva üksikasjad</string>
     <string name="action_hide_details">Peida üksikasjad</string>
 </resources>

@@ -730,7 +730,6 @@
     <string name="guidance_cue_valve_state">Ventilstatus</string>
     <string name="screen_learning_title">Lær</string>
     <string name="msg_learning_subtitle">Visuelle bryggeguides trin for trin</string>
-    <string name="msg_learning_intro">Vælg en brygger og en opskrift, og gennemgå derefter ét tydeligt trin ad gangen.</string>
     <string name="action_show_details">Vis detaljer</string>
     <string name="action_hide_details">Skjul detaljer</string>
 </resources>

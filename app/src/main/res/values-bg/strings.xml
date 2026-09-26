@@ -731,7 +731,6 @@
     <string name="guidance_cue_valve_state">Състояние на клапана</string>
     <string name="screen_learning_title">Научи</string>
     <string name="msg_learning_subtitle">Нагледни ръководства стъпка по стъпка</string>
-    <string name="msg_learning_intro">Изберете уред и рецепта, след което разгледайте всяка ясна стъпка поотделно.</string>
     <string name="action_show_details">Покажи подробности</string>
     <string name="action_hide_details">Скрий подробностите</string>
 </resources>

@@ -28,6 +28,11 @@ import java.nio.file.LinkOption
 import java.nio.file.StandardCopyOption
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
+import dev.tracebox.api.LogTemplate
+
+private object BagDraftStoreTraceboxTemplates {
+    val FAILED_TO_READ_BAG_DRAFT = LogTemplate.of("Failed to read bag draft")
+}
 
 @Serializable
 enum class BagDraftPhase {
@@ -527,7 +532,7 @@ object BagDraftStore {
     internal fun read(directory: File, sessionId: String): BagScanDraft? {
         val file = draftFile(directory, sessionId).takeIf(::isSafeRegularFile) ?: return null
         return runCatching { BagDraftJson.decodeFromString<BagScanDraft>(file.readText()) }
-            .onFailure { error -> Tracebox.log.error(error, "Failed to read bag draft") }
+            .onFailure { error -> Tracebox.log.error(error, BagDraftStoreTraceboxTemplates.FAILED_TO_READ_BAG_DRAFT) }
             .getOrNull()
             ?.takeIf { it.schemaVersion <= BAG_DRAFT_SCHEMA_VERSION }
     }

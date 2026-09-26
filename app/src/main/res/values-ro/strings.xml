@@ -733,7 +733,6 @@
     <string name="guidance_cue_valve_state">Starea supapei</string>
     <string name="screen_learning_title">Învață</string>
     <string name="msg_learning_subtitle">Ghiduri vizuale de preparare pas cu pas</string>
-    <string name="msg_learning_intro">Alege un dispozitiv și o rețetă, apoi parcurge câte un pas clar.</string>
     <string name="action_show_details">Afișează detaliile</string>
     <string name="action_hide_details">Ascunde detaliile</string>
 </resources>

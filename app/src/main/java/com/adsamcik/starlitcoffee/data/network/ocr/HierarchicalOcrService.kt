@@ -6,6 +6,15 @@ import androidx.core.graphics.scale
 import kotlin.math.max
 import kotlin.math.min
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+import dev.tracebox.api.argument
+
+private object HierarchicalOcrServiceTraceboxTemplates {
+    val NO_PROBLEM_REGIONS_DETECTED_SKIPPING_REFINEMENT = LogTemplate.of("No problem regions detected; skipping refinement")
+    val REFINING_PROBLEM_REGION_S_CAP = LogTemplate.of("Refining {}/{} problem region(s) (cap={})")
+    val REFINEMENT_PRODUCED_NO_USABLE_TOKENS_RETURNING_INITIAL = LogTemplate.of("Refinement produced no usable tokens; returning initial result")
+    val REFINEMENT_ADDED_BLOCK_S_CHARS = LogTemplate.of("Refinement added {} block(s) ({} chars)")
+}
 
 /**
  * OCR wrapper that adds region-targeted re-recognition on top of
@@ -87,16 +96,16 @@ class HierarchicalOcrService(
         val initial = delegate.recognize(bitmap) ?: return null
         val problemBlocks = initial.blocks.filter(classifier::isProblem)
         if (problemBlocks.isEmpty()) {
-            Tracebox.log.debug("No problem regions detected; skipping refinement")
+            Tracebox.log.debug(HierarchicalOcrServiceTraceboxTemplates.NO_PROBLEM_REGIONS_DETECTED_SKIPPING_REFINEMENT)
             return initial
         }
 
         val candidates = problemBlocks.take(maxRefineRegions)
         Tracebox.log.debug(
-            "Refining {}/{} problem region(s) (cap={})",
-            candidates.size,
-            problemBlocks.size,
-            maxRefineRegions,
+            HierarchicalOcrServiceTraceboxTemplates.REFINING_PROBLEM_REGION_S_CAP,
+            argument(candidates.size),
+            argument(problemBlocks.size),
+            argument(maxRefineRegions),
         )
 
         val refinedBlocks = mutableListOf<RecognizedTextBlock>()
@@ -106,7 +115,7 @@ class HierarchicalOcrService(
         }
 
         if (refinedBlocks.isEmpty()) {
-            Tracebox.log.debug("Refinement produced no usable tokens; returning initial result")
+            Tracebox.log.debug(HierarchicalOcrServiceTraceboxTemplates.REFINEMENT_PRODUCED_NO_USABLE_TOKENS_RETURNING_INITIAL)
             return initial
         }
 
@@ -119,7 +128,7 @@ class HierarchicalOcrService(
         } else {
             (initial.fullText + "\n" + refinedText).trim()
         }
-        Tracebox.log.debug("Refinement added {} block(s) ({} chars)", refinedBlocks.size, refinedText.length)
+        Tracebox.log.debug(HierarchicalOcrServiceTraceboxTemplates.REFINEMENT_ADDED_BLOCK_S_CHARS, argument(refinedBlocks.size), argument(refinedText.length))
         return RecognizedText(
             fullText = combinedFullText,
             blocks = initial.blocks + refinedBlocks,

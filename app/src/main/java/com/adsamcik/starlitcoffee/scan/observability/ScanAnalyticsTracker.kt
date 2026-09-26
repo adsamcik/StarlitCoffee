@@ -1,7 +1,19 @@
 package com.adsamcik.starlitcoffee.scan.observability
 
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+import dev.tracebox.api.argument
 
+private object ScanAnalyticsTrackerTraceboxTemplates {
+    val EVENT_SCAN_STARTED = LogTemplate.of("event=scan_started")
+    val EVENT_LLM_FIRED_CALL_NUMBER_FIELDS_NEEDED = LogTemplate.of("event=llm_fired call_number={} fields_needed={}")
+    val EVENT_DRAFT_SHOWN_LATENCY_MS_FIELDS_RESOLVED = LogTemplate.of("event=draft_shown latency_ms={} fields_resolved={}")
+    val EVENT_SCAN_COMPLETED_OUTCOME_DURATION_MS_FIELDS = LogTemplate.of("event=scan_completed outcome={} duration_ms={} fields_resolved={} fields_total={}")
+    val EVENT_USER_EDITED_FIELD_NAME = LogTemplate.of("event=user_edited field_name={}")
+    val EVENT_FIELD_REVIEW_FIELD_NAME_WAS_EDITED = LogTemplate.of("event=field_review field_name={} was_edited={} model_confidence={}")
+    val EVENT_SCAN_ABANDONED_DURATION_MS_FIELDS_RESOLVED = LogTemplate.of("event=scan_abandoned duration_ms={} fields_resolved={}")
+    val EVENT_SCAN_ERROR_ERROR_MESSAGE = LogTemplate.of("event=scan_error error_message={}")
+}
 
 /**
  * Lightweight, privacy-classified Tracebox events for useful scan boundaries.
@@ -11,15 +23,15 @@ import dev.tracebox.Tracebox
 object ScanAnalyticsTracker {
 
     fun trackScanStarted() {
-        Tracebox.log.debug("event=scan_started")
+        Tracebox.log.debug(ScanAnalyticsTrackerTraceboxTemplates.EVENT_SCAN_STARTED)
     }
 
     fun trackLlmFired(callNumber: Int, fieldsNeeded: Int) {
-        Tracebox.log.debug("event=llm_fired call_number={} fields_needed={}", callNumber, fieldsNeeded)
+        Tracebox.log.debug(ScanAnalyticsTrackerTraceboxTemplates.EVENT_LLM_FIRED_CALL_NUMBER_FIELDS_NEEDED, argument(callNumber), argument(fieldsNeeded))
     }
 
     fun trackDraftShown(latencyMs: Long, fieldsResolved: Int) {
-        Tracebox.log.debug("event=draft_shown latency_ms={} fields_resolved={}", latencyMs, fieldsResolved)
+        Tracebox.log.debug(ScanAnalyticsTrackerTraceboxTemplates.EVENT_DRAFT_SHOWN_LATENCY_MS_FIELDS_RESOLVED, argument(latencyMs), argument(fieldsResolved))
     }
 
     fun trackScanCompleted(
@@ -29,16 +41,16 @@ object ScanAnalyticsTracker {
         fieldsTotal: Int,
     ) {
         Tracebox.log.debug(
-            "event=scan_completed outcome={} duration_ms={} fields_resolved={} fields_total={}",
-            outcome,
-            durationMs,
-            fieldsResolved,
-            fieldsTotal,
+            ScanAnalyticsTrackerTraceboxTemplates.EVENT_SCAN_COMPLETED_OUTCOME_DURATION_MS_FIELDS,
+            argument(outcome),
+            argument(durationMs),
+            argument(fieldsResolved),
+            argument(fieldsTotal),
         )
     }
 
     fun trackUserEdited(fieldName: String) {
-        Tracebox.log.debug("event=user_edited field_name={}", fieldName)
+        Tracebox.log.debug(ScanAnalyticsTrackerTraceboxTemplates.EVENT_USER_EDITED_FIELD_NAME, argument(fieldName))
     }
 
     /**
@@ -48,19 +60,23 @@ object ScanAnalyticsTracker {
      */
     fun trackFieldReview(fieldName: String, wasEdited: Boolean, modelConfidence: String?) {
         Tracebox.log.debug(
-            "event=field_review field_name={} was_edited={} model_confidence={}",
-            fieldName,
-            wasEdited,
-            modelConfidence ?: "unknown",
+            ScanAnalyticsTrackerTraceboxTemplates.EVENT_FIELD_REVIEW_FIELD_NAME_WAS_EDITED,
+            argument(fieldName),
+            argument(wasEdited),
+            argument(modelConfidence ?: "unknown"),
         )
     }
 
     fun trackScanAbandoned(durationMs: Long, fieldsResolved: Int) {
-        Tracebox.log.debug("event=scan_abandoned duration_ms={} fields_resolved={}", durationMs, fieldsResolved)
+        Tracebox.log.debug(
+            ScanAnalyticsTrackerTraceboxTemplates.EVENT_SCAN_ABANDONED_DURATION_MS_FIELDS_RESOLVED,
+            argument(durationMs),
+            argument(fieldsResolved),
+        )
     }
 
     fun trackScanError(error: String) {
-        Tracebox.log.error("event=scan_error error_message={}", error)
+        Tracebox.log.error(ScanAnalyticsTrackerTraceboxTemplates.EVENT_SCAN_ERROR_ERROR_MESSAGE, argument(error))
     }
 
 }

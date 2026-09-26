@@ -18,6 +18,14 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.BrewSessionStatus
 import com.adsamcik.starlitcoffee.domain.brewing.session.SessionId
 import com.adsamcik.starlitcoffee.domain.brewing.session.SessionRuntimeState
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+
+private object DurableBrewSessionStatusNotifierTraceboxTemplates {
+    val UNABLE_TO_CANCEL_DURABLE_BREW_STATUS_NOTIFICATION = LogTemplate.of("Unable to cancel durable brew status notification")
+    val UNABLE_TO_POST_DURABLE_BREW_STATUS_NOTIFICATION = LogTemplate.of("Unable to post durable brew status notification")
+    val UNABLE_TO_INSPECT_NOTIFICATION_AVAILABILITY = LogTemplate.of("Unable to inspect notification availability")
+    val UNABLE_TO_PREPARE_DURABLE_BREW_STATUS_CHANNEL = LogTemplate.of("Unable to prepare durable brew status channel")
+}
 
 /**
  * The non-interruptive, ongoing timer shown while a durable brew continues
@@ -59,7 +67,7 @@ class DurableBrewSessionStatusNotifier(
                 STATUS_NOTIFICATION_ID,
             )
         }.onFailure { error ->
-            Tracebox.log.error(error, "Unable to cancel durable brew status notification")
+            Tracebox.log.error(error, DurableBrewSessionStatusNotifierTraceboxTemplates.UNABLE_TO_CANCEL_DURABLE_BREW_STATUS_NOTIFICATION)
         }
     }
 
@@ -98,14 +106,14 @@ class DurableBrewSessionStatusNotifier(
         }.onFailure { error ->
             // Permission can be revoked after the preflight check. The durable
             // session stays intact and a later foreground/background cycle can retry.
-            Tracebox.log.error(error, "Unable to post durable brew status notification")
+            Tracebox.log.error(error, DurableBrewSessionStatusNotifierTraceboxTemplates.UNABLE_TO_POST_DURABLE_BREW_STATUS_NOTIFICATION)
         }
     }
 
     private fun areNotificationsEnabled(): Boolean = runCatching {
         NotificationManagerCompat.from(appContext).areNotificationsEnabled()
     }.onFailure { error ->
-        Tracebox.log.error(error, "Unable to inspect notification availability")
+        Tracebox.log.error(error, DurableBrewSessionStatusNotifierTraceboxTemplates.UNABLE_TO_INSPECT_NOTIFICATION_AVAILABILITY)
     }.getOrDefault(false)
 
     private fun isBrewStatusChannelEnabled(): Boolean = runCatching {
@@ -115,7 +123,7 @@ class DurableBrewSessionStatusNotifier(
             ?.importance
         isNotificationChannelEnabled(importance)
     }.onFailure { error ->
-        Tracebox.log.error(error, "Unable to prepare durable brew status channel")
+        Tracebox.log.error(error, DurableBrewSessionStatusNotifierTraceboxTemplates.UNABLE_TO_PREPARE_DURABLE_BREW_STATUS_CHANNEL)
     }.getOrDefault(false)
 
     private fun canPostNotifications(): Boolean = Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
