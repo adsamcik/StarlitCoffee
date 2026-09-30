@@ -174,22 +174,24 @@ fun OnboardingPersonalizeScreen(
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     Spacer(modifier = Modifier.height(12.dp))
+                    val supportedGrinders = GrinderDataSource.getInstance(context).grinders
+                    val noGrinderSelected = supportedGrinders.none { it.id == selectedGrinderId.value }
                     FlowRow(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
                         FilterChip(
-                            selected = selectedGrinderId.value == null,
+                            selected = noGrinderSelected,
                             enabled = !isSubmitting,
                             onClick = { selectedGrinderId.value = null },
                             label = { Text(stringResource(R.string.label_no_grinder)) },
-                            leadingIcon = if (selectedGrinderId.value == null) {
+                            leadingIcon = if (noGrinderSelected) {
                                 { Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }
                             } else {
                                 null
                             },
                         )
-                        GrinderDataSource.getInstance(context).grinders.forEach { grinder ->
+                        supportedGrinders.forEach { grinder ->
                             val isGrinderSelected = selectedGrinderId.value == grinder.id
                             FilterChip(
                                 selected = isGrinderSelected,

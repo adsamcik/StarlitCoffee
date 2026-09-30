@@ -13,4 +13,6 @@ data class Grinder(
     val isManual: Boolean,
     val scaleType: GrinderScaleType,
     val clicksPerRotation: Int? = null,
+    val dial: GrinderDial? = null,
+    val sourceUrls: List<String> = emptyList(),
 )

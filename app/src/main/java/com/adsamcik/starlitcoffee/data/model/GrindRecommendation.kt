@@ -9,4 +9,5 @@ data class GrindRecommendation(
     val suggestedStart: Float,
     val adjustmentStepSize: Float,
     val adjustmentNote: String,
+    val sourceUrls: List<String> = emptyList(),
 )

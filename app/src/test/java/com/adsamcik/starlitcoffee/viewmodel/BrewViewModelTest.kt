@@ -739,12 +739,11 @@ class BrewViewModelTest {
     }
 
     @Test
-    fun `decaf coarsening clamps to rangeEnd on tight METAL_19K`() {
+    fun `unsupported metal filter never receives a precise decaf grinder prediction`() {
         val vm = createPersistenceViewModel()
         vm.setMethod(BrewMethod.PULSAR)
         vm.setFilterType(FilterType.METAL_19K)
         vm.setGrinder("1zpresso-zp6-special")
-        // Dark roast → 2 steps coarser → 5.7 + 0.4 = 6.1, but range is 5.5–5.9
         vm.addCoffeeBag(
             BrewViewModel.CoffeeBagInput(
                 name = "Dark Decaf",
@@ -754,9 +753,7 @@ class BrewViewModelTest {
         )
         selectFirstBag(vm)
 
-        val rec = (vm.uiState.value.grindResult as GrindResult.Specific).recommendation
-        // Clamped to rangeEnd 5.9, not 6.1
-        assertEquals(5.9f, rec.suggestedStart, 0.01f)
+        assertTrue(vm.uiState.value.grindResult is GrindResult.Generic)
     }
 
     // NOTE: Immersion (FRENCH_PRESS / AEROPRESS / COLD_BREW) and ESPRESSO
@@ -964,7 +961,7 @@ class BrewViewModelTest {
 
         persistenceViewModel.saveRecipe("Specific Grind")
 
-        assertEquals("4.3-6.5", persistenceViewModel.savedRecipes.value.first().grindSetting)
+        assertEquals("5.0–6.0", persistenceViewModel.savedRecipes.value.first().grindSetting)
     }
 
     @Test

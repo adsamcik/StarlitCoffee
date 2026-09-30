@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.viewmodel
 
+import com.adsamcik.starlitcoffee.data.model.GrinderSettingFormatter
 import com.adsamcik.starlitcoffee.data.brewing.LegacyBrewingAdapter
 import com.adsamcik.starlitcoffee.data.brewing.LegacyBrewingReference
 import com.adsamcik.starlitcoffee.data.brewing.session.BrewLogPresentationContextSnapshotV1
@@ -373,9 +374,7 @@ class LegacyBrewSessionStartFactory(
     private fun BrewUiState.grindLabel(): String = when (val result = grindResult) {
         is GrindResult.Generic -> result.descriptor.displayName
         is GrindResult.Specific -> {
-            "%.1f".format(result.recommendation.rangeStart) +
-                "-" +
-                "%.1f".format(result.recommendation.rangeEnd)
+            GrinderSettingFormatter.range(result.grinder, result.recommendation)
         }
     }
 

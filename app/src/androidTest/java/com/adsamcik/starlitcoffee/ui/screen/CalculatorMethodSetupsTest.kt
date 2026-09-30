@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -19,6 +20,7 @@ import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.CalculatorSetup
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
+import com.adsamcik.starlitcoffee.data.model.grindersFor
 import com.adsamcik.starlitcoffee.data.repository.CupPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
@@ -29,6 +31,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -54,7 +58,8 @@ class CalculatorMethodSetupsTest {
         val presets = CupPresetRepository(database.cupPresetDao())
         val store = ViewModelStore()
         val calculator = CalculatorViewModel(presets, preferences)
-        val brew = BrewViewModel(recipeRepository = RecipeRepository(database.recipeDao()))
+        val grinderData = GrinderDataSource.getInstance(context)
+        val brew = BrewViewModel(recipeRepository = RecipeRepository(database.recipeDao()), grinderData = grinderData)
         store.put("calculator", calculator)
         store.put("brew", brew)
         try {
@@ -82,9 +87,8 @@ class CalculatorMethodSetupsTest {
             composeRule.onNodeWithText("1:2.5").performClick()
             composeRule.onNodeWithText("4").performClick()
             composeRule.onNodeWithText("5").performClick()
-            val grinders = GrinderDataSource.getInstance(context).grinders
-            val workGrinder = grinders.first().id
-            val homeGrinder = grinders.last().id
+            val workGrinder = grinderData.grindersFor(BrewMethod.ESPRESSO, null).first().id
+            val homeGrinder = grinderData.grindersFor(BrewMethod.PULSAR, FilterType.PAPER).last().id
             composeRule.runOnIdle { calculator.setEquipment(null, workGrinder) }
             saveFavorite(context.getString(R.string.action_save_as_favorite), "Work")
             composeRule.waitUntil(10_000) { brew.savedRecipes.value.any { it.coffeeName == "Work" } }
@@ -110,6 +114,7 @@ class CalculatorMethodSetupsTest {
 
             val workRecipe = brew.savedRecipes.value.single { it.coffeeName == "Work" }
             val homeRecipe = brew.savedRecipes.value.single { it.coffeeName == "Home" }
+            assertEquals("5.2", homeRecipe.grindSetting)
             composeRule.onNodeWithTag("saved_setup_picker").performClick()
             composeRule.onNodeWithTag("saved_setup_${workRecipe.id}").performClick()
             composeRule.runOnIdle {
@@ -142,6 +147,59 @@ class CalculatorMethodSetupsTest {
                 restarted.setBrewMethod(BrewMethod.ESPRESSO)
                 assertEquals(work, restarted.currentSetup())
             }
+        } finally {
+            composeRule.runOnIdle { store.clear() }
+            database.close()
+        }
+    }
+
+    @Test
+    fun incompatibleSelectionsAreClearedAndUnsupportedControlsAreHidden() {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        val preferences = UserPreferencesRepository(context)
+        runBlocking {
+            preferences.updateMethodSelection(BrewMethod.entries.toSet(), BrewMethod.PULSAR)
+            BrewMethod.entries.forEach { method ->
+                preferences.updateCalculatorSetup(method, CalculatorSetup(ratio = method.defaultRatio))
+            }
+            preferences.updateCalculatorSetup(BrewMethod.PULSAR,
+                CalculatorSetup(ratio = 17f, filterType = FilterType.PAPER.name, grinderId = "df64"))
+        }
+        val database = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
+        val store = ViewModelStore()
+        val calculator = CalculatorViewModel(CupPresetRepository(database.cupPresetDao()), preferences)
+        val brew = BrewViewModel(grinderData = GrinderDataSource.getInstance(context))
+        store.put("calculator", calculator)
+        store.put("brew", brew)
+        try {
+            composeRule.setContent {
+                StarlitCoffeeTheme(dynamicColor = false) {
+                    CalculatorBrewScreen(calculator, brew, preferences,
+                        onNavigateToBrew = {}, recoverableSessionId = null, onResumeSession = {},
+                        onNavigateToBarcode = {}, onNavigateToBags = {})
+                }
+            }
+            composeRule.waitUntil(10_000) {
+                calculator.uiState.value.preferencesLoaded && calculator.uiState.value.grinderId == null
+            }
+            composeRule.onNodeWithTag("grinder_picker").performClick()
+            composeRule.onNodeWithText("1Zpresso ZP6 Special").assertIsDisplayed()
+            composeRule.onNodeWithText("Fellow Ode Gen 2 (Gen 2 burrs)").performClick()
+            composeRule.onNodeWithTag("filter_picker").performClick()
+            composeRule.onNodeWithText(FilterType.METAL_19K.displayName).performClick()
+            composeRule.onNodeWithTag("grinder_picker").assertDoesNotExist()
+            composeRule.runOnIdle {
+                assertNull(calculator.uiState.value.grinderId)
+                assertTrue(brew.uiState.value.grindResult is com.adsamcik.starlitcoffee.viewmodel.GrindResult.Generic)
+            }
+            composeRule.onNodeWithText("Pulsar").performClick()
+            composeRule.onNodeWithText("Espresso").performClick()
+            composeRule.onNodeWithTag("grinder_picker").performClick()
+            composeRule.onNodeWithText("Comandante C40 (standard clicks)").assertIsDisplayed()
+            composeRule.onNodeWithText("Baratza Encore ESP").assertIsDisplayed()
+            composeRule.onNodeWithText("Niche Zero").assertIsDisplayed()
+            composeRule.onNodeWithText("1Zpresso ZP6 Special").assertDoesNotExist()
+            composeRule.onNodeWithText("Fellow Ode Gen 2 (Gen 2 burrs)").assertDoesNotExist()
         } finally {
             composeRule.runOnIdle { store.clear() }
             database.close()

@@ -41,7 +41,7 @@ import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.Grinder
-import com.adsamcik.starlitcoffee.data.model.GrinderScaleType
+import com.adsamcik.starlitcoffee.data.model.GrinderSettingFormatter
 import com.adsamcik.starlitcoffee.data.model.GrindRecommendation
 import com.adsamcik.starlitcoffee.ui.component.CoffeeBagSelector
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
@@ -568,28 +568,8 @@ private fun grindPrepStep(grindResult: GrindResult, coffeeG: Float): String? {
  * [formatGrindSetting] but drops the parenthetical noise ("on dial", "from
  * zero") that doesn't help inside a sentence.
  */
-private fun grindSettingInline(grinder: Grinder, value: Float): String {
-    return when (grinder.scaleType) {
-        GrinderScaleType.DIAL_CLICKS -> {
-            val whole = value.toInt()
-            val clicks = Math.round((value - whole) * 10f).coerceAtLeast(0)
-            if (clicks > 0) {
-                val label = if (clicks == 1) "click" else "clicks"
-                "${"%.1f".format(value)} ($whole + $clicks $label)"
-            } else {
-                "%.1f".format(value)
-            }
-        }
-        GrinderScaleType.PURE_CLICKS -> {
-            val rounded = Math.round(value)
-            val label = if (rounded == 1) "click" else "clicks"
-            "$rounded $label"
-        }
-        GrinderScaleType.NUMBERED_DIAL -> {
-            if (value % 1f == 0f) value.toInt().toString() else "%.1f".format(value)
-        }
-    }
-}
+private fun grindSettingInline(grinder: Grinder, value: Float): String =
+    GrinderSettingFormatter.label(grinder, value)
 
 @Composable
 private fun PrepStep(text: String) {
@@ -628,70 +608,13 @@ private fun SectionDivider() {
     )
 }
 
-private data class FormattedGrindSetting(
-    val primary: String,
-    val unit: String?,
-    val breakdown: String?,
-)
-
-/**
- * Format a grind setting value for display based on the grinder's scale type.
- *
- * - DIAL_CLICKS (e.g. 1Zpresso): "5.2" shown as "5.2" with breakdown "5 + 2 clicks"
- * - PURE_CLICKS (e.g. Comandante C40): shown as integer clicks count
- * - NUMBERED_DIAL (e.g. Fellow Ode): shown as printed dial setting
- */
-private fun formatGrindSetting(grinder: Grinder, value: Float): FormattedGrindSetting {
-    return when (grinder.scaleType) {
-        GrinderScaleType.DIAL_CLICKS -> {
-            val whole = value.toInt()
-            val clicks = Math.round((value - whole) * 10f).coerceAtLeast(0)
-            val clicksLabel = if (clicks == 1) "click" else "clicks"
-            FormattedGrindSetting(
-                primary = "%.1f".format(value),
-                unit = null,
-                breakdown = if (clicks > 0) "$whole + $clicks $clicksLabel" else "$whole (no extra clicks)",
-            )
-        }
-        GrinderScaleType.PURE_CLICKS -> {
-            val rounded = Math.round(value)
-            FormattedGrindSetting(
-                primary = rounded.toString(),
-                unit = if (rounded == 1) "click" else "clicks",
-                breakdown = "from zero",
-            )
-        }
-        GrinderScaleType.NUMBERED_DIAL -> {
-            FormattedGrindSetting(
-                primary = if (value % 1f == 0f) value.toInt().toString() else "%.1f".format(value),
-                unit = null,
-                breakdown = "on dial",
-            )
-        }
-    }
-}
+private fun formatGrindSetting(grinder: Grinder, value: Float) = GrinderSettingFormatter.format(grinder, value)
 
 private fun rangeLine(grinder: Grinder, rec: GrindRecommendation): String {
-    return when (grinder.scaleType) {
-        GrinderScaleType.PURE_CLICKS -> {
-            val lo = Math.round(rec.rangeStart)
-            val hi = Math.round(rec.rangeEnd)
-            val step = Math.round(rec.adjustmentStepSize).coerceAtLeast(1)
-            "range $lo–$hi clicks · ±$step to taste"
-        }
-        GrinderScaleType.DIAL_CLICKS -> {
-            val stepClicks = Math.round(rec.adjustmentStepSize * 10f).coerceAtLeast(1)
-            val clicksLabel = if (stepClicks == 1) "click" else "clicks"
-            "range ${"%.1f".format(rec.rangeStart)}–${"%.1f".format(rec.rangeEnd)} · ±$stepClicks $clicksLabel to taste"
-        }
-        GrinderScaleType.NUMBERED_DIAL -> {
-            val step = rec.adjustmentStepSize
-            val stepLabel = if (step % 1f == 0f) step.toInt().toString() else "%.1f".format(step)
-            val loLabel = if (rec.rangeStart % 1f == 0f) rec.rangeStart.toInt().toString() else "%.1f".format(rec.rangeStart)
-            val hiLabel = if (rec.rangeEnd % 1f == 0f) rec.rangeEnd.toInt().toString() else "%.1f".format(rec.rangeEnd)
-            "range $loLabel–$hiLabel · ±$stepLabel to taste"
-        }
-    }
+    val kind = if (rec.rangeStart == rec.rangeEnd) "start" else "range"
+    val range = GrinderSettingFormatter.range(grinder, rec)
+    val step = GrinderSettingFormatter.adjustment(grinder, rec.adjustmentStepSize)
+    return "$kind $range · ±$step to taste"
 }
 
 private fun formatRatio(ratio: Float): String {

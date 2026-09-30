@@ -44,6 +44,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Grinder choices now require a source-backed recommendation for the selected
+  method and filter. Five precisely identified models use their actual setting
+  notation, including Ode's numbered subdivisions and Niche's stepless dial.
+  Encore ESP starts now follow its own manual. DF64 and uncited method/filter
+  predictions were removed; unsupported combinations use texture guidance.
 - The calculator shows only quantities supported by the selected brewing method,
   with the remaining cards expanding to fill the available space.
 - Calculator ratios now start from the selected method's default and offer

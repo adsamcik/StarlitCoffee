@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
+import com.adsamcik.starlitcoffee.data.model.GrinderSettingFormatter
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -541,7 +542,7 @@ fun MethodPickerScreen(
             is GrindResult.Generic ->
                 stringResource(R.string.format_grind_generic, gr.descriptor.displayName, gr.descriptor.visualCue)
             is GrindResult.Specific ->
-                stringResource(R.string.format_grind_specific_range, "%.1f".format(gr.recommendation.rangeStart), "%.1f".format(gr.recommendation.rangeEnd))
+                "${stringResource(R.string.label_grind)}: ${GrinderSettingFormatter.range(gr.grinder, gr.recommendation)}"
         }
         val bagGrindHint = selectedRankedBag?.grindInsight?.bestGrindSetting ?: selectedBag?.grindSetting
         ElevatedCard(

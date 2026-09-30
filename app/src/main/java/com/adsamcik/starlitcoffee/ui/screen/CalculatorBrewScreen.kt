@@ -82,6 +82,7 @@ import com.adsamcik.starlitcoffee.data.model.CupPreset
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.Grinder
 import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
+import com.adsamcik.starlitcoffee.data.model.grindersFor
 import com.adsamcik.starlitcoffee.data.model.InputMode
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
@@ -123,7 +124,10 @@ fun CalculatorBrewScreen(
     // calculator setup and supplies its equipment to the preparation boundary.
     val selectedMethod = brewState.method
     val selectedFilter = state.filterType
-    val selectedGrinderId = state.grinderId
+    val context = LocalContext.current
+    val grinderData = remember { GrinderDataSource.getInstance(context) }
+    val grinders = grinderData.grindersFor(state.brewMethod, selectedFilter)
+    val selectedGrinderId = state.grinderId?.takeIf { id -> grinders.any { it.id == id } }
     val savedRecipes by brewViewModel.savedRecipes.collectAsStateWithLifecycle()
 
     LaunchedEffect(selectedMethod, brewState.beverageOutputCalibration) {
@@ -133,15 +137,15 @@ fun CalculatorBrewScreen(
         )
     }
 
-    LaunchedEffect(state.brewMethod, selectedFilter, selectedGrinderId, state.preferencesLoaded) {
+    LaunchedEffect(state.brewMethod, selectedFilter, state.grinderId, state.preferencesLoaded) {
         if (state.preferencesLoaded && state.brewMethod == brewViewModel.uiState.value.method) {
+            if (state.grinderId != selectedGrinderId) {
+                calculatorViewModel.setEquipment(selectedFilter, selectedGrinderId)
+            }
             brewViewModel.setFilterType(selectedFilter)
             brewViewModel.setGrinder(selectedGrinderId)
         }
     }
-
-    val context = LocalContext.current
-    val grinders = remember { GrinderDataSource.getInstance(context).grinders }
 
     // Compact-height adaptation. Reference values (dp):
     //   - Small phones (5" / Pixel 4a): ~683 dp
@@ -191,7 +195,7 @@ fun CalculatorBrewScreen(
     // chip handlers, so only the calc-derived fields need explicit syncing.
     val syncCalcDerivedState: () -> Unit = {
         brewViewModel.setFilterType(state.filterType)
-        brewViewModel.setGrinder(state.grinderId)
+        brewViewModel.setGrinder(selectedGrinderId)
         brewViewModel.setCustomRatio(state.ratio.toString())
         brewViewModel.setInputMode(InputMode.COFFEE_TO_WATER)
         brewViewModel.setAmount(state.previewDoseG.toString())
@@ -297,7 +301,12 @@ fun CalculatorBrewScreen(
                 ) {
                     brewViewModel.selectBagForBrewing(bagId)
                     brewViewModel.setFilterType(scanCalcState.filterType)
-                    brewViewModel.setGrinder(scanCalcState.grinderId)
+                    brewViewModel.setGrinder(
+                        scanCalcState.grinderId?.takeIf {
+                            grinderData.grindersFor(scanCalcState.brewMethod, scanCalcState.filterType)
+                                .any { grinder -> grinder.id == it }
+                        },
+                    )
                     brewViewModel.setCustomRatio(scanCalcState.ratio.toString())
                     brewViewModel.setInputMode(InputMode.COFFEE_TO_WATER)
                     brewViewModel.setAmount(scanCalcState.previewDoseG.toString())
@@ -359,7 +368,11 @@ fun CalculatorBrewScreen(
                 brewViewModel.setMethod(method)
                 val setup = calculatorViewModel.uiState.value
                 brewViewModel.setFilterType(setup.filterType)
-                brewViewModel.setGrinder(setup.grinderId)
+                brewViewModel.setGrinder(
+                    setup.grinderId?.takeIf {
+                        grinderData.grindersFor(method, setup.filterType).any { grinder -> grinder.id == it }
+                    },
+                )
                 calculatorViewModel.setBrewContext(method, brewViewModel.uiState.value.beverageOutputCalibration)
             },
             onFilterChange = { calculatorViewModel.setEquipment(it, selectedGrinderId) },
@@ -727,6 +740,7 @@ private fun BrewSettingsPillBar(
             val pillLabel = selectedFilter?.displayName ?: noFilterLabel
             PillDropdown(
                 label = pillLabel,
+                modifier = Modifier.testTag("filter_picker"),
                 options = buildList {
                     add(
                         PillOption(
@@ -757,6 +771,7 @@ private fun BrewSettingsPillBar(
             } ?: noGrinderLabel
             PillDropdown(
                 label = pillLabel,
+                modifier = Modifier.testTag("grinder_picker"),
                 options = buildList {
                     add(
                         PillOption(
@@ -791,6 +806,7 @@ private data class PillOption(
 private fun PillDropdown(
     label: String,
     options: List<PillOption>,
+    modifier: Modifier = Modifier,
 ) {
     var expanded by remember { mutableStateOf(false) }
     val arrowRotation by animateFloatAsState(
@@ -800,6 +816,7 @@ private fun PillDropdown(
     Box {
         AssistChip(
             onClick = { expanded = true },
+            modifier = modifier,
             label = {
                 Text(
                     text = label,

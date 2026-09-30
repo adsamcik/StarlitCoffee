@@ -408,18 +408,20 @@ fun SettingsScreen(
                 }
                 SettingsRowDivider()
                 SettingsSelectorBlock(title = stringResource(R.string.label_your_grinder)) {
+                    val supportedGrinders = GrinderDataSource.getInstance(context).grinders
+                    val noGrinderSelected = supportedGrinders.none { it.id == prefs.selectedGrinderId }
                     FlowRow(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
                         FilterChip(
-                            selected = prefs.selectedGrinderId == null,
+                            selected = noGrinderSelected,
                             enabled = !isBusy,
                             onClick = { viewModel.updateSelectedGrinder(null) },
                             label = { Text(stringResource(R.string.label_no_grinder)) },
-                            leadingIcon = if (prefs.selectedGrinderId == null) checkIcon else null,
+                            leadingIcon = if (noGrinderSelected) checkIcon else null,
                         )
-                        GrinderDataSource.getInstance(context).grinders.forEach { grinder ->
+                        supportedGrinders.forEach { grinder ->
                             val isGrinderSelected = prefs.selectedGrinderId == grinder.id
                             FilterChip(
                                 selected = isGrinderSelected,

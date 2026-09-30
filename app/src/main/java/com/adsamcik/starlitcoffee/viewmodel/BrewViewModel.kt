@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.viewmodel
 
+import com.adsamcik.starlitcoffee.data.model.GrinderSettingFormatter
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
@@ -745,7 +746,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                     grindSetting = when (val result = state.grindResult) {
                         is GrindResult.Generic -> result.descriptor.displayName
                         is GrindResult.Specific -> {
-                            "${"%.1f".format(result.recommendation.rangeStart)}-${"%.1f".format(result.recommendation.rangeEnd)}"
+                            GrinderSettingFormatter.range(result.grinder, result.recommendation)
                         }
                     },
                     filterType = state.filterType?.name,
@@ -836,7 +837,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         grindSetting = when (val result = state.grindResult) {
             is GrindResult.Generic -> result.descriptor.displayName
             is GrindResult.Specific -> {
-                "${"%.1f".format(result.recommendation.rangeStart)}-${"%.1f".format(result.recommendation.rangeEnd)}"
+                GrinderSettingFormatter.range(result.grinder, result.recommendation)
             }
         },
         filterType = state.filterType?.name,
@@ -872,7 +873,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             updated = updated.copy(status = "OPEN", openedDate = System.currentTimeMillis())
         }
         val grindStr = when (val result = state.grindResult) {
-            is GrindResult.Specific -> "%.1f".format(result.recommendation.suggestedStart)
+            is GrindResult.Specific -> GrinderSettingFormatter.label(result.grinder, result.recommendation.suggestedStart)
             is GrindResult.Generic -> null
         }
         if (grindStr != null && updated.grindSetting != grindStr) {
