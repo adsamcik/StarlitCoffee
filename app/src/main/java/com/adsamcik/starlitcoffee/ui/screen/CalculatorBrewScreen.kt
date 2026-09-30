@@ -72,6 +72,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.calculator.CalcEvaluator.InputDirection
 import com.adsamcik.starlitcoffee.calculator.CalculatorQuantityTarget
+import com.adsamcik.starlitcoffee.calculator.calculatorRatioOptions
+import com.adsamcik.starlitcoffee.calculator.formatCalculatorRatio
+import com.adsamcik.starlitcoffee.data.model.BrewOutputSemantics
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.CalcOp
 import com.adsamcik.starlitcoffee.data.model.CalcToken
@@ -79,15 +82,16 @@ import com.adsamcik.starlitcoffee.data.model.CupPreset
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.Grinder
 import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
+import com.adsamcik.starlitcoffee.data.model.InputMode
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
-import com.adsamcik.starlitcoffee.domain.BeverageOutputEstimator
 import com.adsamcik.starlitcoffee.ui.adaptive.LocalWindowWidthClass
 import com.adsamcik.starlitcoffee.ui.component.CalculationQuantityIcon
 import com.adsamcik.starlitcoffee.ui.component.CalculationQuantityIconType
 import com.adsamcik.starlitcoffee.ui.component.CalculatorQuantityCardItem
 import com.adsamcik.starlitcoffee.ui.component.CalculatorQuantitySelector
 import com.adsamcik.starlitcoffee.ui.component.SaveFavoriteDialog
+import com.adsamcik.starlitcoffee.ui.component.SavedSetupPicker
 import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import com.adsamcik.starlitcoffee.ui.util.PresetIcon
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
@@ -115,18 +119,25 @@ fun CalculatorBrewScreen(
         initialValue = UserPreferences(),
     )
 
-    // Brew config (method/filter/grinder) is owned by BrewViewModel — its
-    // `applyUserDefaults()` already seeds these from prefs at VM init. Keep
-    // local read-only aliases for ergonomics; mutations go directly to the VM.
+    // BrewViewModel selects the method. CalculatorViewModel owns the remembered
+    // calculator setup and supplies its equipment to the preparation boundary.
     val selectedMethod = brewState.method
-    val selectedFilter = brewState.filterType
-    val selectedGrinderId = brewState.selectedGrinderId
+    val selectedFilter = state.filterType
+    val selectedGrinderId = state.grinderId
+    val savedRecipes by brewViewModel.savedRecipes.collectAsStateWithLifecycle()
 
     LaunchedEffect(selectedMethod, brewState.beverageOutputCalibration) {
         calculatorViewModel.setBrewContext(
             method = selectedMethod,
             calibration = brewState.beverageOutputCalibration,
         )
+    }
+
+    LaunchedEffect(state.brewMethod, selectedFilter, selectedGrinderId, state.preferencesLoaded) {
+        if (state.preferencesLoaded && state.brewMethod == brewViewModel.uiState.value.method) {
+            brewViewModel.setFilterType(selectedFilter)
+            brewViewModel.setGrinder(selectedGrinderId)
+        }
     }
 
     val context = LocalContext.current
@@ -179,7 +190,10 @@ fun CalculatorBrewScreen(
     // start brew). Method/filter/grinder are already in the VM via direct
     // chip handlers, so only the calc-derived fields need explicit syncing.
     val syncCalcDerivedState: () -> Unit = {
+        brewViewModel.setFilterType(state.filterType)
+        brewViewModel.setGrinder(state.grinderId)
         brewViewModel.setCustomRatio(state.ratio.toString())
+        brewViewModel.setInputMode(InputMode.COFFEE_TO_WATER)
         brewViewModel.setAmount(state.previewDoseG.toString())
     }
 
@@ -197,6 +211,7 @@ fun CalculatorBrewScreen(
             showInlineResult = isCompactHeight && state.hasValidExpression,
             previewDoseG = state.previewDoseG,
             previewWaterMl = state.previewWaterMl,
+            isBeverageYield = state.brewMethod.outputSemantics == BrewOutputSemantics.BEVERAGE_YIELD,
             isCompactHeight = isCompactHeight,
             onSaveFavorite = {
                 syncCalcDerivedState()
@@ -206,9 +221,9 @@ fun CalculatorBrewScreen(
     }
 
     val previewAndConfig: @Composable () -> Unit = {
-        val outputModel = BeverageOutputEstimator.modelFor(state.brewMethod)
+        val isYield = state.brewMethod.outputSemantics == BrewOutputSemantics.BEVERAGE_YIELD
         val coffeeValue = formatQuantityCardAmount(state.previewDoseG)
-        val waterValue = formatQuantityCardAmount(state.previewWaterMl)
+        val waterValue = if (isYield) "—" else formatQuantityCardAmount(state.previewWaterMl)
         val cupValue = state.previewBeverageG?.let(::formatQuantityCardAmount) ?: "—"
         val gramsUnit = stringResource(R.string.unit_grams)
         CalculatorQuantitySelector(
@@ -226,6 +241,7 @@ fun CalculatorBrewScreen(
                     value = waterValue,
                     spokenValue = quantityCardSpokenValue(waterValue, gramsUnit),
                     icon = CalculationQuantityIconType.WATER_IN,
+                    enabled = CalculatorQuantityTarget.WATER_IN.isAvailableFor(state.brewMethod),
                 ),
                 CalculatorQuantityCardItem(
                     target = CalculatorQuantityTarget.IN_CUP,
@@ -233,6 +249,7 @@ fun CalculatorBrewScreen(
                     value = cupValue,
                     spokenValue = if (
                         state.previewBeverageG != null &&
+                        !isYield &&
                         state.quantityTarget != CalculatorQuantityTarget.IN_CUP
                     ) {
                         stringResource(
@@ -244,8 +261,9 @@ fun CalculatorBrewScreen(
                     },
                     icon = CalculationQuantityIconType.CUP_OUTPUT,
                     approximate = state.previewBeverageG != null &&
+                        !isYield &&
                         state.quantityTarget != CalculatorQuantityTarget.IN_CUP,
-                    enabled = outputModel != null,
+                    enabled = CalculatorQuantityTarget.IN_CUP.isAvailableFor(state.brewMethod),
                 ),
             ),
             selected = state.quantityTarget,
@@ -278,7 +296,10 @@ fun CalculatorBrewScreen(
                     scanCalcState.quantityTarget == requestedQuantity
                 ) {
                     brewViewModel.selectBagForBrewing(bagId)
+                    brewViewModel.setFilterType(scanCalcState.filterType)
+                    brewViewModel.setGrinder(scanCalcState.grinderId)
                     brewViewModel.setCustomRatio(scanCalcState.ratio.toString())
+                    brewViewModel.setInputMode(InputMode.COFFEE_TO_WATER)
                     brewViewModel.setAmount(scanCalcState.previewDoseG.toString())
                     onNavigateToBrew()
                 } else {
@@ -333,12 +354,28 @@ fun CalculatorBrewScreen(
             selectedGrinderId = selectedGrinderId,
             grinders = grinders,
             ratio = state.ratio,
-            onMethodChange = { brewViewModel.setMethod(it) },
-            onFilterChange = { brewViewModel.setFilterType(it) },
-            onGrinderChange = { brewViewModel.setGrinder(it) },
+            onMethodChange = { method ->
+                calculatorViewModel.setBrewMethod(method)
+                brewViewModel.setMethod(method)
+                val setup = calculatorViewModel.uiState.value
+                brewViewModel.setFilterType(setup.filterType)
+                brewViewModel.setGrinder(setup.grinderId)
+                calculatorViewModel.setBrewContext(method, brewViewModel.uiState.value.beverageOutputCalibration)
+            },
+            onFilterChange = { calculatorViewModel.setEquipment(it, selectedGrinderId) },
+            onGrinderChange = { calculatorViewModel.setEquipment(selectedFilter, it) },
             onRatioChange = { calculatorViewModel.setRatio(it) },
             recoverableSessionId = recoverableSessionId,
             onResumeSession = onResumeSession,
+            savedSetups = {
+                SavedSetupPicker(
+                    recipes = savedRecipes,
+                    enabledMethods = prefs.enabledMethods,
+                    onSelect = { recipe ->
+                        if (calculatorViewModel.loadRecipe(recipe)) brewViewModel.loadRecipe(recipe)
+                    },
+                )
+            },
         )
     }
 
@@ -421,7 +458,8 @@ fun CalculatorBrewScreen(
         SaveFavoriteDialog(
             suggestedName = "",
             onSave = { name ->
-                brewViewModel.saveRecipe(name)
+                syncCalcDerivedState()
+                brewViewModel.saveRecipe(name, calculatorViewModel.currentSetup())
                 showSaveFavoriteDialog = false
             },
             onDismiss = { showSaveFavoriteDialog = false },
@@ -438,6 +476,7 @@ private fun ExpressionHeader(
     showInlineResult: Boolean,
     previewDoseG: Float,
     previewWaterMl: Float,
+    isBeverageYield: Boolean,
     isCompactHeight: Boolean,
     onSaveFavorite: () -> Unit,
 ) {
@@ -457,6 +496,7 @@ private fun ExpressionHeader(
                     waterAmountMode = waterAmountMode,
                     doseG = previewDoseG,
                     waterMl = previewWaterMl,
+                    isBeverageYield = isBeverageYield,
                 )
             } else {
                 null
@@ -489,24 +529,35 @@ private fun ExpressionHeader(
  * ("= 💧 340g") so the icon's tint matches the result side without the
  * caller needing to thread Material colors through.
  */
-private data class InlineResult(
+internal data class InlineResult(
     val icon: CalculationQuantityIconType,
     val value: String,
     val side: ResultSide,
 )
 
-private enum class ResultSide { COFFEE, WATER }
+internal enum class ResultSide { COFFEE, WATER, CUP }
 
 /**
  * Picks the inline result side: the user's input direction names the side
  * they're typing, so the result is always the *other* side.
  */
-private fun buildInlineResult(
+internal fun buildInlineResult(
     direction: InputDirection,
     waterAmountMode: WaterAmountMode,
     doseG: Float,
     waterMl: Float,
+    isBeverageYield: Boolean = false,
 ): InlineResult = when {
+    isBeverageYield && direction == InputDirection.DOSE -> InlineResult(
+        icon = CalculationQuantityIconType.CUP_OUTPUT,
+        value = formatAmount(waterMl),
+        side = ResultSide.CUP,
+    )
+    isBeverageYield -> InlineResult(
+        icon = CalculationQuantityIconType.COFFEE_DOSE,
+        value = formatAmount(doseG),
+        side = ResultSide.COFFEE,
+    )
     direction == InputDirection.WATER && waterAmountMode == WaterAmountMode.BEVERAGE_OUTPUT -> InlineResult(
         icon = CalculationQuantityIconType.WATER_IN,
         value = formatAmount(waterMl),
@@ -596,6 +647,7 @@ private fun ExpressionDisplay(
                         tint = when (result.side) {
                             ResultSide.COFFEE -> MaterialTheme.colorScheme.primary
                             ResultSide.WATER -> MaterialTheme.colorScheme.secondary
+                            ResultSide.CUP -> MaterialTheme.colorScheme.tertiary
                         },
                         modifier = Modifier.size(if (isCompactHeight) 22.dp else 26.dp),
                     )
@@ -625,6 +677,7 @@ private fun BrewSettingsPillBar(
     onRatioChange: (Float) -> Unit,
     recoverableSessionId: String?,
     onResumeSession: (String) -> Unit,
+    savedSetups: @Composable () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -654,18 +707,19 @@ private fun BrewSettingsPillBar(
             )
         }
 
-        // Ratio pill — always visible. Options match the legacy ratio dialog.
-        val ratioOptions = listOf(2f, 8f, 10f, 15f, 16f, 17f, 18f)
+        val ratioOptions = selectedMethod.calculatorRatioOptions(ratio)
         PillDropdown(
-            label = "1:${ratio.toInt()}",
+            label = "1:${formatCalculatorRatio(ratio)}",
             options = ratioOptions.map { value ->
                 PillOption(
-                    label = "1:${value.toInt()}",
+                    label = "1:${formatCalculatorRatio(value)}",
                     selected = value == ratio,
                     onClick = { onRatioChange(value) },
                 )
             },
         )
+
+        savedSetups()
 
         // Filter pill — Pulsar only (FilterType is a Pulsar-specific concept).
         if (selectedMethod == BrewMethod.PULSAR) {

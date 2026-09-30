@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.data.brewing.snapshot
 
+import com.adsamcik.starlitcoffee.data.model.CalculatorSetup
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
@@ -38,6 +39,8 @@ data class BrewRecipeSnapshotV1(
     val isDecaf: Boolean = false,
     val notes: String? = null,
     val outputModel: OutputModelSnapshotV1,
+    /** Optional editor intent for named calculator setups; older favorites omit it. */
+    val calculatorSetup: CalculatorSetup? = null,
 ) {
     companion object {
         const val SCHEMA_VERSION = 1

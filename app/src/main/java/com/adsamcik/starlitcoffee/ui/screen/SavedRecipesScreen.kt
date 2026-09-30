@@ -64,6 +64,7 @@ fun SavedRecipesScreen(
     brewViewModel: BrewViewModel,
     onNavigateToAmount: () -> Unit,
     onBack: () -> Unit,
+    onRecipeSelected: (SavedRecipeEntity) -> Unit = brewViewModel::loadRecipe,
 ){
     val recipes by brewViewModel.savedRecipes.collectAsStateWithLifecycle()
     val context = LocalContext.current
@@ -165,7 +166,7 @@ fun SavedRecipesScreen(
                             recipe = recipe,
                             dateFormat = dateFormat,
                             onTap = {
-                                brewViewModel.loadRecipe(recipe)
+                                onRecipeSelected(recipe)
                                 onNavigateToAmount()
                             },
                             onDelete = { pendingDelete = recipe },

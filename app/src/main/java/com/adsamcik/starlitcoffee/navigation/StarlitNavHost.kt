@@ -682,6 +682,9 @@ fun StarlitNavHost() {
                         brewViewModel = brewViewModel,
                         onNavigateToAmount = { navController.navigate(CalculatorBrew) },
                         onBack = { navController.popBackStack() },
+                        onRecipeSelected = { recipe ->
+                            if (calculatorViewModel.loadRecipe(recipe)) brewViewModel.loadRecipe(recipe)
+                        },
                     )
                 }
                 composable<BagInventory> { backStackEntry ->

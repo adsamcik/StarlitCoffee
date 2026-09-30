@@ -17,6 +17,7 @@ import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.brewing.BrewLogMeasurementContextResolver
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
+import com.adsamcik.starlitcoffee.data.model.CalculatorSetup
 import com.adsamcik.starlitcoffee.data.model.CalibrationStyle
 import com.adsamcik.starlitcoffee.data.model.DefaultGrinders
 import com.adsamcik.starlitcoffee.data.model.FilterType
@@ -730,12 +731,11 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         _uiState.update { it.copy(feedbackNotes = notes) }
     }
 
-    fun saveRecipe(name: String?) {
+    fun saveRecipe(name: String?, calculatorSetup: CalculatorSetup? = null) {
         val repository = recipeRepository ?: return
         val state = _uiState.value
         viewModelScope.launch {
-            repository.insertRecipe(
-                SavedRecipeEntity(
+            val entity = SavedRecipeEntity(
                     coffeeName = name,
                     method = state.method.name,
                     ratio = state.effectiveRatio,
@@ -751,8 +751,17 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                     filterType = state.filterType?.name,
                     isDecaf = state.isDecafBrew,
                     notes = state.feedbackNotes.takeIf { it.isNotBlank() },
-                ),
-            )
+                )
+            if (calculatorSetup == null) {
+                repository.insertRecipe(entity)
+            } else {
+                val ready = LegacyBrewSessionStartFactory().create(state, null, null)
+                    as? LegacyBrewSessionStartResult.Ready ?: return@launch
+                repository.insertVersionedRecipe(
+                    entity,
+                    ready.request.recipe.copy(calculatorSetup = calculatorSetup),
+                )
+            }
         }
     }
 

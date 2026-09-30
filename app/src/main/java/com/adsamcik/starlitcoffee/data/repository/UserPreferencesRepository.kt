@@ -13,6 +13,8 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltinBrewingCatalog
 import com.adsamcik.starlitcoffee.domain.brewing.CatalogResolution
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
+import com.adsamcik.starlitcoffee.data.model.CalculatorSetup
+import com.adsamcik.starlitcoffee.data.model.CalculatorSetupCodec
 import com.adsamcik.starlitcoffee.data.model.BrewVibrationTheme
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.util.RecognitionPreference
@@ -24,6 +26,8 @@ import java.io.IOException
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
 
+private fun calculatorSetupKey(method: BrewMethod) = stringPreferencesKey("calculator_setup_${method.name}")
+
 data class UserPreferences(
     val onboardingCompleted: Boolean = false,
     val enabledMethods: Set<BrewMethod> = BrewMethod.entries.toSet(),
@@ -33,6 +37,7 @@ data class UserPreferences(
     val qrLinkExplorerEnabled: Boolean = false,
     val lastUsedRatio: Float = 17f,
     val defaultInputDirection: String = "DOSE",
+    val calculatorSetups: Map<BrewMethod, CalculatorSetup> = emptyMap(),
     val skipMethodSelection: Boolean = false,
     val dimModeEnabled: Boolean = true,
     val dimModeTrueBlack: Boolean = true,
@@ -267,7 +272,15 @@ abstract class UserPreferencesWriter protected constructor(
 }
 class UserPreferencesRepository(context: Context) :
     UserPreferencesWriter(context),
-    BrewingPreferenceStore {
+    BrewingPreferenceStore,
+    CalculatorSetupStore {
+
+    override suspend fun updateCalculatorSetup(method: BrewMethod, setup: CalculatorSetup) {
+        val valid = setup.validatedFor(method) ?: return
+        context.dataStore.edit { prefs ->
+            prefs[calculatorSetupKey(method)] = CalculatorSetupCodec.encode(valid)
+        }
+    }
 
     override val userPreferences: Flow<UserPreferences> = context.dataStore.data
         .catch { exception ->
@@ -301,6 +314,11 @@ class UserPreferencesRepository(context: Context) :
                 qrLinkExplorerEnabled = prefs[UserPreferenceKeys.QR_LINK_EXPLORER_ENABLED] ?: false,
                 lastUsedRatio = prefs[UserPreferenceKeys.LAST_USED_RATIO] ?: 17f,
                 defaultInputDirection = prefs[UserPreferenceKeys.DEFAULT_INPUT_DIRECTION] ?: "DOSE",
+                calculatorSetups = BrewMethod.entries.mapNotNull { method ->
+                    prefs[calculatorSetupKey(method)]?.let { raw ->
+                        CalculatorSetupCodec.decode(raw, method)?.let { method to it }
+                    }
+                }.toMap(),
                 skipMethodSelection = prefs[UserPreferenceKeys.SKIP_METHOD_SELECTION] ?: false,
                 dimModeEnabled = prefs[UserPreferenceKeys.DIM_MODE_ENABLED] ?: true,
                 dimModeTrueBlack = prefs[UserPreferenceKeys.DIM_MODE_TRUE_BLACK] ?: true,

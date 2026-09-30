@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Remembered brewing setups** — each method remembers its ratio, calculator
+  amount and selected quantity, filter, and grinder. Named favorites such as
+  Home and Work can be selected directly on the Brew screen and preserve the
+  complete calculator expression.
 - **Scan to brew** — the Brew screen can scan a saved coffee barcode and match it
   to bags still in stock, then continue brewing with the selected amount. Shared
   barcodes offer a bag choice; scans without an amount select the coffee first.
@@ -40,6 +44,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Calculator ratios now start from the selected method's default and offer
+  method-specific choices, including half-step espresso ratios. On first use
+  after upgrading, the previous global ratio is replaced by each method's
+  default because its original brewing method was not recorded.
 - All 23 supported languages remain available for the app interface and the
   new Pulsar guide. Exact-recipe technical guidance now releases only for
   independently reviewed locales; canonical English is currently eligible,
@@ -78,6 +86,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Espresso now supports planning by the amount in the cup at its dose-to-yield
+  ratio; its yield is no longer displayed as water input in the calculator.
 - GitHub Packages setup now verifies access to both dependency versions, reports
   credential failures without exposing tokens, and lets build/CI credentials
   override stale local tokens. Gradle also finds standard Windows GitHub CLI
