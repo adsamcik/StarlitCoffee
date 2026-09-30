@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_to_brew">Nuskaityti ir ruošti</string>
+    <string name="msg_barcode_brew_no_match">Nė viena turima kava neturi šio brūkšninio kodo. Patikrinkite kodą išsaugotuose pakuotės duomenyse.</string>
+    <string name="msg_barcode_brew_choose_bag">Kelios pakuotės turi šį brūkšninį kodą. Pasirinkite naudojamą pakuotę.</string>
+    <string name="msg_barcode_brew_enter_amount">Pasirinkta: %1$s. Nustatykite kiekį ir palieskite Ruošti.</string>
+</resources>

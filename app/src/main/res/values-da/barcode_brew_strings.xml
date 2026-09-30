@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_to_brew">Scan for at brygge</string>
+    <string name="msg_barcode_brew_no_match">Ingen kaffe på lager har denne stregkode. Kontrollér stregkoden i de gemte poseoplysninger.</string>
+    <string name="msg_barcode_brew_choose_bag">Flere poser har denne stregkode. Vælg den pose, du bruger.</string>
+    <string name="msg_barcode_brew_enter_amount">%1$s er valgt. Angiv en mængde, og tryk derefter på Bryg.</string>
+</resources>

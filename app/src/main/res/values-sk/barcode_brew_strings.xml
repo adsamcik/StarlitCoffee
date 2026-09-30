@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_to_brew">Naskenovať a pripraviť</string>
+    <string name="msg_barcode_brew_no_match">Žiadna káva na sklade nemá tento čiarový kód. Skontrolujte kód v uložených údajoch balenia.</string>
+    <string name="msg_barcode_brew_choose_bag">Tento čiarový kód má niekoľko balení. Vyberte balenie, ktoré používate.</string>
+    <string name="msg_barcode_brew_enter_amount">Vybrané: %1$s. Zadajte množstvo a klepnite na Pripraviť.</string>
+</resources>

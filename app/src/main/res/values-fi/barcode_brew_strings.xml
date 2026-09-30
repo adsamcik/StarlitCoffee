@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_to_brew">Skannaa ja valmista</string>
+    <string name="msg_barcode_brew_no_match">Millään varastossa olevalla kahvilla ei ole tätä viivakoodia. Tarkista viivakoodi pussin tallennetuista tiedoista.</string>
+    <string name="msg_barcode_brew_choose_bag">Usealla pussilla on tämä viivakoodi. Valitse käyttämäsi pussi.</string>
+    <string name="msg_barcode_brew_enter_amount">%1$s valittu. Aseta määrä ja napauta Valmista.</string>
+</resources>

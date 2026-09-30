@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
+import android.widget.Toast
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -102,6 +103,10 @@ fun CalculatorBrewScreen(
     onNavigateToBrew: () -> Unit,
     recoverableSessionId: String?,
     onResumeSession: (String) -> Unit,
+    onNavigateToBarcode: () -> Unit,
+    onNavigateToBags: () -> Unit,
+    scannedBarcodeResult: String? = null,
+    onScannedBarcodeResultConsumed: () -> Unit = {},
 ) {
     val state by calculatorViewModel.uiState.collectAsStateWithLifecycle()
     val brewState by brewViewModel.uiState.collectAsStateWithLifecycle()
@@ -159,6 +164,7 @@ fun CalculatorBrewScreen(
     val twoPaneCalculator = LocalWindowWidthClass.current.isWide && isLandscape
 
     val coffeeBags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
+    val inventoryLoaded by brewViewModel.isCoffeeBagInventoryLoaded.collectAsStateWithLifecycle()
     val selectedBagId by brewViewModel.selectedBagId.collectAsStateWithLifecycle()
     val selectedBag = remember(coffeeBags, selectedBagId) {
         coffeeBags.find { it.id == selectedBagId }
@@ -246,10 +252,48 @@ fun CalculatorBrewScreen(
             onSelect = calculatorViewModel::selectQuantity,
             compact = isCompactHeight,
         )
+        if (hasInStockBarcodeBags(coffeeBags) || selectedBag != null) {
+            Spacer(modifier = Modifier.height(sectionSpacer))
+        }
+        BarcodeBrewEntry(
+            bags = coffeeBags,
+            inventoryLoaded = inventoryLoaded,
+            scannedBarcode = scannedBarcodeResult,
+            onBarcodeConsumed = onScannedBarcodeResultConsumed,
+            onScan = onNavigateToBarcode,
+            onViewBeans = onNavigateToBags,
+            onSelectBag = { bagId ->
+                val requestedQuantity = calculatorViewModel.uiState.value.quantityTarget
+                brewViewModel.selectBag(bagId)
+                // Bag selection can restore its last method. Recompute an in-cup
+                // amount for that method before taking the preparation snapshot.
+                val selectedBrewState = brewViewModel.uiState.value
+                calculatorViewModel.setBrewContext(
+                    method = selectedBrewState.method,
+                    calibration = selectedBrewState.beverageOutputCalibration,
+                )
+                val scanCalcState = calculatorViewModel.uiState.value
+                if (
+                    scanCalcState.hasValidExpression && scanCalcState.previewDoseG > 0f &&
+                    scanCalcState.quantityTarget == requestedQuantity
+                ) {
+                    brewViewModel.selectBagForBrewing(bagId)
+                    brewViewModel.setCustomRatio(scanCalcState.ratio.toString())
+                    brewViewModel.setAmount(scanCalcState.previewDoseG.toString())
+                    onNavigateToBrew()
+                } else {
+                    val bagName = coffeeBags.firstOrNull { it.id == bagId }?.name.orEmpty()
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.msg_barcode_brew_enter_amount, bagName),
+                        Toast.LENGTH_LONG,
+                    ).show()
+                }
+            },
+        )
         // Selected bag indicator — visible reminder that a bag is in play,
         // with one-tap clear so the user can switch to brewing without one.
         selectedBag?.let { bag ->
-            Spacer(modifier = Modifier.height(sectionSpacer))
             InputChip(
                 selected = true,
                 onClick = { brewViewModel.selectBag(null) },
@@ -311,6 +355,7 @@ fun CalculatorBrewScreen(
             onBackspace = { calculatorViewModel.backspace() },
             onClear = { calculatorViewModel.clear() },
             onBrew = {
+                selectedBagId?.let(brewViewModel::selectBagForBrewing)
                 syncCalcDerivedState()
                 onNavigateToBrew()
             },

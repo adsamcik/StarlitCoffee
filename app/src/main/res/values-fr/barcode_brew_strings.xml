@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_to_brew">Scanner pour préparer</string>
+    <string name="msg_barcode_brew_no_match">Aucun café en stock ne porte ce code-barres. Vérifiez le code dans les informations enregistrées du sachet.</string>
+    <string name="msg_barcode_brew_choose_bag">Plusieurs sachets portent ce code-barres. Choisissez celui que vous utilisez.</string>
+    <string name="msg_barcode_brew_enter_amount">%1$s sélectionné. Indiquez une quantité, puis appuyez sur Préparer.</string>
+</resources>

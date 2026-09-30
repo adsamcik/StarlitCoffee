@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_to_brew">Skanni valmistamiseks</string>
+    <string name="msg_barcode_brew_no_match">Ühelgi laos oleval kohvil pole seda vöötkoodi. Kontrolli vöötkoodi koti salvestatud andmetes.</string>
+    <string name="msg_barcode_brew_choose_bag">Mitmel kotil on see vöötkood. Vali kott, mida kasutad.</string>
+    <string name="msg_barcode_brew_enter_amount">%1$s on valitud. Määra kogus ja puuduta seejärel Valmista.</string>
+</resources>

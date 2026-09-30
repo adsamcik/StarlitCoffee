@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_to_brew">Ler para preparar</string>
+    <string name="msg_barcode_brew_no_match">Nenhum café em stock tem este código de barras. Verifique o código nos dados guardados da embalagem.</string>
+    <string name="msg_barcode_brew_choose_bag">Várias embalagens têm este código de barras. Escolha a que está a utilizar.</string>
+    <string name="msg_barcode_brew_enter_amount">%1$s selecionado. Defina uma quantidade e toque em Preparar.</string>
+</resources>

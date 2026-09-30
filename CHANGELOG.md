@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Scan to brew** — the Brew screen can scan a saved coffee barcode and match it
+  to bags still in stock, then continue brewing with the selected amount. Shared
+  barcodes offer a bag choice; scans without an amount select the coffee first.
 - **Private, user-controlled diagnostics** — Tracebox now records bounded,
   privacy-aware app logs and JVM, ANR, OS-exit, handled-exception, and native
   failure context locally. A simple Settings screen lets users review the exact

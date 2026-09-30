@@ -510,7 +510,10 @@ fun StarlitNavHost() {
                 }
 
                 // Main app screens
-                composable<CalculatorBrew> {
+                composable<CalculatorBrew> { backStackEntry ->
+                    val scannedBarcode by backStackEntry.savedStateHandle
+                        .getStateFlow<String?>(SCANNED_BARCODE_RESULT_KEY, null)
+                        .collectAsStateWithLifecycle()
                     CalculatorBrewScreen(
                         calculatorViewModel = calculatorViewModel,
                         brewViewModel = brewViewModel,
@@ -528,6 +531,13 @@ fun StarlitNavHost() {
                             navController.navigate(BrewSession(sessionId = sessionId)) {
                                 launchSingleTop = true
                             }
+                        },
+                        onNavigateToBarcode = { navController.navigate(BarcodeScanner) },
+                        onNavigateToBags = { navController.navigate(BagInventory) },
+                        scannedBarcodeResult = scannedBarcode,
+                        onScannedBarcodeResultConsumed = {
+                            backStackEntry.savedStateHandle
+                                .consumeOneShotResult<String>(SCANNED_BARCODE_RESULT_KEY)
                         },
                     )
                 }

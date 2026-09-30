@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_to_brew">Σάρωση για παρασκευή</string>
+    <string name="msg_barcode_brew_no_match">Κανένας διαθέσιμος καφές δεν έχει αυτό το barcode. Ελέγξτε το barcode στα αποθηκευμένα στοιχεία της συσκευασίας.</string>
+    <string name="msg_barcode_brew_choose_bag">Πολλές συσκευασίες έχουν αυτό το barcode. Επιλέξτε τη συσκευασία που χρησιμοποιείτε.</string>
+    <string name="msg_barcode_brew_enter_amount">Επιλέχθηκε: %1$s. Ορίστε ποσότητα και πατήστε Παρασκευή.</string>
+</resources>

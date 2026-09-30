@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_to_brew">Scan to brew</string>
+    <string name="msg_barcode_brew_no_match">No coffee in stock has this barcode. Check the barcode in your saved bag details.</string>
+    <string name="msg_barcode_brew_choose_bag">Several bags have this barcode. Choose the bag you are using.</string>
+    <string name="msg_barcode_brew_enter_amount">%1$s selected. Set an amount, then tap Brew.</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_to_brew">Skanuj, aby zaparzyć</string>
+    <string name="msg_barcode_brew_no_match">Żadna kawa w zapasie nie ma tego kodu kreskowego. Sprawdź kod w zapisanych danych opakowania.</string>
+    <string name="msg_barcode_brew_choose_bag">Kilka opakowań ma ten kod kreskowy. Wybierz opakowanie, którego używasz.</string>
+    <string name="msg_barcode_brew_enter_amount">Wybrano: %1$s. Ustaw ilość, a następnie dotknij Zaparz.</string>
+</resources>

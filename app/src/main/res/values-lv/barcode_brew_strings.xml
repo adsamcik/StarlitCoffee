@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_to_brew">Skenēt pagatavošanai</string>
+    <string name="msg_barcode_brew_no_match">Nevienai krājumā esošai kafijai nav šī svītrkoda. Pārbaudiet kodu saglabātajos iepakojuma datos.</string>
+    <string name="msg_barcode_brew_choose_bag">Vairākiem iepakojumiem ir šis svītrkods. Izvēlieties iepakojumu, kuru izmantojat.</string>
+    <string name="msg_barcode_brew_enter_amount">Atlasīts: %1$s. Iestatiet daudzumu un pieskarieties Pagatavot.</string>
+</resources>

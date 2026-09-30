@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_to_brew">Skanna för att brygga</string>
+    <string name="msg_barcode_brew_no_match">Inget kaffe i lager har den här streckkoden. Kontrollera koden i de sparade uppgifterna för påsen.</string>
+    <string name="msg_barcode_brew_choose_bag">Flera påsar har den här streckkoden. Välj påsen du använder.</string>
+    <string name="msg_barcode_brew_enter_amount">%1$s har valts. Ange en mängd och tryck på Brygg.</string>
+</resources>

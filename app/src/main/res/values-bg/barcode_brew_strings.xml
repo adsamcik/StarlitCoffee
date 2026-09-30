@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_to_brew">Сканиране за приготвяне</string>
+    <string name="msg_barcode_brew_no_match">Няма налично кафе с този баркод. Проверете баркода в запазените данни за пакета.</string>
+    <string name="msg_barcode_brew_choose_bag">Няколко пакета имат този баркод. Изберете пакета, който използвате.</string>
+    <string name="msg_barcode_brew_enter_amount">Избрано е %1$s. Задайте количество, след което натиснете Приготвяне.</string>
+</resources>
