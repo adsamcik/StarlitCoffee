@@ -31,6 +31,7 @@ class LegacyBuiltInGuidanceCatalogTest {
                 BrewMethod.ESPRESSO,
                 BrewMethod.MOKA_POT,
                 BrewMethod.COLD_BREW,
+                BrewMethod.CHEMEX,
             ),
             LegacyBuiltInGuidanceCatalog.legacyMethodProfileIds.keys.toList(),
         )

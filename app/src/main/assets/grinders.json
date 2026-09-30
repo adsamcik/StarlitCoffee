@@ -20,6 +20,10 @@
         "Roast modifier: dark / espresso / medium-dark roasts +1 more step coarser (already brittle from caramelization, decaf compounds the effect).",
         "Process relief: Swiss Water, Mountain Water, and CO₂ supercritical processes preserve bean structure better → -1 step relief (less coarsening needed). Solvent processes (EA Sugarcane, EA Direct, MC Direct) get no relief — more fines expected.",
         "Final steps clamped to ≥ 0; recommendation moves toward rangeEnd, never beyond."
+      ],
+      "chemex-official-anchor": [
+        "Baratza Encore ESP Operations Manual January 2023 v1.0 p.5: Chemex starting setting 30; https://assets.breville.com/ZCG495/manual-encoreesp-v1-0-en-010923.pdf; verified 2026-09-30",
+        "Setting 30 is a published starting point, not a published optimal range. Other grinders use generic medium-coarse guidance until method-specific evidence is verified."
       ]
     }
   },
@@ -323,6 +327,19 @@
       "adjustmentNote": "Manufacturer V60 range; calibrated stepless dial",
       "sourceUrls": [
         "https://www.nichecoffee.co.uk/blogs/exploring-coffee/how-to-dial-in-your-niche-zero"
+      ]
+    },
+    {
+      "grinderId": "baratza-encore-esp",
+      "methodId": "CHEMEX",
+      "filterType": null,
+      "rangeStart": 30,
+      "rangeEnd": 30,
+      "suggestedStart": 30,
+      "adjustmentStepSize": 1,
+      "adjustmentNote": "Start at 30 (Baratza guide). If drainage stalls, check the spout air channel, then try coarser. Tune by taste.",
+      "sourceUrls": [
+        "https://assets.breville.com/ZCG495/manual-encoreesp-v1-0-en-010923.pdf"
       ]
     }
   ]

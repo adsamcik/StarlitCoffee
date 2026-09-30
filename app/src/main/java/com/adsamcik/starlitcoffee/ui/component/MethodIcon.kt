@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.Coffee
 import androidx.compose.material.icons.filled.FilterDrama
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.LocalCafe
+import androidx.compose.material.icons.filled.HourglassEmpty
 import androidx.compose.material.icons.filled.OutdoorGrill
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
@@ -19,4 +20,5 @@ fun iconForMethod(method: BrewMethod): ImageVector = when (method) {
     BrewMethod.ESPRESSO -> Icons.Filled.LocalCafe
     BrewMethod.MOKA_POT -> Icons.Filled.OutdoorGrill
     BrewMethod.COLD_BREW -> Icons.Filled.AcUnit
+    BrewMethod.CHEMEX -> Icons.Filled.HourglassEmpty
 }

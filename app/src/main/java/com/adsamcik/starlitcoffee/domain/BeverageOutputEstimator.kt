@@ -52,6 +52,8 @@ object BeverageOutputEstimator {
         // generic reservoir-water model.
         BrewMethod.ESPRESSO,
         BrewMethod.MOKA_POT,
+        // Bonded-paper loss has no verified method-specific coefficient yet.
+        BrewMethod.CHEMEX,
         -> null
     }
 

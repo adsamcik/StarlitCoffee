@@ -55,7 +55,7 @@
     <string name="label_brewer_profile_v60">V60</string>
     <string name="label_brewer_profile_wave_185">Wave 185 s ravnim dnom</string>
     <string name="label_brewer_profile_wedge">Klinasti dripper</string>
-    <string name="label_brewer_profile_thick_paper_carafe">Uređaj s vrčem i debelim papirnatim filtrom</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Chemex</string>
     <string name="label_brewer_profile_conical">Generički konusni dripper</string>
     <string name="label_brewer_profile_family_manual_gravity">Ručna gravitacijska priprema</string>
     <string name="label_brewer_profile_pulsar">Pulsar</string>

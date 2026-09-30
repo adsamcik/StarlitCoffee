@@ -84,6 +84,23 @@ class BrewViewModelTest {
     // --- Ratio Calculation ---
 
     @Test
+    fun `selecting Chemex clears Pulsar equipment and uses Chemex defaults`() {
+        viewModel.setMethod(BrewMethod.PULSAR)
+        viewModel.setFilterType(FilterType.METAL_19K)
+        viewModel.setMethod(BrewMethod.CHEMEX)
+        viewModel.setAmount("30")
+
+        val state = viewModel.uiState.value
+        assertEquals(BrewMethod.CHEMEX, state.method)
+        assertNull(state.filterType)
+        assertEquals(16f, state.effectiveRatio, 0.01f)
+        assertEquals(480f, state.waterG, 0.01f)
+        assertEquals(GrindResult.Generic(GrindDescriptor.MEDIUM_COARSE), state.grindResult)
+        assertEquals(240, state.timeTargetLowS)
+        assertEquals(330, state.timeTargetHighS)
+    }
+
+    @Test
     fun `coffee to water with Pulsar default ratio`() {
         viewModel.setMethod(BrewMethod.PULSAR)
         viewModel.setInputMode(InputMode.COFFEE_TO_WATER)

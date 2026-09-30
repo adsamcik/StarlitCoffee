@@ -282,6 +282,7 @@ internal object BrewDerivation {
         val baseSteps = when (method) {
             BrewMethod.PULSAR,
             BrewMethod.V60,
+            BrewMethod.CHEMEX,
             BrewMethod.MOKA_POT,
             BrewMethod.ESPRESSO -> 1
             BrewMethod.FRENCH_PRESS,

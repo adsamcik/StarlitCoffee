@@ -82,7 +82,7 @@
     <string name="label_brewer_profile_v60">V60</string>
     <string name="label_brewer_profile_wave_185">Flat-bottom Wave 185</string>
     <string name="label_brewer_profile_wedge">Wedge dripper</string>
-    <string name="label_brewer_profile_thick_paper_carafe">Thick-paper carafe brewer</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Chemex</string>
     <string name="label_brewer_profile_conical">Generic conical dripper</string>
     <string name="label_brewer_profile_moccamaster_kbgv_select" translatable="false">Moccamaster KBGV Select</string>
     <string name="label_brewer_profile_family_manual_gravity">Manual gravity</string>

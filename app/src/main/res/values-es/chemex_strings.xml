@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_tip_chemex">Usa papel de filtro Chemex del tamaño adecuado. Coloca las tres capas hacia el pico, enjuaga con agua caliente y desecha esa agua. Añade café de molienda media-gruesa y tara la báscula. Mantén libre el canal de aire.</string>
+    <string name="instruction_chemex_bloom">Moja todo el café con el agua de preinfusión y deja que termine la preinfusión.</string>
+    <string name="instruction_chemex_pour">Vierte suavemente hasta la cantidad total de agua. Deja que el nivel baje entre vertidos y mantenlo por debajo del borde.</string>
+    <string name="instruction_chemex_drawdown">Espera a que el agua termine de pasar por el café. Retira el filtro, gira suavemente y sirve sujetando el collar o el asa.</string>
+    <string name="label_filter_chemex_bonded">Papel de filtro Chemex</string>
+</resources>

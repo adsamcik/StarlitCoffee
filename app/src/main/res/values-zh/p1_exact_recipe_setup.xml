@@ -55,7 +55,7 @@
     <string name="label_brewer_profile_v60">V60</string>
     <string name="label_brewer_profile_wave_185">平底 Wave 185</string>
     <string name="label_brewer_profile_wedge">楔形滤杯</string>
-    <string name="label_brewer_profile_thick_paper_carafe">厚滤纸咖啡壶</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Chemex</string>
     <string name="label_brewer_profile_conical">通用锥形滤杯</string>
     <string name="label_brewer_profile_family_manual_gravity">手动重力滴滤</string>
     <string name="label_brewer_profile_pulsar">Pulsar</string>

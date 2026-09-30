@@ -121,7 +121,14 @@ class LegacyBrewSessionStartFactory(
             )
 
         val compiledPlan = when (
-            val compiled = StagePlanCompiler.compile(LegacyStagePlanFactory.create(legacyMethod))
+            val compiled = StagePlanCompiler.compile(LegacyStagePlanFactory.create(
+                method = legacyMethod,
+                bloomDurationSeconds = if (legacyMethod == BrewMethod.CHEMEX) {
+                    input.state.effectiveBloomDurationSeconds
+                } else {
+                    legacyMethod.bloomDurationSeconds
+                },
+            ))
         ) {
             is StagePlanCompileResult.Compiled -> compiled.value
             is StagePlanCompileResult.Invalid -> {

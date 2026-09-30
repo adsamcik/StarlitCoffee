@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Chemex brewing** — select Chemex in the everyday Brew flow, with remembered
+  setups, medium-coarse grind guidance, bonded-filter preparation, and a guided
+  bloom, pour, drawdown, and serving session. Starting recommendations use a
+  1:16 ratio, 93–96 °C water, and a 4–5½ minute brew window; drainage is confirmed
+  before serving. The existing six-cup exact recipe is now named Chemex.
 - **Remembered brewing setups** — each method remembers its ratio, calculator
   amount and selected quantity, filter, and grinder. Named favorites such as
   Home and Work can be selected directly on the Brew screen and preserve the

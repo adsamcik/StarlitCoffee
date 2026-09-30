@@ -54,7 +54,7 @@
     <string name="label_brewer_profile_v60">V60</string>
     <string name="label_brewer_profile_wave_185">Wave 185 s plochým dnem</string>
     <string name="label_brewer_profile_wedge">Klínový dripper</string>
-    <string name="label_brewer_profile_thick_paper_carafe">Karafa se silným papírovým filtrem</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Chemex</string>
     <string name="label_brewer_profile_conical">Obecný kónický dripper</string>
     <string name="label_brewer_profile_family_manual_gravity">Manuální překapávání</string>
     <string name="label_brewer_profile_pulsar">Pulsar</string>

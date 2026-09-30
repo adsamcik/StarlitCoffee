@@ -132,6 +132,7 @@ class LegacyBrewSessionStartFactoryTest {
             BrewMethod.ESPRESSO to ("espresso" to "espresso_pump_generic"),
             BrewMethod.MOKA_POT to ("steam_pressure_multichamber" to "moka_generic_unspecified"),
             BrewMethod.COLD_BREW to ("cold_immersion" to "cold_immersion_generic"),
+            BrewMethod.CHEMEX to ("manual_gravity" to "chemex_unspecified"),
         )
 
         BrewMethod.entries.forEach { method ->

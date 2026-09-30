@@ -55,7 +55,7 @@
     <string name="label_brewer_profile_v60">V60</string>
     <string name="label_brewer_profile_wave_185">Wave 185 a fondo piatto</string>
     <string name="label_brewer_profile_wedge">Dripper a cuneo</string>
-    <string name="label_brewer_profile_thick_paper_carafe">Caffettiera a caraffa con filtro di carta spesso</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Chemex</string>
     <string name="label_brewer_profile_conical">Dripper conico generico</string>
     <string name="label_brewer_profile_family_manual_gravity">Gravità manuale</string>
     <string name="label_brewer_profile_pulsar">Pulsar</string>

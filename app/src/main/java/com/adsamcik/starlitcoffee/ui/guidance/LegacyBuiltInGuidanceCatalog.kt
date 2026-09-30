@@ -11,14 +11,14 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.LegacyStagePlanFactory
 import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanNode
 
 /**
- * Profile-scoped curriculum for the calculator's seven legacy brewing-method
+ * Profile-scoped curriculum for the calculator's brewing-method
  * aliases.
  *
  * Pulsar's reviewed curriculum already lives in [PulsarBuiltInGuidanceCatalog].
- * This catalogue composes it with the six remaining aliases instead of copying
+ * This catalogue composes it with the remaining aliases instead of copying
  * its IDs or silently substituting Pulsar copy for another brewer. Consumers
  * should use this one [catalog] in place of the separate Pulsar catalogue when
- * they need coverage for all seven legacy methods.
+ * they need coverage for all calculator methods.
  *
  * Source stage plans remain the execution authority. The content below is
  * checked against [LegacyStagePlanFactory] as it is built, so a future stage
@@ -37,6 +37,7 @@ object LegacyBuiltInGuidanceCatalog {
         BrewMethod.ESPRESSO to BrewerProfileId("espresso_pump_generic"),
         BrewMethod.MOKA_POT to BrewerProfileId("moka_generic_unspecified"),
         BrewMethod.COLD_BREW to BrewerProfileId("cold_immersion_generic"),
+        BrewMethod.CHEMEX to BrewerProfileId("chemex_unspecified"),
     )
 
     /** The composed, deterministic source for all legacy aliases. */
@@ -241,6 +242,33 @@ object LegacyBuiltInGuidanceCatalog {
     )
 
     private val stageCopyByContentId: Map<StageContentId, InstructionCopy> = linkedMapOf(
+        StageContentId("chemex_bloom") to InstructionCopy(
+            primaryInstruction = "Wet all the grounds with the selected bloom water and let the bloom countdown finish.",
+            conciseInstruction = "Wet all grounds and let the bloom finish.",
+            explanation = "The bloom lets trapped gas escape. Use the amount and time shown for this brew.",
+            tip = "Keep the three-layer side of the bonded filter over the spout and leave the air channel open.",
+            altText = "Evenly wetted coffee in a Chemex bonded filter with three layers against the open spout.",
+        ),
+        StageContentId("chemex_pour") to InstructionCopy(
+            primaryInstruction = "Pour the remaining water in gentle circular additions to the target on the scale. " +
+                "Let the level fall between pours and keep it well below the rim.",
+            conciseInstruction = "Pour gently to the water target, leaving room below the rim.",
+            explanation = "The thick paper drains slowly. Pause if the water rises faster than it drains.",
+            tip = "If drainage stalls, check that the filter has not sealed the spout. Try a coarser grind next time.",
+            altText = "A circular pour into a Chemex with liquid below the rim and an open spout air channel.",
+        ),
+        StageContentId("chemex_drawdown") to InstructionCopy(
+            primaryInstruction = "Wait until the water has drained through the coffee bed, then confirm that drawdown is complete.",
+            conciseInstruction = "Wait for the coffee bed to drain before continuing.",
+            explanation = "The brew-time range is a starting guide. Batch size, coffee, grind and pouring affect drainage; " +
+                "the timer does not finish the brew for you.",
+            altText = "A Chemex with no standing water above the drained coffee bed.",
+        ),
+        StageContentId("chemex_serve") to InstructionCopy(
+            primaryInstruction = "Lift out the spent filter carefully, swirl the coffee gently and serve using the collar or handle.",
+            conciseInstruction = "Remove the filter, swirl gently and serve.",
+            altText = "A Chemex held by its collar while brewed coffee is poured into a mug.",
+        ),
         StageContentId("v60_bloom") to InstructionCopy(
             primaryInstruction =
                 "Pour the selected bloom water evenly over the grounds, make sure they are all wet, then let the bloom run for the recipe's countdown.",
@@ -343,6 +371,18 @@ object LegacyBuiltInGuidanceCatalog {
     )
 
     private val stageSafetyCopyByContentId: Map<StageContentId, InstructionCopy> = linkedMapOf(
+        StageContentId("chemex_pour") to InstructionCopy(
+            primaryInstruction = "Keep the water well below the rim and pause pouring if drainage slows.",
+            conciseInstruction = "Leave room below the rim and pause if needed.",
+            warning = "Keep the brewer stable and the spout air channel open to prevent overflowing.",
+            altText = "A stable Chemex with liquid below the rim and a clear spout air channel.",
+        ),
+        StageContentId("chemex_serve") to InstructionCopy(
+            primaryInstruction = "Handle the Chemex by its collar or handle when serving.",
+            conciseInstruction = "Use the collar or handle.",
+            warning = "The glass and spent filter can be hot. Keep hands clear of the hot glass body and coffee.",
+            altText = "A hand gripping the Chemex collar with fingers clear of hot glass.",
+        ),
         StageContentId("french_press_press") to InstructionCopy(
             primaryInstruction = "Keep the press on a stable surface and use a slow, even motion.",
             conciseInstruction = "Keep it stable and press slowly.",
@@ -404,6 +444,34 @@ object LegacyBuiltInGuidanceCatalog {
     )
 
     private val profileCopyById: List<ProfileCopy> = listOf(
+        ProfileCopy(
+            profileId = BrewerProfileId("chemex_unspecified"),
+            preparation = InstructionCopy(
+                primaryInstruction = "Use Chemex bonded paper sized for your brewer; the three-cup model uses half-moon paper. " +
+                    "Place three layers over the spout, rinse with hot water, discard the rinse water, " +
+                    "then add medium-coarse coffee and tare the scale.",
+                conciseInstruction = "Fit and rinse bonded paper with three layers over the spout. Add coffee and tare.",
+                explanation = "Keep the spout air channel open so air can escape as the coffee drains.",
+                altText = "A rinsed Chemex bonded filter with three layers over the spout and a level bed of coffee.",
+            ),
+            completion = InstructionCopy(
+                primaryInstruction = "When drainage is complete, remove the filter, swirl gently and serve using the collar or handle.",
+                conciseInstruction = "Let it drain, remove the filter and serve.",
+                altText = "Coffee being served from a Chemex held by the collar after the filter is removed.",
+            ),
+            utility = InstructionCopy(
+                primaryInstruction = "Use the scale's total water target. The 4–5½ minute range is a starting guide; " +
+                    "confirm drainage before serving.",
+                conciseInstruction = "Follow the water target and confirm drainage.",
+                altText = "A Chemex beside a scale and brew timer.",
+            ),
+            globalSafety = InstructionCopy(
+                primaryInstruction = "Keep the brewer on a stable surface and the liquid well below the rim.",
+                conciseInstruction = "Keep it stable and leave room below the rim.",
+                warning = "Hot glass and coffee can burn. Use the collar or handle; do not grip the hot glass body.",
+                altText = "A Chemex on a stable scale with a hand safely holding its collar.",
+            ),
+        ),
         ProfileCopy(
             profileId = BrewerProfileId("v60_unspecified"),
             preparation = InstructionCopy(

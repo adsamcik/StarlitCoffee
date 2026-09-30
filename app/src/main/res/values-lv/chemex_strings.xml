@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_tip_chemex">Izmantojiet savam traukam atbilstoša izmēra Chemex papīra filtru. Novietojiet trīs kārtas snīpja pusē, izskalojiet ar karstu ūdeni un izlejiet šo ūdeni. Pievienojiet vidēji rupji maltu kafiju un nonullējiet svarus. Atstājiet gaisa kanālu vaļā.</string>
+    <string name="instruction_chemex_bloom">Samitriniet visu kafiju ar priekšuzliešanas ūdeni un sagaidiet priekšuzliešanas beigas.</string>
+    <string name="instruction_chemex_pour">Lejiet lēni līdz kopējam ūdens daudzumam. Starp liešanas reizēm ļaujiet līmenim kristies un turiet to zem malas.</string>
+    <string name="instruction_chemex_drawdown">Pagaidiet, līdz ūdens iztek caur kafiju. Izņemiet filtru, viegli pagrieziet un pasniedziet, turot aiz apkakles vai roktura.</string>
+    <string name="label_filter_chemex_bonded">Chemex papīra filtrs</string>
+</resources>

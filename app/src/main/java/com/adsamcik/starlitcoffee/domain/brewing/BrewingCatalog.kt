@@ -95,6 +95,14 @@ object BuiltinBrewingCatalog {
                 evidenceConfidence = EvidenceConfidence.HIGH,
             ),
             FilterProfile(FilterProfileId("cone_paper"), FilterMedium.PAPER, FilterGeometry.CONE),
+            // Size is chosen to fit the user's Chemex; three-cup brewers use half-moon paper.
+            FilterProfile(
+                id = FilterProfileId("chemex_bonded_paper"),
+                medium = FilterMedium.PAPER,
+                geometry = FilterGeometry.BREWER_SPECIFIC,
+                disposable = true,
+                evidenceConfidence = EvidenceConfidence.HIGH,
+            ),
             FilterProfile(
                 id = FilterProfileId("moccamaster_number_four_cone_paper"),
                 medium = FilterMedium.PAPER,
@@ -230,11 +238,20 @@ object BuiltinBrewingCatalog {
                 setOf("wedge_paper"),
             ),
             profile(
+                "chemex_unspecified",
+                "manual_gravity",
+                "Chemex",
+                OutputModel.BrewWaterMinusRetention(2.0),
+                setOf("chemex_bonded_paper"),
+                safety = setOf(SafetyTag.HOT_LIQUID, SafetyTag.HOT_GLASS, SafetyTag.OVERFLOW),
+            ),
+            profile(
                 "manual_thick_paper_carafe",
                 "manual_gravity",
-                "Thick-paper carafe brewer",
+                "Chemex (6-cup)",
                 OutputModel.BrewWaterMinusRetention(2.0),
                 setOf("chemex_six_cup_bonded_paper"),
+                safety = setOf(SafetyTag.HOT_LIQUID, SafetyTag.HOT_GLASS, SafetyTag.OVERFLOW),
             ),
             profile(
                 "french_press_generic",
@@ -378,6 +395,7 @@ object BuiltinBrewingCatalog {
         methodAliases = mapOf(
             "PULSAR" to BrewerProfileId("pulsar_standard"),
             "V60" to BrewerProfileId("v60_unspecified"),
+            "CHEMEX" to BrewerProfileId("chemex_unspecified"),
             "FRENCH_PRESS" to BrewerProfileId("french_press_generic"),
             "AEROPRESS" to BrewerProfileId("aeropress_standard"),
             "ESPRESSO" to BrewerProfileId("espresso_pump_generic"),

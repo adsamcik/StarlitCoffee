@@ -3,6 +3,7 @@
     <string-array name="brew_method_names">
         <item>Pulsar</item><item>V60</item><item>Presă franceză</item><item>AeroPress</item>
         <item>Espresso</item><item>Espressor moka</item><item>Infuzare la rece</item>
+        <item>Chemex</item>
     </string-array>
     <string-array name="filter_type_names"><item>Hârtie</item><item>19K</item><item>40K</item></string-array>
     <string-array name="filter_cup_profiles">

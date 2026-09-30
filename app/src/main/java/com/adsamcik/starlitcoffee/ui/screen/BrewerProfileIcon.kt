@@ -38,7 +38,7 @@ internal fun brewerProfileIconKind(profileId: BrewerProfileId): BrewerProfileIco
         "v60_02", "v60_unspecified", "manual_conical_generic" -> BrewerProfileIconKind.CONE
         "manual_wave_185" -> BrewerProfileIconKind.FLAT_BOTTOM
         "manual_wedge_generic" -> BrewerProfileIconKind.WEDGE
-        "manual_thick_paper_carafe" -> BrewerProfileIconKind.CARAFE
+        "manual_thick_paper_carafe", "chemex_unspecified" -> BrewerProfileIconKind.CARAFE
         "clever_style", "hario_switch" -> BrewerProfileIconKind.IMMERSION
         "cezve_generic" -> BrewerProfileIconKind.CEZVE
         "moccamaster_kbgv_select", "automatic_batch_generic" -> BrewerProfileIconKind.BATCH_MACHINE
@@ -77,7 +77,7 @@ internal fun brewerProfileIconDrawable(profileId: BrewerProfileId): Int =
         "v60_unspecified" -> R.drawable.learn_brewer_icon_v60
         "manual_wave_185" -> R.drawable.learn_brewer_icon_wave_185
         "manual_wedge_generic" -> R.drawable.learn_brewer_icon_wedge
-        "manual_thick_paper_carafe" -> R.drawable.learn_brewer_icon_carafe
+        "manual_thick_paper_carafe", "chemex_unspecified" -> R.drawable.learn_brewer_icon_carafe
         "manual_conical_generic" -> R.drawable.learn_brewer_icon_conical
         "clever_style" -> R.drawable.learn_brewer_icon_clever
         "hario_switch" -> R.drawable.learn_brewer_icon_switch

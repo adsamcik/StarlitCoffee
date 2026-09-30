@@ -13,9 +13,30 @@ object DefaultGrinders : GrinderDataProvider {
             dial = GrinderDial(GrinderDialNotation.DECIMAL_CLICKS, minimum = 0f, stepSize = 0.1f, numbersPerRotation = 9),
             sourceUrls = listOf("https://1zpresso.coffee/grind-setting/"),
         ),
+        Grinder(
+            id = "baratza-encore-esp",
+            brand = "Baratza",
+            model = "Encore ESP",
+            isManual = false,
+            scaleType = GrinderScaleType.NUMBERED_DIAL,
+            dial = GrinderDial(GrinderDialNotation.NUMBERED, minimum = 1f, maximum = 40f, stepSize = 1f),
+            sourceUrls = listOf("https://assets.breville.com/ZCG495/manual-encoreesp-v1-0-en-010923.pdf"),
+        ),
     )
 
     override val recommendations: List<GrindRecommendation> = listOf(
+        GrindRecommendation(
+            grinderId = "baratza-encore-esp",
+            methodId = "CHEMEX",
+            filterType = null,
+            rangeStart = 30f,
+            rangeEnd = 30f,
+            suggestedStart = 30f,
+            adjustmentStepSize = 1f,
+            adjustmentNote = "Start at 30 (Baratza guide). " +
+                "If drainage stalls, check the spout air channel, then try coarser. Tune by taste.",
+            sourceUrls = listOf("https://assets.breville.com/ZCG495/manual-encoreesp-v1-0-en-010923.pdf"),
+        ),
         GrindRecommendation(
             grinderId = "1zpresso-zp6-special",
             methodId = "PULSAR",

@@ -163,10 +163,12 @@ fun MethodPickerScreen(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 val noFilterLabel = stringResource(R.string.label_no_filter)
+                val chemexFilterLabel = stringResource(R.string.label_filter_chemex_bonded)
                 val decafSuffix = stringResource(R.string.label_decaf_suffix)
                 Text(
                     text = buildString {
-                        append(state.filterType?.displayName ?: noFilterLabel)
+                        append(if (state.method == BrewMethod.CHEMEX) chemexFilterLabel
+                            else state.filterType?.displayName ?: noFilterLabel)
                         if (state.isDecafBrew) append(decafSuffix)
                     },
                     style = MaterialTheme.typography.bodySmall,

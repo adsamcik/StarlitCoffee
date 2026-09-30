@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_tip_chemex">Użyj papierowego filtra Chemex w odpowiednim rozmiarze. Umieść trzy warstwy od strony wylewki, przepłucz gorącą wodą i wylej wodę. Dodaj średnio grubo zmieloną kawę i wytaruj wagę. Pozostaw kanał powietrzny otwarty.</string>
+    <string name="instruction_chemex_bloom">Zwilż całą kawę wodą do preinfuzji i poczekaj na koniec preinfuzji.</string>
+    <string name="instruction_chemex_pour">Nalewaj delikatnie do całkowitej ilości wody. Pozwól poziomowi opaść między zalaniami i utrzymuj go poniżej krawędzi.</string>
+    <string name="instruction_chemex_drawdown">Poczekaj, aż woda przepłynie przez kawę. Wyjmij filtr, delikatnie zakręć i podawaj, trzymając za kołnierz lub uchwyt.</string>
+    <string name="label_filter_chemex_bonded">Papierowy filtr Chemex</string>
+</resources>

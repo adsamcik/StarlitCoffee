@@ -3,6 +3,7 @@
     <string-array name="brew_method_names">
         <item>Pulsar</item><item>V60</item><item>Γαλλική πρέσα</item><item>AeroPress</item>
         <item>Εσπρέσο</item><item>Μόκα</item><item>Κρύα εκχύλιση</item>
+        <item>Chemex</item>
     </string-array>
     <string-array name="filter_type_names">
         <item>Χάρτινο</item><item>19K</item><item>40K</item>

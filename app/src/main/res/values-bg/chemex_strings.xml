@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_tip_chemex">Използвайте филтър Chemex с подходящ размер. Поставете трите слоя над чучура, изплакнете с гореща вода и излейте водата. Добавете средно едро смляно кафе и нулирайте везната. Оставете въздушния канал отворен.</string>
+    <string name="instruction_chemex_bloom">Намокрете цялото кафе с водата за предварително накисване и изчакайте края му.</string>
+    <string name="instruction_chemex_pour">Наливайте бавно до общото количество вода. Оставяйте нивото да спадне между наливанията и го дръжте под ръба.</string>
+    <string name="instruction_chemex_drawdown">Изчакайте водата да се оттече през кафето. Махнете филтъра, завъртете леко и сервирайте, като държите за яката или дръжката.</string>
+    <string name="label_filter_chemex_bonded">Хартиен филтър Chemex</string>
+</resources>

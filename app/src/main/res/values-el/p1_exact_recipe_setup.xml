@@ -55,7 +55,7 @@
     <string name="label_brewer_profile_v60">V60</string>
     <string name="label_brewer_profile_wave_185">Wave 185 με επίπεδο πυθμένα</string>
     <string name="label_brewer_profile_wedge">Σφηνοειδής dripper</string>
-    <string name="label_brewer_profile_thick_paper_carafe">Συσκευή παρασκευής με καράφα και χοντρό χάρτινο φίλτρο</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Chemex</string>
     <string name="label_brewer_profile_conical">Γενικός κωνικός dripper</string>
     <string name="label_brewer_profile_family_manual_gravity">Χειροκίνητη παρασκευή με βαρύτητα</string>
     <string name="label_brewer_profile_pulsar">Pulsar</string>

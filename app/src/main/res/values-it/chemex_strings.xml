@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_tip_chemex">Usa un filtro di carta Chemex della misura adatta. Posiziona i tre strati verso il beccuccio, risciacqua con acqua calda e getta l’acqua di risciacquo. Aggiungi caffè macinato medio-grosso e azzera la bilancia. Lascia libero il canale d’aria.</string>
+    <string name="instruction_chemex_bloom">Bagna tutto il caffè con l’acqua della preinfusione e attendi la fine della preinfusione.</string>
+    <string name="instruction_chemex_pour">Versa delicatamente fino alla quantità totale d’acqua. Lascia scendere il livello tra i versamenti e mantienilo sotto il bordo.</string>
+    <string name="instruction_chemex_drawdown">Attendi che l’acqua attraversi il letto di caffè. Rimuovi il filtro, fai ruotare delicatamente e servi tenendo il collare o il manico.</string>
+    <string name="label_filter_chemex_bonded">Filtro di carta Chemex</string>
+</resources>

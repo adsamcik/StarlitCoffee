@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_tip_chemex">使用适合咖啡壶尺寸的 Chemex 专用滤纸。将三层的一侧朝向壶嘴，用热水润洗并倒掉润洗水。加入中粗研磨的咖啡并将秤归零。保持壶嘴气道畅通。</string>
+    <string name="instruction_chemex_bloom">用闷蒸水润湿所有咖啡粉，等待闷蒸结束。</string>
+    <string name="instruction_chemex_pour">缓慢注水至目标总水量。每次注水之间让水位下降，始终保持水位低于壶口。</string>
+    <string name="instruction_chemex_drawdown">等待水流过粉床。取出滤纸，轻轻摇匀，握住护圈或手柄倒出咖啡。</string>
+    <string name="label_filter_chemex_bonded">Chemex 专用滤纸</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_tip_chemex">Naudokite savo indui tinkamo dydžio Chemex popierinį filtrą. Tris sluoksnius dėkite ties snapeliu, praskalaukite karštu vandeniu ir jį išpilkite. Įberkite vidutiniškai stambiai maltos kavos ir nunulinkite svarstykles. Oro kanalą palikite atvirą.</string>
+    <string name="instruction_chemex_bloom">Sudrėkinkite visą kavą pradinio užpylimo vandeniu ir palaukite jo pabaigos.</string>
+    <string name="instruction_chemex_pour">Pilkite švelniai iki bendro vandens kiekio. Tarp pylimų leiskite lygiui nukristi ir laikykite jį žemiau krašto.</string>
+    <string name="instruction_chemex_drawdown">Palaukite, kol vanduo nutekės per kavą. Išimkite filtrą, švelniai pasukite ir patiekite laikydami už apykaklės arba rankenos.</string>
+    <string name="label_filter_chemex_bonded">Chemex popierinis filtras</string>
+</resources>

@@ -3,6 +3,7 @@
     <string-array name="brew_method_names">
         <item>Pulsar</item><item>V60</item><item>French press</item><item>AeroPress</item>
         <item>Eszpresszó</item><item>Kotyogós</item><item>Hideg áztatás</item>
+        <item>Chemex</item>
     </string-array>
     <string-array name="filter_type_names"><item>Papír</item><item>19K</item><item>40K</item></string-array>
     <string-array name="filter_cup_profiles">

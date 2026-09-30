@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_tip_chemex">Utilisez un filtre en papier Chemex adapté à votre cafetière. Placez les trois épaisseurs côté bec, rincez à l’eau chaude et jetez cette eau. Ajoutez du café moulu moyennement gros et tarez la balance. Gardez le passage d’air libre.</string>
+    <string name="instruction_chemex_bloom">Mouillez tout le café avec l’eau de préinfusion et attendez la fin de la préinfusion.</string>
+    <string name="instruction_chemex_pour">Versez doucement jusqu’à la quantité totale d’eau. Laissez le niveau baisser entre les versements et gardez-le sous le bord.</string>
+    <string name="instruction_chemex_drawdown">Attendez que l’eau traverse le lit de café. Retirez le filtre, faites tourner doucement et servez en tenant le collier ou la poignée.</string>
+    <string name="label_filter_chemex_bonded">Filtre en papier Chemex</string>
+</resources>

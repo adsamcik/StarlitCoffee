@@ -821,6 +821,7 @@
         <item>Espresso</item>
         <item>Moka pot</item>
         <item>Cold brew</item>
+        <item>Chemex</item>
     </string-array>
     <string-array name="filter_type_names">
         <item>Paper</item>

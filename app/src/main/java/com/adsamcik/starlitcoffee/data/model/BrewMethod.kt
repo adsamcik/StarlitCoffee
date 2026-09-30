@@ -231,6 +231,30 @@ enum class BrewMethod(
             timerReadyRes = R.string.instruction_cold_brew_filter,
         ),
     ),
+    // Append methods: localized name arrays use these stable ordinal positions.
+    CHEMEX(
+        displayName = "Chemex",
+        iconName = "hourglass_empty",
+        defaultRatio = 16f,
+        bloomMultiplier = 3f,
+        defaultPulses = 2,
+        tempRangeLow = 93,
+        tempRangeHigh = 96,
+        timeTargetLow = 240,
+        timeTargetHigh = 330,
+        hasBloom = true,
+        hasPulses = true,
+        // Chemex sizes differ; total brew water is not a single-fill limit.
+        capacityMaxG = null,
+        defaultGrindDescriptor = GrindDescriptor.MEDIUM_COARSE,
+        decafTimeAdjustmentPolicy = DecafTimeAdjustmentPolicy.NONE,
+        stageGuidance = BrewStageGuidance(
+            prepTipRes = R.string.prep_tip_chemex,
+            timerStartRes = R.string.instruction_chemex_bloom,
+            timerActiveRes = R.string.instruction_chemex_pour,
+            timerReadyRes = R.string.instruction_chemex_drawdown,
+        ),
+    ),
     ;
 
     val defaultRatioPresets: List<RatioPreset>

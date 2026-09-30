@@ -26,13 +26,21 @@ class BrewMethodStageGuidanceTest {
 
     @Test
     fun `bloom methods keep existing bloom timer flow`() {
-        val bloomMethods = BrewMethod.entries.filter { it.hasBloom }
+        val bloomMethods = listOf(BrewMethod.PULSAR, BrewMethod.V60)
 
         bloomMethods.forEach { method ->
             assertNull("${method.name} start guidance", method.stageGuidance.timerStartRes)
             assertNull("${method.name} active guidance", method.stageGuidance.timerActiveRes)
             assertNull("${method.name} ready guidance", method.stageGuidance.timerReadyRes)
         }
+    }
+
+    @Test
+    fun `Chemex has its own preparation pour and drainage instructions`() {
+        val guidance = BrewMethod.CHEMEX.stageGuidance
+        assertEquals(R.string.prep_tip_chemex, guidance.prepTipRes)
+        assertEquals(R.string.instruction_chemex_pour, guidance.timerActiveRes)
+        assertEquals(R.string.instruction_chemex_drawdown, guidance.timerReadyRes)
     }
 
     @Test
