@@ -13,6 +13,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltinBrewingCatalog
 import com.adsamcik.starlitcoffee.domain.brewing.CatalogResolution
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
+import com.adsamcik.starlitcoffee.data.model.BrewingSet
 import com.adsamcik.starlitcoffee.data.model.CalculatorSetup
 import com.adsamcik.starlitcoffee.data.model.CalculatorSetupCodec
 import com.adsamcik.starlitcoffee.data.model.BrewVibrationTheme
@@ -24,9 +25,16 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
+internal val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
 
-private fun calculatorSetupKey(method: BrewMethod) = stringPreferencesKey("calculator_setup_${method.name}")
+internal fun calculatorSetupKey(method: BrewMethod) = stringPreferencesKey("calculator_setup_${method.name}")
+
+internal fun legacyBrewerProfileId(rawMethodId: String): String = when (
+    val resolution = BuiltinBrewingCatalog.instance.resolveLegacyMethod(rawMethodId)
+) {
+    is CatalogResolution.Known -> resolution.value.value
+    is CatalogResolution.Unknown -> resolution.rawId
+}
 
 data class UserPreferences(
     val onboardingCompleted: Boolean = false,
@@ -38,6 +46,8 @@ data class UserPreferences(
     val lastUsedRatio: Float = 17f,
     val defaultInputDirection: String = "DOSE",
     val calculatorSetups: Map<BrewMethod, CalculatorSetup> = emptyMap(),
+    val brewingSets: List<BrewingSet> = emptyList(),
+    val activeBrewingSetId: String? = null,
     val skipMethodSelection: Boolean = false,
     val dimModeEnabled: Boolean = true,
     val dimModeTrueBlack: Boolean = true,
@@ -84,7 +94,7 @@ internal fun normalizeMethodSelection(
 // This is the single DataStore boundary for all settings surfaces; keeping the
 // atomic write API together prevents screens from rebuilding partial updates.
 @Suppress("TooManyFunctions")
-interface UserPreferencesStore {
+interface UserPreferencesStore : BrewingSetWriter {
     val userPreferences: Flow<UserPreferences>
 
     suspend fun completeOnboarding(
@@ -112,7 +122,7 @@ interface UserPreferencesStore {
     suspend fun updateLabelRecognitionPreference(preference: RecognitionPreference) = Unit
 }
 
-private object UserPreferenceKeys {
+internal object UserPreferenceKeys {
     val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
     val ENABLED_METHODS = stringSetPreferencesKey("enabled_methods")
     val DEFAULT_METHOD = stringPreferencesKey("default_method")
@@ -273,6 +283,7 @@ abstract class UserPreferencesWriter protected constructor(
 class UserPreferencesRepository(context: Context) :
     UserPreferencesWriter(context),
     BrewingPreferenceStore,
+    BrewingSetWriter by DataStoreBrewingSetWriter(context.dataStore),
     CalculatorSetupStore {
 
     override suspend fun updateCalculatorSetup(method: BrewMethod, setup: CalculatorSetup) {
@@ -303,14 +314,17 @@ class UserPreferencesRepository(context: Context) :
                 ?.let { name -> BrewMethod.entries.find { it.name == name } }
                 ?: BrewMethod.PULSAR
             val methodSelection = normalizeMethodSelection(enabledMethods, requestedDefault)
+            val setSelection = readBrewingSetSelection(prefs)
             UserPreferences(
                 onboardingCompleted = prefs[UserPreferenceKeys.ONBOARDING_COMPLETED] ?: false,
-                enabledMethods = methodSelection.enabledMethods,
-                defaultMethod = methodSelection.defaultMethod,
-                defaultFilterType = prefs[UserPreferenceKeys.DEFAULT_FILTER_TYPE]
+                enabledMethods = setSelection.sets.map { it.method }.toSet(),
+                defaultMethod = setSelection.active.method,
+                defaultFilterType = setSelection.active.setup.filterType
                     ?.let { name -> FilterType.entries.find { it.name == name } }
                     ?.takeIf { methodSelection.enabledMethods.contains(BrewMethod.PULSAR) },
-                selectedGrinderId = prefs[UserPreferenceKeys.SELECTED_GRINDER_ID],
+                selectedGrinderId = setSelection.active.setup.grinderId,
+                brewingSets = setSelection.sets,
+                activeBrewingSetId = setSelection.activeId,
                 qrLinkExplorerEnabled = prefs[UserPreferenceKeys.QR_LINK_EXPLORER_ENABLED] ?: false,
                 lastUsedRatio = prefs[UserPreferenceKeys.LAST_USED_RATIO] ?: 17f,
                 defaultInputDirection = prefs[UserPreferenceKeys.DEFAULT_INPUT_DIRECTION] ?: "DOSE",
@@ -416,6 +430,10 @@ class UserPreferencesRepository(context: Context) :
                 prefs[UserPreferenceKeys.SELECTED_GRINDER_ID] = selectedGrinderId
             } else {
                 prefs.remove(UserPreferenceKeys.SELECTED_GRINDER_ID)
+            }
+            if (prefs[BrewingSetKeys.SETS] == null) {
+                val initial = legacyBrewingSetSelection(prefs)
+                writeBrewingSetSelection(prefs, initial.copy(sets = initial.sets.map { it.copy(revision = 1) }))
             }
         }
     }
@@ -528,13 +546,6 @@ class UserPreferencesRepository(context: Context) :
 
     private fun legacyDefaultBrewerProfileId(prefs: Preferences): String =
         legacyBrewerProfileId(prefs[UserPreferenceKeys.DEFAULT_METHOD] ?: BrewMethod.PULSAR.name)
-
-    private fun legacyBrewerProfileId(rawMethodId: String): String = when (
-        val resolution = BuiltinBrewingCatalog.instance.resolveLegacyMethod(rawMethodId)
-    ) {
-        is CatalogResolution.Known -> resolution.value.value
-        is CatalogResolution.Unknown -> resolution.rawId
-    }
 
     private fun legacyGuidanceByFamily(
         profileIds: Set<String>,

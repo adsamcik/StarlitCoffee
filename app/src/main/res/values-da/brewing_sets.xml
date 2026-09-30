@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_sets">Bryggeopsætninger</string>
+    <string name="msg_brewing_sets_hint">Gem separate opsætninger til hjemmet, arbejdet eller forskellige bryggemetoder.</string>
+    <string name="action_add_brewing_set">Tilføj opsætning</string>
+    <string name="action_save_brewing_set">Gem som opsætning</string>
+    <string name="label_new_brewing_set">Ny opsætning</string>
+    <string name="label_edit_brewing_set">Rediger opsætning</string>
+    <string name="hint_brewing_set_name">f.eks. Filter hjemme</string>
+    <string name="action_manage_brewing_sets">Administrer opsætninger</string>
+    <string name="label_brewing_set_method">Bryggemetode</string>
+    <string name="msg_delete_brewing_set">Slet denne bryggeopsætning?</string>
+    <string name="screen_first_brewing_set_method">Vælg din første metode</string>
+    <string name="msg_first_brewing_set">Start med én metode. Du kan tilføje flere bryggeopsætninger i Indstillinger.</string>
+    <string name="action_retry_brewing_set">Prøv igen</string>
+</resources>

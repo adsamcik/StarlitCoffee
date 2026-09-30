@@ -42,6 +42,7 @@ import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
+import com.adsamcik.starlitcoffee.data.model.grindersFor
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
@@ -73,16 +74,19 @@ fun OnboardingPersonalizeScreen(
     ) -> Unit,
 ) {
     val filterType = rememberSaveable(saver = NullableFilterTypeSaver) {
-        mutableStateOf(initialFilter)
+        mutableStateOf(initialFilter ?: FilterType.PAPER.takeIf { selectedMethods.contains(BrewMethod.PULSAR) })
     }
     val selectedGrinderId = rememberSaveable { mutableStateOf(initialGrinder) }
     val context = LocalContext.current
 
     val showFilterSection = selectedMethods.contains(BrewMethod.PULSAR)
     val effectiveFilter = filterType.value.takeIf { showFilterSection }
+    val method = selectedMethods.firstOrNull() ?: BrewMethod.PULSAR
+    val supportedGrinders = GrinderDataSource.getInstance(context).grindersFor(method, effectiveFilter)
+    val effectiveGrinder = selectedGrinderId.value?.takeIf { id -> supportedGrinders.any { it.id == id } }
     val requestBack = {
         if (!isSubmitting) {
-            onSelectionChanged(effectiveFilter, selectedGrinderId.value)
+            onSelectionChanged(effectiveFilter, effectiveGrinder)
             onBack()
         }
     }
@@ -160,63 +164,64 @@ fun OnboardingPersonalizeScreen(
             }
 
             // Grinder section
-            ElevatedCard(
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        text = stringResource(R.string.label_your_grinder),
-                        style = MaterialTheme.typography.titleMedium,
-                    )
-                    Text(
-                        text = stringResource(R.string.msg_grinder_hint),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    val supportedGrinders = GrinderDataSource.getInstance(context).grinders
-                    val noGrinderSelected = supportedGrinders.none { it.id == selectedGrinderId.value }
-                    FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalArrangement = Arrangement.spacedBy(4.dp),
-                    ) {
-                        FilterChip(
-                            selected = noGrinderSelected,
-                            enabled = !isSubmitting,
-                            onClick = { selectedGrinderId.value = null },
-                            label = { Text(stringResource(R.string.label_no_grinder)) },
-                            leadingIcon = if (noGrinderSelected) {
-                                { Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }
-                            } else {
-                                null
-                            },
+            if (supportedGrinders.isNotEmpty()) {
+                ElevatedCard(
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text(
+                            text = stringResource(R.string.label_your_grinder),
+                            style = MaterialTheme.typography.titleMedium,
                         )
-                        supportedGrinders.forEach { grinder ->
-                            val isGrinderSelected = selectedGrinderId.value == grinder.id
+                        Text(
+                            text = stringResource(R.string.msg_grinder_hint),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                        Spacer(modifier = Modifier.height(12.dp))
+                        val noGrinderSelected = supportedGrinders.none { it.id == selectedGrinderId.value }
+                        FlowRow(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalArrangement = Arrangement.spacedBy(4.dp),
+                        ) {
                             FilterChip(
-                                selected = isGrinderSelected,
+                                selected = noGrinderSelected,
                                 enabled = !isSubmitting,
-                                onClick = {
-                                    selectedGrinderId.value = if (isGrinderSelected) {
-                                        null
-                                    } else {
-                                        grinder.id
-                                    }
-                                },
-                                label = {
-                                    val label = if (grinder.brand == grinder.model) {
-                                        grinder.model
-                                    } else {
-                                        "${grinder.brand} ${grinder.model}"
-                                    }
-                                    Text(label)
-                                },
-                                leadingIcon = if (isGrinderSelected) {
+                                onClick = { selectedGrinderId.value = null },
+                                label = { Text(stringResource(R.string.label_no_grinder)) },
+                                leadingIcon = if (noGrinderSelected) {
                                     { Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }
                                 } else {
                                     null
                                 },
                             )
+                            supportedGrinders.forEach { grinder ->
+                                val isGrinderSelected = selectedGrinderId.value == grinder.id
+                                FilterChip(
+                                    selected = isGrinderSelected,
+                                    enabled = !isSubmitting,
+                                    onClick = {
+                                        selectedGrinderId.value = if (isGrinderSelected) {
+                                            null
+                                        } else {
+                                            grinder.id
+                                        }
+                                    },
+                                    label = {
+                                        val label = if (grinder.brand == grinder.model) {
+                                            grinder.model
+                                        } else {
+                                            "${grinder.brand} ${grinder.model}"
+                                        }
+                                        Text(label)
+                                    },
+                                    leadingIcon = if (isGrinderSelected) {
+                                        { Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }
+                                    } else {
+                                        null
+                                    },
+                                )
+                            }
                         }
                     }
                 }
@@ -249,7 +254,7 @@ fun OnboardingPersonalizeScreen(
             Spacer(modifier = Modifier.width(8.dp))
             Button(
                 onClick = {
-                    onFinish(effectiveFilter, selectedGrinderId.value)
+                    onFinish(effectiveFilter, effectiveGrinder)
                 },
                 enabled = !isSubmitting,
                 colors = primaryActionButtonColors(),

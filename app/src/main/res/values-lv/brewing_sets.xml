@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_sets">Pagatavošanas komplekti</string>
+    <string name="msg_brewing_sets_hint">Saglabājiet atsevišķus komplektus mājām, darbam vai dažādām pagatavošanas metodēm.</string>
+    <string name="action_add_brewing_set">Pievienot komplektu</string>
+    <string name="action_save_brewing_set">Saglabāt kā komplektu</string>
+    <string name="label_new_brewing_set">Jauns komplekts</string>
+    <string name="label_edit_brewing_set">Rediģēt komplektu</string>
+    <string name="hint_brewing_set_name">piem., Filtrs mājās</string>
+    <string name="action_manage_brewing_sets">Pārvaldīt komplektus</string>
+    <string name="label_brewing_set_method">Pagatavošanas metode</string>
+    <string name="msg_delete_brewing_set">Dzēst šo pagatavošanas komplektu?</string>
+    <string name="screen_first_brewing_set_method">Izvēlieties pirmo metodi</string>
+    <string name="msg_first_brewing_set">Sāciet ar vienu metodi. Papildu komplektus varat pievienot Iestatījumos.</string>
+    <string name="action_retry_brewing_set">Mēģināt vēlreiz</string>
+</resources>

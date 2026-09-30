@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_sets">Brygguppsättningar</string>
+    <string name="msg_brewing_sets_hint">Spara separata uppsättningar för hemmet, jobbet eller olika bryggmetoder.</string>
+    <string name="action_add_brewing_set">Lägg till uppsättning</string>
+    <string name="action_save_brewing_set">Spara som uppsättning</string>
+    <string name="label_new_brewing_set">Ny uppsättning</string>
+    <string name="label_edit_brewing_set">Redigera uppsättning</string>
+    <string name="hint_brewing_set_name">t.ex. Filter hemma</string>
+    <string name="action_manage_brewing_sets">Hantera uppsättningar</string>
+    <string name="label_brewing_set_method">Bryggmetod</string>
+    <string name="msg_delete_brewing_set">Ta bort den här brygguppsättningen?</string>
+    <string name="screen_first_brewing_set_method">Välj din första metod</string>
+    <string name="msg_first_brewing_set">Börja med en metod. Du kan lägga till fler uppsättningar i Inställningar.</string>
+    <string name="action_retry_brewing_set">Försök igen</string>
+</resources>

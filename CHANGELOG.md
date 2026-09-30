@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Brewing sets** — switch between named Home, Work, espresso and filter
+  equipment combinations. Each set remembers its own ratio, amount, quantity,
+  filter and grinder. Settings manages the same set list; existing method
+  preferences and named calculator favorites migrate automatically.
 - **Chemex brewing** — select Chemex in the everyday Brew flow, with remembered
   setups, medium-coarse grind guidance, bonded-filter preparation, and a guided
   bloom, pour, drawdown, and serving session. Starting recommendations use a

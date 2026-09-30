@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_sets">冲煮组合</string>
+    <string name="msg_brewing_sets_hint">为家中、办公室或不同冲煮方式保存独立的组合。</string>
+    <string name="action_add_brewing_set">添加组合</string>
+    <string name="action_save_brewing_set">保存为组合</string>
+    <string name="label_new_brewing_set">新建组合</string>
+    <string name="label_edit_brewing_set">编辑组合</string>
+    <string name="hint_brewing_set_name">例如：家中手冲</string>
+    <string name="action_manage_brewing_sets">管理组合</string>
+    <string name="label_brewing_set_method">冲煮方式</string>
+    <string name="msg_delete_brewing_set">删除此冲煮组合？</string>
+    <string name="screen_first_brewing_set_method">选择您的第一种冲煮方式</string>
+    <string name="msg_first_brewing_set">先选择一种方式。您可以在设置中添加更多冲煮组合。</string>
+    <string name="action_retry_brewing_set">重试</string>
+</resources>

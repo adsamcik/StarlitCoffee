@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,7 +25,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Backspace
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.BookmarkAdd
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.LocalCafe
 import androidx.compose.material3.AssistChip
@@ -70,29 +69,30 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
+import androidx.compose.material3.TextButton
 import com.adsamcik.starlitcoffee.calculator.CalcEvaluator.InputDirection
 import com.adsamcik.starlitcoffee.calculator.CalculatorQuantityTarget
 import com.adsamcik.starlitcoffee.calculator.calculatorRatioOptions
 import com.adsamcik.starlitcoffee.calculator.formatCalculatorRatio
 import com.adsamcik.starlitcoffee.data.model.BrewOutputSemantics
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
+import com.adsamcik.starlitcoffee.data.model.BrewingSet
+import com.adsamcik.starlitcoffee.data.model.GrinderDataProvider
+import com.adsamcik.starlitcoffee.ui.component.BrewingSetEditor
+import com.adsamcik.starlitcoffee.ui.component.BrewingSetPicker
+import com.adsamcik.starlitcoffee.ui.component.brewingSetSummary
+import java.util.UUID
 import com.adsamcik.starlitcoffee.data.model.CalcOp
 import com.adsamcik.starlitcoffee.data.model.CalcToken
 import com.adsamcik.starlitcoffee.data.model.CupPreset
-import com.adsamcik.starlitcoffee.data.model.FilterType
-import com.adsamcik.starlitcoffee.data.model.Grinder
 import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.data.model.grindersFor
 import com.adsamcik.starlitcoffee.data.model.InputMode
-import com.adsamcik.starlitcoffee.data.repository.UserPreferences
-import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.ui.adaptive.LocalWindowWidthClass
 import com.adsamcik.starlitcoffee.ui.component.CalculationQuantityIcon
 import com.adsamcik.starlitcoffee.ui.component.CalculationQuantityIconType
 import com.adsamcik.starlitcoffee.ui.component.CalculatorQuantityCardItem
 import com.adsamcik.starlitcoffee.ui.component.CalculatorQuantitySelector
-import com.adsamcik.starlitcoffee.ui.component.SaveFavoriteDialog
-import com.adsamcik.starlitcoffee.ui.component.SavedSetupPicker
 import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import com.adsamcik.starlitcoffee.ui.util.PresetIcon
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
@@ -104,7 +104,6 @@ import com.adsamcik.starlitcoffee.viewmodel.WaterAmountMode
 fun CalculatorBrewScreen(
     calculatorViewModel: CalculatorViewModel,
     brewViewModel: BrewViewModel,
-    userPreferencesRepository: UserPreferencesRepository,
     onNavigateToBrew: () -> Unit,
     recoverableSessionId: String?,
     onResumeSession: (String) -> Unit,
@@ -112,33 +111,30 @@ fun CalculatorBrewScreen(
     onNavigateToBags: () -> Unit,
     scannedBarcodeResult: String? = null,
     onScannedBarcodeResultConsumed: () -> Unit = {},
+    onNavigateToSettings: (() -> Unit)? = null,
 ) {
     val state by calculatorViewModel.uiState.collectAsStateWithLifecycle()
     val brewState by brewViewModel.uiState.collectAsStateWithLifecycle()
 
-    val prefs by userPreferencesRepository.userPreferences.collectAsStateWithLifecycle(
-        initialValue = UserPreferences(),
-    )
-
-    // BrewViewModel selects the method. CalculatorViewModel owns the remembered
-    // calculator setup and supplies its equipment to the preparation boundary.
-    val selectedMethod = brewState.method
+    // The selected set owns calculator input and equipment; preparation receives the same values.
+    val selectedMethod = state.brewMethod
     val selectedFilter = state.filterType
     val context = LocalContext.current
     val grinderData = remember { GrinderDataSource.getInstance(context) }
     val grinders = grinderData.grindersFor(state.brewMethod, selectedFilter)
     val selectedGrinderId = state.grinderId?.takeIf { id -> grinders.any { it.id == id } }
-    val savedRecipes by brewViewModel.savedRecipes.collectAsStateWithLifecycle()
-
-    LaunchedEffect(selectedMethod, brewState.beverageOutputCalibration) {
-        calculatorViewModel.setBrewContext(
-            method = selectedMethod,
-            calibration = brewState.beverageOutputCalibration,
-        )
+    LaunchedEffect(state.brewMethod, brewState.beverageOutputCalibration, state.preferencesLoaded) {
+        if (state.preferencesLoaded) {
+            calculatorViewModel.setBrewContext(
+                method = selectedMethod,
+                calibration = brewState.beverageOutputCalibration,
+            )
+        }
     }
 
     LaunchedEffect(state.brewMethod, selectedFilter, state.grinderId, state.preferencesLoaded) {
-        if (state.preferencesLoaded && state.brewMethod == brewViewModel.uiState.value.method) {
+        if (state.preferencesLoaded) {
+            if (brewViewModel.uiState.value.method != state.brewMethod) brewViewModel.setMethod(state.brewMethod)
             if (state.grinderId != selectedGrinderId) {
                 calculatorViewModel.setEquipment(selectedFilter, selectedGrinderId)
             }
@@ -185,15 +181,20 @@ fun CalculatorBrewScreen(
         coffeeBags.find { it.id == selectedBagId }
     }
 
-    var showSaveFavoriteDialog by remember { mutableStateOf(false) }
+    var newSetId by rememberSaveable { mutableStateOf<String?>(null) }
+    LaunchedEffect(state.savedSetId) {
+        if (state.savedSetId == newSetId && newSetId != null) {
+            newSetId = null
+            calculatorViewModel.consumeSetSaveOutcome()
+        }
+    }
 
     val scrollState = rememberScrollState()
 
-    // Calc-side derived values (ratio, dose) need to land on BrewViewModel
-    // before downstream actions that snapshot the brew state (save recipe,
-    // start brew). Method/filter/grinder are already in the VM via direct
-    // chip handlers, so only the calc-derived fields need explicit syncing.
+    // Snapshot the whole selected set before starting, including a switch whose
+    // presentation effect has not reached the preparation ViewModel yet.
     val syncCalcDerivedState: () -> Unit = {
+        if (brewViewModel.uiState.value.method != state.brewMethod) brewViewModel.setMethod(state.brewMethod)
         brewViewModel.setFilterType(state.filterType)
         brewViewModel.setGrinder(selectedGrinderId)
         brewViewModel.setCustomRatio(state.ratio.toString())
@@ -211,16 +212,13 @@ fun CalculatorBrewScreen(
             tokens = state.tokens,
             direction = state.inputDirection,
             waterAmountMode = state.waterAmountMode,
-            canSaveFavorite = state.hasValidExpression && state.previewDoseG > 0f,
+            canSaveSet = state.preferencesLoaded,
             showInlineResult = isCompactHeight && state.hasValidExpression,
             previewDoseG = state.previewDoseG,
             previewWaterMl = state.previewWaterMl,
             isBeverageYield = state.brewMethod.outputSemantics == BrewOutputSemantics.BEVERAGE_YIELD,
             isCompactHeight = isCompactHeight,
-            onSaveFavorite = {
-                syncCalcDerivedState()
-                showSaveFavoriteDialog = true
-            },
+            onSaveSet = { newSetId = UUID.randomUUID().toString() },
         )
     }
 
@@ -357,39 +355,22 @@ fun CalculatorBrewScreen(
         // thumb reach while the user is entering numbers. Replaces the older
         // expandable config card.
         BrewSettingsPillBar(
-            enabledMethods = prefs.enabledMethods.toList(),
+            sets = state.brewingSets,
+            selectedSetId = state.activeBrewingSetId,
             selectedMethod = selectedMethod,
-            selectedFilter = selectedFilter,
-            selectedGrinderId = selectedGrinderId,
-            grinders = grinders,
+            grinderData = grinderData,
             ratio = state.ratio,
-            onMethodChange = { method ->
-                calculatorViewModel.setBrewMethod(method)
-                brewViewModel.setMethod(method)
-                val setup = calculatorViewModel.uiState.value
-                brewViewModel.setFilterType(setup.filterType)
-                brewViewModel.setGrinder(
-                    setup.grinderId?.takeIf {
-                        grinderData.grindersFor(method, setup.filterType).any { grinder -> grinder.id == it }
-                    },
-                )
-                calculatorViewModel.setBrewContext(method, brewViewModel.uiState.value.beverageOutputCalibration)
-            },
-            onFilterChange = { calculatorViewModel.setEquipment(it, selectedGrinderId) },
-            onGrinderChange = { calculatorViewModel.setEquipment(selectedFilter, it) },
-            onRatioChange = { calculatorViewModel.setRatio(it) },
+            onSetChange = calculatorViewModel::selectBrewingSet,
+            onRatioChange = calculatorViewModel::setRatio,
             recoverableSessionId = recoverableSessionId,
             onResumeSession = onResumeSession,
-            savedSetups = {
-                SavedSetupPicker(
-                    recipes = savedRecipes,
-                    enabledMethods = prefs.enabledMethods,
-                    onSelect = { recipe ->
-                        if (calculatorViewModel.loadRecipe(recipe)) brewViewModel.loadRecipe(recipe)
-                    },
-                )
-            },
+            onManage = onNavigateToSettings,
         )
+        if (state.setSaveFailed && newSetId == null) {
+            TextButton(onClick = calculatorViewModel::retrySetupSave) {
+                Text(stringResource(R.string.msg_settings_save_failed) + " " + stringResource(R.string.action_retry_brewing_set))
+            }
+        }
     }
 
     val keyboard: @Composable () -> Unit = {
@@ -467,16 +448,12 @@ fun CalculatorBrewScreen(
         }
     }
 
-    if (showSaveFavoriteDialog) {
-        SaveFavoriteDialog(
-            suggestedName = "",
-            onSave = { name ->
-                syncCalcDerivedState()
-                brewViewModel.saveRecipe(name, calculatorViewModel.currentSetup())
-                showSaveFavoriteDialog = false
-            },
-            onDismiss = { showSaveFavoriteDialog = false },
-        )
+    newSetId?.let { id ->
+        val draft = remember(id) { BrewingSet(id = id, method = state.brewMethod, setup = calculatorViewModel.currentSetup()) }
+        BrewingSetEditor(draft, isNew = true, grinderData = grinderData,
+            isSaving = state.setSaveInProgress, saveFailed = state.setSaveFailed,
+            onSave = calculatorViewModel::saveBrewingSet,
+            onDismiss = { newSetId = null; calculatorViewModel.consumeSetSaveOutcome() })
     }
 }
 
@@ -485,13 +462,13 @@ private fun ExpressionHeader(
     tokens: List<CalcToken>,
     direction: InputDirection,
     waterAmountMode: WaterAmountMode,
-    canSaveFavorite: Boolean,
+    canSaveSet: Boolean,
     showInlineResult: Boolean,
     previewDoseG: Float,
     previewWaterMl: Float,
     isBeverageYield: Boolean,
     isCompactHeight: Boolean,
-    onSaveFavorite: () -> Unit,
+    onSaveSet: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -518,16 +495,16 @@ private fun ExpressionHeader(
         )
 
         IconButton(
-            onClick = onSaveFavorite,
-            enabled = canSaveFavorite,
+            onClick = onSaveSet,
+            enabled = canSaveSet,
             modifier = Modifier
                 .size(40.dp)
-                .testTag("save_favorite_button"),
+                .testTag("save_set_button"),
         ) {
             Icon(
-                imageVector = Icons.Filled.FavoriteBorder,
-                contentDescription = stringResource(R.string.action_save_as_favorite),
-                tint = if (canSaveFavorite) {
+                    imageVector = Icons.Filled.BookmarkAdd,
+                contentDescription = stringResource(R.string.action_save_brewing_set),
+                tint = if (canSaveSet) {
                     MaterialTheme.colorScheme.primary
                 } else {
                     MaterialTheme.colorScheme.onSurfaceVariant
@@ -678,120 +655,35 @@ private fun ExpressionDisplay(
 
 @Composable
 private fun BrewSettingsPillBar(
-    enabledMethods: List<BrewMethod>,
+    sets: List<BrewingSet>,
+    selectedSetId: String?,
     selectedMethod: BrewMethod,
-    selectedFilter: FilterType?,
-    selectedGrinderId: String?,
-    grinders: List<Grinder>,
+    grinderData: GrinderDataProvider,
     ratio: Float,
-    onMethodChange: (BrewMethod) -> Unit,
-    onFilterChange: (FilterType?) -> Unit,
-    onGrinderChange: (String?) -> Unit,
+    onSetChange: (String) -> Unit,
     onRatioChange: (Float) -> Unit,
     recoverableSessionId: String?,
     onResumeSession: (String) -> Unit,
-    savedSetups: @Composable () -> Unit,
+    onManage: (() -> Unit)?,
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .horizontalScroll(rememberScrollState()),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        // Method pill — only when more than one method is enabled in Settings.
-        if (enabledMethods.size > 1) {
+    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        Row(modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+            BrewingSetPicker(sets, selectedSetId, grinderData, onSetChange, onManage)
+            val ratioOptions = selectedMethod.calculatorRatioOptions(ratio)
             PillDropdown(
-                label = selectedMethod.displayName,
-                options = enabledMethods.map { method ->
-                    PillOption(
-                        label = method.displayName,
-                        selected = method == selectedMethod,
-                        onClick = { onMethodChange(method) },
-                    )
+                label = "1:${formatCalculatorRatio(ratio)}",
+                options = ratioOptions.map { value ->
+                    PillOption("1:${formatCalculatorRatio(value)}", value == ratio) { onRatioChange(value) }
                 },
             )
+            recoverableSessionId?.let { id ->
+                AssistChip(onClick = { onResumeSession(id) }, label = { Text(stringResource(R.string.action_resume)) })
+            }
         }
-
-        recoverableSessionId?.let { sessionId ->
-            AssistChip(
-                onClick = { onResumeSession(sessionId) },
-                label = { Text(stringResource(R.string.action_resume)) },
-            )
-        }
-
-        val ratioOptions = selectedMethod.calculatorRatioOptions(ratio)
-        PillDropdown(
-            label = "1:${formatCalculatorRatio(ratio)}",
-            options = ratioOptions.map { value ->
-                PillOption(
-                    label = "1:${formatCalculatorRatio(value)}",
-                    selected = value == ratio,
-                    onClick = { onRatioChange(value) },
-                )
-            },
-        )
-
-        savedSetups()
-
-        // Filter pill — Pulsar only (FilterType is a Pulsar-specific concept).
-        if (selectedMethod == BrewMethod.PULSAR) {
-            val noFilterLabel = stringResource(R.string.label_no_filter)
-            val pillLabel = selectedFilter?.displayName ?: noFilterLabel
-            PillDropdown(
-                label = pillLabel,
-                modifier = Modifier.testTag("filter_picker"),
-                options = buildList {
-                    add(
-                        PillOption(
-                            label = noFilterLabel,
-                            selected = selectedFilter == null,
-                            onClick = { onFilterChange(null) },
-                        ),
-                    )
-                    FilterType.entries.forEach { filter ->
-                        add(
-                            PillOption(
-                                label = filter.displayName,
-                                selected = filter == selectedFilter,
-                                onClick = { onFilterChange(filter) },
-                            ),
-                        )
-                    }
-                },
-            )
-        }
-
-        // Grinder pill — only when grinder data is available.
-        if (grinders.isNotEmpty()) {
-            val noGrinderLabel = stringResource(R.string.label_none)
-            val selectedGrinder = grinders.find { it.id == selectedGrinderId }
-            val pillLabel = selectedGrinder?.let { g ->
-                if (g.brand == g.model) g.model else "${g.brand} ${g.model}"
-            } ?: noGrinderLabel
-            PillDropdown(
-                label = pillLabel,
-                modifier = Modifier.testTag("grinder_picker"),
-                options = buildList {
-                    add(
-                        PillOption(
-                            label = noGrinderLabel,
-                            selected = selectedGrinderId == null,
-                            onClick = { onGrinderChange(null) },
-                        ),
-                    )
-                    grinders.forEach { g ->
-                        val gLabel = if (g.brand == g.model) g.model else "${g.brand} ${g.model}"
-                        add(
-                            PillOption(
-                                label = gLabel,
-                                selected = g.id == selectedGrinderId,
-                                onClick = { onGrinderChange(g.id) },
-                            ),
-                        )
-                    }
-                },
-            )
+        sets.find { it.id == selectedSetId }?.let { selected ->
+            Text(brewingSetSummary(selected, grinderData), style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }

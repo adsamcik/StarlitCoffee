@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
+import com.adsamcik.starlitcoffee.data.model.BrewingSet
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.repository.CupPresetResetter
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesStore
@@ -36,6 +37,7 @@ enum class SettingsFailure {
 }
 
 enum class SettingsCompletion {
+    BREWING_SET_SAVED,
     CUP_PRESETS_RESET,
     DIAGNOSTICS_CLEARED,
 }
@@ -60,6 +62,8 @@ class AndroidDiagnosticHistoryClearer(context: Context) : DiagnosticHistoryClear
     }
 }
 
+// Every settings write uses the same operation gate and failure state, including set edits.
+@Suppress("TooManyFunctions")
 class SettingsViewModel(
     private val preferences: UserPreferencesStore,
     private val cupPresetResetter: CupPresetResetter? = null,
@@ -72,6 +76,20 @@ class SettingsViewModel(
 
     fun updateMethodSelection(enabledMethods: Set<BrewMethod>, defaultMethod: BrewMethod) {
         persist { preferences.updateMethodSelection(enabledMethods, defaultMethod) }
+    }
+
+    fun saveBrewingSet(set: BrewingSet) {
+        launchOperation(SettingsOperation.SAVING, SettingsFailure.SAVE, SettingsCompletion.BREWING_SET_SAVED) {
+            preferences.saveBrewingSet(set)
+        }
+    }
+
+    fun selectBrewingSet(id: String) {
+        persist { preferences.selectBrewingSet(id) }
+    }
+
+    fun deleteBrewingSet(id: String) {
+        persist { preferences.deleteBrewingSet(id) }
     }
 
     fun updateDefaultMethod(enabledMethods: Set<BrewMethod>, method: BrewMethod) {

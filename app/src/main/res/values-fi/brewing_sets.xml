@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_sets">Valmistuskokoonpanot</string>
+    <string name="msg_brewing_sets_hint">Tallenna erilliset kokoonpanot kotiin, töihin tai eri valmistusmenetelmille.</string>
+    <string name="action_add_brewing_set">Lisää kokoonpano</string>
+    <string name="action_save_brewing_set">Tallenna kokoonpanona</string>
+    <string name="label_new_brewing_set">Uusi kokoonpano</string>
+    <string name="label_edit_brewing_set">Muokkaa kokoonpanoa</string>
+    <string name="hint_brewing_set_name">esim. Suodatin kotona</string>
+    <string name="action_manage_brewing_sets">Hallitse kokoonpanoja</string>
+    <string name="label_brewing_set_method">Valmistusmenetelmä</string>
+    <string name="msg_delete_brewing_set">Poistetaanko tämä valmistuskokoonpano?</string>
+    <string name="screen_first_brewing_set_method">Valitse ensimmäinen menetelmä</string>
+    <string name="msg_first_brewing_set">Aloita yhdellä menetelmällä. Voit lisätä kokoonpanoja Asetuksissa.</string>
+    <string name="action_retry_brewing_set">Yritä uudelleen</string>
+</resources>

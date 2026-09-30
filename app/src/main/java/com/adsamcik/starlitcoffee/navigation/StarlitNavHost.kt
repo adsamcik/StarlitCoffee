@@ -179,7 +179,8 @@ fun StarlitNavHost() {
         factory = BrewViewModelFactory(context as Application),
     )
     val calculatorViewModel: CalculatorViewModel = viewModel {
-        CalculatorViewModel(cupPresetRepository, userPreferencesRepository)
+        CalculatorViewModel(cupPresetRepository, userPreferencesRepository,
+            com.adsamcik.starlitcoffee.data.repository.RecipeRepository(database.recipeDao()))
     }
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -517,7 +518,7 @@ fun StarlitNavHost() {
                     CalculatorBrewScreen(
                         calculatorViewModel = calculatorViewModel,
                         brewViewModel = brewViewModel,
-                        userPreferencesRepository = userPreferencesRepository,
+                        onNavigateToSettings = { navController.navigate(Settings) },
                         onNavigateToBrew = {
                             brewViewModel.startNewBrewSession()
                             if (prefs.skipMethodSelection) {

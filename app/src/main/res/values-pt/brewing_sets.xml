@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_sets">Conjuntos de preparação</string>
+    <string name="msg_brewing_sets_hint">Guarde conjuntos separados para casa, trabalho ou diferentes métodos de preparação.</string>
+    <string name="action_add_brewing_set">Adicionar conjunto</string>
+    <string name="action_save_brewing_set">Guardar como conjunto</string>
+    <string name="label_new_brewing_set">Novo conjunto</string>
+    <string name="label_edit_brewing_set">Editar conjunto</string>
+    <string name="hint_brewing_set_name">por ex. Filtro em casa</string>
+    <string name="action_manage_brewing_sets">Gerir conjuntos</string>
+    <string name="label_brewing_set_method">Método de preparação</string>
+    <string name="msg_delete_brewing_set">Eliminar este conjunto de preparação?</string>
+    <string name="screen_first_brewing_set_method">Escolha o seu primeiro método</string>
+    <string name="msg_first_brewing_set">Comece com um método. Pode adicionar mais conjuntos nas Definições.</string>
+    <string name="action_retry_brewing_set">Tentar novamente</string>
+</resources>

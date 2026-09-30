@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_sets">Equipos de preparación</string>
+    <string name="msg_brewing_sets_hint">Guarda configuraciones distintas para casa, el trabajo o diferentes métodos de preparación.</string>
+    <string name="action_add_brewing_set">Añadir equipo</string>
+    <string name="action_save_brewing_set">Guardar como equipo</string>
+    <string name="label_new_brewing_set">Nuevo equipo</string>
+    <string name="label_edit_brewing_set">Editar equipo</string>
+    <string name="hint_brewing_set_name">p. ej. Filtro en casa</string>
+    <string name="action_manage_brewing_sets">Gestionar equipos</string>
+    <string name="label_brewing_set_method">Método de preparación</string>
+    <string name="msg_delete_brewing_set">¿Eliminar este equipo de preparación?</string>
+    <string name="screen_first_brewing_set_method">Elige tu primer método</string>
+    <string name="msg_first_brewing_set">Empieza con un método. Puedes añadir más equipos en Ajustes.</string>
+    <string name="action_retry_brewing_set">Volver a intentar</string>
+</resources>

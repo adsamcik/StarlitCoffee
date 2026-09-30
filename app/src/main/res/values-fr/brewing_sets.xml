@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_sets">Configurations café</string>
+    <string name="msg_brewing_sets_hint">Gardez des configurations distinctes pour la maison, le travail ou différentes méthodes de préparation.</string>
+    <string name="action_add_brewing_set">Ajouter une configuration</string>
+    <string name="action_save_brewing_set">Enregistrer comme configuration</string>
+    <string name="label_new_brewing_set">Nouvelle configuration</string>
+    <string name="label_edit_brewing_set">Modifier la configuration</string>
+    <string name="hint_brewing_set_name">p. ex. Filtre à la maison</string>
+    <string name="action_manage_brewing_sets">Gérer les configurations</string>
+    <string name="label_brewing_set_method">Méthode de préparation</string>
+    <string name="msg_delete_brewing_set">Supprimer cette configuration café ?</string>
+    <string name="screen_first_brewing_set_method">Choisissez votre première méthode</string>
+    <string name="msg_first_brewing_set">Commencez par une méthode. Vous pouvez ajouter des configurations dans les paramètres.</string>
+    <string name="action_retry_brewing_set">Réessayer</string>
+</resources>

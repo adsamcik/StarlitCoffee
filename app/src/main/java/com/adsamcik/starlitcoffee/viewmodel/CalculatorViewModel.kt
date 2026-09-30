@@ -10,6 +10,7 @@ import com.adsamcik.starlitcoffee.data.brewing.snapshot.StoredRecipePayload
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.BrewOutputSemantics
+import com.adsamcik.starlitcoffee.data.model.BrewingSet
 import com.adsamcik.starlitcoffee.data.model.CalculatorSetup
 import com.adsamcik.starlitcoffee.data.model.CalcOp
 import com.adsamcik.starlitcoffee.data.model.CalcToken
@@ -17,6 +18,7 @@ import com.adsamcik.starlitcoffee.data.model.CupPreset
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.repository.CalculatorSetupStore
 import com.adsamcik.starlitcoffee.data.repository.CupPresetRepository
+import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.domain.BeverageOutputCalibration
 import com.adsamcik.starlitcoffee.domain.BeverageOutputEstimator
@@ -27,6 +29,10 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.CancellationException
+import java.util.UUID
+import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
 
 enum class WaterAmountMode {
     WATER_INPUT,
@@ -49,6 +55,11 @@ data class CalcUiState(
     val filterType: FilterType? = null,
     val grinderId: String? = null,
     val preferencesLoaded: Boolean = false,
+    val brewingSets: List<BrewingSet> = emptyList(),
+    val activeBrewingSetId: String? = null,
+    val setSaveInProgress: Boolean = false,
+    val setSaveFailed: Boolean = false,
+    val savedSetId: String? = null,
 ) {
     val quantityTarget: CalculatorQuantityTarget
         get() = when {
@@ -58,18 +69,32 @@ data class CalcUiState(
         }
 }
 
+private sealed interface SetupWrite {
+    data class Initialize(val recipes: List<SavedRecipeEntity>?) : SetupWrite
+    data class Remember(val method: BrewMethod, val setup: CalculatorSetup, val id: String?, val revision: Int) : SetupWrite
+    data class Select(val id: String) : SetupWrite
+    data class Save(val set: BrewingSet) : SetupWrite
+}
+
+// Calculator input and the selected set share one state transaction and one ordered writer.
+@Suppress("TooManyFunctions")
 class CalculatorViewModel(
     private val presetRepository: CupPresetRepository,
     private val userPreferencesRepository: CalculatorSetupStore? = null,
+    private val recipeRepository: RecipeRepository? = null,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(CalcUiState())
     val uiState: StateFlow<CalcUiState> = _uiState.asStateFlow()
     private val setups = mutableMapOf<BrewMethod, CalculatorSetup>()
     private val editedMethods = mutableSetOf<BrewMethod>()
-    private val setupWrites = Channel<Pair<BrewMethod, CalculatorSetup>>(Channel.UNLIMITED)
+    private val setupWrites = Channel<SetupWrite>(Channel.UNLIMITED)
     private var initialPreferences = UserPreferences()
     private var contextSelected = false
+    private var lastPersistedSetId: String? = null
+    private var pendingSelectionId: String? = null
+    private val pendingSetups = mutableMapOf<String, SetupWrite.Remember>()
+    private var failedWrite: SetupWrite? = null
 
     init {
         viewModelScope.launch {
@@ -81,6 +106,7 @@ class CalculatorViewModel(
             }
         }
         viewModelScope.launch {
+            persistSetupWrite(SetupWrite.Initialize(recipeRepository?.getAllRecipes()?.first()))
             initialPreferences = userPreferencesRepository?.userPreferences?.first() ?: UserPreferences()
             initialPreferences.calculatorSetups.forEach { (method, setup) ->
                 if (method !in editedMethods) setup.validatedFor(method)?.let { setups[method] = it }
@@ -99,11 +125,13 @@ class CalculatorViewModel(
                 val setup = setups[method] ?: defaultSetup(method, target)
                 _uiState.update { restoreSetup(it.copy(brewMethod = method), setup) }
             }
+            initializeSetSelection(method)
             _uiState.update { it.copy(preferencesLoaded = true) }
-            // Serialize writes in user-action order, including edits made while preferences load.
-            for ((changedMethod, setup) in setupWrites) {
-                userPreferencesRepository?.updateCalculatorSetup(changedMethod, setup)
+            if (userPreferencesRepository != null) {
+                viewModelScope.launch { userPreferencesRepository.userPreferences.collect(::applySetPreferences) }
             }
+            // Serialize writes in user-action order, including edits made while preferences load.
+            for (write in setupWrites) persistSetupWrite(write)
         }
     }
 
@@ -275,6 +303,17 @@ class CalculatorViewModel(
         calibration: BeverageOutputCalibration.Profile?,
     ) {
         contextSelected = true
+        if (_uiState.value.brewMethod != method && _uiState.value.brewingSets.isNotEmpty()) {
+            val target = _uiState.value.brewingSets.firstOrNull { it.method == method }
+            if (target != null) {
+                selectBrewingSet(target.id)
+            } else {
+                val generated = BrewingSet(UUID.randomUUID().toString(), method = method,
+                    setup = defaultSetup(method, _uiState.value.quantityTarget))
+                _uiState.update { restoreSet(it.copy(brewingSets = it.brewingSets + generated), generated) }
+                setupWrites.trySend(SetupWrite.Save(generated))
+            }
+        }
         val outgoing = _uiState.value
         if (outgoing.brewMethod != method) setups[outgoing.brewMethod] = currentSetup()
         _uiState.update { state ->
@@ -363,7 +402,120 @@ class CalculatorViewModel(
         val setup = currentSetup()
         setups[method] = setup
         editedMethods += method
-        if (userPreferencesRepository != null) setupWrites.trySend(method to setup)
+        val active = _uiState.value.brewingSets.find { it.id == _uiState.value.activeBrewingSetId }
+        if (active != null) {
+            _uiState.update { state -> state.copy(brewingSets = state.brewingSets.map {
+                if (it.id == active.id) it.copy(setup = setup) else it
+            }) }
+        }
+        if (userPreferencesRepository != null) {
+            val write = SetupWrite.Remember(method, setup, active?.id, active?.revision ?: 0)
+            active?.id?.let { pendingSetups[it] = write }
+            setupWrites.trySend(write)
+        }
+    }
+
+    fun selectBrewingSet(id: String) {
+        val set = _uiState.value.brewingSets.find { it.id == id } ?: return
+        pendingSelectionId = id
+        _uiState.update { restoreSet(it, set) }
+        setupWrites.trySend(SetupWrite.Select(id))
+    }
+
+    fun saveBrewingSet(set: BrewingSet) {
+        val valid = set.validated() ?: return
+        _uiState.update { it.copy(setSaveInProgress = true, setSaveFailed = false, savedSetId = null) }
+        setupWrites.trySend(SetupWrite.Save(valid))
+    }
+
+    fun consumeSetSaveOutcome() {
+        _uiState.update { it.copy(savedSetId = null, setSaveFailed = false) }
+        if (failedWrite is SetupWrite.Save) failedWrite = null
+    }
+
+    fun retrySetupSave() {
+        failedWrite?.let { setupWrites.trySend(it) }
+    }
+
+    private fun initializeSetSelection(method: BrewMethod) {
+        lastPersistedSetId = initialPreferences.activeBrewingSetId
+        val set = initialPreferences.brewingSets.find { it.id == lastPersistedSetId && it.method == method }
+            ?: initialPreferences.brewingSets.firstOrNull { it.method == method }
+        _uiState.update { state ->
+            val updated = state.copy(brewingSets = initialPreferences.brewingSets, activeBrewingSetId = set?.id)
+            if (set != null && method !in editedMethods) restoreSet(updated, set) else updated
+        }
+        if (set != null && method in editedMethods) rememberSetup()
+        if (set != null && set.id != lastPersistedSetId) {
+            pendingSelectionId = set.id
+            setupWrites.trySend(SetupWrite.Select(set.id))
+        }
+    }
+
+    private fun applySetPreferences(preferences: UserPreferences) {
+        val state = _uiState.value
+        val selected = preferences.brewingSets.find { it.id == preferences.activeBrewingSetId }
+        val current = state.brewingSets.find { it.id == state.activeBrewingSetId }
+        val changedSelection = preferences.activeBrewingSetId != lastPersistedSetId
+        lastPersistedSetId = preferences.activeBrewingSetId
+        val canSelect = pendingSelectionId == null || pendingSelectionId == selected?.id
+        if (pendingSelectionId == selected?.id) pendingSelectionId = null
+        val changedRevision = selected?.id == current?.id && selected?.revision != current?.revision
+        val restore = selected != null && canSelect &&
+            ((changedSelection && selected.id != state.activeBrewingSetId) || changedRevision)
+        pendingSetups.entries.removeAll { (id, write) ->
+            preferences.brewingSets.none { it.id == id && it.revision == write.revision }
+        }
+        _uiState.update {
+            val sets = preferences.brewingSets.map { set ->
+                val sameRevision = set.revision == current?.revision
+                val pending = pendingSetups[set.id]
+                when {
+                    pending != null -> set.copy(setup = pending.setup)
+                    !restore && set.id == current?.id && sameRevision -> set.copy(setup = currentSetup())
+                    else -> set
+                }
+            }
+            val updated = it.copy(brewingSets = sets)
+            if (restore) restoreSet(updated, sets.first { set -> set.id == selected.id }) else updated
+        }
+    }
+
+    private fun restoreSet(state: CalcUiState, set: BrewingSet): CalcUiState =
+        restoreSetup(state.copy(brewMethod = set.method, activeBrewingSetId = set.id,
+            beverageOutputCalibration = state.beverageOutputCalibration?.takeIf { it.method == set.method }), set.setup)
+
+    private suspend fun persistSetupWrite(write: SetupWrite) {
+        try {
+            when (write) {
+                is SetupWrite.Initialize -> userPreferencesRepository?.initializeBrewingSets(write.recipes)
+                is SetupWrite.Remember -> if (write.id == null) {
+                    userPreferencesRepository?.updateCalculatorSetup(write.method, write.setup)
+                } else {
+                    userPreferencesRepository?.updateBrewingSetSetup(write.id, write.revision, write.setup)
+                }
+                is SetupWrite.Select -> userPreferencesRepository?.selectBrewingSet(write.id)
+                is SetupWrite.Save -> {
+                    userPreferencesRepository?.saveBrewingSet(write.set)
+                    _uiState.update { it.copy(setSaveInProgress = false, savedSetId = write.set.id, setSaveFailed = false) }
+                }
+            }
+            if (write is SetupWrite.Remember && pendingSetups[write.id] == write) pendingSetups.remove(write.id)
+            val failed = failedWrite
+            val replacesFailedInput = write is SetupWrite.Remember && failed is SetupWrite.Remember &&
+                write.id == failed.id && write.revision == failed.revision
+            val replacesFailedSelection = write is SetupWrite.Select && failed is SetupWrite.Select
+            if (failed == write || replacesFailedInput || replacesFailedSelection) {
+                failedWrite = null
+                _uiState.update { it.copy(setSaveFailed = false) }
+            }
+        } catch (error: CancellationException) {
+            throw error
+        } catch (error: Exception) {
+            failedWrite = write
+            Tracebox.log.error(error, LogTemplate.of("Brewing set persistence failed"))
+            _uiState.update { it.copy(setSaveFailed = true, setSaveInProgress = false) }
+        }
     }
 
     fun getDisplayExpression(): String {

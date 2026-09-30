@@ -16,6 +16,7 @@ import com.adsamcik.starlitcoffee.data.model.CalculatorSetupCodec
 import com.adsamcik.starlitcoffee.data.model.CupPreset
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.repository.CalculatorSetupStore
+import com.adsamcik.starlitcoffee.data.repository.BrewingSetWriter
 import com.adsamcik.starlitcoffee.data.repository.CupPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.RecipeRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
@@ -125,7 +126,7 @@ class CalculatorSetupTest {
     @Test
     fun `late preferences do not overwrite an already edited setup`() {
         val preferences = MutableSharedFlow<UserPreferences>(replay = 1)
-        val store = object : CalculatorSetupStore {
+        val store = object : CalculatorSetupStore, BrewingSetWriter by NoBrewingSetWriter {
             override val userPreferences = preferences
             override suspend fun updateCalculatorSetup(method: BrewMethod, setup: CalculatorSetup) = Unit
         }
@@ -284,7 +285,8 @@ private class SetupCupPresetDao : CupPresetDao {
     }
 }
 
-private class MemorySetupStore(initial: UserPreferences = UserPreferences()) : CalculatorSetupStore {
+private class MemorySetupStore(initial: UserPreferences = UserPreferences()) :
+    CalculatorSetupStore, BrewingSetWriter by NoBrewingSetWriter {
     override val userPreferences = MutableStateFlow(initial)
 
     override suspend fun updateCalculatorSetup(method: BrewMethod, setup: CalculatorSetup) {

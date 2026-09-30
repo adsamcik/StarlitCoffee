@@ -4,12 +4,13 @@ import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesStore
+import com.adsamcik.starlitcoffee.data.repository.BrewingSetWriter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
 internal open class TestUserPreferencesStore(
     initial: UserPreferences = UserPreferences(),
-) : UserPreferencesStore {
+) : UserPreferencesStore, BrewingSetWriter by NoBrewingSetWriter {
     protected val state = MutableStateFlow(initial)
     override val userPreferences: Flow<UserPreferences> = state
 
