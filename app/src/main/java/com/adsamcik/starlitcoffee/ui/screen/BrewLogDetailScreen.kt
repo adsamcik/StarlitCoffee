@@ -80,6 +80,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
 
 private val FlavorDescriptorSetSaver: Saver<MutableState<Set<FlavorDescriptor>>, ArrayList<String>> = Saver(
     save = { state -> ArrayList(state.value.map { it.name }) },
@@ -274,7 +275,7 @@ fun BrewLogDetailScreen(
                                     onBack()
                                 },
                                 onFailure = { error ->
-                                    Tracebox.log.error(error, "Failed to delete brew log")
+                                    Tracebox.log.error(error, LogTemplate.of("Failed to delete brew log"))
                                     Toast.makeText(
                                         context,
                                         R.string.msg_could_not_delete,
@@ -339,7 +340,7 @@ fun BrewLogDetailScreen(
                                     showMeasurementsSheet = false
                                 },
                                 onFailure = { error ->
-                                    Tracebox.log.error(error, "Failed to update brew measurements")
+                                    Tracebox.log.error(error, LogTemplate.of("Failed to update brew measurements"))
                                     measurementSaveError = resources.getString(
                                         R.string.msg_could_not_save_changes,
                                     )
@@ -370,7 +371,7 @@ fun BrewLogDetailScreen(
                                     showMeasurementsSheet = false
                                 },
                                 onFailure = { error ->
-                                    Tracebox.log.error(error, "Failed to clear brew measurements")
+                                    Tracebox.log.error(error, LogTemplate.of("Failed to clear brew measurements"))
                                     measurementSaveError = resources.getString(
                                         R.string.msg_could_not_save_changes,
                                     )
@@ -553,7 +554,10 @@ fun BrewLogDetailScreen(
                                         log = entity.copy(coffeeBagId = bagId)
                                     },
                                     onFailure = { error ->
-                                        Tracebox.log.error(error, "Failed to update brew log coffee bag")
+                                        Tracebox.log.error(
+                                            error,
+                                            LogTemplate.of("Failed to update brew log coffee bag"),
+                                        )
                                         Toast.makeText(
                                             context,
                                             R.string.msg_could_not_save_changes,
@@ -574,7 +578,7 @@ fun BrewLogDetailScreen(
                                         log = entity.copy(coffeeBagId = null)
                                     },
                                     onFailure = { error ->
-                                        Tracebox.log.error(error, "Failed to clear brew log coffee bag")
+                                        Tracebox.log.error(error, LogTemplate.of("Failed to clear brew log coffee bag"))
                                         Toast.makeText(
                                             context,
                                             R.string.msg_could_not_save_changes,
@@ -612,7 +616,7 @@ fun BrewLogDetailScreen(
                         val feedback = try {
                             TasteFeedbackModel.valueOf(entity.tasteFeedback)
                         } catch (e: Exception) {
-                            Tracebox.log.error(e, "Failed to parse taste feedback")
+                            Tracebox.log.error(e, LogTemplate.of("Failed to parse taste feedback"))
                             null
                         }
                         if (feedback != null) {

@@ -20,6 +20,8 @@ import java.util.UUID
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+import dev.tracebox.api.argument
 
 @Serializable
 internal data class PendingBagPhotoDeletion(
@@ -126,7 +128,7 @@ object ScanPhotoStorage {
         )
         file.toUri().toString()
     } catch (e: Exception) {
-        Tracebox.log.error(e, "Failed to write capture to cache")
+        Tracebox.log.error(e, LogTemplate.of("Failed to write capture to cache"))
         null
     }
 
@@ -172,7 +174,10 @@ object ScanPhotoStorage {
                 runCatching { directorySync.sync(storageDir) }
                     .onFailure { cleanupError ->
                         failure?.addSuppressed(cleanupError)
-                            ?: Tracebox.log.error(cleanupError, "Could not durably remove capture temporary file")
+                            ?: Tracebox.log.error(
+                                cleanupError,
+                                LogTemplate.of("Could not durably remove capture temporary file"),
+                            )
                     }
             }
         }
@@ -253,7 +258,7 @@ object ScanPhotoStorage {
                 runCatching { directorySync.sync(storageDir) }
                     .onFailure(error::addSuppressed)
             }
-            Tracebox.log.error(error, "Failed to copy scan photos")
+            Tracebox.log.error(error, LogTemplate.of("Failed to copy scan photos"))
             null
         }
     }
@@ -300,7 +305,7 @@ object ScanPhotoStorage {
             uriString = uriString,
         )
         if (!deleted) {
-            Tracebox.log.warn("Rejected or could not delete staged capture")
+            Tracebox.log.warn(LogTemplate.of("Rejected or could not delete staged capture"))
         }
         return deleted
     }
@@ -346,7 +351,7 @@ object ScanPhotoStorage {
             }
             ?.forEach { file ->
                 if (!file.delete()) {
-                    Tracebox.log.warn("Could not remove expired staged capture {}", file.path)
+                    Tracebox.log.warn(LogTemplate.of("Could not remove expired staged capture {}"), argument(file.path))
                 }
             }
     }
@@ -406,7 +411,7 @@ object ScanPhotoStorage {
                 directorySync = AndroidDirectorySync,
                 deleteFile = File::delete,
             )
-            Tracebox.log.error(error, "Failed to optimize scan photos")
+            Tracebox.log.error(error, LogTemplate.of("Failed to optimize scan photos"))
             null
         } catch (error: OutOfMemoryError) {
             deletePermanentFilesDurably(
@@ -415,7 +420,7 @@ object ScanPhotoStorage {
                 directorySync = AndroidDirectorySync,
                 deleteFile = File::delete,
             )
-            Tracebox.log.error(error, "Insufficient memory to optimize scan photos")
+            Tracebox.log.error(error, LogTemplate.of("Insufficient memory to optimize scan photos"))
             null
         }
     }
@@ -467,7 +472,7 @@ object ScanPhotoStorage {
                 putStringSet(KEY_PENDING_SAVE_SESSIONS, pending)
             }
             if (!cleared) {
-                Tracebox.log.warn("Could not clear scan-photo save journal for {}", sessionId)
+                Tracebox.log.warn(LogTemplate.of("Could not clear scan-photo save journal for {}"), argument(sessionId))
             }
             cleared
         }
@@ -504,7 +509,10 @@ object ScanPhotoStorage {
                     remove("$KEY_PENDING_DELETE_PREFIX$deletionId")
                 }
             if (!cleared) {
-                Tracebox.log.warn("Could not clear deleted-bag photo cleanup journal for {}", deletionId)
+                Tracebox.log.warn(
+                    LogTemplate.of("Could not clear deleted-bag photo cleanup journal for {}"),
+                    argument(deletionId),
+                )
             }
             cleared
         }
@@ -526,12 +534,15 @@ object ScanPhotoStorage {
         pendingBagPhotoDeletions(context).forEach { deletion ->
             val bagId = deletion.bagId ?: bagIdFromDeletionId(deletion.deletionId)
             if (bagId == null) {
-                Tracebox.log.warn("Cannot safely reconcile bag-photo cleanup without a bag id")
+                Tracebox.log.warn(LogTemplate.of("Cannot safely reconcile bag-photo cleanup without a bag id"))
                 return@forEach
             }
             val currentOwnership = runCatching { findCurrentOwnership(bagId) }
                 .onFailure { error ->
-                    Tracebox.log.error(error, "Could not verify current bag-photo ownership; cleanup will retry")
+                    Tracebox.log.error(
+                        error,
+                        LogTemplate.of("Could not verify current bag-photo ownership; cleanup will retry"),
+                    )
                 }
                 .getOrElse { return@forEach }
             if (deleteUnreferencedPermanentBagPhotos(context, deletion, currentOwnership)) {
@@ -580,7 +591,7 @@ object ScanPhotoStorage {
     ): Boolean {
         val plan = cleanupPlan(deletion, currentOwnership)
         if (!plan.canClearJournal) {
-            Tracebox.log.warn("Bag-photo ownership did not match the pending cleanup journal")
+            Tracebox.log.warn(LogTemplate.of("Bag-photo ownership did not match the pending cleanup journal"))
             return false
         }
         return deletePermanentBagPhotos(
@@ -628,7 +639,7 @@ object ScanPhotoStorage {
                 val destination = File(permanentDir, destinationName)
                 runCatching { recoverFallbackBackup(destination, directorySync) }
                     .onFailure { error ->
-                        Tracebox.log.error(error, "Could not recover interrupted photo replacement")
+                        Tracebox.log.error(error, LogTemplate.of("Could not recover interrupted photo replacement"))
                     }
             }
     }
@@ -723,12 +734,18 @@ object ScanPhotoStorage {
     private fun permanentFiles(permanentDir: File): List<File>? {
         if (!permanentDir.exists()) return emptyList()
         if (!permanentDir.isDirectory) {
-            Tracebox.log.warn("Permanent photo path is not a directory: {}", permanentDir.path)
+            Tracebox.log.warn(
+                LogTemplate.of("Permanent photo path is not a directory: {}"),
+                argument(permanentDir.path),
+            )
             return null
         }
         return permanentDir.listFiles()?.toList().also { files ->
             if (files == null) {
-                Tracebox.log.warn("Could not enumerate permanent photo directory {}", permanentDir.path)
+                Tracebox.log.warn(
+                    LogTemplate.of("Could not enumerate permanent photo directory {}"),
+                    argument(permanentDir.path),
+                )
             }
         }
     }
@@ -744,14 +761,14 @@ object ScanPhotoStorage {
             if (!file.exists()) return@forEach
             if (!deleteFile(file)) {
                 deletedAll = false
-                Tracebox.log.warn("Could not remove permanent bag photo {}", file.path)
+                Tracebox.log.warn(LogTemplate.of("Could not remove permanent bag photo {}"), argument(file.path))
             }
         }
         if (permanentDir.exists()) {
             try {
                 directorySync.sync(permanentDir)
             } catch (error: Exception) {
-                Tracebox.log.error(error, "Could not durably sync permanent photo deletion")
+                Tracebox.log.error(error, LogTemplate.of("Could not durably sync permanent photo deletion"))
                 deletedAll = false
             }
         }
@@ -893,11 +910,14 @@ object ScanPhotoStorage {
 
         if (backup.exists()) {
             if (!backup.delete()) {
-                Tracebox.log.warn("Could not remove replaced photo rollback link {}", backup.path)
+                Tracebox.log.warn(
+                    LogTemplate.of("Could not remove replaced photo rollback link {}"),
+                    argument(backup.path),
+                )
             } else {
                 runCatching { directorySync.sync(parentDirectory) }
                     .onFailure { error ->
-                        Tracebox.log.error(error, "Could not durably sync photo rollback-link cleanup")
+                        Tracebox.log.error(error, LogTemplate.of("Could not durably sync photo rollback-link cleanup"))
                     }
             }
         }

@@ -8,6 +8,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
 
 enum class P1ExactLocalizationStatus {
     RELEASED,
@@ -276,7 +277,10 @@ object BuiltInP1ExactTerminologyLoader {
     }
 
     private fun unavailable(exception: Exception): BuiltInP1ExactTerminologyLoadResult.Unavailable {
-        Tracebox.log.error(exception, "Exact P1 terminology is unavailable; references will remain hidden")
+        Tracebox.log.error(
+            exception,
+            LogTemplate.of("Exact P1 terminology is unavailable; references will remain hidden"),
+        )
         return BuiltInP1ExactTerminologyLoadResult.Unavailable(
             reason = exception.message ?: exception::class.java.simpleName,
         )

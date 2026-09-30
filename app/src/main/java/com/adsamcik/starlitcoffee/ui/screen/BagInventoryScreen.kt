@@ -104,6 +104,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
 
 // Longest-side pixel target for the focused square thumbnail baked at save time.
 // Comfortably covers the 68.dp list-card slot on high-density screens.
@@ -987,7 +988,7 @@ fun BagInventoryScreen(
                             Toast.makeText(context, couldNotReadLabel, Toast.LENGTH_LONG).show()
                         }
                         is ScannedBagSaveResult.Failed -> {
-                            Tracebox.log.error(saveResult.error, "Failed to save coffee bag")
+                            Tracebox.log.error(saveResult.error, LogTemplate.of("Failed to save coffee bag"))
                             Toast.makeText(context, couldNotSaveBag, Toast.LENGTH_LONG).show()
                         }
                         is ScannedBagSaveResult.Saved -> {
@@ -1104,7 +1105,7 @@ fun BagInventoryScreen(
                         } catch (error: CancellationException) {
                             throw error
                         } catch (error: Exception) {
-                            Tracebox.log.error(error, "Failed to delete coffee bag")
+                            Tracebox.log.error(error, LogTemplate.of("Failed to delete coffee bag"))
                             Toast.makeText(
                                 context,
                                 R.string.msg_could_not_delete,
@@ -1174,7 +1175,7 @@ fun BagInventoryScreen(
                     } catch (error: CancellationException) {
                         throw error
                     } catch (error: Exception) {
-                        Tracebox.log.error(error, "Failed to update coffee bag")
+                        Tracebox.log.error(error, LogTemplate.of("Failed to update coffee bag"))
                         Toast.makeText(context, R.string.msg_could_not_save_changes, Toast.LENGTH_LONG).show()
                     } finally {
                         isUpdatingBag = false

@@ -81,6 +81,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
 
 // List-detail pane split used on Expanded windows: the log list keeps a compact
 // master column while the selected entry gets the larger detail pane.
@@ -361,7 +362,7 @@ private fun BrewLogCard(
         try {
             TasteFeedbackModel.valueOf(name).emoji()
         } catch (e: Exception) {
-            Tracebox.log.error(e, "Failed to parse taste feedback")
+            Tracebox.log.error(e, LogTemplate.of("Failed to parse taste feedback"))
             null
         }
     }

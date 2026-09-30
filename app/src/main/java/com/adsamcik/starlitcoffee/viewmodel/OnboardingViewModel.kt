@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
 
 data class OnboardingSubmission(
     val enabledMethods: Set<BrewMethod>,
@@ -74,7 +75,7 @@ class OnboardingViewModel(
             } catch (error: CancellationException) {
                 throw error
             } catch (error: Exception) {
-                Tracebox.log.error(error, "Failed to complete onboarding")
+                Tracebox.log.error(error, LogTemplate.of("Failed to complete onboarding"))
                 _uiState.update { it.copy(isSubmitting = false, failure = true) }
             }
         }

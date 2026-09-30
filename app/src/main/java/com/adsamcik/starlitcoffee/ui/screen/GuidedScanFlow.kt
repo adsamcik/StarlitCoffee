@@ -59,6 +59,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
 
 private const val THUMBNAIL_TARGET_PX = 512
 
@@ -603,7 +604,7 @@ fun ScanAddBagReview(
                             Toast.makeText(context, couldNotReadLabel, Toast.LENGTH_LONG).show()
                         }
                         is ScannedBagSaveResult.Failed -> {
-                            Tracebox.log.error(saveResult.error, "Failed to save scanned coffee bag")
+                            Tracebox.log.error(saveResult.error, LogTemplate.of("Failed to save scanned coffee bag"))
                             Toast.makeText(context, couldNotSaveBag, Toast.LENGTH_LONG).show()
                         }
                         is ScannedBagSaveResult.Saved -> {
@@ -710,7 +711,10 @@ fun ScanRescanReview(
                             Toast.makeText(context, R.string.msg_could_not_read_label, Toast.LENGTH_LONG).show()
                         }
                         is ScannedBagSaveResult.Failed -> {
-                            Tracebox.log.error(updateResult.error, "Failed to update rescanned coffee bag")
+                            Tracebox.log.error(
+                                updateResult.error,
+                                LogTemplate.of("Failed to update rescanned coffee bag"),
+                            )
                             Toast.makeText(
                                 context,
                                 R.string.msg_could_not_save_changes,
@@ -722,7 +726,7 @@ fun ScanRescanReview(
                 } catch (error: CancellationException) {
                     throw error
                 } catch (error: Exception) {
-                    Tracebox.log.error(error, "Failed to update rescanned coffee bag")
+                    Tracebox.log.error(error, LogTemplate.of("Failed to update rescanned coffee bag"))
                     Toast.makeText(context, R.string.msg_could_not_save_changes, Toast.LENGTH_LONG).show()
                 } finally {
                     brewViewModel.finishScannedBagSave(saveSessionId)

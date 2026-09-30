@@ -47,6 +47,7 @@ import com.google.mlkit.vision.common.InputImage
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.Executors
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
 
 @Composable
 fun BarcodeScannerScreen(
@@ -203,7 +204,7 @@ private fun analyzeBarcode(
                     imageProxy.close()
                 }
         } catch (error: Exception) {
-            Tracebox.log.error(error, "Failed to process barcode frame")
+            Tracebox.log.error(error, LogTemplate.of("Failed to process barcode frame"))
             imageProxy.close()
         }
     } else {
@@ -292,11 +293,11 @@ private fun releaseCameraResources(
     scanner: com.google.mlkit.vision.barcode.BarcodeScanner?,
 ) {
     runCatching { imageAnalysis?.clearAnalyzer() }
-        .onFailure { Tracebox.log.error(it, "Failed to clear barcode analyzer") }
+        .onFailure { Tracebox.log.error(it, LogTemplate.of("Failed to clear barcode analyzer")) }
     runCatching { cameraProvider?.unbindAll() }
-        .onFailure { Tracebox.log.error(it, "Failed to unbind barcode camera") }
+        .onFailure { Tracebox.log.error(it, LogTemplate.of("Failed to unbind barcode camera")) }
     runCatching { scanner?.close() }
-        .onFailure { Tracebox.log.error(it, "Failed to close barcode scanner") }
+        .onFailure { Tracebox.log.error(it, LogTemplate.of("Failed to close barcode scanner")) }
 }
 
 /**
@@ -447,7 +448,7 @@ private fun installBarcodeAnalyzer(
 } catch (error: Exception) {
     releaseCameraResources(cameraProvider, analysis, barcodeScanner)
     if (lifecyclePolicy.isActive) {
-        Tracebox.log.error(error, "Failed to install barcode analyzer")
+        Tracebox.log.error(error, LogTemplate.of("Failed to install barcode analyzer"))
     }
     false
 }
@@ -496,6 +497,6 @@ private fun bindActiveBarcodeCamera(
         }
     } catch (error: Exception) {
         resources.release()
-        Tracebox.log.error(error, "Failed to bind camera for barcode scanning")
+        Tracebox.log.error(error, LogTemplate.of("Failed to bind camera for barcode scanning"))
     }
 }

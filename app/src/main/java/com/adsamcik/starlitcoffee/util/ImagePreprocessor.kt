@@ -22,6 +22,7 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
 
 /**
  * Preprocesses camera photos to improve ML Kit OCR accuracy.
@@ -55,7 +56,7 @@ object ImagePreprocessor {
             )
             return applyExifOrientation(bitmap, orientation)
         } catch (e: Exception) {
-            Tracebox.log.error(e, "Failed to apply EXIF rotation")
+            Tracebox.log.error(e, LogTemplate.of("Failed to apply EXIF rotation"))
             return bitmap
         }
     }
@@ -153,7 +154,7 @@ object ImagePreprocessor {
 
             return result
         } catch (e: Exception) {
-            Tracebox.log.error(e, "Failed to apply text alignment")
+            Tracebox.log.error(e, LogTemplate.of("Failed to apply text alignment"))
             return bitmap
         }
     }
@@ -252,7 +253,7 @@ object ImagePreprocessor {
 
             return result
         } catch (e: Exception) {
-            Tracebox.log.error(e, "Failed to preprocess image for OCR")
+            Tracebox.log.error(e, LogTemplate.of("Failed to preprocess image for OCR"))
             return bitmap
         }
     }

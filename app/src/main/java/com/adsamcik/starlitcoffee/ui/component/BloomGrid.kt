@@ -1,6 +1,8 @@
 package com.adsamcik.starlitcoffee.ui.component
 
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+import dev.tracebox.api.argument
 
 
 /**
@@ -140,12 +142,12 @@ internal fun resolveBloomGridOrLog(
     is BloomGridParseResult.Success -> result.grid
     is BloomGridParseResult.Failure -> {
         Tracebox.log.warn(
-            "Rejected spritesheet '{}' ({}x{}, frameSizePx={}): {}",
-            spritesheetId,
-            imageWidth,
-            imageHeight,
-            frameSizePx,
-            result.error.reason,
+            LogTemplate.of("Rejected spritesheet '{}' ({}x{}, frameSizePx={}): {}"),
+            argument(spritesheetId),
+            argument(imageWidth),
+            argument(imageHeight),
+            argument(frameSizePx),
+            argument(result.error.reason),
         )
         null
     }

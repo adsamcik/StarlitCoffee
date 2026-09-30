@@ -35,6 +35,7 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlin.time.Duration.Companion.seconds
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
 
 class StarlitCoffeeApp : Application() {
 
@@ -84,7 +85,7 @@ class StarlitCoffeeApp : Application() {
             awaitSuccessfulMindlayerReconnect(
                 awaitConnection = { services.client.awaitConnected(RECONNECT_TIMEOUT) },
                 checkAvailability = { services.llmProvider.isAvailable() },
-                onFailure = { error -> Tracebox.log.error(error, "Mindlayer reconnect failed") },
+                onFailure = { error -> Tracebox.log.error(error, LogTemplate.of("Mindlayer reconnect failed")) },
             )
         }
     }
@@ -123,7 +124,7 @@ class StarlitCoffeeApp : Application() {
             } catch (error: CancellationException) {
                 throw error
             } catch (error: Exception) {
-                Tracebox.log.error(error, "Durable brew-session recovery failed")
+                Tracebox.log.error(error, LogTemplate.of("Durable brew-session recovery failed"))
             }
         }
         // Warm Mindlayer only after the user has enabled label recognition.
@@ -178,7 +179,7 @@ class StarlitCoffeeApp : Application() {
                     ocrService = HierarchicalOcrService(MindlayerOcrService(client)),
                 ).also { mindlayerServices = it }
             } catch (error: Exception) {
-                Tracebox.log.error(error, "Mindlayer service initialization failed")
+                Tracebox.log.error(error, LogTemplate.of("Mindlayer service initialization failed"))
                 null
             }
         }

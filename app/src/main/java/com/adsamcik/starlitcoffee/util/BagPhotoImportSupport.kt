@@ -8,6 +8,8 @@ import java.util.Locale
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+import dev.tracebox.api.argument
 
 object BagPhotoImportSupport {
     private const val DEFAULT_EXTENSION = "jpg"
@@ -70,7 +72,7 @@ object BagPhotoImportSupport {
                 } ?: return@mapIndexedNotNull null
                 importedPhoto.toUri()
             } catch (error: Exception) {
-                Tracebox.log.error(error, "Failed to import gallery photo: {}", sourceUri)
+                Tracebox.log.error(error, LogTemplate.of("Failed to import gallery photo: {}"), argument(sourceUri))
                 null
             }
         }

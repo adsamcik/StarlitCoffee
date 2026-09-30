@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import androidx.core.net.toUri
 import java.io.File
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
 
 /**
  * Renders a focused, square WebP thumbnail for a coffee bag by cropping the
@@ -66,10 +67,10 @@ object BagThumbnailWriter {
                 if (!bitmap.isRecycled) bitmap.recycle()
             }
         } catch (e: Exception) {
-            Tracebox.log.error(e, "Failed to create focused thumbnail")
+            Tracebox.log.error(e, LogTemplate.of("Failed to create focused thumbnail"))
             null
         } catch (error: OutOfMemoryError) {
-            Tracebox.log.error(error, "Insufficient memory to create focused thumbnail")
+            Tracebox.log.error(error, LogTemplate.of("Insufficient memory to create focused thumbnail"))
             null
         }
     }

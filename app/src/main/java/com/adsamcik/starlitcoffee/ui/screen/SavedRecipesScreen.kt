@@ -51,6 +51,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
 
 internal fun normalizeSavedRecipeDecafFilter(
     selected: DecafFilter,
@@ -110,7 +111,7 @@ fun SavedRecipesScreen(
                         } catch (error: CancellationException) {
                             throw error
                         } catch (error: Exception) {
-                            Tracebox.log.error(error, "Failed to delete recipe")
+                            Tracebox.log.error(error, LogTemplate.of("Failed to delete recipe"))
                             Toast.makeText(context, R.string.msg_could_not_delete, Toast.LENGTH_LONG).show()
                         } finally {
                             isDeleting = false

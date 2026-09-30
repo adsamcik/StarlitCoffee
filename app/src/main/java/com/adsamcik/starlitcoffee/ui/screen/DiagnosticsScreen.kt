@@ -36,11 +36,10 @@ import dev.tracebox.ui.compose.TraceboxPrimaryAction
 fun DiagnosticsScreen(onBack: () -> Unit) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val handle = remember { Tracebox.current() }
-    val supportDescription = stringResource(R.string.msg_diagnostics_support_description)
-    val configuration = remember(supportDescription) {
+    val configuration = remember {
         TraceboxDiagnosticsUiConfiguration(
             strings = TraceboxDiagnosticsUiStrings(
-                supportDescription = supportDescription,
+                supportDescription = R.string.msg_diagnostics_support_description,
             ),
             showHeading = false,
             primaryAction = TraceboxPrimaryAction.SHARE,

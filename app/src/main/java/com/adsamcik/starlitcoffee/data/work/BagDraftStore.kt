@@ -13,6 +13,7 @@ import com.adsamcik.starlitcoffee.util.RecognitionCapability
 import com.adsamcik.starlitcoffee.util.RecognitionPreference
 import com.adsamcik.starlitcoffee.util.RecognitionRunState
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
@@ -527,7 +528,7 @@ object BagDraftStore {
     internal fun read(directory: File, sessionId: String): BagScanDraft? {
         val file = draftFile(directory, sessionId).takeIf(::isSafeRegularFile) ?: return null
         return runCatching { BagDraftJson.decodeFromString<BagScanDraft>(file.readText()) }
-            .onFailure { error -> Tracebox.log.error(error, "Failed to read bag draft") }
+            .onFailure { error -> Tracebox.log.error(error, LogTemplate.of("Failed to read bag draft")) }
             .getOrNull()
             ?.takeIf { it.schemaVersion <= BAG_DRAFT_SCHEMA_VERSION }
     }

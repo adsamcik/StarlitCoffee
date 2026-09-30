@@ -16,6 +16,8 @@ import kotlinx.coroutines.withTimeout
 import java.io.ByteArrayOutputStream
 import kotlin.time.Duration.Companion.seconds
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+import dev.tracebox.api.argument
 
 class MindlayerModelSetupRequiredException(
     val family: String,
@@ -102,12 +104,12 @@ class MindlayerOcrService(
      */
     override suspend fun recognize(bitmap: Bitmap): RecognizedText? {
         if (!ensureCapability(throwOnSetupRequired = true)) {
-            Tracebox.log.warn("OCR capability not advertised by Mindlayer service")
+            Tracebox.log.warn(LogTemplate.of("OCR capability not advertised by Mindlayer service"))
             return null
         }
 
         val pngBytes = withContext(Dispatchers.Default) { encodePng(bitmap) } ?: run {
-            Tracebox.log.warn("PNG encode returned null — skipping OCR")
+            Tracebox.log.warn(LogTemplate.of("PNG encode returned null — skipping OCR"))
             return null
         }
 
@@ -126,7 +128,7 @@ class MindlayerOcrService(
             }
         }.onFailure { error ->
             if (error is CancellationException) throw error
-            Tracebox.log.error(error, "OCR call failed: {}", error.message)
+            Tracebox.log.error(error, LogTemplate.of("OCR call failed: {}"), argument(error.message))
         }.getOrNull()
     }
 
@@ -145,7 +147,7 @@ class MindlayerOcrService(
         } catch (e: MindlayerModelSetupRequiredException) {
             throw e
         } catch (e: Exception) {
-            Tracebox.log.error(e, "Capability check failed: {}", e.message)
+            Tracebox.log.error(e, LogTemplate.of("Capability check failed: {}"), argument(e.message))
             false
         }
     }

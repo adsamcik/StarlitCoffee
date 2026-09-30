@@ -9,6 +9,8 @@ import androidx.core.content.getSystemService
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
+import dev.tracebox.api.argument
 
 /**
  * Schedules and cancels rating-reminder notifications for completed brews.
@@ -36,14 +38,18 @@ class RatingReminderScheduler(private val context: Context) : RatingReminders {
 
     override fun scheduleReminder(brewLogId: Long, methodLabel: String?, delay: Duration) {
         val alarmManager = context.getSystemService<AlarmManager>() ?: run {
-            Tracebox.log.warn("AlarmManager unavailable — cannot schedule rating reminder")
+            Tracebox.log.warn(LogTemplate.of("AlarmManager unavailable — cannot schedule rating reminder"))
             return
         }
         NotificationChannels.ensureRatingReminderChannel(context)
         val triggerAt = System.currentTimeMillis() + delay.inWholeMilliseconds
         val pendingIntent = buildPendingIntent(brewLogId, methodLabel)
         alarmManager.set(AlarmManager.RTC_WAKEUP, triggerAt, pendingIntent)
-        Tracebox.log.debug("Scheduled rating reminder for brew {} in {}", brewLogId, delay)
+        Tracebox.log.debug(
+            LogTemplate.of("Scheduled rating reminder for brew {} in {}"),
+            argument(brewLogId),
+            argument(delay),
+        )
     }
 
     override fun cancelReminder(brewLogId: Long) {

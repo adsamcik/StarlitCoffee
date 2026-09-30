@@ -26,6 +26,7 @@ import com.adsamcik.starlitcoffee.util.ScanProgress
 import com.adsamcik.starlitcoffee.util.ScanStage
 import kotlinx.coroutines.CancellationException
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
 
 class BagExtractionWorker(
     appContext: Context,
@@ -121,7 +122,7 @@ class BagExtractionWorker(
         } catch (error: CancellationException) {
             throw error
         } catch (error: Exception) {
-            Tracebox.log.error(error, "Bag extraction worker failed")
+            Tracebox.log.error(error, LogTemplate.of("Bag extraction worker failed"))
             val failureResult = BagPhotoProcessingResult(
                 capturedPhotoUris = photosCsv,
                 llmStatus = com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus.UNAVAILABLE,
@@ -141,7 +142,7 @@ class BagExtractionWorker(
                     replay = storedResult.toTerminalReplay(reviewContext),
                 )
             } catch (persistenceError: Exception) {
-                Tracebox.log.error(persistenceError, "Could not persist failed bag extraction result")
+                Tracebox.log.error(persistenceError, LogTemplate.of("Could not persist failed bag extraction result"))
                 Result.retry()
             }
         }
@@ -171,7 +172,10 @@ class BagExtractionWorker(
         replay: BagExtractionTerminalReplay,
     ): Result {
         runCatching { BagExtractionCheckpointStore.delete(applicationContext, workId) }
-            .onFailure { error -> Tracebox.log.error(error, "Could not delete terminal scan checkpoint") }
+            .onFailure { error -> Tracebox.log.error(
+                error,
+                LogTemplate.of("Could not delete terminal scan checkpoint"),
+            ) }
         if (draftAcceptsResult()) {
             BagExtractionScheduler.enqueueCompletionNotification(
                 applicationContext,
@@ -199,7 +203,9 @@ class BagExtractionWorker(
         } catch (error: Exception) {
             Tracebox.log.error(
                 error,
-                "Could not promote bag extraction to a foreground service; continuing as background work",
+                LogTemplate.of(
+                    "Could not promote bag extraction to a foreground service; continuing as background work",
+                ),
             )
         }
     }
@@ -219,9 +225,9 @@ class BagExtractionWorker(
             NotificationManagerCompat.from(applicationContext)
                 .notify(foregroundNotificationId, buildProgressNotification(progress))
         } catch (security: SecurityException) {
-            Tracebox.log.error(security, "Missing notification permission for scan progress update")
+            Tracebox.log.error(security, LogTemplate.of("Missing notification permission for scan progress update"))
         } catch (error: Exception) {
-            Tracebox.log.error(error, "Failed to update scan progress notification")
+            Tracebox.log.error(error, LogTemplate.of("Failed to update scan progress notification"))
         }
     }
 
@@ -236,12 +242,12 @@ class BagExtractionWorker(
                     result.encodeToStoredJson(),
                 )
             }.onFailure { error ->
-                Tracebox.log.error(error, "Could not persist bag analysis checkpoint")
+                Tracebox.log.error(error, LogTemplate.of("Could not persist bag analysis checkpoint"))
             }
         }
         latestPreviewJson = result.encodeForProgressJson()
         if (latestPreviewJson == null) {
-            Tracebox.log.warn("Bag analysis preview is too large for WorkManager progress data")
+            Tracebox.log.warn(LogTemplate.of("Bag analysis preview is too large for WorkManager progress data"))
         }
         latestProgress?.let(::publishWorkProgress)
     }
@@ -270,7 +276,7 @@ class BagExtractionWorker(
                 terminal = terminal,
             )
         }.onFailure { error ->
-            Tracebox.log.error(error, "Could not persist coffee draft preview")
+            Tracebox.log.error(error, LogTemplate.of("Could not persist coffee draft preview"))
         }
     }
 

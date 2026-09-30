@@ -19,6 +19,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
 
 /** Canonical illustration importance. It does not imply review approval. */
 enum class P1ExactVisualPriority {
@@ -329,7 +330,7 @@ object BuiltInP1ExactGuidanceLoader {
     }
 
     private fun unavailable(exception: Exception): BuiltInP1ExactGuidanceLoadResult.Unavailable {
-        Tracebox.log.error(exception, "Exact P1 guidance is unavailable; no fallback will be used")
+        Tracebox.log.error(exception, LogTemplate.of("Exact P1 guidance is unavailable; no fallback will be used"))
         return BuiltInP1ExactGuidanceLoadResult.Unavailable(
             reason = exception.message ?: exception::class.java.simpleName,
         )

@@ -15,6 +15,7 @@ import java.nio.file.LinkOption
 import java.nio.file.StandardCopyOption
 import java.util.UUID
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
 
 @Serializable
 data class StoredBagExtractionResult(
@@ -148,7 +149,7 @@ object BagExtractionResultStore {
         return runCatching {
             json.decodeFromString<StoredBagExtractionResult>(file.readText())
         }.onFailure { error ->
-            Tracebox.log.error(error, "Failed to read stored bag extraction result")
+            Tracebox.log.error(error, LogTemplate.of("Failed to read stored bag extraction result"))
         }.getOrNull()
     }
 

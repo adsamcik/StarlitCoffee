@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.withContext
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
 
 internal sealed interface ScannedBagSaveResult {
     data class Saved(val bagId: Long) : ScannedBagSaveResult
@@ -324,7 +325,10 @@ private suspend fun recoverPendingSave(
 ): PendingSaveRecovery {
     val ownership = runCatching { findOwnedBagId() }
     ownership.exceptionOrNull()?.let { error ->
-        Tracebox.log.error(error, "Could not verify Room ownership for pending scan-photo save; journal retained")
+        Tracebox.log.error(
+            error,
+            LogTemplate.of("Could not verify Room ownership for pending scan-photo save; journal retained"),
+        )
         return PendingSaveRecovery.Deferred(error as? Exception ?: IllegalStateException(error))
     }
     ownership.getOrNull()?.let { bagId ->
@@ -343,10 +347,12 @@ private suspend fun recoverPendingSave(
     if (error != null) {
         Tracebox.log.error(
             error,
-            "Could not durably remove unowned scan photos; save journal retained for retry",
+            LogTemplate.of("Could not durably remove unowned scan photos; save journal retained for retry"),
         )
     } else {
-        Tracebox.log.warn("Could not durably remove unowned scan photos; save journal retained for retry")
+        Tracebox.log.warn(
+            LogTemplate.of("Could not durably remove unowned scan photos; save journal retained for retry"),
+        )
     }
     return PendingSaveRecovery.Deferred(error as? Exception)
 }
@@ -403,6 +409,6 @@ private suspend fun cleanupReplacedBagPhotos(
             ScanPhotoStorage.clearPendingBagPhotoDeletion(context, deletion.deletionId)
         }
     }.onFailure { error ->
-        Tracebox.log.error(error, "Old bag-photo cleanup deferred; journal retained")
+        Tracebox.log.error(error, LogTemplate.of("Old bag-photo cleanup deferred; journal retained"))
     }
 }

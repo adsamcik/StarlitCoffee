@@ -75,6 +75,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Updated diagnostics and logging calls for the upgraded Tracebox API, preserving
+  private-value redaction and restoring compilation with the new dependencies.
 - Exact Learn guides now merge authored teaching copy with the executable
   recipe contract, showing dose, every input, ratio semantics, temperature,
   grind scope, equipment, timing, cumulative and incremental water, completion

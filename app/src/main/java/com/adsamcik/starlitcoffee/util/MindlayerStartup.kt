@@ -10,6 +10,7 @@ import android.os.Build
 import androidx.core.net.toUri
 import com.adsamcik.starlitcoffee.BuildConfig
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
 
 object MindlayerAvailability {
     private val packageNames: List<String>
@@ -31,10 +32,10 @@ object MindlayerAvailability {
         } catch (_: PackageManager.NameNotFoundException) {
             false
         } catch (error: SecurityException) {
-            Tracebox.log.error(error, "Mindlayer package lookup was blocked")
+            Tracebox.log.error(error, LogTemplate.of("Mindlayer package lookup was blocked"))
             false
         } catch (error: RuntimeException) {
-            Tracebox.log.error(error, "Mindlayer package lookup failed")
+            Tracebox.log.error(error, LogTemplate.of("Mindlayer package lookup failed"))
             false
         }
     }
@@ -57,9 +58,9 @@ object MindlayerInstallLink {
                 return true
             }
         } catch (error: SecurityException) {
-            Tracebox.log.error(error, "Mindlayer market link resolution was blocked")
+            Tracebox.log.error(error, LogTemplate.of("Mindlayer market link resolution was blocked"))
         } catch (error: RuntimeException) {
-            Tracebox.log.error(error, "Mindlayer market link resolution failed")
+            Tracebox.log.error(error, LogTemplate.of("Mindlayer market link resolution failed"))
         }
         return tryStartActivity(context, Intent(Intent.ACTION_VIEW, webStoreUri))
     }
@@ -72,13 +73,13 @@ object MindlayerInstallLink {
             context.startActivity(intent)
             true
         } catch (error: ActivityNotFoundException) {
-            Tracebox.log.error(error, "No activity can open the Mindlayer install link")
+            Tracebox.log.error(error, LogTemplate.of("No activity can open the Mindlayer install link"))
             false
         } catch (error: SecurityException) {
-            Tracebox.log.error(error, "Mindlayer install link was blocked")
+            Tracebox.log.error(error, LogTemplate.of("Mindlayer install link was blocked"))
             false
         } catch (error: RuntimeException) {
-            Tracebox.log.error(error, "Mindlayer install link failed")
+            Tracebox.log.error(error, LogTemplate.of("Mindlayer install link failed"))
             false
         }
     }

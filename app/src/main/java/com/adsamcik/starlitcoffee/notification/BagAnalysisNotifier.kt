@@ -14,6 +14,7 @@ import com.adsamcik.starlitcoffee.MainActivity
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.work.BagReviewContext
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
 
 /**
  * Posts the "bag analysis complete" notification after the user sent the AI
@@ -93,11 +94,11 @@ class AndroidBagAnalysisNotifier(
         reviewContext: BagReviewContext?,
     ): Boolean {
         if (!hasPostNotificationPermission()) {
-            Tracebox.log.warn("POST_NOTIFICATIONS not granted — cannot post bag analysis notification")
+            Tracebox.log.warn(LogTemplate.of("POST_NOTIFICATIONS not granted — cannot post bag analysis notification"))
             return false
         }
         if (!NotificationManagerCompat.from(context).areNotificationsEnabled()) {
-            Tracebox.log.warn("Notifications are disabled — cannot post bag analysis notification")
+            Tracebox.log.warn(LogTemplate.of("Notifications are disabled — cannot post bag analysis notification"))
             return false
         }
         NotificationChannels.ensureBagAnalysisChannel(context)
@@ -105,7 +106,7 @@ class AndroidBagAnalysisNotifier(
             ?.getNotificationChannel(NotificationChannels.BAG_ANALYSIS_ID)
             ?.importance
         if (!isNotificationChannelEnabled(channelImportance)) {
-            Tracebox.log.warn("Bag analysis notification channel is disabled")
+            Tracebox.log.warn(LogTemplate.of("Bag analysis notification channel is disabled"))
             return false
         }
 
@@ -140,7 +141,7 @@ class AndroidBagAnalysisNotifier(
             )
             true
         }.onFailure { error ->
-            Tracebox.log.error(error, "Failed to post bag analysis notification")
+            Tracebox.log.error(error, LogTemplate.of("Failed to post bag analysis notification"))
         }.getOrDefault(false)
     }
 
