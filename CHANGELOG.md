@@ -78,6 +78,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- GitHub Packages setup now verifies access to both dependency versions, reports
+  credential failures without exposing tokens, and lets build/CI credentials
+  override stale local tokens. Gradle also finds standard Windows GitHub CLI
+  installs and sends authentication on the first registry request.
 - Updated diagnostics and logging calls for the upgraded Tracebox API, preserving
   private-value redaction and restoring compilation with the new dependencies.
 - Exact Learn guides now merge authored teaching copy with the executable
