@@ -64,8 +64,10 @@ brew setup.
 
 Each method starts at its own ratio and remembers the expression, input
 quantity, ratio, filter, and grinder across switches and app restarts. Espresso
-uses Coffee and In cup; Water in is unavailable because beverage yield does not
-determine water input. Moka still requires a separate calibrated output model.
+uses Coffee and In cup; its Water in card is hidden because beverage yield does
+not determine water input. Moka's In cup card is hidden until a calibrated output
+model is supported. Available cards share the full row width, and the enlarged-text
+layout stacks only those cards.
 Derived filter-brew output is approximate; requested output and espresso yield
 are planned targets. Compact espresso results also identify cup yield or dose,
 never water input.

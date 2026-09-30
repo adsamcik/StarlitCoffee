@@ -19,8 +19,6 @@ import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertContentDescriptionEquals
 import androidx.compose.ui.test.assertHeightIsAtLeast
 import androidx.compose.ui.test.assertIsEnabled
-import androidx.compose.ui.test.assertIsNotEnabled
-import androidx.compose.ui.test.assertIsNotSelected
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -66,26 +64,52 @@ class CalculatorQuantitySelectorTest {
     }
 
     @Test
-    fun selectedCardIsIdempotentAndUnavailableCupIsDisabled() {
+    fun selectedCardIsIdempotentAndUnavailableQuantitiesReflow() {
         val callbacks = AtomicInteger(0)
+        var cupEnabled by mutableStateOf(true)
+        var waterEnabled by mutableStateOf(true)
+        var selected by mutableStateOf(CalculatorQuantityTarget.WATER_IN)
         composeRule.setContent {
             StarlitCoffeeTheme(dynamicColor = false) {
                 TestSelector(
-                    selected = CalculatorQuantityTarget.WATER_IN,
+                    selected = selected,
                     onSelect = { callbacks.incrementAndGet() },
-                    cupEnabled = false,
+                    cupEnabled = cupEnabled,
+                    waterEnabled = waterEnabled,
                 )
             }
         }
 
-        composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.COFFEE)).assertIsEnabled()
+        val threeCardWidth = composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.COFFEE))
+            .fetchSemanticsNode().boundsInRoot.width
+        composeRule.runOnIdle { cupEnabled = false }
+        val coffeeNode = composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.COFFEE))
+        coffeeNode.assertIsEnabled()
         composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.WATER_IN))
             .assertIsSelected()
             .performClick()
+        composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.IN_CUP)).assertDoesNotExist()
+        val coffeeBounds = coffeeNode.fetchSemanticsNode().boundsInRoot
+        val waterBounds = composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.WATER_IN))
+            .fetchSemanticsNode().boundsInRoot
+        val selectorBounds = composeRule.onNodeWithTag("quantity_card_selector")
+            .fetchSemanticsNode().boundsInRoot
+        composeRule.runOnIdle {
+            assertTrue(coffeeBounds.width > threeCardWidth)
+            assertEquals(coffeeBounds.width, waterBounds.width, 1f)
+            assertEquals(selectorBounds.left, coffeeBounds.left, 1f)
+            assertEquals(selectorBounds.right, waterBounds.right, 1f)
+            waterEnabled = false
+            cupEnabled = true
+            selected = CalculatorQuantityTarget.IN_CUP
+        }
+        composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.WATER_IN)).assertDoesNotExist()
         composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.IN_CUP))
-            .assertIsNotSelected()
-            .assertIsNotEnabled()
+            .assertIsSelected()
             .performClick()
+        val cupBounds = composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.IN_CUP))
+            .fetchSemanticsNode().boundsInRoot
+        assertEquals(selectorBounds.right, cupBounds.right, 1f)
         composeRule.runOnIdle { assertEquals(0, callbacks.get()) }
     }
 
@@ -124,6 +148,7 @@ class CalculatorQuantitySelectorTest {
                         selected = selected,
                         onSelect = { selected = it },
                         compact = true,
+                        waterEnabled = false,
                     )
                 }
             }
@@ -134,18 +159,17 @@ class CalculatorQuantitySelectorTest {
 
         val coffeeLeft = composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.COFFEE))
             .fetchSemanticsNode().boundsInRoot.left
-        val waterLeft = composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.WATER_IN))
-            .fetchSemanticsNode().boundsInRoot.left
+        composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.WATER_IN)).assertDoesNotExist()
         val cupLeft = composeRule.onNodeWithTag(tag(CalculatorQuantityTarget.IN_CUP))
             .fetchSemanticsNode().boundsInRoot.left
         composeRule.runOnIdle {
-            assertTrue(coffeeLeft > waterLeft)
-            assertTrue(waterLeft > cupLeft)
+            assertTrue(coffeeLeft > cupLeft)
         }
     }
 
     @Test
     fun enlargedTextUsesReadableNonOverlappingCards() {
+        var cupEnabled by mutableStateOf(true)
         composeRule.setContent {
             StarlitCoffeeTheme(dynamicColor = false) {
                 val density = LocalDensity.current
@@ -158,6 +182,7 @@ class CalculatorQuantitySelectorTest {
                             onSelect = {},
                             waterLabel = "Sisään tuleva vesi",
                             modifier = Modifier.fillMaxWidth(),
+                            cupEnabled = cupEnabled,
                         )
                     }
                 }
@@ -179,7 +204,14 @@ class CalculatorQuantitySelectorTest {
             assertTrue(waterBounds.bottom <= cupBounds.top)
             assertEquals(coffeeBounds.width, waterBounds.width, 1f)
             assertEquals(waterBounds.width, cupBounds.width, 1f)
+            cupEnabled = false
         }
+        cupNode.assertDoesNotExist()
+        val selectorBounds = composeRule.onNodeWithTag("quantity_card_selector")
+            .fetchSemanticsNode().boundsInRoot
+        val remainingWaterBounds = waterNode.fetchSemanticsNode().boundsInRoot
+        assertEquals(remainingWaterBounds.bottom, selectorBounds.bottom, 1f)
+        assertTrue(selectorBounds.bottom < cupBounds.bottom)
     }
 
     @Composable
@@ -188,6 +220,7 @@ class CalculatorQuantitySelectorTest {
         onSelect: (CalculatorQuantityTarget) -> Unit,
         modifier: Modifier = Modifier,
         cupEnabled: Boolean = true,
+        waterEnabled: Boolean = true,
         compact: Boolean = false,
         waterLabel: String = "Water in",
     ) {
@@ -206,6 +239,7 @@ class CalculatorQuantitySelectorTest {
                     value = "320",
                     spokenValue = "320 g",
                     icon = CalculationQuantityIconType.WATER_IN,
+                    enabled = waterEnabled,
                 ),
                 CalculatorQuantityCardItem(
                     target = CalculatorQuantityTarget.IN_CUP,

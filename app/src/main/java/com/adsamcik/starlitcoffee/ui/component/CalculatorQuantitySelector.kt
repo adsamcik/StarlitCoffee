@@ -25,6 +25,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,7 +42,7 @@ import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.calculator.CalculatorQuantityTarget
 
 /**
- * Three independent, friendly quantity cards for choosing what the calculator edits.
+ * Available quantity cards for choosing what the calculator edits, sharing the available space.
  *
  * This intentionally uses ordinary Material surfaces. Each card owns its visual and interaction
  * state; there is no shared rail, moving overlay, custom canvas, shader, or idle animation.
@@ -56,6 +57,7 @@ fun CalculatorQuantitySelector(
 ) {
     require(items.map { it.target } == CalculatorQuantityTargetOrder)
 
+    val availableItems = items.filter { it.enabled }
     val fontScale = LocalDensity.current.fontScale
     val useAccessibleStack = fontScale >= StackedLayoutFontScale
     Column(
@@ -71,17 +73,19 @@ fun CalculatorQuantitySelector(
                     .selectableGroup(),
                 verticalArrangement = Arrangement.spacedBy(CardSpacing),
             ) {
-                items.forEach { item ->
-                    QuantityCard(
-                        item = item,
-                        selected = item.target == selected,
-                        onSelect = onSelect,
-                        compact = compact,
-                        horizontalContent = true,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .heightIn(min = AccessibleCardMinimumHeight),
-                    )
+                availableItems.forEach { item ->
+                    key(item.target) {
+                        QuantityCard(
+                            item = item,
+                            selected = item.target == selected,
+                            onSelect = onSelect,
+                            compact = compact,
+                            horizontalContent = true,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .heightIn(min = AccessibleCardMinimumHeight),
+                        )
+                    }
                 }
             }
         } else {
@@ -92,17 +96,19 @@ fun CalculatorQuantitySelector(
                     .selectableGroup(),
                 horizontalArrangement = Arrangement.spacedBy(CardSpacing),
             ) {
-                items.forEach { item ->
-                    QuantityCard(
-                        item = item,
-                        selected = item.target == selected,
-                        onSelect = onSelect,
-                        compact = compact,
-                        horizontalContent = false,
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxHeight(),
-                    )
+                availableItems.forEach { item ->
+                    key(item.target) {
+                        QuantityCard(
+                            item = item,
+                            selected = item.target == selected,
+                            onSelect = onSelect,
+                            compact = compact,
+                            horizontalContent = false,
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxHeight(),
+                        )
+                    }
                 }
             }
         }

@@ -44,6 +44,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- The calculator shows only quantities supported by the selected brewing method,
+  with the remaining cards expanding to fill the available space.
 - Calculator ratios now start from the selected method's default and offer
   method-specific choices, including half-step espresso ratios. On first use
   after upgrading, the previous global ratio is replaced by each method's

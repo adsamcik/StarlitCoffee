@@ -1,7 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import androidx.compose.ui.test.assertIsEnabled
-import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -77,7 +76,7 @@ class CalculatorMethodSetupsTest {
             composeRule.onNodeWithText("Pulsar").performClick()
             composeRule.onNodeWithText("Espresso").performClick()
             composeRule.runOnIdle { assertEquals(2f, calculator.uiState.value.ratio, 0f) }
-            composeRule.onNodeWithTag("quantity_card_water_in").assertIsNotEnabled()
+            composeRule.onNodeWithTag("quantity_card_water_in").assertDoesNotExist()
             composeRule.onNodeWithTag("quantity_card_in_cup").assertIsEnabled().performClick()
             composeRule.onNodeWithText("1:2").performClick()
             composeRule.onNodeWithText("1:2.5").performClick()
@@ -93,7 +92,12 @@ class CalculatorMethodSetupsTest {
             composeRule.runOnIdle { assertEquals(18f, calculator.uiState.value.previewDoseG, 0.01f) }
 
             composeRule.onNodeWithText("Espresso").performClick()
+            composeRule.onNodeWithText("Moka Pot").performClick()
+            composeRule.onNodeWithTag("quantity_card_water_in").assertIsEnabled()
+            composeRule.onNodeWithTag("quantity_card_in_cup").assertDoesNotExist()
+            composeRule.onNodeWithText("Moka Pot").performClick()
             composeRule.onNodeWithText("Pulsar").performClick()
+            composeRule.onNodeWithTag("quantity_card_water_in").assertIsEnabled()
             composeRule.onNodeWithText("1:17").performClick()
             composeRule.onNodeWithText("1:18").performClick()
             composeRule.onNodeWithText("2").performClick()
