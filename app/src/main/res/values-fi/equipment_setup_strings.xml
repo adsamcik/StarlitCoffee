@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_set_name_optional">Nimi (valinnainen)</string>
+    <string name="label_starting_recipe">Aloitusresepti</string>
+    <string name="label_starting_amount">Aloitusmäärä</string>
+    <string name="msg_brewing_set_recipe_invalid">Anna positiivinen suhde ja määrä tai jätä määrä tyhjäksi.</string>
+    <string name="msg_brewing_sets_onboarding">Valitse välineesi. Lisää settejä kotiin tai töihin ja valitse, mikä avautuu ensin.</string>
+    <string name="action_create_brewing_set">Luo setti</string>
+    <string name="cd_brewing_set_options">Setin %1$s vaihtoehdot</string>
+    <string name="msg_saved_brewing_calculation">Tallennettu laskelma: %1$s. Korvaa se antamalla määrä.</string>
+</resources>

@@ -11,6 +11,6 @@
     <string name="label_brewing_set_method">Zetmethode</string>
     <string name="msg_delete_brewing_set">Deze zetcombinatie verwijderen?</string>
     <string name="screen_first_brewing_set_method">Kies je eerste methode</string>
-    <string name="msg_first_brewing_set">Begin met één methode. Je kunt meer zetcombinaties toevoegen in Instellingen.</string>
+    <string name="msg_first_brewing_set">Begin met één methode. Voeg in de volgende stap meer zetcombinaties toe.</string>
     <string name="action_retry_brewing_set">Opnieuw proberen</string>
 </resources>

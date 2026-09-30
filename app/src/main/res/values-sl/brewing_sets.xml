@@ -11,6 +11,6 @@
     <string name="label_brewing_set_method">Način priprave</string>
     <string name="msg_delete_brewing_set">Izbrišem ta komplet za pripravo?</string>
     <string name="screen_first_brewing_set_method">Izberite prvi način priprave</string>
-    <string name="msg_first_brewing_set">Začnite z enim načinom. Dodatne komplete lahko dodate v Nastavitvah.</string>
+    <string name="msg_first_brewing_set">Začnite z enim načinom. V naslednjem koraku dodajte več kompletov.</string>
     <string name="action_retry_brewing_set">Poskusi znova</string>
 </resources>

@@ -34,12 +34,10 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -61,8 +59,6 @@ import com.adsamcik.starlitcoffee.data.db.AppDatabase
 import com.adsamcik.starlitcoffee.data.brewing.session.ActiveBrewSessionEntityMapper
 import com.adsamcik.starlitcoffee.data.brewing.session.ActiveBrewSessionRestoreResult
 import com.adsamcik.starlitcoffee.data.brewing.session.BrewSessionRuntime
-import com.adsamcik.starlitcoffee.data.model.BrewMethod
-import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.repository.CupPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.data.repository.StableBrewingPreferences
@@ -93,6 +89,10 @@ import com.adsamcik.starlitcoffee.ui.screen.GuidedScanFlow
 import com.adsamcik.starlitcoffee.ui.screen.BagDraftReviewRoute
 import com.adsamcik.starlitcoffee.ui.screen.MoreScreen
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingMethodsScreen
+import com.adsamcik.starlitcoffee.data.model.BrewingSet
+import com.adsamcik.starlitcoffee.ui.component.BrewingSetDraft
+import com.adsamcik.starlitcoffee.ui.component.initialBrewingSetup
+import java.util.UUID
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingPersonalizeScreen
 import com.adsamcik.starlitcoffee.ui.screen.SavedRecipesScreen
 import com.adsamcik.starlitcoffee.ui.screen.ScanAddBagReview
@@ -141,31 +141,6 @@ private val dimModeRoutes = setOf(
     BrewSession::class,
     GrindPrep::class,
     BloomTimer::class,
-)
-
-private val BrewMethodSetStateSaver: Saver<MutableState<Set<BrewMethod>>, ArrayList<String>> = Saver(
-    save = { state -> ArrayList(state.value.map { it.name }) },
-    restore = { list ->
-        mutableStateOf(
-            list.mapNotNull { runCatching { BrewMethod.valueOf(it) }.getOrNull() }.toSet(),
-        )
-    },
-)
-
-private val BrewMethodStateSaver: Saver<MutableState<BrewMethod>, String> = Saver(
-    save = { it.value.name },
-    restore = { name ->
-        runCatching { BrewMethod.valueOf(name) }.getOrNull()?.let { mutableStateOf(it) }
-    },
-)
-
-private val NullableFilterTypeStateSaver: Saver<MutableState<FilterType?>, String> = Saver(
-    save = { it.value?.name ?: "" },
-    restore = { name ->
-        mutableStateOf(
-            if (name.isEmpty()) null else runCatching { FilterType.valueOf(name) }.getOrNull(),
-        )
-    },
 )
 
 @Composable
@@ -231,16 +206,9 @@ fun StarlitNavHost() {
     }
 
     // Track onboarding state for methods screen → personalize screen
-    val onboardingMethods = rememberSaveable(saver = BrewMethodSetStateSaver) {
-        mutableStateOf(emptySet<BrewMethod>())
-    }
-    val onboardingDefault = rememberSaveable(saver = BrewMethodStateSaver) {
-        mutableStateOf(BrewMethod.PULSAR)
-    }
-    val onboardingFilter = rememberSaveable(saver = NullableFilterTypeStateSaver) {
-        mutableStateOf<FilterType?>(null)
-    }
-    val onboardingGrinder = rememberSaveable { mutableStateOf<String?>(null) }
+    val onboardingDrafts = rememberSaveable { mutableStateOf<String?>(null) }
+    val onboardingActiveId = rememberSaveable { mutableStateOf<String?>(null) }
+    val onboardingFirstId = rememberSaveable { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
 
     val showBottomBar = currentDestination?.let { dest ->
@@ -457,13 +425,19 @@ fun StarlitNavHost() {
                 // Onboarding flow
                 composable<OnboardingMethods> {
                     OnboardingMethodsScreen(
-                        initialMethods = onboardingMethods.value,
-                        initialDefault = onboardingDefault.value.takeIf { onboardingMethods.value.isNotEmpty() },
-                        onNext = { methods, default ->
-                            onboardingMethods.value = methods
-                            onboardingDefault.value = default
-                            navController.navigate(OnboardingPersonalize)
+                        selected = onboardingDrafts.value?.let(BrewingSetDraft::decodeList)
+                            ?.find { it.set.id == onboardingFirstId.value }?.set?.method,
+                        onSelect = { method ->
+                            val drafts = onboardingDrafts.value?.let(BrewingSetDraft::decodeList)
+                            val changed = if (drafts.isNullOrEmpty()) {
+                                listOf(BrewingSetDraft(BrewingSet(UUID.randomUUID().toString(),
+                                    method = method, setup = initialBrewingSetup(method))))
+                            } else drafts.map { draft -> if (draft.set.id == onboardingFirstId.value) draft.withMethod(method) else draft }
+                            onboardingDrafts.value = BrewingSetDraft.encodeList(changed)
+                            if (onboardingFirstId.value == null) onboardingFirstId.value = changed.first().set.id
+                            if (onboardingActiveId.value == null) onboardingActiveId.value = changed.first().set.id
                         },
+                        onNext = { navController.navigate(OnboardingPersonalize) },
                     )
                 }
                 composable<OnboardingPersonalize> { backStackEntry ->
@@ -486,26 +460,21 @@ fun StarlitNavHost() {
                         }
                     }
                     OnboardingPersonalizeScreen(
-                        selectedMethods = onboardingMethods.value,
-                        initialFilter = onboardingFilter.value,
-                        initialGrinder = onboardingGrinder.value,
+                        drafts = BrewingSetDraft.decodeList(requireNotNull(onboardingDrafts.value)),
+                        activeId = requireNotNull(onboardingActiveId.value),
                         isSubmitting = onboardingState.isSubmitting,
                         submitFailed = onboardingState.failure,
                         onBack = {
                             // Save personalize state before going back
                             navController.popBackStack()
                         },
-                        onSelectionChanged = { filter, grinder ->
-                            onboardingFilter.value = filter
-                            onboardingGrinder.value = grinder
+                        onDraftsChanged = { drafts, id ->
+                            onboardingDrafts.value = BrewingSetDraft.encodeList(drafts)
+                            onboardingActiveId.value = id
+                            if (drafts.none { it.set.id == onboardingFirstId.value }) onboardingFirstId.value = id
                         },
-                        onFinish = { filterType, grinderId ->
-                            onboardingViewModel.complete(
-                                enabledMethods = onboardingMethods.value,
-                                defaultMethod = onboardingDefault.value,
-                                filterType = filterType,
-                                grinderId = grinderId,
-                            )
+                        onFinish = { sets, id ->
+                            onboardingViewModel.completeSets(sets, id)
                         },
                     )
                 }

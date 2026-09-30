@@ -11,6 +11,6 @@
     <string name="label_brewing_set_method">Bryggmetod</string>
     <string name="msg_delete_brewing_set">Ta bort den här brygguppsättningen?</string>
     <string name="screen_first_brewing_set_method">Välj din första metod</string>
-    <string name="msg_first_brewing_set">Börja med en metod. Du kan lägga till fler uppsättningar i Inställningar.</string>
+    <string name="msg_first_brewing_set">Börja med en metod. Lägg till fler uppsättningar i nästa steg.</string>
     <string name="action_retry_brewing_set">Försök igen</string>
 </resources>

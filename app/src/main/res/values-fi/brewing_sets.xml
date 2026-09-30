@@ -11,6 +11,6 @@
     <string name="label_brewing_set_method">Valmistusmenetelmä</string>
     <string name="msg_delete_brewing_set">Poistetaanko tämä valmistuskokoonpano?</string>
     <string name="screen_first_brewing_set_method">Valitse ensimmäinen menetelmä</string>
-    <string name="msg_first_brewing_set">Aloita yhdellä menetelmällä. Voit lisätä kokoonpanoja Asetuksissa.</string>
+    <string name="msg_first_brewing_set">Aloita yhdellä menetelmällä. Lisää kokoonpanoja seuraavassa vaiheessa.</string>
     <string name="action_retry_brewing_set">Yritä uudelleen</string>
 </resources>

@@ -654,6 +654,7 @@ private fun ExpressionDisplay(
 }
 
 @Composable
+@OptIn(ExperimentalLayoutApi::class)
 private fun BrewSettingsPillBar(
     sets: List<BrewingSet>,
     selectedSetId: String?,
@@ -667,8 +668,8 @@ private fun BrewSettingsPillBar(
     onManage: (() -> Unit)?,
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-        Row(modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
-            horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+        androidx.compose.foundation.layout.FlowRow(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             BrewingSetPicker(sets, selectedSetId, grinderData, onSetChange, onManage)
             val ratioOptions = selectedMethod.calculatorRatioOptions(ratio)
             PillDropdown(
@@ -682,7 +683,8 @@ private fun BrewSettingsPillBar(
             }
         }
         sets.find { it.id == selectedSetId }?.let { selected ->
-            Text(brewingSetSummary(selected, grinderData), style = MaterialTheme.typography.bodySmall,
+            val summary = brewingSetSummary(selected, grinderData)
+            if (summary.isNotEmpty()) Text(summary, style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }

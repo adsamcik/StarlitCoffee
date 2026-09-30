@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_set_name_optional">Nimi (valikuline)</string>
+    <string name="label_starting_recipe">Algretsept</string>
+    <string name="label_starting_amount">Algkogus</string>
+    <string name="msg_brewing_set_recipe_invalid">Sisestage positiivne suhe ja kogus või jätke kogus tühjaks.</string>
+    <string name="msg_brewing_sets_onboarding">Valige oma varustus. Lisage komplekte kodu või töö jaoks ja valige, milline avaneb esimesena.</string>
+    <string name="action_create_brewing_set">Loo komplekt</string>
+    <string name="cd_brewing_set_options">Komplekti %1$s valikud</string>
+    <string name="msg_saved_brewing_calculation">Salvestatud arvutus: %1$s. Selle asendamiseks sisestage kogus.</string>
+</resources>

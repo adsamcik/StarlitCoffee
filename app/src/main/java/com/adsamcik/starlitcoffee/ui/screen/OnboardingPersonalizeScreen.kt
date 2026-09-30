@@ -1,279 +1,101 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
-import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
-import androidx.compose.material3.Icon
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
-import com.adsamcik.starlitcoffee.data.model.FilterType
+import com.adsamcik.starlitcoffee.data.model.BrewingSet
+import com.adsamcik.starlitcoffee.data.model.BrewingSetCodec
 import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
-import com.adsamcik.starlitcoffee.data.model.grindersFor
+import com.adsamcik.starlitcoffee.ui.component.BrewingSetDraft
+import com.adsamcik.starlitcoffee.ui.component.BrewingSetEditor
+import com.adsamcik.starlitcoffee.ui.component.BrewingSetForm
+import com.adsamcik.starlitcoffee.ui.component.BrewingSetsList
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
+import com.adsamcik.starlitcoffee.ui.component.initialBrewingSetup
 import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
-import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
-import com.adsamcik.starlitcoffee.ui.util.localizedCupProfile
-import com.adsamcik.starlitcoffee.ui.util.localizedDisplayName
+import java.util.UUID
 
-private val NullableFilterTypeSaver: Saver<MutableState<FilterType?>, String> = Saver(
-    save = { it.value?.name ?: "" },
-    restore = { name ->
-        mutableStateOf(
-            if (name.isEmpty()) null else runCatching { FilterType.valueOf(name) }.getOrNull(),
-        )
-    },
-)
-
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun OnboardingPersonalizeScreen(
-    selectedMethods: Set<BrewMethod>,
-    initialFilter: FilterType? = null,
-    initialGrinder: String? = null,
-    isSubmitting: Boolean = false,
-    submitFailed: Boolean = false,
+    drafts: List<BrewingSetDraft>, activeId: String,
+    isSubmitting: Boolean = false, submitFailed: Boolean = false,
     onBack: () -> Unit,
-    onSelectionChanged: (FilterType?, String?) -> Unit = { _, _ -> },
-    onFinish: (
-        filterType: FilterType?,
-        grinderId: String?,
-    ) -> Unit,
+    onDraftsChanged: (List<BrewingSetDraft>, String) -> Unit,
+    onFinish: (List<BrewingSet>, String) -> Unit,
 ) {
-    val filterType = rememberSaveable(saver = NullableFilterTypeSaver) {
-        mutableStateOf(initialFilter ?: FilterType.PAPER.takeIf { selectedMethods.contains(BrewMethod.PULSAR) })
-    }
-    val selectedGrinderId = rememberSaveable { mutableStateOf(initialGrinder) }
-    val context = LocalContext.current
-
-    val showFilterSection = selectedMethods.contains(BrewMethod.PULSAR)
-    val effectiveFilter = filterType.value.takeIf { showFilterSection }
-    val method = selectedMethods.firstOrNull() ?: BrewMethod.PULSAR
-    val supportedGrinders = GrinderDataSource.getInstance(context).grindersFor(method, effectiveFilter)
-    val effectiveGrinder = selectedGrinderId.value?.takeIf { id -> supportedGrinders.any { it.id == id } }
-    val requestBack = {
-        if (!isSubmitting) {
-            onSelectionChanged(effectiveFilter, effectiveGrinder)
-            onBack()
-        }
-    }
-
+    val data = GrinderDataSource.getInstance(LocalContext.current)
+    val active = drafts.find { it.set.id == activeId } ?: drafts.first()
+    val resolved = drafts.map { it.build(data) }
+    var newSet by rememberSaveable { mutableStateOf<String?>(null) }
+    val requestBack = { if (!isSubmitting) onBack() }
     BackHandler(onBack = requestBack)
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 24.dp),
-    ) {
-        ScreenTopBar(
-            title = stringResource(R.string.screen_personalize_title),
-            onBack = requestBack,
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Column(
-            modifier = Modifier
-                .weight(1f)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(20.dp),
-        ) {
-            // Filter section (Pulsar only)
-            if (showFilterSection) {
-                ElevatedCard(
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = stringResource(R.string.label_pulsar_filter_type),
-                            style = MaterialTheme.typography.titleMedium,
-                        )
-                        Text(
-                            text = stringResource(R.string.msg_filter_hint),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                        Spacer(modifier = Modifier.height(12.dp))
-                        FlowRow(
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        ) {
-                            FilterType.entries.forEach { filter ->
-                                FilterChip(
-                                    selected = filterType.value == filter,
-                                    enabled = !isSubmitting,
-                                    onClick = {
-                                        filterType.value = if (filterType.value == filter) {
-                                            null
-                                        } else {
-                                            filter
-                                        }
-                                    },
-                                    label = { Text(filter.localizedDisplayName()) },
-                                    leadingIcon = if (filterType.value == filter) {
-                                        { Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }
-                                    } else {
-                                        null
-                                    },
-                                )
-                            }
-                        }
-                        if (filterType.value != null) {
-                            Text(
-                                text = filterType.value!!.localizedCupProfile(),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.padding(top = 4.dp),
-                            )
-                        }
-                    }
-
-                }
+    Column(Modifier.fillMaxSize().imePadding().padding(horizontal = 24.dp, vertical = 16.dp)) {
+        ScreenTopBar(title = stringResource(R.string.label_brewing_sets), onBack = requestBack, backEnabled = !isSubmitting)
+        Column(Modifier.weight(1f).verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(20.dp)) {
+            Text(stringResource(R.string.msg_brewing_sets_onboarding), style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
+            if (drafts.size > 1) {
+                BrewingSetsList(drafts.map { draft -> draft.build(data) ?: draft.set }, active.set.id, data, !isSubmitting,
+                    onSelect = { onDraftsChanged(drafts, it) }, onEdit = { onDraftsChanged(drafts, it.id) },
+                    onDelete = { removed ->
+                        val remaining = drafts.filterNot { it.set.id == removed.id }
+                        if (remaining.isNotEmpty()) onDraftsChanged(remaining,
+                            activeId.takeIf { it != removed.id } ?: remaining.first().set.id)
+                    })
             }
-
-            // Grinder section
-            if (supportedGrinders.isNotEmpty()) {
-                ElevatedCard(
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = stringResource(R.string.label_your_grinder),
-                            style = MaterialTheme.typography.titleMedium,
-                        )
-                        Text(
-                            text = stringResource(R.string.msg_grinder_hint),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                        Spacer(modifier = Modifier.height(12.dp))
-                        val noGrinderSelected = supportedGrinders.none { it.id == selectedGrinderId.value }
-                        FlowRow(
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            verticalArrangement = Arrangement.spacedBy(4.dp),
-                        ) {
-                            FilterChip(
-                                selected = noGrinderSelected,
-                                enabled = !isSubmitting,
-                                onClick = { selectedGrinderId.value = null },
-                                label = { Text(stringResource(R.string.label_no_grinder)) },
-                                leadingIcon = if (noGrinderSelected) {
-                                    { Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }
-                                } else {
-                                    null
-                                },
-                            )
-                            supportedGrinders.forEach { grinder ->
-                                val isGrinderSelected = selectedGrinderId.value == grinder.id
-                                FilterChip(
-                                    selected = isGrinderSelected,
-                                    enabled = !isSubmitting,
-                                    onClick = {
-                                        selectedGrinderId.value = if (isGrinderSelected) {
-                                            null
-                                        } else {
-                                            grinder.id
-                                        }
-                                    },
-                                    label = {
-                                        val label = if (grinder.brand == grinder.model) {
-                                            grinder.model
-                                        } else {
-                                            "${grinder.brand} ${grinder.model}"
-                                        }
-                                        Text(label)
-                                    },
-                                    leadingIcon = if (isGrinderSelected) {
-                                        { Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }
-                                    } else {
-                                        null
-                                    },
-                                )
-                            }
-                        }
-                    }
+            BrewingSetForm(active, data, !isSubmitting) { changed ->
+                onDraftsChanged(drafts.map { if (it.set.id == changed.set.id) changed else it }, active.set.id)
+            }
+            FilledTonalButton(onClick = {
+                newSet = BrewingSetCodec.encode(listOf(BrewingSet(UUID.randomUUID().toString(),
+                    method = BrewMethod.PULSAR, setup = initialBrewingSetup(BrewMethod.PULSAR))))
+            }, enabled = !isSubmitting, modifier = Modifier.fillMaxWidth().testTag("add_brewing_set")) {
+                androidx.compose.material3.Icon(Icons.Default.Add, null)
+                Text(stringResource(R.string.action_add_brewing_set), Modifier.padding(start = 8.dp))
+            }
+            if (submitFailed) Text(stringResource(R.string.msg_settings_save_failed), color = MaterialTheme.colorScheme.error)
+            drafts.firstOrNull { it.build(data) == null }?.let { invalid ->
+                Text(stringResource(R.string.msg_brewing_set_recipe_invalid), color = MaterialTheme.colorScheme.error)
+                TextButton(onClick = { onDraftsChanged(drafts, invalid.set.id) }, modifier = Modifier.testTag("fix_invalid_brewing_set")) {
+                    Text(com.adsamcik.starlitcoffee.ui.component.brewingSetName(invalid.set))
                 }
             }
         }
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        if (submitFailed) {
-            Text(
-                text = stringResource(R.string.msg_onboarding_save_failed),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.error,
-                modifier = Modifier.padding(bottom = 8.dp),
-            )
-        }
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            TextButton(
-                onClick = { onFinish(null, null) },
-                enabled = !isSubmitting,
-                modifier = Modifier.testTag("onboarding_skip_button"),
-            ) {
-                Text(stringResource(R.string.action_skip))
-            }
-            Spacer(modifier = Modifier.width(8.dp))
-            Button(
-                onClick = {
-                    onFinish(effectiveFilter, effectiveGrinder)
-                },
-                enabled = !isSubmitting,
-                colors = primaryActionButtonColors(),
-                modifier = Modifier.testTag("onboarding_finish_button"),
-            ) {
-                Text(stringResource(R.string.action_finish))
-            }
+        Button(onClick = { onFinish(resolved.filterNotNull(), active.set.id) },
+            enabled = resolved.all { it != null } && !isSubmitting, colors = primaryActionButtonColors(),
+            modifier = Modifier.fillMaxWidth().padding(top = 16.dp).testTag("onboarding_finish_button")) {
+            Text(stringResource(R.string.action_start_brewing))
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun OnboardingPersonalizeScreenPreview() {
-    StarlitCoffeeTheme {
-        OnboardingPersonalizeScreen(
-            selectedMethods = setOf(BrewMethod.V60, BrewMethod.PULSAR),
-            onBack = {},
-            onFinish = { _, _ -> },
-        )
+    newSet?.let { encoded ->
+        BrewingSetEditor(BrewingSetCodec.decode(encoded).first(), true, data, false,
+            onSave = { saved -> onDraftsChanged(drafts + BrewingSetDraft(saved), saved.id); newSet = null },
+            onDismiss = { newSet = null })
     }
 }

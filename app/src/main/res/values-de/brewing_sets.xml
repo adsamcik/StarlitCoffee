@@ -11,6 +11,6 @@
     <string name="label_brewing_set_method">Brühmethode</string>
     <string name="msg_delete_brewing_set">Diese Brühkombination löschen?</string>
     <string name="screen_first_brewing_set_method">Wähle deine erste Methode</string>
-    <string name="msg_first_brewing_set">Beginne mit einer Methode. Weitere Brühkombinationen kannst du in den Einstellungen hinzufügen.</string>
+    <string name="msg_first_brewing_set">Beginne mit einer Methode. Füge im nächsten Schritt weitere Brühkombinationen hinzu.</string>
     <string name="action_retry_brewing_set">Erneut versuchen</string>
 </resources>

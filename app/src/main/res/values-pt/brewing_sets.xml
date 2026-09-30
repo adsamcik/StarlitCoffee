@@ -11,6 +11,6 @@
     <string name="label_brewing_set_method">Método de preparação</string>
     <string name="msg_delete_brewing_set">Eliminar este conjunto de preparação?</string>
     <string name="screen_first_brewing_set_method">Escolha o seu primeiro método</string>
-    <string name="msg_first_brewing_set">Comece com um método. Pode adicionar mais conjuntos nas Definições.</string>
+    <string name="msg_first_brewing_set">Comece com um método. Adicione mais conjuntos no próximo passo.</string>
     <string name="action_retry_brewing_set">Tentar novamente</string>
 </resources>

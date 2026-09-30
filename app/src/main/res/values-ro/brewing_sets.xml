@@ -11,6 +11,6 @@
     <string name="label_brewing_set_method">Metodă de preparare</string>
     <string name="msg_delete_brewing_set">Ștergeți acest set de preparare?</string>
     <string name="screen_first_brewing_set_method">Alegeți prima metodă</string>
-    <string name="msg_first_brewing_set">Începeți cu o metodă. Puteți adăuga mai multe seturi în Setări.</string>
+    <string name="msg_first_brewing_set">Începeți cu o metodă. Adăugați mai multe seturi la pasul următor.</string>
     <string name="action_retry_brewing_set">Încercați din nou</string>
 </resources>

@@ -117,6 +117,47 @@ class BrewingSetPreferencesTest {
         assertEquals(remaining.active.method.name, data.data.value[UserPreferenceKeys.DEFAULT_METHOD])
     }
 
+    @Test
+    fun `onboarding commits two full recipes and their active identity together`() = runTest {
+        val data = MemoryPreferences()
+        val espresso = BrewingSet("espresso", "Work", BrewMethod.ESPRESSO,
+            CalculatorSetup(2f, "IN_CUP", listOf(CalcToken.Number("36")), grinderId = "niche-zero"))
+        completeBrewingSetOnboarding(data, listOf(home, espresso), espresso.id)
+        val selection = readBrewingSetSelection(data.data.value)
+        assertEquals(listOf(home.copy(revision = 1), espresso.copy(revision = 1)), selection.sets)
+        assertEquals(espresso.id, selection.activeId)
+        assertEquals(true, data.data.value[UserPreferenceKeys.ONBOARDING_COMPLETED])
+        assertEquals("ESPRESSO", data.data.value[UserPreferenceKeys.DEFAULT_METHOD])
+        // A late duplicate submission must not replace a completed user's sets.
+        completeBrewingSetOnboarding(data, listOf(home), home.id)
+        assertEquals(selection, readBrewingSetSelection(data.data.value))
+    }
+
+    @Test
+    fun `explicit recipe save survives reload and rejects a stale equipment revision`() = runTest {
+        val data = MemoryPreferences()
+        val writer = DataStoreBrewingSetWriter(data)
+        writer.saveBrewingSet(home)
+        val changed = home.copy(setup = home.setup.copy(ratio = 16f, tokens = listOf(CalcToken.Number("25"))))
+        writer.saveBrewingSetRecipe(changed)
+        val saved = readBrewingSetSelection(data.data.value).active
+        assertEquals(changed.setup, saved.setup)
+        assertEquals(1, saved.revision)
+        writer.updateBrewingSetSetup(home.id, 0, home.setup)
+        assertEquals(saved, readBrewingSetSelection(data.data.value).active)
+        val before = data.data.value
+        assertTrue(runCatching { writer.saveBrewingSetRecipe(home) }.isFailure)
+        assertEquals(before, data.data.value)
+    }
+
+    @Test
+    fun `invalid onboarding selection writes neither sets nor completion`() = runTest {
+        val data = MemoryPreferences()
+        assertTrue(runCatching { completeBrewingSetOnboarding(data, listOf(home), "missing") }.isFailure)
+        assertNull(data.data.value[BrewingSetKeys.SETS])
+        assertNull(data.data.value[UserPreferenceKeys.ONBOARDING_COMPLETED])
+    }
+
     private class MemoryPreferences(initial: Preferences = emptyPreferences()) : DataStore<Preferences> {
         override val data = MutableStateFlow(initial)
         private val mutex = Mutex()

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_set_name_optional">Navn (valgfrit)</string>
+    <string name="label_starting_recipe">Startopskrift</string>
+    <string name="label_starting_amount">Startmængde</string>
+    <string name="msg_brewing_set_recipe_invalid">Angiv et positivt forhold og en mængde, eller lad mængden være tom.</string>
+    <string name="msg_brewing_sets_onboarding">Vælg dit udstyr. Tilføj sæt til hjemmet eller arbejdet, og vælg, hvilket der åbner først.</string>
+    <string name="action_create_brewing_set">Opret sæt</string>
+    <string name="cd_brewing_set_options">Muligheder for %1$s</string>
+    <string name="msg_saved_brewing_calculation">Gemt beregning: %1$s. Angiv en mængde for at erstatte den.</string>
+</resources>

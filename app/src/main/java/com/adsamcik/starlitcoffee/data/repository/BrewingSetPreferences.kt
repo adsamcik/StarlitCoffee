@@ -78,6 +78,23 @@ internal fun writeBrewingSetSelection(prefs: MutablePreferences, selection: Brew
     prefs[calculatorSetupKey(active.method)] = CalculatorSetupCodec.encode(active.setup)
 }
 
+/** No partial presets or completed flag can escape a failed onboarding write. */
+internal suspend fun completeBrewingSetOnboarding(
+    dataStore: DataStore<Preferences>, sets: List<BrewingSet>, activeId: String,
+) {
+    require(sets.isNotEmpty() && sets.map { it.id }.distinct().size == sets.size)
+    val valid = sets.map { requireNotNull(it.validated()) }
+    require(valid.any { it.id == activeId })
+    dataStore.edit { prefs ->
+        if (prefs[UserPreferenceKeys.ONBOARDING_COMPLETED] == true) return@edit
+        // Keep already stored user sets if onboarding was reopened or interrupted.
+        val existing = prefs[BrewingSetKeys.SETS]?.let(BrewingSetCodec::decode).orEmpty()
+            .filter { stored -> valid.none { it.id == stored.id } }
+        writeBrewingSetSelection(prefs, BrewingSetSelection(valid.map { it.copy(revision = 1) } + existing, activeId))
+        prefs[UserPreferenceKeys.ONBOARDING_COMPLETED] = true
+    }
+}
+
 internal class DataStoreBrewingSetWriter(private val dataStore: DataStore<Preferences>) : BrewingSetWriter {
     override suspend fun initializeBrewingSets(savedRecipes: List<SavedRecipeEntity>?) {
         dataStore.edit { prefs ->
@@ -96,6 +113,7 @@ internal class DataStoreBrewingSetWriter(private val dataStore: DataStore<Prefer
     }
 
     override suspend fun saveBrewingSet(set: BrewingSet) = change { it.upsert(set) }
+    override suspend fun saveBrewingSetRecipe(set: BrewingSet) = change { it.upsert(set, replaceRecipe = true) }
     override suspend fun selectBrewingSet(id: String) = change { it.select(id) }
     override suspend fun deleteBrewingSet(id: String) = change { it.remove(id) }
     override suspend fun updateBrewingSetSetup(id: String, revision: Int, setup: CalculatorSetup) =

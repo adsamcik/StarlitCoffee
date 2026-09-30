@@ -11,6 +11,6 @@
     <string name="label_brewing_set_method">Készítési mód</string>
     <string name="msg_delete_brewing_set">Törli ezt az összeállítást?</string>
     <string name="screen_first_brewing_set_method">Válassza ki az első készítési módot</string>
-    <string name="msg_first_brewing_set">Kezdje egy készítési móddal. További összeállításokat a Beállításokban adhat hozzá.</string>
+    <string name="msg_first_brewing_set">Kezdje egy készítési móddal. A következő lépésben további összeállításokat adhat hozzá.</string>
     <string name="action_retry_brewing_set">Újrapróbálkozás</string>
 </resources>

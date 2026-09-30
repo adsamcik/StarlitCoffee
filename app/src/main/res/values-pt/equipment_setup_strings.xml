@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_set_name_optional">Nome (opcional)</string>
+    <string name="label_starting_recipe">Receita inicial</string>
+    <string name="label_starting_amount">Quantidade inicial</string>
+    <string name="msg_brewing_set_recipe_invalid">Introduza uma proporção e uma quantidade positivas, ou deixe a quantidade vazia.</string>
+    <string name="msg_brewing_sets_onboarding">Escolha o equipamento. Adicione conjuntos para casa ou trabalho e escolha qual abrir primeiro.</string>
+    <string name="action_create_brewing_set">Criar conjunto</string>
+    <string name="cd_brewing_set_options">Opções de %1$s</string>
+    <string name="msg_saved_brewing_calculation">Cálculo guardado: %1$s. Introduza uma quantidade para o substituir.</string>
+</resources>

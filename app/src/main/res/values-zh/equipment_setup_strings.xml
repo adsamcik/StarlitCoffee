@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_set_name_optional">名称（可选）</string>
+    <string name="label_starting_recipe">初始配方</string>
+    <string name="label_starting_amount">初始用量</string>
+    <string name="msg_brewing_set_recipe_invalid">请输入正数比例和用量，或将用量留空。</string>
+    <string name="msg_brewing_sets_onboarding">选择您的设备。添加家用或工作用套装，并选择首先打开哪一套。</string>
+    <string name="action_create_brewing_set">创建套装</string>
+    <string name="cd_brewing_set_options">%1$s 的选项</string>
+    <string name="msg_saved_brewing_calculation">已保存的计算：%1$s。输入用量即可替换。</string>
+</resources>

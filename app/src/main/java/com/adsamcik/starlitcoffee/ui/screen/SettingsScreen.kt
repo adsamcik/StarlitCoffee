@@ -71,6 +71,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.BrewingSet
+import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.CalculatorSetup
 import com.adsamcik.starlitcoffee.ui.component.BrewingSetEditor
 import com.adsamcik.starlitcoffee.ui.component.BrewingSetsSettings
@@ -181,11 +182,13 @@ fun SettingsScreen(
     editingSetId?.let { id ->
         val original = remember(id) {
             prefs.brewingSets.find { it.id == id } ?: BrewingSet(id = id, method = prefs.defaultMethod,
-                setup = CalculatorSetup(ratio = prefs.defaultMethod.defaultRatio,
-                    filterType = prefs.defaultFilterType?.name, grinderId = prefs.selectedGrinderId))
+                setup = com.adsamcik.starlitcoffee.ui.component.initialBrewingSetup(prefs.defaultMethod).copy(
+                    filterType = if (prefs.defaultMethod == BrewMethod.PULSAR) prefs.defaultFilterType?.name ?: "PAPER" else null,
+                    grinderId = prefs.selectedGrinderId))
         }
         BrewingSetEditor(original, editorIsNew, grinderData, isBusy,
-            onSave = viewModel::saveBrewingSet, onDismiss = { editingSetId = null })
+            onSave = viewModel::saveBrewingSet, onSaveRecipe = viewModel::saveBrewingSetRecipe,
+            saveFailed = operationState.failure == SettingsFailure.SAVE, onDismiss = { editingSetId = null })
     }
     deletingSetId?.let { id ->
         DestructiveActionDialog(titleRes = R.string.action_delete, confirmLabelRes = R.string.action_delete,

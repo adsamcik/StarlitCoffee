@@ -1,5 +1,9 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -30,7 +34,9 @@ class ChemexBrewingScreenTest {
         var default: BrewMethod? = null
         composeRule.setContent {
             StarlitCoffeeTheme(dynamicColor = false) {
-                OnboardingMethodsScreen(onNext = { methods, method -> selected = methods; default = method })
+                var chosen by remember { mutableStateOf<BrewMethod?>(null) }
+                OnboardingMethodsScreen(chosen, onSelect = { chosen = it },
+                    onNext = { selected = setOf(requireNotNull(chosen)); default = chosen })
             }
         }
         composeRule.onNodeWithTag("onboarding_method_CHEMEX").performScrollTo().performClick()

@@ -88,6 +88,12 @@ class SettingsViewModel(
         persist { preferences.selectBrewingSet(id) }
     }
 
+    fun saveBrewingSetRecipe(set: BrewingSet) {
+        launchOperation(SettingsOperation.SAVING, SettingsFailure.SAVE, SettingsCompletion.BREWING_SET_SAVED) {
+            preferences.saveBrewingSetRecipe(set)
+        }
+    }
+
     fun deleteBrewingSet(id: String) {
         persist { preferences.deleteBrewingSet(id) }
     }

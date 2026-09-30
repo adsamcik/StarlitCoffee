@@ -97,6 +97,10 @@ internal fun normalizeMethodSelection(
 interface UserPreferencesStore : BrewingSetWriter {
     val userPreferences: Flow<UserPreferences>
 
+    suspend fun completeOnboardingSets(sets: List<BrewingSet>, activeId: String) {
+        throw UnsupportedOperationException("Atomic brewing-set onboarding is not implemented")
+    }
+
     suspend fun completeOnboarding(
         enabledMethods: Set<BrewMethod>,
         defaultMethod: BrewMethod,
@@ -436,6 +440,10 @@ class UserPreferencesRepository(context: Context) :
                 writeBrewingSetSelection(prefs, initial.copy(sets = initial.sets.map { it.copy(revision = 1) }))
             }
         }
+    }
+
+    override suspend fun completeOnboardingSets(sets: List<BrewingSet>, activeId: String) {
+        completeBrewingSetOnboarding(context.dataStore, sets, activeId)
     }
 
     override suspend fun updateMethodSelection(

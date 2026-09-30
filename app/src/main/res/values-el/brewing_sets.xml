@@ -11,6 +11,6 @@
     <string name="label_brewing_set_method">Μέθοδος παρασκευής</string>
     <string name="msg_delete_brewing_set">Να διαγραφεί αυτό το σετ παρασκευής;</string>
     <string name="screen_first_brewing_set_method">Επιλέξτε την πρώτη σας μέθοδο</string>
-    <string name="msg_first_brewing_set">Ξεκινήστε με μία μέθοδο. Μπορείτε να προσθέσετε περισσότερα σετ στις Ρυθμίσεις.</string>
+    <string name="msg_first_brewing_set">Ξεκινήστε με μία μέθοδο. Προσθέστε περισσότερα σετ στο επόμενο βήμα.</string>
     <string name="action_retry_brewing_set">Δοκιμάστε ξανά</string>
 </resources>

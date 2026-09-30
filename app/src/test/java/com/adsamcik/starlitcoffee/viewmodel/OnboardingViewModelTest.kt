@@ -2,6 +2,7 @@ package com.adsamcik.starlitcoffee.viewmodel
 
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
+import com.adsamcik.starlitcoffee.data.model.BrewingSet
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -101,5 +102,34 @@ class OnboardingViewModelTest {
         advanceUntilIdle()
         assertFalse(viewModel.uiState.value.failure)
         assertEquals(BrewMethod.PULSAR, viewModel.uiState.value.completedSubmission?.defaultMethod)
+    }
+
+    @Test
+    fun `set completion snapshots all presets and waits for a retryable atomic write`() = runTest(dispatcher) {
+        val sets = listOf(BrewingSet("home", method = BrewMethod.PULSAR), BrewingSet("work", method = BrewMethod.ESPRESSO))
+        val gate = CompletableDeferred<Unit>()
+        var fail = true
+        var calls = 0
+        val store = object : TestUserPreferencesStore() {
+            override suspend fun completeOnboardingSets(sets: List<BrewingSet>, activeId: String) {
+                calls++
+                gate.await()
+                if (fail) error("Storage unavailable")
+            }
+        }
+        val model = OnboardingViewModel(store)
+        model.completeSets(sets, "work")
+        model.completeSets(sets, "home")
+        assertEquals(1, calls)
+        assertTrue(model.uiState.value.isSubmitting)
+        gate.complete(Unit)
+        advanceUntilIdle()
+        assertTrue(model.uiState.value.failure)
+        assertNull(model.uiState.value.completedSubmission)
+        fail = false
+        model.completeSets(sets, "work")
+        advanceUntilIdle()
+        assertEquals(sets, model.uiState.value.completedSubmission?.sets)
+        assertEquals("work", model.uiState.value.completedSubmission?.activeId)
     }
 }

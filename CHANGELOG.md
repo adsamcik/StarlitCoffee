@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Illustrated equipment choices** — a consistent, theme-tinted family of
+  brewing-method, filter and grinder visuals across setup, set selection,
+  preparation and brew history. Onboarding can create multiple brewing sets,
+  customize their starting recipes and choose which opens first.
 - **Brewing sets** — switch between named Home, Work, espresso and filter
   equipment combinations. Each set remembers its own ratio, amount, quantity,
   filter and grinder. Settings manages the same set list; existing method

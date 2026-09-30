@@ -88,13 +88,14 @@ class CalculatorBrewingSetsUiTest {
             composeRule.runOnIdle { assertEquals(home, fixture.calculator.currentSetup()) }
 
             manage()
-            composeRule.onNodeWithTag("edit_brewing_set_${fixture.home.id}").performScrollTo().performClick()
+            edit(fixture.home.id)
             composeRule.onNodeWithTag("brewing_set_name").performTextReplacement("Home filter renamed")
             composeRule.onNodeWithTag("save_brewing_set").performClick()
             composeRule.waitUntil(10_000) { fixture.calculator.uiState.value.brewingSets.any { it.name == "Home filter renamed" } }
             composeRule.onNodeWithTag("brewing_set_${fixture.work.id}").performScrollTo().performClick()
             composeRule.waitUntil(10_000) { fixture.calculator.uiState.value.activeBrewingSetId == fixture.work.id }
-            composeRule.onNodeWithTag("delete_brewing_set_${fixture.work.id}").performScrollTo().performClick()
+            composeRule.onNodeWithTag("brewing_set_options_${fixture.work.id}").performScrollTo().performClick()
+            composeRule.onNodeWithTag("delete_brewing_set_${fixture.work.id}").performClick()
             composeRule.onNodeWithTag("confirm_destructive_action").performClick()
             composeRule.waitUntil(10_000) { fixture.calculator.uiState.value.brewingSets.none { it.id == fixture.work.id } }
             composeRule.onNodeWithTag("back_button").performClick()
@@ -125,8 +126,7 @@ class CalculatorBrewingSetsUiTest {
             show(fixture)
             composeRule.waitUntil(10_000) { fixture.calculator.uiState.value.preferencesLoaded && fixture.calculator.uiState.value.grinderId == null }
             manage()
-            composeRule.onNodeWithTag("edit_brewing_set_${fixture.home.id}").performScrollTo().performClick()
-            composeRule.onNodeWithTag("brewing_set_filter").performClick()
+            edit(fixture.home.id)
             composeRule.onNodeWithTag("brewing_set_filter_option_METAL_19K").performClick()
             composeRule.onNodeWithTag("brewing_set_grinder").assertDoesNotExist()
             composeRule.onNodeWithTag("save_brewing_set").performClick()
@@ -135,9 +135,9 @@ class CalculatorBrewingSetsUiTest {
             composeRule.runOnIdle { assertNull(fixture.calculator.currentSetup().grinderId) }
 
             manage()
-            composeRule.onNodeWithTag("edit_brewing_set_${fixture.home.id}").performScrollTo().performClick()
+            edit(fixture.home.id)
             composeRule.onNodeWithTag("brewing_set_method").performClick()
-            composeRule.onNodeWithTag("brewing_set_method_option_ESPRESSO").performClick()
+            composeRule.onNodeWithTag("brewing_set_method_option_ESPRESSO").performScrollTo().performClick()
             composeRule.onNodeWithTag("brewing_set_filter").assertDoesNotExist()
             composeRule.onNodeWithTag("brewing_set_grinder").performClick()
             composeRule.onNodeWithTag("brewing_set_grinder_option_1zpresso-zp6-special").assertDoesNotExist()
@@ -148,7 +148,7 @@ class CalculatorBrewingSetsUiTest {
             composeRule.onNodeWithTag("back_button").performClick()
             composeRule.runOnIdle {
                 assertEquals(2f, fixture.calculator.currentSetup().ratio, 0f)
-                assertEquals(emptyList<CalcToken>(), fixture.calculator.currentSetup().tokens)
+                assertEquals(listOf(CalcToken.Number("18")), fixture.calculator.currentSetup().tokens)
                 assertEquals("niche-zero", fixture.calculator.currentSetup().grinderId)
                 assertEquals(CalculatorQuantityTarget.COFFEE, fixture.calculator.uiState.value.quantityTarget)
             }
@@ -159,6 +159,10 @@ class CalculatorBrewingSetsUiTest {
     private fun choose(id: String) {
         composeRule.onNodeWithTag("brewing_set_picker").performClick()
         composeRule.onNodeWithTag("choose_brewing_set_$id").performClick()
+    }
+    private fun edit(id: String) {
+        composeRule.onNodeWithTag("brewing_set_options_$id").performScrollTo().performClick()
+        composeRule.onNodeWithTag("edit_brewing_set_$id").performClick()
     }
     private fun manage() {
         composeRule.onNodeWithTag("brewing_set_picker").performClick()

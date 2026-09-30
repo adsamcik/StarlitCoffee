@@ -66,7 +66,8 @@ import com.adsamcik.starlitcoffee.ui.component.HomeContextCardView
 import com.adsamcik.starlitcoffee.ui.component.FavoritesRow
 import com.adsamcik.starlitcoffee.ui.component.SaveFavoriteDialog
 import com.adsamcik.starlitcoffee.ui.component.RatioPresetRow
-import com.adsamcik.starlitcoffee.ui.component.iconForMethod
+import com.adsamcik.starlitcoffee.ui.component.EquipmentIcon
+import com.adsamcik.starlitcoffee.ui.component.EquipmentVisual
 import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import com.adsamcik.starlitcoffee.data.model.BrewRating
 import com.adsamcik.starlitcoffee.viewmodel.GrindResult
@@ -222,11 +223,7 @@ fun MethodPickerScreen(
                         modifier = Modifier.testTag("method_chip_${method.name}"),
                         label = { Text(method.displayName) },
                         leadingIcon = {
-                            Icon(
-                                imageVector = iconForMethod(method),
-                                contentDescription = null,
-                                modifier = Modifier.size(18.dp),
-                            )
+                            EquipmentIcon(EquipmentVisual.method(method), modifier = Modifier.size(24.dp))
                         },
                     )
                 }

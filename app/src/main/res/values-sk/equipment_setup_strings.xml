@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_set_name_optional">Názov (voliteľný)</string>
+    <string name="label_starting_recipe">Východiskový recept</string>
+    <string name="label_starting_amount">Východiskové množstvo</string>
+    <string name="msg_brewing_set_recipe_invalid">Zadajte kladný pomer a množstvo alebo nechajte množstvo prázdne.</string>
+    <string name="msg_brewing_sets_onboarding">Vyberte svoje vybavenie. Pridajte sady pre domov alebo prácu a vyberte, ktorá sa otvorí ako prvá.</string>
+    <string name="action_create_brewing_set">Vytvoriť sadu</string>
+    <string name="cd_brewing_set_options">Možnosti sady %1$s</string>
+    <string name="msg_saved_brewing_calculation">Uložený výpočet: %1$s. Novým množstvom ho nahradíte.</string>
+</resources>

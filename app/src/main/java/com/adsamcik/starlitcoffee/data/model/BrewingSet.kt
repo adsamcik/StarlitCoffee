@@ -23,8 +23,8 @@ data class BrewingSet(
     }
 
     /** Equipment edits preserve calculator input already saved by another screen. */
-    fun editedOver(current: BrewingSet?): BrewingSet = if (current == null) this else copy(
-        setup = if (method == current.method) current.setup.copy(
+    fun editedOver(current: BrewingSet?, replaceRecipe: Boolean = false): BrewingSet = if (current == null) this else copy(
+        setup = if (method == current.method && !replaceRecipe) current.setup.copy(
             filterType = setup.filterType, grinderId = setup.grinderId,
         ) else setup,
         revision = current.revision + 1,
@@ -34,10 +34,11 @@ data class BrewingSet(
 data class BrewingSetSelection(val sets: List<BrewingSet>, val activeId: String) {
     val active: BrewingSet get() = sets.first { it.id == activeId }
 
-    fun upsert(set: BrewingSet): BrewingSetSelection {
+    fun upsert(set: BrewingSet, replaceRecipe: Boolean = false): BrewingSetSelection {
         val valid = requireNotNull(set.validated())
         val existing = sets.find { it.id == valid.id }
-        val edited = valid.editedOver(existing)
+        require(!replaceRecipe || existing == null || existing.revision == valid.revision)
+        val edited = valid.editedOver(existing, replaceRecipe)
         return if (existing == null) copy(sets = sets + edited, activeId = edited.id)
         else copy(sets = sets.map { if (it.id == edited.id) edited else it })
     }

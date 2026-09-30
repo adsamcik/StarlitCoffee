@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_set_name_optional">Naam (optioneel)</string>
+    <string name="label_starting_recipe">Startrecept</string>
+    <string name="label_starting_amount">Starthoeveelheid</string>
+    <string name="msg_brewing_set_recipe_invalid">Voer een positieve verhouding en hoeveelheid in of laat de hoeveelheid leeg.</string>
+    <string name="msg_brewing_sets_onboarding">Kies je apparatuur. Voeg sets toe voor thuis of werk en kies welke als eerste opent.</string>
+    <string name="action_create_brewing_set">Set maken</string>
+    <string name="cd_brewing_set_options">Opties voor %1$s</string>
+    <string name="msg_saved_brewing_calculation">Opgeslagen berekening: %1$s. Voer een hoeveelheid in om deze te vervangen.</string>
+</resources>
