@@ -887,7 +887,21 @@ fun BagInventoryScreen(
                 brewViewModel.exploreApprovedQrLink(url, callback)
             },
             onRetryLlmEnrichment = {
-                isProcessingScan = brewViewModel.retryBagPhotoLlm(bagDraftSessionId)
+                if (!isProcessingScan) {
+                    val retrySessionId = bagDraftSessionId
+                    isProcessingScan = true
+                    coroutineScope.launch {
+                        var retryStarted = false
+                        try {
+                            (context.applicationContext as? StarlitCoffeeApp)?.reconnectMindlayerIfUnavailable()
+                            if (showAddSheet && bagDraftSessionId == retrySessionId) {
+                                retryStarted = brewViewModel.retryBagPhotoLlm(retrySessionId)
+                            }
+                        } finally {
+                            if (bagDraftSessionId == retrySessionId) isProcessingScan = retryStarted
+                        }
+                    }
+                }
             },
             onEnableAi = aiConsentFlow.request,
             onInstallLabelRecognition = {

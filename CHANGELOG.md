@@ -106,6 +106,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Coffee-label recognition now offers retry for connection and model failures
+  instead of asking already-authorized users to approve it again. Missing models
+  retain the setup action, and genuine authorization failures retain approval.
 - AI troubleshooting records now honor diagnostic capture and deletion controls,
   retain only typed outcomes and numeric measurements, and remove old raw AI
   output and error samples on upgrade.

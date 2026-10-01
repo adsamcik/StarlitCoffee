@@ -22,6 +22,7 @@ import com.adsamcik.mindlayer.sdk.MindlayerException
 import com.adsamcik.mindlayer.shared.MindlayerErrorCode
 import com.adsamcik.mindlayer.ModelReadinessItem
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
+import com.adsamcik.starlitcoffee.util.RecognitionCapability
 import com.adsamcik.starlitcoffee.domain.scandiagnostics.LlmDiagnosticsRecorder
 import com.adsamcik.starlitcoffee.domain.scandiagnostics.LlmPassDiagnostic
 import kotlinx.coroutines.Dispatchers
@@ -210,6 +211,9 @@ class MindlayerLlmInferenceProvider(
         return state == ConnectionState.CONNECTED || state == ConnectionState.CONNECTING
     }
 
+    override fun unavailableCapability(): RecognitionCapability =
+        mindlayerConnectionCapability(mindlayer.connectionState.value)
+
     override fun supportsVision(): Boolean {
         // Disabled once the per-process vision budget is consumed (see the
         // one-shot circuit breaker in extractBagFieldsWithVision).
@@ -318,46 +322,45 @@ class MindlayerLlmInferenceProvider(
             throw e
         } catch (e: MindlayerException) {
             recordPass(LlmPassDiagnostic.Pass.TEXT, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, failure = e)
-            LlmExtractionResult.Failed(
-                "Inference failed: ${e.message}",
+            currentCoroutineContext().ensureActive()
+            mindlayerFailureResult(
+                e, mindlayer.connectionState.value, "Inference failed",
                 retryable = e.isRetryableForScan(),
-                retryAfterMs = e.retryAfterMs,
             )
         } catch (e: Exception) {
             recordPass(LlmPassDiagnostic.Pass.TEXT, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, failure = e)
-            LlmExtractionResult.Failed("Inference failed: ${e.message}", retryable = true)
+            currentCoroutineContext().ensureActive()
+            mindlayerFailureResult(e, mindlayer.connectionState.value, "Inference failed", retryable = true)
         }
     }
 
     private suspend fun prepareTextExtraction(
         request: LlmExtractionRequest,
-    ): LlmExtractionResult.Unavailable? {
-        val connectionFailure = try {
+    ): LlmExtractionResult? {
+        val readiness = try {
             awaitMindlayerConnected()
-            null
+            mindlayer.getModelReadiness().item(ModelReadinessItem.FAMILY_CHAT)
         } catch (error: kotlinx.coroutines.CancellationException) {
             throw error
         } catch (error: Exception) {
-            LlmExtractionResult.Unavailable(
-                "Mindlayer service not available: ${error.message}",
-            )
+            currentCoroutineContext().ensureActive()
+            return mindlayerUnavailableResult(error, mindlayer.connectionState.value)
         }
-        if (connectionFailure != null) return connectionFailure
-        val readiness = mindlayer.getModelReadiness()
-            .item(ModelReadinessItem.FAMILY_CHAT)
         if (readiness?.state == ModelReadinessItem.STATE_SETUP_REQUIRED) {
             return LlmExtractionResult.Unavailable(
                 reason = "Mindlayer chat model setup is required",
-                setupRequired = true,
+                capability = RecognitionCapability.ASSET_SETUP_REQUIRED,
             )
         }
-        if (readiness?.state == ModelReadinessItem.STATE_FAILED) {
+        if (readiness?.state == ModelReadinessItem.STATE_FAILED ||
+            readiness?.state == ModelReadinessItem.STATE_IN_PROGRESS
+        ) {
             return LlmExtractionResult.Unavailable(
                 "Mindlayer chat model is unavailable: ${readiness.reasonCode ?: "unknown error"}",
             )
         }
         if (request.rawOcrText.isNullOrBlank()) {
-            return LlmExtractionResult.Unavailable(
+            return LlmExtractionResult.Failed(
                 "No OCR text available for LLM extraction (text-only mode)",
             )
         }
@@ -426,7 +429,8 @@ class MindlayerLlmInferenceProvider(
         } catch (e: kotlinx.coroutines.CancellationException) {
             throw e
         } catch (e: Exception) {
-            return@withContext LlmExtractionResult.Unavailable("Mindlayer service not available: ${e.message}")
+            currentCoroutineContext().ensureActive()
+            return@withContext mindlayerUnavailableResult(e, mindlayer.connectionState.value)
         }
         try {
             mindlayer.prewarm(PREWARM_BACKEND)
@@ -481,10 +485,12 @@ class MindlayerLlmInferenceProvider(
             LlmExtractionResult.Unavailable("Vision budget already used this session")
         } catch (e: MindlayerException) {
             recordPass(LlmPassDiagnostic.Pass.VISION, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, failure = e)
-            LlmExtractionResult.Failed("Vision inference failed: ${e.message}", retryable = false)
+            currentCoroutineContext().ensureActive()
+            mindlayerFailureResult(e, mindlayer.connectionState.value, "Vision inference failed", retryable = false)
         } catch (e: Exception) {
             recordPass(LlmPassDiagnostic.Pass.VISION, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, failure = e)
-            LlmExtractionResult.Failed("Vision inference failed: ${e.message}", retryable = false)
+            currentCoroutineContext().ensureActive()
+            mindlayerFailureResult(e, mindlayer.connectionState.value, "Vision inference failed", retryable = false)
         } finally {
             bitmap.recycle()
         }
@@ -510,7 +516,8 @@ class MindlayerLlmInferenceProvider(
         } catch (e: kotlinx.coroutines.CancellationException) {
             throw e
         } catch (e: Exception) {
-            return@withContext LlmExtractionResult.Unavailable("Mindlayer service not available: ${e.message}")
+            currentCoroutineContext().ensureActive()
+            return@withContext mindlayerUnavailableResult(e, mindlayer.connectionState.value)
         }
         try {
             mindlayer.prewarm(PREWARM_BACKEND)
@@ -564,10 +571,12 @@ class MindlayerLlmInferenceProvider(
             throw e
         } catch (e: MindlayerException) {
             recordPass(LlmPassDiagnostic.Pass.COMBINE, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, failure = e)
-            LlmExtractionResult.Failed("Combine inference failed: ${e.message}", retryable = false)
+            currentCoroutineContext().ensureActive()
+            mindlayerFailureResult(e, mindlayer.connectionState.value, "Combine inference failed", retryable = false)
         } catch (e: Exception) {
             recordPass(LlmPassDiagnostic.Pass.COMBINE, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, failure = e)
-            LlmExtractionResult.Failed("Combine inference failed: ${e.message}", retryable = false)
+            currentCoroutineContext().ensureActive()
+            mindlayerFailureResult(e, mindlayer.connectionState.value, "Combine inference failed", retryable = false)
         }
     }
 
@@ -582,7 +591,8 @@ class MindlayerLlmInferenceProvider(
         } catch (e: kotlinx.coroutines.CancellationException) {
             throw e
         } catch (e: Exception) {
-            return@withContext LlmExtractionResult.Unavailable("Mindlayer service not available: ${e.message}")
+            currentCoroutineContext().ensureActive()
+            return@withContext mindlayerUnavailableResult(e, mindlayer.connectionState.value)
         }
         try {
             mindlayer.prewarm(PREWARM_BACKEND)
@@ -636,10 +646,12 @@ class MindlayerLlmInferenceProvider(
             throw e
         } catch (e: MindlayerException) {
             recordPass(LlmPassDiagnostic.Pass.REFINE, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, failure = e)
-            LlmExtractionResult.Failed("Refine inference failed: ${e.message}", retryable = false)
+            currentCoroutineContext().ensureActive()
+            mindlayerFailureResult(e, mindlayer.connectionState.value, "Refine inference failed", retryable = false)
         } catch (e: Exception) {
             recordPass(LlmPassDiagnostic.Pass.REFINE, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, failure = e)
-            LlmExtractionResult.Failed("Refine inference failed: ${e.message}", retryable = false)
+            currentCoroutineContext().ensureActive()
+            mindlayerFailureResult(e, mindlayer.connectionState.value, "Refine inference failed", retryable = false)
         }
     }
 

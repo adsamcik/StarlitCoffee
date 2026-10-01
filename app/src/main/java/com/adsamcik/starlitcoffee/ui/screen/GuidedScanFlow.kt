@@ -49,7 +49,6 @@ import com.adsamcik.starlitcoffee.util.MindlayerAvailability
 import com.adsamcik.starlitcoffee.util.MindlayerInstallLink
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
 import com.adsamcik.starlitcoffee.util.RecognitionUiStateMapper
-import com.adsamcik.starlitcoffee.util.RecognitionCapability
 import com.adsamcik.starlitcoffee.util.ScanPhotoStorage
 import com.adsamcik.starlitcoffee.viewmodel.BagScanCaptureViewModel
 import com.adsamcik.starlitcoffee.viewmodel.BagScanDraftViewModel
@@ -475,27 +474,18 @@ fun ScanAddBagReview(
         isRetryingLlm,
     ) {
         if (durableDraft != null) {
-            val capability = when {
-                data.llmStatus == LlmEnrichmentStatus.SETUP_REQUIRED ->
-                    RecognitionCapability.ASSET_SETUP_REQUIRED
-                data.llmStatus == LlmEnrichmentStatus.UNAVAILABLE &&
-                    !MindlayerAvailability.isSupported() ->
-                    RecognitionCapability.UNSUPPORTED
-                data.llmStatus == LlmEnrichmentStatus.UNAVAILABLE &&
-                    !mindlayerInstalled ->
-                    RecognitionCapability.INSTALLATION_REQUIRED
-                data.llmStatus == LlmEnrichmentStatus.UNAVAILABLE ->
-                    RecognitionCapability.AUTHORIZATION_REQUIRED
-                else -> durableDraft.recognitionCapability
-            }
-            RecognitionUiStateMapper.map(
-                capability = capability,
-                runState = durableDraft.recognitionRunState,
+            RecognitionUiStateMapper.fromPipeline(
+                pipelineStatus = data.llmStatus,
+                isProcessing = data.isProcessing || isRetryingLlm,
                 preference = recognitionPreference,
                 hasValues = durableDraft.fields.values.any { !it.value.isNullOrBlank() },
                 unresolvedCount = durableDraft.fields.values.count {
                     it.reviewState == BagDraftReviewState.NEEDS_REVIEW
                 },
+                mindlayerSupported = MindlayerAvailability.isSupported(),
+                mindlayerInstalled = mindlayerInstalled,
+                fallbackCapability = durableDraft.recognitionCapability,
+                fallbackRunState = durableDraft.recognitionRunState,
             )
         } else {
             RecognitionUiStateMapper.fromPipeline(
@@ -528,7 +518,18 @@ fun ScanAddBagReview(
         onScanMorePhotos = callbacks.onScanMore,
         onExploreQrUrl = { url, callback -> brewViewModel.exploreApprovedQrLink(url, callback) },
         onRetryLlmEnrichment = {
-            isRetryingLlm = data.sessionId?.let(brewViewModel::retryBagPhotoLlm) == true
+            if (!isRetryingLlm && !data.isProcessing) {
+                isRetryingLlm = true
+                scope.launch {
+                    var retryStarted = false
+                    try {
+                        (context.applicationContext as? StarlitCoffeeApp)?.reconnectMindlayerIfUnavailable()
+                        retryStarted = data.sessionId?.let(brewViewModel::retryBagPhotoLlm) == true
+                    } finally {
+                        isRetryingLlm = retryStarted
+                    }
+                }
+            }
         },
         onEnableAi = aiConsentFlow.request,
         onInstallLabelRecognition = {

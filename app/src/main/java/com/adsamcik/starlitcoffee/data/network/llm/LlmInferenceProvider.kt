@@ -1,5 +1,7 @@
 package com.adsamcik.starlitcoffee.data.network.llm
 
+import com.adsamcik.starlitcoffee.util.RecognitionCapability
+
 /**
  * API-agnostic contract for LLM-based bag field extraction.
  *
@@ -116,6 +118,9 @@ interface LlmInferenceProvider {
      * connection state. Callers may invoke this from Main.
      */
     fun isAvailable(): Boolean
+
+    /** Cached reason for skipping a call. Consent requires positive authorization evidence. */
+    fun unavailableCapability(): RecognitionCapability = RecognitionCapability.TEMPORARILY_UNAVAILABLE
 
     /**
      * Optionally pre-warm the provider so the first [extractBagFields] call

@@ -25,6 +25,7 @@ import com.adsamcik.starlitcoffee.scan.observability.LegacyLlmDiagnosticsStore
 import com.adsamcik.starlitcoffee.scan.observability.TraceboxLlmDiagnosticsRecorder
 import com.adsamcik.starlitcoffee.util.MindlayerAvailability
 import com.adsamcik.starlitcoffee.util.RecognitionPreference
+import com.adsamcik.starlitcoffee.util.RecognitionCapability
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -90,6 +91,10 @@ class StarlitCoffeeApp : Application() {
             )
         }
     }
+
+    /** Manual recovery reuses a healthy client and reconnects failed bindings without consent. */
+    suspend fun reconnectMindlayerIfUnavailable(): Boolean =
+        currentMindlayerServices()?.llmProvider?.isAvailable() == true || reconnectMindlayer()
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
@@ -280,6 +285,10 @@ class StarlitCoffeeApp : Application() {
             if (!MindlayerAvailability.isInstalled(app)) return false
             return app.currentMindlayerServices()?.llmProvider?.isAvailable() ?: true
         }
+
+        override fun unavailableCapability(): RecognitionCapability =
+            app.currentMindlayerServices()?.llmProvider?.unavailableCapability()
+                ?: RecognitionCapability.TEMPORARILY_UNAVAILABLE
 
         override suspend fun prewarm() {
             if (!app.isMindlayerEnrichmentEnabled()) return

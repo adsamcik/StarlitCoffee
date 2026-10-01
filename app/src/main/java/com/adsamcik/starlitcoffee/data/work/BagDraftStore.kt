@@ -171,7 +171,7 @@ internal fun BagScanDraft.applyRecognitionResult(
         phase = if (phase == BagDraftPhase.CAPTURING) BagDraftPhase.REVIEWING else phase,
         photoUris = incoming.updatedPhotoUrisOr(photoUris),
         fields = mergeRecognitionFields(incomingFields, sourceRevision, focusedFields),
-        recognitionRunState = incoming.resolveRecognitionRunState(incomingFields, terminal),
+        recognitionRunState = incoming.resolveRecognitionRunState(incomingFields, terminal, recognitionPreference),
         recognitionCapability = incoming.updatedRecognitionCapabilityOr(recognitionCapability),
         workId = workId ?: this.workId,
         resultJson = incoming.encodeToStoredJson(),
@@ -219,7 +219,17 @@ private fun BagPhotoProcessingResult.updatedPhotoUrisOr(
 private fun BagPhotoProcessingResult.resolveRecognitionRunState(
     incomingFields: Map<BagDraftField, BagDraftFieldValue>,
     terminal: Boolean,
+    preference: RecognitionPreference,
 ): RecognitionRunState = when {
+    terminal && (
+        llmStatus == LlmEnrichmentStatus.AUTHORIZATION_REQUIRED ||
+            llmStatus == LlmEnrichmentStatus.SETUP_REQUIRED
+        ) -> RecognitionRunState.IDLE
+    terminal && llmStatus == LlmEnrichmentStatus.UNAVAILABLE -> when {
+        preference == RecognitionPreference.ENABLED -> RecognitionRunState.RETRIABLE_FAILURE
+        incomingFields.isNotEmpty() -> RecognitionRunState.COMPLETE
+        else -> RecognitionRunState.IDLE
+    }
     terminal && (
         llmStatus == LlmEnrichmentStatus.FAILED ||
             llmStatus == LlmEnrichmentStatus.TIMED_OUT ||
@@ -233,8 +243,13 @@ private fun BagPhotoProcessingResult.resolveRecognitionRunState(
 private fun BagPhotoProcessingResult.updatedRecognitionCapabilityOr(
     currentCapability: RecognitionCapability,
 ): RecognitionCapability = when (llmStatus) {
+    LlmEnrichmentStatus.AUTHORIZATION_REQUIRED -> RecognitionCapability.AUTHORIZATION_REQUIRED
     LlmEnrichmentStatus.SETUP_REQUIRED -> RecognitionCapability.ASSET_SETUP_REQUIRED
     LlmEnrichmentStatus.UNAVAILABLE -> RecognitionCapability.TEMPORARILY_UNAVAILABLE
+    LlmEnrichmentStatus.SUCCEEDED,
+    LlmEnrichmentStatus.FAILED,
+    LlmEnrichmentStatus.TIMED_OUT,
+    -> RecognitionCapability.READY
     else -> currentCapability
 }
 
