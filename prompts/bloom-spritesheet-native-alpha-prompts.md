@@ -92,6 +92,14 @@ and [selected two-pose leaf repair](tomato-redesign-2026-10-01/leaf-repair.txt).
 
 ### Strawberry
 
+<!-- berry-family-redesign-2026-10-01:strawberry:start -->
+Richer original-finish follow-up ([review](../docs/reviews/berry-family-redesign-2026-10-01.md)):
+
+- [initial.txt](berry-family-redesign-2026-10-01/strawberry/initial.txt)
+- [late-bank.txt](berry-family-redesign-2026-10-01/strawberry/late-bank.txt)
+<!-- berry-family-redesign-2026-10-01:strawberry:end -->
+
+
 - [strawberry-initial.txt](bloom-revision-2026-10-01/strawberry-initial.txt)
 - [strawberry-retry1.txt](bloom-revision-2026-10-01/strawberry-retry1.txt)
 - [strawberry.txt](bloom-revision-2026-10-01/strawberry.txt)
@@ -116,11 +124,33 @@ Earlier 44-animation checkpoint prompts remain below.
 
 ### Blueberry
 
+<!-- berry-family-redesign-2026-10-01:blueberry:start -->
+Richer original-finish follow-up ([review](../docs/reviews/berry-family-redesign-2026-10-01.md)):
+
+- [initial.txt](berry-family-redesign-2026-10-01/blueberry/initial.txt)
+- [fruiting-bank.txt](berry-family-redesign-2026-10-01/blueberry/fruiting-bank.txt)
+- [fruiting-bank-repair.txt](berry-family-redesign-2026-10-01/blueberry/fruiting-bank-repair.txt)
+- [early-bank.txt](berry-family-redesign-2026-10-01/blueberry/early-bank.txt)
+- [early-bank-repair.txt](berry-family-redesign-2026-10-01/blueberry/early-bank-repair.txt)
+- [tone-repair.txt](berry-family-redesign-2026-10-01/blueberry/tone-repair.txt)
+<!-- berry-family-redesign-2026-10-01:blueberry:end -->
+
+
 - [blueberry-initial.txt](bloom-revision-2026-10-01/blueberry-initial.txt)
 - [blueberry-retry1.txt](bloom-revision-2026-10-01/blueberry-retry1.txt)
 - [blueberry.txt](bloom-revision-2026-10-01/blueberry.txt)
 
 ### Blackberry
+
+<!-- berry-family-redesign-2026-10-01:blackberry:start -->
+Richer original-finish follow-up ([review](../docs/reviews/berry-family-redesign-2026-10-01.md)):
+
+- [initial.txt](berry-family-redesign-2026-10-01/blackberry/initial.txt)
+- [repair-01.txt](berry-family-redesign-2026-10-01/blackberry/repair-01.txt)
+- [early-bridge.txt](berry-family-redesign-2026-10-01/blackberry/early-bridge.txt)
+- [late-ripening.txt](berry-family-redesign-2026-10-01/blackberry/late-ripening.txt)
+<!-- berry-family-redesign-2026-10-01:blackberry:end -->
+
 
 - [blackberry-initial.txt](bloom-revision-2026-10-01/blackberry-initial.txt)
 - [blackberry-retry1.txt](bloom-revision-2026-10-01/blackberry-retry1.txt)

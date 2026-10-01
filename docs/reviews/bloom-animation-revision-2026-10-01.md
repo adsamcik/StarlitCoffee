@@ -163,3 +163,9 @@ The initial final-build attempt encountered three Detekt findings in concurrentl
 
 The [Raspberry follow-up](raspberry-redesign-2026-10-01.md) restores the richer original branched berry-cluster finish. Its [manifest](raspberry-redesign-2026-10-01.json) contains the current resource/source hashes, original-final provenance and native validation. The preceding 44-animation report and hashes remain an archived checkpoint, including its earlier simplified Raspberry artwork.
 <!-- raspberry-redesign-2026-10-01:end -->
+
+<!-- berry-family-redesign-2026-10-01:start -->
+## Subsequent berry-family redesign
+
+The [berry-family follow-up](berry-family-redesign-2026-10-01.md) gives Strawberry, Blueberry and Blackberry richer, distinct final compositions and consistent growth. Its [manifest](berry-family-redesign-2026-10-01.json) contains the current resource/source hashes, exact prompt provenance and native validation. The preceding 44-animation report and hashes remain an archived checkpoint. The completed Raspberry follow-up remains unchanged.
+<!-- berry-family-redesign-2026-10-01:end -->

@@ -1,0 +1,29 @@
+Create a native-alpha 4x4 sprite bank: EXACTLY 16 complete blueberry plants, four equal columns and four equal rows, one whole plant per cell, no text or lines, generous fully transparent gutters. Every plant includes the complete SAME full-size brown split coffee bean and small soil ring. Fixed camera, lighting, painted material, baseline and bean dimensions throughout. No per-cell zoom. The supplied original final image is the identity and final architecture reference.
+
+This bank covers only the mature leafy plant developing buds into ripe berries. Start with the final branching skeleton and layered oval pointed leaves already established, and keep that exact skeleton/leaf count thereafter. Do not draw early sprouts in this bank. Preserve the original's abundant natural asymmetry and large dusty-blue berries; never simplify to four spheres.
+
+EXACT anatomy in ALL SIXTEEN cells:
+- SEVEN and only seven distinct hanging berry nodes, visible and attached from the FIRST cell: A left-upper, B left-lower, C middle-upper, D middle-front/lower, E upper-right, F far outer-right, G lower-right. Same stems, locations and overlap order in every cell. Make all seven countable; even youngest fruits are recognizable tiny spheres rather than ambiguous leaf-like buds.
+- TWO SEPARATE PALE IVORY/PINK HANGING BELL FLOWERS upper-left, above/beside berries A and B, plus the small green flower bud from the reference. The two bells are FULLY OPEN in every cell, identical pale cream in every cell. These flowers NEVER become fruit and NEVER turn pink-purple-blue during fruit ripening. Only the SEVEN spherical berry bodies change color.
+- Every established leaf and branch persists. Open leaves never close into buds. Keep the original layered pointed oval leaves and woody branched stem.
+- SAME bean and soil ring in every cell; no final-pose replacement. Young fruits grow on the already-complete skeleton, and the final reference supplies the exact target proportions.
+
+Chronological16 complete poses (read row-major). Every pose has all seven A–G fruit, two pale open bells, one green flower bud, same complete foliage/base:
+B01: All seven tiny light-green round ovaries, each with a tiny star-shaped calyx; about25% final berry diameter. Both pale hanging bells fully open.
+B02: Same seven green berries at35% final diameter; same two pale bells.
+B03: Same seven green berries at45% diameter, clearly separate calyx stars; same two pale bells.
+B04: Same seven green berries at55% diameter; same two pale bells.
+B05: Same seven green berries at65% diameter, rounded powdery surface; same two pale bells.
+B06: Same seven green berries at75% diameter; same two pale bells.
+B07: Same seven green berries at85% diameter, pale bloom; same two pale bells.
+B08: Same seven almost full-size green berries; A and B begin faint rosy blush. Same two pale bells.
+B09: A/B blush rose, C/D pale green, E/F/G green. All seven remain. BOTH bell flowers remain IVORY, not rose.
+B10: A/B plum purple, C/D rosy pink, E/F/G green. Seven berries. TWO IVORY BELLS.
+B11: A/B violet blue, C/D purple, E/F/G faint rose. Seven berries. TWO IVORY BELLS.
+B12: A/B dusty blue, C/D violet blue, E/F/G rose-purple. Seven berries. TWO IVORY BELLS.
+B13: A/B/C/D dusty blue, E/F/G purple. Seven berries. TWO IVORY BELLS.
+B14: A/B/C/D/E dusty blue, F/G violet. Seven berries. TWO IVORY BELLS.
+B15: A/B/C/D/E/F dusty blue, G violet-blue and almost full. Seven berries. TWO IVORY BELLS.
+B16: All seven A–G fully ripe dusty blue with dark calyx stars, original reference's rich berry arrangement and leafy composition. BOTH pale hanging bells still present. SAME bean, ring, branches and foliage asB01–15.
+
+The last four cells must visibly finish three right berries in order, not hold an already-complete plant. No berry reverses ripening. No fruit disappears, appears late, swaps position or replaces a bell. Dark star calyx crowns and pale powdery bloom make BLUEBERRY identity clear at148px. Warm tactile softly painted illustration matching reference, not glossy plastic. Genuine transparent background, no guides, no borders, no text.

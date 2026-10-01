@@ -1,0 +1,15 @@
+Generate a transparent 3x3 sprite bank: exactly NINE complete blueberry plant growth poses, three equal columns and three equal rows, chronological row-major. No text, grid, borders, guides or colored background. Each cell contains the complete bean/soil/plant with generous empty margins. The supplied image is the exact mature target's STYLE, BASE AND ARCHITECTURE reference. These nine poses are the EARLY growth stages only; do not show ripe blue fruit.
+
+INVARIANTS: the SAME full-sized split brown bean and small soil ring from the reference in every cell, fixed frontal camera, lighting, material, baseline, bean width and native-pixel scale. Do not make young bean smaller or final bean larger. Above the bean grows the same woody branched blueberry shrub, irregular oval-pointed leaves, seven attached fruit sites and two pale hanging bells. Preserve every leaf after it appears. No leaf or branch disappears, no open leaf becomes a bud.
+
+Pose1: Only the unchanged full-sized bean and soil ring, no green growth.
+Pose2: Tiny green tip emerges from the bean seam.
+Pose3: The same tip extends into a short curving green stem; one tiny folded lateral leaf.
+Pose4: Same stem and first leaf; a second opposite leaf unfolds; two small pointed-oval leaves visibly open.
+Pose5: Same retained lower pair widens, stem extends and upper leaf pair begins unfolding; four persistent leaf positions.
+Pose6: Same bean, retained four leaves and woody stem; natural side branches and more layered leaf tips emerge toward the reference's asymmetric architecture. No flowers/fruit yet.
+Pose7: Same bean and all established leaves; near-final branched leafy skeleton with seven TINY green berry buds at the permanent reference positions: twoleft, twomiddle, threeright. Two SEPARATE upperleft flower buds begin hanging, plus small green flower bud.
+Pose8: Same entire leaf/branch skeleton; ALL SEVEN buds become tiny round green ovaries with minute calyx stars, about20% matureberry diameter. TWO separate pale ivory-pink bell flowers open atupperleft and will remain bells. They never turn into berries. Preserve all leaf layers and every attachment.
+Pose9: Same complete plant and bean; ALL SEVEN green berries enlarge toabout40% mature diameter, all seven countable on fixed stems. TWO separate IVORY bell flowers stay open plus small green bud. The leafy architecture exactly approaches the attached mature target, only the seven berries are smaller and green.
+
+Always retain nodes: seven berries left2/middle2/right3 frompose7 onward, two upperleft hanging bells separate from berries, irregular layered pointedoval foliage and woody stems. Leaves are smooth oval, not serrated. Match reference's painted warm texture, no new art style. Fixed bean/ring and scale across9. End with young GREEN sevenberry plant, not ripe blue. Genuine alpha, no labels.

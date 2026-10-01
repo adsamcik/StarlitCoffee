@@ -28044,6 +28044,21 @@
       "animation_id": "raspberry",
       "review": "docs/reviews/raspberry-redesign-2026-10-01.json",
       "note": "The archived simplified-plant hashes describe the earlier checkpoint; current Raspberry restores its richer original identity with consistent growth."
+    },
+    {
+      "animation_id": "strawberry",
+      "review": "docs/reviews/berry-family-redesign-2026-10-01.json",
+      "note": "The archived 44-animation hashes describe the earlier checkpoint; current berry artwork restores its richer species-specific finish."
+    },
+    {
+      "animation_id": "blueberry",
+      "review": "docs/reviews/berry-family-redesign-2026-10-01.json",
+      "note": "The archived 44-animation hashes describe the earlier checkpoint; current berry artwork restores its richer species-specific finish."
+    },
+    {
+      "animation_id": "blackberry",
+      "review": "docs/reviews/berry-family-redesign-2026-10-01.json",
+      "note": "The archived 44-animation hashes describe the earlier checkpoint; current berry artwork restores its richer species-specific finish."
     }
   ]
 }

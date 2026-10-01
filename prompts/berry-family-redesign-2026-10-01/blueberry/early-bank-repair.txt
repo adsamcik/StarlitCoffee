@@ -1,0 +1,8 @@
+Edit the FIRST supplied image, the transparent 3x3 early-growth atlas, keeping panels1–6 completely unchanged. The SECOND image is a full seven-fruit architecture reference for the last row.
+Correct ONLY the three complete plant poses in the BOTTOM ROW (panels7,8,9) of the3x3 atlas. Each currently has onlyfive fruit. They must have SEVEN at the exact locations/branch map of the second reference: left-upper, left-lower, middle-upper, middle-front/lower, upper-right, outer-right, lower-right. Add the missing two CENTRAL fruit nodes on their own visible stems while retaining existingfive at their locations. No component disappearance. These are complete native poses, keep the wholebean/soil and fullleaves.
+
+Bottom-left panel7: same wholeplant with ALL SEVEN tiny green fruit ovaries at the seven sites, about25% mature diameter, still irregular tinycalyx shapes. TWO separate upperleft pale hanging bells, one newlyopening, and onegreenbud. Never count bellsasberries.
+Bottom-middle panel8: same SEVEN greenberries visiblyrounder, about35% maturediameter. Same2bellsnowopen,samegreenbud.
+Bottom-right panel9: same SEVEN green roundberries about45% maturediameter, smoothcalyxstars, same2openivorybells+bud. This must join the second reference's 7greenfruit nextpose naturally, with SAME branchattachment geometry, base and leafsilhouette. No ripefruit yet.
+
+Allthreebottomposes keep the same bean, soilring, camera, baseline, scale, lighting, paintedstyle and alreadyestablished foliage. Middle/frontlowerberry must sit abovebean and NEVER erase its stem or coverwholebean. Preserve natural asymmetry. Allother6poses unchanged, exact3x3transparent layout, clear gutters, no text or guides.
