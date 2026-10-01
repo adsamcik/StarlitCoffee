@@ -1,0 +1,35 @@
+Use case: stylized-concept.
+Asset type: production 25-frame growth-animation sprite sheet for a polished coffee app.
+Primary request: redesign Coffee plant as a compact, expressive growing coffee bush. One warm espresso seed bean develops a visible stem, broad glossy coffee leaves and four ripening red coffee cherries. This is a stylized compressed growth sequence, with every pose advancing a clear retained structure.
+Input image 1 is a STYLE REFERENCE ONLY for the tactile painted brown bean, not a sprite-sheet edit target. Improve its edges by removing the turquoise under-rim. Redraw a smaller, cohesive warm-brown bean while keeping that same new bean, seam and size identical in all25 new frames.
+Output: one square RGBA atlas with TRUE transparent background, EXACTLY5 columns and5 rows,25 complete isolated sprites, row-major chronological order. Nominal1280x1280 atlas with256x256 cells. No background painting, no ground patch or shadow, no text or labels, no frames, guides, grids, numbers, particles, cup, flowers or extra objects. Every leaf and fruit is opaque painted color, never a transparent hole.
+Composition: fixed front three-quarter viewpoint and orientation. At256px cell scale, bean about60px tall, final total plant190–200px tall and165–180px wide. Bean base fixed at bottom centre, substantial empty gutters and at least24px canvas padding. No cell-boundary contact or clipped leaves. Keep camera, plant axis and base locked; no per-frame rescaling to fill each cell.
+Design: final plant has EXACTLY THREE opposite pairs of broad glossy green leaves (six leaves total). Pointed oval leaves with gentle wavy edges and restrained warm gloss, dark forest-green rather than neon green. Upper pair smaller. Keep a visible central stem, air between tiers, curved leaf silhouettes and a balanced but natural canopy. Exactly TWO short side fruiting branches, each with TWO persistent cherries, four cherries total, staggered so all four are visible. Cherry diameter13–16px. Keep fruit visible in gaps, not hidden inside leaf texture. Ruby/warm-red fruit and natural brown-green stem give a distinctive coffee finish.
+Cumulative continuity: once a leaf, branch or fruit node appears it stays attached and visible thereafter; it can unfurl or plump but never disappear, shrink to a bud or reset. Each leaf pair opens over several frames. No changing leaf counts after six exist. Branches stay two; fruit nodes stay four after introduced. The lower foliage continues a gradual natural spread as the upper tiers form; final silhouette settles only atF25. Last two rows visibly extend branches, plump and ripen existing fruit, and open the retained crown. Do not repeat a finished plant across the final row. Each frame must communicate a distinct useful step at148px, through structural growth or conspicuous ripening, not random texture flicker.
+Frame descriptions below are instructions only; NEVER render their labels or numbers. Each describes the COMPLETE visible plant, preserving everything already introduced:
+F01: One compact upright brown bean with a readable central crease; no shoot, leaves, branches or fruit.
+F02: Same bean and scale; upper crease parts just enough to show a short green tip inside, not a glow.
+F03: Same bean; a short green hook protrudes above its seam; no leaves yet.
+F04: Same bean; hook lengthens into a short upright stem with one folded paired tip; no open leaves.
+F05: Same bean and stem; two narrow first leaves begin separating left/right at the same lower node.
+F06: Same bean and stem; the same two lower leaves unfold halfway, exposing broad glossy surfaces.
+F07: Same bean and stem; exactly two open lower leaves, wider and slightly downward angled; central growing tip remains visible.
+F08: Same bean, stem and two lower leaves; stem extends upward and a second opposite pair appears as two small folded tips.
+F09: Same bean, stem and two lower leaves; the second opposite pair opens halfway, four visible leaves total.
+F10: Same bean and stem; exactly four open leaves in two distinct tiers, with clear air between tiers and visible stem.
+F11: Same bean, stem and four open lower leaves; two folded upper tips emerge above them, six persistent leaf nodes total.
+F12: Same bean, stem and four lower leaves; upper pair opens halfway, all six leaf positions retained.
+F13: Same bean and central stem; exactly six open glossy leaves in three opposite pairs, smaller upper pair, two larger lower pairs; no fruit or side fruiting branches yet.
+F14: Same bean, stem and six leaves; exactly two short side-branch nubs emerge at the middle node, one left and one right, visible in the gaps between leaf tiers.
+F15: Same bean, central stem and six leaves; the same two side branches extend outward a little, with clear attachment to the stem; no new leaf tier.
+F16: Same bean, stem, six leaves and two branches; exactly four small green fruit nodules, two attached to each side branch, separated and fully countable.
+F17: Same retained bean, stem, six leaves, two branches and four fruit nodes; all four green nodules become small round cherries.
+F18: Same retained whole anatomy; the same four green cherries become clearly oval and larger, with space between them and the six leaves.
+F19: Same whole anatomy and exactly four cherries; left pair swells toward mature size and becomes yellow-green, right pair remains green and continues swelling.
+F20: Same bean, six leaves, stem, two branches and four cherries; left pair turns warm yellow-orange, right pair becomes yellow-green; fruit silhouettes continue filling out.
+F21: Same complete retained plant; left cherry pair turns coral-orange and right pair turns yellow-orange, with all four identities and attachments clear.
+F22: Same complete retained plant; left two cherries become warm red, right two remain orange; both branches and all six leaves stay visible.
+F23: Same complete retained plant; left pair stays warm red, right pair turns coral-red and rounds further, with no added fruit or leaves.
+F24: Same complete retained plant; all four cherries are warm red, the right pair just short of final oval fullness; existing upper leaves reach nearly their final spread.
+F25: Same bean, central stem, three opposite leaf pairs, two branches and exactly four fully plump warm-red cherries; final leaf spread and slight branch weight settle. Crisp tactile highlights, no extra nodes, glow, sparkle or new object.
+Render the full25-frame atlas now. Prioritize retained anatomy, coherent leaf/fruit attachment, readable maturation and polished painterly material over decorative complexity. Preserve true alpha and comfortable gutters.

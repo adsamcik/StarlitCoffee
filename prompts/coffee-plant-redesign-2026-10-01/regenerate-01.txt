@@ -1,0 +1,36 @@
+Use case: stylized-concept.
+Asset type: 25-frame production growth sprite-sheet redesign for Coffee plant.
+Input image1 is ONLY a single mature-pose reference for leaf material, compact bean and fruit style. It is NOT an atlas to edit or a finished pose to repeat. Create a fresh sequence.
+Output EXACT5 columns by5 rows, one square RGBA transparent atlas, EXACT25 whole isolated sprites in row-major chronological order. Nominal1280px with256px cells; comfortably transparent gaps and24px minimum inset. No text/grid/numbers/guides/ground/shadows/flowers/cup/extraobjects. Retain opaque colored leaf and bean surfaces, TRUE native transparency around them.
+CRITICAL FIXED REFERENCE: use exactly the same small upright brown bean, same60px-source height, same45px-source width, same crease and base position in ALL25 frames including every row boundary. Final mature totalheight195–200px andwidth175–180px, bean60px throughout. NEVER shrink or replace bean/plant atF15→16. Zero per-frame zoom, zero row-based resizing. No turquoise rim.
+Style: rich painterly dark-green coffee foliage, gentle wavy pointed oval leaf contours, restrained warm glints and veins, visible green/brown central stem, plump ruby coffee cherries. Broad leaves must be clear at148px, no dense fernlike canopy.
+CUMULATIVE ANATOMY: only THREE pairs of opposite leaves, exactlySIX mature leaves. First pair is the lowest final tier and remains present at its original stem attachment. The second pair forms ABOVE the first. The third pair forms ABOVE the second. NEVER invent a new broad pair BELOW already-grown leaves, reinterpret a tier, erase it, or shrink it when the next tier appears. Keep the lower leaves full and gently expanding. Grow the stem upward to make new tiers, not reconstruct the canopy. Stem remains visible between tiers.
+ExactlyTWO short persistent lateral fruiting branches attached near the middle node, each bearing exactlyTWO fruit nodes. Introduce allFOUR nodules visibly together atF16. They remain four as they grow and ripen, staggered and separated so allfour count at148px. Never2berries→4berries latejump. Fruit source diameter12px when greenF18,15px atF23,17px atF25.
+Do not finish early and hold. Leaves unfold gradually through F18, then retained crown continues subtle spread while FOUR cherries become conspicuously warmer and plumper atF19–25. F24 still visibly less broad and fruit less plump thanF25. No swaying, random repainting, disappearing spears or alternating forked/closed tips. Each frame must progress useful structure or visibly ripen fruit, not textureonly.
+The following COMPLETE chronological states are instructions only; do NOT render numbers. Every state includes the identical compact bean, samebase, all prior leaves, branches and fruit:
+F01: Bare closed bean, no green tip.
+F02: Samebean with a CLEAR small3px green pointed shoot protruding at its top crease; make this readable, not only a texture change.
+F03: Green shoot about10px above bean, visibly taller.
+F04: Shoot about20px, its paired first leaf tips closed together.
+F05: Stem taller; TWO first lower leaves begin separating, about30% open.
+F06: SameTWO lower leaves,50% open, broadening surfaces.
+F07: SameTWO lower leaves75% open, gently curved.
+F08: FirstTWO leaves fully open; stem extends UP above their node with small second-pair folded buds.
+F09: Retain first fullpair. Secondpair ABOVE it separates intoTWO tiny narrow leaves,10% open.
+F10: Retain first fullpair. Secondpair25% open, clearly larger thanF09.
+F11: Retain first fullpair. Same secondpair40% open. FOUR leaves total. No sudden thirdpair.
+F12: Retain first fullpair. Same secondpair60% open, stem grows above it.
+F13: Retain first fullpair. Same secondpair80% open; TWO tiny third-pair buds appear ABOVE secondpair.
+F14: Retain first andsecond fullpairs. Thirdpair20% open ABOVE them, SIX visible leaves including the2small upper ones. TWO subtle lateral branch nubs emerge near middle node.
+F15: Retain lowerFOUR broad leaves. Same upperTHIRD pair40% open. TWO short side branches lengthen in visible gaps. Bean DOES NOT shrink.
+F16: Retain allSIX leaves, thirdpair60% open. TWO side branches each displayTWO tiny green nodules, FOUR nodules clearly visible together.
+F17: Samebean, SIX retained leaves, thirdpair75% open; FOUR green cherries plump noticeably. No added or erased leaves.
+F18: Samebean, SIX retained leaves, thirdpair90% open; FOUR round12px green cherries, visible air between fruit/leaves.
+F19: Samebean, SIX leaves, thirdpairfully open; crown still belowfinalspread. FOUR larger cherries, leftpair yellow-green and rightpairgreen.
+F20: Samebean, SIX retained leaves spread a little wider; FOUR cherries enlarge further, leftpairgold and rightpairyellow-green.
+F21: Samebean, sameSIX leaves/crown at90% finalspread. FOUR cherries; leftpairorange, rightpairgold.
+F22: Samebean, sameSIX leaves/crown at93% finalspread. FOUR cherries; leftpaircoral-red, rightpairorange.
+F23: Samebean, sameSIX leaves/crown at96% finalspread. FOUR15px cherries; leftpairruby-red, rightpaircoral.
+F24: Samebean, sameSIX leaves/crown at98% finalspread. AllFOUR cherriesred,16px and notyet asplump asF25.
+F25: Samebean, sameSIX leaves opened to final175–180px crownwidth, visible central stem, exactlyTWO fruiting branches and FOUR full17px ripe ruby cherries with gentle coherent highlights. Strong finalcoffeeplant silhouette, full foliage plus visible ripe fruit, no new anatomy.
+Render this complete fresh25-frame transparent atlas now. Geometry continuity and useful progression outrank ornate veins or random surface changes.

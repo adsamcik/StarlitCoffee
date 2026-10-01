@@ -62,6 +62,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   in light and dark themes. Finished previews match the bloom shown while brewing.
   Latte bloom now unfolds into a warm milk-foam heart with a progressive
   pull-through finish.
+  Coffee plant now grows fuller glossy foliage and four cherries that ripen
+  through the final frames.
 - Grinder choices now require a source-backed recommendation for the selected
   method and filter. Five precisely identified models use their actual setting
   notation, including Ode's numbered subdivisions and Niche's stepless dial.

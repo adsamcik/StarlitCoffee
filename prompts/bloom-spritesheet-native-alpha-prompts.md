@@ -64,6 +64,14 @@ supersedes the rosetta artwork below. Its exact prompts are
 
 ### Coffee plant
 
+The current [coffee bush redesign](../docs/reviews/coffee-plant-redesign-2026-10-01.md)
+supersedes the seedling artwork below. Its exact prompt set is
+[initial generation](coffee-plant-redesign-2026-10-01/initial.txt),
+[regeneration](coffee-plant-redesign-2026-10-01/regenerate-01.txt),
+[square atlas repair](coffee-plant-redesign-2026-10-01/repair-02.txt),
+[unsuccessful atlas fruit repair](coffee-plant-redesign-2026-10-01/repair-03.txt),
+and [selected isolated pose repair](coffee-plant-redesign-2026-10-01/frame12-repair.txt).
+
 - [coffee_plant-initial.txt](bloom-revision-2026-10-01/coffee_plant-initial.txt)
 - [coffee_plant-retry1.txt](bloom-revision-2026-10-01/coffee_plant-retry1.txt)
 - [coffee_plant.txt](bloom-revision-2026-10-01/coffee_plant.txt)

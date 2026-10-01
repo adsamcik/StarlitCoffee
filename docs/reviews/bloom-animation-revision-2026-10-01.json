@@ -28029,6 +28029,11 @@
       "animation_id": "coffee_latte",
       "review": "docs/reviews/latte-heart-redesign-2026-10-01.json",
       "note": "The archived rosetta hashes below describe this checkpoint; current Latte bloom uses the user-selected heart redesign."
+    },
+    {
+      "animation_id": "coffee_plant",
+      "review": "docs/reviews/coffee-plant-redesign-2026-10-01.json",
+      "note": "The archived seedling hashes below describe the 8735c18 checkpoint; current Coffee plant uses the reviewed coffee bush redesign."
     }
   ]
 }
