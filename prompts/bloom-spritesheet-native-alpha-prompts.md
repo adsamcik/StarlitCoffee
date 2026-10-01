@@ -98,6 +98,18 @@ and [selected two-pose leaf repair](tomato-redesign-2026-10-01/leaf-repair.txt).
 
 ### Raspberry
 
+<!-- raspberry-redesign-2026-10-01:start -->
+Richer original-finish follow-up ([review](../docs/reviews/raspberry-redesign-2026-10-01.md)):
+
+- [flower-repair.txt](raspberry-redesign-2026-10-01/flower-repair.txt)
+- [fruiting-bank.txt](raspberry-redesign-2026-10-01/fruiting-bank.txt)
+- [growth-bridge.txt](raspberry-redesign-2026-10-01/growth-bridge.txt)
+- [initial.txt](raspberry-redesign-2026-10-01/initial.txt)
+- [repair-01.txt](raspberry-redesign-2026-10-01/repair-01.txt)
+
+Earlier 44-animation checkpoint prompts remain below.
+<!-- raspberry-redesign-2026-10-01:end -->
+
 - [raspberry-initial.txt](bloom-revision-2026-10-01/raspberry-initial.txt)
 - [raspberry-retry1.txt](bloom-revision-2026-10-01/raspberry-retry1.txt)
 - [raspberry.txt](bloom-revision-2026-10-01/raspberry.txt)

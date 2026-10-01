@@ -157,3 +157,9 @@ The initial final-build attempt encountered three Detekt findings in concurrentl
 }
 
 ```
+
+<!-- raspberry-redesign-2026-10-01:start -->
+## Subsequent Raspberry redesign
+
+The [Raspberry follow-up](raspberry-redesign-2026-10-01.md) restores the richer original branched berry-cluster finish. Its [manifest](raspberry-redesign-2026-10-01.json) contains the current resource/source hashes, original-final provenance and native validation. The preceding 44-animation report and hashes remain an archived checkpoint, including its earlier simplified Raspberry artwork.
+<!-- raspberry-redesign-2026-10-01:end -->
