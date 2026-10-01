@@ -765,4 +765,18 @@
     <string name="msg_learning_intro">Vyberte zařízení a recept a potom si projděte jeden srozumitelný krok po druhém.</string>
     <string name="action_show_details">Zobrazit podrobnosti</string>
     <string name="action_hide_details">Skrýt podrobnosti</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Výsledky opětovného skenování</string>
+    <string name="title_rescan_no_changes">Nenalezeny žádné změny</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">%1$d údaj změněn:</item>
+        <item quantity="few">%1$d údaje změněny:</item>
+        <item quantity="many">%1$d údaje změněno:</item>
+        <item quantity="other">%1$d údajů změněno:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Zatím nebyly nalezeny žádné změny.</string>
+    <string name="msg_rescan_incomplete">Zkontrolujte již nalezené údaje nebo zkuste rozpoznávání znovu.</string>
+    <string name="action_update_bag_so_far">Aktualizovat s aktuálními výsledky</string>
+    <string name="action_new_bag_so_far">Nové balení s aktuálními výsledky</string>
 </resources>

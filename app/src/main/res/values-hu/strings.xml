@@ -734,4 +734,16 @@
     <string name="msg_learning_intro">Válasszon kávékészítőt és receptet, majd haladjon végig egyértelműen, lépésről lépésre.</string>
     <string name="action_show_details">Részletek megjelenítése</string>
     <string name="action_hide_details">Részletek elrejtése</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Újraolvasás eredményei</string>
+    <string name="title_rescan_no_changes">Nem találtunk változást</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">%1$d mező változott:</item>
+        <item quantity="other">%1$d mező változott:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Még nem találtunk változást.</string>
+    <string name="msg_rescan_incomplete">Tekintsd át a már megtalált adatokat, vagy próbáld újra a felismerést.</string>
+    <string name="action_update_bag_so_far">Frissítés a jelenlegi eredményekkel</string>
+    <string name="action_new_bag_so_far">Új csomag a jelenlegi eredményekkel</string>
 </resources>

@@ -736,4 +736,17 @@
     <string name="msg_learning_intro">Scegli una caffettiera e una ricetta, poi scopri un passaggio chiaro alla volta.</string>
     <string name="action_show_details">Mostra dettagli</string>
     <string name="action_hide_details">Nascondi dettagli</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Risultati della nuova scansione</string>
+    <string name="title_rescan_no_changes">Nessuna modifica trovata</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">%1$d campo modificato:</item>
+        <item quantity="many">%1$d campi modificati:</item>
+        <item quantity="other">%1$d campi modificati:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Nessuna modifica trovata finora.</string>
+    <string name="msg_rescan_incomplete">Controlla i dati già trovati o riprova il riconoscimento.</string>
+    <string name="action_update_bag_so_far">Aggiorna con i risultati attuali</string>
+    <string name="action_new_bag_so_far">Nuova confezione con i risultati attuali</string>
 </resources>

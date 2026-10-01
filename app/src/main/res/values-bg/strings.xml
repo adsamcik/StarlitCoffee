@@ -734,4 +734,16 @@
     <string name="msg_learning_intro">Изберете уред и рецепта, след което разгледайте всяка ясна стъпка поотделно.</string>
     <string name="action_show_details">Покажи подробности</string>
     <string name="action_hide_details">Скрий подробностите</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Резултати от повторното сканиране</string>
+    <string name="title_rescan_no_changes">Не са открити промени</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">Променено е %1$d поле:</item>
+        <item quantity="other">Променени са %1$d полета:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Все още не са открити промени.</string>
+    <string name="msg_rescan_incomplete">Прегледайте вече намерените данни или опитайте разпознаването отново.</string>
+    <string name="action_update_bag_so_far">Обнови с текущите резултати</string>
+    <string name="action_new_bag_so_far">Нова опаковка с текущите резултати</string>
 </resources>

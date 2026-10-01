@@ -738,4 +738,18 @@
     <string name="msg_learning_intro">Izberite pripravljalnik in recept, nato pa raziščite en jasen korak naenkrat.</string>
     <string name="action_show_details">Pokaži podrobnosti</string>
     <string name="action_hide_details">Skrij podrobnosti</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Rezultati ponovnega skeniranja</string>
+    <string name="title_rescan_no_changes">Ni najdenih sprememb</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">Spremenjeno %1$d polje:</item>
+        <item quantity="two">Spremenjeni %1$d polji:</item>
+        <item quantity="few">Spremenjena %1$d polja:</item>
+        <item quantity="other">Spremenjenih %1$d polj:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Za zdaj ni najdenih sprememb.</string>
+    <string name="msg_rescan_incomplete">Preglejte že najdene podatke ali poskusite prepoznavanje znova.</string>
+    <string name="action_update_bag_so_far">Posodobi s trenutnimi rezultati</string>
+    <string name="action_new_bag_so_far">Nova vrečka s trenutnimi rezultati</string>
 </resources>

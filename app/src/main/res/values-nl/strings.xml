@@ -733,4 +733,16 @@
     <string name="msg_learning_intro">Kies een koffiezetter en recept en doorloop steeds één duidelijke stap.</string>
     <string name="action_show_details">Details tonen</string>
     <string name="action_hide_details">Details verbergen</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Resultaten van opnieuw scannen</string>
+    <string name="title_rescan_no_changes">Geen wijzigingen gevonden</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">%1$d veld gewijzigd:</item>
+        <item quantity="other">%1$d velden gewijzigd:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Nog geen wijzigingen gevonden.</string>
+    <string name="msg_rescan_incomplete">Controleer de gevonden gegevens of probeer de herkenning opnieuw.</string>
+    <string name="action_update_bag_so_far">Bijwerken met huidige resultaten</string>
+    <string name="action_new_bag_so_far">Nieuwe zak met huidige resultaten</string>
 </resources>

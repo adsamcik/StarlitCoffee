@@ -109,6 +109,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Rescans now show ongoing label recognition and contextual recovery actions.
+  Available changes remain reviewable while recognition runs, and saving partial
+  results is labeled clearly instead of presenting an unfinished scan as complete.
 - Coffee-label recognition now offers retry for connection and model failures
   instead of asking already-authorized users to approve it again. Missing models
   retain the setup action, and genuine authorization failures retain approval.

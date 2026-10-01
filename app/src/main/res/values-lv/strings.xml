@@ -736,4 +736,17 @@
     <string name="msg_learning_intro">Izvēlieties pagatavošanas ierīci un recepti, pēc tam izpētiet katru skaidro soli atsevišķi.</string>
     <string name="action_show_details">Rādīt informāciju</string>
     <string name="action_hide_details">Paslēpt informāciju</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Atkārtotās skenēšanas rezultāti</string>
+    <string name="title_rescan_no_changes">Izmaiņas nav atrastas</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="zero">Mainīti %1$d lauki:</item>
+        <item quantity="one">Mainīts %1$d lauks:</item>
+        <item quantity="other">Mainīti %1$d lauki:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Vēl nav atrastas izmaiņas.</string>
+    <string name="msg_rescan_incomplete">Pārskatiet jau atrastos datus vai mēģiniet atpazīšanu vēlreiz.</string>
+    <string name="action_update_bag_so_far">Atjaunināt ar pašreizējiem rezultātiem</string>
+    <string name="action_new_bag_so_far">Jauns iepakojums ar pašreizējiem rezultātiem</string>
 </resources>

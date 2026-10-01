@@ -736,4 +736,17 @@
     <string name="msg_learning_intro">Escolha um método e uma receita e explore um passo claro de cada vez.</string>
     <string name="action_show_details">Mostrar detalhes</string>
     <string name="action_hide_details">Ocultar detalhes</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Resultados da nova leitura</string>
+    <string name="title_rescan_no_changes">Nenhuma alteração encontrada</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">%1$d campo alterado:</item>
+        <item quantity="many">%1$d campos alterados:</item>
+        <item quantity="other">%1$d campos alterados:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Ainda não foram encontradas alterações.</string>
+    <string name="msg_rescan_incomplete">Reveja os dados encontrados ou tente o reconhecimento novamente.</string>
+    <string name="action_update_bag_so_far">Atualizar com os resultados atuais</string>
+    <string name="action_new_bag_so_far">Novo pacote com os resultados atuais</string>
 </resources>

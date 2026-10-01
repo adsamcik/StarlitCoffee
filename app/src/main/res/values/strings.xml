@@ -942,4 +942,16 @@
     <string name="msg_learning_intro">Choose a brewer and recipe, then explore one clear step at a time.</string>
     <string name="action_show_details">Show details</string>
     <string name="action_hide_details">Hide details</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Rescan results</string>
+    <string name="title_rescan_no_changes">No changes found</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">%1$d field changed:</item>
+        <item quantity="other">%1$d fields changed:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">No changes found yet.</string>
+    <string name="msg_rescan_incomplete">Review the details already found, or try recognition again.</string>
+    <string name="action_update_bag_so_far">Update with current results</string>
+    <string name="action_new_bag_so_far">New bag with current results</string>
 </resources>

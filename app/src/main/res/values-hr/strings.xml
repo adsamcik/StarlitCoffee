@@ -736,4 +736,17 @@
     <string name="msg_learning_intro">Odaberite aparat i recept, a zatim prođite jedan jasan korak odjednom.</string>
     <string name="action_show_details">Prikaži pojedinosti</string>
     <string name="action_hide_details">Sakrij pojedinosti</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Rezultati ponovnog skeniranja</string>
+    <string name="title_rescan_no_changes">Nisu pronađene promjene</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">Promijenjeno %1$d polje:</item>
+        <item quantity="few">Promijenjena %1$d polja:</item>
+        <item quantity="other">Promijenjeno %1$d polja:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Još nisu pronađene promjene.</string>
+    <string name="msg_rescan_incomplete">Pregledajte već pronađene podatke ili pokušajte ponovno prepoznavanje.</string>
+    <string name="action_update_bag_so_far">Ažuriraj trenutačnim rezultatima</string>
+    <string name="action_new_bag_so_far">Nova vrećica s trenutačnim rezultatima</string>
 </resources>

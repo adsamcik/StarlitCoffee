@@ -734,4 +734,16 @@
     <string name="msg_learning_intro">Välj en bryggare och ett recept och utforska ett tydligt steg i taget.</string>
     <string name="action_show_details">Visa detaljer</string>
     <string name="action_hide_details">Dölj detaljer</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Resultat av ny skanning</string>
+    <string name="title_rescan_no_changes">Inga ändringar hittades</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">%1$d fält ändrat:</item>
+        <item quantity="other">%1$d fält ändrade:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Inga ändringar har hittats ännu.</string>
+    <string name="msg_rescan_incomplete">Granska uppgifterna som hittats eller försök läsa etiketten igen.</string>
+    <string name="action_update_bag_so_far">Uppdatera med aktuella resultat</string>
+    <string name="action_new_bag_so_far">Ny påse med aktuella resultat</string>
 </resources>

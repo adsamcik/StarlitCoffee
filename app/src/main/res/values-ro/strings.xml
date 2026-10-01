@@ -736,4 +736,17 @@
     <string name="msg_learning_intro">Alege un dispozitiv și o rețetă, apoi parcurge câte un pas clar.</string>
     <string name="action_show_details">Afișează detaliile</string>
     <string name="action_hide_details">Ascunde detaliile</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Rezultatele scanării repetate</string>
+    <string name="title_rescan_no_changes">Nu s-au găsit modificări</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">%1$d câmp modificat:</item>
+        <item quantity="few">%1$d câmpuri modificate:</item>
+        <item quantity="other">%1$d de câmpuri modificate:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Nu s-au găsit încă modificări.</string>
+    <string name="msg_rescan_incomplete">Verificați datele deja găsite sau încercați din nou recunoașterea.</string>
+    <string name="action_update_bag_so_far">Actualizare cu rezultatele curente</string>
+    <string name="action_new_bag_so_far">Pungă nouă cu rezultatele curente</string>
 </resources>

@@ -73,7 +73,6 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLocale
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import com.adsamcik.starlitcoffee.R
 import androidx.compose.ui.Alignment
@@ -92,8 +91,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.heading
-import androidx.compose.ui.semantics.LiveRegionMode
-import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -120,10 +117,7 @@ import com.adsamcik.starlitcoffee.util.CoffeeInputSuggestionEngine
 import com.adsamcik.starlitcoffee.util.CoffeeMetadataNormalizer
 import com.adsamcik.starlitcoffee.util.CoffeeVocabularyEntry
 import com.adsamcik.starlitcoffee.util.DateParser
-import com.adsamcik.starlitcoffee.util.RecognitionOffer
 import com.adsamcik.starlitcoffee.util.RecognitionPresentation
-import com.adsamcik.starlitcoffee.util.RecognitionRecoveryAction
-import com.adsamcik.starlitcoffee.util.RecognitionStatusText
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
 import com.adsamcik.starlitcoffee.util.ThumbnailLoader
 import kotlinx.coroutines.Dispatchers
@@ -802,14 +796,17 @@ fun AddBagSheet(
             ) {
                 item {
                     CapturedPhotoReviewStrip(capturedPhotoUris)
-                    RecognitionStatusRow(
+                    RecognitionStatusCard(
                         presentation = recognition,
-                        onRetry = onRetryLlmEnrichment,
-                        onEnable = onEnableAi,
-                        onInstall = onInstallLabelRecognition,
-                        onSetup = onSetupAi,
-                        onDisable = onDisableLabelRecognition,
-                        onRetake = onScanMorePhotos,
+                        actions = RecognitionActions(
+                            onRetry = onRetryLlmEnrichment,
+                            onEnable = onEnableAi,
+                            onInstall = onInstallLabelRecognition,
+                            onSetup = onSetupAi,
+                            onDisable = onDisableLabelRecognition,
+                            onRetake = onScanMorePhotos,
+                        ),
+                        enabled = !isSaving,
                     )
                     if (reviewHints.isNotEmpty()) {
                         ReviewHintsCard(reviewHints = reviewHints)
@@ -1982,90 +1979,6 @@ private fun FieldEvidenceAssist(
         label = { Text(evidence.localizedSummaryLabel()) },
         modifier = Modifier.padding(bottom = 8.dp),
     )
-}
-
-@Composable
-private fun RecognitionStatusRow(
-    presentation: RecognitionPresentation,
-    onRetry: (() -> Unit)?,
-    onEnable: (() -> Unit)?,
-    onInstall: (() -> Unit)?,
-    onSetup: (() -> Unit)?,
-    onDisable: (() -> Unit)?,
-    onRetake: (() -> Unit)?,
-) {
-    val message = when (presentation.status) {
-        RecognitionStatusText.CHECKING_LABEL -> stringResource(R.string.msg_checking_label)
-        RecognitionStatusText.CHECKING_MORE_DETAILS -> stringResource(R.string.msg_checking_more_details)
-        RecognitionStatusText.DETAILS_NEED_REVIEW -> pluralStringResource(
-            R.plurals.format_label_details_need_review,
-            presentation.unresolvedCount,
-            presentation.unresolvedCount,
-        )
-        RecognitionStatusText.COULD_NOT_READ_MORE -> stringResource(R.string.msg_could_not_read_more_details)
-        null -> null
-    }
-    if (message == null && presentation.offer == null && presentation.recoveryAction == null) return
-    ElevatedCard(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 12.dp)
-            .semantics {
-                if (presentation.announceUpdate) liveRegion = LiveRegionMode.Polite
-            },
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            message?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-            if (presentation.offer != null) {
-                Text(
-                    text = stringResource(R.string.msg_label_recognition_offer),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-            when {
-                presentation.offer == RecognitionOffer.FINISH_SETUP && onSetup != null -> {
-                    TextButton(onClick = onSetup) {
-                        Text(stringResource(R.string.action_finish_label_recognition_setup))
-                    }
-                }
-                presentation.offer == RecognitionOffer.INSTALL && onInstall != null -> {
-                    TextButton(onClick = onInstall) {
-                        Text(stringResource(R.string.action_set_up_label_recognition))
-                    }
-                }
-                presentation.offer == RecognitionOffer.ENABLE && onEnable != null -> {
-                    TextButton(onClick = onEnable) {
-                        Text(stringResource(R.string.action_use_label_recognition))
-                    }
-                }
-                presentation.recoveryAction == RecognitionRecoveryAction.RETRY && onRetry != null -> {
-                    TextButton(onClick = onRetry) {
-                        Text(stringResource(R.string.action_try_label_again))
-                    }
-                }
-                presentation.recoveryAction == RecognitionRecoveryAction.RETAKE && onRetake != null -> {
-                    TextButton(onClick = onRetake) {
-                        Text(stringResource(R.string.action_retake_label_photo))
-                    }
-                }
-            }
-            if (presentation.offer != null && onDisable != null) {
-                TextButton(onClick = onDisable) {
-                    Text(stringResource(R.string.action_always_enter_manually))
-                }
-            }
-        }
-    }
 }
 
 @Composable

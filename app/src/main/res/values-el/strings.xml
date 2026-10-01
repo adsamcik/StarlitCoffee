@@ -734,4 +734,16 @@
     <string name="msg_learning_intro">Επιλέξτε συσκευή και συνταγή και εξερευνήστε ένα σαφές βήμα κάθε φορά.</string>
     <string name="action_show_details">Εμφάνιση λεπτομερειών</string>
     <string name="action_hide_details">Απόκρυψη λεπτομερειών</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Αποτελέσματα νέας σάρωσης</string>
+    <string name="title_rescan_no_changes">Δεν βρέθηκαν αλλαγές</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">Άλλαξε %1$d πεδίο:</item>
+        <item quantity="other">Άλλαξαν %1$d πεδία:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Δεν βρέθηκαν αλλαγές ακόμη.</string>
+    <string name="msg_rescan_incomplete">Ελέγξτε τα στοιχεία που βρέθηκαν ή δοκιμάστε ξανά την αναγνώριση.</string>
+    <string name="action_update_bag_so_far">Ενημέρωση με τα τρέχοντα αποτελέσματα</string>
+    <string name="action_new_bag_so_far">Νέα συσκευασία με τα τρέχοντα αποτελέσματα</string>
 </resources>

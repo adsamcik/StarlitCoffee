@@ -738,4 +738,18 @@
     <string name="msg_learning_intro">Pasirinkite kavos ruošimo įrenginį ir receptą, tada peržiūrėkite po vieną aiškų žingsnį.</string>
     <string name="action_show_details">Rodyti išsamią informaciją</string>
     <string name="action_hide_details">Slėpti išsamią informaciją</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Pakartotinio nuskaitymo rezultatai</string>
+    <string name="title_rescan_no_changes">Pakeitimų nerasta</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">Pakeistas %1$d laukas:</item>
+        <item quantity="few">Pakeisti %1$d laukai:</item>
+        <item quantity="many">Pakeista %1$d lauko:</item>
+        <item quantity="other">Pakeista %1$d laukų:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Kol kas pakeitimų nerasta.</string>
+    <string name="msg_rescan_incomplete">Peržiūrėkite jau rastus duomenis arba bandykite atpažinti dar kartą.</string>
+    <string name="action_update_bag_so_far">Atnaujinti dabartiniais rezultatais</string>
+    <string name="action_new_bag_so_far">Naujas pakelis su dabartiniais rezultatais</string>
 </resources>
