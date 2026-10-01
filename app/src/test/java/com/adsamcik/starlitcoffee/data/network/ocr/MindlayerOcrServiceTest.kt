@@ -10,6 +10,8 @@ import com.adsamcik.mindlayer.sdk.Capabilities
 import com.adsamcik.mindlayer.sdk.ConnectionState
 import com.adsamcik.mindlayer.sdk.InferenceBackend
 import com.adsamcik.mindlayer.sdk.Mindlayer
+import com.adsamcik.mindlayer.sdk.OcrHandle
+import com.adsamcik.mindlayer.sdk.OcrRequest
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.test.runTest
@@ -22,13 +24,14 @@ import kotlin.time.Duration.Companion.seconds
 
 /**
  * Fake [Mindlayer] exposing only what [MindlayerOcrService] actually calls
- * ([connectionState], [awaitConnected]). The project has no mocking library,
+ * ([connectionState], [awaitConnected], [ocr]). The project has no mocking library,
  * so every other member throws — this fake fails loudly if the code under
  * test ever starts depending on something new instead of silently returning
  * a meaningless stub.
  */
-private class FakeMindlayer(
-    private val onAwaitConnected: (Duration) -> Unit = {},
+internal class FakeMindlayer(
+    private val onAwaitConnected: suspend (Duration) -> Unit = {},
+    private val onOcr: suspend () -> OcrHandle.OneShot = { error("not used in test") },
     private val supportedFeatures: () -> Set<String>,
 ) : Mindlayer {
 
@@ -39,6 +42,8 @@ private class FakeMindlayer(
         onAwaitConnected(timeout)
         return Capabilities(supportedFeatures())
     }
+
+    override suspend fun ocr(build: OcrRequest.Builder.() -> Unit): OcrHandle.OneShot = onOcr()
 
     override fun disconnect(): Unit = error("not used in test")
 

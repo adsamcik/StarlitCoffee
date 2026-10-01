@@ -1,6 +1,6 @@
 # Starlit Coffee AI and telemetry integration audit
 
-Reviewed on 2026-10-01 against Starlit Coffee `06e11f0` and the existing working changes. This is an audit and validation report; recommendations below have not been implemented. Existing staged and unstaged application work was preserved.
+Reviewed on 2026-10-01 against Starlit Coffee `06e11f0` and the existing working changes. This audit preserves the original findings; subsequent fixes are recorded with each finding below. Existing staged and unstaged application work was preserved.
 
 The published dependencies are compatible at build level, but the integration has gaps in OCR recovery, diagnostic privacy, AI failure reporting, and recognition UX. Passing unit tests does not cover these scenarios. The local development checkouts also differ from the latest published packages and require separate coordination.
 
@@ -28,6 +28,12 @@ The local Mindlayer SDK keeps the existing inference/OCR signatures and appends 
 Evidence: `MindlayerOcrService.kt:117-132`, `FallbackOcrService.kt:38-45`, and `BagExtractionWorker.kt:123`. A standalone Kotlin probe compiled the exact current fallback helper and ran an inner timeout beneath an outer deadline. It reported `escaped:TimeoutCancellationException`, `fallbackCalls=0`, and `outerActive=true`. This confirms the coroutine behavior without claiming a live OCR engine timeout.
 
 Smallest remedy: convert the timeout owned by OCR into a null primary result, while checking that the caller is still active. Preserve real cancellation and the overall scan deadline. Add distinct regressions for owned timeout, caller cancellation, outer deadline, and durable worker outcome. Existing tests cover ordinary failure and cancellation, but not this distinction.
+
+Resolution on 2026-10-01: the production one-shot boundary now uses `withTimeoutOrNull`, returning a null primary result only when its own 60-second budget expires. The SDK's bounded five-second connection timeout also becomes unavailable when the caller remains active. Activity checks before converting timeouts or ordinary failures prevent fallback when the SDK translates a cancelled caller's timeout into a typed connection error. `FallbackOcrService` continues to propagate cancellation unchanged, and fallback uses the original scan deadline. Static timeout warnings contain no recognized text.
+
+Twelve unit regressions exercise the production service with fake Mindlayer handles: submission/await timeouts, cleanup before fallback, timely success, caller cancellation, independently nested timeout, expiry during OCR or fallback, connection timeout ownership, and SDK timeout-to-error translation. Before the timeout fix, four cases reproduced the escaping timeout. Two additional cases reproduced fallback starting after SDK-translated caller cancellation before the activity guards were added. This verifies the coroutine boundary, not Android bitmap encoding, native recognition, or a durable worker run on a device.
+
+Final fix validation used the repository's pinned Mindlayer `1.0.0-alpha.7` and Tracebox `0.1.0-alpha.7`: all 12 new regressions passed, and the full app unit suite reported 1,455 tests (1,451 executed, four skipped), zero failures, and zero errors. Detekt, debug APK assembly, and release-source compilation passed. The local log is `build/ocr-timeout-fix-validation.log`.
 
 ### P1 AI diagnostic text bypasses the visible privacy controls
 

@@ -106,6 +106,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Coffee-label scans now fall back to bundled text recognition when Mindlayer
+  recognition or its connection wait times out, while preserving cancellation
+  and the original scan deadline.
 - Espresso now supports planning by the amount in the cup at its dose-to-yield
   ratio; its yield is no longer displayed as water input in the calculator.
 - GitHub Packages setup now verifies access to both dependency versions, reports
