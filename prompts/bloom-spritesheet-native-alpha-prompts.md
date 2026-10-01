@@ -78,6 +78,12 @@ and [selected isolated pose repair](coffee-plant-redesign-2026-10-01/frame12-rep
 
 ### Cherry tomato
 
+The current [tomato vine reconstruction](../docs/reviews/tomato-redesign-2026-10-01.md)
+works backward from the richer original finish. Its exact prompt set is
+[initial generation](tomato-redesign-2026-10-01/initial.txt),
+[atlas repair](tomato-redesign-2026-10-01/repair-01.txt),
+and [selected two-pose leaf repair](tomato-redesign-2026-10-01/leaf-repair.txt).
+
 - [cherry_tomato-initial.txt](bloom-revision-2026-10-01/cherry_tomato-initial.txt)
 - [cherry_tomato-retry1.txt](bloom-revision-2026-10-01/cherry_tomato-retry1.txt)
 - [cherry_tomato-retry2.txt](bloom-revision-2026-10-01/cherry_tomato-retry2.txt)

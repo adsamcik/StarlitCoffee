@@ -28034,6 +28034,11 @@
       "animation_id": "coffee_plant",
       "review": "docs/reviews/coffee-plant-redesign-2026-10-01.json",
       "note": "The archived seedling hashes below describe the 8735c18 checkpoint; current Coffee plant uses the reviewed coffee bush redesign."
+    },
+    {
+      "animation_id": "cherry_tomato",
+      "review": "docs/reviews/tomato-redesign-2026-10-01.json",
+      "note": "The archived four-fruit hashes describe the 8735c18 checkpoint; current Cherry tomato reconstructs the richer original finish with consistent growth."
     }
   ]
 }

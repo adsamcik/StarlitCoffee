@@ -64,6 +64,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   pull-through finish.
   Coffee plant now grows fuller glossy foliage and four cherries that ripen
   through the final frames.
+  Cherry tomato now grows clustered fruit and yellow blossoms toward its richer
+  original finish.
 - Grinder choices now require a source-backed recommendation for the selected
   method and filter. Five precisely identified models use their actual setting
   notation, including Ode's numbered subdivisions and Niche's stepless dial.
