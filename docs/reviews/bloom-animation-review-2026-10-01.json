@@ -1,0 +1,1630 @@
+{
+  "review_date": "2026-10-01",
+  "reviewer_model": "gpt-6-astra",
+  "source_commit": "06e11f00c988d1fe1b5c35a2f1333811cb9a0bb1",
+  "evidence_scope": "25 original frames each; derived 148px previews approximate renderer translation and two halo passes, Pillow bicubic differs from Compose Medium filtering; static custom app palette, not dynamic system colors. Anchor sums vectorized float32 approximate Kotlin sequential float accumulation.",
+  "reviewers": [
+    {
+      "model": "gpt-6-astra",
+      "reviewed_ids": [
+        "bleeding_heart",
+        "passionflower",
+        "bee_orchid",
+        "jade_vine",
+        "bird_of_paradise",
+        "blue_himalayan_poppy",
+        "rafflesia",
+        "chocolate_cosmos",
+        "flame_lily",
+        "queen_of_the_night",
+        "snowdrop",
+        "myosotis_sylvatica",
+        "fuchsia_ballerina",
+        "magnolia_dawn",
+        "iris_origami"
+      ],
+      "evidence_scope": "15 supplied botanical bloom animations; all 375 source frames viewed in original 5x5 sheets, then all 375 in each of the light and dark 148px corrected contact sheets.",
+      "shared_findings": [
+        "Fix hard asset defects first: Magnolia has duplicated subjects and broken bands; Fuchsia and Iris have background-colored holes through intended petal surfaces. No timing or glow treatment can repair those surfaces.",
+        "Every progress frame should change a readable growing structure: seed crack, attached stem, leaf unfurling, bud swelling, petal separation, or final center reveal. Fine repainting of a static bud contributes little at the actual viewing size.",
+        "The first-row-to-second-row boundary often resets growth; F5→6 should be checked as carefully as the final opening. Snowdrop even loses an apparent early bud there.",
+        "Plant identity must persist: keep each leaf junction, branch, bud and flower attached to the same location. Chocolate Cosmos and Snowdrop currently move or replace already open flowers, and Queen of the Night introduces unexplained late buds.",
+        "Use a stable seed/base shape and authored anchor. Runtime bottom-band correction can reduce translation, but cannot fix seed resizing, branch replacement or silhouette changes; its measured anchor range is not a pure motion metric.",
+        "Reserve safe margins after runtime correction and halo. Source clipping is visible on Jade Vine; approximate corrected previews also cut top details in several otherwise intact sheets. This requires actual Compose verification before declaring a fix.",
+        "Do not reserve all meaningful flower opening for F21–25. Passionflower, Bee Orchid and Iris spend too many frames in a near-held bud, then rush the most rewarding anatomy.",
+        "At 148px, value structure beats intricate texture: fewer separated Jade Vine claws, somewhat larger Myosotis faces, and brighter broad Chocolate Cosmos petal planes would communicate more clearly.",
+        "Perceptually redundant means near-held/repainted, not literally identical pixels. The parent evidence check reports no exact adjacent RGBA duplicate frames.",
+        "Final-frame impact should come from a complete, readable blossom and deliberate settling, not an abrupt whole-object zoom or surprise new branches. Preserve the calm character of the brewing flow."
+      ]
+    },
+    {
+      "model": "gpt-6-astra",
+      "reviewed_ids": [
+        "coffee_flower",
+        "coffee_starlit",
+        "coffee_latte",
+        "coffee_plant",
+        "cherry_tomato",
+        "strawberry",
+        "raspberry",
+        "blueberry",
+        "blackberry",
+        "coffee_brew",
+        "rose",
+        "lotus",
+        "sunflower",
+        "orchid",
+        "jasmine"
+      ],
+      "evidence_scope": "All 15 original 1280x1280 sheets and all 30 corresponding 148px light/dark labeled contact sheets were inspected visually, covering all 375 source frames. Frame references are 1-based, 5x5 row-major. Contact sheets approximate the current anchor translation and silhouette halos using Pillow bicubic; actual device pixels depend on density and the app uses a different sampling filter. Live Compose playback was not observed. No literal adjacent duplicate claims: near-holds refer to perceptual redundancy. Priorities concern progression, not wholesale replacement of final artwork.",
+      "shared_findings": [
+        "Every original sheet was visually inspected; no claims are based only on asset names or generation prompts.",
+        "The strongest improvement is temporal continuity: keep the same bean, stem, branches, petals, and fruit nodes across frames. Runtime translation can correct position but cannot repair anatomy replacements or growth reversal.",
+        "Several flower and magical sheets reach a convincing finish around F15-20 and spend the final frames on contour/texture redraws. Reallocate those frames to visible development, then use a small final settle.",
+        "Fruit sheets have richer narrative milestones but frequently introduce mature fruit at new positions. Earlier buds must establish the later harvest layout.",
+        "F5→6 and F20→21 deserve explicit checks because several row boundaries visibly reset growth or ripeness. Not every sheet has a row-boundary fault.",
+        "Preserve strong final artwork. Rebuild means restructuring the progression around it, not necessarily regenerating the entire visual style.",
+        "A useful frame changes one readable structural feature while preserving everything already grown; tiny sparks, texture variation, and petal repainting are weak substitutes at small display sizes.",
+        "Both light and dark 148px contact sheets were reviewed for every assigned id. Pale flowers remain readable through their outlines; luminous thin steam/loops lose more weight in light theme. These are approximate composites, not live Compose screenshots.",
+        "Possible faint source-cell residue was visually observed near jasmine F12-14, latte F19-20, and coffee_plant F7. Confirm with source alpha/component inspection before treating these as proven cleanup defects."
+      ]
+    },
+    {
+      "model": "gpt-6-astra",
+      "reviewed_ids": [
+        "king_protea_sunrise",
+        "dahlia_kaleidoscope",
+        "pincushion_firework",
+        "morning_glory_spiral",
+        "foxglove_chimes",
+        "cherry_blossom_wish",
+        "himalayan_lantern",
+        "black_bat_flower",
+        "water_lily_twilight",
+        "moonphase_magnolia",
+        "crema_chrysanthemum",
+        "stained_glass_iris",
+        "aurora_anemone",
+        "constellation_blossom"
+      ],
+      "evidence_scope": "Read-only visual review of all 14 original 1280x1280 sheets, every row-major F1-F25 cell, and all 28 derived 148px light/dark composites using approximate current per-frame anchor translation and two halo passes. No live Compose playback, device-density, timing, or reduced-motion proof.",
+      "shared_findings": [
+        {
+          "finding": "Repeated middle poses make the animation feel stalled, then rushed.",
+          "evidence": "Across most assigned sheets, roughly F11-20 retain a closed bud or sphere with texture/scale changes; F21-23 then carry most opening. Dahlia opens slightly earlier at F19-20 and bat flower at F17-20.",
+          "recommendation": "Replace near-held middle poses with identifiable seam release, petal unfolding and center reveal. A frame should advance silhouette, anatomy or a prepared light/reveal event, not just redraw texture."
+        },
+        {
+          "finding": "Theme-dependent holes are source-art problems, not simply low contrast.",
+          "evidence": "King protea, foxglove, cherry blossom, water lily, stained-glass iris, aurora anemone and constellation have areas that look like highlights on light but become background on dark. Morning glory additionally has large missing horizontal bands.",
+          "recommendation": "Inspect recoverable pre-matting images and alpha masks before regenerating art. Keep petal surfaces intact and validate on both actual theme backgrounds; do not compensate by making halos stronger."
+        },
+        {
+          "finding": "Late anatomical reversals weaken completion.",
+          "evidence": "Foxglove F21 lower bell is absent F22; water lily center visible F23 hidden F24 returns F25; iris front lower petal disappears/relocates F24; moonphase and constellation partly close F24; pincushion raises then removes a central cone F24-25.",
+          "recommendation": "Track the same petal/bell/center structures across frames, with monotonic opening until a small deliberate settling motion. Finish on an earned stable shape."
+        },
+        {
+          "finding": "Exact valid PNG geometry is insufficient for a usable animation.",
+          "evidence": "Morning glory shows more than one plant in several actual cells, horizontal cutouts and detached fragments despite being a nominal five-by-five image.",
+          "recommendation": "Review all 25 independently cropped cells as well as the sheet; enforce one continuous plant, no neighboring-frame remnants and consistent registration."
+        },
+        {
+          "finding": "Strong concepts survive at the intended small size.",
+          "evidence": "Dahlia's coral layers, pincushion's orange arcs, Himalayan lantern's shell reveal, crema's curls and moonphase's ivory sphere/flower are clear on both 148px composites.",
+          "recommendation": "Preserve these palettes and silhouettes. Spend effort on meaningful growth and anatomical continuity rather than adding particles, extra decoration, controls or more intricate texture."
+        },
+        {
+          "finding": "The current halo makes subtle outline artifacts visible, but it cannot hide major content problems.",
+          "evidence": "Approximate composites show gray or pale rims around some plants; dark bat flower detail still recedes and missing petal regions still change the flower between themes.",
+          "recommendation": "Repair assets first, then judge the halo at actual density and in the full UI. Keep contrast correction restrained and only as strong as needed for shape readability."
+        }
+      ]
+    }
+  ],
+  "priorities": {
+    "Targeted": 31,
+    "Rebuild": 12,
+    "Polish": 1
+  },
+  "animations": [
+    {
+      "id": "coffee_flower",
+      "label": "Coffee flower",
+      "source": "app/src/main/res/drawable-nodpi/bloom_coffee_flower_spritesheet.png",
+      "sha256": "d72b48ef60882a7eca3ee7e7b6f06de3293f214d620de618f8f4ecd897406d63",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "coffee_flower",
+        "strength": "The ivory flower against the glossy coffee bean is immediately readable; the broad five-petal finish is a strong, restrained reward.",
+        "issues": [
+          "F1-4 mostly changes the bean seam brightness; the silhouette offers little progress before F5.",
+          "F10-16 grows the bud clearly, but F17-19 spends three frames on nearly the same cupped shape.",
+          "F23→24 replaces the cupped flower with a front-facing five-petal layout in one step; the large lower petals arrive abruptly. F24-25 then adds very little."
+        ],
+        "recommendation": "Keep the final flower and bean. Redistribute two near-hold frames into intermediate outward/downward petal rotations before F24; track the same five petals from closed bud to finish. Make seam separation, rather than brightness alone, carry the early progress.",
+        "priority": "Targeted",
+        "confidence": "High for sheet anatomy and frame progression; playback pacing unobserved.",
+        "proposed_milestones": [
+          "F1 bean",
+          "F4 visible opening",
+          "F8 two leaves",
+          "F12 closed five-petal bud",
+          "F16 first petal separation",
+          "F20 partly unfolded star",
+          "F24 full star",
+          "F25 settle"
+        ],
+        "small_size_assessment": "Clear in both themes at 148px. Light-theme outlines preserve the ivory petals; the final five-petal silhouette reads more strongly than the earlier cup. The F23→24 change remains conspicuous at this scale."
+      }
+    },
+    {
+      "id": "coffee_starlit",
+      "label": "Starlit coffee",
+      "source": "app/src/main/res/drawable-nodpi/bloom_coffee_starlit_spritesheet.png",
+      "sha256": "577792400db11e2fed5d9f407552c5bb965d7ff8df6227e6b1c9311504714064",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "coffee_starlit",
+        "strength": "The luminous loops and surrounding stars create a recognizable magical identity with excellent large-shape contrast on dark backgrounds.",
+        "issues": [
+          "F4→5 jumps rapidly from an opening bean to a nearly full-height plume.",
+          "F5-9 largely redraws the plume; stars appear at F8 and disappear at F9 rather than establishing a growing constellation.",
+          "F15-18 already has the three-loop flower and four surrounding stars. F19-25 mostly removes the remaining top wisp and shuffles small details; completion has little new payoff.",
+          "Thin loop interiors and tiny sparks compete with the central motif rather than contributing equally useful progress."
+        ],
+        "recommendation": "Rebuild the progression around a persistent three-loop constellation while retaining the final palette and bean. Let a short plume trace the left, right, then top loop over distinct intervals; reveal stars only as their matching loop completes. Save closure of the top loop and one coherent final light expansion for F23-25.",
+        "priority": "Rebuild",
+        "confidence": "High for progression redundancy and discontinuous stars; light/dark contact sheets reviewed, playback unobserved.",
+        "proposed_milestones": [
+          "F1 bean",
+          "F5 short plume",
+          "F9 left arc",
+          "F13 two open arcs",
+          "F17 two closed loops",
+          "F21 top loop forming",
+          "F24 constellation complete",
+          "F25 settle"
+        ],
+        "small_size_assessment": "Excellent dark-theme readability. In light theme the loops/stars become fine outlined shapes and lose luminous impact, though still identifiable. A slightly stronger warm-gold edge on the major loops would help more than extra sparks."
+      }
+    },
+    {
+      "id": "coffee_latte",
+      "label": "Latte bloom",
+      "source": "app/src/main/res/drawable-nodpi/bloom_coffee_latte_spritesheet.png",
+      "sha256": "e0130d97cace39a92dc59bde2f614b163f8fa475593446ffc6ae2625059182ed",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "coffee_latte",
+        "strength": "The cream rosetta has an elegant, clean silhouette and a strong coffee-specific association; it needs very little extra decoration.",
+        "issues": [
+          "F5-9 repeats a tall steam shape without a clear transition toward the rosetta.",
+          "F10 has a broad cream surface and tall plume, then F11 collapses to a short sideways curl: a clear visual regression at the row boundary.",
+          "F13-15 adds most of the rosetta lobes quickly. F16-25 is essentially the finished leaf, with tip and contour repainting instead of meaningful growth."
+        ],
+        "recommendation": "Rebuild the middle and late progression using one continuous rosetta stem. Eliminate the F10→11 reset, add alternating cream lobes one pair at a time, and reserve the top lobe and final broadening for the last quarter. Preserve the restrained final artwork.",
+        "priority": "Rebuild",
+        "confidence": "High; major silhouette regression and prolonged finish are directly visible.",
+        "proposed_milestones": [
+          "F1 bean",
+          "F5 cream emerges",
+          "F9 lower lobe pair",
+          "F13 second pair",
+          "F17 third pair",
+          "F21 upper pair",
+          "F24 top heart/tip completes",
+          "F25 settle"
+        ],
+        "small_size_assessment": "The rosetta remains readable in both themes, with stronger impact on dark. F16-25 feels particularly static at 148px. F19-20 also shows faint horizontal stray marks above the main art in the supplied composites; verify and clear source-cell residue."
+      }
+    },
+    {
+      "id": "coffee_plant",
+      "label": "Coffee plant",
+      "source": "app/src/main/res/drawable-nodpi/bloom_coffee_plant_spritesheet.png",
+      "sha256": "ba2726d476f9c397573baa2be83edc145fcadade7d51f3781b51f3408fe5abf5",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "coffee_plant",
+        "strength": "The four broad glossy leaves read clearly, and the bean-to-sprout story is direct without requiring flower details.",
+        "issues": [
+          "F6→7 makes a large stem-height step while F7-9 changes little except tiny leaves.",
+          "F11→12 shrinks the established leaf pair; F13 enlarges it again, producing a growth reversal.",
+          "F15-18 shows a small paired shoot at the top, but F19 replaces it with a flat, cut-looking stem tip.",
+          "F19-24 offers almost the same two-tier plant, and F25 simply enlarges leaves. The final tip remains visually unfinished."
+        ],
+        "recommendation": "Repair the leaf-size reversal and carry the top shoot continuously into a small third leaf pair. Keep the two mature tiers stable while the new pair separates during F20-24; finish with a naturally tapered growing tip instead of a flat stump.",
+        "priority": "Targeted",
+        "confidence": "High; explicit anatomy reversals visible.",
+        "proposed_milestones": [
+          "F1 bean",
+          "F5 sprout",
+          "F9 first leaves unfold",
+          "F13 first pair mature",
+          "F17 second pair opens",
+          "F21 third pair separates",
+          "F25 compact three-tier plant"
+        ],
+        "small_size_assessment": "Leaf tiers read well in both themes. The F11→12 shrink and lost top leaves at F19 are obvious at 148px. A faint isolated horizontal mark is visible above F7; verify/clear source-cell residue."
+      }
+    },
+    {
+      "id": "cherry_tomato",
+      "label": "Cherry tomato",
+      "source": "app/src/main/res/drawable-nodpi/bloom_cherry_tomato_spritesheet.png",
+      "sha256": "75cb71d5b553a194c190783682ee5d0b6f36fbf5a00044b39a9de2790e7294ff",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "cherry_tomato",
+        "strength": "The combination of yellow flowers, green fruit, and bright red tomatoes gives excellent narrative variety and a visually generous final reward.",
+        "issues": [
+          "F1→2 abruptly rotates the bean from diagonal to upright; this reads as an object replacement without an intermediate turn.",
+          "F5→6 loses the developing branched tip and returns to a simpler single sprout.",
+          "F12→13 adds several substantial branches/leaves at once; F15→16 changes branch geometry while introducing the first flower and fruit.",
+          "F20→21 turns the upper ripe red tomato back into green and rearranges the lower clusters.",
+          "F24-25 has a compelling full harvest, but late fruits appear in new positions instead of consistently growing from established flowers."
+        ],
+        "recommendation": "Lock the bean orientation and main branch skeleton. Keep every fruit attached to the same node through green enlargement and red ripening; repair the F20→21 reverse-ripening first. Stage the two major lower clusters over the final six frames rather than adding a new harvest arrangement at the end.",
+        "priority": "Targeted",
+        "confidence": "High for visible fruit continuity and row-boundary regressions.",
+        "proposed_milestones": [
+          "F1 stable bean",
+          "F5 sprout",
+          "F10 established branches",
+          "F14 flower buds",
+          "F17 flowers and tiny green fruit",
+          "F20 first red cluster",
+          "F23 remaining fruit ripens",
+          "F25 full harvest"
+        ],
+        "small_size_assessment": "The final red fruit is clear in both themes. Mid-sequence green fruit competes with tiny leaves, so fewer stable clusters with clean gaps would communicate progress better than added fine detail."
+      }
+    },
+    {
+      "id": "strawberry",
+      "label": "Strawberry",
+      "source": "app/src/main/res/drawable-nodpi/bloom_strawberry_spritesheet.png",
+      "sha256": "d6f18c80fd27311885dd73641820acb294824cc390b0ff3213f53adafcd2b512",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "strawberry",
+        "strength": "The four large red berries and surviving white flower form one of the clearest final compositions; the triangular berry shape remains distinctive.",
+        "issues": [
+          "F1→2 changes bean orientation abruptly. F5→6 shortens the sprout after the first leaf pair has appeared.",
+          "F11→12 adds a large flower and substantial lower foliage in one step; the flower also moves toward the center in F13.",
+          "F15→16 removes/rearranges several flowers while introducing sizeable green berries, obscuring flower-to-fruit continuity.",
+          "F21→22 introduces a new lower-right green berry without an earlier visible flower at that node; the final four-fruit layout is only established late."
+        ],
+        "recommendation": "Keep the strong final layout but establish its four fruit nodes before flowering. Show each white flower closing into a small green berry at the same location, then enlarge and redden the berries on a staggered schedule. Repair the early sprout reset and stabilize the bean.",
+        "priority": "Targeted",
+        "confidence": "High for growth and node continuity; final berry shape confirmed readable in both 148px theme composites.",
+        "proposed_milestones": [
+          "F1 bean",
+          "F5 sprout",
+          "F10 compact foliage",
+          "F14 four flower nodes",
+          "F17 small green berries",
+          "F20 first two berries red",
+          "F23 third berry red",
+          "F25 four ripe berries"
+        ],
+        "small_size_assessment": "One of the strongest final silhouettes at 148px: four red berries remain separately recognizable in both themes. Seed detail remains a texture rather than a required cue; preserve the large berry shapes and spacing."
+      }
+    },
+    {
+      "id": "raspberry",
+      "label": "Raspberry",
+      "source": "app/src/main/res/drawable-nodpi/bloom_raspberry_spritesheet.png",
+      "sha256": "a1f4e551b862b01a4d006a4fe0ed1489e61e250b68ddf86bf58a048419b7e486",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "raspberry",
+        "strength": "The red compound berries contrast strongly with the leaves; the fruiting cane gives a richer endpoint than a simple single flower.",
+        "issues": [
+          "F1→2 changes bean orientation abruptly; the soil ring and bean texture continue to shift later.",
+          "F7→8 adds a large amount of foliage in one step; F10→11 introduces a prominent white flower while reshaping the canopy.",
+          "F12-17 already has the right fruiting branch but spends several frames moving small green berries around instead of clearly enlarging fixed berries.",
+          "F19→20 suddenly adds multiple large red berries, including a left berry. F23→24 substantially rearranges the fruit clusters, and F25 adds more fruit again."
+        ],
+        "recommendation": "Retain the recognizable raspberry texture but lock one cane and two fruiting branches. Establish all final berry nodes as buds by mid-sequence, grow them in place, and reserve ripening for the last third. Rework F19-25 as one coherent staggered harvest instead of several alternate final compositions.",
+        "priority": "Targeted",
+        "confidence": "High for changing cluster layout; botanical realism is not being asserted.",
+        "proposed_milestones": [
+          "F1 bean",
+          "F5 cane",
+          "F10 stable branches",
+          "F14 flowers and bud clusters",
+          "F18 green compound berries",
+          "F21 first red cluster",
+          "F24 all intended fruit ripe",
+          "F25 settle"
+        ],
+        "small_size_assessment": "Red berries and their compound texture remain recognizable in both themes, but tiny green berries/branchlets merge with leaves. Stable cluster locations and clear berry-to-leaf gaps matter more than fine thorns or vein detail."
+      }
+    },
+    {
+      "id": "blueberry",
+      "label": "Blueberry",
+      "source": "app/src/main/res/drawable-nodpi/bloom_blueberry_spritesheet.png",
+      "sha256": "39312e62d056648e4aa25ce17f201e677f47f8ae5599e16a2f1c469d7b6b7a00",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "blueberry",
+        "strength": "The bell-shaped flowers and powdery blue fruit give this animation a distinctive identity; the simple oval leaves avoid some of the visual clutter of other fruit plants.",
+        "issues": [
+          "F1→2 changes bean orientation and F5→6 shortens the seedling.",
+          "F10→11 adds several developed flowers abruptly; later flowers move between branches instead of consistently becoming fruit.",
+          "F18→19 turns several right berries blue in one step; F20→21 suddenly introduces a larger multi-berry arrangement and fruit on the left.",
+          "F22-25 mostly repaints/repositions already mature berries, with little remaining growth and some changing overlap."
+        ],
+        "recommendation": "Preserve the airy leaves and bell flowers. Establish the final two berry clusters earlier, transition each flower through a small green sphere, and stagger the blue color change. Spend F22-25 on the last berries reaching size/color while already ripe berries remain fixed.",
+        "priority": "Targeted",
+        "confidence": "High for observed cluster and ripening changes; both 148px theme composites reviewed.",
+        "proposed_milestones": [
+          "F1 bean",
+          "F5 seedling",
+          "F10 branch skeleton",
+          "F14 bell flowers",
+          "F17 small green berries",
+          "F20 first blue berries",
+          "F23 second cluster ripens",
+          "F25 final fullness"
+        ],
+        "small_size_assessment": "Blue fruit remains distinct from green leaves in both themes; the pale bell flowers read especially well on dark. Final overlapping berries are understandable as a cluster, but successive redraws produce little useful change at 148px."
+      }
+    },
+    {
+      "id": "blackberry",
+      "label": "Blackberry",
+      "source": "app/src/main/res/drawable-nodpi/bloom_blackberry_spritesheet.png",
+      "sha256": "809609b31ddf6d16c91a98fbda1ba7ab8ca422811b0b10dca7bc5a8005336e72",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "blackberry",
+        "strength": "The green-to-red-to-purple ripening story is strong, and the pale blossom provides a helpful contrasting focal point above the dark fruit.",
+        "issues": [
+          "F1→2 rotates the bean; F5→6 offers little additional silhouette development.",
+          "F10→11 swaps a leafy tip for an open flower without a clear bud-opening bridge.",
+          "F17→18 jumps from green to substantially larger red berries; F19 adds a large left fruit that was not established as a visible earlier bud.",
+          "F20→21 makes nearly the whole crop dark at once and relocates the upper cluster. F21-25 mainly shifts the finished berries and foliage.",
+          "F21-25 dark fruit is visually quieter than the red stage. It remains recognizable in the 148px dark composite, but stronger fruit-to-leaf gaps would preserve the final harvest emphasis."
+        ],
+        "recommendation": "Track four persistent fruit nodes from bud to green, red, and purple. Use the final five frames to ripen those nodes sequentially, preserve berry positions, and give the dark berries a slightly broader cool highlight and clear negative space from the bean/leaves.",
+        "priority": "Targeted",
+        "confidence": "High for sequence continuity; dark fruit remains identifiable in supplied 148px dark-theme approximation.",
+        "proposed_milestones": [
+          "F1 bean",
+          "F5 cane",
+          "F10 flower buds",
+          "F14 flowers/green fruit",
+          "F18 red fruit",
+          "F21 first purple fruit",
+          "F24 last fruit darkens",
+          "F25 settle"
+        ],
+        "small_size_assessment": "The dark fruit is still recognizable with the existing highlights/halo in the dark composite, but visually quieter than the red ripening stage. Keep clear gaps around fruit and broad highlights; do not brighten the whole asset or add more detail."
+      }
+    },
+    {
+      "id": "coffee_brew",
+      "label": "Coffee brew",
+      "source": "app/src/main/res/drawable-nodpi/bloom_coffee_brew_spritesheet.png",
+      "sha256": "fed686ff17d27bd721a15a88735ae4b3e5154bcc178402df687ebda28015e47f",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "coffee_brew",
+        "strength": "The warm steam/flame and opened bean are bold and readable, with a compact symmetric silhouette suited to a small brewing display.",
+        "issues": [
+          "F4→5 suddenly establishes a tall plume; F5-7 then changes mainly its contour.",
+          "F10→11 reduces the size/height of the steam and side curls at the row boundary.",
+          "F13-15 reaches the complete three-pronged steam motif. F16-25 largely repaints that same state and tiny sparks.",
+          "The final shape is visually close to coffee_starlit, reducing the distinction between the two choices; its finish has little new event."
+        ],
+        "recommendation": "Rebuild the timing around a continuous brewing plume while preserving the bean and colors. Let the side curls form gradually and rise/relax into a single coherent steam crown only near completion. Avoid star-like additions here so starlit owns the constellation finish; reserve the final frames for a readable final expansion and settle.",
+        "priority": "Rebuild",
+        "confidence": "High for long visual plateau and F10→11 shrink; relative theme identity is aesthetic judgment.",
+        "proposed_milestones": [
+          "F1 bean",
+          "F5 short steam",
+          "F9 rising main plume",
+          "F13 side curls emerge",
+          "F17 curls expand",
+          "F21 steam crown",
+          "F24 broad final plume",
+          "F25 settle"
+        ],
+        "small_size_assessment": "Main curls remain readable, especially on dark. Light theme reduces them to pale thin contours, weakening visual impact; strengthen selected warm-gold boundaries rather than expanding the halo or adding sparks."
+      }
+    },
+    {
+      "id": "rose",
+      "label": "Rose",
+      "source": "app/src/main/res/drawable-nodpi/bloom_rose_spritesheet.png",
+      "sha256": "da83c6f3e89a4b24041d4bd4030c773e6cb47736e3f1404caa202fce4d62f2dc",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "rose",
+        "strength": "The saturated red, layered bloom is immediately recognizable and creates a strong focal point without relying on particles.",
+        "issues": [
+          "F2-4 uses a bright red/orange seam flare that disappears when the sprout arrives at F5, adding an isolated effect rather than continuous growth.",
+          "F10→11 is nearly a hold, then F11→12 enlarges the red bud substantially in one step.",
+          "F17→18 changes a narrow upright bud into a broad, more front-facing rose abruptly.",
+          "F20-25 is already fully open and mostly redraws the petal spiral, with little distinguishable progress."
+        ],
+        "recommendation": "Keep the final rose. Redistribute late near-holds into intermediate opening poses between F12-20, tracking the same outer petal edges as they roll outward. Save the last outer-petal layer and gentle final widening for F23-25, and soften the isolated early flare.",
+        "priority": "Targeted",
+        "confidence": "High for silhouette transitions and late redundancy.",
+        "proposed_milestones": [
+          "F1 bean",
+          "F5 sprout",
+          "F10 small red bud",
+          "F14 swollen bud",
+          "F18 outer petals curl",
+          "F21 middle whorl opens",
+          "F24 full rose",
+          "F25 settle"
+        ],
+        "small_size_assessment": "Strong in both themes at 148px. Red and the broad whorled silhouette carry the identity; late internal petal redraws add little at this size. No extra particles or ornament are needed."
+      }
+    },
+    {
+      "id": "lotus",
+      "label": "Lotus",
+      "source": "app/src/main/res/drawable-nodpi/bloom_lotus_spritesheet.png",
+      "sha256": "fbf2319b9c36940856a961879a6df7d4739d24ac64d637bae0f12759d703236c",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "lotus",
+        "strength": "The broad layered ivory flower gives a calm, luminous finish, and the low bloom positioned near the bean feels balanced.",
+        "issues": [
+          "F9→10 changes a small green bud into a substantially larger white bud in one step.",
+          "F10-13 repeats a similar closed bud with only minor contour changes.",
+          "F15-18 spends four frames in a similar cup shape; F19→20 then adds a visibly new lower petal tier abruptly.",
+          "F21-25 has nearly the same fully opened silhouette, with petal rearrangement rather than a distinct final opening."
+        ],
+        "recommendation": "Preserve the layered finish but distinguish the tiers from the bud stage onward. Open the outer tier first, then the inner tier, with a persistent petal count/layout. Use the spare closed-bud and final-hold frames to bridge F19→20 and reveal the center only near completion.",
+        "priority": "Targeted",
+        "confidence": "High for tier appearance and redundant ranges.",
+        "proposed_milestones": [
+          "F1 bean",
+          "F5 sprout",
+          "F9 green bud",
+          "F13 layered ivory bud",
+          "F17 outer tier opens",
+          "F21 inner tier opens",
+          "F24 center reveal",
+          "F25 settle"
+        ],
+        "small_size_assessment": "The broad layered silhouette is clear in both themes. Light theme relies on gold outlines for inner-tier separation; preserve those boundaries. Most F21-25 differences become negligible at this scale."
+      }
+    },
+    {
+      "id": "sunflower",
+      "label": "Sunflower",
+      "source": "app/src/main/res/drawable-nodpi/bloom_sunflower_spritesheet.png",
+      "sha256": "5191c6d1e0f348284ac83d6752c8f9416a78d7a7543871b867e4c7392491314a",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "sunflower",
+        "strength": "One of the clearest sequences in this set: a round bud opens into a dark disk with bright yellow rays, and the radial silhouette stays recognizable at a glance.",
+        "issues": [
+          "F10→11 and F16→17 contribute little visible progress relative to adjacent steps.",
+          "F12→13 exposes much of the disk at once; a partial sepal-opening bridge would help.",
+          "F20-25 is effectively the mature flower, with slight petal redraws/scale changes rather than a purposeful final phase.",
+          "The bean seam flare F2-4 is more visually active than some later growth steps."
+        ],
+        "recommendation": "Polish the existing sequence rather than redesign it. Move one near-hold into the first disk reveal, keep the disk/petal arrangement fixed, and distribute the final ray-petal extension across F20-24 before a stable F25. Reduce incidental texture changes.",
+        "priority": "Polish",
+        "confidence": "High for relative clarity and redundant late frames; playback smoothness unobserved.",
+        "proposed_milestones": [
+          "F1 bean",
+          "F5 sprout",
+          "F10 round bud",
+          "F13 partial disk reveal",
+          "F17 short ray petals",
+          "F21 rays extending",
+          "F24 full sunflower",
+          "F25 settle"
+        ],
+        "small_size_assessment": "Best immediate small-size recognition in this group: dark disk, yellow rays, and green leaves are distinct in both themes. Final-frame redraws are barely meaningful, so continuity and timing are the priority."
+      }
+    },
+    {
+      "id": "orchid",
+      "label": "Orchid",
+      "source": "app/src/main/res/drawable-nodpi/bloom_orchid_spritesheet.png",
+      "sha256": "714d694d300b13765fa4dc4d356c88cccf8970d8521f7268ea414b96c570834c",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "orchid",
+        "strength": "The mature white orchid is elegant and distinctive, with a broad silhouette and colored lip that provide a clear visual reward.",
+        "issues": [
+          "F10-16 reads as a generic upright cup-shaped flower rather than an emerging orchid; most identity arrives very late.",
+          "F18→19 replaces the cup center with a detailed orchid lip and changes the side petals/front-facing geometry in one jump.",
+          "F19-25 is largely the completed orchid, with scale and small lip/petal redraws consuming the final quarter.",
+          "The subtle pale petal veins and small colored center will contribute less than the broad silhouette at app size."
+        ],
+        "recommendation": "Keep the mature orchid but rebuild F12-21 around its actual final petal arrangement: two broad side petals gradually separate and the lip unfurls downward from a persistent center. Spread that reveal over several frames and reserve final side-petal expansion for F22-24.",
+        "priority": "Targeted",
+        "confidence": "High for visible anatomy discontinuity; not a claim about biological timing.",
+        "proposed_milestones": [
+          "F1 bean",
+          "F5 sprout",
+          "F10 small bud",
+          "F14 orchid-specific folded bud",
+          "F18 side petals separating",
+          "F21 lip unfurls",
+          "F24 broad orchid",
+          "F25 settle"
+        ],
+        "small_size_assessment": "The final broad side petals identify the flower in both themes; the small colored lip remains visible but subtle. F18→19 is still a conspicuous design change at 148px. Preserve broad petal separation rather than increasing vein detail."
+      }
+    },
+    {
+      "id": "jasmine",
+      "label": "Jasmine",
+      "source": "app/src/main/res/drawable-nodpi/bloom_jasmine_spritesheet.png",
+      "sha256": "a045a868892b7d09f334212784da9d1c0aef4c4572e443db47237fab447762e8",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "jasmine",
+        "strength": "The final five-petal white star is simple, bright, and readable; the restrained palette works well with the coffee bean.",
+        "issues": [
+          "F12-14 has thin stray horizontal colored pixels visible above the bud in the original sheet; inspect and clear the affected cell margins.",
+          "F12-18 closely resembles the coffee_flower cup sequence, delaying jasmine's own narrow/star-shaped identity.",
+          "F19-22 moves through a bent, roughly four-lobed layout; F23 introduces a five-petal layout and F25 rearranges it again. The flower reads as changing designs rather than the same petals unfolding.",
+          "F20→21 mainly holds the earlier asymmetric form, leaving too few frames to resolve the final star continuously."
+        ],
+        "recommendation": "Clean the stray pixels and establish five persistent narrow petals in the closed bud. Unfold those same petals outward in a stable order from F15 onward, keeping the flower center and leaf positions fixed. Preserve the final star but bridge its lower petals over several frames.",
+        "priority": "Targeted",
+        "confidence": "High for visible late petal-layout changes; stray pixels observed in original rendering and should be confirmed by alpha inspection.",
+        "proposed_milestones": [
+          "F1 bean",
+          "F5 sprout",
+          "F10 small bud",
+          "F14 five-petal folded bud",
+          "F18 top/side petals open",
+          "F21 lower petals separating",
+          "F24 five-petal star",
+          "F25 settle"
+        ],
+        "small_size_assessment": "The final star is readable in both themes, but the preceding four-lobed/asymmetric forms make late progression feel like a changing flower design. F12-14 faint horizontal residue is also visible in the contact sheets."
+      }
+    },
+    {
+      "id": "bleeding_heart",
+      "label": "Bleeding heart",
+      "source": "app/src/main/res/drawable-nodpi/bloom_bleeding_heart_spritesheet.png",
+      "sha256": "041c1928c58422988a69d7795d410495179003e8fc46ce87dd41b80fe8989538",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "bleeding_heart",
+        "strength": "The arched pink heart raceme and white hanging tips are distinctive; F12–20 visibly develop the flower rather than just increasing scale.",
+        "issues": [
+          "F1→2 rotates a flat bean into an upright split seed without an intermediate; F5→6 removes the paired seed leaves and shortens the plant.",
+          "F10→11 substantially enlarges and repositions the lower foliage; F11→12 replaces the right leafy branch with a flowering raceme instead of retaining a clear branch-to-bud transition.",
+          "F15→16 shifts the plant left and changes the bean size; F18→19 introduces an already flowering left raceme. These read as composition changes rather than continuous growth.",
+          "F21–25 are nearly the same finished arrangement with small repaint/pose differences, while the hanging hearts crowd the horizontal bounds. Extra flower count is less valuable than readable heart silhouettes at 148px."
+        ],
+        "recommendation": "Keep the final heart design; rebuild only the structural transitions using fixed bean and branch landmarks. Carry seed leaves through F5–7, establish the left raceme as tiny buds before F18, and use the last five frames for sequential heart swelling and white-tip emergence on existing stalks.",
+        "priority": "Targeted",
+        "confidence": "High for static anatomy, continuity and perceptual holds across all 25 frames; medium for runtime clipping/feel because theme composites approximate Compose and actual playback was not observed.",
+        "proposed_milestones": [
+          "F1–5 crack and rooted paired leaves",
+          "F6–10 continuous arch and permanent foliage",
+          "F11–15 visible buds on both racemes",
+          "F16–20 hearts inflate and tips release",
+          "F21–25 finish distal hearts without adding or moving branches"
+        ],
+        "small_size_theme_review": "At 148px the pink hearts remain readable in both themes, but the final cluster becomes crowded and the approximate corrected preview cuts the highest foliage at F21–25. Preserve gaps between hearts and leave post-correction top margin.",
+        "evidence": {
+          "raw_sheet": "app/src/main/res/drawable-nodpi/bloom_bleeding_heart_spritesheet.png",
+          "light_preview": "bleeding_heart_light.png",
+          "dark_preview": "bleeding_heart_dark.png",
+          "frames_visually_reviewed": "F1–25 row-major; all four row boundaries compared"
+        }
+      }
+    },
+    {
+      "id": "passionflower",
+      "label": "Passionflower",
+      "source": "app/src/main/res/drawable-nodpi/bloom_passionflower_spritesheet.png",
+      "sha256": "9380afe665755ad4ab9db005b304cf7f24326b5582ce8b8c182dcdec7417c135",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "passionflower",
+        "strength": "The final white petals, purple radial corona and raised green center form an excellent distinctive payoff; the curled tendrils provide a recognizable vine accent.",
+        "issues": [
+          "F1–3 mostly alter the seed crack; F5→6 reduces the visible sprout, losing early progress.",
+          "F10→11 jumps to a taller plant with a definite terminal bud; F12–18 repeatedly repaint an almost unchanged closed bud. F15→16 adds little visible progress.",
+          "F20→21 begins the actual opening very late. F23→24 suddenly reveals a fully formed raised center while the bean visibly shrinks and the composition changes.",
+          "F24→25 is predominantly enlargement; the most interesting corona separation is compressed into F21–24."
+        ],
+        "recommendation": "Preserve the final flower and allocate more frames to its opening: begin sepal separation around F14, reveal the corona progressively around F17–21, and grow the center through F22–25. Hold the bean, leaf junctions and flower attachment fixed while opening.",
+        "priority": "Targeted",
+        "confidence": "High for static anatomy, continuity and perceptual holds across all 25 frames; medium for runtime clipping/feel because theme composites approximate Compose and actual playback was not observed.",
+        "proposed_milestones": [
+          "F1–5 crack and continuous sprout",
+          "F6–10 leaves, tendrils and bud stalk",
+          "F11–15 bud swelling and first sepal separation",
+          "F16–20 petal fan and corona expansion",
+          "F21–25 center rises and flower settles"
+        ],
+        "small_size_theme_review": "At 148px the final corona/center is still readable on both themes. The near-held F12–18 buds are especially apparent, and the approximate corrected preview clips the top of the F12–15 buds.",
+        "evidence": {
+          "raw_sheet": "app/src/main/res/drawable-nodpi/bloom_passionflower_spritesheet.png",
+          "light_preview": "passionflower_light.png",
+          "dark_preview": "passionflower_dark.png",
+          "frames_visually_reviewed": "F1–25 row-major; all four row boundaries compared"
+        }
+      }
+    },
+    {
+      "id": "bee_orchid",
+      "label": "Bee orchid",
+      "source": "app/src/main/res/drawable-nodpi/bloom_bee_orchid_spritesheet.png",
+      "sha256": "780767341309498cf75eed2d12f55f5bc83b2a835796882204e62b992c869f68",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "bee_orchid",
+        "strength": "The pink three-part silhouette and dark patterned lip give a clear, charming identity once open.",
+        "issues": [
+          "F1→2 changes the seed orientation; F5→6 lowers the sprout/base composition.",
+          "F8→9 introduces both large leaves in one step; F12→13 jumps from a small green tip to a large pink bud.",
+          "F13–18 hold nearly the same closed bud, including the F15→16 row transition; most differences are contour and paint changes.",
+          "F20→21 exposes most of the dark lip in one step; F21→22 suddenly spreads both lateral petals. F23–25 increasingly enlarge the flower while shrinking the bean, creating a zoom-like finish instead of further opening."
+        ],
+        "recommendation": "Retain the finished orchid; replace redundant bud frames with leaf unfurling and staged lateral-petal/lip release. Fix bean scale and flower center, then finish by rounding the patterned lip and settling the three petals.",
+        "priority": "Targeted",
+        "confidence": "High for static anatomy, continuity and perceptual holds across all 25 frames; medium for runtime clipping/feel because theme composites approximate Compose and actual playback was not observed.",
+        "proposed_milestones": [
+          "F1–5 seed crack and sprout",
+          "F6–10 two leaves gradually unfurl",
+          "F11–15 pink bud grows and seams separate",
+          "F16–20 lip emerges and side petals lift",
+          "F21–25 petals spread and lip rounds at fixed scale"
+        ],
+        "small_size_theme_review": "At 148px the final lip and pink petals remain clear in both themes. The long bud hold is more obvious than its fine color changes; the approximate corrected preview clips F13–15 bud tips.",
+        "evidence": {
+          "raw_sheet": "app/src/main/res/drawable-nodpi/bloom_bee_orchid_spritesheet.png",
+          "light_preview": "bee_orchid_light.png",
+          "dark_preview": "bee_orchid_dark.png",
+          "frames_visually_reviewed": "F1–25 row-major; all four row boundaries compared"
+        }
+      }
+    },
+    {
+      "id": "jade_vine",
+      "label": "Jade vine",
+      "source": "app/src/main/res/drawable-nodpi/bloom_jade_vine_spritesheet.png",
+      "sha256": "14a1481b45a65d5eecadf88ee6752dc4631e9c6655c6799aa9ed6aedf9e9757a",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "jade_vine",
+        "strength": "Turquoise claw-shaped flowers and a hanging raceme create one of the most unusual and visually rewarding silhouettes in the set.",
+        "issues": [
+          "F5→6 removes the leaves and shortens the vine, an unmistakable reversal.",
+          "F9→10 makes a large foliage/stem jump. From about F10 onward the upper stem is visibly cut by the top cell edge, making the plant feel cropped instead of complete.",
+          "F10→11 adds a long dangling bud chain; F15→16 jumps from mostly closed narrow buds to many broad hooked flowers at once.",
+          "F18–25 add density faster than readable structure. F20→21 shifts/recomposes the bean and raceme, while F23–25 are almost finished-state repetitions with flowers crowded along the right and bottom edges."
+        ],
+        "recommendation": "Rebuild the composition with a complete curved vine inside a consistent safe margin. Preserve the claw design and turquoise color, reduce competing tendril detail, and open a fixed set of raceme buds in a clear top-to-bottom wave.",
+        "priority": "Rebuild",
+        "confidence": "High for static anatomy, continuity and perceptual holds across all 25 frames; medium for runtime clipping/feel because theme composites approximate Compose and actual playback was not observed.",
+        "proposed_milestones": [
+          "F1–5 stable seed and leafy vine tip",
+          "F6–10 continuous arch within bounds",
+          "F11–15 fixed hanging bud chain develops",
+          "F16–20 top-to-bottom claw opening",
+          "F21–25 lower claws finish with clear gaps"
+        ],
+        "small_size_theme_review": "At 148px the turquoise color reads well, but the tendrils, leaves and many claws compete for attention. Top clipping persists in both themes; fewer, more separated claws would be clearer.",
+        "evidence": {
+          "raw_sheet": "app/src/main/res/drawable-nodpi/bloom_jade_vine_spritesheet.png",
+          "light_preview": "jade_vine_light.png",
+          "dark_preview": "jade_vine_dark.png",
+          "frames_visually_reviewed": "F1–25 row-major; all four row boundaries compared"
+        }
+      }
+    },
+    {
+      "id": "bird_of_paradise",
+      "label": "Bird of paradise",
+      "source": "app/src/main/res/drawable-nodpi/bloom_bird_of_paradise_spritesheet.png",
+      "sha256": "15f10da57e9ecb34330e4e693eda10b52d4122cc85f81a973c343efbb314d43b",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "bird_of_paradise",
+        "strength": "The final orange fan against a blue spear has strong color contrast and an immediately readable directional silhouette.",
+        "issues": [
+          "F1→2 flips the seed orientation; F5→6 lowers the sprout. F8→9 produces the paired leaves abruptly.",
+          "F11→13 transforms the upright tip into the large horizontal sheath over very few frames.",
+          "F13–18 largely hold the horizontal green sheath, with only tiny tip-color changes; F15→16 actually appears to reduce the orange opening.",
+          "F20→21 adds much of the orange crest; F21→22 changes the supporting leaves and stem bend. F23–25 mostly enlarge/spread the completed flower as the bean shrinks."
+        ],
+        "recommendation": "Keep the final orange/blue silhouette; spend F13–20 opening the sheath and lifting individual orange segments with the blue spear emerging between them. Lock the stem bend, leaves and seed scale through the finish.",
+        "priority": "Targeted",
+        "confidence": "High for static anatomy, continuity and perceptual holds across all 25 frames; medium for runtime clipping/feel because theme composites approximate Compose and actual playback was not observed.",
+        "proposed_milestones": [
+          "F1–5 sprout from fixed bean",
+          "F6–10 leaf unfolding and stem elongation",
+          "F11–15 sheath bends and visibly separates",
+          "F16–20 orange segments and blue spear emerge",
+          "F21–25 fan spreads and settles"
+        ],
+        "small_size_theme_review": "At 148px the orange crest has good impact in both themes; the first orange traces around F15–18 are too small to communicate much progress. Keep the blue spear broad enough to separate from the sheath.",
+        "evidence": {
+          "raw_sheet": "app/src/main/res/drawable-nodpi/bloom_bird_of_paradise_spritesheet.png",
+          "light_preview": "bird_of_paradise_light.png",
+          "dark_preview": "bird_of_paradise_dark.png",
+          "frames_visually_reviewed": "F1–25 row-major; all four row boundaries compared"
+        }
+      }
+    },
+    {
+      "id": "blue_himalayan_poppy",
+      "label": "Blue Himalayan poppy",
+      "source": "app/src/main/res/drawable-nodpi/bloom_blue_himalayan_poppy_spritesheet.png",
+      "sha256": "164ef74e4174e41758eafbb6e64c5d4e8a2d3d980cdf5058daae2296c51cc791",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "blue_himalayan_poppy",
+        "strength": "The drooping neck, soft blue petals and yellow center give a graceful reveal; F22–25 have a clear increasing floral payoff.",
+        "issues": [
+          "F5→6 resets the sprout lower; F7→8 inserts two substantial leaves in one frame.",
+          "F10→11 abruptly bends the upright stalk into a hook while shrinking the leaves. F11→12 contributes almost no new silhouette before the bud appears at F13.",
+          "F15→16 reduces and repositions the bud/plant; F16–19 linger on similar half-covered blue buds.",
+          "F20→21 shifts the plant and reduces the bean/foliage; F23–25 enlarge and turn the flower toward the viewer rapidly, with F25 close to the right boundary."
+        ],
+        "recommendation": "Preserve the nodding blue bloom but distribute neck bending across F9–12 and keep the seed/leaf scaffold fixed. Move a few redundant bud frames into gradual cap peeling and a slower forward-facing petal spread, retaining space to the right.",
+        "priority": "Targeted",
+        "confidence": "High for static anatomy, continuity and perceptual holds across all 25 frames; medium for runtime clipping/feel because theme composites approximate Compose and actual playback was not observed.",
+        "proposed_milestones": [
+          "F1–5 sprout",
+          "F6–10 leaves and gradual neck curvature",
+          "F11–15 bud hangs and cap separates",
+          "F16–20 blue petals peel free",
+          "F21–25 bowl opens and yellow center becomes readable"
+        ],
+        "small_size_theme_review": "At 148px the blue/yellow final bloom is strong in both themes and the petals retain soft volume. F16–19's small seam changes contribute little; protect the right edge during the final expansion.",
+        "evidence": {
+          "raw_sheet": "app/src/main/res/drawable-nodpi/bloom_blue_himalayan_poppy_spritesheet.png",
+          "light_preview": "blue_himalayan_poppy_light.png",
+          "dark_preview": "blue_himalayan_poppy_dark.png",
+          "frames_visually_reviewed": "F1–25 row-major; all four row boundaries compared"
+        }
+      }
+    },
+    {
+      "id": "rafflesia",
+      "label": "Rafflesia",
+      "source": "app/src/main/res/drawable-nodpi/bloom_rafflesia_spritesheet.png",
+      "sha256": "630968180e0806ff90e058bacd05e265598234d54bb1178faaacbcee7efdf2d5",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "rafflesia",
+        "strength": "The five large fleshy lobes and dark central cup remain legible without a delicate stem; growth is expressed through a strong broadening silhouette.",
+        "issues": [
+          "F2→3 loses the bright inner crack and changes seed size; F4→5 visibly shrinks the emerging red point.",
+          "F11–13 are nearly the same segmented dome, then F14→15 jumps from a closed globe to five folded-out petals.",
+          "F15→16 and F20→21 continue reasonably, but F16–20 spend several frames mostly resizing the opening; F21–24 repeat a similar final lobe arrangement.",
+          "F25 mainly enlarges the final flower and adds central detail. The dense spots and glossy ridges compete with the central opening at small size; the bloom nearly fills the available width."
+        ],
+        "recommendation": "Preserve the broad five-lobed composition and use intermediate dome frames to show the seams pulling apart before each lobe folds outward. Keep the brown base stable, simplify spot contrast, and make the final change a readable opening/deepening of the central cup rather than overall zoom.",
+        "priority": "Targeted",
+        "confidence": "High for static anatomy, continuity and perceptual holds across all 25 frames; medium for runtime clipping/feel because theme composites approximate Compose and actual playback was not observed.",
+        "proposed_milestones": [
+          "F1–5 seed opens around rising red bud",
+          "F6–10 five-lobed dome inflates",
+          "F11–15 seams separate and lobes hinge outward",
+          "F16–20 lobes flatten around opening cup",
+          "F21–25 central structure reveals at fixed flower width"
+        ],
+        "small_size_theme_review": "At 148px the broad five-lobed flower is highly readable in both themes. Spot texture is busy but does not destroy recognition; prioritize the abrupt F14→15 unfolding and near-held final poses over radical restyling.",
+        "evidence": {
+          "raw_sheet": "app/src/main/res/drawable-nodpi/bloom_rafflesia_spritesheet.png",
+          "light_preview": "rafflesia_light.png",
+          "dark_preview": "rafflesia_dark.png",
+          "frames_visually_reviewed": "F1–25 row-major; all four row boundaries compared"
+        }
+      }
+    },
+    {
+      "id": "chocolate_cosmos",
+      "label": "Chocolate cosmos",
+      "source": "app/src/main/res/drawable-nodpi/bloom_chocolate_cosmos_spritesheet.png",
+      "sha256": "6f7574db721070b79eff23617231416cf39b340f5f61566570a18bc3a0486435",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "chocolate_cosmos",
+        "strength": "Deep burgundy flowers against fine green foliage create a restrained palette and a useful multi-flower progression.",
+        "issues": [
+          "F5→6 lowers and narrows the seedling; F7→8 swaps broad seed leaves for a branching feathery scaffold abruptly.",
+          "F10→11 replaces the top foliage with a bud-bearing stem. F12–15 repeatedly change bud positions rather than maintaining an obvious growing scaffold.",
+          "F15→16 instantly opens the main flower and loses the second bud; F17→18 reintroduces a side flower. This breaks flower identity.",
+          "F20→21 relocates the main flowers; F21–25 rearrange bloom/bud count and positions, including open side blooms apparently reverting to buds. The dark petals may be difficult to separate on dark surfaces."
+        ],
+        "recommendation": "Rebuild the frame sequence around three or four persistent stems, each with a tracked bud. Preserve the burgundy flower artwork, introduce each bud before opening, and stagger their openings without moving or closing an established bloom. Add enough petal-edge light to distinguish the flower on dark UI.",
+        "priority": "Rebuild",
+        "confidence": "High for static anatomy, continuity and perceptual holds across all 25 frames; medium for runtime clipping/feel because theme composites approximate Compose and actual playback was not observed.",
+        "proposed_milestones": [
+          "F1–5 seedling",
+          "F6–10 stable feathery foliage and main stem",
+          "F11–15 fixed secondary stems and buds",
+          "F16–20 main then side blooms open",
+          "F21–25 remaining buds open in place"
+        ],
+        "small_size_theme_review": "At 148px the burgundy flowers are visibly weaker against the dark theme than the green foliage and glossy bean, even with the preview halo. Lift the petals' broad planes and center contrast while retaining the dark chocolate character.",
+        "evidence": {
+          "raw_sheet": "app/src/main/res/drawable-nodpi/bloom_chocolate_cosmos_spritesheet.png",
+          "light_preview": "chocolate_cosmos_light.png",
+          "dark_preview": "chocolate_cosmos_dark.png",
+          "frames_visually_reviewed": "F1–25 row-major; all four row boundaries compared"
+        }
+      }
+    },
+    {
+      "id": "flame_lily",
+      "label": "Flame lily",
+      "source": "app/src/main/res/drawable-nodpi/bloom_flame_lily_spritesheet.png",
+      "sha256": "1fcd6fe3ac6a8cba5aa295a02279cfa8e261bfb2201dbd475c05ac5f88cfd09b",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "flame_lily",
+        "strength": "The red/yellow recurved petals are vivid, and the long stamens create a striking celebratory final silhouette.",
+        "issues": [
+          "F2→3 removes the luminous seed crack; F5→6 shifts the growing tip down.",
+          "F10→11 changes the stem to a curl; F12→13 introduces a large hanging bud with little buildup.",
+          "F15–18 are similar closed red-striped buds, then F18→19 jumps to the full upright flame shape with exposed stamens.",
+          "F20→21 shifts the main flower left. F21–25 largely enlarge and spread the finished flower while changing/removing the curled stem tip, rather than showing the petals progressively recurving."
+        ],
+        "recommendation": "Preserve the flame silhouette, replace repeated closed-bud frames with visible petal-tip separation, and show the petals folding backward in stages. Keep the hook and seed landmarks coherent; reveal stamens progressively after the first petals open.",
+        "priority": "Targeted",
+        "confidence": "High for static anatomy, continuity and perceptual holds across all 25 frames; medium for runtime clipping/feel because theme composites approximate Compose and actual playback was not observed.",
+        "proposed_milestones": [
+          "F1–5 continuous sprout",
+          "F6–10 leaves and hook growth",
+          "F11–15 hanging bud forms and reddens",
+          "F16–20 tips split and petals recurve",
+          "F21–25 stamens extend and petals finish curling"
+        ],
+        "small_size_theme_review": "At 148px the final red/yellow flower is vivid in both themes; thin stamens are secondary. Approximate corrected previews clip the upper curl around F12–15 and top petal tips in F24–25; keep the whole final silhouette inside a safe margin.",
+        "evidence": {
+          "raw_sheet": "app/src/main/res/drawable-nodpi/bloom_flame_lily_spritesheet.png",
+          "light_preview": "flame_lily_light.png",
+          "dark_preview": "flame_lily_dark.png",
+          "frames_visually_reviewed": "F1–25 row-major; all four row boundaries compared"
+        }
+      }
+    },
+    {
+      "id": "queen_of_the_night",
+      "label": "Queen of the Night",
+      "source": "app/src/main/res/drawable-nodpi/bloom_queen_of_the_night_spritesheet.png",
+      "sha256": "44f3d80edff78c69630e66f0f5711c92e3836da6afc8fa539764ffa4406adc19",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "queen_of_the_night",
+        "strength": "The cactus-like foliage and large layered white flower provide a strong identity, with meaningful opening changes through F16–21.",
+        "issues": [
+          "F5→6 slightly resets the shoot; F9→10 abruptly changes the number and arrangement of cactus segments.",
+          "F10→11 replaces the multi-segment canopy with a different scaffold and a fully hanging bud. F11–15 bud growth is legible, but the supporting segments repaint/change identities.",
+          "F15→16 shifts the plant left; F20→21 again shifts the composition and enlarges the flower, while the top foliage and right petals approach the frame bounds.",
+          "F21–22 are almost the same finished flower; F22→23 adds a mature side bud and F24→25 moves/adds a bud on the opposite side. The final frames dilute the main bloom with unexplained new growth."
+        ],
+        "recommendation": "Keep the layered white opening; use one stable cactus scaffold and introduce the flower stalk gradually. Remove the late unprepared side buds or seed them well before F20. Finish with the existing flower's inner petals opening, using a wider safe margin.",
+        "priority": "Targeted",
+        "confidence": "High for static anatomy, continuity and perceptual holds across all 25 frames; medium for runtime clipping/feel because theme composites approximate Compose and actual playback was not observed.",
+        "proposed_milestones": [
+          "F1–5 cactus shoot",
+          "F6–10 fixed segment scaffold and tiny bud stalk",
+          "F11–15 hanging bud grows and separates",
+          "F16–20 outer then inner petals open",
+          "F21–25 center reveals and flower settles without new branches"
+        ],
+        "small_size_theme_review": "At 148px the large white bloom reads in both themes, though the light preview gives it a somewhat outlined appearance. Approximate correction crops the highest segment in F11–15 and the late right bud reaches/crosses the side bound.",
+        "evidence": {
+          "raw_sheet": "app/src/main/res/drawable-nodpi/bloom_queen_of_the_night_spritesheet.png",
+          "light_preview": "queen_of_the_night_light.png",
+          "dark_preview": "queen_of_the_night_dark.png",
+          "frames_visually_reviewed": "F1–25 row-major; all four row boundaries compared"
+        }
+      }
+    },
+    {
+      "id": "snowdrop",
+      "label": "Snowdrop",
+      "source": "app/src/main/res/drawable-nodpi/bloom_snowdrop_spritesheet.png",
+      "sha256": "444c950cef1c4cbc12f7f1b6178cce8a1e408f02e179b49b6526637a46d4ecce",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "snowdrop",
+        "strength": "The downward white bells and green inner markings are clear, gentle and appropriate to a calm brewing flow.",
+        "issues": [
+          "F5 shows a distinct pale bud inside the sprout, but F5→6 removes it; the next bud does not reappear until F12.",
+          "F10→11 changes the foliage proportions; F11→12 adds a nearly formed drooping bud and stalk in a single step.",
+          "F15→16 is a useful opening step, but F18→19 suddenly adds a second right bud; F19→20 moves that bud to the left.",
+          "F21–23 largely repaint/rearrange the same two bells. F23→24 changes a previously open left flower into a closed bud while adding the right bloom, so the final cluster lacks persistent flower identity."
+        ],
+        "recommendation": "Keep the first bell opening and establish three persistent stalks before their buds enlarge. Open them sequentially from F16 onward, never moving an existing flower between sides or reverting it to a bud. Use the last frames for the third bell and inner green markings.",
+        "priority": "Targeted",
+        "confidence": "High for static anatomy, continuity and perceptual holds across all 25 frames; medium for runtime clipping/feel because theme composites approximate Compose and actual playback was not observed.",
+        "proposed_milestones": [
+          "F1–5 leaf shoot without premature flower",
+          "F6–10 continuous foliage and first arch",
+          "F11–15 three stalks with staggered buds",
+          "F16–20 first and second bells open in place",
+          "F21–25 third bell opens and green markings reveal"
+        ],
+        "small_size_theme_review": "At 148px the white bells and green inner markings remain clear on both themes. Existing contrast is adequate; preserving each bell's identity and position is the main refinement.",
+        "evidence": {
+          "raw_sheet": "app/src/main/res/drawable-nodpi/bloom_snowdrop_spritesheet.png",
+          "light_preview": "snowdrop_light.png",
+          "dark_preview": "snowdrop_dark.png",
+          "frames_visually_reviewed": "F1–25 row-major; all four row boundaries compared"
+        }
+      }
+    },
+    {
+      "id": "myosotis_sylvatica",
+      "label": "Myosotis sylvatica",
+      "source": "app/src/main/res/drawable-nodpi/bloom_myosotis_sylvatica_spritesheet.png",
+      "sha256": "7f9e9eb16d2433a6bcca4ee584897836930f59cb0101ac4f7faa1e61b96df0df",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "myosotis_sylvatica",
+        "strength": "The airy blue spray with yellow centers is pleasant, and the final cluster remains visually lighter than the dense exotic flowers.",
+        "issues": [
+          "F5→6 lowers the growing tip; F10→11 mostly repaints the same plant.",
+          "F11→12 replaces the upper leaves with a bud spray without a clear emerging flower stalk; F13–16 mostly multiply/reposition small buds.",
+          "F16→17 opens multiple tiny flowers at once. F19→20 and F20→21 alter branch and flower positions; the final cluster repeatedly changes which bloom is at which endpoint.",
+          "F21–25 differ mostly by small rearrangements and flower count. Individual flowers and their fine branching are small relative to the bean and may lose clarity at 148px."
+        ],
+        "recommendation": "Retain the delicate spray but choose a stable, slightly simplified branching structure with fewer larger readable flower faces. Track each bud endpoint and open one local group at a time; make F21–25 finish the existing outer buds rather than reshuffling the cluster.",
+        "priority": "Targeted",
+        "confidence": "High for static anatomy, continuity and perceptual holds across all 25 frames; medium for runtime clipping/feel because theme composites approximate Compose and actual playback was not observed.",
+        "proposed_milestones": [
+          "F1–5 sprout",
+          "F6–10 permanent leaf pair and branch stalk",
+          "F11–15 stable bud spray",
+          "F16–20 inner flower groups open",
+          "F21–25 outer buds finish with larger clear blue faces"
+        ],
+        "small_size_theme_review": "At 148px blue faces are recognizable, but their thin rims and tiny centers merge into decorative dots, especially in dark mode. Approximate corrected previews cut the top buds in F14–15. Slightly larger, fewer flowers and fixed endpoints would improve progress readability.",
+        "evidence": {
+          "raw_sheet": "app/src/main/res/drawable-nodpi/bloom_myosotis_sylvatica_spritesheet.png",
+          "light_preview": "myosotis_sylvatica_light.png",
+          "dark_preview": "myosotis_sylvatica_dark.png",
+          "frames_visually_reviewed": "F1–25 row-major; all four row boundaries compared"
+        }
+      }
+    },
+    {
+      "id": "fuchsia_ballerina",
+      "label": "Fuchsia ballerina",
+      "source": "app/src/main/res/drawable-nodpi/bloom_fuchsia_ballerina_spritesheet.png",
+      "sha256": "8fdf1460e4c500cb8a1f301c7cc62a3a4011d921259682b99bac2d3d21536866",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "fuchsia_ballerina",
+        "strength": "The arched stalk and contrasting pink sepals/purple hanging skirt could create a memorable, elegant downward bloom.",
+        "issues": [
+          "F1–3 provide little visible progress; early plants sit low in much empty space.",
+          "F9→10 replaces a leafy tip with a fully arched hanging bud while removing the right leaf.",
+          "F12–15 develop large background-colored holes in the bud; F16–20 are predominantly scratchy magenta outlines around a transparent interior. Both light/dark composites confirm missing surfaces.",
+          "F20→21 opens the upper sepals abruptly while the hanging center remains hollow. F23–25 show a purple skirt with extensive missing-looking interior detail; F24–25 are nearly the same final pose. These defects prevent a polished small-size reading."
+        ],
+        "recommendation": "First repair or regenerate the source alpha/matte and validate opaque colored petal interiors on both light and dark backgrounds. Rebuild the bud-to-skirt opening with solid connected surfaces, a fixed bean/stalk, and gradual sepal lift; do not try to hide the defect with glow.",
+        "priority": "Rebuild",
+        "confidence": "High: defects confirmed in original sheet and both 148px theme composites; exact asset-pipeline cause and actual Compose playback unverified.",
+        "proposed_milestones": [
+          "F1–5 clear seed-to-leaf progression",
+          "F6–10 arch and attached solid bud",
+          "F11–15 solid pink bud elongates",
+          "F16–20 sepals lift and purple skirt emerges",
+          "F21–25 skirt unfurls and stamens descend"
+        ],
+        "small_size_theme_review": "Both 148px theme composites confirm that the missing petal interiors take on the background color. The final purple skirt nearly disappears in dark mode and looks washed out/hollow in light mode; this is a material alpha/surface defect, not merely subtle shading.",
+        "evidence": {
+          "raw_sheet": "app/src/main/res/drawable-nodpi/bloom_fuchsia_ballerina_spritesheet.png",
+          "light_preview": "fuchsia_ballerina_light.png",
+          "dark_preview": "fuchsia_ballerina_dark.png",
+          "frames_visually_reviewed": "F1–25 row-major; all four row boundaries compared"
+        }
+      }
+    },
+    {
+      "id": "magnolia_dawn",
+      "label": "Magnolia dawn",
+      "source": "app/src/main/res/drawable-nodpi/bloom_magnolia_dawn_spritesheet.png",
+      "sha256": "0e9d2071e9f8d1486fc4078166aadf8e8155048c787798a4b2b6ca3d29c49230",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "magnolia_dawn",
+        "strength": "The pale pink-to-ivory magnolia and broad leaves have a warm, refined final color palette worth retaining.",
+        "issues": [
+          "Every third cell visibly contains two narrow plant renderings (F3, F8, F13, F18, F23), violating the single-subject frame composition.",
+          "F11–15 have a horizontal missing-looking band across the bud; F16–20 have very large empty horizontal bands separating bud tips from their lower halves.",
+          "The apparent row packing does not respect clean isolated 256px cells: upper bud tips around F11–15 intrude toward/above the row edge, and F16–20 are severely fragmented.",
+          "F20→21 transitions from fragmented closed bud to a complete flower; F21–25 opening cannot read smoothly because F23 again contains two narrow flowers, while F24–25 jump to broad frontal blooms."
+        ],
+        "recommendation": "Rebuild the sheet from 25 individually validated square frames. Repair layout/alpha first, ensuring one complete plant per cell with no missing bands or duplication; then preserve the final palette in a coherent magnolia cup-to-open-petal sequence.",
+        "priority": "Rebuild",
+        "confidence": "High: defects confirmed in original sheet and both 148px theme composites; exact asset-pipeline cause and actual Compose playback unverified.",
+        "proposed_milestones": [
+          "F1–5 one intact seed and sprout per frame",
+          "F6–10 paired leaves and terminal bud",
+          "F11–15 continuous intact bud enlargement",
+          "F16–20 petal seams separate into a cup",
+          "F21–25 outer petals unfold to final ivory flower"
+        ],
+        "small_size_theme_review": "Both 148px theme composites confirm duplicated plants in every third cell, disconnected bud fragments around F6–15, and broad empty bands through the middle phase. F25's ivory petals are legible in both themes; the layout defects are the blocker.",
+        "evidence": {
+          "raw_sheet": "app/src/main/res/drawable-nodpi/bloom_magnolia_dawn_spritesheet.png",
+          "light_preview": "magnolia_dawn_light.png",
+          "dark_preview": "magnolia_dawn_dark.png",
+          "frames_visually_reviewed": "F1–25 row-major; all four row boundaries compared"
+        }
+      }
+    },
+    {
+      "id": "iris_origami",
+      "label": "Iris origami",
+      "source": "app/src/main/res/drawable-nodpi/bloom_iris_origami_spritesheet.png",
+      "sha256": "1ebb7712275db96233c0eaa241f0a35a79a2b4eb71f9c57d0e91b991485910b4",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "iris_origami",
+        "strength": "The vertical sword leaves and purple/yellow iris silhouette offer a strong shape distinct from round-petaled flowers.",
+        "issues": [
+          "F1→2 moves the tiny bean downward; the small base and sparse early sprout occupy little of the frame.",
+          "F6–20 purple bud interiors are scratched away/transparent, leaving disconnected highlights and edges instead of a solid folded surface; both light/dark composites confirm the background shows through.",
+          "F10→11, F15→16 and much of F11–18 are near-holds with slight repainting/scale changes; there is little readable anatomical progress through the long closed-bud phase.",
+          "F20→21 splits the bud; F22→23 introduces the large drooping side petals and yellow beards abruptly. F23–25 are near-duplicate final poses, still with damaged-looking purple interiors."
+        ],
+        "recommendation": "Repair/regenerate solid purple petal surfaces before tuning movement. Then replace the long bud hold with three clear unfolding stages: upper standards separate, lower falls descend, yellow beards reveal. Preserve the sword-leaf identity and use a consistent bean anchor.",
+        "priority": "Rebuild",
+        "confidence": "High: defects confirmed in original sheet and both 148px theme composites; exact asset-pipeline cause and actual Compose playback unverified.",
+        "proposed_milestones": [
+          "F1–5 sprout from stable visible bean",
+          "F6–10 sword leaves and intact purple bud",
+          "F11–15 bud swells and seams separate",
+          "F16–20 upper petals lift and lower petals descend",
+          "F21–25 yellow beards reveal and folds settle"
+        ],
+        "small_size_theme_review": "Both 148px theme composites confirm background-colored holes through the purple bud/petals. They look white and scratched in light mode and almost disappear in dark mode. F23–25's yellow beards read, but cannot rescue the broken upper petals.",
+        "evidence": {
+          "raw_sheet": "app/src/main/res/drawable-nodpi/bloom_iris_origami_spritesheet.png",
+          "light_preview": "iris_origami_light.png",
+          "dark_preview": "iris_origami_dark.png",
+          "frames_visually_reviewed": "F1–25 row-major; all four row boundaries compared"
+        }
+      }
+    },
+    {
+      "id": "king_protea_sunrise",
+      "label": "King protea sunrise",
+      "source": "app/src/main/res/drawable-nodpi/bloom_king_protea_sunrise_spritesheet.png",
+      "sha256": "de210f37a5f4e9a325a3d565262794197f481d2dd921de691f6e23ada384db81",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "king_protea_sunrise",
+        "strength": "Distinctive sculptural pink crown, broad green base and cream center give the last row a strong, recognizable silhouette.",
+        "issues": [
+          "F1-2 are visually near-identical; F7-17 mostly enlarge the same pointed bud rather than progressively releasing bracts.",
+          "F7-25 contain conspicuous jagged background-revealing gaps inside pink bracts, worst at F14-22; these read as damaged petals rather than purposeful openings.",
+          "F17-18 begins useful bract separation, but much of the width arrives at F20-21. F21-25 repeatedly redesign the cream center's height and crown while the silhouette is already essentially complete.",
+          "F5-6 and F10-11 remain readable growth steps; the more consequential transition is F20-21. F15-16 adds foliage without a comparably clear bloom milestone."
+        ],
+        "recommendation": "Retain the distinctive final composition but rebuild the affected petal imagery with intact surfaces and consistent individual bracts. Move initial bract release to the middle third, then open tracked layers gradually; keep center geometry continuous through the last five frames.",
+        "priority": "Rebuild",
+        "confidence": "High: all 25 source frames plus approximate 148px light/dark composites visually inspected. Temporal impression and real Compose rendering remain unverified.",
+        "proposed_milestones": [
+          "F1-4 bean split and shoot",
+          "F5-9 pink bud and paired leaves",
+          "F10-15 outer bracts peel outward",
+          "F16-20 inner bracts separate and cream core rises",
+          "F21-25 crown broadens slightly and settles with a stable center"
+        ],
+        "small_size_and_theme": "At 148px the crown is recognizable on both themes, but petal holes remain prominent on dark and masquerade as highlights on light. Gray halo edges do not repair the missing material."
+      }
+    },
+    {
+      "id": "dahlia_kaleidoscope",
+      "label": "Dahlia kaleidoscope",
+      "source": "app/src/main/res/drawable-nodpi/bloom_dahlia_kaleidoscope_spritesheet.png",
+      "sha256": "eae609e100e14d319983c6cb3717d77a00c62e0ccb5b541dd2d064f87748d661",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "dahlia_kaleidoscope",
+        "strength": "Clean coral petals, readable green stem and a large layered final flower; one of this group's most coherent intact assets.",
+        "issues": [
+          "F6-10 mostly swell one small bud; F12-18 retain nearly the same closed rose-like silhouette, so several middle frames add little at small size.",
+          "F19-20 abruptly switches from a few opening petals to a broad, many-layered flower. F20-21 remains a noticeable shape change across the row boundary.",
+          "F22-24 largely repeat the finished flower; F25 introduces a bright yellow center almost at once instead of gradually uncovering it.",
+          "F5-6 and F10-11 are understandable growth changes; F15-16 adds little distinct motion."
+        ],
+        "recommendation": "Keep the palette and final flower. Replace redundant middle frames with tracked outer-petal unfolding, bridge F19-20 with intermediate layers, and reveal the yellow center over F22-25.",
+        "priority": "Targeted",
+        "confidence": "High: all 25 source frames plus approximate 148px light/dark composites visually inspected. Temporal impression and real Compose rendering remain unverified.",
+        "proposed_milestones": [
+          "F1-5 sprout and bud",
+          "F6-10 bud swells and separates at seams",
+          "F11-15 outer petal ring unfurls",
+          "F16-20 successive rings expand",
+          "F21-25 center is uncovered and petals settle"
+        ],
+        "small_size_and_theme": "Coral layering and overall silhouette remain clear on both 148px composites. Middle buds are so similar that texture changes contribute little; the F25 yellow center is legible but arrives abruptly."
+      }
+    },
+    {
+      "id": "pincushion_firework",
+      "label": "Pincushion firework",
+      "source": "app/src/main/res/drawable-nodpi/bloom_pincushion_firework_spritesheet.png",
+      "sha256": "c01508f94437893b6d39c91ba123f4a00208971fc4df9ce74899cb177cc75570",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "pincushion_firework",
+        "strength": "Bright orange styling and the outward-curving tipped filaments make an excellent distinctive final reward.",
+        "issues": [
+          "F7-16 mainly grow a tightly packed orange oval; F17-20 show only small filament changes and underuse the characteristic firework motion.",
+          "F20-21 releases several long filaments abruptly. The expansion is then crowded into F21-25.",
+          "F23-24 raises a large central cone, which becomes a lower round cushion again at F25; this looks like anatomy changing rather than finishing.",
+          "Thin stray blue/purple marks are visible near some source cell bottoms, especially F2-5. F1-2 also changes the bean's scale/shape abruptly."
+        ],
+        "recommendation": "Preserve the orange cushion and tipped filaments. Begin distinguishable filament release around F12, lengthen the same filaments incrementally, and keep the center's height and topology continuous through F23-25. Clean isolated boundary pixels.",
+        "priority": "Targeted",
+        "confidence": "High: all 25 source frames plus approximate 148px light/dark composites visually inspected. Temporal impression and real Compose rendering remain unverified.",
+        "proposed_milestones": [
+          "F1-5 stable bean opens and sprouts",
+          "F6-10 cushion forms",
+          "F11-15 first tipped filaments separate",
+          "F16-20 filaments arc outward sequentially",
+          "F21-25 remaining arcs extend around a stable central cushion"
+        ],
+        "small_size_and_theme": "Orange tips and arcs remain readable on both 148px themes. The few fine boundary specks are secondary, while the F24 central cone and F25 collapse remain obvious."
+      }
+    },
+    {
+      "id": "morning_glory_spiral",
+      "label": "Morning glory spiral",
+      "source": "app/src/main/res/drawable-nodpi/bloom_morning_glory_spiral_spritesheet.png",
+      "sha256": "564eb75c84b2f0ac9cfdfa27f93c32a01341eec817d54d61c0eab6d93286a512",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "morning_glory_spiral",
+        "strength": "The curled vine and large blue trumpet could deliver a particularly legible, graceful growth story.",
+        "issues": [
+          "F3/8/13/18/23 visibly contain two narrow plants or split duplicated imagery within what must be one 256px cell; the apparent grid does not match the renderer's five-column framing.",
+          "Broad horizontal missing bands cut across the flowers in F11-25; parts of later flowers are separated from their stems or truncated.",
+          "Blue petals also contain jagged missing patches. These defects dominate any judgment of smooth growth.",
+          "F5-6/10-11/15-16/20-21 cross states with changing crop or image layout; scale and anatomy cannot remain continuous with this sheet."
+        ],
+        "recommendation": "Rebuild the sheet from individually approved, consistently registered single-plant frames. Keep the spiral vine and blue trumpet concept; establish exact 256px cells and inspect every cropped cell before evaluating motion. Repairing timing cannot fix these source images.",
+        "priority": "Rebuild",
+        "confidence": "High: all 25 source frames plus approximate 148px light/dark composites visually inspected. Temporal impression and real Compose rendering remain unverified.",
+        "proposed_milestones": [
+          "F1-5 one bean and one curling shoot",
+          "F6-10 paired leaves and a closed twisted trumpet",
+          "F11-15 a continuous twist begins loosening",
+          "F16-20 trumpet rim widens without crop changes",
+          "F21-25 uninterrupted blue face opens and settles"
+        ],
+        "small_size_and_theme": "Both 148px themes plainly show doubled/split plants, detached flower fragments and horizontal cutouts. No size or halo adjustment can make the current cells valid single-flower states."
+      }
+    },
+    {
+      "id": "foxglove_chimes",
+      "label": "Foxglove chimes",
+      "source": "app/src/main/res/drawable-nodpi/bloom_foxglove_chimes_spritesheet.png",
+      "sha256": "adfce898712d14f2909f24e0539f9db4317adb8ae5f4754ddb14472995047f25",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "foxglove_chimes",
+        "strength": "A tall stalk and staggered bells give this design a distinct vertical rhythm and a charming final silhouette.",
+        "issues": [
+          "F7-9 holds a single top bud; two side buds appear together at F10. F11-20 mostly recolor/swell these closed buds rather than visibly unroll bells.",
+          "At F21 a bottom bell opens; F22 removes that bottom bell and opens the middle one instead. F23 then restores three open bells, so the plant visibly loses and regains anatomy.",
+          "F16-25 pink petals have jagged background-revealing missing areas, especially the late bell walls; intended spots and unintended missing material need separation.",
+          "F20-21 is a large opening event after a long plateau; F23-25 mainly vary bell direction/shape instead of delivering additional growth."
+        ],
+        "recommendation": "Keep the staggered stalk. Preserve every bud and bell once it appears, unfurl from the bottom upward over more frames, and keep the spotted throats inside intact petal walls. Reuse the same stalk geometry throughout the opening.",
+        "priority": "Targeted",
+        "confidence": "High: all 25 source frames plus approximate 148px light/dark composites visually inspected. Temporal impression and real Compose rendering remain unverified.",
+        "proposed_milestones": [
+          "F1-5 sprout",
+          "F6-10 stalk and three persistent buds form",
+          "F11-15 bottom bell lengthens and opens",
+          "F16-20 middle bell opens as top bud bends",
+          "F21-25 top bell opens; all three settle without disappearing"
+        ],
+        "small_size_and_theme": "At 148px the tall final three-bell silhouette is clear. Dark reveals missing petal-wall regions that light largely conceals; the disappearing lower bell at F22 remains obvious in both."
+      }
+    },
+    {
+      "id": "cherry_blossom_wish",
+      "label": "Cherry blossom wish",
+      "source": "app/src/main/res/drawable-nodpi/bloom_cherry_blossom_wish_spritesheet.png",
+      "sha256": "8425b947cc699044cacfc7a628ce3a2a1475d42fdbf71d4d4775b979e33247a9",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "cherry_blossom_wish",
+        "strength": "Three simple pink flowers on a spare branching stem create an immediately understandable final composition.",
+        "issues": [
+          "F6-7 is nearly a hold; F11-20 keeps the same three closed buds with slight repainting, using ten frames without a major visible milestone.",
+          "F6-21 has jagged background-revealing holes in the pink buds; F24 also shows a damaged patch on the top flower.",
+          "F20-21 abruptly opens the left bloom, F21-22 opens the right, and F22-23 opens the top. The sequence is sensible but each individual opening lacks intermediate petal poses.",
+          "F23-25 are mostly finished-flower variations; F15-16 provides almost no meaningful progress."
+        ],
+        "recommendation": "Preserve the clean three-branch silhouette and staggered opening order. Start opening the left bloom in the middle frames, show each bud's five petals separating over multiple steps, then overlap the right and top openings; repair missing petal pixels and hold a stable final flower.",
+        "priority": "Targeted",
+        "confidence": "High: all 25 source frames plus approximate 148px light/dark composites visually inspected. Temporal impression and real Compose rendering remain unverified.",
+        "proposed_milestones": [
+          "F1-5 first shoot",
+          "F6-10 branches and three buds form",
+          "F11-15 left flower unfurls",
+          "F16-20 right flower unfurls while top loosens",
+          "F21-25 top flower finishes and all three settle"
+        ],
+        "small_size_and_theme": "The final three flowers are readable and attractive at 148px. Dark-theme intermediate buds look hollow or damaged; light conceals the same missing regions. The fine stem is sufficiently visible in these composites."
+      }
+    },
+    {
+      "id": "himalayan_lantern",
+      "label": "Himalayan lantern",
+      "source": "app/src/main/res/drawable-nodpi/bloom_himalayan_lantern_spritesheet.png",
+      "sha256": "d65a6c5709d3117fccca5ba48eb9734c4ddaa04b7ebb448d0e5c3cf0285f79fa",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "himalayan_lantern",
+        "strength": "The vivid orange lantern revealing a warm gold flower is an unusually strong and readable reveal concept.",
+        "issues": [
+          "F6-11 rapidly enlarges the lantern, but F11-20 mostly keeps swelling/repainting an already large closed shape; the reveal has almost no anticipation.",
+          "F21-22 finally separates a seam; F22-23 suddenly reveals an almost complete gold flower.",
+          "F23-24 changes the opening asymmetrically and the inner flower's orientation before F25 spreads into a new star-like shell shape; tracked folds would read more clearly.",
+          "Small blue/purple boundary specks appear near several cell bottoms. F10-11 has a size step, while F15-16 adds little structural progress."
+        ],
+        "recommendation": "Keep the lantern-and-flower payoff. Use middle frames to define and widen a stable set of seams, let a gold glint precede the full flower, and open the same shell panels continuously through the final row. Remove stray edge pixels.",
+        "priority": "Targeted",
+        "confidence": "High: all 25 source frames plus approximate 148px light/dark composites visually inspected. Temporal impression and real Compose rendering remain unverified.",
+        "proposed_milestones": [
+          "F1-5 shoot and small lantern",
+          "F6-10 lantern inflates",
+          "F11-15 seams brighten and separate",
+          "F16-20 panels peel apart with a growing gold glimpse",
+          "F21-25 flower opens as the same shell panels finish spreading"
+        ],
+        "small_size_and_theme": "The orange lantern and gold reveal are legible on both 148px themes. The middle plateau and F23-24 uneven reclosing are visible; source-edge specks are a lower priority at this size."
+      }
+    },
+    {
+      "id": "black_bat_flower",
+      "label": "Black bat flower",
+      "source": "app/src/main/res/drawable-nodpi/bloom_black_bat_flower_spritesheet.png",
+      "sha256": "c2d4fcff04fa6188895a2298f990fbc5c746bfcb7fe283541c72fb568a507ba3",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "black_bat_flower",
+        "strength": "The bilateral dark bracts and long whiskers give this flower a striking, genuinely different outline. F17-20 already has a useful opening sequence.",
+        "issues": [
+          "F1-2 is nearly identical; F6-16 spends eleven frames on a slender closed bud with small scale/color changes.",
+          "F21-23 mostly repeat open wings and short whiskers; F24-25 suddenly adds most of the whisker length, making the final frame feel like a replacement illustration.",
+          "The near-black bud and bracts lose internal separation on the approximate 148px dark composite; the silhouette survives, but the center and thin whiskers are much less clear than on light.",
+          "F20-21 is coherent and comparatively restrained; the weak part is F10-11/F15-16 with little progress, followed by the outsized final whisker change."
+        ],
+        "recommendation": "Preserve the bat silhouette and asymmetrical first bract release. Start that release earlier, expose the central cluster gradually, and spread whisker growth across F18-25. Lift a few structural violet highlights rather than adding decoration.",
+        "priority": "Targeted",
+        "confidence": "High: all 25 source frames plus approximate 148px light/dark composites visually inspected. Temporal impression and real Compose rendering remain unverified.",
+        "proposed_milestones": [
+          "F1-5 sprout",
+          "F6-10 bud enlarges and outlines bract folds",
+          "F11-15 one bract then the other releases",
+          "F16-20 center opens and short whiskers emerge",
+          "F21-25 existing whiskers lengthen smoothly to final arcs"
+        ],
+        "small_size_and_theme": "The 148px dark composite retains the outline but loses much of the center and bract detail. Pale halo outlines partially rescue edges; a few deliberate violet structural highlights would improve depth. Final whiskers are visible on both themes but fine."
+      }
+    },
+    {
+      "id": "water_lily_twilight",
+      "label": "Water lily at twilight",
+      "source": "app/src/main/res/drawable-nodpi/bloom_water_lily_twilight_spritesheet.png",
+      "sha256": "421ed4190bdc9d9f6b5be395704893a61eab3ae2e22fbd06ee867ea0905fae25",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "water_lily_twilight",
+        "strength": "A lavender radial bloom with a gold center provides a clear, attractive final target.",
+        "issues": [
+          "F6-25 has extensive jagged background-revealing gaps through petal surfaces, including much of the tall bud and late flower; the visible effect is shredded material.",
+          "F11-20 mostly scales/repaints a closed upright bud. The radial opening starts only at F21.",
+          "F22-23 changes sharply into the open flower; the gold center visible at F23 is largely obscured at F24 and reappears at F25.",
+          "F24-25 source edges include stray vertical-colored marks; F20-21 adds a flat outer ring abruptly after the long bud plateau."
+        ],
+        "recommendation": "Rebuild damaged petal frames around the existing lavender-and-gold final concept. Track petal layers and the center consistently, opening outer petals through the middle frames and inner petals later; keep the center increasingly visible once revealed.",
+        "priority": "Rebuild",
+        "confidence": "High: all 25 source frames plus approximate 148px light/dark composites visually inspected. Temporal impression and real Compose rendering remain unverified.",
+        "proposed_milestones": [
+          "F1-5 shoot and bud",
+          "F6-10 intact bud lengthens and seams separate",
+          "F11-15 outer petals lower",
+          "F16-20 inner petal layers spread",
+          "F21-25 gold center is progressively revealed and radial flower settles"
+        ],
+        "small_size_and_theme": "At 148px the flower looks pale and roughly intact on light, but large petal areas become background on dark and the final flower loses substantial body. This is a major theme-consistency defect."
+      }
+    },
+    {
+      "id": "moonphase_magnolia",
+      "label": "Moonphase magnolia",
+      "source": "app/src/main/res/drawable-nodpi/bloom_moonphase_magnolia_spritesheet.png",
+      "sha256": "90a517b6fd729496cab02ca49cd4c1372aad8b475fdeb5dfaec60b5244fad6bf",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "moonphase_magnolia",
+        "strength": "The luminous moon-like bud turning into an ivory flower is visually distinctive, and broad petals remain simple enough to read at small size.",
+        "issues": [
+          "F10-20 is largely an enlarging moon sphere with changing crater texture; many frames communicate neither a new phase nor a new petal action.",
+          "F20-21 suddenly peels two tall side petals away, F21-22 reveals more, and F22-23 becomes a flat open flower; most anatomical change occurs in three steps.",
+          "F23-24 partly raises/closes the lower-left/front petal before F25 opens again, creating a small reversal at completion.",
+          "Star accents appear abruptly at F22/F23, and their placement feels like decoration being switched on rather than a consequence of opening."
+        ],
+        "recommendation": "Retain the moon-textured bud and ivory flower. Start curved petal seam separation earlier, preserve recognizable moon segments as they unfold, and make the last frames a monotonic opening with stable stars revealed by the petals.",
+        "priority": "Targeted",
+        "confidence": "High: all 25 source frames plus approximate 148px light/dark composites visually inspected. Temporal impression and real Compose rendering remain unverified.",
+        "proposed_milestones": [
+          "F1-5 sprout",
+          "F6-10 rounded moon bud",
+          "F11-15 crescent-shaped petal seams release",
+          "F16-20 broad petals uncup and reveal star accents",
+          "F21-25 front petals lower to a stable open face"
+        ],
+        "small_size_and_theme": "The moon sphere, ivory flower and tiny gold stars remain legible on both 148px themes. The halo produces a noticeable pale outline but is less damaging than the long motion plateau and F24 reclosure."
+      }
+    },
+    {
+      "id": "crema_chrysanthemum",
+      "label": "Crema chrysanthemum",
+      "source": "app/src/main/res/drawable-nodpi/bloom_crema_chrysanthemum_spritesheet.png",
+      "sha256": "5bd5b15b2c164622cbf2371313e9b67fc2682e9ce1c44fcde9adc2875d9a66b2",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "crema_chrysanthemum",
+        "strength": "Warm cream ribbons and a dark coffee-colored center suit the coffee theme particularly well; the final bloom is rich and intact.",
+        "issues": [
+          "F7-8 makes little progress; F9-10 abruptly reorganizes an upright bud into a spiral rosette rather than showing that twist developing.",
+          "F11-18 repeats a tightly curled sphere with small changes. F19-21 begins useful ribbon release, but F21-22 instantly replaces it with an almost fully opened chrysanthemum.",
+          "F22-24 mainly alter spacing/size of the finished blossom. F25 adds more curled petal tips rather than resolving a clearly prepared motion.",
+          "Fine blue/purple marks are visible along the top of some last-row source cells; these look unrelated to the flower."
+        ],
+        "recommendation": "Preserve the cream-ribbon material and coffee center. Develop the spiral continuously from the bud, uncurl recognizable ribbons across F12-21, and reveal the center through a widening aperture before the final ring spreads. Clean cell-edge specks.",
+        "priority": "Targeted",
+        "confidence": "High: all 25 source frames plus approximate 148px light/dark composites visually inspected. Temporal impression and real Compose rendering remain unverified.",
+        "proposed_milestones": [
+          "F1-5 shoot and cream bud",
+          "F6-10 ribbons start a continuous spiral",
+          "F11-15 outer ribbons unfurl",
+          "F16-20 inner curls open and center appears",
+          "F21-25 layered curled tips spread and settle"
+        ],
+        "small_size_and_theme": "Cream curls and coffee center read well on both 148px themes, including the final layered form. Tiny source-edge marks are barely visible here; the F21-22 topology jump is the substantive issue."
+      }
+    },
+    {
+      "id": "stained_glass_iris",
+      "label": "Stained-glass iris",
+      "source": "app/src/main/res/drawable-nodpi/bloom_stained_glass_iris_spritesheet.png",
+      "sha256": "f90567c80b3e749cdda86123f23b74ebb0075ef75303925be982a63e6ff0505f",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "stained_glass_iris",
+        "strength": "The glass-like color panels and classic upright-and-drooping iris silhouette have strong identity in the final frames.",
+        "issues": [
+          "F8-20 stays a narrow closed lance; color-panel changes substitute for meaningful unfolding across much of the sequence.",
+          "F11-25 has numerous jagged background-revealing interruptions through colored petals, so the glass surfaces look broken or missing rather than translucent.",
+          "F21-22 leaps from split spear to recognizable iris; F22-23 adds a large frontal drooping petal. That petal disappears or relocates to the side at F24, then returns front-and-center at F25.",
+          "Fine multicolored lines become busy texture at 148px, while the overall iris survives. F15-16 has little silhouette change and F20-21 starts the entire reveal late."
+        ],
+        "recommendation": "Rebuild affected petal imagery using a stable set of three upright and three descending structures, with intact, clearly bounded glass panels. Open these structures over the middle and late frames while preserving the front fall petal's identity. Simplify internal leading at displayed size.",
+        "priority": "Rebuild",
+        "confidence": "High: all 25 source frames plus approximate 148px light/dark composites visually inspected. Temporal impression and real Compose rendering remain unverified.",
+        "proposed_milestones": [
+          "F1-5 shoot",
+          "F6-10 glass bud emerges",
+          "F11-15 upright petals separate",
+          "F16-20 three fall petals bend downward consistently",
+          "F21-25 panels catch light as the stable iris reaches full spread"
+        ],
+        "small_size_and_theme": "At 148px light exposes pale missing regions among purple panels; dark makes much of the bloom merge into its background. The overall iris is recognizable, but fine leading becomes busy texture and the moving/disappearing front petal is obvious."
+      }
+    },
+    {
+      "id": "aurora_anemone",
+      "label": "Aurora anemone",
+      "source": "app/src/main/res/drawable-nodpi/bloom_aurora_anemone_spritesheet.png",
+      "sha256": "640e0b17d89d89676a448d8f453b68a3b8cacb72a230f9db0dc1c047ab2aaf38",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "aurora_anemone",
+        "strength": "A simple purple cup becoming a round blue-violet flower with a dark center offers an appealing, readable color contrast.",
+        "issues": [
+          "F6-10 forms a bud well, but F11-21 keeps nearly the same closed oval; F16-20 is especially low-value repainting.",
+          "F22 finally exposes the center and F23 abruptly becomes a flat open flower; F23-25 largely repeat this final pose.",
+          "F22-25 has conspicuous background-revealing missing bands and patches near petal bases and upper petals; the cyan edges make these look torn rather than luminous.",
+          "F5-6 introduces paired leaves and a purple bud at once; F10-11 and F15-16 are minor swelling steps, while F20-21 adds little before the late snap."
+        ],
+        "recommendation": "Keep the broad purple petals and dark center. Repair petal surfaces and distribute cup opening across F13-23, preserving petal count and allowing the cyan-to-purple gradient to follow opening surfaces. Finish with a small final spread rather than repeated redraws.",
+        "priority": "Targeted",
+        "confidence": "High: all 25 source frames plus approximate 148px light/dark composites visually inspected. Temporal impression and real Compose rendering remain unverified.",
+        "proposed_milestones": [
+          "F1-5 bean and shoot",
+          "F6-10 purple bud and leaves",
+          "F11-15 petal tips separate",
+          "F16-20 cup widens and center becomes visible",
+          "F21-25 petals lower to the open face and settle"
+        ],
+        "small_size_and_theme": "At 148px light makes the transparent band look like a white petal base; dark makes it a wide missing band around the center. This changes the apparent flower design between themes, beyond a normal contrast variation."
+      }
+    },
+    {
+      "id": "constellation_blossom",
+      "label": "Constellation blossom",
+      "source": "app/src/main/res/drawable-nodpi/bloom_constellation_blossom_spritesheet.png",
+      "sha256": "f0b67b4f68a99fb810fcdca401a206bb2459e073a40e2b059f500185c3b3df63",
+      "size": [
+        1280,
+        1280
+      ],
+      "review": {
+        "id": "constellation_blossom",
+        "strength": "Five white petals and sparse gold points give a clean, easily understood flower with a restrained celestial motif.",
+        "issues": [
+          "F9-10 changes a pointed bud into a shorter star-capped shape abruptly; F11-20 then holds a rounded closed bud with minimal new action.",
+          "F21 opens two side petals, F22 adds more, and F23 is fully open. F24 raises/recloses front petals before F25 returns to the open five-point silhouette.",
+          "F21/F22/F24 show background-revealing holes in white petals, especially the left/top surfaces; cell-boundary specks also appear above the last row.",
+          "At 148px the gold nodes remain visible but fine constellation marks are subtle. F15-16 contributes little beyond swelling."
+        ],
+        "recommendation": "Keep the five-petal silhouette and restrained gold nodes. Preserve five continuous petal identities, begin separating them earlier, and remove the F24 reclosure. Use a consistent sparse constellation pattern that is uncovered as the petals open, and repair missing white areas.",
+        "priority": "Targeted",
+        "confidence": "High: all 25 source frames plus approximate 148px light/dark composites visually inspected. Temporal impression and real Compose rendering remain unverified.",
+        "proposed_milestones": [
+          "F1-5 shoot",
+          "F6-10 five-seamed bud",
+          "F11-15 first petal pair unfolds",
+          "F16-20 remaining petals separate and reveal gold nodes",
+          "F21-25 all five petals flatten continuously and settle"
+        ],
+        "small_size_and_theme": "At 148px the five-petal shape and gold nodes read in both themes; connecting marks are subtle. The missing white regions in F21/F22/F24 are much more conspicuous on dark. Preserve a sparse gold motif."
+      }
+    }
+  ]
+}
