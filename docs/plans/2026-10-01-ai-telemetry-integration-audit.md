@@ -127,6 +127,10 @@ There are no production callers of `ScanSessionRingBuffer.save` and no `ScanSess
 
 Smallest remedy: emit one bounded start/terminal scan record from the durable photo workflow, using a shared scan/work correlation identifier, typed outcome, timing, stage/attempt counts, and field counts. Adapt the old frame-oriented summary to the current photo flow. Keep useful support events within the normal capture policy.
 
+Resolution on 2026-10-01: the current photo workflow now emits typed INFO lifecycle records through Tracebox for queue/start, observed stages, partial field counts, completion, durable-result replay, retry, persisted review/background/save/discard transitions, cancellation, and enqueue failure. Worker and in-memory execution use numeric keys derived from strictly validated session/generation/work UUIDs; the same immutable coroutine context correlates AI passes. Replay has a separate event, technical cancellation is separate from explicit discard, and phase events are emitted only after a successful changed draft write. No additional diagnostic persistence or raw scan text was introduced. The unused legacy preference ring remains unpopulated.
+
+Retry and OCR-checkpoint replacement also advance the durable draft's generation at the existing generation boundary, so their new work and results pass the same ownership checks as initial scans.
+
 ### Parsed failures are recorded as successful passes
 
 TEXT, VISION, COMBINE, and REFINE record `SUCCESS` before parsing/validating the generated response. Malformed JSON returns `Failed`, but the retained diagnostic still says successful.
@@ -135,6 +139,8 @@ Evidence: `MindlayerLlmInferenceProvider.kt:306-307`, `474-475`, `557-558`, `630
 
 Smallest remedy: record the final validated result. Distinguish generation completion from parsing/validation failure with bounded statuses.
 
+Resolution on 2026-10-01: TEXT, VISION, COMBINE, and REFINE record their final parsed outcome. Accepted usable fields produce `SUCCESS`, valid responses without usable fields produce `NO_RESULT`, and malformed responses produce `ERROR` with the closed `INVALID_RESPONSE` reason. Existing parser results and retry behavior are retained. Blank translation fallback records no result and the actual emitted character count. Caller cancellation and outer deadlines do not create false error/timeout outcomes.
+
 ### Release packages omit actionable AI failure codes
 
 AI failure reasons are passed to Tracebox as ordinary strings and are correctly redacted. The raw reason lives in the separate LLM preferences, outside the release support package. Connection/readiness/setup failures can also return before any pass record is created. Support can receive “LLM enrichment failed: [redacted]” without the useful reason or a correlated pass.
@@ -142,6 +148,8 @@ AI failure reasons are passed to Tracebox as ordinary strings and are correctly 
 Evidence: `BagPhotoExtractor.kt:1182`, `1192`, and `1233`; `MindlayerLlmInferenceProvider.kt:336-366`; release Diagnostics uses only the Tracebox package flow.
 
 Smallest remedy: persist typed error codes, readiness/setup outcomes, pass, attempt, provider route, SDK/service version, context budget, and correlation metadata. Use bounded throwable structure when available. Do not mark arbitrary model/error strings public.
+
+Resolution on 2026-10-01: the reviewed Tracebox package retains known numeric SDK codes, typed connection/approval/setup/model/timeout/inference/validation reasons, pass outcome, context-budget and character counts, and scan correlation. Actual readiness and connection failures receive bounded preflight records even when generation never starts. The six published model-readiness codes (including low memory, integrity mismatch, and unavailable backend) are retained as a closed enum; unknown or decorated reason text is excluded. Ordinary strings remain private. Provider/version, OCR-route attribution, and detailed performance instrumentation remain separate gaps below.
 
 ### OCR fallback and performance lack measurements
 

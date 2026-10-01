@@ -46,4 +46,14 @@ class LlmDiagnosticErrorCodeTest {
         assertNull(knownLlmDiagnosticErrorCode(IllegalStateException("INPUT_EXCEEDS_CONTEXT: PRIVATE_CONTENT")))
         assertNull(knownLlmDiagnosticErrorCode(null))
     }
+
+    @Test
+    fun `prefixed AIDL security errors retain only a recognized wire code`() {
+        val failure = SecurityException(
+            MindlayerErrorCode.wireMessage(MindlayerErrorCode.RATE_LIMITED, "PRIVATE_AIDL_MESSAGE"),
+        )
+
+        assertEquals(MindlayerErrorCode.RATE_LIMITED, knownLlmDiagnosticErrorCode(failure))
+        assertNull(knownLlmDiagnosticErrorCode(SecurityException("PRIVATE_AUTH_GATE_MESSAGE")))
+    }
 }

@@ -25,6 +25,7 @@ import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import com.adsamcik.starlitcoffee.util.RecognitionCapability
 import com.adsamcik.starlitcoffee.domain.scandiagnostics.LlmDiagnosticsRecorder
 import com.adsamcik.starlitcoffee.domain.scandiagnostics.LlmPassDiagnostic
+import com.adsamcik.starlitcoffee.domain.scandiagnostics.ScanDiagnosticContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.currentCoroutineContext
@@ -128,15 +129,30 @@ class MindlayerLlmInferenceProvider(
      * when none is wired, e.g. in unit tests). Records typed outcomes, counts,
      * and timing through Tracebox without retaining model text or error messages.
      */
-    private fun recordPass(
+    private suspend fun recordPass(
         pass: LlmPassDiagnostic.Pass,
         status: LlmPassDiagnostic.Status,
         startMs: Long,
         promptCharLen: Int,
         output: String? = null,
         failure: Throwable? = null,
+        failureReason: LlmPassDiagnostic.FailureReason? = null,
+        readinessCode: LlmPassDiagnostic.ReadinessCode? = null,
     ) {
+        currentCoroutineContext().ensureActive()
         val recorder = diagnosticsRecorder ?: return
+        val context = currentCoroutineContext()[ScanDiagnosticContext]
+        val boundedFailureReason = failureReason ?: when (status) {
+            LlmPassDiagnostic.Status.TIMEOUT -> LlmPassDiagnostic.FailureReason.TIMEOUT
+            LlmPassDiagnostic.Status.ERROR -> when (
+                (failure as? Exception)?.let { mindlayerRecoveryCapability(it, mindlayer.connectionState.value) }
+            ) {
+                RecognitionCapability.AUTHORIZATION_REQUIRED -> LlmPassDiagnostic.FailureReason.AUTHORIZATION_REQUIRED
+                RecognitionCapability.ASSET_SETUP_REQUIRED -> LlmPassDiagnostic.FailureReason.MODEL_SETUP_REQUIRED
+                else -> LlmPassDiagnostic.FailureReason.INFERENCE_FAILED
+            }
+            else -> null
+        }
         recorder.record(
             LlmPassDiagnostic(
                 timestampMs = System.currentTimeMillis(),
@@ -147,15 +163,78 @@ class MindlayerLlmInferenceProvider(
                 promptCharLen = promptCharLen,
                 outputCharLen = output?.length ?: 0,
                 errorCode = knownLlmDiagnosticErrorCode(failure),
+                failureReason = boundedFailureReason,
+                readinessCode = readinessCode,
+                sessionKey = context?.sessionKey,
+                generationKey = context?.generationKey,
+                workKey = context?.workKey,
+                photoCount = context?.photoCount,
+                mode = context?.mode,
             ),
         )
+    }
+
+    /** Parse before recording an outcome; emitted text alone is not a successful extraction. */
+    internal suspend fun parseAndRecordResponse(
+        pass: LlmPassDiagnostic.Pass,
+        response: String,
+        fieldsNeeded: Set<String>,
+        startMs: Long,
+        promptCharLen: Int,
+        requireEvidenceFor: Set<String> = emptySet(),
+    ): LlmExtractionResult {
+        currentCoroutineContext().ensureActive()
+        val result = try {
+            parseResponse(response, fieldsNeeded, requireEvidenceFor)
+        } catch (error: kotlinx.coroutines.CancellationException) {
+            throw error
+        } catch (error: Exception) {
+            // Preserve the former outer-handler retry policy for structurally invalid fields.
+            LlmExtractionResult.Failed(
+                "Failed to parse LLM response as JSON: ${error.message}",
+                retryable = pass == LlmPassDiagnostic.Pass.TEXT,
+            )
+        }
+        val status = when (result) {
+            is LlmExtractionResult.Success -> if (result.fieldCandidates.isEmpty()) {
+                LlmPassDiagnostic.Status.NO_RESULT
+            } else {
+                LlmPassDiagnostic.Status.SUCCESS
+            }
+            is LlmExtractionResult.Failed -> LlmPassDiagnostic.Status.ERROR
+            is LlmExtractionResult.Unavailable -> LlmPassDiagnostic.Status.UNAVAILABLE
+        }
+        recordPass(
+            pass, status, startMs, promptCharLen, output = response,
+            failureReason = if (result is LlmExtractionResult.Failed) {
+                LlmPassDiagnostic.FailureReason.INVALID_RESPONSE
+            } else {
+                null
+            },
+        )
+        return result
+    }
+
+    private suspend fun unavailableBeforeInference(
+        pass: LlmPassDiagnostic.Pass,
+        startMs: Long,
+        error: Exception,
+    ): LlmExtractionResult.Unavailable {
+        val result = mindlayerUnavailableResult(error, mindlayer.connectionState.value)
+        val reason = when (result.capability) {
+            RecognitionCapability.AUTHORIZATION_REQUIRED -> LlmPassDiagnostic.FailureReason.AUTHORIZATION_REQUIRED
+            RecognitionCapability.ASSET_SETUP_REQUIRED -> LlmPassDiagnostic.FailureReason.MODEL_SETUP_REQUIRED
+            else -> LlmPassDiagnostic.FailureReason.CONNECTION_UNAVAILABLE
+        }
+        recordPass(pass, LlmPassDiagnostic.Status.UNAVAILABLE, startMs, 0, failure = error, failureReason = reason)
+        return result
     }
 
     /**
      * Normalize raw (often bilingual) OCR text into clean English for the
      * downstream extractor — translate descriptive words and field labels, keep
      * every proper noun / number / date / unit / section marker verbatim. This
-     * is a best-effort pre-pass: any failure, blank result, or cancellation
+     * is a best-effort pre-pass: any failure or blank result
      * falls back to the original [ocrText] so extraction always has something to
      * work with. Recorded as a [LlmPassDiagnostic.Pass.TRANSLATE] pass.
      */
@@ -164,7 +243,7 @@ class MindlayerLlmInferenceProvider(
         val prompt = buildTranslatePrompt(ocrText)
         val startMs = System.currentTimeMillis()
         return try {
-            val out = withTimeout(EXTRACTION_TIMEOUT_MS) {
+            val response = withTimeout(EXTRACTION_TIMEOUT_MS) {
                 val handle = mindlayer.infer {
                     ephemeralSession {
                         systemPrompt = TRANSLATE_SYSTEM_PROMPT
@@ -179,13 +258,18 @@ class MindlayerLlmInferenceProvider(
                     outputText()
                 }
                 (handle as InferenceHandle.Text).awaitText()
-            }.trim()
+            }
+            val out = response.trim()
             val normalized = out.ifBlank { ocrText }
             Tracebox.log.debug(LogTemplate.of("Translate complete: {} chars"), argument(out.length))
             if (com.adsamcik.starlitcoffee.BuildConfig.DEBUG) {
                 logLongDebug("Translate output (debug)", normalized)
             }
-            recordPass(LlmPassDiagnostic.Pass.TRANSLATE, LlmPassDiagnostic.Status.SUCCESS, startMs, prompt.length, output = normalized)
+            recordPass(
+                LlmPassDiagnostic.Pass.TRANSLATE,
+                if (out.isBlank()) LlmPassDiagnostic.Status.NO_RESULT else LlmPassDiagnostic.Status.SUCCESS,
+                startMs, prompt.length, output = response,
+            )
             normalized
         } catch (_: TimeoutCancellationException) {
             currentCoroutineContext().ensureActive()
@@ -304,8 +388,7 @@ class MindlayerLlmInferenceProvider(
                 logLongDebug("LLM prompt (debug)", prompt)
                 logLongDebug("LLM response (debug)", responseText)
             }
-            recordPass(LlmPassDiagnostic.Pass.TEXT, LlmPassDiagnostic.Status.SUCCESS, startMs, prompt.length, output = responseText)
-            parseResponse(responseText, request.fieldsNeeded)
+            parseAndRecordResponse(LlmPassDiagnostic.Pass.TEXT, responseText, request.fieldsNeeded, startMs, prompt.length)
         } catch (_: TimeoutCancellationException) {
             currentCoroutineContext().ensureActive()
             recordPass(
@@ -337,6 +420,7 @@ class MindlayerLlmInferenceProvider(
     private suspend fun prepareTextExtraction(
         request: LlmExtractionRequest,
     ): LlmExtractionResult? {
+        val startMs = System.currentTimeMillis()
         val readiness = try {
             awaitMindlayerConnected()
             mindlayer.getModelReadiness().item(ModelReadinessItem.FAMILY_CHAT)
@@ -344,9 +428,15 @@ class MindlayerLlmInferenceProvider(
             throw error
         } catch (error: Exception) {
             currentCoroutineContext().ensureActive()
-            return mindlayerUnavailableResult(error, mindlayer.connectionState.value)
+            return unavailableBeforeInference(LlmPassDiagnostic.Pass.TEXT, startMs, error)
         }
+        val readinessCode = LlmPassDiagnostic.ReadinessCode.entries.firstOrNull { it.name == readiness?.reasonCode }
         if (readiness?.state == ModelReadinessItem.STATE_SETUP_REQUIRED) {
+            recordPass(
+                LlmPassDiagnostic.Pass.TEXT, LlmPassDiagnostic.Status.UNAVAILABLE, startMs, 0,
+                failureReason = LlmPassDiagnostic.FailureReason.MODEL_SETUP_REQUIRED,
+                readinessCode = readinessCode,
+            )
             return LlmExtractionResult.Unavailable(
                 reason = "Mindlayer chat model setup is required",
                 capability = RecognitionCapability.ASSET_SETUP_REQUIRED,
@@ -355,6 +445,15 @@ class MindlayerLlmInferenceProvider(
         if (readiness?.state == ModelReadinessItem.STATE_FAILED ||
             readiness?.state == ModelReadinessItem.STATE_IN_PROGRESS
         ) {
+            recordPass(
+                LlmPassDiagnostic.Pass.TEXT, LlmPassDiagnostic.Status.UNAVAILABLE, startMs, 0,
+                failureReason = if (readiness.state == ModelReadinessItem.STATE_IN_PROGRESS) {
+                    LlmPassDiagnostic.FailureReason.MODEL_IN_PROGRESS
+                } else {
+                    LlmPassDiagnostic.FailureReason.MODEL_FAILED
+                },
+                readinessCode = readinessCode,
+            )
             return LlmExtractionResult.Unavailable(
                 "Mindlayer chat model is unavailable: ${readiness.reasonCode ?: "unknown error"}",
             )
@@ -424,13 +523,14 @@ class MindlayerLlmInferenceProvider(
             return@withContext LlmExtractionResult.Unavailable("Vision budget already used this session")
         }
 
+        val connectionStartMs = System.currentTimeMillis()
         try {
             awaitMindlayerConnected()
         } catch (e: kotlinx.coroutines.CancellationException) {
             throw e
         } catch (e: Exception) {
             currentCoroutineContext().ensureActive()
-            return@withContext mindlayerUnavailableResult(e, mindlayer.connectionState.value)
+            return@withContext unavailableBeforeInference(LlmPassDiagnostic.Pass.VISION, connectionStartMs, e)
         }
         try {
             mindlayer.prewarm(PREWARM_BACKEND)
@@ -471,8 +571,10 @@ class MindlayerLlmInferenceProvider(
                 (handle as InferenceHandle.Text).awaitText()
             }
             Tracebox.log.debug(LogTemplate.of("Vision inference complete: {} chars"), argument(responseText.length))
-            recordPass(LlmPassDiagnostic.Pass.VISION, LlmPassDiagnostic.Status.SUCCESS, startMs, prompt.length, output = responseText)
-            parseResponse(responseText, request.fieldsNeeded, requireEvidenceFor = EVIDENCE_REQUIRED_FIELDS)
+            parseAndRecordResponse(
+                LlmPassDiagnostic.Pass.VISION, responseText, request.fieldsNeeded, startMs, prompt.length,
+                requireEvidenceFor = EVIDENCE_REQUIRED_FIELDS,
+            )
         } catch (_: TimeoutCancellationException) {
             currentCoroutineContext().ensureActive()
             recordPass(
@@ -511,13 +613,14 @@ class MindlayerLlmInferenceProvider(
         if (request.textPassFields.isEmpty() && request.visionPassFields.isEmpty()) {
             return@withContext LlmExtractionResult.Unavailable("Nothing to combine")
         }
+        val connectionStartMs = System.currentTimeMillis()
         try {
             awaitMindlayerConnected()
         } catch (e: kotlinx.coroutines.CancellationException) {
             throw e
         } catch (e: Exception) {
             currentCoroutineContext().ensureActive()
-            return@withContext mindlayerUnavailableResult(e, mindlayer.connectionState.value)
+            return@withContext unavailableBeforeInference(LlmPassDiagnostic.Pass.COMBINE, connectionStartMs, e)
         }
         try {
             mindlayer.prewarm(PREWARM_BACKEND)
@@ -556,8 +659,7 @@ class MindlayerLlmInferenceProvider(
                 logLongDebug("Combine prompt (debug)", prompt)
                 logLongDebug("Combine response (debug)", responseText)
             }
-            recordPass(LlmPassDiagnostic.Pass.COMBINE, LlmPassDiagnostic.Status.SUCCESS, startMs, prompt.length, output = responseText)
-            parseResponse(responseText, request.fieldsNeeded)
+            parseAndRecordResponse(LlmPassDiagnostic.Pass.COMBINE, responseText, request.fieldsNeeded, startMs, prompt.length)
         } catch (_: TimeoutCancellationException) {
             currentCoroutineContext().ensureActive()
             recordPass(
@@ -586,13 +688,14 @@ class MindlayerLlmInferenceProvider(
         if (request.suggestionsByField.isEmpty()) {
             return@withContext LlmExtractionResult.Unavailable("Nothing to refine")
         }
+        val connectionStartMs = System.currentTimeMillis()
         try {
             awaitMindlayerConnected()
         } catch (e: kotlinx.coroutines.CancellationException) {
             throw e
         } catch (e: Exception) {
             currentCoroutineContext().ensureActive()
-            return@withContext mindlayerUnavailableResult(e, mindlayer.connectionState.value)
+            return@withContext unavailableBeforeInference(LlmPassDiagnostic.Pass.REFINE, connectionStartMs, e)
         }
         try {
             mindlayer.prewarm(PREWARM_BACKEND)
@@ -631,8 +734,7 @@ class MindlayerLlmInferenceProvider(
                 logLongDebug("Refine prompt (debug)", prompt)
                 logLongDebug("Refine response (debug)", responseText)
             }
-            recordPass(LlmPassDiagnostic.Pass.REFINE, LlmPassDiagnostic.Status.SUCCESS, startMs, prompt.length, output = responseText)
-            parseResponse(responseText, request.fieldsNeeded)
+            parseAndRecordResponse(LlmPassDiagnostic.Pass.REFINE, responseText, request.fieldsNeeded, startMs, prompt.length)
         } catch (_: TimeoutCancellationException) {
             currentCoroutineContext().ensureActive()
             recordPass(
@@ -1785,6 +1887,10 @@ Response format (JSON only, no markdown):
 
 /** Retain a recognized wire code, never an SDK message or caller-supplied code name. */
 internal fun knownLlmDiagnosticErrorCode(failure: Throwable?): Int? =
-    (failure as? MindlayerException)?.code?.takeIf {
+    when (failure) {
+        is MindlayerException -> failure
+        is SecurityException -> MindlayerException.fromAidlSecurityException(failure)
+        else -> null
+    }?.code?.takeIf {
         it != MindlayerErrorCode.UNKNOWN && MindlayerErrorCode.nameOf(it) != null
     }

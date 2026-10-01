@@ -3,6 +3,7 @@ package com.adsamcik.starlitcoffee.scan.observability
 import dev.tracebox.Tracebox
 import dev.tracebox.api.LogTemplate
 import dev.tracebox.api.argument
+import com.adsamcik.starlitcoffee.domain.scandiagnostics.ScanLifecycleDiagnostic
 
 
 /**
@@ -11,6 +12,10 @@ import dev.tracebox.api.argument
  * default before they can reach durable storage or optional Logcat mirroring.
  */
 object ScanAnalyticsTracker {
+
+    fun trackLifecycle(diagnostic: ScanLifecycleDiagnostic) {
+        TraceboxScanDiagnosticsRecorder().record(diagnostic)
+    }
 
     fun trackScanStarted() {
         Tracebox.log.debug(LogTemplate.of("event=scan_started"))

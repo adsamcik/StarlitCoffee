@@ -23,7 +23,7 @@ data class LlmPassDiagnostic(
     val timestampMs: Long,
     /** TRANSLATE, TEXT, VISION, COMBINE, or REFINE. */
     val pass: Pass,
-    /** SUCCESS, TIMEOUT, ERROR, or UNAVAILABLE. */
+    /** Final validated outcome, including a valid response with no usable fields. */
     val status: Status,
     val elapsedMs: Long,
     /** Total KV-cache budget requested for the session (input + output). */
@@ -34,14 +34,42 @@ data class LlmPassDiagnostic(
     val outputCharLen: Int,
     /** Known Mindlayer wire error code; no exception text or arbitrary code name. */
     val errorCode: Int? = null,
+    /** Closed app diagnosis for failures that have no Mindlayer wire code. */
+    val failureReason: FailureReason? = null,
+    /** Scan correlation contains validated numeric keys, never a label or image path. */
+    val sessionKey: Long? = null,
+    val generationKey: Long? = null,
+    val workKey: Long? = null,
+    val photoCount: Int? = null,
+    val mode: ScanDiagnosticMode? = null,
+    /** Known coarse SDK readiness cause; arbitrary service reason strings are excluded. */
+    val readinessCode: ReadinessCode? = null,
 ) {
-    enum class Status { SUCCESS, TIMEOUT, ERROR, UNAVAILABLE }
+    enum class Status { SUCCESS, NO_RESULT, TIMEOUT, ERROR, UNAVAILABLE }
     enum class Pass { TRANSLATE, TEXT, VISION, COMBINE, REFINE }
+    enum class FailureReason {
+        INVALID_RESPONSE,
+        CONNECTION_UNAVAILABLE,
+        AUTHORIZATION_REQUIRED,
+        MODEL_SETUP_REQUIRED,
+        MODEL_IN_PROGRESS,
+        MODEL_FAILED,
+        TIMEOUT,
+        INFERENCE_FAILED,
+    }
+    enum class ReadinessCode {
+        MODEL_MISSING,
+        LOW_MEMORY,
+        INTEGRITY_MISMATCH,
+        BACKEND_UNAVAILABLE,
+        NATIVE_ERROR,
+        OLD_SERVICE,
+    }
 }
 
 /**
  * Sink the LLM provider records each pass into. Kept Context-free so the
- * provider stays unit-testable; the app wires a persistent implementation.
+ * provider stays unit-testable; the app wires the policy-controlled Tracebox sink.
  */
 fun interface LlmDiagnosticsRecorder {
     fun record(diagnostic: LlmPassDiagnostic)

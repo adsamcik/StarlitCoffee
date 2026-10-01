@@ -56,6 +56,9 @@ import com.adsamcik.starlitcoffee.data.work.BagExtractionResultStore
 import com.adsamcik.starlitcoffee.data.work.BagExtractionWorker
 import com.adsamcik.starlitcoffee.data.work.BagDraftPhase
 import com.adsamcik.starlitcoffee.data.work.BagDraftStore
+import com.adsamcik.starlitcoffee.data.work.BagScanRunTelemetry
+import com.adsamcik.starlitcoffee.data.work.bagScanDiagnosticContext
+import com.adsamcik.starlitcoffee.data.work.recordBagScanLifecycle
 import com.adsamcik.starlitcoffee.data.work.BagReviewContext
 import com.adsamcik.starlitcoffee.data.work.BagReviewQueue
 import com.adsamcik.starlitcoffee.data.work.decodeBagReviewContext
@@ -64,6 +67,10 @@ import com.adsamcik.starlitcoffee.data.work.encodeToJson
 import com.adsamcik.starlitcoffee.data.work.hasDeterministicScanData
 import com.adsamcik.starlitcoffee.domain.pickWeightedBloomSpritesheetId
 import com.adsamcik.starlitcoffee.domain.BeverageOutputCalibration
+import com.adsamcik.starlitcoffee.domain.scandiagnostics.ScanLifecycleDiagnostic
+import com.adsamcik.starlitcoffee.domain.scandiagnostics.ScanLifecycleEvent
+import com.adsamcik.starlitcoffee.domain.scandiagnostics.ScanDiagnosticFailure
+import com.adsamcik.starlitcoffee.domain.scandiagnostics.ScanDiagnosticOutcome
 import com.adsamcik.starlitcoffee.notification.BagAnalysisNotifier
 import com.adsamcik.starlitcoffee.notification.BrewSessionNotifier
 import com.adsamcik.starlitcoffee.notification.NoOpBagAnalysisNotifier
@@ -1562,6 +1569,14 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         }
         if (photoUriList.isEmpty()) {
             bagPhotoLlmRetryContexts.remove(sessionId)
+            recordBagScanLifecycle(
+                ScanLifecycleDiagnostic(
+                    context = bagScanDiagnosticContext(sessionId, generationId, null, photosCsv, reviewContext),
+                    event = ScanLifecycleEvent.COMPLETED,
+                    outcome = ScanDiagnosticOutcome.NO_RESULT,
+                    failure = ScanDiagnosticFailure.NO_PHOTOS,
+                ),
+            )
             _bagPhotoResult.value = BagPhotoSessionResult(
                 sessionId = sessionId,
                 result = BagPhotoProcessingResult(capturedPhotoUris = photosCsv),
@@ -1665,6 +1680,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         }
         val generationId = UUID.randomUUID().toString()
         rememberLatestBagExtractionGeneration(sessionId, generationId)
+        app?.let { BagDraftStore.beginGeneration(it, sessionId, generationId) }
         return generationId
     }
 
@@ -1772,18 +1788,37 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         activeBagExtractionGenerationId = context.generationId
         activeBagExtractionReviewContext = context.reviewContext
         bagPhotoProcessJob = viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) {
-                runCancellableLlmEnrichment(
-                    photoUris = context.photoUriList,
-                    knownFieldValues = context.knownFieldValues,
-                    runLlm = runLlm,
-                    onProgress = ::updateBagPhotoProgress,
-                    onPartialResult = { partialResult ->
-                        updateBagAnalysisPreview(
-                            partialResult.copy(capturedPhotoUris = context.photosCsv),
-                        )
-                    },
-                )
+            val telemetry = BagScanRunTelemetry(context.diagnosticContext(), aiRequested = runLlm)
+            telemetry.start()
+            val result = try {
+                withContext(Dispatchers.IO + telemetry.identity) {
+                    runCancellableLlmEnrichment(
+                        photoUris = context.photoUriList,
+                        knownFieldValues = context.knownFieldValues,
+                        runLlm = runLlm,
+                        onProgress = { progress ->
+                            telemetry.progress(progress)
+                            updateBagPhotoProgress(progress)
+                        },
+                        onPartialResult = { partialResult ->
+                            telemetry.partial(partialResult)
+                            updateBagAnalysisPreview(
+                                partialResult.copy(capturedPhotoUris = context.photosCsv),
+                            )
+                        },
+                    )
+                }
+            } catch (error: CancellationException) {
+                telemetry.cancel()
+                throw error
+            } catch (error: Exception) {
+                telemetry.finish(BagPhotoProcessingResult(), successful = false)
+                throw error
+            }
+            if (isLatestBagExtractionGeneration(context.sessionId, context.generationId)) {
+                telemetry.finish(result, successful = true)
+            } else {
+                telemetry.cancel()
             }
             bagPhotoLlmRetryContexts[context.sessionId] = context
             deliverBagPhotoResult(
@@ -2032,6 +2067,9 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         val context = previousContext.copy(
             generationId = startNewBagExtractionGeneration(sessionId),
         )
+        recordBagScanLifecycle(
+            ScanLifecycleDiagnostic(context.diagnosticContext(), ScanLifecycleEvent.RETRY_REQUESTED, aiRequested = true),
+        )
         bagPhotoLlmRetryContexts[sessionId] = context
         bagPhotoSkipRequested = false
         bagPhotoRetrySessionId = sessionId
@@ -2097,6 +2135,10 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         val photoUriList: List<String>,
         val knownFieldValues: KnownFieldValues,
         val reviewContext: BagReviewContext?,
+    )
+
+    private fun BagPhotoLlmRetryContext.diagnosticContext() = bagScanDiagnosticContext(
+        sessionId, generationId, null, photosCsv, reviewContext,
     )
 
     fun consumeBagPhotoResult(sessionId: String) {
@@ -2278,6 +2320,8 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         cancelBagPhotoProcessJob()
         bagPhotoLlmDeferred = null
         if (checkpoint != null) {
+            BagScanRunTelemetry(context.diagnosticContext(), aiRequested = false)
+                .finish(checkpoint.copy(llmStatus = LlmEnrichmentStatus.NOT_RUN), successful = true)
             deliverBagPhotoResult(
                 result = checkpoint.copy(
                     capturedPhotoUris = context.photosCsv,

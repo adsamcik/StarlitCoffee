@@ -109,6 +109,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Scan support diagnostics now include recognition progress and recovery events,
+  distinguish malformed AI responses from usable results, and retain safe failure
+  codes and scan correlation in reviewed exports. Capture and deletion remain
+  controlled by Diagnostics.
+
 - Rescans now show ongoing label recognition and contextual recovery actions.
   Available changes remain reviewable while recognition runs, and saving partial
   results is labeled clearly instead of presenting an unfinished scan as complete.

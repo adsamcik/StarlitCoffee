@@ -1,6 +1,8 @@
 package com.adsamcik.starlitcoffee.data.work
 
 import android.content.Context
+import com.adsamcik.starlitcoffee.domain.scandiagnostics.ScanLifecycleDiagnostic
+import com.adsamcik.starlitcoffee.scan.observability.ScanAnalyticsTracker
 import com.adsamcik.starlitcoffee.util.AndroidDirectorySync
 import com.adsamcik.starlitcoffee.util.AndroidFileSync
 import com.adsamcik.starlitcoffee.util.BagFieldConfidence
@@ -462,14 +464,39 @@ object BagDraftStore {
         sessionId: String,
         phase: BagDraftPhase,
         nowMillis: Long = System.currentTimeMillis(),
-    ): BagScanDraft? = update(context, sessionId) { draft ->
-        when {
-            !draft.isActive -> draft
-            phase == BagDraftPhase.SAVED || phase == BagDraftPhase.DISCARDED ->
-                draft.closeAsTombstone(phase, nowMillis)
-            else -> draft.copy(phase = phase, updatedAtMillis = nowMillis)
+    ): BagScanDraft? = markPhase(directory(context), sessionId, phase, nowMillis)
+
+    @Synchronized
+    internal fun markPhase(
+        directory: File,
+        sessionId: String,
+        phase: BagDraftPhase,
+        nowMillis: Long = System.currentTimeMillis(),
+        fileSync: FileSync = AndroidFileSync,
+        directorySync: DirectorySync = AndroidDirectorySync,
+        emit: (ScanLifecycleDiagnostic) -> Unit = ScanAnalyticsTracker::trackLifecycle,
+    ): BagScanDraft? {
+        val current = read(directory, sessionId)
+        if (current == null) {
+            clearFocusForClosedPhase(sessionId, phase)
+            return null
         }
-    }.also {
+        val next = when {
+            !current.isActive -> current
+            phase == BagDraftPhase.SAVED || phase == BagDraftPhase.DISCARDED ->
+                current.closeAsTombstone(phase, nowMillis)
+            else -> current.copy(phase = phase, updatedAtMillis = nowMillis)
+        }
+        if (next != current) {
+            write(directory, next, fileSync, directorySync)
+            changes.value += 1L
+            bagDraftPhaseDiagnostic(current, next)?.let { recordBagScanLifecycle(it, emit) }
+        }
+        clearFocusForClosedPhase(sessionId, phase)
+        return next
+    }
+
+    private fun clearFocusForClosedPhase(sessionId: String, phase: BagDraftPhase) {
         if (phase == BagDraftPhase.SAVED || phase == BagDraftPhase.DISCARDED) {
             BagDraftFocusRegistry.clear(sessionId)
         }
@@ -503,7 +530,9 @@ object BagDraftStore {
     ): BagScanDraft? {
         val current = read(context, sessionId) ?: return null
         val next = transform(current)
-        if (next != current) write(context, next)
+        if (next != current) {
+            write(context, next)
+        }
         return next
     }
 

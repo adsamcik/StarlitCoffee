@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.scan.observability
 
 import com.adsamcik.starlitcoffee.domain.scandiagnostics.LlmPassDiagnostic
+import com.adsamcik.starlitcoffee.domain.scandiagnostics.ScanDiagnosticMode
 import dev.tracebox.api.LogArgument
 import dev.tracebox.api.LogCategory
 import dev.tracebox.api.LogLevel
@@ -25,10 +26,13 @@ class TraceboxLlmDiagnosticsRecorderTest {
         val event = logger.events.single()
         assertEquals(LogLevel.INFO, event.level)
         assertEquals(
-            "AI pass={} status={} elapsed_ms={} max_tokens={} prompt_chars={} output_chars={} error_code={}",
+            "AI pass={} status={} ms={} tokens={} prompt={} out={} error_code={} reason={} session={} generation={} work={} photos={} mode={} ready={}",
             event.template,
         )
-        assertEquals(listOf("TEXT", "SUCCESS", "1500", "4096", "1206", "27", "null"), event.arguments.map { it.text })
+        assertEquals(
+            listOf("TEXT", "SUCCESS", "1500", "4096", "1206", "27") + List(8) { "null" },
+            event.arguments.map { it.text },
+        )
         assertTrue(event.arguments.all { it.privacy == Privacy.PUBLIC && !it.transformed })
     }
 
@@ -50,8 +54,8 @@ class TraceboxLlmDiagnosticsRecorderTest {
         logger.events.zip(statuses).forEach { (event, status) ->
             assertEquals(LogLevel.WARN, event.level)
             assertEquals(status.name, event.arguments[1].text)
-            assertEquals(if (status == LlmPassDiagnostic.Status.ERROR) "3006" else "null", event.arguments.last().text)
-            assertEquals(7, event.arguments.size)
+            assertEquals(if (status == LlmPassDiagnostic.Status.ERROR) "3006" else "null", event.arguments[6].text)
+            assertEquals(14, event.arguments.size)
             assertTrue(event.arguments.all { it.privacy == Privacy.PUBLIC && !it.transformed })
         }
     }
@@ -65,6 +69,65 @@ class TraceboxLlmDiagnosticsRecorderTest {
 
         assertEquals(LlmPassDiagnostic.Pass.entries.map { it.name }, logger.events.map { it.arguments.first().text })
         assertTrue(logger.events.all { it.arguments.first().privacy == Privacy.PUBLIC })
+    }
+
+    @Test
+    fun `valid empty responses are informative rather than warning failures`() {
+        val logger = CapturingLogger()
+
+        TraceboxLlmDiagnosticsRecorder(logger).record(diagnostic(status = LlmPassDiagnostic.Status.NO_RESULT))
+
+        assertEquals(LogLevel.INFO, logger.events.single().level)
+        assertEquals("NO_RESULT", logger.events.single().arguments[1].text)
+    }
+
+    @Test
+    fun `all typed failure reasons and numeric scan keys survive default privacy`() {
+        val logger = CapturingLogger()
+        val recorder = TraceboxLlmDiagnosticsRecorder(logger)
+        LlmPassDiagnostic.FailureReason.entries.forEach { reason ->
+            recorder.record(
+                diagnostic(status = LlmPassDiagnostic.Status.UNAVAILABLE).copy(
+                    failureReason = reason,
+                    sessionKey = 101L,
+                    generationKey = 202L,
+                    workKey = 303L,
+                    photoCount = 2,
+                    mode = ScanDiagnosticMode.entries.first(),
+                ),
+            )
+        }
+
+        assertEquals(LlmPassDiagnostic.FailureReason.entries.map { it.name }, logger.events.map { it.arguments[7].text })
+        logger.events.forEach { event ->
+            assertEquals(
+                listOf("101", "202", "303", "2", ScanDiagnosticMode.entries.first().name, "null"),
+                event.arguments.drop(8).map { it.text },
+            )
+            assertTrue(event.arguments.all { it.privacy == Privacy.PUBLIC && !it.transformed })
+        }
+    }
+
+    @Test
+    fun `known readiness causes remain public enums alongside model failed diagnosis`() {
+        val logger = CapturingLogger()
+        val recorder = TraceboxLlmDiagnosticsRecorder(logger)
+        LlmPassDiagnostic.ReadinessCode.entries.forEach { readinessCode ->
+            recorder.record(
+                diagnostic(status = LlmPassDiagnostic.Status.UNAVAILABLE).copy(
+                    failureReason = LlmPassDiagnostic.FailureReason.MODEL_FAILED,
+                    readinessCode = readinessCode,
+                ),
+            )
+        }
+
+        assertEquals(LlmPassDiagnostic.ReadinessCode.entries.map { it.name }, logger.events.map { it.arguments.last().text })
+        logger.events.forEach { event ->
+            assertEquals("MODEL_FAILED", event.arguments[7].text)
+            assertEquals(LogLevel.WARN, event.level)
+            assertEquals(14, event.arguments.size)
+            assertTrue(event.arguments.all { it.privacy == Privacy.PUBLIC && !it.transformed })
+        }
     }
 
     private fun diagnostic(

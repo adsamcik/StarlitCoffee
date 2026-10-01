@@ -26,10 +26,15 @@ class TraceboxLlmDiagnosticsRecorder(
     private val logger: TraceboxLogger = Tracebox.log,
 ) : LlmDiagnosticsRecorder {
     override fun record(diagnostic: LlmPassDiagnostic) {
-        val level = if (diagnostic.status == LlmPassDiagnostic.Status.SUCCESS) LogLevel.INFO else LogLevel.WARN
+        val level = when (diagnostic.status) {
+            LlmPassDiagnostic.Status.SUCCESS, LlmPassDiagnostic.Status.NO_RESULT -> LogLevel.INFO
+            else -> LogLevel.WARN
+        }
         logger.log(
             level,
-            LogTemplate.of("AI pass={} status={} elapsed_ms={} max_tokens={} prompt_chars={} output_chars={} error_code={}"),
+            LogTemplate.of(
+                "AI pass={} status={} ms={} tokens={} prompt={} out={} error_code={} reason={} session={} generation={} work={} photos={} mode={} ready={}",
+            ),
             argument(diagnostic.pass),
             argument(diagnostic.status),
             argument(diagnostic.elapsedMs),
@@ -37,6 +42,13 @@ class TraceboxLlmDiagnosticsRecorder(
             argument(diagnostic.promptCharLen),
             argument(diagnostic.outputCharLen),
             argument(diagnostic.errorCode),
+            argument(diagnostic.failureReason),
+            argument(diagnostic.sessionKey),
+            argument(diagnostic.generationKey),
+            argument(diagnostic.workKey),
+            argument(diagnostic.photoCount),
+            argument(diagnostic.mode),
+            argument(diagnostic.readinessCode),
         )
     }
 }

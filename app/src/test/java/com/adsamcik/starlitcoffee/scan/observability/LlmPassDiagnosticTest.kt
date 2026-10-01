@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.scan.observability
 
 import com.adsamcik.starlitcoffee.domain.scandiagnostics.LlmPassDiagnostic
+import com.adsamcik.starlitcoffee.domain.scandiagnostics.ScanDiagnosticMode
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
@@ -31,6 +32,13 @@ class LlmPassDiagnosticTest {
 
         assertEquals(original, decoded)
         assertNull(decoded.errorCode)
+        assertNull(decoded.failureReason)
+        assertNull(decoded.sessionKey)
+        assertNull(decoded.generationKey)
+        assertNull(decoded.workKey)
+        assertNull(decoded.photoCount)
+        assertNull(decoded.mode)
+        assertNull(decoded.readinessCode)
     }
 
     @Test
@@ -117,5 +125,76 @@ class LlmPassDiagnosticTest {
 
         assertEquals(passes, decoded)
         assertEquals(LlmPassDiagnostic.Pass.COMBINE, decoded.first().pass)
+    }
+
+    @Test
+    fun `typed readiness and validation failures round-trip with scan correlation`() {
+        LlmPassDiagnostic.FailureReason.entries.forEach { reason ->
+            val original = LlmPassDiagnostic(
+                timestampMs = 1L,
+                pass = LlmPassDiagnostic.Pass.TEXT,
+                status = LlmPassDiagnostic.Status.UNAVAILABLE,
+                elapsedMs = 2L,
+                maxTokens = 4096,
+                promptCharLen = 0,
+                outputCharLen = 0,
+                failureReason = reason,
+                sessionKey = 101L,
+                generationKey = 202L,
+                workKey = 303L,
+                photoCount = 2,
+                mode = ScanDiagnosticMode.entries.first(),
+            )
+
+            assertEquals(original, json.decodeFromString<LlmPassDiagnostic>(json.encodeToString(original)))
+        }
+    }
+
+    @Test
+    fun `unknown diagnosis and mode strings cannot become diagnostic text`() {
+        val encoded = json.encodeToString(
+            LlmPassDiagnostic(
+                1L, LlmPassDiagnostic.Pass.TEXT, LlmPassDiagnostic.Status.NO_RESULT, 2L, 4096, 3, 4,
+                failureReason = LlmPassDiagnostic.FailureReason.INVALID_RESPONSE,
+                mode = ScanDiagnosticMode.entries.first(),
+            ),
+        )
+
+        listOf(
+            encoded.replace("\"INVALID_RESPONSE\"", "\"PRIVATE_EXCEPTION_MESSAGE\""),
+            encoded.replace("\"${ScanDiagnosticMode.entries.first().name}\"", "\"PRIVATE_IMAGE_PATH\""),
+        ).forEach { injected ->
+            assertThrows(SerializationException::class.java) { json.decodeFromString<LlmPassDiagnostic>(injected) }
+        }
+    }
+
+    @Test
+    fun `readiness schema contains exactly known SDK causes and round-trips each cause`() {
+        assertEquals(
+            listOf("MODEL_MISSING", "LOW_MEMORY", "INTEGRITY_MISMATCH", "BACKEND_UNAVAILABLE", "NATIVE_ERROR", "OLD_SERVICE"),
+            LlmPassDiagnostic.ReadinessCode.entries.map { it.name },
+        )
+        LlmPassDiagnostic.ReadinessCode.entries.forEach { readinessCode ->
+            val original = LlmPassDiagnostic(
+                1L, LlmPassDiagnostic.Pass.TEXT, LlmPassDiagnostic.Status.UNAVAILABLE, 2L, 4096, 0, 0,
+                failureReason = LlmPassDiagnostic.FailureReason.MODEL_FAILED,
+                readinessCode = readinessCode,
+            )
+
+            assertEquals(original, json.decodeFromString<LlmPassDiagnostic>(json.encodeToString(original)))
+        }
+    }
+
+    @Test
+    fun `unknown readiness strings are rejected rather than retained or logged`() {
+        val encoded = json.encodeToString(
+            LlmPassDiagnostic(
+                1L, LlmPassDiagnostic.Pass.TEXT, LlmPassDiagnostic.Status.UNAVAILABLE, 2L, 4096, 0, 0,
+                readinessCode = LlmPassDiagnostic.ReadinessCode.LOW_MEMORY,
+            ),
+        )
+        val injected = encoded.replace("\"LOW_MEMORY\"", "\"PRIVATE_MODEL_REASON_TEXT\"")
+
+        assertThrows(SerializationException::class.java) { json.decodeFromString<LlmPassDiagnostic>(injected) }
     }
 }
