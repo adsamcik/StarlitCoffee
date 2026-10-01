@@ -1,0 +1,30 @@
+Use case: stylized-concept. Supporting visual reference: supplied SINGLE finished sprite, used ONLY for the mature subject identity, warm painterly tactile finish, coffee-bean base and palette. Generate a NEW 25-frame growth atlas from an unsprouted coffee bean to this final mature subject. The reference is the final destination, NOT the subject to repeat throughout the atlas. Output ONE SQUARE transparent RGBA spritesheet, exactly FIVE columns and FIVE rows of equal square cells, 25 frames row-major left-to-right then top-to-bottom. Prefer 1280x1280 (256px cells) if supported. Actual transparent background, no checkerboard pixels. ZERO text, numbers, labels, guides, borders, grid lines, color bars, watermarks, dots or stray pixels. Each cell contains ONE complete isolated subject with generous empty margin; all content stays inside its cell. Same front camera, light direction, bean size/orientation/texture and base anchor in every cell. Bean base at horizontal center and 88% down cell; highest final tip stays below 10% down cell, widest final artwork inside 12%-88% cell width. Preserve readable silhouettes at 148px. NO camera zoom, rotation, recentering, growth reversal, object swaps, disappearing mature leaves, random petal counts, or premature completed bloom. New frames must follow a SINGLE persistent anatomy, not alternate drawings. Smooth purposeful silhouette development across ALL 25 cells including every row boundary. Each frame makes the next small structural growth step; finished state arrives at frame25. No long repeated bud phase or last-row duplicate poses. Do not copy the original's timing defects. Do not draw frame labels from the following instructions.
+Subject: compact cherry tomato plant with persistent two lower fruit clusters and one upper node, fine tomato leaves, yellow star flowers, shiny round red tomatoes. Establish all final fruit nodes as buds before fruit develops, keep their spatial locations attached to the same branch throughout. Every fruit transitions at its own node flower→tiny green fruit→larger green fruit→ripe; never teleport, multiply late, recolor backwards, or change branch skeleton. Preserve an airy canopy with clear fruit-to-leaf gaps.
+
+Exact 25-frame sequence:
+Frame 1: closed upright bean.
+Frame 2: seam loosens.
+Frame 3: green point appears.
+Frame 4: sprout emerges.
+Frame 5: stem lengthens.
+Frame 6: first leaves separate.
+Frame 7: first leaves unfold.
+Frame 8: two side branches bud.
+Frame 9: side branches lengthen.
+Frame 10: leaves spread on fixed branches.
+Frame 11: six small flower buds at final fruit nodes.
+Frame 12: buds enlarge at same nodes.
+Frame 13: first buds open flowers.
+Frame 14: all fruit-node flowers open.
+Frame 15: petals recede revealing tiny green fruit.
+Frame 16: green fruit grows slightly.
+Frame 17: green fruit grows visibly.
+Frame 18: fruit reaches three-quarter size.
+Frame 19: first fruit starts blushing.
+Frame 20: first fruit becomes red.
+Frame 21: second fruit changes color.
+Frame 22: next fruit reaches red.
+Frame 23: remaining fruit color spreads toward red.
+Frame 24: last fruit almost ripe.
+Frame 25: all six fruit fully red, full harvest.
+Cumulative anatomy is essential: every leaf, branch, petal and fruit already grown REMAINS attached in the same location and at least the same size in every later frame. Do not reset at a row boundary. The whole figure develops gradually; the final five frames must continue visible completion, not repeat mature alternatives.

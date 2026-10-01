@@ -1,0 +1,35 @@
+Use case: precise-object-edit.
+Asset type: production transparent botanical growth sprite atlas for a calm coffee-brewing app, viewed one cell at a time at about 148px.
+Primary request: create a fully rebuilt 25-frame growth animation for Passionflower, using the supplied artwork for its tactile painted style and final flower identity. This is one image atlas, not a contact-sheet presentation.
+Output layout: exactly FIVE columns and FIVE rows of equal SQUARE cells, 25 frames total, row-major from upper-left F1 to lower-right F25. Square canvas ideally 1280x1280. No row gaps or gutters. Grid is mathematical only: absolutely NO lines, borders, labels, numbers, typography, guides, checkerboard, background color or watermark. REAL transparent alpha everywhere outside the plant.
+Every cell contains EXACTLY ONE complete plant, NEVER two. No cut limbs, no spill into neighboring cells. Within each cell keep every pixel of the subject inside an approximately 10% inset safe rectangle. Plant rooted at the same central ground point around (50%,88%) in each cell. Same front three-quarter view, same lighting, same painted depth. Fixed bean base size and shape throughout: warm brown coffee bean, about 26% of cell width, underside at 88% cell height. Keep its crack, texture landmarks, and orientation stable. Mature plant fills approximately 72% of cell height and 72% of width; young sprout remains small above the SAME bean. No camera zoom, no drifting, no shadows extending outside the object.
+Render opaque colored interior surfaces, clean antialiased alpha edges, softly modeled botanical volume, restrained fine detail, crisp silhouettes and petal separation readable at small size. Preserve already-created plant nodes: stems, leaves, buds and petals remain attached, evolve continuously, never vanish or swap sides. Every frame advances a meaningful visible growth action; no repeated near-held repainting, no reversal from flower to bud. Broad changes must have in-between poses. Opening starts well BEFORE last five frames. Only F25 is fully finished; F21–24 each show a distinct final stage.
+SPECIFIC ART DIRECTION
+Preserve ivory five-petal/five-sepal star, vivid purple radial corona, raised green-and-gold central column, two broad lobed leaf groups and one small curled tendril on right. One flower centered over bean. Establish leaves and tendril before bud opening; never replace them. Make corona broad readable ring, not microscopic filigree.
+EXACT FRAME PLAN (do not print numbers):
+F1: closed upright bean.
+F2: same bean seam opens.
+F3: tiny green sprout.
+F4: sprout lengthens.
+F5: paired folded leaves appear.
+F6: two leaves begin unfolding.
+F7: paired lobed leaves widen.
+F8: central stalk rises, small right tendril appears.
+F9: same leaves and tendril, small terminal bud.
+F10: same scaffold, oval bud enlarges.
+F11: same scaffold, bud swells and pale seams appear.
+F12: same scaffold, five sepal tips begin separating.
+F13: same scaffold, sepals spread into narrow cup.
+F14: same scaffold, white petal tips emerge within cup.
+F15: same scaffold, outer ivory petals unfold quarter-way.
+F16: same scaffold, petals unfold halfway, purple fringe appears.
+F17: same scaffold, petals spread farther, purple corona expands.
+F18: same scaffold, ivory star three-quarters open, corona ring enlarges.
+F19: same scaffold, corona strands separate, center starts rising.
+F20: same scaffold, ivory star nearly open, short green column visible.
+F21: same scaffold, corona widens and central column lengthens.
+F22: same scaffold, green stigmas begin unfolding.
+F23: same scaffold, golden anthers turn outward.
+F24: same scaffold, last petal tips flatten and center opens fully.
+F25: fully open ivory and purple passionflower with complete raised center and unchanged leaves/tendril.
+Final check before delivery: count 5x5 and 25 separate single plants; all 25 complete inside their cells; no missing horizontal bands; no duplicate skinny plants; no holes in intended solid petals; no flattened silhouette texture; no artificial glow.

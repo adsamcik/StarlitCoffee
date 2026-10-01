@@ -1,0 +1,35 @@
+Use case: precise-object-edit.
+Asset type: production transparent botanical growth sprite atlas for a calm coffee-brewing app, viewed one cell at a time at about 148px.
+Primary request: create a fully rebuilt 25-frame growth animation for Jade Vine, using the supplied artwork for its tactile painted style and final flower identity. This is one image atlas, not a contact-sheet presentation.
+Output layout: exactly FIVE columns and FIVE rows of equal SQUARE cells, 25 frames total, row-major from upper-left F1 to lower-right F25. Square canvas ideally 1280x1280. No row gaps or gutters. Grid is mathematical only: absolutely NO lines, borders, labels, numbers, typography, guides, checkerboard, background color or watermark. REAL transparent alpha everywhere outside the plant.
+Every cell contains EXACTLY ONE complete plant, NEVER two. No cut limbs, no spill into neighboring cells. Within each cell keep every pixel of the subject inside an approximately 10% inset safe rectangle. Plant rooted at the same central ground point around (50%,88%) in each cell. Same front three-quarter view, same lighting, same painted depth. Fixed bean base size and shape throughout: warm brown coffee bean, about 26% of cell width, underside at 88% cell height. Keep its crack, texture landmarks, and orientation stable. Mature plant fills approximately 72% of cell height and 72% of width; young sprout remains small above the SAME bean. No camera zoom, no drifting, no shadows extending outside the object.
+Render opaque colored interior surfaces, clean antialiased alpha edges, softly modeled botanical volume, restrained fine detail, crisp silhouettes and petal separation readable at small size. Preserve already-created plant nodes: stems, leaves, buds and petals remain attached, evolve continuously, never vanish or swap sides. Every frame advances a meaningful visible growth action; no repeated near-held repainting, no reversal from flower to bud. Broad changes must have in-between poses. Opening starts well BEFORE last five frames. Only F25 is fully finished; F21–24 each show a distinct final stage.
+SPECIFIC ART DIRECTION
+Input is old flawed atlas: preserve turquoise claw flower material and warm brown bean, but redesign layout to fit complete plant. ONE thin vine arches left-to-right over bean; exactly three oval green leaves remain on the left stem; exactly one hanging raceme on right with seven large separated turquoise claws. Avoid tangly micro-tendrils and cropped top. All seven buds introduced together, then open from top to bottom; no new branches late.
+EXACT FRAME PLAN (do not print numbers):
+F1: closed upright bean.
+F2: same bean seam parts.
+F3: green shoot emerges from seam.
+F4: shoot rises as a short curl.
+F5: curl lengthens with first folded leaf.
+F6: curved vine retains first leaf and adds second leaf tip.
+F7: vine arches right, both left leaves unfold.
+F8: third left leaf appears below two retained leaves.
+F9: all three left leaves widen, arch stretches right.
+F10: complete arch and three leaves, tiny raceme tip at right.
+F11: same arch and leaves, seven tiny attached raceme buds.
+F12: same scaffold, seven buds lengthen together.
+F13: same scaffold, top bud swells, lower six stay attached.
+F14: top bud begins splitting, six lower buds swell.
+F15: top claw opens halfway, second bud splits, lower five closed.
+F16: top claw unfolds, second claw half open, third splits, four closed.
+F17: two upper claws open, third halfway, fourth splits, three closed.
+F18: three upper claws open, fourth half, fifth splits, two closed.
+F19: four upper claws open, fifth half, sixth splits, last closed.
+F20: five upper claws open, sixth half, seventh splits.
+F21: upper five stay open, sixth broadens, seventh half open.
+F22: six open claws remain, last claw curls outward.
+F23: seven claws visible, last three curl a little farther.
+F24: seven claws spread with clear negative-space gaps.
+F25: complete balanced seven-claw turquoise raceme with all three leaves and arch intact.
+Final check before delivery: count 5x5 and 25 separate single plants; all 25 complete inside their cells; no missing horizontal bands; no duplicate skinny plants; no holes in intended solid petals; no flattened silhouette texture; no artificial glow.

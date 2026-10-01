@@ -1,0 +1,36 @@
+Input reference is ONE finished flower still, used only for painted material, color and flower identity. Build a NEW square 5-by-5 animation atlas from it, not a zoomed copy of the still. Each complete plant must occupy ONLY the middle 75% of ITS OWN cell; completely empty transparent safety band at least 12% wide on ALL FOUR sides of EACH cell. No subject pixel may touch a cell boundary. Show cumulative growth exactly as below.
+Use case: precise-object-edit.
+Asset type: production transparent botanical growth sprite atlas for a calm coffee-brewing app, viewed one cell at a time at about 148px.
+Primary request: create a fully rebuilt 25-frame growth animation for Bird of Paradise, using the supplied artwork for its tactile painted style and final flower identity. This is one image atlas, not a contact-sheet presentation.
+Output layout: exactly FIVE columns and FIVE rows of equal SQUARE cells, 25 frames total, row-major from upper-left F1 to lower-right F25. Square canvas ideally 1280x1280. No row gaps or gutters. Grid is mathematical only: absolutely NO lines, borders, labels, numbers, typography, guides, checkerboard, background color or watermark. REAL transparent alpha everywhere outside the plant.
+Every cell contains EXACTLY ONE complete plant, NEVER two. No cut limbs, no spill into neighboring cells. Within each cell keep every pixel of the subject inside an approximately 10% inset safe rectangle. Plant rooted at the same central ground point around (50%,88%) in each cell. Same front three-quarter view, same lighting, same painted depth. Fixed bean base size and shape throughout: warm brown coffee bean, about 26% of cell width, underside at 88% cell height. Keep its crack, texture landmarks, and orientation stable. Mature plant fills approximately 72% of cell height and 72% of width; young sprout remains small above the SAME bean. No camera zoom, no drifting, no shadows extending outside the object.
+Render opaque colored interior surfaces, clean antialiased alpha edges, softly modeled botanical volume, restrained fine detail, crisp silhouettes and petal separation readable at small size. Preserve already-created plant nodes: stems, leaves, buds and petals remain attached, evolve continuously, never vanish or swap sides. Every frame advances a meaningful visible growth action; no repeated near-held repainting, no reversal from flower to bud. Broad changes must have in-between poses. Opening starts well BEFORE last five frames. Only F25 is fully finished; F21–24 each show a distinct final stage.
+SPECIFIC ART DIRECTION
+Preserve green horizontal boat-shaped spathe, upright orange fan and blue spear. Exactly two basal green leaves and one curved stem retained throughout. Open the spathe gradually and grow three orange segments plus one cobalt spear from within; avoid flowers popping in or changing leaf count.
+EXACT FRAME PLAN (do not print numbers):
+F1: closed upright bean.
+F2: same bean seam opens.
+F3: green shoot appears.
+F4: shoot lengthens.
+F5: two folded basal leaves appear.
+F6: two leaves unfurl slightly.
+F7: two leaves open halfway, stalk lengthens.
+F8: two leaves open fully, stalk begins curving right.
+F9: same two leaves, stalk tip thickens.
+F10: same scaffold, tip bends into small horizontal spathe.
+F11: same scaffold, spathe lengthens.
+F12: same scaffold, spathe thickens into a boat.
+F13: same scaffold, upper spathe seam opens slightly.
+F14: same scaffold, orange tip visible in seam.
+F15: same scaffold, first orange segment emerges quarter-way.
+F16: same scaffold, first orange segment rises halfway, second tip appears.
+F17: same scaffold, first segment near upright, second segment grows.
+F18: same scaffold, third orange tip and tiny blue spear appear.
+F19: same scaffold, two orange segments rise, third grows, blue spear lengthens.
+F20: same scaffold, three orange segments fan halfway with blue spear retained.
+F21: same scaffold, orange fan widens, blue spear lifts.
+F22: same scaffold, fan reaches near full height and width.
+F23: same scaffold, third segment spreads outward.
+F24: same scaffold, tips extend slightly, boat remains unchanged.
+F25: fully open balanced three-orange-segment fan and cobalt spear above green spathe.
+Final check before delivery: count 5x5 and 25 separate single plants; all 25 complete inside their cells; no missing horizontal bands; no duplicate skinny plants; no holes in intended solid petals; no flattened silhouette texture; no artificial glow.

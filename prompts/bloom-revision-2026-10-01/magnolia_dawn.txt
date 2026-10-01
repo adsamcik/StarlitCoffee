@@ -1,0 +1,35 @@
+Use case: precise-object-edit.
+Asset type: production transparent botanical growth sprite atlas for a calm coffee-brewing app, viewed one cell at a time at about 148px.
+Primary request: create a fully rebuilt 25-frame growth animation for Magnolia Dawn, using the supplied artwork for its tactile painted style and final flower identity. This is one image atlas, not a contact-sheet presentation.
+Output layout: exactly FIVE columns and FIVE rows of equal SQUARE cells, 25 frames total, row-major from upper-left F1 to lower-right F25. Square canvas ideally 1280x1280. No row gaps or gutters. Grid is mathematical only: absolutely NO lines, borders, labels, numbers, typography, guides, checkerboard, background color or watermark. REAL transparent alpha everywhere outside the plant.
+Every cell contains EXACTLY ONE complete plant, NEVER two. No cut limbs, no spill into neighboring cells. Within each cell keep every pixel of the subject inside an approximately 10% inset safe rectangle. Plant rooted at the same central ground point around (50%,88%) in each cell. Same front three-quarter view, same lighting, same painted depth. Fixed bean base size and shape throughout: warm brown coffee bean, about 26% of cell width, underside at 88% cell height. Keep its crack, texture landmarks, and orientation stable. Mature plant fills approximately 72% of cell height and 72% of width; young sprout remains small above the SAME bean. No camera zoom, no drifting, no shadows extending outside the object.
+Render opaque colored interior surfaces, clean antialiased alpha edges, softly modeled botanical volume, restrained fine detail, crisp silhouettes and petal separation readable at small size. Preserve already-created plant nodes: stems, leaves, buds and petals remain attached, evolve continuously, never vanish or swap sides. Every frame advances a meaningful visible growth action; no repeated near-held repainting, no reversal from flower to bud. Broad changes must have in-between poses. Opening starts well BEFORE last five frames. Only F25 is fully finished; F21–24 each show a distinct final stage.
+SPECIFIC ART DIRECTION
+Input is a cropped finished flower reference, not a grid to copy. Preserve soft ivory petals with subtle blush-pink bases, warm golden stamens, two broad glossy green leaves, tactile brown coffee-bean root. Reconstruct an elegant rounded magnolia bud opening into a broad ivory bowl. Reference edges may have tiny alpha artifacts; correct them. Whole flower centered above bean, fit all petals inside margin.
+EXACT FRAME PLAN (do not print numbers):
+F1: closed upright bean with narrow seam.
+F2: seam widens slightly.
+F3: small green shoot appears.
+F4: shoot elongates.
+F5: two folded leaf tips emerge.
+F6: leaf tips separate.
+F7: left and right leaves unfurl halfway.
+F8: both leaves reach broad oval shape.
+F9: terminal fuzzy bud appears.
+F10: bud elongates above permanent leaves.
+F11: bud swells into an oval.
+F12: pink seam appears at bud tip.
+F13: two outer petal tips separate.
+F14: outer tips fold outward a little.
+F15: bud becomes a partly open cup.
+F16: front petal tips lower.
+F17: side petals fan outward.
+F18: rear petals rise and separate.
+F19: inner petals become visible.
+F20: cup widens with first golden stamens visible.
+F21: front petals lower halfway.
+F22: side petals broaden, inner ring still cupped.
+F23: inner ring opens, center nearly visible.
+F24: last rear petal eases outward and stamens rise.
+F25: fully open balanced ivory magnolia with clear center.
+Final check before delivery: count 5x5 and 25 separate single plants; all 25 complete inside their cells; no missing horizontal bands; no duplicate skinny plants; no holes in intended solid petals; no flattened silhouette texture; no artificial glow.

@@ -432,7 +432,9 @@ fun BloomSpritesheetFinalFramePreview(
         image = image,
         grid = grid,
         frameIndex = grid.frameCount - 1,
-        frameCorrection = IntOffset.Zero,
+        frameCorrection = remember(image, grid) {
+            resolveBloomFrameCorrections(image = image, grid = grid)
+        }.getOrElse(grid.frameCount - 1) { IntOffset.Zero },
         contentDescription = contentDescription,
         modifier = modifier,
     )

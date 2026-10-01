@@ -1,0 +1,28 @@
+Use case: precise-object-edit. Edit target: supplied 25-frame atlas. Revise its animation progression, retaining its distinctive mature subject, warm painterly tactile finish, coffee-bean base, palette and polished game-asset style. Output ONE SQUARE transparent RGBA spritesheet, exactly FIVE columns and FIVE rows of equal square cells, 25 frames row-major left-to-right then top-to-bottom. Prefer 1280x1280 (256px cells) if supported. Actual transparent background, no checkerboard pixels. ZERO text, numbers, labels, guides, borders, grid lines, color bars, watermarks, dots or stray pixels. Each cell contains ONE complete isolated subject with generous empty margin; all content stays inside its cell. Same front camera, light direction, bean size/orientation/texture and base anchor in every cell. Bean base at horizontal center and 88% down cell; highest final tip stays below 10% down cell, widest final artwork inside 12%-88% cell width. Preserve readable silhouettes at 148px. NO camera zoom, rotation, recentering, growth reversal, object swaps, disappearing mature leaves, random petal counts, or premature completed bloom. New frames must follow a SINGLE persistent anatomy, not alternate drawings. Smooth purposeful silhouette development across ALL 25 cells including every row boundary. Each frame makes the next small structural growth step; finished state arrives at frame25. No long repeated bud phase or last-row duplicate poses. Do not copy the original's timing defects. Do not draw frame labels from the following instructions.
+Cream/gold effect should have clean substantial main contours and warm gold edge accents visible on both light and dark UI, not a faint hairline or a blown-out glow. Bean halves ease apart once, then remain fixed. 
+Exact 25-frame sequence:
+Frame 1: closed bean.
+Frame 2: seam separates.
+Frame 3: bean opens slightly.
+Frame 4: cream peeks through.
+Frame 5: short cream stem.
+Frame 6: stem taller.
+Frame 7: lower left lobe begins.
+Frame 8: lower right lobe begins.
+Frame 9: lower pair broadens.
+Frame 10: second left lobe buds.
+Frame 11: second right lobe buds.
+Frame 12: second pair opens.
+Frame 13: stem extends.
+Frame 14: third left lobe buds.
+Frame 15: third right lobe buds.
+Frame 16: third pair opens.
+Frame 17: fourth left lobe buds.
+Frame 18: fourth right lobe buds.
+Frame 19: fourth pair opens.
+Frame 20: top rosetta curl begins.
+Frame 21: top curl rises.
+Frame 22: top curl unfolds.
+Frame 23: upper lobes broaden.
+Frame 24: rosetta nearly full.
+Frame 25: complete elegant cream rosetta.

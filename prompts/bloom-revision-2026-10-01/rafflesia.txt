@@ -1,0 +1,35 @@
+Use case: precise-object-edit.
+Asset type: production transparent botanical growth sprite atlas for a calm coffee-brewing app, viewed one cell at a time at about 148px.
+Primary request: create a fully rebuilt 25-frame growth animation for Rafflesia, using the supplied artwork for its tactile painted style and final flower identity. This is one image atlas, not a contact-sheet presentation.
+Output layout: exactly FIVE columns and FIVE rows of equal SQUARE cells, 25 frames total, row-major from upper-left F1 to lower-right F25. Square canvas ideally 1280x1280. No row gaps or gutters. Grid is mathematical only: absolutely NO lines, borders, labels, numbers, typography, guides, checkerboard, background color or watermark. REAL transparent alpha everywhere outside the plant.
+Every cell contains EXACTLY ONE complete plant, NEVER two. No cut limbs, no spill into neighboring cells. Within each cell keep every pixel of the subject inside an approximately 10% inset safe rectangle. Plant rooted at the same central ground point around (50%,88%) in each cell. Same front three-quarter view, same lighting, same painted depth. Fixed bean base size and shape throughout: warm brown coffee bean, about 26% of cell width, underside at 88% cell height. Keep its crack, texture landmarks, and orientation stable. Mature plant fills approximately 72% of cell height and 72% of width; young sprout remains small above the SAME bean. No camera zoom, no drifting, no shadows extending outside the object.
+Render opaque colored interior surfaces, clean antialiased alpha edges, softly modeled botanical volume, restrained fine detail, crisp silhouettes and petal separation readable at small size. Preserve already-created plant nodes: stems, leaves, buds and petals remain attached, evolve continuously, never vanish or swap sides. Every frame advances a meaningful visible growth action; no repeated near-held repainting, no reversal from flower to bud. Broad changes must have in-between poses. Opening starts well BEFORE last five frames. Only F25 is fully finished; F21–24 each show a distinct final stage.
+SPECIFIC ART DIRECTION
+Preserve five broad red fleshy spotted lobes, central deep dark cup with golden structures, bean-like brown base. No stem/leaves. Five lobes are present in folded bud and unfold progressively, never switch count. Use fewer broader ivory spots with modeled volume; stable base not growing zoom.
+EXACT FRAME PLAN (do not print numbers):
+F1: closed upright brown bean.
+F2: same bean seam parts.
+F3: small red bud emerges within seam.
+F4: red tip grows.
+F5: red bud broadens within brown base.
+F6: five faint vertical lobe seams form.
+F7: five-lobed bud swells.
+F8: same five lobes round outward.
+F9: five seams deepen on rounded dome.
+F10: dome broadens, central tip indents.
+F11: five seam tips start splitting.
+F12: five lobe tips separate slightly, center remains narrow.
+F13: front two lobes begin folding outward.
+F14: side two lobes start hinging outward with front pair retained.
+F15: rear lobe begins folding, all five tips separated.
+F16: all five lobes unfold halfway around small center.
+F17: front lobes lower farther, side/rear lobes keep opening.
+F18: five lobes broaden, central cup begins opening.
+F19: all five lobes nearly flat, cup widens.
+F20: five retained lobes fully distinct, first gold center structures visible.
+F21: central cup deepens, all five lobes remain in place.
+F22: inner golden structures rise slightly.
+F23: five lobes soften outward at rims, center clearer.
+F24: last rear lobe settles to match balance.
+F25: complete five-lobed red spotted rafflesia with readable deep golden-centered cup.
+Final check before delivery: count 5x5 and 25 separate single plants; all 25 complete inside their cells; no missing horizontal bands; no duplicate skinny plants; no holes in intended solid petals; no flattened silhouette texture; no artificial glow.

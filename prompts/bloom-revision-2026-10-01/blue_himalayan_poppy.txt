@@ -1,0 +1,35 @@
+Use case: precise-object-edit.
+Asset type: production transparent botanical growth sprite atlas for a calm coffee-brewing app, viewed one cell at a time at about 148px.
+Primary request: create a fully rebuilt 25-frame growth animation for Blue Himalayan Poppy, using the supplied artwork for its tactile painted style and final flower identity. This is one image atlas, not a contact-sheet presentation.
+Output layout: exactly FIVE columns and FIVE rows of equal SQUARE cells, 25 frames total, row-major from upper-left F1 to lower-right F25. Square canvas ideally 1280x1280. No row gaps or gutters. Grid is mathematical only: absolutely NO lines, borders, labels, numbers, typography, guides, checkerboard, background color or watermark. REAL transparent alpha everywhere outside the plant.
+Every cell contains EXACTLY ONE complete plant, NEVER two. No cut limbs, no spill into neighboring cells. Within each cell keep every pixel of the subject inside an approximately 10% inset safe rectangle. Plant rooted at the same central ground point around (50%,88%) in each cell. Same front three-quarter view, same lighting, same painted depth. Fixed bean base size and shape throughout: warm brown coffee bean, about 26% of cell width, underside at 88% cell height. Keep its crack, texture landmarks, and orientation stable. Mature plant fills approximately 72% of cell height and 72% of width; young sprout remains small above the SAME bean. No camera zoom, no drifting, no shadows extending outside the object.
+Render opaque colored interior surfaces, clean antialiased alpha edges, softly modeled botanical volume, restrained fine detail, crisp silhouettes and petal separation readable at small size. Preserve already-created plant nodes: stems, leaves, buds and petals remain attached, evolve continuously, never vanish or swap sides. Every frame advances a meaningful visible growth action; no repeated near-held repainting, no reversal from flower to bud. Broad changes must have in-between poses. Opening starts well BEFORE last five frames. Only F25 is fully finished; F21–24 each show a distinct final stage.
+SPECIFIC ART DIRECTION
+Preserve a nodding blue cup flower with yellow stamens, softly crinkled opaque blue petals, one gracefully curved neck and exactly two serrated basal leaves. Gradually curl the neck before bud forms. Keep leaves/base fixed while cap peels and flower opens; finish tilted slightly toward viewer without camera change.
+EXACT FRAME PLAN (do not print numbers):
+F1: closed upright bean.
+F2: same seam opens.
+F3: tiny shoot appears.
+F4: shoot lengthens.
+F5: two serrated leaf tips emerge.
+F6: two leaves unfurl slightly.
+F7: two leaves spread halfway, stem rises.
+F8: two leaves open fully, stem starts curving right.
+F9: same leaves, neck bends farther.
+F10: same leaves, neck forms a smooth hook.
+F11: same scaffold, tiny terminal hanging bud.
+F12: same scaffold, bud lengthens downward.
+F13: same scaffold, bud swells and cap seam appears.
+F14: same scaffold, cap parts to show blue stripe.
+F15: same scaffold, cap peels quarter-way, blue tips emerge.
+F16: same scaffold, cap peels halfway, blue petals lengthen.
+F17: same scaffold, blue petals separate slightly.
+F18: same scaffold, hanging cup begins widening.
+F19: same scaffold, front petals curl outward, yellow center peeks.
+F20: same scaffold, cup opens halfway toward viewer.
+F21: same scaffold, side petals broaden, yellow center grows clearer.
+F22: same scaffold, back petals unfold, cup three-quarters open.
+F23: same scaffold, front rim lowers to reveal stamens.
+F24: same scaffold, final back fold releases.
+F25: fully open soft blue nodding poppy cup with clear golden center and fixed leaves.
+Final check before delivery: count 5x5 and 25 separate single plants; all 25 complete inside their cells; no missing horizontal bands; no duplicate skinny plants; no holes in intended solid petals; no flattened silhouette texture; no artificial glow.
