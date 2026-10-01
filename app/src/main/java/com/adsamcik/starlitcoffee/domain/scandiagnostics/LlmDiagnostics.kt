@@ -10,9 +10,9 @@ import kotlinx.serialization.Serializable
  * generic "AI couldn't finish reading this label" banner, and the real reason
  * (e.g. `input_exceeds_context (...)`, a timeout, a parse error) lived only in a
  * transient logcat line that had usually rotated away by the time anyone looked.
- * This record persists the per-pass outcome — including the real error message
- * and a sample of what the model actually emitted — so a failure is attributable
- * after the fact, on any device, without a USB cable.
+ * This record contains only typed outcomes, a numeric SDK failure code, and
+ * timings/counts. Prompts, model output, and exception messages are never
+ * diagnostic fields. Tracebox owns capture, retention, deletion, and export.
  *
  * Lives in a neutral, dependency-free `domain.*` package so both the scan
  * pipeline (`scan.*`) and the on-device LLM layer (`data.network.llm`) can
@@ -22,9 +22,9 @@ import kotlinx.serialization.Serializable
 data class LlmPassDiagnostic(
     val timestampMs: Long,
     /** TRANSLATE, TEXT, VISION, COMBINE, or REFINE. */
-    val pass: String,
+    val pass: Pass,
     /** SUCCESS, TIMEOUT, ERROR, or UNAVAILABLE. */
-    val status: String,
+    val status: Status,
     val elapsedMs: Long,
     /** Total KV-cache budget requested for the session (input + output). */
     val maxTokens: Int,
@@ -32,18 +32,11 @@ data class LlmPassDiagnostic(
     val promptCharLen: Int,
     /** Characters the model emitted (0 when it failed before generating). */
     val outputCharLen: Int,
-    /** A leading slice of the model output — "what the LLM said" — or null. */
-    val outputSample: String?,
-    /** The real failure reason for non-SUCCESS passes (e.g. the wire message). */
-    val errorMessage: String?,
+    /** Known Mindlayer wire error code; no exception text or arbitrary code name. */
+    val errorCode: Int? = null,
 ) {
     enum class Status { SUCCESS, TIMEOUT, ERROR, UNAVAILABLE }
     enum class Pass { TRANSLATE, TEXT, VISION, COMBINE, REFINE }
-
-    companion object {
-        /** Max characters of model output retained in [outputSample]. */
-        const val OUTPUT_SAMPLE_LIMIT = 600
-    }
 }
 
 /**

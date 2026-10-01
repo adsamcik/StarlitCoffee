@@ -666,10 +666,10 @@
     <string name="msg_cup_preset_reset_failed">Profili šalica nisu vraćeni. Pokušajte ponovno.</string>
     <string name="msg_reset_cup_presets">Zamijeniti sve profile šalica zadanima?</string>
     <string name="msg_diagnostic_clear_failed">Nije moguće izbrisati svu dijagnostiku. Pokušajte ponovno.</string>
-    <string name="msg_clear_diagnostics">Izbrisati sve spremljene sesije skeniranja i LLM prolaze?</string>
+    <string name="msg_clear_diagnostics">Izbrisati sve spremljene sesije skeniranja?</string>
     <string name="label_log_scan_corrections">Bilježi ispravke skeniranja (na uređaju)</string>
     <string name="msg_log_scan_corrections">Samo na ovom uređaju bilježi što je AI izdvojio i što ste spremili. Ništa se ne prenosi.</string>
-    <string name="format_scan_debug_counts">Sesije: %1$d · LLM prolazi: %2$d</string>
+    <string name="format_scan_debug_counts">Sesije: %1$d</string>
     <string name="format_scan_session_subject">Sesija skeniranja: %1$s</string>
     <string name="action_share_scan_session">Dijeli sesiju skeniranja</string>
 

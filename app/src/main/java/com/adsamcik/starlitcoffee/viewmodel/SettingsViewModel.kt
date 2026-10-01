@@ -9,7 +9,7 @@ import com.adsamcik.starlitcoffee.data.model.BrewingSet
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.repository.CupPresetResetter
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesStore
-import com.adsamcik.starlitcoffee.scan.observability.ScanLlmDiagnosticsStore
+import com.adsamcik.starlitcoffee.scan.observability.LegacyLlmDiagnosticsStore
 import com.adsamcik.starlitcoffee.scan.observability.ScanSessionRingBuffer
 import com.adsamcik.starlitcoffee.util.RecognitionPreference
 import kotlinx.coroutines.CancellationException
@@ -57,8 +57,8 @@ class AndroidDiagnosticHistoryClearer(context: Context) : DiagnosticHistoryClear
 
     override suspend fun clear(): Boolean = withContext(Dispatchers.IO) {
         val sessionsCleared = ScanSessionRingBuffer.clear(appContext)
-        val llmPassesCleared = ScanLlmDiagnosticsStore.clear(appContext)
-        sessionsCleared && llmPassesCleared
+        val legacyLlmDataCleared = LegacyLlmDiagnosticsStore.clear(appContext)
+        sessionsCleared && legacyLlmDataCleared
     }
 }
 

@@ -664,10 +664,10 @@
     <string name="msg_cup_preset_reset_failed">A csészeprofilokat nem sikerült visszaállítani. Próbálja újra.</string>
     <string name="msg_reset_cup_presets">Minden csészeprofilt lecserél az alapértelmezettekre?</string>
     <string name="msg_diagnostic_clear_failed">Nem sikerült minden diagnosztikai adatot törölni. Próbálja újra.</string>
-    <string name="msg_clear_diagnostics">Törli az összes mentett beolvasási munkamenetet és LLM-futtatást?</string>
+    <string name="msg_clear_diagnostics">Törli az összes mentett beolvasási munkamenetet?</string>
     <string name="label_log_scan_corrections">Beolvasási javítások naplózása (az eszközön)</string>
     <string name="msg_log_scan_corrections">Csak ezen az eszközön rögzíti, mit nyert ki az AI és mit mentett. Semmi nem kerül feltöltésre.</string>
-    <string name="format_scan_debug_counts">Munkamenetek: %1$d · LLM-futtatások: %2$d</string>
+    <string name="format_scan_debug_counts">Munkamenetek: %1$d</string>
     <string name="format_scan_session_subject">Beolvasási munkamenet: %1$s</string>
     <string name="action_share_scan_session">Beolvasási munkamenet megosztása</string>
 

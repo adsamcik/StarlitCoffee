@@ -695,10 +695,10 @@
     <string name="msg_cup_preset_reset_failed">Profily šálků se nepodařilo obnovit. Zkuste to znovu.</string>
     <string name="msg_reset_cup_presets">Nahradit všechny profily šálků výchozími?</string>
     <string name="msg_diagnostic_clear_failed">Nepodařilo se vymazat všechna diagnostická data. Zkuste to znovu.</string>
-    <string name="msg_clear_diagnostics">Vymazat všechny uložené relace skenování a průchody LLM?</string>
+    <string name="msg_clear_diagnostics">Vymazat všechny uložené relace skenování?</string>
     <string name="label_log_scan_corrections">Zaznamenávat opravy skenování (v zařízení)</string>
     <string name="msg_log_scan_corrections">Pouze v tomto zařízení zaznamená, co AI rozpoznala a co jste uložili. Nic se neodesílá.</string>
-    <string name="format_scan_debug_counts">Relace: %1$d · Průchody LLM: %2$d</string>
+    <string name="format_scan_debug_counts">Relace: %1$d</string>
     <string name="format_scan_session_subject">Relace skenování: %1$s</string>
     <string name="action_share_scan_session">Sdílet relaci skenování</string>
 

@@ -664,10 +664,10 @@
     <string name="msg_cup_preset_reset_failed">Kopprofilerna kunde inte återställas. Försök igen.</string>
     <string name="msg_reset_cup_presets">Ersätta alla kopprofiler med standardprofilerna?</string>
     <string name="msg_diagnostic_clear_failed">Alla diagnostikdata kunde inte rensas. Försök igen.</string>
-    <string name="msg_clear_diagnostics">Rensa alla sparade skanningssessioner och LLM-körningar?</string>
+    <string name="msg_clear_diagnostics">Rensa alla sparade skanningssessioner?</string>
     <string name="label_log_scan_corrections">Logga skanningskorrigeringar (på enheten)</string>
     <string name="msg_log_scan_corrections">Registrerar endast på den här enheten vad AI extraherade och vad du sparade. Inget laddas upp.</string>
-    <string name="format_scan_debug_counts">Sessioner: %1$d · LLM-körningar: %2$d</string>
+    <string name="format_scan_debug_counts">Sessioner: %1$d</string>
     <string name="format_scan_session_subject">Skanningssession: %1$s</string>
     <string name="action_share_scan_session">Dela skanningssession</string>
 

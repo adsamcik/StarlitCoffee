@@ -664,10 +664,10 @@
     <string name="msg_cup_preset_reset_failed">Die Tassenprofile konnten nicht zurückgesetzt werden. Bitte erneut versuchen.</string>
     <string name="msg_reset_cup_presets">Alle Tassenprofile durch die Standardwerte ersetzen?</string>
     <string name="msg_diagnostic_clear_failed">Nicht alle Diagnosedaten konnten gelöscht werden. Bitte erneut versuchen.</string>
-    <string name="msg_clear_diagnostics">Alle gespeicherten Scan-Sitzungen und LLM-Durchläufe löschen?</string>
+    <string name="msg_clear_diagnostics">Alle gespeicherten Scan-Sitzungen löschen?</string>
     <string name="label_log_scan_corrections">Scan-Korrekturen protokollieren (auf dem Gerät)</string>
     <string name="msg_log_scan_corrections">Zeichnet nur auf diesem Gerät auf, was die KI erkannt und was du gespeichert hast. Es wird nichts hochgeladen.</string>
-    <string name="format_scan_debug_counts">Sitzungen: %1$d · LLM-Durchläufe: %2$d</string>
+    <string name="format_scan_debug_counts">Sitzungen: %1$d</string>
     <string name="format_scan_session_subject">Scan-Sitzung: %1$s</string>
     <string name="action_share_scan_session">Scan-Sitzung teilen</string>
 

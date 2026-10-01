@@ -16,7 +16,6 @@ object ScanBugReporter {
         }
 
         val sessions = ScanSessionRingBuffer.getForReport(context, count = 5)
-        val llmPasses = ScanLlmDiagnosticsStore.getForReport(context, count = 15)
 
         return buildString {
             appendLine("=== StarlitCoffee Scan Report ===")
@@ -27,9 +26,6 @@ object ScanBugReporter {
             appendLine()
             appendLine("--- Recent Scan Sessions ---")
             appendLine(sessions)
-            appendLine()
-            appendLine("--- Recent LLM Extraction Passes ---")
-            appendLine(llmPasses)
         }
     }
 

@@ -43,6 +43,18 @@ Evidence: `StarlitCoffeeApp.kt:175-178`, `MindlayerLlmInferenceProvider.kt:139-1
 
 Smallest remedy: keep bounded numeric and typed diagnostic records within the same capture/deletion policy. If raw content remains useful for debugging, make it explicit opt-in, removable, and separately reviewed before sharing. Verify disable, delete, and restart with a seeded model-output marker.
 
+Resolution on 2026-10-01: AI pass records now contain closed pass/status enums, timing/count measurements, and optional recognized numeric SDK error codes. They are written directly through Tracebox's privacy-aware logger, using its capture gate, storage fences, deletion, and reviewed exports. The app no longer stores or reads raw AI pass output/error samples in preferences, and the old direct raw-pass report section has been removed.
+
+Each app startup deletes the entire legacy `scan_llm_diagnostics` preferences file, including its backup and unknown keys, before providers can start. The existing Diagnostics delete-all handle also retries this cleanup. A failed legacy deletion makes an otherwise completed Tracebox deletion report pending rather than silently reporting success. Independent debug scan-session history remains available, with its count/clear wording updated in all 23 languages. The separately opted-in debug correction dataset is outside this AI pass-store finding.
+
+Privacy fix validation passed 18 unit regressions for typed serialization, default Tracebox privacy classification, recognized numeric error codes, and delete-all cleanup/retry behavior. The full unit suite reported 1,470 tests (1,466 executed, four skipped), zero failures, and zero errors. Detekt, locale parity, debug/app-test APK assembly, and release-source compilation passed using the unchanged alpha.7 dependency pins. The local build log is `build/ai-diagnostics-privacy-validation.log`.
+
+Three instrumented cases passed on an API 36 x86_64 emulator in a disposable `.privacycheck` installation: whole-file migration with a malformed backup and unknown keys; a positive durable Tracebox write followed by disable, delayed completion, delete-all, and no recreation; and a separate process restart proving persisted disable plus production startup migration. Every invocation reported `INSTRUMENTATION_STATUS_CODE: 0` and `OK (1 test)`, including the restart case. The runtime fixture used managed capture with native capture disabled. These results establish the Android storage/policy boundary; they do not establish live Mindlayer inference, native capture, or physical-device behavior.
+
+The destructive instrumented cases deliberately skip ordinary app installations. Reproduce them with a temporary Gradle init script that sets `android.buildTypes.getByName('debug').applicationIdSuffix = '.privacycheck'` inside `androidComponents.finalizeDsl`, then run `:app:testDebugUnitTest :app:detekt :app:assembleDebug :app:assembleDebugAndroidTest :app:compileReleaseKotlin`. Install only the isolated app and test APKs. Invoke `AiDiagnosticsPrivacyInstrumentedTest#legacyMigrationDeletesSamplesUnknownKeysAndBackup`, then `#disableDeleteAndSeedRestartState`, force-stop only `com.adsamcik.starlitcoffee.privacycheck`, and invoke `#restartPreservesDisableAndPurgesLegacySamples` using separate `am instrument` commands. Require an executed pass rather than an assumption skip for all three phases.
+
+Device logs and the isolated APKs are retained locally under `build/ai-privacy-validation`. Both disposable packages were removed after validation, preserving the existing development installation and data. Normal debug/app-test APK assembly then passed without the init script, restoring the `.debug` outputs (`build/ai-diagnostics-restore-debug.log`).
+
 ### P2 AI unavailability leads to the wrong recovery action
 
 Connection failures, failed model readiness, and missing OCR text all become `Unavailable`. When Mindlayer is installed, the UI interprets ordinary unavailability as authorization required and offers “Use label recognition.” An already-approved user can therefore repeat consent and retry the same model or input failure. Low memory, integrity mismatch, and backend failure need different remedies.
@@ -160,7 +172,7 @@ The validation command used the installed Gradle 9.7.1 distribution with the ini
 
 The OCR timeout probe is isolated under the system temporary directory and used cached Kotlin/coroutines dependencies. It confirms owned-timeout propagation through the actual fallback helper, not a real engine, worker, camera, or device test.
 
-Device validation was not performed because the sole connected emulator was claimed by another task. No app install, device reset, model replacement, destructive diagnostics deletion, or sharing was performed. Native/JVM crash and ANR capture, restart retention, reviewed package contents, TalkBack, physical-device inference, backend selection, memory use, and minified runtime behavior remain unverified.
+During the original audit, device validation was not performed because the sole connected emulator was claimed by another task. No app install, device reset, model replacement, destructive diagnostics deletion, or sharing was performed during that audit. The later privacy fix has isolated device/restart coverage described with its resolution above. Native/JVM crash and ANR capture, reviewed package contents, TalkBack, physical-device inference, backend selection, memory use, and minified runtime behavior remain unverified.
 
 ## Proposed implementation order
 

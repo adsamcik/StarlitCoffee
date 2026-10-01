@@ -19,6 +19,7 @@ import com.adsamcik.mindlayer.sdk.JsonOutputStrategy
 import com.adsamcik.mindlayer.sdk.JsonValidationDepth
 import com.adsamcik.mindlayer.sdk.Mindlayer
 import com.adsamcik.mindlayer.sdk.MindlayerException
+import com.adsamcik.mindlayer.shared.MindlayerErrorCode
 import com.adsamcik.mindlayer.ModelReadinessItem
 import com.adsamcik.starlitcoffee.util.KnownFieldValues
 import com.adsamcik.starlitcoffee.domain.scandiagnostics.LlmDiagnosticsRecorder
@@ -123,10 +124,8 @@ class MindlayerLlmInferenceProvider(
 
     /**
      * Record one extraction pass into the injected [diagnosticsRecorder] (no-op
-     * when none is wired, e.g. in unit tests). Captures the real outcome — the
-     * model output on success, or the precise failure reason on timeout/error —
-     * so a scan failure is attributable from the in-app Scan Debug surface
-     * instead of a long-gone logcat line.
+     * when none is wired, e.g. in unit tests). Records typed outcomes, counts,
+     * and timing through Tracebox without retaining model text or error messages.
      */
     private fun recordPass(
         pass: LlmPassDiagnostic.Pass,
@@ -134,20 +133,19 @@ class MindlayerLlmInferenceProvider(
         startMs: Long,
         promptCharLen: Int,
         output: String? = null,
-        error: String? = null,
+        failure: Throwable? = null,
     ) {
         val recorder = diagnosticsRecorder ?: return
         recorder.record(
             LlmPassDiagnostic(
                 timestampMs = System.currentTimeMillis(),
-                pass = pass.name,
-                status = status.name,
+                pass = pass,
+                status = status,
                 elapsedMs = System.currentTimeMillis() - startMs,
                 maxTokens = MAX_TOKENS,
                 promptCharLen = promptCharLen,
                 outputCharLen = output?.length ?: 0,
-                outputSample = output?.take(LlmPassDiagnostic.OUTPUT_SAMPLE_LIMIT),
-                errorMessage = error,
+                errorCode = knownLlmDiagnosticErrorCode(failure),
             ),
         )
     }
@@ -192,13 +190,12 @@ class MindlayerLlmInferenceProvider(
             currentCoroutineContext().ensureActive()
             recordPass(
                 LlmPassDiagnostic.Pass.TRANSLATE, LlmPassDiagnostic.Status.TIMEOUT, startMs, prompt.length,
-                error = "Translate timed out after ${EXTRACTION_TIMEOUT_MS / 1000}s",
             )
             ocrText
         } catch (e: kotlinx.coroutines.CancellationException) {
             throw e
         } catch (e: Exception) {
-            recordPass(LlmPassDiagnostic.Pass.TRANSLATE, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, error = e.message)
+            recordPass(LlmPassDiagnostic.Pass.TRANSLATE, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, failure = e)
             ocrText
         }
     }
@@ -309,7 +306,6 @@ class MindlayerLlmInferenceProvider(
             currentCoroutineContext().ensureActive()
             recordPass(
                 LlmPassDiagnostic.Pass.TEXT, LlmPassDiagnostic.Status.TIMEOUT, startMs, prompt.length,
-                error = "Inference timed out after ${EXTRACTION_TIMEOUT_MS / 1000}s",
             )
             LlmExtractionResult.Failed(
                 "Inference timed out after ${EXTRACTION_TIMEOUT_MS / 1000}s",
@@ -321,14 +317,14 @@ class MindlayerLlmInferenceProvider(
             // session that has already been torn down.
             throw e
         } catch (e: MindlayerException) {
-            recordPass(LlmPassDiagnostic.Pass.TEXT, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, error = e.message)
+            recordPass(LlmPassDiagnostic.Pass.TEXT, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, failure = e)
             LlmExtractionResult.Failed(
                 "Inference failed: ${e.message}",
                 retryable = e.isRetryableForScan(),
                 retryAfterMs = e.retryAfterMs,
             )
         } catch (e: Exception) {
-            recordPass(LlmPassDiagnostic.Pass.TEXT, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, error = e.message)
+            recordPass(LlmPassDiagnostic.Pass.TEXT, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, failure = e)
             LlmExtractionResult.Failed("Inference failed: ${e.message}", retryable = true)
         }
     }
@@ -477,7 +473,6 @@ class MindlayerLlmInferenceProvider(
             currentCoroutineContext().ensureActive()
             recordPass(
                 LlmPassDiagnostic.Pass.VISION, LlmPassDiagnostic.Status.TIMEOUT, startMs, prompt.length,
-                error = "Vision inference timed out after ${VISION_TIMEOUT_MS / 1000}s",
             )
             LlmExtractionResult.Failed("Vision inference timed out after ${VISION_TIMEOUT_MS / 1000}s", retryable = false)
         } catch (e: kotlinx.coroutines.CancellationException) {
@@ -485,10 +480,10 @@ class MindlayerLlmInferenceProvider(
         } catch (_: VisionInferenceBudgetConsumedException) {
             LlmExtractionResult.Unavailable("Vision budget already used this session")
         } catch (e: MindlayerException) {
-            recordPass(LlmPassDiagnostic.Pass.VISION, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, error = e.message)
+            recordPass(LlmPassDiagnostic.Pass.VISION, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, failure = e)
             LlmExtractionResult.Failed("Vision inference failed: ${e.message}", retryable = false)
         } catch (e: Exception) {
-            recordPass(LlmPassDiagnostic.Pass.VISION, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, error = e.message)
+            recordPass(LlmPassDiagnostic.Pass.VISION, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, failure = e)
             LlmExtractionResult.Failed("Vision inference failed: ${e.message}", retryable = false)
         } finally {
             bitmap.recycle()
@@ -560,7 +555,6 @@ class MindlayerLlmInferenceProvider(
             currentCoroutineContext().ensureActive()
             recordPass(
                 LlmPassDiagnostic.Pass.COMBINE, LlmPassDiagnostic.Status.TIMEOUT, startMs, prompt.length,
-                error = "Combine inference timed out after ${EXTRACTION_TIMEOUT_MS / 1000}s",
             )
             LlmExtractionResult.Failed(
                 "Combine inference timed out after ${EXTRACTION_TIMEOUT_MS / 1000}s",
@@ -569,10 +563,10 @@ class MindlayerLlmInferenceProvider(
         } catch (e: kotlinx.coroutines.CancellationException) {
             throw e
         } catch (e: MindlayerException) {
-            recordPass(LlmPassDiagnostic.Pass.COMBINE, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, error = e.message)
+            recordPass(LlmPassDiagnostic.Pass.COMBINE, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, failure = e)
             LlmExtractionResult.Failed("Combine inference failed: ${e.message}", retryable = false)
         } catch (e: Exception) {
-            recordPass(LlmPassDiagnostic.Pass.COMBINE, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, error = e.message)
+            recordPass(LlmPassDiagnostic.Pass.COMBINE, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, failure = e)
             LlmExtractionResult.Failed("Combine inference failed: ${e.message}", retryable = false)
         }
     }
@@ -633,7 +627,6 @@ class MindlayerLlmInferenceProvider(
             currentCoroutineContext().ensureActive()
             recordPass(
                 LlmPassDiagnostic.Pass.REFINE, LlmPassDiagnostic.Status.TIMEOUT, startMs, prompt.length,
-                error = "Refine inference timed out after ${EXTRACTION_TIMEOUT_MS / 1000}s",
             )
             LlmExtractionResult.Failed(
                 "Refine inference timed out after ${EXTRACTION_TIMEOUT_MS / 1000}s",
@@ -642,10 +635,10 @@ class MindlayerLlmInferenceProvider(
         } catch (e: kotlinx.coroutines.CancellationException) {
             throw e
         } catch (e: MindlayerException) {
-            recordPass(LlmPassDiagnostic.Pass.REFINE, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, error = e.message)
+            recordPass(LlmPassDiagnostic.Pass.REFINE, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, failure = e)
             LlmExtractionResult.Failed("Refine inference failed: ${e.message}", retryable = false)
         } catch (e: Exception) {
-            recordPass(LlmPassDiagnostic.Pass.REFINE, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, error = e.message)
+            recordPass(LlmPassDiagnostic.Pass.REFINE, LlmPassDiagnostic.Status.ERROR, startMs, prompt.length, failure = e)
             LlmExtractionResult.Failed("Refine inference failed: ${e.message}", retryable = false)
         }
     }
@@ -1777,3 +1770,9 @@ Response format (JSON only, no markdown):
   }
 }
         """.trimIndent()
+
+/** Retain a recognized wire code, never an SDK message or caller-supplied code name. */
+internal fun knownLlmDiagnosticErrorCode(failure: Throwable?): Int? =
+    (failure as? MindlayerException)?.code?.takeIf {
+        it != MindlayerErrorCode.UNKNOWN && MindlayerErrorCode.nameOf(it) != null
+    }

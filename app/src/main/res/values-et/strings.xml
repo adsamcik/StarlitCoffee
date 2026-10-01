@@ -664,10 +664,10 @@
     <string name="msg_cup_preset_reset_failed">Tassiprofiile ei saanud lähtestada. Proovige uuesti.</string>
     <string name="msg_reset_cup_presets">Kas asendada kõik tassiprofiilid vaikeprofiilidega?</string>
     <string name="msg_diagnostic_clear_failed">Kõiki diagnostikaandmeid ei saanud kustutada. Proovige uuesti.</string>
-    <string name="msg_clear_diagnostics">Kas kustutada kõik salvestatud skannimisseansid ja LLM-i läbimised?</string>
+    <string name="msg_clear_diagnostics">Kas kustutada kõik salvestatud skannimisseansid?</string>
     <string name="label_log_scan_corrections">Skannimisparanduste logimine (seadmes)</string>
     <string name="msg_log_scan_corrections">Salvestab ainult selles seadmes, mida AI tuvastas ja mida te salvestasite. Midagi ei laadita üles.</string>
-    <string name="format_scan_debug_counts">Seansse: %1$d · LLM-i läbimisi: %2$d</string>
+    <string name="format_scan_debug_counts">Seansse: %1$d</string>
     <string name="format_scan_session_subject">Skannimisseanss: %1$s</string>
     <string name="action_share_scan_session">Jaga skannimisseanssi</string>
 

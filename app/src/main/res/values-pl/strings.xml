@@ -667,10 +667,10 @@
     <string name="msg_cup_preset_reset_failed">Nie udało się zresetować profili filiżanek. Spróbuj ponownie.</string>
     <string name="msg_reset_cup_presets">Zastąpić wszystkie profile filiżanek domyślnymi?</string>
     <string name="msg_diagnostic_clear_failed">Nie udało się wyczyścić wszystkich danych diagnostycznych. Spróbuj ponownie.</string>
-    <string name="msg_clear_diagnostics">Wyczyścić wszystkie zapisane sesje skanowania i przebiegi LLM?</string>
+    <string name="msg_clear_diagnostics">Wyczyścić wszystkie zapisane sesje skanowania?</string>
     <string name="label_log_scan_corrections">Rejestruj poprawki skanowania (na urządzeniu)</string>
     <string name="msg_log_scan_corrections">Tylko na tym urządzeniu zapisuje to, co wyodrębniła AI i co zapisano. Nic nie jest przesyłane.</string>
-    <string name="format_scan_debug_counts">Sesje: %1$d · Przebiegi LLM: %2$d</string>
+    <string name="format_scan_debug_counts">Sesje: %1$d</string>
     <string name="format_scan_session_subject">Sesja skanowania: %1$s</string>
     <string name="action_share_scan_session">Udostępnij sesję skanowania</string>
 

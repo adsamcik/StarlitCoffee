@@ -664,10 +664,10 @@
     <string name="msg_cup_preset_reset_failed">Профилите за чаши не можаха да бъдат нулирани. Опитайте отново.</string>
     <string name="msg_reset_cup_presets">Да се заменят ли всички профили за чаши със стандартните?</string>
     <string name="msg_diagnostic_clear_failed">Не всички диагностични данни можаха да бъдат изчистени. Опитайте отново.</string>
-    <string name="msg_clear_diagnostics">Да се изчистят ли всички запазени сканирания и LLM преминавания?</string>
+    <string name="msg_clear_diagnostics">Да се изчистят ли всички запазени сканирания?</string>
     <string name="label_log_scan_corrections">Запис на корекциите при сканиране (на устройството)</string>
     <string name="msg_log_scan_corrections">Записва само на това устройство разликите между извлеченото от AI и запазеното от вас. Нищо не се качва.</string>
-    <string name="format_scan_debug_counts">Сесии: %1$d · LLM преминавания: %2$d</string>
+    <string name="format_scan_debug_counts">Сесии: %1$d</string>
     <string name="format_scan_session_subject">Сесия на сканиране: %1$s</string>
     <string name="action_share_scan_session">Споделяне на сесията</string>
 

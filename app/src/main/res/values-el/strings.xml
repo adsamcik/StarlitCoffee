@@ -664,10 +664,10 @@
     <string name="msg_cup_preset_reset_failed">Δεν ήταν δυνατή η επαναφορά των προεπιλογών φλιτζανιού. Δοκιμάστε ξανά.</string>
     <string name="msg_reset_cup_presets">Αντικατάσταση όλων των προεπιλογών φλιτζανιού με τις προεπιλεγμένες;</string>
     <string name="msg_diagnostic_clear_failed">Δεν ήταν δυνατή η εκκαθάριση όλων των διαγνωστικών. Δοκιμάστε ξανά.</string>
-    <string name="msg_clear_diagnostics">Εκκαθάριση όλων των αποθηκευμένων συνεδριών σάρωσης και περασμάτων LLM;</string>
+    <string name="msg_clear_diagnostics">Εκκαθάριση όλων των αποθηκευμένων συνεδριών σάρωσης;</string>
     <string name="label_log_scan_corrections">Καταγραφή διορθώσεων σάρωσης (στη συσκευή)</string>
     <string name="msg_log_scan_corrections">Καταγράφει μόνο σε αυτή τη συσκευή τι εξήγαγε η AI και τι αποθηκεύσατε. Δεν μεταφορτώνεται τίποτα.</string>
-    <string name="format_scan_debug_counts">Συνεδρίες: %1$d · Περάσματα LLM: %2$d</string>
+    <string name="format_scan_debug_counts">Συνεδρίες: %1$d</string>
     <string name="format_scan_session_subject">Συνεδρία σάρωσης: %1$s</string>
     <string name="action_share_scan_session">Κοινοποίηση συνεδρίας σάρωσης</string>
 

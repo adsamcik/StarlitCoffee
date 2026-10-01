@@ -666,10 +666,10 @@
     <string name="msg_cup_preset_reset_failed">Profilurile de ceașcă nu au putut fi resetate. Încercați din nou.</string>
     <string name="msg_reset_cup_presets">Înlocuiți toate profilurile de ceașcă cu cele implicite?</string>
     <string name="msg_diagnostic_clear_failed">Nu au putut fi șterse toate datele de diagnostic. Încercați din nou.</string>
-    <string name="msg_clear_diagnostics">Ștergeți toate sesiunile de scanare și trecerile LLM salvate?</string>
+    <string name="msg_clear_diagnostics">Ștergeți toate sesiunile de scanare salvate?</string>
     <string name="label_log_scan_corrections">Înregistrează corecțiile scanării (pe dispozitiv)</string>
     <string name="msg_log_scan_corrections">Înregistrează numai pe acest dispozitiv ce a extras AI și ce ați salvat. Nu se încarcă nimic.</string>
-    <string name="format_scan_debug_counts">Sesiuni: %1$d · Treceri LLM: %2$d</string>
+    <string name="format_scan_debug_counts">Sesiuni: %1$d</string>
     <string name="format_scan_session_subject">Sesiune de scanare: %1$s</string>
     <string name="action_share_scan_session">Partajați sesiunea de scanare</string>
 

@@ -668,10 +668,10 @@
     <string name="msg_cup_preset_reset_failed">Profilov skodelic ni bilo mogoče ponastaviti. Poskusite znova.</string>
     <string name="msg_reset_cup_presets">Zamenjam vse profile skodelic s privzetimi?</string>
     <string name="msg_diagnostic_clear_failed">Vseh diagnostičnih podatkov ni bilo mogoče izbrisati. Poskusite znova.</string>
-    <string name="msg_clear_diagnostics">Izbrišem vse shranjene seje skeniranja in prehode LLM?</string>
+    <string name="msg_clear_diagnostics">Izbrišem vse shranjene seje skeniranja?</string>
     <string name="label_log_scan_corrections">Beleži popravke skeniranja (v napravi)</string>
     <string name="msg_log_scan_corrections">Samo v tej napravi zabeleži, kaj je izluščila AI in kaj ste shranili. Nič se ne naloži.</string>
-    <string name="format_scan_debug_counts">Seje: %1$d · Prehodi LLM: %2$d</string>
+    <string name="format_scan_debug_counts">Seje: %1$d</string>
     <string name="format_scan_session_subject">Seja skeniranja: %1$s</string>
     <string name="action_share_scan_session">Deli sejo skeniranja</string>
 

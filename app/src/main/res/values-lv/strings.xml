@@ -666,10 +666,10 @@
     <string name="msg_cup_preset_reset_failed">Neizdevās atiestatīt tašu profilus. Mēģiniet vēlreiz.</string>
     <string name="msg_reset_cup_presets">Vai aizstāt visus tašu profilus ar noklusējuma profiliem?</string>
     <string name="msg_diagnostic_clear_failed">Neizdevās notīrīt visus diagnostikas datus. Mēģiniet vēlreiz.</string>
-    <string name="msg_clear_diagnostics">Vai notīrīt visas saglabātās skenēšanas sesijas un LLM gājienus?</string>
+    <string name="msg_clear_diagnostics">Vai notīrīt visas saglabātās skenēšanas sesijas?</string>
     <string name="label_log_scan_corrections">Reģistrēt skenēšanas labojumus (ierīcē)</string>
     <string name="msg_log_scan_corrections">Tikai šajā ierīcē reģistrē AI iegūto un jūsu saglabāto. Nekas netiek augšupielādēts.</string>
-    <string name="format_scan_debug_counts">Sesijas: %1$d · LLM gājieni: %2$d</string>
+    <string name="format_scan_debug_counts">Sesijas: %1$d</string>
     <string name="format_scan_session_subject">Skenēšanas sesija: %1$s</string>
     <string name="action_share_scan_session">Kopīgot skenēšanas sesiju</string>
 

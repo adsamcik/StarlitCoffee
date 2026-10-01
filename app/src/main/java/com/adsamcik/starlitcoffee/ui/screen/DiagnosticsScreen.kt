@@ -18,11 +18,14 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.diagnostics.StarlitTracebox
+import com.adsamcik.starlitcoffee.diagnostics.LegacyCleanupTraceboxHandle
+import com.adsamcik.starlitcoffee.scan.observability.LegacyLlmDiagnosticsStore
 import dev.tracebox.Tracebox
 import dev.tracebox.ui.compose.TraceboxAdvancedControls
 import dev.tracebox.ui.compose.TraceboxDiagnosticsScreen
@@ -35,7 +38,12 @@ import dev.tracebox.ui.compose.TraceboxPrimaryAction
 @Composable
 fun DiagnosticsScreen(onBack: () -> Unit) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-    val handle = remember { Tracebox.current() }
+    val context = LocalContext.current
+    val handle = remember(context) {
+        Tracebox.current()?.let { delegate ->
+            LegacyCleanupTraceboxHandle(delegate) { LegacyLlmDiagnosticsStore.clear(context) }
+        }
+    }
     val configuration = remember {
         TraceboxDiagnosticsUiConfiguration(
             strings = TraceboxDiagnosticsUiStrings(

@@ -667,10 +667,10 @@
     <string name="msg_cup_preset_reset_failed">Profily šálok sa nepodarilo obnoviť. Skúste to znova.</string>
     <string name="msg_reset_cup_presets">Nahradiť všetky profily šálok predvolenými?</string>
     <string name="msg_diagnostic_clear_failed">Nepodarilo sa vymazať všetky diagnostické údaje. Skúste to znova.</string>
-    <string name="msg_clear_diagnostics">Vymazať všetky uložené relácie skenovania a priechody LLM?</string>
+    <string name="msg_clear_diagnostics">Vymazať všetky uložené relácie skenovania?</string>
     <string name="label_log_scan_corrections">Zaznamenávať opravy skenovania (v zariadení)</string>
     <string name="msg_log_scan_corrections">Iba v tomto zariadení zaznamená, čo AI rozpoznala a čo ste uložili. Nič sa neodosiela.</string>
-    <string name="format_scan_debug_counts">Relácie: %1$d · Priechody LLM: %2$d</string>
+    <string name="format_scan_debug_counts">Relácie: %1$d</string>
     <string name="format_scan_session_subject">Relácia skenovania: %1$s</string>
     <string name="action_share_scan_session">Zdieľať reláciu skenovania</string>
 

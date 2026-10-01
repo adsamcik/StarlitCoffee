@@ -664,10 +664,10 @@
     <string name="msg_cup_preset_reset_failed">Kuppiprofiileja ei voitu palauttaa. Yritä uudelleen.</string>
     <string name="msg_reset_cup_presets">Korvataanko kaikki kuppiprofiilit oletuksilla?</string>
     <string name="msg_diagnostic_clear_failed">Kaikkia diagnostiikkatietoja ei voitu tyhjentää. Yritä uudelleen.</string>
-    <string name="msg_clear_diagnostics">Tyhjennetäänkö kaikki tallennetut skannausistunnot ja LLM-ajot?</string>
+    <string name="msg_clear_diagnostics">Tyhjennetäänkö kaikki tallennetut skannausistunnot?</string>
     <string name="label_log_scan_corrections">Kirjaa skannauskorjaukset (laitteessa)</string>
     <string name="msg_log_scan_corrections">Tallentaa vain tähän laitteeseen, mitä tekoäly poimi ja mitä tallensit. Mitään ei lähetetä.</string>
-    <string name="format_scan_debug_counts">Istuntoja: %1$d · LLM-ajoja: %2$d</string>
+    <string name="format_scan_debug_counts">Istuntoja: %1$d</string>
     <string name="format_scan_session_subject">Skannausistunto: %1$s</string>
     <string name="action_share_scan_session">Jaa skannausistunto</string>
 

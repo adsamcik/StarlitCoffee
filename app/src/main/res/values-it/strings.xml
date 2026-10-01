@@ -666,10 +666,10 @@
     <string name="msg_cup_preset_reset_failed">Impossibile reimpostare i profili tazza. Riprova.</string>
     <string name="msg_reset_cup_presets">Sostituire tutti i profili tazza con quelli predefiniti?</string>
     <string name="msg_diagnostic_clear_failed">Impossibile cancellare tutti i dati diagnostici. Riprova.</string>
-    <string name="msg_clear_diagnostics">Cancellare tutte le sessioni di scansione e i passaggi LLM salvati?</string>
+    <string name="msg_clear_diagnostics">Cancellare tutte le sessioni di scansione salvate?</string>
     <string name="label_log_scan_corrections">Registra correzioni scansione (sul dispositivo)</string>
     <string name="msg_log_scan_corrections">Registra solo su questo dispositivo ciò che l’IA ha estratto e ciò che hai salvato. Non viene caricato nulla.</string>
-    <string name="format_scan_debug_counts">Sessioni: %1$d · Passaggi LLM: %2$d</string>
+    <string name="format_scan_debug_counts">Sessioni: %1$d</string>
     <string name="format_scan_session_subject">Sessione di scansione: %1$s</string>
     <string name="action_share_scan_session">Condividi sessione di scansione</string>
 

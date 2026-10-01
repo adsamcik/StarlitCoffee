@@ -98,7 +98,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.adsamcik.starlitcoffee.scan.observability.ScanBugReporter
-import com.adsamcik.starlitcoffee.scan.observability.ScanLlmDiagnosticsStore
 import com.adsamcik.starlitcoffee.scan.observability.ScanSessionRingBuffer
 import com.adsamcik.starlitcoffee.ui.component.DestructiveActionDialog
 import com.adsamcik.starlitcoffee.ui.component.MindlayerDiagnosticsCard
@@ -514,7 +513,6 @@ private fun ScanDebugCard(
     val context = LocalContext.current
     val resources = LocalResources.current
     var sessions by remember { mutableStateOf(ScanSessionRingBuffer.getAll(context)) }
-    var llmPasses by remember { mutableStateOf(ScanLlmDiagnosticsStore.getAll(context)) }
     var showHistory by rememberSaveable { mutableStateOf(false) }
     var showClearDialog by rememberSaveable { mutableStateOf(false) }
     val isClearing = operationState.operation == SettingsOperation.CLEARING_DIAGNOSTICS
@@ -523,7 +521,6 @@ private fun ScanDebugCard(
     LaunchedEffect(operationState.completion) {
         if (operationState.completion == SettingsCompletion.DIAGNOSTICS_CLEARED) {
             sessions = emptyList()
-            llmPasses = emptyList()
             showClearDialog = false
             viewModel.consumeCompletion()
         }
@@ -560,7 +557,6 @@ private fun ScanDebugCard(
                 text = stringResource(
                     R.string.format_scan_debug_counts,
                     sessions.size,
-                    llmPasses.size,
                 ),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,

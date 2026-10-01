@@ -663,10 +663,10 @@
     <string name="msg_cup_preset_reset_failed">De kopprofielen konden niet worden hersteld. Probeer het opnieuw.</string>
     <string name="msg_reset_cup_presets">Alle kopprofielen vervangen door de standaardprofielen?</string>
     <string name="msg_diagnostic_clear_failed">Niet alle diagnostische gegevens konden worden gewist. Probeer het opnieuw.</string>
-    <string name="msg_clear_diagnostics">Alle opgeslagen scansessies en LLM-rondes wissen?</string>
+    <string name="msg_clear_diagnostics">Alle opgeslagen scansessies wissen?</string>
     <string name="label_log_scan_corrections">Scancorrecties loggen (op het apparaat)</string>
     <string name="msg_log_scan_corrections">Legt alleen op dit apparaat vast wat de AI extraheerde en wat je opsloeg. Er wordt niets geüpload.</string>
-    <string name="format_scan_debug_counts">Sessies: %1$d · LLM-rondes: %2$d</string>
+    <string name="format_scan_debug_counts">Sessies: %1$d</string>
     <string name="format_scan_session_subject">Scansessie: %1$s</string>
     <string name="action_share_scan_session">Scansessie delen</string>
 

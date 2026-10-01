@@ -668,10 +668,10 @@
     <string name="msg_cup_preset_reset_failed">Nepavyko atkurti puodelių profilių. Bandykite dar kartą.</string>
     <string name="msg_reset_cup_presets">Pakeisti visus puodelių profilius numatytaisiais?</string>
     <string name="msg_diagnostic_clear_failed">Nepavyko išvalyti visų diagnostikos duomenų. Bandykite dar kartą.</string>
-    <string name="msg_clear_diagnostics">Išvalyti visas išsaugotas nuskaitymo sesijas ir LLM bandymus?</string>
+    <string name="msg_clear_diagnostics">Išvalyti visas išsaugotas nuskaitymo sesijas?</string>
     <string name="label_log_scan_corrections">Registruoti nuskaitymo pataisas (įrenginyje)</string>
     <string name="msg_log_scan_corrections">Tik šiame įrenginyje įrašo, ką išgavo AI ir ką išsaugojote. Niekas neįkeliama.</string>
-    <string name="format_scan_debug_counts">Sesijos: %1$d · LLM bandymai: %2$d</string>
+    <string name="format_scan_debug_counts">Sesijos: %1$d</string>
     <string name="format_scan_session_subject">Nuskaitymo sesija: %1$s</string>
     <string name="action_share_scan_session">Bendrinti nuskaitymo sesiją</string>
 

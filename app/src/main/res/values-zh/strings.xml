@@ -660,10 +660,10 @@
     <string name="msg_cup_preset_reset_failed">无法重置杯量预设，请重试。</string>
     <string name="msg_reset_cup_presets">用默认值替换所有杯量预设？</string>
     <string name="msg_diagnostic_clear_failed">无法清除全部诊断数据，请重试。</string>
-    <string name="msg_clear_diagnostics">清除所有已保存的扫描会话和 LLM 处理记录？</string>
+    <string name="msg_clear_diagnostics">清除所有已保存的扫描会话？</string>
     <string name="label_log_scan_corrections">记录扫描修正（仅限本机）</string>
     <string name="msg_log_scan_corrections">仅在此设备上记录 AI 提取结果与最终保存内容的差异，不会上传任何数据。</string>
-    <string name="format_scan_debug_counts">会话：%1$d · LLM 处理：%2$d</string>
+    <string name="format_scan_debug_counts">会话：%1$d</string>
     <string name="format_scan_session_subject">扫描会话：%1$s</string>
     <string name="action_share_scan_session">分享扫描会话</string>
 

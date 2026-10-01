@@ -21,7 +21,8 @@ import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.data.work.BagExtractionScheduler
 import com.adsamcik.starlitcoffee.data.work.BagExtractionStartupRecovery
 import com.adsamcik.starlitcoffee.diagnostics.StarlitTracebox
-import com.adsamcik.starlitcoffee.scan.observability.PersistentLlmDiagnosticsRecorder
+import com.adsamcik.starlitcoffee.scan.observability.LegacyLlmDiagnosticsStore
+import com.adsamcik.starlitcoffee.scan.observability.TraceboxLlmDiagnosticsRecorder
 import com.adsamcik.starlitcoffee.util.MindlayerAvailability
 import com.adsamcik.starlitcoffee.util.RecognitionPreference
 import kotlinx.coroutines.CancellationException
@@ -94,7 +95,11 @@ class StarlitCoffeeApp : Application() {
         super.attachBaseContext(base)
         traceboxHandlerProcess = StarlitTracebox.isHandlerProcess(base)
         if (!traceboxHandlerProcess) {
+            val legacyAiDiagnosticsCleared = LegacyLlmDiagnosticsStore.clear(base)
             StarlitTracebox.install(base)
+            if (!legacyAiDiagnosticsCleared) {
+                Tracebox.log.warn(LogTemplate.of("Legacy AI diagnostic data deletion needs retry"))
+            }
         }
     }
 
@@ -174,7 +179,7 @@ class StarlitCoffeeApp : Application() {
                     client = client,
                     llmProvider = MindlayerLlmInferenceProvider(
                         client,
-                        PersistentLlmDiagnosticsRecorder(applicationContext),
+                        TraceboxLlmDiagnosticsRecorder(),
                     ),
                     ocrService = HierarchicalOcrService(MindlayerOcrService(client)),
                 ).also { mindlayerServices = it }

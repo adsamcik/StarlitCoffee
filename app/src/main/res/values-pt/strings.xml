@@ -666,10 +666,10 @@
     <string name="msg_cup_preset_reset_failed">Não foi possível repor os perfis de chávena. Tente novamente.</string>
     <string name="msg_reset_cup_presets">Substituir todos os perfis de chávena pelos predefinidos?</string>
     <string name="msg_diagnostic_clear_failed">Não foi possível limpar todos os diagnósticos. Tente novamente.</string>
-    <string name="msg_clear_diagnostics">Limpar todas as sessões de leitura e passagens LLM guardadas?</string>
+    <string name="msg_clear_diagnostics">Limpar todas as sessões de leitura guardadas?</string>
     <string name="label_log_scan_corrections">Registar correções de leitura (no dispositivo)</string>
     <string name="msg_log_scan_corrections">Regista apenas neste dispositivo o que a IA extraiu e o que guardou. Nada é enviado.</string>
-    <string name="format_scan_debug_counts">Sessões: %1$d · Passagens LLM: %2$d</string>
+    <string name="format_scan_debug_counts">Sessões: %1$d</string>
     <string name="format_scan_session_subject">Sessão de leitura: %1$s</string>
     <string name="action_share_scan_session">Partilhar sessão de leitura</string>
 

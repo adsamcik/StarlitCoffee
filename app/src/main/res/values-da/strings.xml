@@ -663,10 +663,10 @@
     <string name="msg_cup_preset_reset_failed">Kopprofilerne kunne ikke nulstilles. Prøv igen.</string>
     <string name="msg_reset_cup_presets">Erstat alle kopprofiler med standarderne?</string>
     <string name="msg_diagnostic_clear_failed">Alle diagnosticeringsdata kunne ikke ryddes. Prøv igen.</string>
-    <string name="msg_clear_diagnostics">Ryd alle gemte scanningssessioner og LLM-kørsler?</string>
+    <string name="msg_clear_diagnostics">Ryd alle gemte scanningssessioner?</string>
     <string name="label_log_scan_corrections">Log scanningsrettelser (på enheden)</string>
     <string name="msg_log_scan_corrections">Registrerer kun på denne enhed, hvad AI udtrak, og hvad du gemte. Intet uploades.</string>
-    <string name="format_scan_debug_counts">Sessioner: %1$d · LLM-kørsler: %2$d</string>
+    <string name="format_scan_debug_counts">Sessioner: %1$d</string>
     <string name="format_scan_session_subject">Scanningssession: %1$s</string>
     <string name="action_share_scan_session">Del scanningssession</string>
 

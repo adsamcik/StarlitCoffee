@@ -806,10 +806,10 @@
     <string name="msg_cup_preset_reset_failed">Could not reset cup presets. Please try again.</string>
     <string name="msg_reset_cup_presets">Replace all cup presets with the defaults?</string>
     <string name="msg_diagnostic_clear_failed">Could not clear all diagnostics. Please try again.</string>
-    <string name="msg_clear_diagnostics">Clear all stored scan sessions and LLM passes?</string>
+    <string name="msg_clear_diagnostics">Clear all stored scan sessions?</string>
     <string name="label_log_scan_corrections">Log scan corrections (on-device)</string>
     <string name="msg_log_scan_corrections">Record what the AI extracted versus what you saved on this device only. Nothing is uploaded.</string>
-    <string name="format_scan_debug_counts">Sessions: %1$d · LLM passes: %2$d</string>
+    <string name="format_scan_debug_counts">Sessions: %1$d</string>
     <string name="format_scan_session_subject">Scan session: %1$s</string>
     <string name="action_share_scan_session">Share scan session</string>
 

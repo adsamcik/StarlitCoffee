@@ -106,6 +106,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- AI troubleshooting records now honor diagnostic capture and deletion controls,
+  retain only typed outcomes and numeric measurements, and remove old raw AI
+  output and error samples on upgrade.
 - Coffee-label scans now fall back to bundled text recognition when Mindlayer
   recognition or its connection wait times out, while preserving cancellation
   and the original scan deadline.

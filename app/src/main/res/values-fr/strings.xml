@@ -666,10 +666,10 @@
     <string name="msg_cup_preset_reset_failed">Impossible de réinitialiser les profils de tasse. Réessayez.</string>
     <string name="msg_reset_cup_presets">Remplacer tous les profils de tasse par ceux par défaut ?</string>
     <string name="msg_diagnostic_clear_failed">Impossible d’effacer tous les diagnostics. Réessayez.</string>
-    <string name="msg_clear_diagnostics">Effacer toutes les sessions d’analyse et tous les passages LLM enregistrés ?</string>
+    <string name="msg_clear_diagnostics">Effacer toutes les sessions d’analyse enregistrées ?</string>
     <string name="label_log_scan_corrections">Journaliser les corrections d’analyse (sur l’appareil)</string>
     <string name="msg_log_scan_corrections">Enregistre uniquement sur cet appareil ce que l’IA a extrait et ce que vous avez sauvegardé. Rien n’est envoyé.</string>
-    <string name="format_scan_debug_counts">Sessions : %1$d · Passages LLM : %2$d</string>
+    <string name="format_scan_debug_counts">Sessions : %1$d</string>
     <string name="format_scan_session_subject">Session d’analyse : %1$s</string>
     <string name="action_share_scan_session">Partager la session d’analyse</string>
 
