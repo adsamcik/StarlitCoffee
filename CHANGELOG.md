@@ -60,6 +60,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **More expressive bloom animations** — all 44 animations now grow and unfold
   more clearly, with intact petals, steadier positioning, and polished finishes
   in light and dark themes. Finished previews match the bloom shown while brewing.
+  Latte bloom now unfolds into a warm milk-foam heart with a progressive
+  pull-through finish.
 - Grinder choices now require a source-backed recommendation for the selected
   method and filter. Five precisely identified models use their actual setting
   notation, including Ode's numbered subdivisions and Niche's stepless dial.

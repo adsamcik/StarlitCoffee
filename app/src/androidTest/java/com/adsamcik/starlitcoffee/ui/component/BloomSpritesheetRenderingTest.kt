@@ -31,7 +31,8 @@ class BloomSpritesheetRenderingTest {
 
     @Test
     fun everyFinalPreviewMatchesPlayedFinishInBothThemes() {
-        val selected = mutableStateOf(BloomSpritesheetOptions.first())
+        val options = optionsForRun()
+        val selected = mutableStateOf(options.first())
         val dark = mutableStateOf(false)
         val showPreview = mutableStateOf(false)
         composeRule.setContent {
@@ -56,7 +57,7 @@ class BloomSpritesheetRenderingTest {
             }
         }
         listOf(false, true).forEach { isDark ->
-            BloomSpritesheetOptions.forEach { option ->
+            options.forEach { option ->
                 composeRule.runOnIdle {
                     selected.value = option
                     dark.value = isDark
@@ -76,7 +77,13 @@ class BloomSpritesheetRenderingTest {
 
     @Test
     fun everyAnimationRendersDistinctGrowthStagesInBothThemes() {
-        val selected = mutableStateOf(BloomSpritesheetOptions.first())
+        val options = optionsForRun()
+        val countdowns = if (InstrumentationRegistry.getArguments().getString("bloomAllFrames") == "true") {
+            (48 downTo 0 step 2).toList()
+        } else {
+            listOf(48, 24, 0)
+        }
+        val selected = mutableStateOf(options.first())
         val dark = mutableStateOf(false)
         val remaining = mutableStateOf(48)
         composeRule.setContent {
@@ -93,8 +100,8 @@ class BloomSpritesheetRenderingTest {
             }
         }
         listOf(false, true).forEach { isDark ->
-            BloomSpritesheetOptions.forEach { option ->
-                val stages = listOf(48, 24, 0).map { seconds ->
+            options.forEach { option ->
+                val stages = countdowns.map { seconds ->
                     composeRule.runOnIdle {
                         selected.value = option
                         dark.value = isDark
@@ -109,6 +116,14 @@ class BloomSpritesheetRenderingTest {
                     assertTrue("${option.id}, dark=$isDark must show readable growth", changedPixels > 64)
                 }
             }
+        }
+    }
+
+    private fun optionsForRun(): List<BloomSpritesheetOption> {
+        val onlyId = InstrumentationRegistry.getArguments().getString("bloomOnly")
+            ?: return BloomSpritesheetOptions
+        return BloomSpritesheetOptions.filter { it.id == onlyId }.also {
+            require(it.isNotEmpty()) { "Unknown bloomOnly animation ID: $onlyId" }
         }
     }
 

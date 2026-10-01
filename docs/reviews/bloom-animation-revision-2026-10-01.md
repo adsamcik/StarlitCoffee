@@ -1,5 +1,9 @@
 # Bloom Animation Revision — 2026-10-01
 
+This report records the 44-animation revision in commit `8735c18`. Latte bloom
+was subsequently replaced by the [latte-art heart redesign](latte-heart-redesign-2026-10-01.md);
+its current source hashes and native-frame evidence are recorded there.
+
 All 44 registered bloom animations have revised native-alpha artwork. Astra reviewed all 25 poses of each sequence in light and dark small-size composites. Existing animation IDs, selections, weights, countdown mapping and completed-bloom behavior remain compatible.
 
 The new sequences distribute visible unfolding through the middle, preserve introduced anatomy, and develop the finish progressively. The most damaged originals—Magnolia, Morning Glory, Fuchsia, both irises, Protea and Water Lily—now have complete, intact sprites and colored petal surfaces. Whole native-generated poses were curated where a repair retained an isolated reversal; the manifest records every selected source and frame.

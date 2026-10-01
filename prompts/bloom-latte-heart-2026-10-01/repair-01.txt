@@ -1,0 +1,23 @@
+Use case: precise-object-edit. Edit the supplied native-alpha5x5 Latte-heart spritesheet. Keep its espresso bean identity, warm ivory liquid material, subtle caramel contour, camera, base position, native transparency and exact25-cell layout. This is a timing/choreography repair, not a style change. Frame numbers below are row-major instructions only, never draw text. Preserve F01-F08, and preserve the same bean geometry and attachment throughout all frames. Replace only the milk-shape progression in F09-F25. Every cell remains one complete isolated whole subject with generous transparent padding; no guide lines, labels, backgrounds, shadows or stray pixels.
+
+Problem to fix: the current atlas already has a complete heart by F15/F16 and its later row mostly repeats that finished silhouette. The heart must develop progressively through F25. Redistribute milk growth across the middle and late poses. No decrease in outer milk span or overall height from F09 onward, no whole-object shrink, no lost left/right lobe, no base change, no flame curl, no plant/leaf shapes. The final recognizable heart is one smooth flowing milk surface, not a puffy balloon. Keep both light/dark readability and clear warm ivory centers.
+
+F09: the left/right low milk pools merge into ONE low broad fan. Its top is a nearly horizontal gently convex continuous curve; NO heart-shaped center notch.
+F10: low fan widens a little, still shallow; top remains smooth without notch.
+F11: left outside rim rolls outward/upward slightly, with the right pool retained; broad fan with continuous center bridge, not a heart.
+F12: matching right outside rim rolls outward/upward; center bridge stays at full height, no notch.
+F13: fan gains height into a broad smooth oval cap, like an unfinished milk pour. Center of top is rounded and unbroken.
+F14: lower sides curve inward modestly, while broad top remains one unbroken rounded crown and bottom is still blunt.
+F15: left shoulder gains fullness and height while staying connected through a high milk bridge across the center; no cleft, no finished heart.
+F16: right shoulder gains matching fullness; broad rounded fan stays visibly unfinished, with high unbroken center bridge.
+F17: left outside shoulder unfolds outward noticeably; center bridge is just beginning to flatten and lower, not cut into a deep cleft. Bottom remains rounded/blunt.
+F18: right outside shoulder unfolds outward noticeably; both shoulders retained and slightly more separated, only a very shallow center indentation, still no pointed bottom.
+F19: a shallow center notch develops clearly between the full shoulders; shape wider than F18 and bottom remains blunt.
+F20: notch deepens a little and shoulders round outward; low part of milk fan remains broad. It is an unfinished heart, not the final pose.
+F21: latte-art pull-through starts shaping the lower milk body inward. Deepen notch visibly, round both lobes outward, keep lower end blunt but narrower.
+F22: carry pull-through farther down. Cleft becomes clearer; both lobes visibly fuller and lower sides more tapered. Keep a broad unfinished lower end rather than final point.
+F23: lower milk sides converge into the emerging tapered heart point; broaden both rounded lobe shoulders a little and deepen cleft again. Short milk connection to bean persists.
+F24: pull-through draws a clear longer point and narrow smooth connecting tail down toward the bean seam; heart becomes almost complete, retaining generous rounded lobes.
+F25: finish the last little downward pull-through and outward shoulder release into a broad balanced latte-art heart. Final cleft, two rounded lobes and pointed bottom are all visibly more resolved than F24. No extra effects, ornaments or new objects.
+
+Make each of these17 revised milk shapes visibly different through liquid folding, width, height, cleft and point formation, not by replacing texture or lighting. Preserve the same one pour continuously attached to the fixed bean in every pose. Output true transparent RGBA; exactly5rows and5columns. No clipped or overlapping cells.

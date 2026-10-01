@@ -1,0 +1,44 @@
+Create a new25-frame Latte-art-heart animation spritesheet with native transparent alpha. Attached image is ONLY the material and FINAL HEART identity reference. Do not repeat this mature heart throughout the animation. The animation begins with a bean, then a liquid milk pour, then an unfinished broad milk pool, then a developing heart, finally the complete heart. Warm hand-painted espresso-brown bean and smooth ivory milk with caramel edging match the reference. Rounded milk shapes, shallow liquid shading, never pointed leaves, flowers, flames or balloons.
+
+ONE square RGBA sheet, exactly five columns and five rows,25 complete isolated subjects in row-major order, equal square cells. Prefer1280x1280. Fully transparent background and generous empty gaps between every column and row. No text, labels, frame numbers, grid lines, borders, checkerboard, background, drop shadow or decorations. Keep all artwork within12%-88% of each cell width and10%-90% of each cell height. Fixed front camera and coffee bean: approximately110px wide,110px tall in256px cell, horizontal center128, bottom232. Bean identity, texture, size and base position are CONSTANT. It opens very slightly by frame4 then stops. Milk changes shape and grows; never scale the bean or camera. Frame positions/numbers below are instructions only, NEVER drawn.
+
+ESSENTIAL SHAPE RULE: the middle milk pool has a BLUNT ROUNDED LOWER EDGE resting over the very top of the bean, like a shallow ivory oval poured across the bean shoulders. It must NOT have the finished heart's triangular lower point or Y-shaped neck during frames9-20. Do not draw a heart prematurely. Final pull-through visibly draws that broad blunt lower edge down to a narrow tapered point over the bean seam in frames21-25. The lower bean always remains visible. Broadening lobes, a deepening cleft, and this actual blunt-to-pointed geometry give the final row meaningful action. No finished-heart holds or superficial texture-only differences.
+
+Each row has a distinct stage, and each of its five cells shows an additional visible step. Use the following milk widths/heights in approximate256px cell units as proportions, with the bean unchanged. Size is supplied by new unfolded milk edges rather than whole-object zoom.
+
+ROW1, frames1-5: bean to milk ribbon.
+F1: same closed brown bean, no milk.
+F2: tiny rounded ivory bead appears in the top seam.
+F3: ivory bead stretches to a short rounded ribbon.
+F4: ribbon rises farther, smooth round tip; bean stops opening here.
+F5: tip bends left into a rounded liquid hook.
+
+ROW2, frames6-10: one pour spreads into a low milk pool, NOT a heart.
+F6: left hook flattens and spreads to a low left pool.
+F7: a smooth milk ribbon sweeps right while retaining the left pool.
+F8: attached right pool forms; left/right meet across the bean shoulders.
+F9: ONE low blunt-bottomed continuous milk fan, roughly72px wide,22px high, no top cleft and no lower point.
+F10: widen and raise that pool to82px by28px, a shallow broad ivory oval with smooth convex upper edge and rounded lower edge resting across the bean top.
+
+ROW3, frames11-15: unfinished milk fan fills upward, NEVER a heart.
+F11: milk90px wide,32px high; left rim visibly rolls outward, right pool persists, crown continuous, lower edge blunt.
+F12: milk99px wide,36px high; right rim unfolds, top remains one convex continuous arch, lower edge blunt.
+F13: milk108px wide,40px high; a taller rounded oval milk cap, NO heart cleft, NO pointed bottom.
+F14: milk117px wide,44px high; milk spreads over bean shoulders, full smooth continuous crown, blunt U-shaped lower edge.
+F15: milk126px wide,48px high; left shoulder fills higher but center bridge remains high and unbroken; still an unfinished rounded milk pool, not a heart.
+
+ROW4, frames16-20: shoulders/lobes form progressively, lower edge still unfinished.
+F16: milk134px wide,53px high; right shoulder fills to match left, milk pool has rounded shoulders connected by a HIGH center bridge, lower edge remains broadly rounded.
+F17: milk142px wide,58px high; left lobe spreads outward, crown starts flattening centrally but no cleft yet, no lower point.
+F18: milk150px wide,63px high; right lobe unfolds outward and both persist; only a tiny central top indentation, lower edge blunt.
+F19: milk158px wide,68px high; shallow top notch begins between the lobes, NO triangular lower point, rounded milk pool still covers bean shoulders.
+F20: milk166px wide,73px high; slightly deeper notch and fuller lobes; visibly BROAD BLUNT LOWER EDGE still rests over bean top, definitely not the final heart silhouette.
+
+ROW5, frames21-25: actual latte-art pull-through changes the lower silhouette every time.
+F21: milk174px wide,79px high; cleft visibly deepens, lower edge begins drawing inward from broad U to blunt V, not yet pointed. Both lobes fuller, all edges retained.
+F22: milk182px wide,85px high; pull-through lowers the bottom center over the bean seam, lower edge becomes a narrower V with rounded unfinished end; top cleft deepens and lobe shoulders round outward.
+F23: milk190px wide,91px high; first distinct emerging heart point, visibly longer downward pull-through over bean seam, broader lobe shoulders and deeper cleft.
+F24: milk198px wide,97px high; point tapers and lengthens, short smooth milk tail appears below it over bean center, heart nearly complete, generous rounded lobes remain.
+F25: milk206px wide,103px high; final pull-through resolves the pointed bottom and elegant tail. Broad full balanced ivory heart, two rounded lobes, generous clear cleft, with polished shallow milk highlights. Lower bean remains visible. This is the full finished reference identity, visibly bigger and more complete thanF24, without new objects or sparkles.
+
+Prioritize anatomical continuity, fixed bean registration and visibly DIFFERENT geometric poses. Each cell contains one entire subject with ample transparent padding. Never duplicate the mature heart early, rotate the camera, change the bean, delete a lobe, or shrink an established milk shape.

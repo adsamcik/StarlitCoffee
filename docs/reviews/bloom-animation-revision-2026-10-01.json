@@ -28022,5 +28022,13 @@
     "reviewer_model": "gpt-6-astra",
     "result": "No meaningful correctness blocker in native-alpha importer, tests, legacy guide-color restriction, final preview registration or native rendering tests.",
     "boundary": "Growth instrumentation samples paused F01/F13/F25; all 24 transitions are reviewed visually, not automatically proved by the native snapshot test."
-  }
+  },
+  "snapshot_commit": "8735c188b49c7547af15f8f32d6be34a6f50ab5b",
+  "subsequent_updates": [
+    {
+      "animation_id": "coffee_latte",
+      "review": "docs/reviews/latte-heart-redesign-2026-10-01.json",
+      "note": "The archived rosetta hashes below describe this checkpoint; current Latte bloom uses the user-selected heart redesign."
+    }
+  ]
 }

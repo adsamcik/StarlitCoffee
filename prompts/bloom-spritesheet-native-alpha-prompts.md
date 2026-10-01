@@ -51,6 +51,12 @@ These are the exact saved native generation and edit prompts. The revision manif
 
 ### Latte bloom
 
+The current [latte-art heart redesign](../docs/reviews/latte-heart-redesign-2026-10-01.md)
+supersedes the rosetta artwork below. Its exact prompts are
+[initial generation](bloom-latte-heart-2026-10-01/initial.txt),
+[first repair](bloom-latte-heart-2026-10-01/repair-01.txt), and
+[selected regeneration](bloom-latte-heart-2026-10-01/regenerate-02.txt).
+
 - [coffee_latte-discarded-edge-repair.txt](bloom-revision-2026-10-01/coffee_latte-discarded-edge-repair.txt)
 - [coffee_latte-initial.txt](bloom-revision-2026-10-01/coffee_latte-initial.txt)
 - [coffee_latte-retry1.txt](bloom-revision-2026-10-01/coffee_latte-retry1.txt)
