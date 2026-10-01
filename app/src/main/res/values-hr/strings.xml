@@ -749,4 +749,9 @@
     <string name="msg_rescan_incomplete">Pregledajte već pronađene podatke ili pokušajte ponovno prepoznavanje.</string>
     <string name="action_update_bag_so_far">Ažuriraj trenutačnim rezultatima</string>
     <string name="action_new_bag_so_far">Nova vrećica s trenutačnim rezultatima</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Otvaranje postavljanja…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Postavljanje nije moguće otvoriti. Pokušajte ponovno ili unesite pojedinosti ručno.</string>
+    <string name="announce_label_details_ready">Pojedinosti s oznake spremne su za pregled.</string>
+    <string name="announce_label_recognition_no_result">Na oznaci nisu pronađene pojedinosti. Unesite ih ručno.</string>
 </resources>

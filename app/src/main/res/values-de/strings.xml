@@ -746,4 +746,9 @@
     <string name="msg_rescan_incomplete">Prüfe die bereits gefundenen Angaben oder versuche die Erkennung erneut.</string>
     <string name="action_update_bag_so_far">Mit aktuellen Ergebnissen aktualisieren</string>
     <string name="action_new_bag_so_far">Neuer Beutel mit aktuellen Ergebnissen</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Einrichtung wird geöffnet…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Die Einrichtung konnte nicht geöffnet werden. Versuchen Sie es erneut oder geben Sie die Details manuell ein.</string>
+    <string name="announce_label_details_ready">Die Details vom Etikett sind zur Überprüfung bereit.</string>
+    <string name="announce_label_recognition_no_result">Es wurden keine Details auf dem Etikett gefunden. Geben Sie die Details manuell ein.</string>
 </resources>

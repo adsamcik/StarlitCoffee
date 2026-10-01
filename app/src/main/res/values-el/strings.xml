@@ -746,4 +746,9 @@
     <string name="msg_rescan_incomplete">Ελέγξτε τα στοιχεία που βρέθηκαν ή δοκιμάστε ξανά την αναγνώριση.</string>
     <string name="action_update_bag_so_far">Ενημέρωση με τα τρέχοντα αποτελέσματα</string>
     <string name="action_new_bag_so_far">Νέα συσκευασία με τα τρέχοντα αποτελέσματα</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Άνοιγμα ρύθμισης…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Δεν ήταν δυνατό το άνοιγμα της ρύθμισης. Προσπαθήστε ξανά ή εισαγάγετε τις λεπτομέρειες χειροκίνητα.</string>
+    <string name="announce_label_details_ready">Οι λεπτομέρειες της ετικέτας είναι έτοιμες για έλεγχο.</string>
+    <string name="announce_label_recognition_no_result">Δεν βρέθηκαν λεπτομέρειες στην ετικέτα. Εισαγάγετε τις λεπτομέρειες χειροκίνητα.</string>
 </resources>

@@ -746,4 +746,9 @@
     <string name="msg_rescan_incomplete">Granska uppgifterna som hittats eller försök läsa etiketten igen.</string>
     <string name="action_update_bag_so_far">Uppdatera med aktuella resultat</string>
     <string name="action_new_bag_so_far">Ny påse med aktuella resultat</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Öppnar installationen…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Det gick inte att öppna installationen. Försök igen eller ange detaljerna manuellt.</string>
+    <string name="announce_label_details_ready">Detaljerna från etiketten är klara att granskas.</string>
+    <string name="announce_label_recognition_no_result">Inga detaljer hittades på etiketten. Ange detaljerna manuellt.</string>
 </resources>

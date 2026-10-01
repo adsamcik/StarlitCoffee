@@ -6,6 +6,8 @@ The published dependencies are compatible at build level, but the integration ha
 
 ## Versions and source boundaries
 
+The following table records the original audit snapshot. Subsequent dependency changes and their validation are recorded with the corresponding fixes below.
+
 | Component | App dependency | Latest published release | Local development checkout |
 | --- | --- | --- | --- |
 | Tracebox | `0.1.0-alpha.7` | [`0.1.0-alpha.8`](https://github.com/adsamcik/Tracebox/releases/tag/v0.1.0-alpha.8), published 2026-09-06, tag `007a3db` | `3515e41` on `codex/personal-project-scope`, declaring `0.1.0-alpha.3` |
@@ -111,6 +113,14 @@ Evidence: app provider prewarm calls at `369`, `398`, `436`, `521`, and `594`; p
 
 Smallest remedy: coordinate SDK adoption and capability-gated `prewarmForContext(8192, CPU)`, preserving the existing CPU crash workaround and explicitly defining behavior with old services. Validate allocation and latency on physical hardware; no memory or performance reduction is established by this audit.
 
+Implementation prepared on 2026-10-01: both the production provider and diagnostic prompt now select CPU directly in bounded ephemeral sessions (8,192 and 256 total tokens respectively). Provider warmup only connects, and no app inference path calls legacy model prewarm. A minimal SDK patch from published `v1.0.0-alpha.7` exposes nullable typed `SessionScope.backend`, forwards it through the canonical inference/open-session bridges, and preserves the existing default for callers and custom scopes. This uses the existing AIDL session configuration; no new service method or private backend override is used.
+
+The published alpha.7 SDK cannot express this combination. The alpha.7-based release branch `codex/sdk-bounded-cpu-alpha8` at `20b1dbe` now publishes SDK/shared `1.0.0-alpha.8` through the existing [CI workflow](https://github.com/adsamcik/Mindlayer/actions/runs/36879488093). Its shared/SDK tests and publication passed; the SDK-only path skipped camera modules, GitHub Release creation, and service APK/AAB jobs. No service release or alpha.7 artifact overwrite was needed. The SDK implementation is also committed to the contextual Mindlayer checkout at `706908f`, with CI support at `20c63c2`, preserving unrelated dependency edits.
+
+Initial consumer validation used an explicit temporary local-repository init script, never overwriting published alpha.7 coordinates or silently substituting the unrelated local contract 1.4 checkout. Normal GitHub Packages consumer resolution is validated separately below.
+
+Source inspection of the alpha.7 service establishes that cold session creation passes `safeConfig.backend` and `safeConfig.maxTokens` to engine initialization. Already-loaded service engines retain their existing backend/context, which another client may have allocated. This change prevents Starlit's oversized speculative allocation; it does not establish an overall device memory ceiling or measured native RAM savings.
+
 ### P2 Context overflow has no compact recovery
 
 Every request uses 8,192 tokens, while text prompts include uncapped OCR, existing values, and vocabulary. Memory pressure can reduce the service's effective context. Typed `INPUT_EXCEEDS_CONTEXT` becomes a generic nonretryable failure, without compacting optional prompt context or using the reported remaining budget.
@@ -118,6 +128,14 @@ Every request uses 8,192 tokens, while text prompts include uncapped OCR, existi
 Evidence: `MindlayerLlmInferenceProvider.kt:323-329`, `749-757`, and `921-923`.
 
 Smallest remedy: budget optional context and use a compact extraction prompt or bounded chunking for typed overflow. Preserve source OCR and avoid automatic context growth under memory pressure. Test long front/back labels, large saved vocabulary, and reduced effective context.
+
+Implementation prepared on 2026-10-01: optional reference vocabulary, existing context, and refinement suggestions use encoded JSON character budgets and retain whole values. Text extraction, combine, and refinement may make one recovery attempt only for numeric `INPUT_EXCEEDS_CONTEXT` (3006), using shorter system and user content. Recovery preserves original source OCR and core pass values, drops optional grounding, retains the response schema and 8,192-token request, and shares the original timeout/caller deadline. It stops if combined content cannot be reduced or the compact attempt also fails. The translation pre-pass continues to fall back to original OCR, and vision remains limited to one image inference per app process. Each completed attempt retains its actual prompt size and validated diagnostic outcome through Tracebox.
+
+These character limits bound optional input size, not tokenizer usage. Full source text that still exceeds the effective service context remains a clean failure with existing partial values available; arbitrary label truncation and automatic context growth are avoided.
+
+Prepared-fix validation passed the full app suite: 1,616 cases, 1,612 executed and four skipped, zero failures/errors. The 16 context-budget/recovery cases, 10 setup-launch coroutine cases, 21 recognition mapper cases and bounded CPU source guard passed. Detekt, both debug APK builds, and release-source compilation passed against the explicit local alpha.8 SDK repository. The SDK patch passed 649 tests with 11 existing skips, including Binder backend/context propagation and unchanged/default custom-scope compatibility. Logs and SDK artifacts remain under `build/ai-recovery-validation` and Mindlayer's isolated validation directory.
+
+After successful CI publication, normal consumer validation passed without any init script or local SDK override: `checkGitHubPackagesAuth`, `:app:testDebugUnitTest`, `:app:detekt`, `:app:assembleDebug`, `:app:assembleDebugAndroidTest`, and `:app:compileReleaseKotlin`, using `--refresh-dependencies`. Registry access returned HTTP 200, and neither alpha.8 module exists in Maven Local. This build reused the previous unit results as up-to-date; a subsequent explicit `:app:testDebugUnitTest --rerun` passed all 1,612 executed cases, with four skipped and zero failures/errors. The normal debug application ID and APKs were restored after disposable emulator testing. Logs are `build/ai-recovery-validation/registry-consumer-validation.log` and `build/ai-recovery-validation/registry-unit-rerun.log`.
 
 ## Telemetry gaps
 
@@ -166,6 +184,12 @@ The core `BrewSessionRuntime` also has no Tracebox callsites. Existing error log
 “Finish setup” can silently do nothing when the service/setup action is null; launch exceptions are logged without user feedback (`BrewViewModel.kt:2298-2311`). Return an explicit launch outcome and provide concise inline feedback with an appropriate route to Mindlayer.
 
 Recognition status has a polite live-region option, but `announceUpdate` defaults false and no production caller enables it (`AddBagSheet.kt:2013-2014`). Progress/completion changes can remain unannounced while a screen-reader user edits another field. Announce meaningful transitions and verify Compose semantics and actual TalkBack behavior.
+
+Implementation prepared on 2026-10-01: setup returns explicit opened-setup/opened-app/unavailable/failed outcomes. A missing, expired, or failing setup action falls back to a visible installed Mindlayer launch intent. An owned query timeout permits fallback, while caller cancellation and outer deadlines never launch another app. New-bag and rescan review share inline opening/failure state, disable duplicate setup taps, cancel pending queries when the review identity or enabled state changes, and arm return recovery only after a successful launch for the same session/generation.
+
+A dedicated stable polite semantics node announces coarse progress, readiness, no-result, setup, and recovery changes. It also exists when all fields are ready and no visual status card is needed. Changing counts, values, and controls stay outside the live region, preserving an edited field's focus. The four new messages are translated across the existing 23 resource sets. Semantics tests and fake launch outcomes do not establish actual TalkBack speech or external app setup completion.
+
+All 31 focused Compose cases passed on the healthy API 36 x86_64 emulator in a disposable `.airecoverycheck` installation: 13 new setup/accessibility cases, 14 rescan regressions and four existing add-bag recovery cases. Coverage includes one stable live node through all-high-confidence completion, no count chatter, retained edited-field focus, inline failure with values/save available, duplicate-tap prevention, generation/disable cancellation before a pending setup destination opens, and arming recovery only for opened destinations. Both disposable packages were removed and the device claim released. The original emulator's package manager remained stalled; it was not reset or used for these tests. Native model allocation, physical ARM64 latency, actual TalkBack speech and a real external setup return remain unverified.
 
 The Settings recognition switch records preference without consent/readiness/setup feedback. Its checked state should be understood as preference, not proof that models and authorization are ready. The contextual consent flow and manual fallback are sensible defaults; improve feedback without adding setup decisions to ordinary bag entry.
 

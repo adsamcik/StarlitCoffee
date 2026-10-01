@@ -425,7 +425,8 @@ fun ScanAddBagReview(
     val couldNotSaveBag = stringResource(R.string.msg_could_not_save_bag)
     var isSavingBag by remember { mutableStateOf(false) }
     val recovery = rememberScanRecognitionRecovery(
-        brewViewModel, data, callbacks.onScanMore, enabled = !isSavingBag,
+        brewViewModel, data, callbacks.onScanMore,
+        enabled = !isSavingBag && recognitionPreference != RecognitionPreference.DISABLED,
     )
     val isRetryingLlm = recovery.isRetrying
     val recognitionPresentation = remember(
@@ -485,6 +486,7 @@ fun ScanAddBagReview(
         onEnableAi = recovery.actions.onEnable,
         onInstallLabelRecognition = recovery.actions.onInstall,
         onSetupAi = recovery.actions.onSetup,
+        setupLaunchState = recovery.actions.setupState,
         onDisableLabelRecognition = recovery.actions.onDisable,
         onDismiss = callbacks.onExit,
         initialFormOverride = durableDraft?.toBagFormSnapshot(),
@@ -613,10 +615,11 @@ fun ScanRescanReview(
     val scope = rememberCoroutineScope()
     var showDiscardDialog by remember { mutableStateOf(false) }
     var isUpdatingBag by remember { mutableStateOf(false) }
-    val recovery = rememberScanRecognitionRecovery(
-        brewViewModel, data, callbacks.onScanMore, enabled = !isUpdatingBag,
-    )
     val recognitionPreference by brewViewModel.recognitionPreference.collectAsStateWithLifecycle()
+    val recovery = rememberScanRecognitionRecovery(
+        brewViewModel, data, callbacks.onScanMore,
+        enabled = !isUpdatingBag && recognitionPreference != RecognitionPreference.DISABLED,
+    )
     val mindlayerInstalled = rememberMindlayerInstalled()
     val isProcessing = data.isProcessing || recovery.isRetrying
     val recognition = RecognitionUiStateMapper.fromPipeline(

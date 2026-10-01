@@ -954,4 +954,9 @@
     <string name="msg_rescan_incomplete">Review the details already found, or try recognition again.</string>
     <string name="action_update_bag_so_far">Update with current results</string>
     <string name="action_new_bag_so_far">New bag with current results</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Opening setup…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Couldn\'t open setup. Try again, or enter the details manually.</string>
+    <string name="announce_label_details_ready">Label details are ready to review.</string>
+    <string name="announce_label_recognition_no_result">No label details were found. Enter the details manually.</string>
 </resources>

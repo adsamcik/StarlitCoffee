@@ -221,6 +221,7 @@ fun AddBagSheet(
     onEnableAi: (() -> Unit)? = null,
     onInstallLabelRecognition: (() -> Unit)? = null,
     onSetupAi: (() -> Unit)? = null,
+    setupLaunchState: RecognitionSetupState = RecognitionSetupState.IDLE,
     onDisableLabelRecognition: (() -> Unit)? = null,
     onScanMorePhotos: (() -> Unit)? = null,
     initialFormOverride: BagFormSnapshot? = null,
@@ -805,6 +806,7 @@ fun AddBagSheet(
                             onSetup = onSetupAi,
                             onDisable = onDisableLabelRecognition,
                             onRetake = onScanMorePhotos,
+                            setupState = setupLaunchState,
                         ),
                         enabled = !isSaving,
                     )

@@ -752,4 +752,9 @@
     <string name="msg_rescan_incomplete">Preglejte že najdene podatke ali poskusite prepoznavanje znova.</string>
     <string name="action_update_bag_so_far">Posodobi s trenutnimi rezultati</string>
     <string name="action_new_bag_so_far">Nova vrečka s trenutnimi rezultati</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Odpiranje nastavitve …</string>
+    <string name="msg_could_not_open_label_recognition_setup">Nastavitve ni bilo mogoče odpreti. Poskusite znova ali vnesite podrobnosti ročno.</string>
+    <string name="announce_label_details_ready">Podrobnosti z oznake so pripravljene za pregled.</string>
+    <string name="announce_label_recognition_no_result">Na oznaki ni bilo najdenih podrobnosti. Vnesite jih ročno.</string>
 </resources>

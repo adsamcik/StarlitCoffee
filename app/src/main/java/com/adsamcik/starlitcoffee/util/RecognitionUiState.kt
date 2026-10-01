@@ -47,12 +47,24 @@ enum class RecognitionRecoveryAction {
     RETAKE,
 }
 
+enum class RecognitionAnnouncement {
+    CHECKING,
+    READY_TO_REVIEW,
+    NO_RESULT,
+    COULD_NOT_READ_MORE,
+    RETRY,
+    RETAKE,
+    ENABLE,
+    INSTALL,
+    FINISH_SETUP,
+}
+
 data class RecognitionPresentation(
     val status: RecognitionStatusText? = null,
     val unresolvedCount: Int = 0,
     val offer: RecognitionOffer? = null,
     val recoveryAction: RecognitionRecoveryAction? = null,
-    val announceUpdate: Boolean = false,
+    val announcement: RecognitionAnnouncement? = null,
 )
 
 /** Pure mapping that prevents provider and pipeline vocabulary reaching Compose. */
@@ -63,7 +75,6 @@ object RecognitionUiStateMapper {
         preference: RecognitionPreference,
         hasValues: Boolean,
         unresolvedCount: Int,
-        announceUpdate: Boolean = false,
     ): RecognitionPresentation {
         val isRunning = runState == RecognitionRunState.RUNNING || runState == RecognitionRunState.PARTIAL
         val offer = when {
@@ -94,13 +105,34 @@ object RecognitionUiStateMapper {
             RecognitionRunState.TERMINAL_NO_RESULT,
             -> null
         }
+        val recovery = recoveryFor(capability, runState, preference, hasValues)
         return RecognitionPresentation(
             status = status,
             unresolvedCount = unresolvedCount,
             offer = offer,
-            recoveryAction = recoveryFor(capability, runState, preference, hasValues),
-            announceUpdate = announceUpdate,
+            recoveryAction = recovery,
+            announcement = announcementFor(runState, hasValues, offer, recovery),
         )
+    }
+
+    private fun announcementFor(
+        runState: RecognitionRunState,
+        hasValues: Boolean,
+        offer: RecognitionOffer?,
+        recovery: RecognitionRecoveryAction?,
+    ): RecognitionAnnouncement? = when {
+        runState == RecognitionRunState.RUNNING || runState == RecognitionRunState.PARTIAL ->
+            RecognitionAnnouncement.CHECKING
+        offer == RecognitionOffer.ENABLE -> RecognitionAnnouncement.ENABLE
+        offer == RecognitionOffer.INSTALL -> RecognitionAnnouncement.INSTALL
+        offer == RecognitionOffer.FINISH_SETUP -> RecognitionAnnouncement.FINISH_SETUP
+        recovery == RecognitionRecoveryAction.RETRY -> RecognitionAnnouncement.RETRY
+        recovery == RecognitionRecoveryAction.RETAKE -> RecognitionAnnouncement.RETAKE
+        runState == RecognitionRunState.RETRIABLE_FAILURE -> RecognitionAnnouncement.COULD_NOT_READ_MORE
+        runState == RecognitionRunState.COMPLETE && hasValues -> RecognitionAnnouncement.READY_TO_REVIEW
+        runState == RecognitionRunState.COMPLETE || runState == RecognitionRunState.TERMINAL_NO_RESULT ->
+            RecognitionAnnouncement.NO_RESULT
+        else -> null
     }
 
     private fun recoveryFor(

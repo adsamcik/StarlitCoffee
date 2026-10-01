@@ -749,4 +749,9 @@
     <string name="msg_rescan_incomplete">Controlla i dati già trovati o riprova il riconoscimento.</string>
     <string name="action_update_bag_so_far">Aggiorna con i risultati attuali</string>
     <string name="action_new_bag_so_far">Nuova confezione con i risultati attuali</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Apertura della configurazione…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Impossibile aprire la configurazione. Riprova o inserisci i dettagli manualmente.</string>
+    <string name="announce_label_details_ready">I dettagli dell\'etichetta sono pronti per la verifica.</string>
+    <string name="announce_label_recognition_no_result">Non sono stati trovati dettagli sull\'etichetta. Inserisci i dettagli manualmente.</string>
 </resources>

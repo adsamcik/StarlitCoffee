@@ -298,7 +298,7 @@ class MindlayerLlmPassDiagnosticsTest {
     fun `inference failure differs from invalid generated JSON`() = runTest {
         val diagnostics = PassDiagnostics()
         val client = PassMindlayer(onResponse = {
-            throw MindlayerException("PRIVATE_INFERENCE_DETAIL", code = MindlayerErrorCode.INPUT_EXCEEDS_CONTEXT)
+            throw MindlayerException("PRIVATE_INFERENCE_DETAIL", code = MindlayerErrorCode.INTERNAL)
         })
 
         val result = MindlayerLlmInferenceProvider(client, diagnostics).combineBagFields(combineRequest())
@@ -307,7 +307,7 @@ class MindlayerLlmPassDiagnosticsTest {
         val record = diagnostics.records.single()
         assertEquals(Status.ERROR, record.status)
         assertEquals(FailureReason.INFERENCE_FAILED, record.failureReason)
-        assertEquals(MindlayerErrorCode.INPUT_EXCEEDS_CONTEXT, record.errorCode)
+        assertEquals(MindlayerErrorCode.INTERNAL, record.errorCode)
         assertEquals(0, record.outputCharLen)
     }
 

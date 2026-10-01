@@ -752,4 +752,9 @@
     <string name="msg_rescan_incomplete">Peržiūrėkite jau rastus duomenis arba bandykite atpažinti dar kartą.</string>
     <string name="action_update_bag_so_far">Atnaujinti dabartiniais rezultatais</string>
     <string name="action_new_bag_so_far">Naujas pakelis su dabartiniais rezultatais</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Atidaroma sąranka…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Nepavyko atidaryti sąrankos. Bandykite dar kartą arba įveskite informaciją rankiniu būdu.</string>
+    <string name="announce_label_details_ready">Etiketės informacija paruošta peržiūrėti.</string>
+    <string name="announce_label_recognition_no_result">Etiketėje informacijos nerasta. Įveskite informaciją rankiniu būdu.</string>
 </resources>

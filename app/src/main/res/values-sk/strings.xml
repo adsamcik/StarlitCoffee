@@ -751,4 +751,9 @@
     <string name="msg_rescan_incomplete">Skontrolujte už nájdené údaje alebo skúste rozpoznávanie znova.</string>
     <string name="action_update_bag_so_far">Aktualizovať s aktuálnymi výsledkami</string>
     <string name="action_new_bag_so_far">Nové balenie s aktuálnymi výsledkami</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Otvára sa nastavenie…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Nastavenie sa nepodarilo otvoriť. Skúste to znova alebo zadajte podrobnosti manuálne.</string>
+    <string name="announce_label_details_ready">Podrobnosti zo štítku sú pripravené na kontrolu.</string>
+    <string name="announce_label_recognition_no_result">Na štítku sa nenašli žiadne podrobnosti. Zadajte ich manuálne.</string>
 </resources>

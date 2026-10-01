@@ -749,4 +749,9 @@
     <string name="msg_rescan_incomplete">Pārskatiet jau atrastos datus vai mēģiniet atpazīšanu vēlreiz.</string>
     <string name="action_update_bag_so_far">Atjaunināt ar pašreizējiem rezultātiem</string>
     <string name="action_new_bag_so_far">Jauns iepakojums ar pašreizējiem rezultātiem</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Notiek iestatīšanas atvēršana…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Neizdevās atvērt iestatīšanu. Mēģiniet vēlreiz vai ievadiet informāciju manuāli.</string>
+    <string name="announce_label_details_ready">Etiķetes informācija ir gatava pārskatīšanai.</string>
+    <string name="announce_label_recognition_no_result">Etiķetē informācija netika atrasta. Ievadiet informāciju manuāli.</string>
 </resources>

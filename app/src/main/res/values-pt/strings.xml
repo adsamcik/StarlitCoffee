@@ -749,4 +749,9 @@
     <string name="msg_rescan_incomplete">Reveja os dados encontrados ou tente o reconhecimento novamente.</string>
     <string name="action_update_bag_so_far">Atualizar com os resultados atuais</string>
     <string name="action_new_bag_so_far">Novo pacote com os resultados atuais</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Abrindo a configuração…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Não foi possível abrir a configuração. Tente novamente ou insira os detalhes manualmente.</string>
+    <string name="announce_label_details_ready">Os detalhes do rótulo estão prontos para revisão.</string>
+    <string name="announce_label_recognition_no_result">Não foram encontrados detalhes no rótulo. Insira os detalhes manualmente.</string>
 </resources>

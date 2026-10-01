@@ -111,6 +111,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- AI label checks now start with a bounded context instead of oversized model
+  warmup. Requests that exceed the available context receive one smaller retry
+  that preserves the original label text and the scan deadline.
+- Label-recognition setup now shows opening and failure feedback, falls back to
+  the installed Mindlayer app when needed, and retries only after a destination
+  actually opens. Screen readers announce meaningful recognition and recovery
+  changes without repeating changing field counts.
 - Scan support diagnostics now include recognition progress and recovery events,
   distinguish malformed AI responses from usable results, and retain safe failure
   codes and scan correlation in reviewed exports. Capture and deletion remain

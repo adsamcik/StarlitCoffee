@@ -316,6 +316,81 @@ class RecognitionUiStateTest {
         }
     }
 
+    @Test
+    fun `running and partial announcements stay stable across arriving fields and counts`() {
+        listOf(RecognitionRunState.RUNNING, RecognitionRunState.PARTIAL).forEach { state ->
+            listOf(false, true).forEach { hasValues ->
+                listOf(0, 1, 7).forEach { count ->
+                    val presentation = RecognitionUiStateMapper.map(
+                        RecognitionCapability.ASSET_SETUP_REQUIRED, state, RecognitionPreference.ENABLED, hasValues, count,
+                    )
+                    assertEquals(RecognitionAnnouncement.CHECKING, presentation.announcement)
+                    assertNull(presentation.offer)
+                }
+            }
+        }
+    }
+
+    @Test
+    fun `completed values announce readiness even when every field is high confidence`() {
+        listOf(0, 1, 7).forEach { count ->
+            val presentation = RecognitionUiStateMapper.map(
+                RecognitionCapability.READY, RecognitionRunState.COMPLETE, RecognitionPreference.ENABLED, true, count,
+            )
+
+            assertEquals(RecognitionAnnouncement.READY_TO_REVIEW, presentation.announcement)
+        }
+    }
+
+    @Test
+    fun `ordinary idle manual form is quiet while terminal empty result is announced`() {
+        val idle = RecognitionUiStateMapper.map(
+            RecognitionCapability.READY, RecognitionRunState.IDLE, RecognitionPreference.UNDECIDED, false, 0,
+        )
+        assertNull(idle.announcement)
+        listOf(RecognitionRunState.COMPLETE, RecognitionRunState.TERMINAL_NO_RESULT).forEach { state ->
+            val empty = RecognitionUiStateMapper.map(
+                RecognitionCapability.READY, state, RecognitionPreference.ENABLED, false, 0,
+            )
+            assertEquals(RecognitionAnnouncement.NO_RESULT, empty.announcement)
+        }
+    }
+
+    @Test
+    fun `recovery announcements name the actionable next step rather than a field count`() {
+        val expected = listOf(
+            Triple(RecognitionCapability.AUTHORIZATION_REQUIRED, true, RecognitionAnnouncement.ENABLE),
+            Triple(RecognitionCapability.INSTALLATION_REQUIRED, true, RecognitionAnnouncement.INSTALL),
+            Triple(RecognitionCapability.ASSET_SETUP_REQUIRED, true, RecognitionAnnouncement.FINISH_SETUP),
+            Triple(RecognitionCapability.TEMPORARILY_UNAVAILABLE, false, RecognitionAnnouncement.RETRY),
+            Triple(RecognitionCapability.READY, false, RecognitionAnnouncement.RETAKE),
+            Triple(RecognitionCapability.UNSUPPORTED, true, RecognitionAnnouncement.COULD_NOT_READ_MORE),
+        )
+        expected.forEach { (capability, hasValues, announcement) ->
+            val presentation = RecognitionUiStateMapper.map(
+                capability, RecognitionRunState.RETRIABLE_FAILURE, RecognitionPreference.ENABLED, hasValues, 5,
+            )
+            assertEquals(announcement, presentation.announcement)
+        }
+    }
+
+    @Test
+    fun `durable not run state retains meaningful running setup and terminal announcements`() {
+        val expected = listOf(
+            Triple(RecognitionCapability.READY, RecognitionRunState.PARTIAL, RecognitionAnnouncement.CHECKING),
+            Triple(RecognitionCapability.READY, RecognitionRunState.COMPLETE, RecognitionAnnouncement.READY_TO_REVIEW),
+            Triple(RecognitionCapability.ASSET_SETUP_REQUIRED, RecognitionRunState.IDLE, RecognitionAnnouncement.FINISH_SETUP),
+        )
+        expected.forEach { (capability, state, announcement) ->
+            val presentation = fromPipeline(
+                LlmEnrichmentStatus.NOT_RUN,
+                fallbackCapability = capability,
+                fallbackRunState = state,
+            )
+            assertEquals(announcement, presentation.announcement)
+        }
+    }
+
     private fun fromPipeline(
         status: LlmEnrichmentStatus,
         preference: RecognitionPreference = RecognitionPreference.ENABLED,

@@ -741,4 +741,9 @@
     <string name="msg_rescan_incomplete">请查看已找到的信息，或再次尝试识别。</string>
     <string name="action_update_bag_so_far">用当前结果更新</string>
     <string name="action_new_bag_so_far">用当前结果新建咖啡袋</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">正在打开设置…</string>
+    <string name="msg_could_not_open_label_recognition_setup">无法打开设置。请重试，或手动输入详细信息。</string>
+    <string name="announce_label_details_ready">标签详细信息已准备好供您检查。</string>
+    <string name="announce_label_recognition_no_result">未找到标签详细信息。请手动输入详细信息。</string>
 </resources>

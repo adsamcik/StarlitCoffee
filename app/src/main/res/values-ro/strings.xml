@@ -749,4 +749,9 @@
     <string name="msg_rescan_incomplete">Verificați datele deja găsite sau încercați din nou recunoașterea.</string>
     <string name="action_update_bag_so_far">Actualizare cu rezultatele curente</string>
     <string name="action_new_bag_so_far">Pungă nouă cu rezultatele curente</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Se deschide configurarea…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Configurarea nu a putut fi deschisă. Încercați din nou sau introduceți detaliile manual.</string>
+    <string name="announce_label_details_ready">Detaliile de pe etichetă sunt gata de revizuit.</string>
+    <string name="announce_label_recognition_no_result">Nu s-au găsit detalii pe etichetă. Introduceți detaliile manual.</string>
 </resources>

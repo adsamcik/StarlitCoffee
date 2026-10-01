@@ -746,4 +746,9 @@
     <string name="msg_rescan_incomplete">Tekintsd át a már megtalált adatokat, vagy próbáld újra a felismerést.</string>
     <string name="action_update_bag_so_far">Frissítés a jelenlegi eredményekkel</string>
     <string name="action_new_bag_so_far">Új csomag a jelenlegi eredményekkel</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Beállítás megnyitása…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Nem sikerült megnyitni a beállítást. Próbálja újra, vagy adja meg a részleteket kézzel.</string>
+    <string name="announce_label_details_ready">A címke részletei készen állnak az ellenőrzésre.</string>
+    <string name="announce_label_recognition_no_result">Nem találtunk részleteket a címkén. Adja meg őket kézzel.</string>
 </resources>

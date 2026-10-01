@@ -746,4 +746,9 @@
     <string name="msg_rescan_incomplete">Прегледайте вече намерените данни или опитайте разпознаването отново.</string>
     <string name="action_update_bag_so_far">Обнови с текущите резултати</string>
     <string name="action_new_bag_so_far">Нова опаковка с текущите резултати</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Отваряне на настройката…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Настройката не можа да бъде отворена. Опитайте отново или въведете подробностите ръчно.</string>
+    <string name="announce_label_details_ready">Подробностите от етикета са готови за преглед.</string>
+    <string name="announce_label_recognition_no_result">Не са намерени подробности на етикета. Въведете подробностите ръчно.</string>
 </resources>

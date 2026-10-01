@@ -745,4 +745,9 @@
     <string name="msg_rescan_incomplete">Se de oplysninger, der allerede er fundet, eller prøv genkendelse igen.</string>
     <string name="action_update_bag_so_far">Opdater med aktuelle resultater</string>
     <string name="action_new_bag_so_far">Ny pose med aktuelle resultater</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Åbner opsætningen…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Kunne ikke åbne opsætningen. Prøv igen, eller indtast oplysningerne manuelt.</string>
+    <string name="announce_label_details_ready">Oplysningerne fra etiketten er klar til gennemgang.</string>
+    <string name="announce_label_recognition_no_result">Der blev ikke fundet oplysninger på etiketten. Indtast oplysningerne manuelt.</string>
 </resources>

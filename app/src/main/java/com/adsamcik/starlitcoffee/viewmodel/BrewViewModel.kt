@@ -91,6 +91,9 @@ import com.adsamcik.starlitcoffee.util.ScanProgress
 import com.adsamcik.starlitcoffee.util.ScanPhotoStorage
 import com.adsamcik.starlitcoffee.util.ScanStage
 import com.adsamcik.starlitcoffee.util.RecognitionPreference
+import com.adsamcik.starlitcoffee.util.ModelSetupLaunchOutcome
+import com.adsamcik.starlitcoffee.util.openInstalledMindlayerApp
+import com.adsamcik.starlitcoffee.util.resolveMindlayerSetupLaunch
 import com.adsamcik.starlitcoffee.util.commitDeletionWithDeferredCleanup
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Deferred
@@ -2340,20 +2343,24 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
 
     /** Open Mindlayer's own model screen for the pending scan. */
     fun openMindlayerModelSetup() {
-        val app = application as? com.adsamcik.starlitcoffee.StarlitCoffeeApp ?: return
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                app.getOrCreateMindlayerServices()
-                    ?.client
+        viewModelScope.launch { launchMindlayerModelSetup() }
+    }
+
+    /** Reports launch success separately from model readiness; returning from setup triggers rechecking. */
+    suspend fun launchMindlayerModelSetup(): ModelSetupLaunchOutcome = withContext(Dispatchers.IO) {
+        val app = application as? com.adsamcik.starlitcoffee.StarlitCoffeeApp
+            ?: return@withContext ModelSetupLaunchOutcome.UNAVAILABLE
+        resolveMindlayerSetupLaunch(
+            queryAction = {
+                app.getOrCreateMindlayerServices()?.client
                     ?.getModelSetupAction(com.adsamcik.mindlayer.ModelReadinessItem.FAMILY_CHAT)
-                    ?.setupIntent
-                    ?.send()
-            } catch (error: CancellationException) {
-                throw error
-            } catch (error: Exception) {
+                    ?.setupIntent?.let { intent -> { intent.send() } }
+            },
+            openApp = { withContext(Dispatchers.Main.immediate) { openInstalledMindlayerApp(app) } },
+            onFailure = { error ->
                 Tracebox.log.error(error, LogTemplate.of("Could not open Mindlayer model setup"))
-            }
-        }
+            },
+        )
     }
 
     private fun observeBagExtractionWork(

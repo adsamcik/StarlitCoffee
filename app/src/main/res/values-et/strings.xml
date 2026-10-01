@@ -746,4 +746,9 @@
     <string name="msg_rescan_incomplete">Vaata leitud andmed üle või proovi tuvastamist uuesti.</string>
     <string name="action_update_bag_so_far">Uuenda praeguste tulemustega</string>
     <string name="action_new_bag_so_far">Uus pakk praeguste tulemustega</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Seadistamise avamine…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Seadistamist ei saanud avada. Proovige uuesti või sisestage üksikasjad käsitsi.</string>
+    <string name="announce_label_details_ready">Sildi üksikasjad on ülevaatamiseks valmis.</string>
+    <string name="announce_label_recognition_no_result">Sildilt ei leitud üksikasju. Sisestage need käsitsi.</string>
 </resources>
