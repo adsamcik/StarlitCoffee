@@ -1,0 +1,19 @@
+// Opt-in native comparison only; keeps the production raster mappings intact.
+allprojects { project ->
+    project.plugins.withId('com.android.application') {
+        def resourceDirectory = project.rootProject.file('build/vessel-vector-study/native-res/drawable')
+        project.copy {
+            from project.rootProject.file('docs/assets/vessel-vector-study/android')
+            into resourceDirectory
+            include '*.xml'
+            rename { name -> name.replace('vessel_icon_', 'vessel_vector_study_') }
+        }
+        project.extensions.getByName('androidComponents').finalizeDsl { android ->
+            android.buildTypes.getByName('debug').applicationIdSuffix = '.vesselvectorstudy'
+            android.sourceSets.getByName('debug').res.directories.add(
+                project.rootProject.file('build/vessel-vector-study/native-res').absolutePath)
+            android.sourceSets.getByName('androidTest').kotlin.directories.add(
+                project.rootProject.file('tools/vessel_vector_study/native-src').absolutePath)
+        }
+    }
+}
