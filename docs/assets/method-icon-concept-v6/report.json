@@ -1,8 +1,9 @@
 {
-  "status": "preview only; app retains its original icon",
+  "status": "accepted artwork; production resource matches this export",
   "source": "root-authored photo-based redraw after Astra reviewed the rejected simplification",
-  "svg_sha256": "85b8a41764d126e9718798d730b60f8bc47c078650f393a74d6704f314b65edc",
-  "android_sha256": "ab0488e8a9587ae844ca5bd05228d13a84eaaebd8ddcfa766f6077b13a298281",
+  "svg_sha256": "a08513bf519cfe724e8eb3df32cecde7f0adb6979b262cf3d6f85ab0556c23be",
+  "android_sha256": "6372be9639835c017a0846e769669ca767a18bdf740a2278c7847a9fdb5c2638",
+  "production_resource_matches": true,
   "alpha_bounds_px": {
     "24": [
       4,
@@ -13,7 +14,7 @@
     "28": [
       5,
       1,
-      22,
+      23,
       27
     ],
     "34": [
@@ -31,9 +32,10 @@
     "1024": [
       200,
       63,
-      792,
-      966
+      793,
+      964
     ]
   },
-  "validation": "direct SVG rendering and lossless Android path export; no native app capture"
+  "validation": "direct SVG rendering and lossless Android path export; matching native Compose fixture captures in light and dark themes",
+  "native_validation": "native/validation.json"
 }

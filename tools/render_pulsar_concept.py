@@ -84,7 +84,7 @@ def main() -> None:
     sheet = Image.new('RGBA', (640, 480), BACKGROUND)
     draw = ImageDraw.Draw(sheet)
     draw.text((32, 24), 'Pulsar', fill=INK, font=font(26))
-    subtitle = ('Revised silhouette and valve placement' if VERSION == 6 else
+    subtitle = ('Accepted artwork · corrected right foot' if VERSION == 6 else
                 'Designed for small icons' if VERSION == 5 else
                 'Vector redraw from your photo' if VERSION == 3 else
                 'Dispersion cap · flat bed · flow valve')
@@ -109,8 +109,11 @@ def main() -> None:
             draw.text((x, 344), f'{size}px', fill='#73778A', font=font(14))
             sheet.alpha_composite(render(size), (x + 8, 376 + (34 - size) // 2))
     sheet.convert('RGB').save(OUT / 'preview.png')
+    production = ROOT / 'app/src/main/res/drawable/equipment_pulsar.xml'
+    production_matches = production.read_bytes() == vector.read_bytes()
     report = {
         'status': ('rejected by user; app retains its original icon' if VERSION in (3, 5) else
+                   'accepted artwork; production resource matches this export' if VERSION == 6 and production_matches else
                    'preview only; app retains its original icon'),
         'source': ('root-authored photo-based redraw after Astra reviewed the rejected simplification'
                    if VERSION == 6 else
@@ -119,9 +122,17 @@ def main() -> None:
                    if VERSION == 3 else 'authored paths by Astra from primary photos; root refined joins and valve clearance'),
         'svg_sha256': hashlib.sha256(SVG.read_bytes()).hexdigest(),
         'android_sha256': hashlib.sha256(vector.read_bytes()).hexdigest(),
+        'production_resource_matches': production_matches,
         'alpha_bounds_px': {str(size): render(size).getchannel('A').getbbox() for size in (24, 28, 34, 88, 1024)},
         'validation': 'direct SVG rendering and lossless Android path export; no native app capture',
     }
+    native_evidence = OUT / 'native/validation.json'
+    if native_evidence.is_file():
+        native = json.loads(native_evidence.read_text(encoding='utf-8'))
+        if native.get('android_sha256') == report['android_sha256']:
+            report['native_validation'] = 'native/validation.json'
+            report['validation'] = ('direct SVG rendering and lossless Android path export; '
+                                    'matching native Compose fixture captures in light and dark themes')
     (OUT / 'report.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8', newline='\n')
     print('Rendered Pulsar vector preview and study XML; production resources untouched.')
 

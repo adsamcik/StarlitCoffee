@@ -1,7 +1,10 @@
-# Pulsar silhouette correction
+# Accepted Pulsar icon
 
-Preview study after the user rejected v5's likeness. This version has not
-been accepted as replacement artwork. The app's original icon remains in use.
+The user selected this artwork on 2026-10-03, requesting a correction to the
+right leg. The right foot now has a straighter outer edge and a distinct
+opening beside the receding rear support. The other contours and the valve
+are unchanged from the accepted preview. The exported vector is installed at
+`app/src/main/res/drawable/equipment_pulsar.xml`.
 
 The primary construction photographs and mechanism references are recorded
 in [v4](../method-icon-concept-v4/README.md). The elevated assembled brewer
@@ -33,8 +36,19 @@ and shows 48dp badge mockups at 2.625 pixels per dp. `pulsar-1024.png` is an
 enlarged SVG render. These are rendered previews, not Android captures.
 `report.json` records source hashes and raster bounds.
 
-The exported Android XML passed AAPT2 resource compilation (4,108-byte
-compiled resource). This validates resource syntax, not native visual quality.
+`native/light.png` and `native/dark.png` capture the production Compose icon
+and badge components on Android API 36 at 420dpi, using the real production
+resource without overlays. Both existing capture tests passed, including
+24/28/34/44dp bounds and visibility checks. Native captures also show the
+three unchanged method icons for context. This is component rendering proof,
+not a full brewing workflow test. The disposable test packages were removed.
+`native/validation.json` links the captures to exact SVG, XML and APK hashes.
+
+The SVG exporter records whether the production resource matches the study
+export byte for byte. It exports into this folder; copying that XML to the
+production resource is a separate deliberate operation. The historical
+`vectorize_equipment_icons.py` raster pipeline predates this approved artwork
+and must not be used to regenerate the Pulsar resource from its old raster.
 
 ```powershell
 uv run --offline --with pillow==12.3.0 python tools/render_pulsar_concept.py --version 6

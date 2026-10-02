@@ -1,0 +1,10 @@
+// Capture the real production artwork in a disposable debug app; no resource overlays.
+allprojects { project ->
+    project.plugins.withId('com.android.application') {
+        project.extensions.getByName('androidComponents').finalizeDsl { android ->
+            android.buildTypes.getByName('debug').applicationIdSuffix = '.pulsariconcheck'
+            android.sourceSets.getByName('androidTest').kotlin.directories.add(
+                project.rootProject.file('tools/method_icon_refinement/native-src').absolutePath)
+        }
+    }
+}
