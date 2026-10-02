@@ -1,6 +1,8 @@
 # Pulsar vector redraw
 
-Preview only, created on 2026-10-02 after the user challenged the previous
+Rejected by the user on 2026-10-02 as not resembling the real brewer. This
+study still treats the cap as a solid lid and oversimplifies the base and
+rotary handle. It was created after the user challenged the previous
 raster concept's resemblance to their supplied Pulsar photograph. The app
 continues to use its original icon.
 

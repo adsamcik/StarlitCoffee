@@ -5,6 +5,7 @@ Run: uv run --offline --with pillow==12.3.0 python tools/render_pulsar_concept.p
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import shutil
@@ -15,8 +16,11 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'docs/assets/method-icon-concept-v3'
-TEMP = ROOT / 'build/method-icon-concept-v3'
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--version', type=int, choices=(3, 4), default=3)
+VERSION = parser.parse_args().version
+OUT = ROOT / f'docs/assets/method-icon-concept-v{VERSION}'
+TEMP = ROOT / f'build/method-icon-concept-v{VERSION}'
 SVG = OUT / 'pulsar.svg'
 NS = '{http://www.w3.org/2000/svg}'
 MAGICK = shutil.which('magick') or 'C:/Program Files/ImageMagick-7.1.2-Q16-HDRI/magick.exe'
@@ -74,7 +78,8 @@ def main() -> None:
     sheet = Image.new('RGBA', (640, 480), BACKGROUND)
     draw = ImageDraw.Draw(sheet)
     draw.text((32, 24), 'Pulsar', fill=INK, font=font(26))
-    draw.text((32, 63), 'Vector redraw from your photo', fill='#73778A', font=font(17))
+    subtitle = 'Vector redraw from your photo' if VERSION == 3 else 'Dispersion cap · flat bed · flow valve'
+    draw.text((32, 63), subtitle, fill='#73778A', font=font(17))
     sheet.alpha_composite(render(288), (16, 112))
     draw.text((370, 122), '48dp app badges', fill=INK, font=font(17))
     draw.text((370, 148), 'Rendered at 2.625 px/dp', fill='#73778A', font=font(14))
@@ -88,8 +93,10 @@ def main() -> None:
     sheet.alpha_composite(render(34), (521, 348))
     sheet.convert('RGB').save(OUT / 'preview.png')
     report = {
-        'status': 'preview only; app retains its original icon',
-        'source': 'authored paths by Astra; root supplied user-photo measurements and refined valve clearance',
+        'status': ('rejected by user; app retains its original icon' if VERSION == 3 else
+                   'preview only; app retains its original icon'),
+        'source': ('authored paths by Astra; root supplied user-photo measurements and refined valve clearance'
+                   if VERSION == 3 else 'authored paths by Astra from primary photos; root refined joins and valve clearance'),
         'svg_sha256': hashlib.sha256(SVG.read_bytes()).hexdigest(),
         'android_sha256': hashlib.sha256(vector.read_bytes()).hexdigest(),
         'alpha_bounds_px': {str(size): render(size).getchannel('A').getbbox() for size in (24, 34, 88, 1024)},
