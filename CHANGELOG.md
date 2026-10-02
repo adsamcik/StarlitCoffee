@@ -57,6 +57,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Optional AI label recognition now uses Mindlayer `1.0.0-alpha.9` and resumes
+  after idle disconnect or automatic reconnection without repeating setup.
 - **More expressive bloom animations** — all 44 animations now grow and unfold
   more clearly, with intact petals, steadier positioning, and polished finishes
   in light and dark themes. Finished previews match the bloom shown while brewing.

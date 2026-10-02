@@ -6,6 +6,49 @@ The published dependencies are compatible at build level, but the integration ha
 
 ## Versions and source boundaries
 
+### Released Mindlayer integration — 2026-10-02
+
+Starlit Coffee now consumes published SDK/shared `1.0.0-alpha.9`, from the
+mainline commit `4e104599c38dc4aec17d32b1eb4a507eda81ef5e` tagged
+[`v1.0.0-alpha.9`](https://github.com/adsamcik/Mindlayer/releases/tag/v1.0.0-alpha.9).
+The standard [tag workflow](https://github.com/adsamcik/Mindlayer/actions/runs/36984032596)
+published all four Maven modules and the service APK. This replaces the
+branch-published alpha.8 dependency; no local SDK substitution is used.
+
+The provider now admits `SUSPENDED_IDLE` and `RECOVERING` for text, vision,
+combine, and refine. The SDK resumes an idle binding on `awaitConnected`; every
+app pass retains its five-second connection limit. Terminal disconnection and
+rejection stay blocked, and failed resume retains retry rather than consent.
+OCR already invokes the SDK directly and needs no additional state gate.
+
+CPU session budgets remain 8,192 tokens for label inference and 256 for the
+diagnostic prompt. The new SDK's larger context range and context-aware warmup
+do not change those workload limits. Warmup still connects without allocating
+an engine; compact overflow recovery, bundled OCR fallback, and the process-wide
+vision budget remain in effect. The SDK negotiates service capabilities; an
+older service's unsupported readiness response remains a supported fallback.
+
+The original snapshot and historical alpha.8 validation below remain as audit
+history. Tracebox remains pinned to `0.1.0-alpha.7`.
+
+Consumer validation passed with normal GitHub Packages resolution and
+`--refresh-dependencies`: registry authentication, full debug unit tests,
+Detekt, debug app and Android-test APK assembly, and release Kotlin compilation.
+The suite ran 1,622 of 1,626 cases, with four skipped and zero failures/errors;
+all 18 provider recovery cases passed, including idle admission, the five-second
+resume budget, failed-resume retry, and caller cancellation. Dependency insight
+confirmed SDK and shared at alpha.9. Resolved AAR SHA-256 values:
+
+- SDK: `acd71101f66804c58737908f25d17133b7043eadf4cc6e9e27df77c971ca4fc9`
+- Shared: `89a584e37f9406599bf2e4c8832e41574025e4cea27999abc4145a67ab22f179`
+
+Logs, dependency reports, hashes, and JUnit evidence are retained under
+`build/mindlayer-alpha9-integration`. These checks establish build and
+app-policy compatibility. This integration has not been deployed to a device;
+live Binder idle resume, native model inference, physical memory use, and
+TalkBack speech were not revalidated here. The Android-test APK was built,
+but its instrumented tests were not rerun for this dependency change.
+
 The following table records the original audit snapshot. Subsequent dependency changes and their validation are recorded with the corresponding fixes below.
 
 | Component | App dependency | Latest published release | Local development checkout |

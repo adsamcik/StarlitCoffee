@@ -314,13 +314,15 @@ class MindlayerLlmInferenceProvider(
     }
 
     override fun isAvailable(): Boolean {
-        val state = mindlayer.connectionState.value
-        // Report actual connectivity. Previously this also returned true after
-        // a connection failure, which made callers launch LLM attempts that
-        // could only time out. If the SDK is reconnecting the state is
-        // CONNECTING and we stay optimistically available; a hard failure
-        // leaves it disconnected and we correctly report unavailable.
-        return state == ConnectionState.CONNECTED || state == ConnectionState.CONNECTING
+        // Allow the SDK to resume an idle binding or finish automatic recovery.
+        // Each operation still waits for connectivity within CONNECTION_TIMEOUT.
+        return when (mindlayer.connectionState.value) {
+            ConnectionState.CONNECTED,
+            ConnectionState.CONNECTING,
+            ConnectionState.RECOVERING,
+            ConnectionState.SUSPENDED_IDLE -> true
+            else -> false
+        }
     }
 
     override fun unavailableCapability(): RecognitionCapability =
@@ -330,22 +332,19 @@ class MindlayerLlmInferenceProvider(
         // Disabled once the per-process vision budget is consumed (see the
         // one-shot circuit breaker in extractBagFieldsWithVision).
         if (!visionInferenceBudget.isAvailable()) return false
-        val state = mindlayer.connectionState.value
-        return state == ConnectionState.CONNECTED || state == ConnectionState.CONNECTING
+        return isAvailable()
     }
 
     override fun supportsCombine(): Boolean {
         // Combine is text-only, so it is NOT gated by the vision budget — only
         // by live connectivity, like the text extraction pass.
-        val state = mindlayer.connectionState.value
-        return state == ConnectionState.CONNECTED || state == ConnectionState.CONNECTING
+        return isAvailable()
     }
 
     override fun supportsRefine(): Boolean {
         // Refine is text-only (post-translation), like combine — gated only by
         // live connectivity, not the multimodal-inference budget.
-        val state = mindlayer.connectionState.value
-        return state == ConnectionState.CONNECTED || state == ConnectionState.CONNECTING
+        return isAvailable()
     }
 
     override suspend fun extractBagFields(

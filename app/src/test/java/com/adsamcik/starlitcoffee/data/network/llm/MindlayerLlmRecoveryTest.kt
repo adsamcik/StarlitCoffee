@@ -27,8 +27,9 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
-/** Recovery cases from the pinned alpha.7 connection and model-readiness contracts. */
+/** Recovery cases from the pinned SDK's connection and model-readiness contracts. */
 class MindlayerLlmRecoveryTest {
     @Test
     fun `connection timeouts and service failures never ask an enabled user for consent`() = runTest {
@@ -181,7 +182,6 @@ class MindlayerLlmRecoveryTest {
     fun `early provider availability preserves only an explicit approval rejection`() {
         val unavailableStates = listOf(
             ConnectionState.DISCONNECTED,
-            ConnectionState.RECOVERING,
             ConnectionState.BIND_GAVE_UP,
         )
         unavailableStates.forEach { state ->
@@ -195,10 +195,63 @@ class MindlayerLlmRecoveryTest {
     }
 
     @Test
+    fun `recoverable connections allow every enrichment pass while terminal states stay blocked`() {
+        val recoverableStates = setOf(
+            ConnectionState.CONNECTED,
+            ConnectionState.CONNECTING,
+            ConnectionState.RECOVERING,
+            ConnectionState.SUSPENDED_IDLE,
+        )
+        ConnectionState.entries.forEach { state ->
+            val provider = MindlayerLlmInferenceProvider(RecoveryMindlayer(state = state))
+            val available = state in recoverableStates
+            assertEquals("text in $state", available, provider.isAvailable())
+            assertEquals("vision in $state", available, provider.supportsVision())
+            assertEquals("combine in $state", available, provider.supportsCombine())
+            assertEquals("refine in $state", available, provider.supportsRefine())
+        }
+    }
+
+    @Test
+    fun `idle and recovering clients reach readiness through a bounded connection wait without model warmup`() = runTest {
+        listOf(ConnectionState.SUSPENDED_IDLE, ConnectionState.RECOVERING).forEach { state ->
+            val client = RecoveryMindlayer(state = state)
+            val provider = MindlayerLlmInferenceProvider(client)
+            assertTrue(provider.isAvailable())
+
+            // Missing text stops before inference, after the resumed connection/readiness checks.
+            val result = provider.extractBagFields(request(ocrText = null))
+
+            assertTrue(result is LlmExtractionResult.Failed)
+            assertEquals(1, client.connectionChecks)
+            assertEquals(1, client.readinessChecks)
+            assertEquals(5.seconds, client.lastConnectionTimeout)
+            assertEquals(0, client.prewarmCalls)
+        }
+    }
+
+    @Test
+    fun `failed idle resume offers retry without asking for consent`() = runTest {
+        val client = RecoveryMindlayer(
+            state = ConnectionState.SUSPENDED_IDLE,
+            onAwaitConnected = { throw sdkError(MindlayerErrorCode.CONNECT_TIMEOUT) },
+        )
+        val provider = MindlayerLlmInferenceProvider(client)
+        assertTrue(provider.isAvailable())
+
+        val result = unavailable(provider.extractBagFields(request()))
+
+        assertEquals(RecognitionCapability.TEMPORARILY_UNAVAILABLE, result.capability)
+        assertEquals(0, client.readinessChecks)
+        assertNull(presentation(LlmEnrichmentStatus.UNAVAILABLE).offer)
+        assertEquals(RecognitionRecoveryAction.RETRY, presentation(LlmEnrichmentStatus.UNAVAILABLE).recoveryAction)
+    }
+
+    @Test
     fun `caller cancellation during connection is never turned into a recovery result`() = runTest {
         val started = CompletableDeferred<Unit>()
         var waitCancelled = false
-        val client = RecoveryMindlayer(onAwaitConnected = {
+        val client = RecoveryMindlayer(state = ConnectionState.SUSPENDED_IDLE, onAwaitConnected = {
             started.complete(Unit)
             try {
                 awaitCancellation()
@@ -303,6 +356,8 @@ private class RecoveryMindlayer(
     override val connectionState = MutableStateFlow(state)
     var connectionChecks = 0
         private set
+    var lastConnectionTimeout: Duration? = null
+        private set
     var readinessChecks = 0
         private set
     var prewarmCalls = 0
@@ -310,6 +365,7 @@ private class RecoveryMindlayer(
 
     override suspend fun awaitConnected(timeout: Duration): Capabilities {
         connectionChecks++
+        lastConnectionTimeout = timeout
         onAwaitConnected()
         return Capabilities(emptySet())
     }
