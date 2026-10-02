@@ -1,0 +1,13 @@
+Create a transparent square3x3 bank, EXACTLY9 complete early growth poses of the attached Pincushion plant. One whole plant per equal cell, row-major, fixed camera, fixed upright split brown bean and baseline. No text/guides/background. The attached reference is the CLOSED-BUD ENDPOINT just after pose9. Match its COMPACT support: short green stem, small paired narrow leaves/bracts close below flower head, bean directly beneath. Do NOT introduce long lateral leaves or a tall exposed stalk that later disappears. All introduced surfaces persist.
+
+1 bare split brown bean with tiny green point at seam.
+2 same bean; short green sprout emerges.
+3 same bean; sprout forms tiny paired narrow leaf tips close above split.
+4 same bean; the two small narrow leaves open slightly, short stem between them extends a little, tiny green terminal bud appears.
+5 same short support and paired leaves; green terminal bud grows into a small pointed cone. Keep total stalk short as reference.
+6 retain leaves/stem; bud broadens with tightly nested green bracts and first orange tips. No long filaments.
+7 same compact support; head enlarges into dense rounded orange/green cushion, leaves approach reference size.
+8 same bean and paired compact leaves; orange cushion fuller, many tightly packed small florets fill its dome. Stem/bracts now at final reference positions.
+9 same complete support and fixed bean; CLOSED dense orange cushion reaches reference size, every future filament represented by tiny tightly curled orange tips. Match attached endpoint's compact leaf/stem/bean proportions exactly. No open long firework pins yet.
+
+Opaque fine painterly botanical surfaces, transparent exterior, clear margins. Smooth cumulative growth, no frame already mature at start, no head shrink or bean resize, no invented leaves. Maintain reference's bright orange dense cushion and narrow green support; flower will unfold later, so every pose here remains closed.

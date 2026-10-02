@@ -1,0 +1,34 @@
+Paint exactly25 complete sequential Starlit Coffee growth poses in a uniform5 by5 transparent sprite atlas, read row-major. Reference is the approved mature target. Preserve its tactile brown split bean, warm gold seam, small round central light, THREE UNEQUAL AIRY LOOPS with transparent inner voids, and EXACTLY FIVE small separated five-point stars in the reference positions. Fine ivory-gold parallel strands define the loops. Never fill loop interiors with opaque cream petals or turn them into smooth thick tubes.
+
+This sequence must TRACE the loops over time. It must not show a completed three-loop logo early and then enlarge it. Each completed loop remains present and connected to the central light. Stars appear one at a time in their permanent mature positions, stay there, and never disappear or multiply. The five final star positions are: above top loop, upper-left outside left loop, upper-right outside right loop, lower-left beside bean, lower-right beside bean. The central light is a ROUND glow, not an additional star. No glitter dots or extra sparkles.
+
+25 row-major poses:
+F01 Complete bean in its final position, dark seam, no light shapes or stars.
+F02 Golden light travels upward through the existing seam.
+F03 Short fine gold threads rise just above the bean and gather into a tiny round light.
+F04 Central round light reaches its permanent junction position, and a short fine strand begins extending left.
+F05 Left strand curves outward/downward, still an open stroke.
+F06 Left strand curves upward around the far side. The permanent upper-left star appears small and crisp.
+F07 Left arc returns inward toward the central light, with a clearly open gap.
+F08 Left loop closes at the central light; its transparent inner void remains large.
+F09 A second fine inner strand traces inside the left loop, and the permanent lower-left star appears beside the bean.
+F10 Right strand starts extending outward from the central light; left layered loop and both left stars stay.
+F11 Right strand curves around the far right side, an open arc, not a closed loop.
+F12 Right arc turns upward/inward. The permanent upper-right star appears.
+F13 Right arc approaches the center leaving a visible gap.
+F14 Right loop closes, slightly larger/higher than the left, with transparent interior.
+F15 Fine inner right-loop strands become distinct; permanent lower-right star appears. Both side loops and four side stars stay.
+F16 A single upper strand rises from the left side of the central light, forming the beginning of the tall upper loop.
+F17 Upper strand curves upward farther, reaching the left shoulder of the eventual upper loop; its right half is still missing.
+F18 Upper strand reaches the highest arch. The permanent top star appears ABOVE that arch, making exactly five stars.
+F19 Upper arc bends right across the crest, leaving the right side widely open.
+F20 Upper arc travels down along the upper-right curve, still clearly open below.
+F21 Upper arc extends farther downward toward the junction, while side-loop inner strands separate visibly.
+F22 Upper arc nearly reaches the central light, leaving a small visible lower-right gap; five stars remain fixed.
+F23 Upper loop finally closes at the central round light, completing three transparent voids.
+F24 A second fine upper inner strand finishes tracing the tall loop, and the layered side-loop strands relax apart. Keep all voids transparent.
+F25 Approved mature reference: rich fine layered unequal loops, crisp five stars, warm resolved round center and luminous seam. The last movement completes inner filament ends and center light, without a style/size reset.
+
+Fixed camera scale and bean outer contour, texture, size, baseline and position across all25. The loops grow by line tracing and layering, not per-frame zoom. Keep the mature star footprint and flower-to-bean scale of the reference; all intermediate strokes stay within its envelope. No steam S-plume, plant stem, leaves, petals, cup or decorative motifs. Keep five stars small enough to be elegant but legible at148px, thin strands with warm gold edges and clear dark/transparent gaps.
+
+Exactly one WHOLE uncut pose per equal square cell, generous transparent margins, empty gutters, no row overlap. Square native RGBA atlas with genuine alpha transparency, no background wash or checkerboard. Zero text, numbering, labels, borders, grid lines or guides.

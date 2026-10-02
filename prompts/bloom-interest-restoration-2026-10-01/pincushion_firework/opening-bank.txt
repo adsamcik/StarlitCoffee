@@ -1,0 +1,23 @@
+Create transparent square4x4 native sprite bank: EXACTLY16 complete Pincushion Firework plants, equal cells in row-major order. Clear margins, no text/guides/background. Reference1 is the CLOSED orange cushion starting pose, reference2 is the rich mature END. Same fixed upright split bean, thin stem, TWO narrow leaves and green bracts in every cell; no zoom, base resizing or support change. Fine painterly opaque botanical art with transparent exterior.
+
+CRITICAL ENDING: preserve reference2's DENSE central cushion and many extremely THIN irregular curved orange filaments with small golden knobs. Unequal lengths and graceful hooked curves with air gaps; NOT thick fingers, uniform spokes or sparse candle arms. Mature flower crown is aboutTHREE bean widths. Do not simplify its numerous pins to ease animation. Every future filament begins as a curled tip already attached to the cushion, elongating/unfurling continuously; none vanish or relocate.
+
+16 complete poses, each retains every previous surface:
+1 dense closed orange cushion from first reference; a few top curled tips start lifting.
+2 retain dense head; top central fine pins extend a little, side tips remain curled.
+3 top pin group elongates and bends unevenly, new adjacent curled tips begin lifting.
+4 upper crown gains several thin irregular arcs, no fully spread mature fan yet.
+5 upper pins extend higher, left/right upper groups begin separating, central cushion stays dense.
+6 retained pins lengthen and curl outward, more side tips lift from cushion.
+7 upper fan about half final spread, middle side groups extend gently; lower pins remain tightly curled.
+8 upper pins near final height, side fan opens broader; many short interior curled florets remain visibly packed.
+9 same retained upper fan; left/right side pins lengthen to two-thirds final reach; lower tips begin uncurling.
+10 side arcs spread farther at unequal angles, central small inner florets lift and deepen the cushion.
+11 lower side pin groups begin sweeping outward beneath retained upper crown; still narrower than mature endpoint.
+12 side fan reaches near mature width, LOWER curling pins still visibly short and inward; dense central core retained.
+13 upper and side pins settle at full irregular reach; lower-left fine loops unfurl outward, lower-right loops remain partly curled.
+14 lower-right loops unfurl and extend; all upper/side arcs persist, central curled florets separate slightly to reveal depth.
+15 lowest frontward filaments lengthen and curl outward; remaining low tips still have a final curl to release. Almost mature but visible incomplete lower fan.
+16 exact reference2 character: last low curling tips released, dense nested orange cushion surrounded by a fine irregular firework of many long slender curved pins and tiny gold terminals. TWO narrow leaves, bracts, stem and same bean retained. No new giant pins or extra foliage invented in last cell.
+
+Last four cells must visibly open different lower groups, not four repaints of a finished head. Keep fine uneven filament rhythm and dense inner detail from mature reference. Main head must stay round/full, not shrink while outer pins grow. Full plants within transparent cell margins. No clipping at any canvas edge.

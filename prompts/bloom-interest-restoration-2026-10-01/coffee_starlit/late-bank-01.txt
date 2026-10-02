@@ -1,0 +1,10 @@
+Create a transparent2 by2 square bank of FOUR COMPLETE sequential Starlit Coffee poses that occur between reference1 (preceding pose with incomplete upper arc) and reference2 (mature endpoint). Preserve their exact bean material, dimensions, gold seam, round junction light, completed left/right layered loops, and EXACTLY FIVE stars at the SAME fixed positions in every cell. No star may disappear or move. Every loop void remains transparent.
+
+Only the upper loop's free end advances. The upper strand begins at the LEFT side of the round center, travels up the LEFT edge, across the top, and down the RIGHT edge. Its left attachment and existing upper-left arc persist in all four poses. Never flip the partial arc to the other attachment side.
+
+Pose1 top-left: Extend reference1's upper free tip down the RIGHT side to about halfway toward the central light. A BIG clearly visible gap remains in the LOWER-RIGHT quarter. The upper loop is NOT closed.
+Pose2 top-right: Extend that free tip farther down/right toward the central light, leaving a SMALL but clearly visible lower-right gap. Upper loop still NOT closed.
+Pose3 bottom-left: Outer upper loop finally closes at the round light. Its second fine inner parallel strand is still only partly traced along the upper-left/top portion, leaving a visible unfinished inner end.
+Pose4 bottom-right: The second fine inner strand completes around the upper-right side, giving the mature reference2's layered airy upper loop. Small round center light resolves warmly. Preserve the two side loops and all five stars unchanged.
+
+Make each pose's upper path difference unmistakable at148px. Do not provide four already closed upper ovals with only brightness changes. Fixed camera, same whole bean size and base, one complete uncut pose per equal square cell, clear empty padding/gutters. Warm ivory/gold painted fine strands, no solid tube fill. Native RGBA transparency. No numbers, labels, text, guides, grid, borders or extra symbols.

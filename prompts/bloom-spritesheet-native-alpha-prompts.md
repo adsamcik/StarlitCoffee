@@ -44,6 +44,10 @@ These are the exact saved native generation and edit prompts. The revision manif
 
 ### Starlit coffee
 
+2026-10-01 visual-interest restoration: [final-cleanup-01.txt](bloom-interest-restoration-2026-10-01/coffee_starlit/final-cleanup-01.txt), [growth-01.txt](bloom-interest-restoration-2026-10-01/coffee_starlit/growth-01.txt), [loop-bank-01.txt](bloom-interest-restoration-2026-10-01/coffee_starlit/loop-bank-01.txt), [early-bank-01.txt](bloom-interest-restoration-2026-10-01/coffee_starlit/early-bank-01.txt), [late-bank-01.txt](bloom-interest-restoration-2026-10-01/coffee_starlit/late-bank-01.txt), [early-star-fix-01.txt](bloom-interest-restoration-2026-10-01/coffee_starlit/early-star-fix-01.txt), [early-bank-02.txt](bloom-interest-restoration-2026-10-01/coffee_starlit/early-bank-02.txt).
+Retained source: [`bloom-interest-coffee_starlit-native-source.png`](../docs/assets/bloom-interest-coffee_starlit-native-source.png). Built-in image generation; separate Astra endpoint and sequence reviews are recorded in the [restoration manifest](../docs/reviews/bloom-interest-restoration-2026-10-01.json).
+
+
 - [coffee_starlit-initial.txt](bloom-revision-2026-10-01/coffee_starlit-initial.txt)
 - [coffee_starlit-retry1.txt](bloom-revision-2026-10-01/coffee_starlit-retry1.txt)
 - [coffee_starlit-retry2.txt](bloom-revision-2026-10-01/coffee_starlit-retry2.txt)
@@ -158,6 +162,10 @@ Richer original-finish follow-up ([review](../docs/reviews/berry-family-redesign
 
 ### Coffee brew
 
+2026-10-01 visual-interest restoration: [final-01.txt](bloom-interest-restoration-2026-10-01/coffee_brew/final-01.txt), [growth-01.txt](bloom-interest-restoration-2026-10-01/coffee_brew/growth-01.txt), [coil-bank-01.txt](bloom-interest-restoration-2026-10-01/coffee_brew/coil-bank-01.txt).
+Retained source: [`bloom-interest-coffee_brew-native-source.png`](../docs/assets/bloom-interest-coffee_brew-native-source.png). Built-in image generation; separate Astra endpoint and sequence reviews are recorded in the [restoration manifest](../docs/reviews/bloom-interest-restoration-2026-10-01.json).
+
+
 - [coffee_brew-initial.txt](bloom-revision-2026-10-01/coffee_brew-initial.txt)
 - [coffee_brew-retry1.txt](bloom-revision-2026-10-01/coffee_brew-retry1.txt)
 - [coffee_brew.txt](bloom-revision-2026-10-01/coffee_brew.txt)
@@ -195,6 +203,10 @@ Richer original-finish follow-up ([review](../docs/reviews/berry-family-redesign
 
 ### Bleeding heart
 
+2026-10-01 visual-interest restoration: [final-design.txt](bloom-interest-restoration-2026-10-01/bleeding_heart/final-design.txt), [flowering-bank.txt](bloom-interest-restoration-2026-10-01/bleeding_heart/flowering-bank.txt), [early-bank.txt](bloom-interest-restoration-2026-10-01/bleeding_heart/early-bank.txt), [continuity-repair.txt](bloom-interest-restoration-2026-10-01/bleeding_heart/continuity-repair.txt), [f20-repair.txt](bloom-interest-restoration-2026-10-01/bleeding_heart/f20-repair.txt), [join-repair.txt](bloom-interest-restoration-2026-10-01/bleeding_heart/join-repair.txt).
+Retained source: [`bloom-interest-bleeding_heart-native-source.png`](../docs/assets/bloom-interest-bleeding_heart-native-source.png). Built-in image generation; separate Astra endpoint and sequence reviews are recorded in the [restoration manifest](../docs/reviews/bloom-interest-restoration-2026-10-01.json).
+
+
 - [bleeding_heart.txt](bloom-revision-2026-10-01/bleeding_heart.txt)
 - [bleeding_heart_continuity.txt](bloom-revision-2026-10-01/bleeding_heart_continuity.txt)
 - [bleeding_heart_count_repair.txt](bloom-revision-2026-10-01/bleeding_heart_count_repair.txt)
@@ -214,6 +226,10 @@ Richer original-finish follow-up ([review](../docs/reviews/berry-family-redesign
 
 ### Jade vine
 
+2026-10-01 visual-interest restoration: [final-target.txt](bloom-interest-restoration-2026-10-01/jade_vine/final-target.txt), [growth-01.txt](bloom-interest-restoration-2026-10-01/jade_vine/growth-01.txt), [pendant-bank.txt](bloom-interest-restoration-2026-10-01/jade_vine/pendant-bank.txt), [early-bridge.txt](bloom-interest-restoration-2026-10-01/jade_vine/early-bridge.txt), [early-bridge-repair.txt](bloom-interest-restoration-2026-10-01/jade_vine/early-bridge-repair.txt).
+Retained source: [`bloom-interest-jade_vine-native-source.png`](../docs/assets/bloom-interest-jade_vine-native-source.png). Built-in image generation; separate Astra endpoint and sequence reviews are recorded in the [restoration manifest](../docs/reviews/bloom-interest-restoration-2026-10-01.json).
+
+
 - [jade_vine.txt](bloom-revision-2026-10-01/jade_vine.txt)
 - [jade_vine_repair.txt](bloom-revision-2026-10-01/jade_vine_repair.txt)
 
@@ -223,6 +239,10 @@ Richer original-finish follow-up ([review](../docs/reviews/berry-family-redesign
 - [bird_of_paradise_from_final.txt](bloom-revision-2026-10-01/bird_of_paradise_from_final.txt)
 
 ### Blue Himalayan poppy
+
+2026-10-01 visual-interest restoration: [final-01.txt](bloom-interest-restoration-2026-10-01/blue_himalayan_poppy/final-01.txt), [final-02.txt](bloom-interest-restoration-2026-10-01/blue_himalayan_poppy/final-02.txt), [growth-01.txt](bloom-interest-restoration-2026-10-01/blue_himalayan_poppy/growth-01.txt), [growth-02.txt](bloom-interest-restoration-2026-10-01/blue_himalayan_poppy/growth-02.txt), [growth-03.txt](bloom-interest-restoration-2026-10-01/blue_himalayan_poppy/growth-03.txt), [late-01.txt](bloom-interest-restoration-2026-10-01/blue_himalayan_poppy/late-01.txt).
+Retained source: [`bloom-interest-blue_himalayan_poppy-native-source.png`](../docs/assets/bloom-interest-blue_himalayan_poppy-native-source.png). Built-in image generation; separate Astra endpoint and sequence reviews are recorded in the [restoration manifest](../docs/reviews/bloom-interest-restoration-2026-10-01.json).
+
 
 - [blue_himalayan_poppy.txt](bloom-revision-2026-10-01/blue_himalayan_poppy.txt)
 - [blue_himalayan_poppy_from_final.txt](bloom-revision-2026-10-01/blue_himalayan_poppy_from_final.txt)
@@ -234,6 +254,10 @@ Richer original-finish follow-up ([review](../docs/reviews/berry-family-redesign
 
 ### Chocolate cosmos
 
+2026-10-01 visual-interest restoration: [reverse-bank.txt](bloom-interest-restoration-2026-10-01/chocolate_cosmos/reverse-bank.txt), [early-bank.txt](bloom-interest-restoration-2026-10-01/chocolate_cosmos/early-bank.txt), [early-refinement.txt](bloom-interest-restoration-2026-10-01/chocolate_cosmos/early-refinement.txt).
+Retained source: [`bloom-interest-chocolate_cosmos-native-source.png`](../docs/assets/bloom-interest-chocolate_cosmos-native-source.png). Built-in image generation; separate Astra endpoint and sequence reviews are recorded in the [restoration manifest](../docs/reviews/bloom-interest-restoration-2026-10-01.json).
+
+
 - [chocolate_cosmos.txt](bloom-revision-2026-10-01/chocolate_cosmos.txt)
 - [chocolate_cosmos_repair.txt](bloom-revision-2026-10-01/chocolate_cosmos_repair.txt)
 
@@ -244,17 +268,29 @@ Richer original-finish follow-up ([review](../docs/reviews/berry-family-redesign
 
 ### Queen of the Night
 
+2026-10-01 visual-interest restoration: [final-target.txt](bloom-interest-restoration-2026-10-01/queen_of_the_night/final-target.txt), [final-target-reframe.txt](bloom-interest-restoration-2026-10-01/queen_of_the_night/final-target-reframe.txt), [growth-01.txt](bloom-interest-restoration-2026-10-01/queen_of_the_night/growth-01.txt), [early-bank.txt](bloom-interest-restoration-2026-10-01/queen_of_the_night/early-bank.txt), [opening-bank.txt](bloom-interest-restoration-2026-10-01/queen_of_the_night/opening-bank.txt), [late-refinement.txt](bloom-interest-restoration-2026-10-01/queen_of_the_night/late-refinement.txt).
+Retained source: [`bloom-interest-queen_of_the_night-native-source.png`](../docs/assets/bloom-interest-queen_of_the_night-native-source.png). Built-in image generation; separate Astra endpoint and sequence reviews are recorded in the [restoration manifest](../docs/reviews/bloom-interest-restoration-2026-10-01.json).
+
+
 - [queen_of_the_night.txt](bloom-revision-2026-10-01/queen_of_the_night.txt)
 - [queen_of_the_night_continuity.txt](bloom-revision-2026-10-01/queen_of_the_night_continuity.txt)
 - [queen_of_the_night_from_final.txt](bloom-revision-2026-10-01/queen_of_the_night_from_final.txt)
 
 ### Snowdrop
 
+2026-10-01 visual-interest restoration: [final-design.txt](bloom-interest-restoration-2026-10-01/snowdrop/final-design.txt), [flowering-bank.txt](bloom-interest-restoration-2026-10-01/snowdrop/flowering-bank.txt), [early-bank.txt](bloom-interest-restoration-2026-10-01/snowdrop/early-bank.txt), [late-four-bank.txt](bloom-interest-restoration-2026-10-01/snowdrop/late-four-bank.txt).
+Retained source: [`bloom-interest-snowdrop-native-source.png`](../docs/assets/bloom-interest-snowdrop-native-source.png). Built-in image generation; separate Astra endpoint and sequence reviews are recorded in the [restoration manifest](../docs/reviews/bloom-interest-restoration-2026-10-01.json).
+
+
 - [snowdrop.txt](bloom-revision-2026-10-01/snowdrop.txt)
 - [snowdrop_continuity.txt](bloom-revision-2026-10-01/snowdrop_continuity.txt)
 - [snowdrop_from_final.txt](bloom-revision-2026-10-01/snowdrop_from_final.txt)
 
 ### Myosotis sylvatica
+
+2026-10-01 visual-interest restoration: [final-design.txt](bloom-interest-restoration-2026-10-01/myosotis_sylvatica/final-design.txt), [flowering-bank.txt](bloom-interest-restoration-2026-10-01/myosotis_sylvatica/flowering-bank.txt), [late-bank-repair.txt](bloom-interest-restoration-2026-10-01/myosotis_sylvatica/late-bank-repair.txt), [final-four-bank.txt](bloom-interest-restoration-2026-10-01/myosotis_sylvatica/final-four-bank.txt), [early-bank.txt](bloom-interest-restoration-2026-10-01/myosotis_sylvatica/early-bank.txt), [middle-four-bank.txt](bloom-interest-restoration-2026-10-01/myosotis_sylvatica/middle-four-bank.txt), [first-four-bank.txt](bloom-interest-restoration-2026-10-01/myosotis_sylvatica/first-four-bank.txt), [second-four-bank.txt](bloom-interest-restoration-2026-10-01/myosotis_sylvatica/second-four-bank.txt), [second-four-bud-repair.txt](bloom-interest-restoration-2026-10-01/myosotis_sylvatica/second-four-bud-repair.txt), [early-bridge.txt](bloom-interest-restoration-2026-10-01/myosotis_sylvatica/early-bridge.txt).
+Retained source: [`bloom-interest-myosotis_sylvatica-native-source.png`](../docs/assets/bloom-interest-myosotis_sylvatica-native-source.png). Built-in image generation; separate Astra endpoint and sequence reviews are recorded in the [restoration manifest](../docs/reviews/bloom-interest-restoration-2026-10-01.json).
+
 
 - [myosotis_sylvatica.txt](bloom-revision-2026-10-01/myosotis_sylvatica.txt)
 - [myosotis_sylvatica_continuity.txt](bloom-revision-2026-10-01/myosotis_sylvatica_continuity.txt)
@@ -281,10 +317,18 @@ Richer original-finish follow-up ([review](../docs/reviews/berry-family-redesign
 
 ### Dahlia kaleidoscope
 
+2026-10-01 visual-interest restoration: [reverse-bank.txt](bloom-interest-restoration-2026-10-01/dahlia_kaleidoscope/reverse-bank.txt), [early-bank.txt](bloom-interest-restoration-2026-10-01/dahlia_kaleidoscope/early-bank.txt).
+Retained source: [`bloom-interest-dahlia_kaleidoscope-native-source.png`](../docs/assets/bloom-interest-dahlia_kaleidoscope-native-source.png). Built-in image generation; separate Astra endpoint and sequence reviews are recorded in the [restoration manifest](../docs/reviews/bloom-interest-restoration-2026-10-01.json).
+
+
 - [dahlia_kaleidoscope-retry1.txt](bloom-revision-2026-10-01/dahlia_kaleidoscope-retry1.txt)
 - [dahlia_kaleidoscope.txt](bloom-revision-2026-10-01/dahlia_kaleidoscope.txt)
 
 ### Pincushion firework
+
+2026-10-01 visual-interest restoration: [early-bank.txt](bloom-interest-restoration-2026-10-01/pincushion_firework/early-bank.txt), [opening-bank.txt](bloom-interest-restoration-2026-10-01/pincushion_firework/opening-bank.txt), [reverse-bank.txt](bloom-interest-restoration-2026-10-01/pincushion_firework/reverse-bank.txt), [early-compact-bank.txt](bloom-interest-restoration-2026-10-01/pincushion_firework/early-compact-bank.txt).
+Retained source: [`bloom-interest-pincushion_firework-native-source.png`](../docs/assets/bloom-interest-pincushion_firework-native-source.png). Built-in image generation; separate Astra endpoint and sequence reviews are recorded in the [restoration manifest](../docs/reviews/bloom-interest-restoration-2026-10-01.json).
+
 
 - [pincushion_firework-retry1.txt](bloom-revision-2026-10-01/pincushion_firework-retry1.txt)
 - [pincushion_firework.txt](bloom-revision-2026-10-01/pincushion_firework.txt)
@@ -321,6 +365,10 @@ Richer original-finish follow-up ([review](../docs/reviews/berry-family-redesign
 - [moonphase_magnolia.txt](bloom-revision-2026-10-01/moonphase_magnolia.txt)
 
 ### Crema chrysanthemum
+
+2026-10-01 visual-interest restoration: [final-01.txt](bloom-interest-restoration-2026-10-01/crema_chrysanthemum/final-01.txt), [growth-01.txt](bloom-interest-restoration-2026-10-01/crema_chrysanthemum/growth-01.txt), [opening-bank-01.txt](bloom-interest-restoration-2026-10-01/crema_chrysanthemum/opening-bank-01.txt), [late-bank-01.txt](bloom-interest-restoration-2026-10-01/crema_chrysanthemum/late-bank-01.txt), [late-bank-02.txt](bloom-interest-restoration-2026-10-01/crema_chrysanthemum/late-bank-02.txt), [opening-bank-02.txt](bloom-interest-restoration-2026-10-01/crema_chrysanthemum/opening-bank-02.txt).
+Retained source: [`bloom-interest-crema_chrysanthemum-native-source.png`](../docs/assets/bloom-interest-crema_chrysanthemum-native-source.png). Built-in image generation; separate Astra endpoint and sequence reviews are recorded in the [restoration manifest](../docs/reviews/bloom-interest-restoration-2026-10-01.json).
+
 
 - [crema_chrysanthemum.txt](bloom-revision-2026-10-01/crema_chrysanthemum.txt)
 

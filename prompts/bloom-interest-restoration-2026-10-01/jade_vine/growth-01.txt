@@ -1,0 +1,35 @@
+Generate the complete 25-pose growth animation leading BACKWARD from this APPROVED mature Jade Vine target. The supplied image defines the final rich design. Keep its dense abundant long cascade, twisting woody vine, tendrils, unequal three leaves and split bean. Do not simplify that endpoint to make animation easy. F25 must equal its richness and asymmetry, not become a short ladder.
+
+OUTPUT one transparent square RGBA atlas, EXACT5x5 equal cells, row-majorF1-F25. One complete whole plant per cell, no text, numbers, guides or lines. Empty margins in every cell; nothing crosses a cell boundary. Same frontal camera, lighting, painterly material and fixed coffee bean/soil-ring position, proportions and size in ALL25 cells. Bean width roughly34% of a cell, mature overall silhouette about76% of cell height and74% width. No early oversized bean, row zoom, plant shrink or late scale jump. All painted leaves/flowers are opaque with true transparent exterior.
+
+FINAL LOCK: bean below LEFT side of composition; winding thin woody cane rises with three unequal veined leaves on left, fine attached curling gold-green tendrils. Cane arches over a dense long teal/aqua hanging flower raceme on the RIGHT, tapering down beside bean almost to soil height. About28 overlapping curved claw flowers in14 uneven staggered levels plus pointed inner buds, not identical mirrored ornaments. The crowded abundant hooks have bright pale-aqua rims and teal undersides; their hooks curve outward at unequal angles. Same final flower-to-bean proportions as reference. Preserve every introduced branch, leaf and bud attachment across following poses.
+
+The visible story is woody support growth, a full crowded closed pendant forming, then hooked flowers sequentially uncurling TOP TO BOTTOM. Upper opened hooks never reclose or disappear while lower ones unfold. Later frames retain the entire established canopy, tendrils, pendant backbone and all28 flower sites. Never replace28 sites with8 larger hooks. The flower mass becomes progressively broader as hooks uncurl, while bean and camera remain fixed.
+
+F1 same textured split bean and shallow ring alone.
+F2 a tiny green tip rises from bean seam.
+F3 tip becomes a short bending shoot.
+F4 first small left leaf unfurls from that shoot.
+F5 retain first leaf, extend bending stem; second smaller leaf unfolds.
+F6 retain both leaves, add third low leaf and first delicate attached tendril.
+F7 retain three unequal leaves, extend woody S-shaped cane upward; a second tendril curls.
+F8 same three leaves grow fuller; woody top arches right, a short pendant spine hangs from arch.
+F9 retain whole support; pendant spine grows down beside bean, crowded tiny pointed buds begin along it.
+F10 same support and leaves; pendant elongates toward full length, all28 small pointed bud sites become established in14 irregular levels.
+F11 all28 buds enlarge on same full-length pendant, each still narrow/closed; the three leaves and woody tendrils retain mature architecture.
+F12 only top two claw flowers uncurl; remaining26 stay visible as attached pointed teal buds. Retain all28 sites.
+F13 top four hooks now open, remaining24 buds closed; keep top two hooks unchanged.
+F14 top six hooks open, remaining22 closed; retain all earlier open hooks, leaves and tendrils.
+F15 top eight hooks open, remaining20 closed; same pendant continues down beside bean.
+F16 top ten hooks open, remaining18 closed; upper cascade stays dense and fully open.
+F17 top twelve hooks open, remaining16 closed; newly uncurled hooks broaden upper-middle silhouette.
+F18 top fourteen hooks open, remaining14 closed; lower pointed buds still form the complete tapered tail.
+F19 top sixteen hooks open, remaining12 closed; middle-lower cascade broadens, upper hooks persist.
+F20 top eighteen hooks open, remaining10 closed; enough unopened lower work must remain for final row.
+F21 top twenty hooks open, lowest eight still pointed; visibly unfold the next lower pair without adding new attachment sites.
+F22 top twenty-two hooks open, lowest six still pointed; next lower level curls outward and brightens aqua.
+F23 top twenty-four hooks open, lowest four still pointed; taper broadens with two unequal elegant new curves.
+F24 top twenty-six hooks open, bottom pair half curled; all existing mature hooks stay in place.
+F25 both bottom hooks finish uncurling: the full approved long dense28-hook pendant, irregular turquoise cascade, woody winding support, tiny tendrils and three unequal leaves. Strong rich original-like finish, never a simplified icon.
+
+Keep dramatic airy gaps around the vine and between individual hooks, without holes in flower surfaces. No extra floating sparkles, soil growth, duplicate plants, missing leaves, changing bean, or generic symmetrical pot. Each late frame must visibly release the already-present next lower hooks; never finish the cascade early and hold it for five frames.

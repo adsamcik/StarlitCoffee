@@ -1,0 +1,13 @@
+Create square transparent3x3 sprite bank, EXACTLY9 complete early Dahlia plants in chronological row-major order. Attached reference is the CLOSED BUD endpoint immediately after this bank. One whole plant per equal cell, generous margins, no text/guides/background. Keep same upright split brown bean size/baseline, fixed camera, slim green stem and TWO unequal serrated leaves. Opaque painterly botanical detail, true transparent exterior.
+
+1 same brown split bean with tiny green point in seam.
+2 short green sprout emerges above same bean.
+3 sprout lengthens, two tiny leaf tips emerge at fixed left/right nodes.
+4 paired serrated leaves begin opening left/right, thin stem extends above them.
+5 retained two leaves enlarge, stem grows toward reference height, tiny green terminal bud appears.
+6 leaves nearly reference size and attachments; terminal green bud becomes pointed oval, tightly closed sepals.
+7 same bean, stem and mature two-leaf support; closed bud broadens, slight coral point visible at apex.
+8 same complete support; green bud grows almost to reference size with layered overlapping sepals and small coral tip.
+9 EXACT reference closed-bud architecture and proportions: full tight green oval with coral point, two unequal serrated leaves, thin fixed stem, upright bean unchanged. All petals still folded; no open coral face yet.
+
+Cumulative smooth growth, no early mature stalk, no leaf disappearance, no shrinking/zooming base. Leaves keep the same left/right attachment once formed; bud remains on same central stem. The flower will later unfold into many small nested coral tiers around a recessed tiny gold disk, so this bank only grows the closed bud; never show a yellow center. Preserve natural painterly material and opaque green surfaces from reference.

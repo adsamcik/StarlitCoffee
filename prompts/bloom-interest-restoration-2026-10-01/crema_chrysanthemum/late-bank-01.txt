@@ -1,0 +1,16 @@
+Create a transparent 3 by 3 square sprite bank containing exactly NINE complete successive late-opening Crema Chrysanthemum poses, read left to right then top to bottom. This is one unfolding flower above the SAME upright split coffee bean, not nine separate designs. Reference image 1 is the complete preceding pose F16; reference image 2 is the approved mature F25 endpoint. Preserve the warm ivory and gold tactile painted material, dark recessed flower center, coffee bean size and lighting, and centered stemless attachment. No leaves, soil, stars or additional motifs.
+
+The crucial improvement is gradual emergence of the MANY fine, unequal nested curled petals in reference 2. Do not keep a coarse lotus-like cup for eight images then suddenly add all the fine petals in image nine. The first new pose already exposes several fine inner curls behind the broad front cup, retaining all existing petals; every following pose releases a different identifiable region. Existing broad front petals roll outward to expose pre-existing smaller layers rather than vanishing or being replaced. All petals already opened stay opened. Never reclose the flower.
+
+Nine-pose choreography:
+1: Just beyond reference 1. The rear inner row rises visibly, exposing six slender unequal curls while the broad front cup remains.
+2: The upper left nested curls turn outward, increasing depth and left silhouette.
+3: The upper right nested curls turn outward, with different lengths from the left.
+4: The broad front cup lowers into several outward-rolling petals, exposing the dense inner ring already visible behind it.
+5: Lower-left fine curled tips separate and extend; maintain the upper layers and dark center.
+6: Lower-right fine tips separate and extend; the flower is already richly layered, about 90 percent of the endpoint, not a coarse cup.
+7: Uppermost rear curls lift into taller unequal hooks, inner curls remain dense and individual.
+8: The lowest outer curls unfurl downward and sideways, nearly the endpoint with only the last tips not fully released.
+9: Match the approved mature reference 2 in rich fine layered curl count, depth, overall flower-to-bean proportion, and footprint. Last tips release visibly, without changing the whole material or repainting the bean.
+
+All nine poses share ONE camera scale, identical bean dimensions, fixed bean base center and bottom within each uniform square cell. Use all cells equally, generous transparent padding, whole uncut poses, clear empty gutters, no cell overlap. The mature flower must dominate the bean as in reference 2. Native RGBA transparency, no background wash, no checkerboard painted into art. ZERO text, labels, borders, grid lines or guides. Render fine curls clearly enough for a 148-pixel display, preserve dark gaps and irregularity; avoid a symmetric logo or identical fat curls.

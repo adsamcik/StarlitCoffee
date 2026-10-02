@@ -53,3 +53,7 @@ The [canonical audit](bloom-interest-audit-2026-10-01.json) retains the three As
 The [botanical comparison](../../.qa-screens/bloom-interest-audit-2026-10-01/botanical/comparison-1-light.png) makes the Bleeding Heart and Jade Vine simplification visible. The [second comparison](../../.qa-screens/bloom-interest-audit-2026-10-01/botanical/comparison-2-light.png) shows Queen of the Night and Chocolate Cosmos. Fixed148px and equal-occupied-size contacts for all 44 are retained under `.qa-screens/bloom-interest-audit-2026-10-01/signature` and `core`.
 
 This pass is a visual reassessment and authoring brief. It changes no application artwork, renderer or pipeline and does not constitute a fresh all44 full-transition review, Android playback test or release validation.
+
+## Completed restoration
+
+The twelve priorities in this audit are addressed by the [restoration review](bloom-interest-restoration-2026-10-01.md) and its [manifest](bloom-interest-restoration-2026-10-01.json). Each design has separate Astra endpoint, whole-sequence and native visual acceptance. This audit remains the diagnosis of the preceding revision, with its original comparison evidence intact.

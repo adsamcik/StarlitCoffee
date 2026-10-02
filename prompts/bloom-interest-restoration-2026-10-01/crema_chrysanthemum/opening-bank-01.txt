@@ -1,0 +1,21 @@
+Use case: illustration-story
+Generate a square 4 by 4 bank of SIXTEEN complete Crema Chrysanthemum poses, reading row-major. Image1 is the approved final mature flower; image2 is the preceding early cup pose. The first bank pose should be just beyond image2, and only the sixteenth should be fully image1. All sixteen have the SAME small vertical split bean, short stem, drawing scale, center and baseline. True transparent RGBA, generous clear gutters, no text, guides, grid lines, shadows or background. Each panel contains the WHOLE plant, not a detached flower.
+Restore the mature target's dense many-layered cream/gold head: many fine nested inner curls, unequal tips, warm dark recessed center, larger outer curled petals. No leaves. Keep organic uneven spacing and bowl depth. Do not simplify to a few identical thick curls. As petals unroll, every established curl remains attached and visible or naturally overlapped. Maintain the same golden center position. No per-panel zoom or shrinking bean.
+The existing cup in image2 has only its first few outer petals open. Slowly reveal successive layers rather than reaching a complete head early. Different petal regions should actively uncurl in each pose. The head keeps a visibly unfinished rolled front edge until the last row. Final width grows progressively from about 55 percent to100 percent of image1; the bean never changes size.
+B01: just beyond image2, a small deep two-layer cup, narrow fine inner tips still bundled, about55 percent final width.
+B02: left middle petal tips rise and separate; outer front remains tucked.
+B03: right middle tips lift, matching the developing left without perfect symmetry.
+B04: upper rear fine curls rise above the cup and deepen its layered silhouette, about63 percent width.
+B05: left outer folded petals unroll outward, exposing smaller inner curls behind them.
+B06: right outer folded petals unroll with different lengths and angles.
+B07: front middle curls separate and bend inward around the dark recess, about71 percent width.
+B08: rear inner crown becomes denser as more thin tips lift from the existing center.
+B09: lower-left folds release, revealing another overlapping cream/gold layer.
+B10: lower-right folds release, maintaining the same previous tips and center, about80 percent width.
+B11: upper-side tips flare outward and several still-curled inner tips lift.
+B12: front middle layer deepens and broadens; outer lower tips are still visibly rolled, about86 percent width.
+B13: lower-front outer petals unroll distinctly downward/outward, opening the first part of the final scalloped rim, about90 percent width.
+B14: the left lower rim and left rear fine tips release together, increasing depth and uneven span, about94 percent width.
+B15: right lower rim opens and the last front-middle folds separate, about97 percent width; only the tight innermost crown remains slightly closed.
+B16: full approved image1: dense fine inner crown and dark center, many unequal nested curls, complete irregular outer rim, confident broad mature silhouette and unchanged small bean.
+Each final-row panel must show an identifiable different folded region releasing, not an already complete flower being inflated. Keep the high painterly texture and warm highlights. Empty gutters and intact whole poses are essential.

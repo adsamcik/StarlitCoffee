@@ -70,6 +70,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   blossoms toward its richer original finish.
   Strawberry, Blueberry and Blackberry now grow toward fuller, distinct berry
   plants with retained blossoms and progressive fruit ripening.
+  Twelve flower and coffee animations now retain richer final compositions,
+  with staged growth and purposeful development through their final frames.
 - Grinder choices now require a source-backed recommendation for the selected
   method and filter. Five precisely identified models use their actual setting
   notation, including Ode's numbered subdivisions and Niche's stepless dial.

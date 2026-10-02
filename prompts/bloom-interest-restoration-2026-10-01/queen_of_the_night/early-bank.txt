@@ -1,0 +1,13 @@
+Create a transparent square3x3 sprite bank: EXACTLY9 complete Queen of the Night growth poses, one per equal cell, read left-to-right then downward. No text, guides or background. Same centered split brown bean and stone ring at fixed size/baseline in every cell. Front camera fixed, generous clear cell margins. Use attached mature art as species/material destination, but these9 poses end at TWO mature cactus blades with a CLOSED MAIN BUD and a CLOSED LEFT COMPANION BUD. No open flowers in this bank. ExactlyTWO cactus blades, no extra right blade. Keep every introduced surface and node attached throughout. Painterly opaque intact art, transparent exterior.
+
+1: bean/ring with tiny green point emerging from split, no grown blades.
+2: same bean; short single ribbed cactus tip rises.
+3: first narrow cactus blade lengthens; tiny second tip emerges on its left at base.
+4: tall first blade becomes flatter and scalloped, shorter second blade visibly opens on left. No buds yet.
+5: same TWO unequal blades grow, taller blade leans up-left as mature reference, shorter blade opens low-left. Small inward-curving main floral stem grows from junction, no flower yet.
+6: same two blades approach mature size. Main inward stem arches above bean with tiny green pointed bud. Separate short stalk curls downward on LEFT with tiny companion bud.
+7: exactly two retained cactus blades now mature outline. Main bud grows to small ivory-green tapered cone above/right of bean, left companion bud elongates while still closed. Bean unchanged.
+8: same complete mature TWO-blade support, main cone widens to half mature blossom length, left companion bud nearly final size, both closed. All attachments fixed.
+9: same two mature cactus blades and fixed bean; large CLOSED ivory main cone above bean has overlapping brown sepals, ready to unfold later. CLOSED hanging left companion bud has reached the exact mature-reference size/shape. Main flower still fully closed; no open white fan yet.
+
+Root and bean position must match the reference's centered balanced architecture, not shift left. Mature main flower will later dominate above bean, modestly right-facing; preserve room for that future fan. Smooth visible growth at every step, no early mature pose, no generic leaves, no disappearance, no zoom. Main bud and companion have separate persistent stalks, never exchange sites.

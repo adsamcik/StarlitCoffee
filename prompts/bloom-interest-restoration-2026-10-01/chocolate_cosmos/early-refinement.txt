@@ -1,0 +1,15 @@
+Create square transparent3x3 sprite bank, EXACTLY9 complete Chocolate Cosmos early growth poses, row-major equal cells. Attached CLEAN reference is the FIVE-CLOSED-BUD endpoint. Match its exact DELICATE OPEN foliage architecture: very narrow divided finger-like green leaflets with visible transparent gaps and separate thin stems. NO broad solid fern fronds, no filled triangular green masses, no bushy foliage that later gets pruned. Plant once introduced is retained and only grows. Fixed textured split brown bean/stone ring size and planted baseline in every cell, fixed front camera. True transparent exterior, intact opaque botanical painting. No text/guides/background.
+
+FIVE final sites: A high center largest bud, B medium right, C low-left small, D upper-right small, E upper-left tiniest. Same attachments/unequal heights as reference. All buds stay CLOSED. Central A tip height must increase monotonically from1 to9, never overshoot then shorten as branches arrive.
+
+1 bean/ring with tiny green point in split, no mature foliage.
+2 same bean; short sprout with two tiny narrow divided leaf tips.
+3 retain sprout and small thin divided sprays; central stem short, no broad leaves.
+4 narrow divided sprays enlarge modestly, A stem rises a little above them; tiny short B/C side shoots appear. Total above-bean height ONLY half final reference height.
+5 same retained frond nodes; A/B/C stems lengthen, D/E tiny side shoots emerge. All five terminal sites now visible as tiny green points. Height about65% final. Keep fine open leaflet gaps.
+6 all FIVE stems elongate, all five green buds slightly fuller, total height75% final. Fine divided foliage approaches final shape but stays delicate, never a solid mass.
+7 all five sites retain their attachments; height85% final, A largest, B medium, C/D small, E tiny. Green buds gain faint wine tips. Foliage now matches reference's fine frond locations.
+8 same complete five-site plant, height95% final, buds enlarge gently; fine open foliage and stem inventory remain unchanged.
+9 exact closed reference architecture at full height: five closed wine-tipped buds at uneven sites and DELICATE DIVIDED foliage with transparent internal gaps, same bean/ring. No flower open yet. Match reference leaf density and narrow leaflet shapes, not an alternate bush.
+
+Every whole plant safely inside equal cell with clear margins. No scaling bean down as plant grows. Do not simplify five nodes, remove leaves, thicken foliage into fern triangles or repaint final architecture abruptly. Continuous increase in stem height and branch extent, no shrink/reset. Wine tips are dark chocolate-burgundy, never bright red.

@@ -1,0 +1,15 @@
+Generate a transparent square 3x3 atlas of NINE complete early growth poses of the exact Myosotis plant in reference1, ending just before the entirely closed-bud plant in reference2. Row-major growth, ONE fixed camera and exactly the same broad cracked brown bean size/orientation/baseline in all nine cells. Fixed bean relative to mature design, never enlarge the early bean to fill the cell. Transparent background/gutters, no labels, lines, shadows or guides. Native tactile painted opaque anatomy. Full intact plant per equal cell, generous padding. Maintain the reference's two unequal airy branching sprays, not a radial fan.
+
+Persistent design: exactly TWO basal lanceolate leaves, one sweeping left and one right, at the same two stem nodes; they remain once present and enlarge gradually. Branches remain once formed. Eventual fourteen terminal sites: six larger future flower buds at three left and three right staggered positions, plus eight smaller buds (three left and five right). Every terminal bud stays CLOSED GREEN in all nine early poses. No blue flowers or petal opening. By cells8â€“9 all14 sites visible in the exact mature-reference branching positions. No deleting or merging tips.
+
+Cell1: same fixed full-sized bean, seam just cracks and tiny green nub appears.
+Cell2: same bean and green shoot extends, two minute leaf tips visible.
+Cell3: same bean and shoot, both basal leaves open small, one longer than other.
+Cell4: same bean and two retained basal leaves broader, stem rises above them and begins splitting into two unequal primary sprays.
+Cell5: same bean, two leaves and stem, both primary sprays lengthen; first two upper branch forks emerge.
+Cell6: same retained full structure, secondary outward branches extend on both sprays, upper and side twig tips appear; no leaf loss.
+Cell7: same retained structure taller/wider; all fourteen terminal twig positions now present with tiny green nubs, including lower outer side twigs. Two basal leaves persist.
+Cell8: same bean, leaves, fine asymmetric sprays and fourteen retained twig tips, all14 green nubs swell into small distinct closed buds; canopy approaches mature dimensions.
+Cell9: same complete retained plant, canopy reaches reference2 dimensions, all14 closed GREEN buds visibly elongate while attached to exactly the same fine twigs. Six designated future flower buds are larger and eight others small. Two basal leaves reach mature size, broad bean remains exactly same as every other cell.
+
+Do not add foliage to upper branches. Airy negative space and natural unequal branch lengths must match the rich mature reference. Every pose must show forward development with no stem reset, shrinking bean, mirrored replanting or disappearing leaf.

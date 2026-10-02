@@ -1,0 +1,13 @@
+Create a square transparent3x3 sprite bank with EXACTLY9 complete Pincushion Firework plant growth poses, equal cells, left-to-right row-major. One whole plant in each cell, clear margins, no text/guides/background. Same fixed upright split brown bean, camera and base height throughout. Reference shows mature destination; these9 poses end in a tightly closed small green/orange flower head, with NO elongated firework pins yet. Maintain painterly botanical material, fine green stem and narrow pointed foliage, opaque surfaces and transparent exterior.
+
+1 bare upright split brown bean, tiny green point in its seam.
+2 same bean, short sprout emerges.
+3 sprout lengthens, tiny paired leaf tips unfold.
+4 same bean and stem, TWO narrow green leaves open left/right, stem grows taller.
+5 retained two leaves elongate and spread, stem extends upward, tiny green terminal bud appears.
+6 same stem/leaves, green flower bud grows into small pointed cone, narrow green bracts visible at its base.
+7 stem reaches near mature height, both narrow leaves persist; cone broadens into tightly packed green pointed scales, a few orange tips become visible.
+8 same support and bean; flower head becomes a rounded closed cushion, many tightly packed small orange-gold florets visible within green bracts. No long filaments yet.
+9 retained leaves/stem/bracts and fixed bean; dense orange closed cushion reaches about half mature flower-head width, full future filament population already represented as tiny curled orange tips packed around the central head, but no fully elongated pins. It is ready to unfold in later frames.
+
+Growth must be smooth and cumulative: no early mature stalk, missing leaves, shrinking bean, disappearing bud or sudden head replacement. Do not depict a sunflower/daisy, green tree leaves, extra branches or a giant ball. The mature destination later becomes a dense fine irregular filament firework with small terminal knobs; preserve its fine botanical character even while closed. Keep the bean the same size in every cell, not proportional shrinking as the plant grows.

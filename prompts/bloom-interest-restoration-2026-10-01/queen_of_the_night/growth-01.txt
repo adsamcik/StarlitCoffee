@@ -1,0 +1,32 @@
+Create a square transparent RGBA sprite atlas, EXACTLY5 columns by5 rows,25 equal cells in row-major chronological order. ONE complete Queen of the Night plant per cell. No labels, guides, borders, shadows on background or detached marks. Clear transparent margins around every whole pose. The reference is the approved mature F25 destination: retain its huge asymmetric ivory ray fan, recessed golden throat, TWO unequal flattened cactus blades, ONE closed hanging left companion bud, split brown coffee bean and stone ring. Do not simplify this ending into a small daisy or remove the waiting bud.
+
+Fixed front camera, fixed bean width and planted baseline in ALL25 cells, no zoom or per-cell fitting. Bean stays centered horizontally, mature canopy balanced around its base as reference. Every visible surface persists after introduction. Tall cactus is back-left with diagonal root into bean; shorter blade lower-left. Dominant flower opens above bean, golden throat modestly right of center. Closed companion bud remains low-left on its own curved stalk throughout late stages. Main flower grows on a separate sturdy inward-curving stalk. Keep both flower attachments stable. No fourth appendage, extra flower, missing blade, backward closure or sudden relocation. Opaque detailed painterly art with transparent exterior.
+
+Exact25 complete-pose plan:
+F1 split bean and stone ring, tiny green point in split.
+F2 same bean/ring; short emerging green cactus tip.
+F3 retained tip elongates into narrow ribbed blade, tiny second tip at its lower-left base.
+F4 first flattened blade grows taller, second blade opens visibly to left; same bean.
+F5 both unequal cactus blades broaden with scalloped edges, tall blade leans slightly left, shorter blade attached below.
+F6 retain both blades; grow them toward final proportions, main inward-curving stalk emerges behind tall blade, small left companion stalk emerges from shorter blade.
+F7 both blades approach final height; main stalk curls over bean with tiny pointed bud; companion stalk curves downward with tiny attached green bud.
+F8 retain two blades and both attached buds; main bud elongates above bean, companion bud grows slightly at lower-left.
+F9 same mature blade positions; large upright ivory-green main bud on inward stalk, low-left companion bud longer and closed.
+F10 both cactus blades reach final size and remain fixed henceforth; main bud fattens to narrow tapered cone; companion closed bud reaches near-final size.
+F11 complete two-blade support, same bean and both buds; main cone grows broader, brown outer sepals begin separating at tip; companion stays closed.
+F12 same complete support; main bud lengthens and outer narrow sepals lift outward; closed companion now final size and shape and stays closed through25.
+F13 same two blades and closed companion; main ivory cone broadens, first long outer ivory rays peel back; inner petals still tightly cupped.
+F14 retain all outer rays; more long pointed rays separate on left and right, inner ivory cone loosens but throat remains hidden.
+F15 same support and companion; irregular outer starburst fans wider above bean, layered inner cup opens a little, gold just glimpsed.
+F16 same support and companion; outer rays lengthen toward mature reach; inner cup spreads to show narrow gold throat. Flower still only half open.
+F17 retain every ray; upper and right rays arc outward, inner petal layers roll back slightly; throat widens.
+F18 same complete plant; lower-left ivory rays extend, broad middle petals unfurl, gold stamens still gathered in narrow throat.
+F19 retain two blades and closed companion; fan now three-quarter span, inner petals separate to expose more gold filaments; lower petal points still curved inward.
+F20 same complete support; outer starburst nearly full width, inner cup still visibly deeper/narrower than mature reference, lower inner petals not fully unrolled.
+F21 retained irregular fan spreads its lower rays; two lower middle petals curl outward, throat broadens. Companion stays closed.
+F22 same anatomy; right middle layer opens farther and reveals more curved stamens, upper inner petals lift away from throat.
+F23 retained rays and companion; left inner petals unfold, throat expands, long lower points unroll toward final positions; still not fully mature.
+F24 same complete plant; last inner lower petals widen, golden filaments begin their full elegant spread; one final lower fold remains.
+F25 exact rich destination character: huge irregular ivory ray fan, many overlapping petals, fully recessed open gold throat and graceful stamens; final lower fold released. Both unequal cactus blades and closed low-left companion remain. No extra anatomy invented at25.
+
+Every frame must do visible growth or opening work. In particular21-25 reveal successive petal surfaces and throat/stamen depth, not five identical finished flowers with painted highlights. Do not shrink the final composition to accommodate early poses. Keep all25 whole plants within their equal cells and preserve the reference's flower-to-bean dominance.

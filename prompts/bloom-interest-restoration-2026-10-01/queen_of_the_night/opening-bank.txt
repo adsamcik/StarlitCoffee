@@ -1,0 +1,22 @@
+Create a square transparent4x4 animation pose bank: EXACTLY16 equal cells, one COMPLETE Queen of the Night plant per cell, reading left-to-right row-major. No labels, guides, borders or background. Reference1 is the START: closed main cone with exactlyTWO cactus blades, left closed companion bud, centered split brown bean/stone ring. Reference2 is the RICH FINAL: enormous irregular ivory ray fan, overlapping inner petals, recessed golden throat/stamens, same TWO blades and same CLOSED companion. Keep fixed bean size, baseline, camera and support anatomy across all16. All introduced petals persist and open cumulatively. No extra cactus blade, bud loss, backward reclosure or zoom. Entire plants fit inside cells with transparent margins and opaque painted surfaces.
+
+This bank is ONLY slow continuous UNFURLING. Do not show a finished open flower before cell16. The main flower grows around its SAME upper-right attachment while bending its throat forward; it never relocates. The lower-left companion stays exactly closed and the two cactus blades/bean remain fixed in every cell.
+
+1 same start cone, just first sepal tip lifting; no open face.
+2 retained cone, two outer sepals peel wider, tightly closed ivory core.
+3 retained opening sepals; first long ivory rays lift from cone, core still closed.
+4 outer rays fan to left/right, inner core cracks to narrow slit; no broad disk.
+5 retained outer rays extend, several mid petals peel back, slim gold glimpse.
+6 outer rays reach half mature span, inner petals form narrow trumpet; gold remains mostly hidden.
+7 outer fan widens with unequal long upper rays; trumpet opens a little, lower petals still rolled.
+8 more retained outer rays splay, inner trumpet begins turning forward; narrow gold throat visible.
+9 outer starburst three-quarter spread; middle petals separate, lower points still tucked, gold filaments gathered.
+10 outer starburst spreads downward; middle cup widens, inner top petals remain curved over throat.
+11 retain all rays; lower middle layer uncurls, inner cup deep but broader; not fully open.
+12 retain complete asymmetric fan; right inner petals open more, first gold curved stamens separate.
+13 upper inner petals lift, left middle layer spreads; gold throat wider, lower inner folds visibly retained.
+14 left inner folds release and lower long petal tips uncurl; stamen spray begins fanning.
+15 last lower fold still slightly cupped; other inner petals now nearly mature and stamens spread further.
+16 rich reference destination: final lower fold fully released, large irregular ivory fan around deep fully revealed gold throat and graceful curved stamens. Same bean, TWO cactus blades and closed left companion. No sudden added outer ray inventory here.
+
+Make every transition visibly purposeful at small sprite size: surfaces unfold, not merely repaint highlights. Last row13-16 must continue obvious inner-petal release and widening throat, never four finished near-holds. Flower-to-bean dominance and asymmetric ray detail must equal the final reference; no simple daisy, no loss of cactus/bud architecture. Keep the bean centered under the balanced canopy in all16.

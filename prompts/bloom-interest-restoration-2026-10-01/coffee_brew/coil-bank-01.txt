@@ -1,0 +1,16 @@
+Repair the nine COMPLETE Coffee Brew poses in reference1 as a uniform3 by3 transparent sprite bank. Reference2 is the exact following pose, so the ninth new pose must lead smoothly into it with BOTH side curls present and a slightly shorter central plume. Preserve the whole bean, its dimensions, warm brown texture, gold seam, position and lighting from these references. Do not repaint unrelated style.
+
+The defect to fix: reference1 repeats nearly complete curls too early, then drops the entire right curl in its last pose. Instead show a visibly different continuous ARC-TRACING stage in each cell. A curl grows from its ROOT through an open curved line into a returning loop; once a loop exists it persists. Keep the central slim S plume present throughout. Avoid detached fragments, new symbols, stars or glints in this middle bank.
+
+Nine row-major complete poses:
+1 Left branch begins as a SHORT outward stroke from the low central flow, with no loop.
+2 Left branch extends and curves UP, an open J arc, end still pointing upward.
+3 Left arc turns its tip inward/right, a nearly returning C with a wide opening.
+4 Left curl completes its small open-center returning loop, like the LEFT curl in following reference2. Central plume is still modest.
+5 Keep that left loop. New RIGHT branch starts as a short outward/upward stroke from the lower central flow.
+6 Keep left loop. Right branch becomes an open upward J arc, tip not yet returning.
+7 Keep left loop. Right arc turns inward/left, broad transparent gap still open.
+8 Right curl completes, only slightly larger than left and exactly compatible with the following pose's right curl. Both loops persist. Do not oversize this loop then shrink it in the next pose.
+9 Keep BOTH complete curls with the same dimensions. The central S plume lengthens visibly toward the following reference2 height, ending a little shorter. Never delete the right loop.
+
+All nine have the SAME bean and camera scale, clear thin gold/ivory flow with warm edges and interior highlight strands. Purposeful difference comes from tracing the arcs, not zooming. Leave generous transparent empty gutters, one whole uncut pose per equal square cell, same centered base and baseline. Native RGBA transparent background, no painted checkerboard, text, labels, numbers, guides, grid or border.

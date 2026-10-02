@@ -1,0 +1,16 @@
+Use case: precise-object-edit. Generate a native transparent3x3 atlas of NINE COMPLETE early-growth poses of this exact Bleeding Heart. Image1 is the next flowering-bank pose F10, showing the same fixed broadbean, divided leaves and nine bud nodes. Image2 is the approved mature target. Output ONLYF1-F9 in3columns x3rows, same camera, beanorientation, beanwidth andbaseline in everycell. Each entire plant has generous transparent gutters/safe padding. No text,labels,gridlines,background,halo.
+
+Final architecture is protected: TWO unequal arches, short lower-left3flowernodes andlong high-right6flowernodes; deeply divided foliage inthree uneven clusters. Never simplifytoonearch/threehearts or substitute roundleaves. Early growth must progressively build THIS architecture. Bean is always same broad splitbrown coffee bean withsmallstone ring asImage1, not per-frame zoom. Once leaves or branches emerge they remain. All leaves deeply cut/lobed rather than smoothround. No flower blooms intheseearly9; tiny greenbudsites only byend. FinalcellF9 joins Image1F10 withsamefullshape andscale, slightlysmallergreenbuds.
+
+Complete row-major poses:
+1 Fixed broad splitbean/stonering only; tiny greenpoint in crack.
+2 Samebean, shortgreen shoot withone tiny folded dividedleaf.
+3 Samebean, tallercentralshoot andfirstsmall dividedleaf opens towardupperleft; nolateflowerbranchesyet.
+4 Samebean, retained upperleftdividedleaf spreads; second dividedleaf unfolds lowright and shortleftbranch begins.
+5 Samebean, two retained dividedleafclusters, thirdfarleftleaf starts; shortleftarchingstem curvesout, longerhighrightstem risesfromcrown butits tipstillcurled.
+6 Samebean, allthree irregular dividedleafclusters growing; shortleftarch longer, highrightarch bendsoutward anddown halfway; retain allpriorleaflets andstems.
+7 Samebean, allthreeleafclusters fuller; botharches approachmature span, tinybranchbuds visible atALLNINE permanentpositions:3shortleft,6longright. Budstinygreen, nobloom.
+8 Samebean andsamefullleafclusters, BOTHarches nearlyfullspan; ALLNINE attached greenbuds3left+6right slightlyelongated. No newbranchgraph orlostnodes.
+9 Samebean/full dividedfoliage/BOTHfull unequalarches matchingImage1; ALLNINE smallgreenhangingbuds3left+6right. This is justonegrowthstepbeforeImage1, whichwillfollowasF10; shape/scale/leafarchitecture/base mustjoin smoothly.
+
+Everyframe hasvisibleforward development. Keepwholeplantscaleconstant; growthcomesfromnewretained anatomy, not zoom. Maturetarget fullcomposition/asymmetry determinesearlierarchitecture.

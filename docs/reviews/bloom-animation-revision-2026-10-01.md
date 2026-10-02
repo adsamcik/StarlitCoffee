@@ -169,3 +169,7 @@ The [Raspberry follow-up](raspberry-redesign-2026-10-01.md) restores the richer 
 
 The [berry-family follow-up](berry-family-redesign-2026-10-01.md) gives Strawberry, Blueberry and Blackberry richer, distinct final compositions and consistent growth. Its [manifest](berry-family-redesign-2026-10-01.json) contains the current resource/source hashes, exact prompt provenance and native validation. The preceding 44-animation report and hashes remain an archived checkpoint. The completed Raspberry follow-up remains unchanged.
 <!-- berry-family-redesign-2026-10-01:end -->
+
+## Subsequent visual-interest restoration
+
+The [twelve-design restoration](bloom-interest-restoration-2026-10-01.md) addresses the richer original compositions lost in the initial consistency pass. Its [manifest](bloom-interest-restoration-2026-10-01.json) records current hashes, separate mature-design and sequence consultations with Astra, native source/prompt provenance and bounded Android validation. This earlier 44-animation report and its previous follow-ups remain archived checkpoints.

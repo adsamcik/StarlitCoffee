@@ -1,0 +1,16 @@
+Edit this3 by3 exact-layout template into NINE early Starlit Coffee animation poses. The template repeats the SAME complete pose only to lock the geometry. Preserve the exact bean and star POSITIONS, SIZES, TEXTURES and spacing in every cell. Do NOT zoom, enlarge stars, lower the star field or rearrange the bean. Each star when present must remain at the identical template site and be the identical template size/material. The following animation uses this exact layout, so placement fidelity is crucial.
+
+Only remove the not-yet-present elements and develop seam/central glow according to the nine stages below. Every cell remains a complete whole pose on transparent alpha. No new artwork outside the template design, no background.
+
+Row-major stages:
+1 Bean only. Remove ALL five stars, the round center, left curved stroke and rising light threads. Darken the existing bean seam while keeping its contour/material.
+2 Bean with warm seam. Keep ONLY the template UPPER-LEFT star. Remove the other four stars, orb, stroke and rising threads.
+3 Keep UPPER-LEFT and LOWER-LEFT stars exactly in place. Remove the other three stars, orb, stroke and rising threads. Two stars.
+4 Keep UPPER-LEFT, LOWER-LEFT and UPPER-RIGHT stars exactly in place. Remove TOP and LOWER-RIGHT, orb, stroke and rising threads. Three stars.
+5 Keep ALL FOUR SIDE STARS: upper-left, lower-left, upper-right, lower-right. Remove ONLY the TOP star. No orb, stroke or rising threads. Four stars. Do not omit upper-right.
+6 Keep ALL FIVE stars at exact template positions. Remove orb and curved stroke, seam remains warm.
+7 Same five fixed stars. Add only short fine warm threads rising a little from bean opening toward the future orb. No orb or curved stroke yet.
+8 Same five fixed stars. Show the round central light exactly at template position, connected by warm threads. Remove the left curved stroke.
+9 Same five fixed stars and round center. Show only the FIRST HALF of the template's leftward curved stroke, a short stub. This leads into the complete template pose immediately afterward.
+
+Important: Star layout and bean must not change size or position across any row. All five star sites are defined by the input image, not by automatic centering of each incomplete pose. Keep cell positions/camera scale equal even when most stars are absent. Transparent inner spaces, native RGBA alpha, no text, labels, numbers, captions, borders, guides, grid or decorations.

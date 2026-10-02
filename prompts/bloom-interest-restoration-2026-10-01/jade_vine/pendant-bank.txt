@@ -1,0 +1,28 @@
+Create a native sixteen-pose growth bank for the APPROVED rich Jade Vine target shown in the reference. EXACT4x4 equal square cells, one complete plant per cell, transparent square RGBA atlas, no labels or guide lines. These are ONLY the late stages F10-F25, NOT the whole bean-to-flower sequence. Every pose already has the woody vine support, THREE unequal leaves, tendril curls and a full-length DENSE pendant made from the same approximately28 flower sites. Do NOT output a sparse two-leaf ladder and save all the richness for the last cell.
+
+Match the supplied mature target's painterly material, split bean and soil ring, slender WINDING WOODY support, arch, three left leaves, fine gold-green botanical curls and long abundant turquoise pendant. Keep the same camera and bean size/position throughout all16 cells. The mature flower-to-bean proportion, off-center composition and dense interleaved hook inventory are locked. No larger beans in earlier cells. Maintain generous clear cell margins. Pendant tip stays beside the bean and ABOVE soil baseline. All colored anatomy has complete opaque surfaces.
+
+Important construction: a long central raceme supports roughly14 staggered levels with TWO unequal flower attachments at each, about28 in total. This is a dense THREE-DIMENSIONAL overlapping cascade, with inner pointed buds and outer hooks at different angles, NOT one neat pair of identical claws per row. All28 sites exist in every cell, either as visible plump pointed teal buds or as open curved aqua hooks. Opening changes existing shapes and overlap, never adds missing branches/sites. Every already-open flower remains fully open thereafter. Reference's long abundance, woody twist, three leaves and tendrils remain throughout. Unopened lower buds should be numerous/plump enough to imply the final dense mass, not a thin string with only8 buds.
+
+ROW1:
+Panel1=F10: all28 flower sites are small closed pointed green-teal buds on full-length pendant. Three leaves visible, lowest third leaf still small; woody cane already arches over pendant.
+Panel2=F11: same28 closed buds swell; third leaf expands, woody twist and tendrils become mature.
+Panel3=F12: all three unequal leaves/support now match final architecture; all28 crowded buds plump, still closed. Keep full-length broad/tapered pendant.
+Panel4=F13: top4 hooks open, remaining24 sites stay plump pointed buds. Whole mature support unchanged.
+ROW2:
+Panel5=F14: top6 hooks open, lower22 remain pointed buds. All three leaves and tendrils retained.
+Panel6=F15: top8 hooks open, lower20 closed; keep established hooks.
+Panel7=F16: top10 hooks open, lower18 closed; keep same complete stem/leaf architecture.
+Panel8=F17: top12 hooks open, lower16 closed; cascade broadens through uncurling, not camera zoom.
+ROW3:
+Panel9=F18: top14 hooks open, lower14 closed; all prior open hooks retained.
+Panel10=F19: top16 hooks open, lower12 closed; richly layered upper/middle mass.
+Panel11=F20: top18 hooks open, lower10 closed; leave real lower-cascade opening for final five poses.
+Panel12=F21: top20 hooks open, lowest8 pointed buds; next level releases in an uneven outward arc.
+ROW4:
+Panel13=F22: top22 hooks open, lowest6 pointed buds; all upper hooks remain fully spread.
+Panel14=F23: top24 hooks open, lowest4 pointed buds; already present lower tier curls visibly outward.
+Panel15=F24: top26 hooks open, bottom pair halfway uncurled; same dense support/foliage/upper cascade.
+Panel16=F25: all28 hooks fully uncurled, full dense tapered pendant matching the supplied approved rich target. No new late anatomy, leaf or support, no sudden scale/cluster jump.
+
+Finish with pale aqua rims, opaque teal undersides and tiny internal buds, irregular asymmetrical hook angles and layered depth. Do not simplify any mature frame into fewer bigger hooks; keep the abundance and distinctive woody/tendril silhouette. No floating glitter, extra soil, missing leaf surfaces, frame labels or exterior matte.

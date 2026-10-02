@@ -1,0 +1,22 @@
+Create a square transparent4x4 sprite bank, EXACTLY16 COMPLETE Chocolate Cosmos plants in REVERSE maturity order. Cell1 is the attached original mature destination; cells2-16 progressively fold its existing heads closed. One whole plant per equal cell, row-major, no text/guides/background. Fixed split textured bean/stone ring, five thin stems, dense finely divided feathery foliage and camera/baseline in every cell. True transparent exterior, intact opaque painterly wine-brown petals with warm highlights.
+
+FIVE PERMANENT TERMINAL SITES in EVERY cell: A large high-CENTER head; B medium RIGHT head; C smaller LOW-LEFT head; D small UPPER-RIGHT head; E CLOSED UPPER-LEFT bud. Same attachments/unequal heights throughout. E stays closed and never becomes a fifth open flower. All heads remain attached while folding; no deletion, relocation, equalizing into a triangle or simplification of feathery leaves. Cell1 must retain four UNEQUAL heads in varied opening stages and small retained E bud, exactly as reference.
+
+1 mature reference: A/B/C open with warm recessed centers; D is smaller PARTLY OPEN cup; E closed. Dense divided foliage and fixed bean.
+2 A/B/C unchanged open, D partly-open outer tips curl inward slightly, E closed.
+3 A/B/C unchanged, D narrows its cup further; E closed.
+4 A/B/C unchanged, D's remaining small outer petals fold inward, warm center nearly concealed; E closed.
+5 A/B/C open, D now a CLOSED wine bud at same upper-right site; E closed.
+6 A/B open, C low-left starts curling outer petals inward; D/E closed.
+7 A/B open, C becomes half-open cup; D/E closed.
+8 A/B open, C closes to wine bud; D/E still closed, all FIVE sites retained.
+9 A high-center open, B right petals start curling inward; C/D/E closed.
+10 A open, B becomes a half-open cup with narrower center; C/D/E closed.
+11 A open, B closes to wine bud; C/D/E remain closed.
+12 A outer petals lift into a deep cup; B/C/D/E closed.
+13 A folds into a narrow cup, golden center nearly hidden; all four other sites closed and visible.
+14 A becomes closed wine bud; B/C/D wine buds and E original closed green/wine bud remain at their sites.
+15 all FIVE closed heads retain site/relative size; green sepals cup more of A/B/C/D wine tips.
+16 all FIVE tight green buds with subtle wine tips on unchanged mature five-stem/divided-leaf architecture. A largest, B medium, C/D smaller, E tiniest. Same bean and foliage. No missing future head.
+
+Close petals by folding/overlap, never deleting whole heads or suddenly adding foliage. Keep petals dark chocolate-wine rather than bright red. Preserve original head-to-bean proportions, airy varied branch heights and feathery foliage. Cells1-5 must visibly curl D through different cup shapes so reversed playback gives purposeful last-five opening toward its smaller partly-open finish. Do not make all flowers identical size or fully frontal. Whole plants clear of cell/canvas edges.

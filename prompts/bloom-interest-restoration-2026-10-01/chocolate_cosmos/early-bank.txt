@@ -1,0 +1,15 @@
+Create square transparent3x3 sprite bank, EXACTLY9 complete Chocolate Cosmos early growth poses, row-major, equal cells. Attached reference is the mature FIVE-CLOSED-BUD architecture reached at the end. Fixed textured split brown bean and small earth/stone ring, same size/camera/base in all9. One whole plant per cell with clear margins, no text/guides/background. Opaque fine painterly material and true transparent exterior.
+
+FIVE final sites: A high CENTER largest bud; B medium RIGHT bud; C smaller LOW-LEFT bud; D small UPPER-RIGHT bud; E tiny UPPER-LEFT bud. Once a stem/site emerges it persists at that attachment. Buds all remain CLOSED, no open flower faces yet. Finely divided feathery foliage grows around stem base; do not substitute broad oval leaves. Keep original uneven branch heights and airy thin stems.
+
+1 fixed bean/ring with tiny green point in split.
+2 same bean/ring; short green sprout with tiny divided leaf tips.
+3 sprout grows, two small finely divided leaf sprays unfold left/right.
+4 retained divided leaves expand; main A stem lengthens centrally, side B/C branch tips begin forming.
+5 same bean; three main stems A/B/C lengthen with tiny green terminal points, D/E side shoots begin above foliage. More fine divided leaf segments unfold.
+6 ALL FIVE distinct thin stems/sites established, still short: central A, right B, low-left C, upper-right D, upper-left E. Tiny green buds at every tip. Dense feathery leaves developing below, no site disappears afterward.
+7 same five stems elongate toward reference heights, A largest bud, B medium, C/D smaller, E tiniest. Five closed green tips gain faint wine color. Feathery foliage approaches final fan.
+8 same complete five-site plant, all closed buds enlarge, wine tips become clearer. Thin stems/foliage nearly reference architecture; retain uneven heights and all attachments.
+9 matches attached closed reference: dense finely divided foliage, FIVE closed wine-tipped green buds at fixed uneven positions, A largest at high-center, B medium right, C/D smaller, E tiny upper-left. Same textured bean/ring and mature stem architecture. No open heads.
+
+Smooth cumulative growth, no mature plant at start, no new site replacing another, no bean shrink or per-cell zoom. All9 whole plants fit generous transparent cell margins. Future flowers will be dark chocolate-wine, not bright red; preserve their subdued color even in closed tips.

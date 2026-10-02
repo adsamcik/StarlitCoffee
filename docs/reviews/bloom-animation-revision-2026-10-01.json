@@ -28059,6 +28059,66 @@
       "animation_id": "blackberry",
       "review": "docs/reviews/berry-family-redesign-2026-10-01.json",
       "note": "The archived 44-animation hashes describe the earlier checkpoint; current berry artwork restores its richer species-specific finish."
+    },
+    {
+      "animation_id": "bleeding_heart",
+      "review": "docs/reviews/bloom-interest-restoration-2026-10-01.json",
+      "note": "Restoration uses separate Astra gates for mature-design interest and full growth continuity; preceding44 hashes remain the earlier checkpoint."
+    },
+    {
+      "animation_id": "jade_vine",
+      "review": "docs/reviews/bloom-interest-restoration-2026-10-01.json",
+      "note": "Restoration uses separate Astra gates for mature-design interest and full growth continuity; preceding44 hashes remain the earlier checkpoint."
+    },
+    {
+      "animation_id": "myosotis_sylvatica",
+      "review": "docs/reviews/bloom-interest-restoration-2026-10-01.json",
+      "note": "Restoration uses separate Astra gates for mature-design interest and full growth continuity; preceding44 hashes remain the earlier checkpoint."
+    },
+    {
+      "animation_id": "queen_of_the_night",
+      "review": "docs/reviews/bloom-interest-restoration-2026-10-01.json",
+      "note": "Restoration uses separate Astra gates for mature-design interest and full growth continuity; preceding44 hashes remain the earlier checkpoint."
+    },
+    {
+      "animation_id": "snowdrop",
+      "review": "docs/reviews/bloom-interest-restoration-2026-10-01.json",
+      "note": "Restoration uses separate Astra gates for mature-design interest and full growth continuity; preceding44 hashes remain the earlier checkpoint."
+    },
+    {
+      "animation_id": "chocolate_cosmos",
+      "review": "docs/reviews/bloom-interest-restoration-2026-10-01.json",
+      "note": "Restoration uses separate Astra gates for mature-design interest and full growth continuity; preceding44 hashes remain the earlier checkpoint."
+    },
+    {
+      "animation_id": "pincushion_firework",
+      "review": "docs/reviews/bloom-interest-restoration-2026-10-01.json",
+      "note": "Restoration uses separate Astra gates for mature-design interest and full growth continuity; preceding44 hashes remain the earlier checkpoint."
+    },
+    {
+      "animation_id": "dahlia_kaleidoscope",
+      "review": "docs/reviews/bloom-interest-restoration-2026-10-01.json",
+      "note": "Restoration uses separate Astra gates for mature-design interest and full growth continuity; preceding44 hashes remain the earlier checkpoint."
+    },
+    {
+      "animation_id": "blue_himalayan_poppy",
+      "review": "docs/reviews/bloom-interest-restoration-2026-10-01.json",
+      "note": "Restoration uses separate Astra gates for mature-design interest and full growth continuity; preceding44 hashes remain the earlier checkpoint."
+    },
+    {
+      "animation_id": "crema_chrysanthemum",
+      "review": "docs/reviews/bloom-interest-restoration-2026-10-01.json",
+      "note": "Restoration uses separate Astra gates for mature-design interest and full growth continuity; preceding44 hashes remain the earlier checkpoint."
+    },
+    {
+      "animation_id": "coffee_brew",
+      "review": "docs/reviews/bloom-interest-restoration-2026-10-01.json",
+      "note": "Restoration uses separate Astra gates for mature-design interest and full growth continuity; preceding44 hashes remain the earlier checkpoint."
+    },
+    {
+      "animation_id": "coffee_starlit",
+      "review": "docs/reviews/bloom-interest-restoration-2026-10-01.json",
+      "note": "Restoration uses separate Astra gates for mature-design interest and full growth continuity; preceding44 hashes remain the earlier checkpoint."
     }
   ]
 }
