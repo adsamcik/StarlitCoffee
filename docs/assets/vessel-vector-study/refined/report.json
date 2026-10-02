@@ -1,0 +1,52 @@
+[
+  {
+    "icon": "espresso",
+    "paths": 8,
+    "colors": 8,
+    "source_sha256": "82c633f24031a0653dda74c3f435fd416dbd0cbb1ec6c39c7febe8d7c968d20d",
+    "svg_sha256": "e4e26b98688697429cfd7ca409667700189a24787c6b6c341e5e8c70b1aa83f4",
+    "android_sha256": "5b5e949096f219cdead74a25f8538ccb0d3eec4f1ad06bac63625d9c7f338393",
+    "svg_bytes": 1411,
+    "android_bytes": 1829
+  },
+  {
+    "icon": "cortado",
+    "paths": 12,
+    "colors": 12,
+    "source_sha256": "6f8ca3158ec067ccca87c0285ff3790447f6df365a7ea7bafe8fe262ce16af51",
+    "svg_sha256": "928bf8b6dc87dd0138e206ce4ed1db08a30fc5ba07cf83ce3b6bdda7504938a5",
+    "android_sha256": "385b34187485565daba71af219753a0110cff74180facb10e83c88162e2b47a0",
+    "svg_bytes": 1574,
+    "android_bytes": 2224
+  },
+  {
+    "icon": "cappuccino",
+    "paths": 10,
+    "colors": 10,
+    "source_sha256": "1a0276c8c0619832f8a4689fadac0b5d5dff3ee398c41157355fbf2410805644",
+    "svg_sha256": "76e53df63f7f93a0b22dea1a0ac4314708ed440785aff8cb692ae59992a1fe14",
+    "android_sha256": "607b1b522c4bc9f3622e3896ebb6e1c3445ccbbcb63054a7a4ba8ee7488af353",
+    "svg_bytes": 1607,
+    "android_bytes": 2270
+  },
+  {
+    "icon": "mug",
+    "paths": 12,
+    "colors": 12,
+    "source_sha256": "419a927be413e8212080e5fd41890b0f655459ebbbd8711dd91918d13f2dd43d",
+    "svg_sha256": "ebd148117222dbdf1047d7a3da2fb3d8fd69605a55672cbf8bdecb306426947b",
+    "android_sha256": "4dd7010983d91af84a7043209e0813553edf746ed7e4b708108efabe8356026a",
+    "svg_bytes": 1894,
+    "android_bytes": 2673
+  },
+  {
+    "icon": "travel",
+    "paths": 15,
+    "colors": 15,
+    "source_sha256": "5b83123667c5bcaf349b93ceb529a17a5431a6b1b6d7c46baca11d682c266c2b",
+    "svg_sha256": "b5c8520085cc3edceb5110417d6d4f7fffe01bbb3f94d5eb20e4f3415a4d1dc2",
+    "android_sha256": "3f7cd44770452aed813fdf753d7dce2898f451eac62214ac7229840af78bc442",
+    "svg_bytes": 1978,
+    "android_bytes": 2931
+  }
+]

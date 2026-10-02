@@ -1,9 +1,17 @@
 # Cup icon vector study — 2 October 2026
 
-Five source-derived SVG and Android VectorDrawable candidates preserve the
-calculator vessels' warm illustrated style while replacing fine grain with
-smooth color regions. This is a reviewable experiment; the app continues to
-use its original PNG resources.
+The initial traced candidates below were rejected during enlarged visual
+review: they retained irregular texture-derived contours and fragmented
+shading. Their native rendering checks remain useful technical evidence,
+but do not establish artwork quality. The study is retained for comparison;
+the app continues to use its original PNGs.
+
+The [hand-drawn revision](refined/README.md) replaces the traced geometry with
+deliberate curves and a separately reviewable enlarged preview.
+
+Five source-derived SVG and Android VectorDrawable candidates explore
+replacing fine grain with color regions. These are experiment assets; the
+app continues to use its original PNG resources.
 
 ![Original raster above, vector candidate below](native-light-34dp.png)
 
@@ -52,8 +60,9 @@ Two Compose cases passed on the Android 16/API 36 x86_64 emulator at 420 dpi.
 They render original PNGs and untinted VectorDrawables with identical complete
 canvases at 34 dp and 96 dp in light and dark themes, asserting the exact image
 bounds. The small icons occupy the same 48 dp cells used by the calculator.
-A separate Astra review approved all four native comparison sheets: handles,
-glass, foam and lid details remain clear without clipping or dark fringes.
+All four native comparison sheets showed open handles, glass, foam and lid
+details without clipping or dark fringes. The later enlarged review rejected
+the visual quality of the traced geometry despite these rendering checks.
 
 The opt-in harness keeps experiment resources and tests out of ordinary builds:
 
