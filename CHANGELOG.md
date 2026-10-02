@@ -72,6 +72,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   plants with retained blossoms and progressive fruit ripening.
   Twelve flower and coffee animations now retain richer final compositions,
   with staged growth and purposeful development through their final frames.
+  Bloom growth now spends longer developing stems and buds, with the completed
+  pose reserved for the end of the countdown.
 - Grinder choices now require a source-backed recommendation for the selected
   method and filter. Five precisely identified models use their actual setting
   notation, including Ode's numbered subdivisions and Niche's stepless dial.

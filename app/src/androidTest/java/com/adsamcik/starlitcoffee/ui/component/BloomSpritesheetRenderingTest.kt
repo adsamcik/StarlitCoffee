@@ -78,20 +78,27 @@ class BloomSpritesheetRenderingTest {
     @Test
     fun everyAnimationRendersDistinctGrowthStagesInBothThemes() {
         val options = optionsForRun()
+        // Sampling elapsed time uniformly intentionally repeats some early poses
+        // under delayed growth. This audit still captures every distinct art pose.
+        val duration = 10_000
         val countdowns = if (InstrumentationRegistry.getArguments().getString("bloomAllFrames") == "true") {
-            (48 downTo 0 step 2).toList()
+            (0..24).map { frame ->
+                (duration downTo 0).first { seconds ->
+                    resolveBloomFrameIndex(resolveBloomProgress(seconds, duration), 25) == frame
+                }
+            }
         } else {
-            listOf(48, 24, 0)
+            listOf(duration, duration / 2, 0)
         }
         val selected = mutableStateOf(options.first())
         val dark = mutableStateOf(false)
-        val remaining = mutableStateOf(48)
+        val remaining = mutableStateOf(duration)
         composeRule.setContent {
             StarlitCoffeeTheme(darkTheme = dark.value, dynamicColor = false) {
                 Surface {
                     BloomSpritesheetAnimation(
                         bloomCountdownSeconds = remaining.value,
-                        bloomDurationSeconds = 48,
+                        bloomDurationSeconds = duration,
                         selectedSpritesheetId = selected.value.id,
                         modifier = Modifier.size(148.dp).testTag("sprite"),
                         isRunning = false,
@@ -117,6 +124,78 @@ class BloomSpritesheetRenderingTest {
                 }
             }
         }
+    }
+
+    @Test
+    fun runningGrowthPausesRestartsAndFinishesWithTheCountdown() {
+        val option = optionsForRun().first()
+        val remaining = mutableStateOf(60)
+        val running = mutableStateOf(true)
+        val showPreview = mutableStateOf(false)
+        composeRule.mainClock.autoAdvance = false
+        composeRule.setContent {
+            StarlitCoffeeTheme(darkTheme = false, dynamicColor = false) {
+                Surface {
+                    if (showPreview.value) {
+                        BloomSpritesheetFinalFramePreview(
+                            option = option,
+                            contentDescription = null,
+                            modifier = Modifier.size(148.dp).testTag("sprite"),
+                        )
+                    } else {
+                        BloomSpritesheetAnimation(
+                            bloomCountdownSeconds = remaining.value,
+                            bloomDurationSeconds = 60,
+                            selectedSpritesheetId = option.id,
+                            modifier = Modifier.size(148.dp).testTag("sprite"),
+                            isRunning = running.value,
+                        )
+                    }
+                }
+            }
+        }
+        val seed = capture()
+        composeRule.runOnIdle { remaining.value = 30 }
+        composeRule.mainClock.advanceTimeByFrame()
+        composeRule.mainClock.advanceTimeBy(1_000)
+        val halfway = capture()
+        assertTrue(!pixels(seed).contentEquals(pixels(halfway)))
+
+        composeRule.runOnIdle { running.value = false }
+        composeRule.mainClock.advanceTimeByFrame()
+        val paused = capture()
+        composeRule.mainClock.advanceTimeBy(5_000)
+        assertArrayEquals(pixels(paused), pixels(capture()))
+
+        composeRule.runOnIdle {
+            running.value = true
+            remaining.value = 1
+        }
+        composeRule.mainClock.advanceTimeByFrame()
+        composeRule.mainClock.advanceTimeBy(1_000)
+        val unfinished = capture()
+        composeRule.runOnIdle { remaining.value = 0 }
+        composeRule.mainClock.advanceTimeByFrame()
+        val finished = capture()
+        composeRule.runOnIdle { showPreview.value = true }
+        composeRule.mainClock.advanceTimeByFrame()
+        val preview = capture()
+        assertTrue(!pixels(unfinished).contentEquals(pixels(preview)))
+        assertArrayEquals(pixels(preview), pixels(finished))
+
+        composeRule.runOnIdle {
+            showPreview.value = false
+            remaining.value = 0
+        }
+        composeRule.mainClock.advanceTimeByFrame()
+        assertArrayEquals(pixels(preview), pixels(capture()))
+
+        composeRule.runOnIdle {
+            running.value = false
+            remaining.value = 60
+        }
+        composeRule.mainClock.advanceTimeByFrame()
+        assertArrayEquals(pixels(seed), pixels(capture()))
     }
 
     private fun optionsForRun(): List<BloomSpritesheetOption> {
