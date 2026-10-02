@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,10 +16,14 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -29,7 +34,6 @@ import androidx.compose.material.icons.filled.BookmarkAdd
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.LocalCafe
 import androidx.compose.material3.AssistChip
-import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
@@ -45,6 +49,7 @@ import androidx.compose.material3.InputChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -62,6 +67,10 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -80,7 +89,6 @@ import com.adsamcik.starlitcoffee.data.model.BrewingSet
 import com.adsamcik.starlitcoffee.data.model.GrinderDataProvider
 import com.adsamcik.starlitcoffee.ui.component.BrewingSetEditor
 import com.adsamcik.starlitcoffee.ui.component.BrewingSetPicker
-import com.adsamcik.starlitcoffee.ui.component.brewingSetSummary
 import java.util.UUID
 import com.adsamcik.starlitcoffee.data.model.CalcOp
 import com.adsamcik.starlitcoffee.data.model.CalcToken
@@ -350,11 +358,8 @@ fun CalculatorBrewScreen(
         }
     }
 
-    val pills: @Composable () -> Unit = {
-        // Pills bar — quick-access brew settings near the keyboard, within
-        // thumb reach while the user is entering numbers. Replaces the older
-        // expandable config card.
-        BrewSettingsPillBar(
+    val settingsToolbar: @Composable () -> Unit = {
+        BrewSettingsToolbar(
             sets = state.brewingSets,
             selectedSetId = state.activeBrewingSetId,
             selectedMethod = selectedMethod,
@@ -411,7 +416,7 @@ fun CalculatorBrewScreen(
                 Spacer(modifier = Modifier.height(sectionSpacer))
                 previewAndConfig()
                 Spacer(modifier = Modifier.height(sectionSpacer))
-                pills()
+                settingsToolbar()
             }
             Spacer(modifier = Modifier.width(16.dp))
             Box(
@@ -440,7 +445,7 @@ fun CalculatorBrewScreen(
                 previewAndConfig()
             }
             Spacer(modifier = Modifier.height(sectionSpacer))
-            pills()
+            settingsToolbar()
             // Calculator keyboard — pinned to bottom, outside scroll
             Spacer(modifier = Modifier.height(barSpacer))
             keyboard()
@@ -654,8 +659,7 @@ private fun ExpressionDisplay(
 }
 
 @Composable
-@OptIn(ExperimentalLayoutApi::class)
-private fun BrewSettingsPillBar(
+internal fun BrewSettingsToolbar(
     sets: List<BrewingSet>,
     selectedSetId: String?,
     selectedMethod: BrewMethod,
@@ -667,51 +671,60 @@ private fun BrewSettingsPillBar(
     onResumeSession: (String) -> Unit,
     onManage: (() -> Unit)?,
 ) {
-    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-        androidx.compose.foundation.layout.FlowRow(modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            BrewingSetPicker(sets, selectedSetId, grinderData, onSetChange, onManage)
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Row(modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            BrewingSetPicker(sets, selectedSetId, grinderData, onSetChange, onManage,
+                modifier = Modifier.weight(1f).fillMaxHeight(), showSummary = true)
             val ratioOptions = selectedMethod.calculatorRatioOptions(ratio)
-            PillDropdown(
+            RatioDropdown(
                 label = "1:${formatCalculatorRatio(ratio)}",
                 options = ratioOptions.map { value ->
-                    PillOption("1:${formatCalculatorRatio(value)}", value == ratio) { onRatioChange(value) }
+                    RatioOption("1:${formatCalculatorRatio(value)}", value == ratio) { onRatioChange(value) }
                 },
+                modifier = Modifier.fillMaxHeight(),
+                contentDescription = stringResource(R.string.cd_ratio, formatCalculatorRatio(ratio)),
             )
-            recoverableSessionId?.let { id ->
-                AssistChip(onClick = { onResumeSession(id) }, label = { Text(stringResource(R.string.action_resume)) })
-            }
         }
-        sets.find { it.id == selectedSetId }?.let { selected ->
-            val summary = brewingSetSummary(selected, grinderData)
-            if (summary.isNotEmpty()) Text(summary, style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant)
+        recoverableSessionId?.let { id ->
+            AssistChip(onClick = { onResumeSession(id) }, label = { Text(stringResource(R.string.action_resume)) })
         }
     }
 }
 
-private data class PillOption(
+private data class RatioOption(
     val label: String,
     val selected: Boolean,
     val onClick: () -> Unit,
 )
 
 @Composable
-private fun PillDropdown(
+private fun RatioDropdown(
     label: String,
-    options: List<PillOption>,
+    options: List<RatioOption>,
     modifier: Modifier = Modifier,
+    contentDescription: String,
 ) {
     var expanded by remember { mutableStateOf(false) }
     val arrowRotation by animateFloatAsState(
         targetValue = if (expanded) 180f else 0f,
-        label = "PillDropdownArrow",
+        label = "RatioDropdownArrow",
     )
-    Box {
-        AssistChip(
+    Box(modifier = modifier) {
+        Surface(
             onClick = { expanded = true },
-            modifier = modifier,
-            label = {
+            modifier = Modifier.fillMaxHeight().heightIn(min = 56.dp).widthIn(min = 88.dp)
+                .testTag("calculator_ratio_picker")
+                .semantics { this.contentDescription = contentDescription; role = Role.Button },
+            shape = RoundedCornerShape(16.dp),
+            color = if (expanded) MaterialTheme.colorScheme.secondaryContainer
+                else MaterialTheme.colorScheme.surfaceContainerHigh,
+            contentColor = if (expanded) MaterialTheme.colorScheme.onSecondaryContainer
+                else MaterialTheme.colorScheme.onSurface,
+        ) {
+            Row(Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = label,
                     style = MaterialTheme.typography.labelLarge,
@@ -719,39 +732,16 @@ private fun PillDropdown(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-            },
-            trailingIcon = {
                 Icon(
                     imageVector = Icons.Filled.KeyboardArrowDown,
                     contentDescription = null,
                     modifier = Modifier
-                        .size(AssistChipDefaults.IconSize)
+                        .size(18.dp)
                         .rotate(arrowRotation),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-            },
-            colors = AssistChipDefaults.assistChipColors(
-                containerColor = if (expanded) {
-                    MaterialTheme.colorScheme.secondaryContainer
-                } else {
-                    Color.Transparent
-                },
-                labelColor = if (expanded) {
-                    MaterialTheme.colorScheme.onSecondaryContainer
-                } else {
-                    MaterialTheme.colorScheme.onSurface
-                },
-                trailingIconContentColor = if (expanded) {
-                    MaterialTheme.colorScheme.onSecondaryContainer
-                } else {
-                    MaterialTheme.colorScheme.onSurfaceVariant
-                },
-            ),
-            border = if (expanded) {
-                null
-            } else {
-                AssistChipDefaults.assistChipBorder(enabled = true)
-            },
-        )
+            }
+        }
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
@@ -822,7 +812,6 @@ private fun CalculatorKeyboard(
     onBrew: () -> Unit,
 ) {
     val rowSpacing = if (isCompactHeight) 6.dp else 8.dp
-    val presetRowHeight = if (isCompactHeight) 44.dp else 48.dp
     // Tall phones (e.g. Pixel 7 Pro, Galaxy S24 Ultra in portrait) leave too
     // much empty space above the keyboard with the standard 56dp keys, so
     // grow them for easier thumb reach. Compact wins over tall when both
@@ -835,51 +824,7 @@ private fun CalculatorKeyboard(
     Column(
         verticalArrangement = Arrangement.spacedBy(rowSpacing),
     ) {
-        // Row 1: Preset buttons + backspace.
-        // Chips use the default tonal container — a single neutral colour from
-        // the active scheme — so the row reads as one calm strip of icons
-        // rather than five competing colour blocks. Per-preset [CupPreset.colorHex]
-        // is intentionally ignored here: it's still useful for list/settings
-        // contexts, but inside the calculator it was too loud for what is
-        // ultimately a quick-tap utility row. Icons fill ~70% of the chip so
-        // the vessel art is legible at this 44-48dp size.
-        val presetIconSize = if (isCompactHeight) 32.dp else 34.dp
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(rowSpacing),
-        ) {
-            presets.take(5).forEach { preset ->
-                FilledTonalIconButton(
-                    onClick = { onPreset(preset) },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(presetRowHeight),
-                ) {
-                    PresetIcon(
-                        iconName = preset.iconName,
-                        contentDescription = preset.name,
-                        modifier = Modifier.size(presetIconSize),
-                    )
-                }
-            }
-            // Fill remaining space if fewer than 5 presets
-            repeat((5 - presets.take(5).size).coerceAtLeast(0)) {
-                Spacer(modifier = Modifier.weight(1f))
-            }
-            // Backspace button
-            FilledTonalIconButton(
-                onClick = onBackspace,
-                modifier = Modifier
-                    .weight(1f)
-                    .height(presetRowHeight),
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.Backspace,
-                    contentDescription = stringResource(R.string.cd_backspace),
-                    modifier = Modifier.size(22.dp),
-                )
-            }
-        }
+        CalculatorPresetBar(presets, onPreset, onBackspace)
 
         // Visual breath between the preset/utility row and the calculation rows.
         if (!isCompactHeight) {
@@ -934,6 +879,45 @@ private fun CalculatorKeyboard(
             CalcKey("0", Modifier.weight(2f).height(keyHeight)) { onDigit('0') }
             CalcKey(".", Modifier.weight(1f).height(keyHeight)) { onDecimal() }
             ClearKey(Modifier.weight(1f).height(keyHeight)) { onClear() }
+        }
+    }
+}
+
+@Composable
+internal fun CalculatorPresetBar(
+    presets: List<CupPreset>,
+    onPreset: (CupPreset) -> Unit,
+    onBackspace: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(modifier = modifier.fillMaxWidth().testTag("calculator_preset_bar"),
+        horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+        if (presets.isNotEmpty()) {
+            Surface(modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(16.dp),
+                color = MaterialTheme.colorScheme.surfaceContainerLow) {
+                // Cups scroll on small windows; delete stays in place with its own touch target.
+                LazyRow(modifier = Modifier.testTag("calculator_cup_presets"),
+                    contentPadding = PaddingValues(horizontal = 4.dp),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally)) {
+                    items(presets.take(5)) { preset ->
+                        IconButton(onClick = { onPreset(preset) },
+                            modifier = Modifier.size(48.dp).testTag("calculator_preset_${preset.id}")) {
+                            PresetIcon(preset.iconName, preset.name, Modifier.size(34.dp))
+                        }
+                    }
+                }
+            }
+        } else {
+            Spacer(Modifier.weight(1f))
+        }
+        FilledTonalIconButton(onClick = onBackspace,
+            modifier = Modifier.size(48.dp).testTag("calculator_backspace"),
+            shape = RoundedCornerShape(16.dp),
+            colors = IconButtonDefaults.filledTonalIconButtonColors(
+                containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                contentColor = MaterialTheme.colorScheme.onSurfaceVariant)) {
+            Icon(Icons.AutoMirrored.Filled.Backspace, stringResource(R.string.cd_backspace), Modifier.size(22.dp))
         }
     }
 }

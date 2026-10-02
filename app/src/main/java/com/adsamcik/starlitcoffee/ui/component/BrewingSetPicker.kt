@@ -32,6 +32,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -47,18 +49,30 @@ import com.adsamcik.starlitcoffee.ui.util.localizedDisplayName
 fun BrewingSetPicker(
     sets: List<BrewingSet>, selectedId: String?, grinderData: GrinderDataProvider,
     onSelect: (String) -> Unit, onManage: (() -> Unit)? = null,
+    modifier: Modifier = Modifier,
+    showSummary: Boolean = false,
 ) {
     if (sets.isEmpty()) return
     val active = sets.find { it.id == selectedId } ?: sets.first()
     var expanded by remember { mutableStateOf(false) }
     Surface(onClick = { expanded = true }, shape = RoundedCornerShape(16.dp),
         color = MaterialTheme.colorScheme.secondaryContainer,
-        modifier = Modifier.heightIn(min = 48.dp).widthIn(max = 220.dp).testTag("brewing_set_picker")) {
+        modifier = modifier.heightIn(min = if (showSummary) 56.dp else 48.dp)
+            .then(if (showSummary) Modifier else Modifier.widthIn(max = 220.dp))
+            .testTag("brewing_set_picker").semantics { role = Role.Button }) {
         Row(Modifier.padding(horizontal = 12.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             EquipmentIcon(EquipmentVisual.method(active.method), Modifier.size(28.dp))
-            Text(brewingSetName(active), style = MaterialTheme.typography.labelLarge,
-                maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f, fill = false))
+            Column(Modifier.weight(1f, fill = showSummary), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                Text(brewingSetName(active), style = MaterialTheme.typography.labelLarge,
+                    maxLines = 1, overflow = TextOverflow.Ellipsis)
+                if (showSummary) {
+                    val summary = brewingSetSummary(active, grinderData)
+                    if (summary.isNotEmpty()) Text(summary, style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSecondaryContainer,
+                        maxLines = 1, overflow = TextOverflow.Ellipsis)
+                }
+            }
             Icon(Icons.Default.ExpandMore, null, Modifier.size(20.dp))
         }
     }
