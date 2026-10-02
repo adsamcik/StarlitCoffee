@@ -15,7 +15,6 @@ import numpy as np
 from PIL import Image
 
 import monochrome_icons as trace
-import render_method_icons as authored
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -77,9 +76,7 @@ def main() -> None:
                 continue
             winner, svg = min(passing, key=lambda candidate: (candidate[0].command_count, candidate[0].svg_bytes))
             shutil.copyfile(svg, spec.traced_svg)
-            # These historical traces remain provenance, not the authored source.
-            if key not in authored.authored_keys():
-                trace.write_vector_drawable(spec.traced_svg, spec.vector_drawable)
+            trace.write_vector_drawable(spec.traced_svg, spec.vector_drawable)
             selected.append((spec, spec.traced_svg))
             reports["icons"][key] = {
                 "source_sha256": hashlib.sha256(spec.imagegen_source.read_bytes()).hexdigest(),
@@ -91,14 +88,9 @@ def main() -> None:
             print(f"Traced {key}: {winner.command_count} commands", flush=True)
         trace.make_comparison_sheet(selected, ASSETS / "equipment-vector-comparison.png", temp, magick)
         trace.make_small_size_sheet(selected, ASSETS / "equipment-small-size-comparison.png", temp, magick)
-    reports["production_overrides"] = {
-        key: f"docs/assets/method-icon-refinement/svg/equipment_{key}.svg"
-        for key in authored.authored_keys()
-    }
     (ASSETS / "equipment-vector-report.json").write_text(json.dumps(reports, indent=2) + "\n", encoding="utf-8")
     if failures:
         raise RuntimeError(f"No contour passed fidelity and topology gates: {failures}")
-    authored.main()
 
 
 if __name__ == "__main__":

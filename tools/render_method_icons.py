@@ -1,7 +1,7 @@
-"""Export authored brewing-method SVGs and render review sheets directly from paths.
+"""Export the rejected brewing-method study and render review sheets from paths.
 
 Run: uv run --offline --with pillow==12.3.0 python tools/render_method_icons.py
-ImageMagick must be available. The four SVGs are the editable production sources;
+ImageMagick must be available. The four SVGs are editable study sources only;
 the before/ directory holds immutable snapshots of the previous traced artwork.
 """
 
@@ -19,7 +19,7 @@ from PIL import Image, ImageDraw, ImageFont
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'docs/assets/method-icon-refinement'
 TEMP = ROOT / 'build/method-icon-refinement'
-DRAWABLES = ROOT / 'app/src/main/res/drawable'
+DRAWABLES = OUT / 'android'
 KEYS = ('pulsar', 'aeropress', 'espresso', 'chemex')
 ALL_METHODS = ('pulsar', 'v60', 'french_press', 'aeropress', 'espresso', 'moka_pot', 'cold_brew', 'chemex')
 LABELS = {'pulsar': 'Pulsar', 'v60': 'V60', 'french_press': 'French press', 'aeropress': 'AeroPress',
@@ -69,6 +69,7 @@ def export_android(key: str) -> Path:
         })
     ET.indent(vector, space='    ')
     output = DRAWABLES / f'equipment_{key}.xml'
+    output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(ET.tostring(vector, encoding='unicode') + '\n', encoding='utf-8', newline='\n')
     return output
 
@@ -95,10 +96,10 @@ def font(size: int) -> ImageFont.FreeTypeFont:
 def comparison() -> None:
     sheet = Image.new('RGBA', (1120, 780), BACKGROUND)
     draw = ImageDraw.Draw(sheet)
-    draw.text((32, 18), 'Brewing method icons', font=font(30), fill=INK)
-    draw.text((32, 63), 'Clearer equipment shapes in the same monochrome family', font=font(20), fill='#73778A')
+    draw.text((32, 18), 'Rejected method icon study', font=font(30), fill=INK)
+    draw.text((32, 63), 'Design history only — original icons restored in the app', font=font(20), fill='#73778A')
     draw.text((32, 152), 'Before', font=font(19), fill='#73778A')
-    draw.text((32, 328), 'Reworked', font=font(19), fill=INK)
+    draw.text((32, 328), 'Rejected', font=font(19), fill=INK)
     draw.text((32, 540), '48px badges', font=font(16), fill='#73778A')
     for i, key in enumerate(KEYS):
         x = 196 + i * 228
@@ -136,7 +137,8 @@ def small_sizes() -> None:
 
 def main() -> None:
     TEMP.mkdir(parents=True, exist_ok=True)
-    report = {'source': 'authored monochrome SVG paths; manufacturer references in README.md',
+    report = {'status': 'rejected by user; study only; original production icons restored',
+              'source': 'authored monochrome SVG paths; manufacturer references in README.md',
               'viewport': '32 × 32; 24dp intrinsic size; about 81% maximum glyph dimension',
               'validation': 'deterministic SVG-to-Android path export and direct SVG raster previews',
               'icons': {}}
@@ -152,8 +154,8 @@ def main() -> None:
         render(key, 1024).save(OUT / f'{key}-1024.png')
     comparison()
     small_sizes()
-    (OUT / 'report.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
-    print('Exported four production method icons and review sheets.', flush=True)
+    (OUT / 'report.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8', newline='\n')
+    print('Exported four study icons and review sheets; app resources untouched.', flush=True)
 
 
 if __name__ == '__main__':

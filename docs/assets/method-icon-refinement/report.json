@@ -1,4 +1,5 @@
 {
+  "status": "rejected by user; study only; original production icons restored",
   "source": "authored monochrome SVG paths; manufacturer references in README.md",
   "viewport": "32 \u00d7 32; 24dp intrinsic size; about 81% maximum glyph dimension",
   "validation": "deterministic SVG-to-Android path export and direct SVG raster previews",
