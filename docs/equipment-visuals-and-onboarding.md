@@ -63,7 +63,21 @@ Model identity references: [Pulsar](https://nextlevelbrewer.com/shop/nextlevel-p
 [Encore ESP](https://www.baratza.com/en-us/product/ZCG495),
 [Niche Zero](https://www.nichecoffee.co.uk/).
 
-## Generated artwork and deterministic conversion
+## Authored method refinements
+
+Pulsar, AeroPress, Espresso and Chemex now use authored monochrome SVGs to make
+their equipment shapes clearer: a substantial Pulsar valve base, AeroPress's
+stepped plunger, a separated Espresso portafilter/steam wand, and Chemex's open
+glass body and collar. Resource names and the shared presentation API are the
+same. The new source, references, reproduction command and before/after sheets
+are in [method-icon-refinement/README.md](assets/method-icon-refinement/README.md).
+
+`tools/render_method_icons.py` exports these four production resources. The
+legacy tracing runner preserves these authored overrides and invokes their
+exporter after rebuilding the original traces. The earlier raster fidelity
+reports below describe the historical concepts, not the new authored shapes.
+
+## Original generated artwork and deterministic conversion
 
 Built-in ImageGen generated one raster per asset in a shared monochrome style.
 The exact prompts and immutable source paths are in
@@ -81,8 +95,9 @@ uv run --with vtracer==1.0.0a3 --with pillow==12.3.0 --with numpy==2.3.5 python 
 ImageMagick must be on PATH. Generated dark pixels are thresholded at 128, cropped
 and centered in a 1024px mask with an 832px maximum silhouette dimension. VTracer
 fits contours at several simplification tolerances. The smallest candidate
-passing every gate becomes the Android VectorDrawable; no path coordinates are
-hand authored or corrected.
+passing every gate became the original Android VectorDrawable; those traced
+contours did not have hand-authored path coordinates. The four method
+refinements above intentionally replace their original contours.
 
 The gates require soft alpha IoU >=0.94, binary IoU >=0.95 at 24px / >=0.94 at
 32px and 48px, 95th-percentile boundary displacement <=1px, and identical
@@ -100,7 +115,7 @@ then add its presentation mapping. Support eligibility stays in the existing
 equipment/recommendation data. Never add a supported model merely because an
 illustration exists.
 
-## Verification and previews
+## Original workflow verification and previews
 
 Detekt, the debug build and Android-test APK build pass. The JVM suite has
 1,439 passing tests and four skips. The 22 affected Android checks pass across

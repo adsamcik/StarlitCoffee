@@ -1,0 +1,10 @@
+// Opt-in artwork capture using production mappings and components in a disposable app.
+allprojects { project ->
+    project.plugins.withId('com.android.application') {
+        project.extensions.getByName('androidComponents').finalizeDsl { android ->
+            android.buildTypes.getByName('debug').applicationIdSuffix = '.methodiconcheck'
+            android.sourceSets.getByName('androidTest').kotlin.directories.add(
+                project.rootProject.file('tools/method_icon_refinement/native-src').absolutePath)
+        }
+    }
+}

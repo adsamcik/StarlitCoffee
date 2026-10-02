@@ -1,0 +1,4 @@
+pixelsPerDp=2.625
+dynamicColor=false
+badge=48dp
+iconSizes=24,28,34,44dp
