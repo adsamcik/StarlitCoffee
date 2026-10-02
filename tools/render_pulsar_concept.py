@@ -17,7 +17,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--version', type=int, choices=(3, 4), default=3)
+parser.add_argument('--version', type=int, choices=(3, 4, 5), default=3)
 VERSION = parser.parse_args().version
 OUT = ROOT / f'docs/assets/method-icon-concept-v{VERSION}'
 TEMP = ROOT / f'build/method-icon-concept-v{VERSION}'
@@ -28,9 +28,9 @@ INK = '#595C69'
 BACKGROUND = '#F5F3FA'
 
 
-def render(size: int, ink: str = INK) -> Image.Image:
-    output = TEMP / f'pulsar-{size}.png'
-    subprocess.run([MAGICK, '-background', 'none', '-density', str(size * 12), str(SVG),
+def render(size: int, ink: str = INK, source: Path = SVG) -> Image.Image:
+    output = TEMP / f'{source.parent.name}-{size}.png'
+    subprocess.run([MAGICK, '-background', 'none', '-density', str(size * 12), str(source),
                     '-resize', f'{size}x{size}', str(output)], check=True, capture_output=True)
     with Image.open(output) as raster:
         alpha = raster.convert('RGBA').getchannel('A')
@@ -78,7 +78,9 @@ def main() -> None:
     sheet = Image.new('RGBA', (640, 480), BACKGROUND)
     draw = ImageDraw.Draw(sheet)
     draw.text((32, 24), 'Pulsar', fill=INK, font=font(26))
-    subtitle = 'Vector redraw from your photo' if VERSION == 3 else 'Dispersion cap · flat bed · flow valve'
+    subtitle = ('Designed for small icons' if VERSION == 5 else
+                'Vector redraw from your photo' if VERSION == 3 else
+                'Dispersion cap · flat bed · flow valve')
     draw.text((32, 63), subtitle, fill='#73778A', font=font(17))
     sheet.alpha_composite(render(288), (16, 112))
     draw.text((370, 122), '48dp app badges', fill=INK, font=font(17))
@@ -87,19 +89,28 @@ def main() -> None:
         color, ink, radius = ('#4F5F90', '#FAF8FF', 42) if selected else ('#E2E1ED', '#595C69', 63)
         draw.rounded_rectangle((x, 188, x + 125, 313), radius=radius, fill=color)
         sheet.alpha_composite(render(88, ink), (x + 19, 207))
-    draw.text((348, 354), '24px', fill='#73778A', font=font(14))
-    draw.text((466, 354), '34px', fill='#73778A', font=font(14))
-    sheet.alpha_composite(render(24), (401, 353))
-    sheet.alpha_composite(render(34), (521, 348))
+    if VERSION == 5:
+        previous = ROOT / 'docs/assets/method-icon-concept-v4/pulsar.svg'
+        draw.text((336, 369), 'Previous', fill='#73778A', font=font(14))
+        draw.text((336, 413), 'Revised', fill=INK, font=font(14))
+        for size, x in ((24, 444), (28, 508), (34, 572)):
+            draw.text((x - 2, 339), f'{size}px', fill='#73778A', font=font(14))
+            sheet.alpha_composite(render(size, source=previous), (x, 362 + (34 - size) // 2))
+            sheet.alpha_composite(render(size), (x, 406 + (34 - size) // 2))
+    else:
+        for size, x in ((24, 348), (28, 444), (34, 548)):
+            draw.text((x, 344), f'{size}px', fill='#73778A', font=font(14))
+            sheet.alpha_composite(render(size), (x + 8, 376 + (34 - size) // 2))
     sheet.convert('RGB').save(OUT / 'preview.png')
     report = {
         'status': ('rejected by user; app retains its original icon' if VERSION == 3 else
                    'preview only; app retains its original icon'),
-        'source': ('authored paths by Astra; root supplied user-photo measurements and refined valve clearance'
+        'source': ('root-authored simplification with Astra small-size review' if VERSION == 5 else
+                   'authored paths by Astra; root supplied user-photo measurements and refined valve clearance'
                    if VERSION == 3 else 'authored paths by Astra from primary photos; root refined joins and valve clearance'),
         'svg_sha256': hashlib.sha256(SVG.read_bytes()).hexdigest(),
         'android_sha256': hashlib.sha256(vector.read_bytes()).hexdigest(),
-        'alpha_bounds_px': {str(size): render(size).getchannel('A').getbbox() for size in (24, 34, 88, 1024)},
+        'alpha_bounds_px': {str(size): render(size).getchannel('A').getbbox() for size in (24, 28, 34, 88, 1024)},
         'validation': 'direct SVG rendering and lossless Android path export; no native app capture',
     }
     (OUT / 'report.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8', newline='\n')
