@@ -9,6 +9,7 @@ continues to use its original PNG resources; these are review candidates.
 
 - [89px comparison](comparison-89px.png), equivalent to 34dp at 420dpi.
 - [34px comparison](comparison-34px.png).
+- [Travel cup close-up](travel-detail.png), with transparent preview padding cropped.
 - [Editable SVGs](svg/) and matching [Android VectorDrawables](android/).
 - [Source/output hashes](report.json).
 
@@ -24,6 +25,12 @@ hand-authored the actual SVG paths using Astra's direction and the original
 artwork, with a further Astra review of the enlarged and small previews.
 There is no automatic tracing or embedded bitmap in the new SVG/XML files.
 The generated illustration is a reference only, not a vector deliverable.
+
+The travel cup received a further focused pass: a compact rounded lid with a
+continuous lower-lip shadow, curved paper facets aligned through the sleeve,
+and a flatter sleeve edge with a restrained highlight. Astra found the
+targeted contour issues resolved at 1024px and 89px. The other four drawings
+are unchanged by this pass.
 
 ## Reproduce exports and previews
 

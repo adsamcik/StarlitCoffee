@@ -104,6 +104,20 @@ def comparison(size: int) -> None:
     sheet.convert('RGB').save(OUT / f'comparison-{size}px.png')
 
 
+def detail_sheet(key: str) -> None:
+    # Crop only preview padding; the SVG/XML viewports remain unchanged.
+    icon = render(key, 1024)
+    bounds = icon.getchannel('A').getbbox()
+    if bounds is None:
+        raise ValueError(f'Empty vector artwork: {key}')
+    icon = icon.crop(bounds)
+    sheet = Image.new('RGBA', (icon.width + 96, icon.height + 136), BACKGROUND)
+    draw = ImageDraw.Draw(sheet)
+    draw.text((48, 22), f'{key.title()} cup', font=font(28), fill=INK)
+    sheet.alpha_composite(icon, (48, 88))
+    sheet.convert('RGB').save(OUT / f'{key}-detail.png')
+
+
 def main() -> None:
     (OUT / 'android').mkdir(parents=True, exist_ok=True)
     TEMP.mkdir(parents=True, exist_ok=True)
@@ -122,6 +136,7 @@ def main() -> None:
     enlarged_sheet()
     comparison(89)
     comparison(34)
+    detail_sheet('travel')
     (OUT / 'report.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8', newline='\n')
     print(json.dumps(report, indent=2))
 

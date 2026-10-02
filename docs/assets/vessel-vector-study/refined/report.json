@@ -41,12 +41,12 @@
   },
   {
     "icon": "travel",
-    "paths": 15,
-    "colors": 15,
+    "paths": 16,
+    "colors": 16,
     "source_sha256": "5b83123667c5bcaf349b93ceb529a17a5431a6b1b6d7c46baca11d682c266c2b",
-    "svg_sha256": "b5c8520085cc3edceb5110417d6d4f7fffe01bbb3f94d5eb20e4f3415a4d1dc2",
-    "android_sha256": "3f7cd44770452aed813fdf753d7dce2898f451eac62214ac7229840af78bc442",
-    "svg_bytes": 1978,
-    "android_bytes": 2931
+    "svg_sha256": "290700d2ea8fb29a2eacb374d3522b44a6da17cdacec102282b745cbc56c8017",
+    "android_sha256": "79d349e82fcf11e76ac25166c512358f6f2208f78f4af6415d1c945bc964d820",
+    "svg_bytes": 2085,
+    "android_bytes": 3096
   }
 ]
