@@ -45,7 +45,7 @@ def main() -> None:
     manifest = json.loads((ASSETS / "equipment-imagegen-manifest.json").read_text(encoding="utf-8"))
     selected = []
     failures = []
-    reports = {"path_authoring": "mechanically traced from generated pixels; no manual coordinates",
+    reports = {"path_authoring": "mechanical traces plus explicit approved vector overrides",
                "normalization": "128 darkness threshold; crop and fit 832px inside 1024px; centered",
                "target_sizes": trace.TARGET_SIZES, "icons": {}}
     with tempfile.TemporaryDirectory(prefix="starlit-equipment-icons-") as temporary:
@@ -55,6 +55,16 @@ def main() -> None:
             spec = trace.IconSpec(key, ROOT / entry["source"], ASSETS / f"equipment-{key}-mask.png",
                                  ASSETS / f"equipment-{key}-mask.png", ASSETS / f"equipment-{key}-traced.svg",
                                  DRAWABLES / f"equipment_{key}.xml")
+            if entry.get("authored_vector"):
+                approved = ROOT / entry["authored_vector"]
+                shutil.copyfile(approved, spec.vector_drawable)
+                reports["icons"][key] = {
+                    "path_authoring": "approved authored vector; excluded from raster tracing comparisons",
+                    "source": entry["authored_vector"],
+                    "android_sha256": hashlib.sha256(approved.read_bytes()).hexdigest(),
+                }
+                print(f"Copied approved vector: {key}", flush=True)
+                continue
             prepare_mask(spec.imagegen_source, spec.mask)
             expected = trace.binary_topology(trace.alpha_array(spec.mask))
             trace_input = temp / f"{key}-input.png"

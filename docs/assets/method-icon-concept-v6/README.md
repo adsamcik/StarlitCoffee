@@ -1,5 +1,9 @@
 # Accepted Pulsar icon
 
+Superseded on 2026-10-03: the user preferred the original bold icon family and
+asked to recreate only Pulsar in that style. See [v7](../method-icon-concept-v7/README.md).
+This folder preserves the previously accepted detailed design and its captures.
+
 The user selected this artwork on 2026-10-03, requesting a correction to the
 right leg. The right foot now has a straighter outer edge and a distinct
 opening beside the receding rear support. The other contours and the valve

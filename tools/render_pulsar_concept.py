@@ -17,7 +17,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--version', type=int, choices=(3, 4, 5, 6), default=3)
+parser.add_argument('--version', type=int, choices=(3, 4, 5, 6, 7), default=3)
 VERSION = parser.parse_args().version
 OUT = ROOT / f'docs/assets/method-icon-concept-v{VERSION}'
 TEMP = ROOT / f'build/method-icon-concept-v{VERSION}'
@@ -30,7 +30,9 @@ BACKGROUND = '#F5F3FA'
 
 def render(size: int, ink: str = INK, source: Path = SVG) -> Image.Image:
     output = TEMP / f'{source.parent.name}-{size}.png'
-    subprocess.run([MAGICK, '-background', 'none', '-density', str(size * 12), str(source),
+    viewport = float(ET.parse(source).getroot().get('width', '32'))
+    density = max(96, round(size * 4 * 96 / viewport))
+    subprocess.run([MAGICK, '-background', 'none', '-density', str(density), str(source),
                     '-resize', f'{size}x{size}', str(output)], check=True, capture_output=True)
     with Image.open(output) as raster:
         alpha = raster.convert('RGBA').getchannel('A')
@@ -75,6 +77,23 @@ def font(size: int) -> ImageFont.FreeTypeFont:
     return ImageFont.truetype('C:/Windows/Fonts/segoeui.ttf', size)
 
 
+def family_comparison() -> None:
+    sheet = Image.new('RGBA', (800, 432), BACKGROUND)
+    draw = ImageDraw.Draw(sheet)
+    draw.text((28, 18), 'Original style · Pulsar redrawn', fill=INK, font=font(25))
+    draw.text((28, 56), 'AeroPress, Espresso and Chemex are unchanged', fill='#73778A', font=font(16))
+    draw.text((24, 137), 'Before', fill='#73778A', font=font(16))
+    draw.text((24, 302), 'Now', fill=INK, font=font(16))
+    before = ROOT / 'docs/assets/method-icon-refinement/before'
+    for key, label, x in (('pulsar', 'Pulsar', 102), ('aeropress', 'AeroPress', 280),
+                          ('espresso', 'Espresso', 458), ('chemex', 'Chemex', 636)):
+        original = before / f'equipment_{key}.svg'
+        draw.text((x + 60, 87), label, anchor='mt', fill=INK, font=font(19))
+        sheet.alpha_composite(render(120, source=original), (x, 116))
+        sheet.alpha_composite(render(120, source=SVG if key == 'pulsar' else original), (x, 278))
+    sheet.convert('RGB').save(OUT / 'family-comparison.png')
+
+
 def main() -> None:
     TEMP.mkdir(parents=True, exist_ok=True)
     vector = export_android()
@@ -84,7 +103,8 @@ def main() -> None:
     sheet = Image.new('RGBA', (640, 480), BACKGROUND)
     draw = ImageDraw.Draw(sheet)
     draw.text((32, 24), 'Pulsar', fill=INK, font=font(26))
-    subtitle = ('Accepted artwork · corrected right foot' if VERSION == 6 else
+    subtitle = ('Original style · revised brewer proportions' if VERSION == 7 else
+                'Accepted artwork · corrected right foot' if VERSION == 6 else
                 'Designed for small icons' if VERSION == 5 else
                 'Vector redraw from your photo' if VERSION == 3 else
                 'Dispersion cap · flat bed · flow valve')
@@ -96,7 +116,13 @@ def main() -> None:
         color, ink, radius = ('#4F5F90', '#FAF8FF', 42) if selected else ('#E2E1ED', '#595C69', 63)
         draw.rounded_rectangle((x, 188, x + 125, 313), radius=radius, fill=color)
         sheet.alpha_composite(render(88, ink), (x + 19, 207))
-    if VERSION in (5, 6):
+    if VERSION == 7:
+        draw.text((336, 339), 'Actual pixel sizes', fill='#73778A', font=font(14))
+        for size, x in ((24, 350), (28, 414), (34, 478), (44, 548)):
+            draw.text((x, 369), f'{size}px', fill='#73778A', font=font(14))
+            sheet.alpha_composite(render(size), (x, 397 + (44 - size) // 2))
+        family_comparison()
+    elif VERSION in (5, 6):
         previous = ROOT / 'docs/assets/method-icon-concept-v4/pulsar.svg'
         draw.text((336, 369), 'Previous', fill='#73778A', font=font(14))
         draw.text((336, 413), 'Revised', fill=INK, font=font(14))
@@ -113,9 +139,11 @@ def main() -> None:
     production_matches = production.read_bytes() == vector.read_bytes()
     report = {
         'status': ('rejected by user; app retains its original icon' if VERSION in (3, 5) else
-                   'accepted artwork; production resource matches this export' if VERSION == 6 and production_matches else
-                   'preview only; app retains its original icon'),
-        'source': ('root-authored photo-based redraw after Astra reviewed the rejected simplification'
+                   'production resource matches this export' if VERSION in (6, 7) and production_matches else
+                   'preview only; production resource differs from this export'),
+        'source': ('root-authored solid pictogram in the original family style after Astra construction review'
+                   if VERSION == 7 else
+                   'root-authored photo-based redraw after Astra reviewed the rejected simplification'
                    if VERSION == 6 else
                    'root-authored simplification with Astra small-size review' if VERSION == 5 else
                    'authored paths by Astra; root supplied user-photo measurements and refined valve clearance'
