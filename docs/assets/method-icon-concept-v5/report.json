@@ -1,5 +1,5 @@
 {
-  "status": "preview only; app retains its original icon",
+  "status": "rejected by user; app retains its original icon",
   "source": "root-authored simplification with Astra small-size review",
   "svg_sha256": "7cb42858650473e3003b33d7dce4712d4e4ab0991ca17d8421893a06aed5ca8a",
   "android_sha256": "d8f0fcd733b92b33a328e38773522a551c7a4c06dccec8de14ef8f7958324ded",

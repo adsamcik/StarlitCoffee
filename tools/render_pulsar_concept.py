@@ -17,7 +17,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--version', type=int, choices=(3, 4, 5), default=3)
+parser.add_argument('--version', type=int, choices=(3, 4, 5, 6), default=3)
 VERSION = parser.parse_args().version
 OUT = ROOT / f'docs/assets/method-icon-concept-v{VERSION}'
 TEMP = ROOT / f'build/method-icon-concept-v{VERSION}'
@@ -51,14 +51,20 @@ def export_android() -> Path:
         'android:viewportWidth': '32', 'android:viewportHeight': '32',
     })
     for path in source:
-        if (set(path.attrib) - {'fill', 'd', 'fill-rule'} or path.get('fill') != '#000000'
+        if (set(path.attrib) - {'fill', 'd', 'fill-rule', 'fill-opacity'} or path.get('fill') != '#000000'
                 or not path.get('d') or path.get('fill-rule', 'nonzero') not in ('nonzero', 'evenodd')):
             raise ValueError(f'Unsupported vector path attributes: {path.attrib}')
-        ET.SubElement(vector, 'path', {
+        attributes = {
             'android:fillColor': '#FF000000',
             'android:fillType': 'evenOdd' if path.get('fill-rule') == 'evenodd' else 'nonZero',
             'android:pathData': path.attrib['d'],
-        })
+        }
+        if 'fill-opacity' in path.attrib:
+            opacity = float(path.attrib['fill-opacity'])
+            if not 0 <= opacity <= 1:
+                raise ValueError('Path opacity must be between zero and one')
+            attributes['android:fillAlpha'] = path.attrib['fill-opacity']
+        ET.SubElement(vector, 'path', attributes)
     ET.indent(vector, space='    ')
     output = OUT / 'equipment_pulsar.xml'
     output.write_text(ET.tostring(vector, encoding='unicode') + '\n', encoding='utf-8', newline='\n')
@@ -78,7 +84,8 @@ def main() -> None:
     sheet = Image.new('RGBA', (640, 480), BACKGROUND)
     draw = ImageDraw.Draw(sheet)
     draw.text((32, 24), 'Pulsar', fill=INK, font=font(26))
-    subtitle = ('Designed for small icons' if VERSION == 5 else
+    subtitle = ('Revised silhouette and valve placement' if VERSION == 6 else
+                'Designed for small icons' if VERSION == 5 else
                 'Vector redraw from your photo' if VERSION == 3 else
                 'Dispersion cap · flat bed · flow valve')
     draw.text((32, 63), subtitle, fill='#73778A', font=font(17))
@@ -89,7 +96,7 @@ def main() -> None:
         color, ink, radius = ('#4F5F90', '#FAF8FF', 42) if selected else ('#E2E1ED', '#595C69', 63)
         draw.rounded_rectangle((x, 188, x + 125, 313), radius=radius, fill=color)
         sheet.alpha_composite(render(88, ink), (x + 19, 207))
-    if VERSION == 5:
+    if VERSION in (5, 6):
         previous = ROOT / 'docs/assets/method-icon-concept-v4/pulsar.svg'
         draw.text((336, 369), 'Previous', fill='#73778A', font=font(14))
         draw.text((336, 413), 'Revised', fill=INK, font=font(14))
@@ -103,9 +110,11 @@ def main() -> None:
             sheet.alpha_composite(render(size), (x + 8, 376 + (34 - size) // 2))
     sheet.convert('RGB').save(OUT / 'preview.png')
     report = {
-        'status': ('rejected by user; app retains its original icon' if VERSION == 3 else
+        'status': ('rejected by user; app retains its original icon' if VERSION in (3, 5) else
                    'preview only; app retains its original icon'),
-        'source': ('root-authored simplification with Astra small-size review' if VERSION == 5 else
+        'source': ('root-authored photo-based redraw after Astra reviewed the rejected simplification'
+                   if VERSION == 6 else
+                   'root-authored simplification with Astra small-size review' if VERSION == 5 else
                    'authored paths by Astra; root supplied user-photo measurements and refined valve clearance'
                    if VERSION == 3 else 'authored paths by Astra from primary photos; root refined joins and valve clearance'),
         'svg_sha256': hashlib.sha256(SVG.read_bytes()).hexdigest(),

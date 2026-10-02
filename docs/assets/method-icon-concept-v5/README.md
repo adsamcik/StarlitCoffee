@@ -1,5 +1,9 @@
 # Pulsar icon for small sizes
 
+Rejected by the user: "Does not look like pulsar at all." The simplification
+lost the substantial dispersion collar, curved cylindrical base and proper
+valve placement. These assets are retained as rejected study history.
+
 Preview only, following the user's feedback that v4 is closer but still needs
 refinement and must work as a smaller icon. The app keeps its original icon.
 
