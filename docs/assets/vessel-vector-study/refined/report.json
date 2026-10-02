@@ -44,9 +44,9 @@
     "paths": 16,
     "colors": 16,
     "source_sha256": "5b83123667c5bcaf349b93ceb529a17a5431a6b1b6d7c46baca11d682c266c2b",
-    "svg_sha256": "290700d2ea8fb29a2eacb374d3522b44a6da17cdacec102282b745cbc56c8017",
-    "android_sha256": "79d349e82fcf11e76ac25166c512358f6f2208f78f4af6415d1c945bc964d820",
-    "svg_bytes": 2085,
-    "android_bytes": 3096
+    "svg_sha256": "3f85c60ffb0f21e0fa71d33124d4a3eea52c6a5e77f7c5e50ce23660a4826054",
+    "android_sha256": "59a8cd365ccdec0d73f65300b5e17dd9d02a64207440d4f89a96d364522b07ca",
+    "svg_bytes": 2133,
+    "android_bytes": 3144
   }
 ]

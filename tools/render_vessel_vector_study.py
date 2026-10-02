@@ -63,7 +63,8 @@ def export_android(svg: Path, output: Path) -> list[ET.Element]:
 def render(key: str, size: int) -> Image.Image:
     svg = OUT / 'svg' / f'vessel_icon_{key}.svg'
     target = TEMP / f'{key}-{size}.png'
-    subprocess.run([MAGICK, '-background', 'none', '-density', '384',
+    density = max(384, size * 96 // 256)
+    subprocess.run([MAGICK, '-background', 'none', '-density', str(density),
                     str(svg), '-resize', f'{size}x{size}', str(target)], check=True)
     return Image.open(target).convert('RGBA')
 
@@ -118,6 +119,14 @@ def detail_sheet(key: str) -> None:
     sheet.convert('RGB').save(OUT / f'{key}-detail.png')
 
 
+def travel_seam_detail() -> None:
+    # Render the shared sleeve edge at 8x directly from the vector geometry.
+    icon = render('travel', 2048).crop((138 * 8, 152 * 8, 178 * 8, 180 * 8))
+    sheet = Image.new('RGBA', icon.size, BACKGROUND)
+    sheet.alpha_composite(icon)
+    sheet.convert('RGB').save(OUT / 'travel-seam-detail.png')
+
+
 def main() -> None:
     (OUT / 'android').mkdir(parents=True, exist_ok=True)
     TEMP.mkdir(parents=True, exist_ok=True)
@@ -137,6 +146,7 @@ def main() -> None:
     comparison(89)
     comparison(34)
     detail_sheet('travel')
+    travel_seam_detail()
     (OUT / 'report.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8', newline='\n')
     print(json.dumps(report, indent=2))
 

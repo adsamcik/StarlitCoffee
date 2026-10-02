@@ -10,6 +10,7 @@ continues to use its original PNG resources; these are review candidates.
 - [89px comparison](comparison-89px.png), equivalent to 34dp at 420dpi.
 - [34px comparison](comparison-34px.png).
 - [Travel cup close-up](travel-detail.png), with transparent preview padding cropped.
+- [Travel sleeve seam detail](travel-seam-detail.png), rendered directly at 8x.
 - [Editable SVGs](svg/) and matching [Android VectorDrawables](android/).
 - [Source/output hashes](report.json).
 
@@ -31,6 +32,10 @@ continuous lower-lip shadow, curved paper facets aligned through the sleeve,
 and a flatter sleeve edge with a restrained highlight. Astra found the
 targeted contour issues resolved at 1024px and 89px. The other four drawings
 are unchanged by this pass.
+
+The sleeve's shaded regions share segments of the main lower-edge curve,
+including where the paper facets meet it. This removes a small protruding
+shadow notch visible in enlarged views.
 
 ## Reproduce exports and previews
 
