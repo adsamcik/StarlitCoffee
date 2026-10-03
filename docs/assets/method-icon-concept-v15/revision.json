@@ -1,0 +1,6 @@
+{
+  "parent_version": 14,
+  "subtitle": "Upright paddle beside a round valve face",
+  "source": "Root-authored valve correction after user rejection and Astra anatomy review of the new user reference",
+  "changes": "Remove the horizontal capsule. Depict a solid circular plug face and offset upright, flat-ended paddle over negative clearance on the front foot, matching the new user photo. Keep a short side connection to the mounting foot. Cap, barrel and external base silhouette retain v14 geometry."
+}

@@ -18,7 +18,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--version', type=int, choices=tuple(range(3, 15)), default=3)
+parser.add_argument('--version', type=int, choices=tuple(range(3, 16)), default=3)
 VERSION = parser.parse_args().version
 OUT = ROOT / f'docs/assets/method-icon-concept-v{VERSION}'
 TEMP = ROOT / f'build/method-icon-concept-v{VERSION}'
@@ -94,7 +94,7 @@ def family_comparison() -> None:
                           ('espresso', 'Espresso', 458), ('chemex', 'Chemex', 636)):
         original = before / f'equipment_{key}.svg'
         draw.text((x + 60, 87), label, anchor='mt', fill=INK, font=font(19))
-        baseline = 9 if VERSION >= 10 else 7
+        baseline = 14 if VERSION >= 15 else 9 if VERSION >= 10 else 7
         previous = ROOT / f'docs/assets/method-icon-concept-v{baseline}/pulsar.svg' if VERSION >= 8 and key == 'pulsar' else original
         sheet.alpha_composite(render(120, source=previous), (x, 116))
         sheet.alpha_composite(render(120, source=SVG if key == 'pulsar' else original), (x, 278))

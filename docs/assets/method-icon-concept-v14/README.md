@@ -1,5 +1,9 @@
 # Pulsar: five additional iterations
 
+The user subsequently rejected the valve depiction. The corrected upright
+assembly, based on their new photograph, is in [v15](../method-icon-concept-v15/README.md),
+which supersedes this production source. The captures here remain evidence for v14.
+
 The user requested five more iterations after v9, prioritizing resemblance to
 the actual brewer while retaining the earlier bold filled icon family. Root
 authored each pass after a separate Astra review of the preceding rendered
