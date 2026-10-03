@@ -1,0 +1,37 @@
+{
+  "tested_at": "2026-10-03",
+  "android_sha256": "3be97e77c5935bf434383f191942917f42370d421b7928579f7a855ef83d0d5f",
+  "svg_sha256": "84e403e22c6195a8c8019b16716d78bbf43805d7153606718436a548fa0fa0ad",
+  "app_apk_sha256": "b388fe464826e97d0f7897d87aebd457e06174808c2c0f164fd4a98c3f14dccb",
+  "test_apk_sha256": "0b05cf8a0b4ff2305d7cc203100d3db330501a79656a532b6c8529330953a4bc",
+  "application_id": "com.adsamcik.starlitcoffee.pulsariconcheck",
+  "resource_overlays": false,
+  "device": {
+    "serial": "emulator-5554",
+    "avd": "Medium_Phone",
+    "api": 36,
+    "density_dpi": 420,
+    "pixels_per_dp": 2.625,
+    "disposable_read_only_boot": true
+  },
+  "fixture": "com.adsamcik.starlitcoffee.ui.component.MethodIconCaptureTest",
+  "passed_tests": 2,
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "icon_sizes_dp": [
+    24,
+    28,
+    34,
+    44
+  ],
+  "badge_size_dp": 48,
+  "dynamic_color": false,
+  "attempts": [
+    "First instrumentation process exited before tests; no cause established",
+    "Second invocation passed both tests in 16.965 seconds"
+  ],
+  "scope": "Production EquipmentIcon and EquipmentVisualBadge Compose fixture captures; not a full application workflow test",
+  "cleanup": "Disposable app and test packages removed; emulator retained because concurrent normal debug app installation was observed"
+}

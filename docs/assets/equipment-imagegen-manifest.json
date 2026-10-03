@@ -1,7 +1,7 @@
 [
   {
     "key": "pulsar",
-    "authored_vector": "docs/assets/method-icon-concept-v9/equipment_pulsar.xml",
+    "authored_vector": "docs/assets/method-icon-concept-v14/equipment_pulsar.xml",
     "source": "docs/assets/equipment-pulsar-imagegen-source-v2.png",
     "prompt": "Generate ONE production icon concept for a unified coffee-equipment icon family. Square canvas. Pure solid black shapes on a completely pure white background, no grey, no shading, no gradients, no texture, no text, no logos, no bounding frame, no drop shadow. Flat vector-like filled pictogram with rounded joins and a strong recognizable silhouette; broad white cutouts only, all small details removed. Front or simple side elevation, never perspective. Main object centered and occupies 76% of the square, generous even whitespace. Aim for legibility at 24 to 48 pixels with shapes/cutouts at least 6% of canvas thickness. Friendly and precise, suitable for Material 3 Expressive Android UI. NextLevel Pulsar cylindrical no-bypass brewer. Extremely simplified BOLD FILLED silhouette of a wide upright straight cylinder resting on a flat wide circular foot, with one thick short horizontal valve lever extending right near the bottom. The cylinder must be mostly SOLID BLACK, NOT a thin outlined glass vessel. Exactly ONE very broad white rounded rectangular vertical opening in the center to suggest the chamber; black cylinder walls should be at least 18% of icon width. A simple solid black cap sits directly above the cylinder, separated by ONE broad horizontal white gap of at least 8% icon height. NO shower holes, no visible interior filter disk, no small seams, no side handle, no plunger. At most three connected black regions. Legible at 24px. Do not use realistic exploded view."
   },

@@ -1,0 +1,54 @@
+{
+  "status": "production resource matches this export",
+  "source": "Root-authored pass 5 of 5 after Astra small-size and front-photo review of pass 4",
+  "svg_sha256": "84e403e22c6195a8c8019b16716d78bbf43805d7153606718436a548fa0fa0ad",
+  "android_sha256": "3be97e77c5935bf434383f191942917f42370d421b7928579f7a855ef83d0d5f",
+  "production_resource_matches": true,
+  "alpha_bounds_px": {
+    "24": [
+      4,
+      1,
+      19,
+      23
+    ],
+    "28": [
+      5,
+      1,
+      22,
+      27
+    ],
+    "34": [
+      6,
+      2,
+      27,
+      32
+    ],
+    "44": [
+      8,
+      3,
+      35,
+      41
+    ],
+    "88": [
+      17,
+      6,
+      68,
+      82
+    ],
+    "1024": [
+      204,
+      79,
+      788,
+      942
+    ]
+  },
+  "validation": "direct SVG rendering and lossless Android path export; matching native Compose fixture captures in light and dark themes",
+  "revision": {
+    "iteration": 5,
+    "parent_version": 13,
+    "subtitle": "Flatter foot contacts for small-size clarity",
+    "source": "Root-authored pass 5 of 5 after Astra small-size and front-photo review of pass 4",
+    "changes": "Reduce the two outer feet's bottom corner radii to about 0.42 units and expand their flat contacts from 0.63 to 1.18 units. Mirror them about x15.5 while retaining widths and y29.4 baseline. Retain the central foot, cap, chamber and valve."
+  },
+  "native_validation": "native/validation.json"
+}

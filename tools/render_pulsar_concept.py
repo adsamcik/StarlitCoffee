@@ -11,23 +11,27 @@ import json
 import shutil
 import subprocess
 import xml.etree.ElementTree as ET
+from functools import lru_cache
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--version', type=int, choices=(3, 4, 5, 6, 7, 8, 9), default=3)
+parser.add_argument('--version', type=int, choices=tuple(range(3, 15)), default=3)
 VERSION = parser.parse_args().version
 OUT = ROOT / f'docs/assets/method-icon-concept-v{VERSION}'
 TEMP = ROOT / f'build/method-icon-concept-v{VERSION}'
 SVG = OUT / 'pulsar.svg'
+REVISION = (json.loads((OUT / 'revision.json').read_text(encoding='utf-8'))
+            if (OUT / 'revision.json').is_file() else {})
 NS = '{http://www.w3.org/2000/svg}'
 MAGICK = shutil.which('magick') or 'C:/Program Files/ImageMagick-7.1.2-Q16-HDRI/magick.exe'
 INK = '#595C69'
 BACKGROUND = '#F5F3FA'
 
 
+@lru_cache(maxsize=96)
 def render(size: int, ink: str = INK, source: Path = SVG) -> Image.Image:
     output = TEMP / f'{source.parent.name}-{size}.png'
     viewport = float(ET.parse(source).getroot().get('width', '32'))
@@ -90,14 +94,18 @@ def family_comparison() -> None:
                           ('espresso', 'Espresso', 458), ('chemex', 'Chemex', 636)):
         original = before / f'equipment_{key}.svg'
         draw.text((x + 60, 87), label, anchor='mt', fill=INK, font=font(19))
-        previous = ROOT / 'docs/assets/method-icon-concept-v7/pulsar.svg' if VERSION >= 8 and key == 'pulsar' else original
+        baseline = 9 if VERSION >= 10 else 7
+        previous = ROOT / f'docs/assets/method-icon-concept-v{baseline}/pulsar.svg' if VERSION >= 8 and key == 'pulsar' else original
         sheet.alpha_composite(render(120, source=previous), (x, 116))
         sheet.alpha_composite(render(120, source=SVG if key == 'pulsar' else original), (x, 278))
     sheet.convert('RGB').save(OUT / 'family-comparison.png')
 
 
-def iteration_comparison() -> None:
-    previous = ROOT / 'docs/assets/method-icon-concept-v7/pulsar.svg'
+def iteration_comparison(previous_version: int | None = None,
+                         output_name: str = 'iteration-comparison.png') -> None:
+    if previous_version is None:
+        previous_version = VERSION - 1 if VERSION >= 10 else 7
+    previous = ROOT / f'docs/assets/method-icon-concept-v{previous_version}/pulsar.svg'
     sheet = Image.new('RGBA', (640, 480), BACKGROUND)
     draw = ImageDraw.Draw(sheet)
     draw.text((28, 18), 'Pulsar · refined proportions', fill=INK, font=font(25))
@@ -111,7 +119,7 @@ def iteration_comparison() -> None:
         draw.text((x, 338), f'{size}px', fill='#73778A', font=font(15))
         sheet.alpha_composite(render(size, source=previous), (x, 370 + (44 - size) // 2))
         sheet.alpha_composite(render(size), (x, 420 + (44 - size) // 2))
-    sheet.convert('RGB').save(OUT / 'iteration-comparison.png')
+    sheet.convert('RGB').save(OUT / output_name)
 
 
 def chamber_comparison() -> None:
@@ -134,6 +142,24 @@ def chamber_comparison() -> None:
     sheet.convert('RGB').save(OUT / 'chamber-comparison.png')
 
 
+def five_iterations() -> None:
+    sheet = Image.new('RGBA', (1140, 590), BACKGROUND)
+    draw = ImageDraw.Draw(sheet)
+    draw.text((30, 22), 'Pulsar · five successive iterations', fill=INK, font=font(27))
+    draw.text((30, 63), 'Original filled style · resemblance to the brewer', fill='#73778A', font=font(17))
+    labels = ('Starting point', 'Collar seam', 'Barrel width', 'Base band', 'Valve position', 'Foot contacts')
+    for index, version in enumerate(range(9, 15)):
+        source = ROOT / f'docs/assets/method-icon-concept-v{version}/pulsar.svg'
+        x = 30 + 180 * index
+        draw.text((x + 78, 108), 'Before' if index == 0 else f'Pass {index}', anchor='mt', fill=INK, font=font(20))
+        draw.text((x + 78, 142), labels[index], anchor='mt', fill='#73778A', font=font(15))
+        sheet.alpha_composite(render(160, source=source), (x, 184))
+        for size, y in ((24, 384), (34, 449), (44, 520)):
+            draw.text((x + 24, y + 12), f'{size}px', anchor='rm', fill='#73778A', font=font(14))
+            sheet.alpha_composite(render(size, source=source), (x + 94 - size // 2, y))
+    sheet.convert('RGB').save(OUT / 'five-iterations.png')
+
+
 def main() -> None:
     TEMP.mkdir(parents=True, exist_ok=True)
     vector = export_android()
@@ -150,7 +176,7 @@ def main() -> None:
                 'Designed for small icons' if VERSION == 5 else
                 'Vector redraw from your photo' if VERSION == 3 else
                 'Dispersion cap · flat bed · flow valve')
-    draw.text((32, 63), subtitle, fill='#73778A', font=font(17))
+    draw.text((32, 63), REVISION.get('subtitle', subtitle), fill='#73778A', font=font(17))
     sheet.alpha_composite(render(288), (16, 112))
     draw.text((370, 122), '48dp app badges', fill=INK, font=font(17))
     draw.text((370, 148), 'Rendered at 2.625 px/dp', fill='#73778A', font=font(14))
@@ -158,16 +184,19 @@ def main() -> None:
         color, ink, radius = ('#4F5F90', '#FAF8FF', 42) if selected else ('#E2E1ED', '#595C69', 63)
         draw.rounded_rectangle((x, 188, x + 125, 313), radius=radius, fill=color)
         sheet.alpha_composite(render(88, ink), (x + 19, 207))
-    if VERSION in (7, 8, 9):
+    if VERSION >= 7:
         draw.text((336, 339), 'Actual pixel sizes', fill='#73778A', font=font(14))
         for size, x in ((24, 350), (28, 414), (34, 478), (44, 548)):
             draw.text((x, 369), f'{size}px', fill='#73778A', font=font(14))
             sheet.alpha_composite(render(size), (x, 397 + (44 - size) // 2))
         family_comparison()
-        if VERSION in (8, 9):
+        if VERSION >= 8:
             iteration_comparison()
         if VERSION == 9:
             chamber_comparison()
+        if VERSION == 14:
+            five_iterations()
+            iteration_comparison(9, 'before-after.png')
     elif VERSION in (5, 6):
         previous = ROOT / 'docs/assets/method-icon-concept-v4/pulsar.svg'
         draw.text((336, 369), 'Previous', fill='#73778A', font=font(14))
@@ -185,7 +214,7 @@ def main() -> None:
     production_matches = production.read_bytes() == vector.read_bytes()
     report = {
         'status': ('rejected by user; app retains its original icon' if VERSION in (3, 5) else
-                   'production resource matches this export' if VERSION in (6, 7, 8, 9) and production_matches else
+                   'production resource matches this export' if VERSION >= 6 and production_matches else
                    'preview only; production resource differs from this export'),
         'source': ('root-authored refinement of v8 after Astra front-photo silhouette review'
                    if VERSION == 9 else
@@ -204,6 +233,9 @@ def main() -> None:
         'alpha_bounds_px': {str(size): render(size).getchannel('A').getbbox() for size in (24, 28, 34, 44, 88, 1024)},
         'validation': 'direct SVG rendering and lossless Android path export; no native app capture',
     }
+    if REVISION:
+        report['source'] = REVISION['source']
+        report['revision'] = REVISION
     native_evidence = OUT / 'native/validation.json'
     if native_evidence.is_file():
         native = json.loads(native_evidence.read_text(encoding='utf-8'))

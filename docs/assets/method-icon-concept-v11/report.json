@@ -1,0 +1,53 @@
+{
+  "status": "preview only; production resource differs from this export",
+  "source": "Root-authored pass 2 of 5 after Astra comparison of pass 1 to the front photo",
+  "svg_sha256": "f8f6c0c997adcc7b04d646cb047f192f616c157c1007b24bc9cc7cb6a49817f7",
+  "android_sha256": "181d77d1eeb504d3c89a8d4b7f53d72079a59479215251fb03bea933b84bc88d",
+  "production_resource_matches": false,
+  "alpha_bounds_px": {
+    "24": [
+      4,
+      1,
+      19,
+      23
+    ],
+    "28": [
+      5,
+      1,
+      22,
+      27
+    ],
+    "34": [
+      6,
+      2,
+      27,
+      32
+    ],
+    "44": [
+      8,
+      3,
+      35,
+      41
+    ],
+    "88": [
+      17,
+      6,
+      69,
+      82
+    ],
+    "1024": [
+      204,
+      79,
+      788,
+      942
+    ]
+  },
+  "validation": "direct SVG rendering and lossless Android path export; no native app capture",
+  "revision": {
+    "iteration": 2,
+    "parent_version": 10,
+    "subtitle": "Broader barrel with substantial filled sides",
+    "source": "Root-authored pass 2 of 5 after Astra comparison of pass 1 to the front photo",
+    "changes": "Widen the barrel from 15.8 to 16.4 units and its chamber cutout from 10.3 to 10.9 units, preserving the 2.75-unit side thickness, height and corner radius."
+  }
+}

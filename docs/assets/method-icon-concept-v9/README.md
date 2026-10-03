@@ -1,5 +1,9 @@
 # Pulsar front-view refinement
 
+The user's subsequent request for five more iterations is recorded in
+[v14](../method-icon-concept-v14/README.md), which is now the production source.
+This folder retains v9 and its matching historical native captures.
+
 The user asked to keep iterating, with closer resemblance to the brewer as
 the priority. This 2026-10-03 continuation retains the earlier bold filled
 icon family and changes only Pulsar.

@@ -1,0 +1,53 @@
+{
+  "status": "preview only; production resource differs from this export",
+  "source": "Root-authored pass 4 of 5 after Astra review of pass 3 and the front photo",
+  "svg_sha256": "fde742589b8780a9fd479eee4ba363c21852d2c9f3a80c8b05b39593f6367d0f",
+  "android_sha256": "d1b9f64512ebfac9a5baa399f722f6ffd5aaf37b5ec4b5272dd535f3735c53ae",
+  "production_resource_matches": false,
+  "alpha_bounds_px": {
+    "24": [
+      4,
+      1,
+      19,
+      23
+    ],
+    "28": [
+      5,
+      1,
+      22,
+      27
+    ],
+    "34": [
+      6,
+      2,
+      27,
+      32
+    ],
+    "44": [
+      8,
+      3,
+      35,
+      41
+    ],
+    "88": [
+      17,
+      6,
+      69,
+      82
+    ],
+    "1024": [
+      204,
+      79,
+      788,
+      942
+    ]
+  },
+  "validation": "direct SVG rendering and lossless Android path export; no native app capture",
+  "revision": {
+    "iteration": 4,
+    "parent_version": 12,
+    "subtitle": "Valve centred within the front-foot opening",
+    "source": "Root-authored pass 4 of 5 after Astra review of pass 3 and the front photo",
+    "changes": "Lower the unchanged horizontal paddle by 0.32 units to centreline y27.7, halfway between opening roof y26 and foot baseline y29.4. Retain its central-foot attachment, width, thickness and outer-foot clearance."
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "iteration": 5,
+  "parent_version": 13,
+  "subtitle": "Flatter foot contacts for small-size clarity",
+  "source": "Root-authored pass 5 of 5 after Astra small-size and front-photo review of pass 4",
+  "changes": "Reduce the two outer feet's bottom corner radii to about 0.42 units and expand their flat contacts from 0.63 to 1.18 units. Mirror them about x15.5 while retaining widths and y29.4 baseline. Retain the central foot, cap, chamber and valve."
+}
