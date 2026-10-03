@@ -1,5 +1,8 @@
 # Pulsar in the original icon style
 
+The next refinement is [v8](../method-icon-concept-v8/README.md). This folder
+preserves the previous iteration for comparison.
+
 On 2026-10-03 the user asked to keep the earlier bold filled icon family and
 recreate only Pulsar with a more accurate design. This replaces the detailed
 v6 design, which had been accepted earlier and then superseded by this request.

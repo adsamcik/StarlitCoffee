@@ -1,0 +1,46 @@
+{
+  "status": "preview only; production resource differs from this export",
+  "source": "root-authored refinement of v7 after Astra proportions and small-size review",
+  "svg_sha256": "02a791eb5fd5225debac06fcfc6ddf7b59af34346b6217f5b092933026cb97da",
+  "android_sha256": "8fa447b0c14aab41934209948de431ae4c3aab2477927fef8e3976ff5ad3d97c",
+  "production_resource_matches": false,
+  "alpha_bounds_px": {
+    "24": [
+      4,
+      1,
+      19,
+      23
+    ],
+    "28": [
+      5,
+      1,
+      22,
+      27
+    ],
+    "34": [
+      6,
+      2,
+      27,
+      32
+    ],
+    "44": [
+      8,
+      3,
+      35,
+      41
+    ],
+    "88": [
+      17,
+      6,
+      69,
+      82
+    ],
+    "1024": [
+      204,
+      79,
+      788,
+      942
+    ]
+  },
+  "validation": "direct SVG rendering and lossless Android path export; no native app capture"
+}

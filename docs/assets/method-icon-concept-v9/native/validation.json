@@ -1,0 +1,33 @@
+{
+  "tested_at": "2026-10-03",
+  "android_sha256": "17d86bafa7411c7f7765e03e3402ab060f2e2bd03e587d7226687bce437dbf67",
+  "svg_sha256": "c27c1a25e56881a183f965cc9daa76f3926a45b6a70d7ac1038fa0293dfdda69",
+  "app_apk_sha256": "6a1aabf81ad0e46b7d188e8a784cba22ee823cfefc4dfa9248961b207aaf48c2",
+  "test_apk_sha256": "0b05cf8a0b4ff2305d7cc203100d3db330501a79656a532b6c8529330953a4bc",
+  "application_id": "com.adsamcik.starlitcoffee.pulsariconcheck",
+  "resource_overlays": false,
+  "device": {
+    "serial": "emulator-5554",
+    "avd": "Medium_Phone",
+    "api": 36,
+    "density_dpi": 420,
+    "pixels_per_dp": 2.625,
+    "disposable_read_only_boot": true
+  },
+  "fixture": "com.adsamcik.starlitcoffee.ui.component.MethodIconCaptureTest",
+  "passed_tests": 2,
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "icon_sizes_dp": [
+    24,
+    28,
+    34,
+    44
+  ],
+  "badge_size_dp": 48,
+  "dynamic_color": false,
+  "scope": "Production EquipmentIcon and EquipmentVisualBadge Compose fixture captures; not a full application workflow test",
+  "cleanup": "Disposable app and test packages removed after captures"
+}

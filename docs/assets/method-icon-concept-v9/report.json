@@ -1,0 +1,47 @@
+{
+  "status": "production resource matches this export",
+  "source": "root-authored refinement of v8 after Astra front-photo silhouette review",
+  "svg_sha256": "c27c1a25e56881a183f965cc9daa76f3926a45b6a70d7ac1038fa0293dfdda69",
+  "android_sha256": "17d86bafa7411c7f7765e03e3402ab060f2e2bd03e587d7226687bce437dbf67",
+  "production_resource_matches": true,
+  "alpha_bounds_px": {
+    "24": [
+      4,
+      1,
+      19,
+      23
+    ],
+    "28": [
+      5,
+      1,
+      22,
+      27
+    ],
+    "34": [
+      6,
+      2,
+      27,
+      32
+    ],
+    "44": [
+      8,
+      3,
+      35,
+      41
+    ],
+    "88": [
+      17,
+      6,
+      69,
+      82
+    ],
+    "1024": [
+      204,
+      79,
+      788,
+      942
+    ]
+  },
+  "validation": "direct SVG rendering and lossless Android path export; matching native Compose fixture captures in light and dark themes",
+  "native_validation": "native/validation.json"
+}
