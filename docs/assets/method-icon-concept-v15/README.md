@@ -1,5 +1,9 @@
 # Pulsar valve correction from the user's photograph
 
+This hand-authored design was subsequently rejected. The approved photo-based
+image-generator design is traced and installed from `../pulsar-imagegen-vector/`.
+The artwork and validation here remain historical evidence for v15 only.
+
 The user rejected v14's valve and supplied the assembled white-brewer photo
 preserved in `user-reference.png`. That reference takes priority over the prior
 front photo showing a horizontal valve. The new reference shows a round plug

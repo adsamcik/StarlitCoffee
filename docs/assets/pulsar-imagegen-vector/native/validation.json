@@ -1,0 +1,42 @@
+{
+  "tested_at": "2026-10-03",
+  "source_sha256": "1c5ef2c0778c7ea51dc737ec62c76c6b08c8035916788cea604b3515709a9568",
+  "svg_sha256": "f31e0f3e2af8cc15e713b3554d4d8fcc412c8dbbf37ad3ff968fa1545e7d2a1f",
+  "android_sha256": "a2dac95d678f53ab97c98c13da1ca9ed0965bf23103f8775ab79b2449a8b1158",
+  "app_apk_sha256": "211c08e77047e0060d621513dd42e615057695e0dc6fa92f2d7efc4967307811",
+  "test_apk_sha256": "0b05cf8a0b4ff2305d7cc203100d3db330501a79656a532b6c8529330953a4bc",
+  "application_id": "com.adsamcik.starlitcoffee.pulsariconcheck",
+  "resource_overlays": false,
+  "device": {
+    "serial": "emulator-5554",
+    "avd": "Medium_Phone",
+    "api": 36,
+    "density_dpi": 420,
+    "pixels_per_dp": 2.625,
+    "read_only_boot": true,
+    "renderer": "SwiftShader"
+  },
+  "fixture": "com.adsamcik.starlitcoffee.ui.component.MethodIconCaptureTest",
+  "passed_tests": 2,
+  "duration_seconds": 14.125,
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "icon_sizes_dp": [
+    24,
+    28,
+    34,
+    44
+  ],
+  "badge_size_dp": 48,
+  "dynamic_color": false,
+  "attempts": [
+    "Initial emulator stopped before installation; cause not established",
+    "First instrumentation invocation exited before tests; crash buffer empty; cause not established",
+    "Second invocation passed both tests"
+  ],
+  "scope": "Production EquipmentIcon and EquipmentVisualBadge fixture captures, not full app workflow or physical device validation",
+  "normal_debug_outputs_restored": true,
+  "cleanup": "Disposable icon-check app and test packages removed; dedicated read-only emulator shutdown requested successfully"
+}
