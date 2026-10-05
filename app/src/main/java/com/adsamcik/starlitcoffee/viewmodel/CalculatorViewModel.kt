@@ -284,7 +284,6 @@ class CalculatorViewModel(
 
     fun toggleBeverageOutputMode() {
         val state = _uiState.value
-        if (state.inputDirection != InputDirection.WATER) return
         selectQuantity(
             if (state.waterAmountMode == WaterAmountMode.WATER_INPUT) {
                 CalculatorQuantityTarget.IN_CUP

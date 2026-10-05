@@ -60,6 +60,30 @@ The UI presents rounded grams and explicitly labels the result as approximate.
 The internal calculation retains full floating-point precision for downstream
 brew setup.
 
+## Calculator presentation
+
+The live preview uses one stable glyph per physical quantity: coffee beans for
+dry dose, a water drop for brew water, and a visibly filled cup for collected
+beverage. The compact labels `Coffee`, `Water`, and `In cup` keep the physical
+quantities unambiguous without explanatory copy. The selected calculation
+target has a persistent filled-and-outlined container, and every in-cup value
+retains the `≈` marker.
+All three VectorDrawables are mechanically fitted from approved ImageGen
+concepts; their provenance and raster-fidelity gates are documented in
+`docs/calculation-icon-vectorization.md`.
+The three physical quantities are presented as a single row of large,
+independently tappable cards. The selected card uses the quantity's expressive
+Material colour and higher contrast; unselected cards stay quiet with a subtle
+outline. Tapping any available card makes that quantity the calculator input,
+while the other cards continue to show the values derived from the same brew
+relationship. Methods without a supported beverage-output model keep the
+in-cup card unavailable rather than pretending to know an estimate.
+
+There are no separators, editing label, explanatory sentence, or permanent
+setting below the selector. TalkBack exposes each card's quantity, value,
+selection state, and availability. The French-press residual qualification
+remains contextual.
+
 ## Remembered and named setups
 
 Each method starts at its own ratio and remembers the expression, input

@@ -305,6 +305,43 @@ class CalculatorViewModelTest {
     }
 
     @Test
+    fun `output mode toggle from coffee selects in cup as the active input`() {
+        viewModel.setBrewMethod(BrewMethod.V60)
+        viewModel.setRatio(16f)
+        viewModel.appendDigit('3')
+        viewModel.appendDigit('0')
+        viewModel.appendDigit('0')
+
+        viewModel.toggleBeverageOutputMode()
+
+        val state = viewModel.uiState.value
+        val expectedDose = 300f / (16f - 2.1f)
+        assertEquals(InputDirection.WATER, state.inputDirection)
+        assertEquals(WaterAmountMode.BEVERAGE_OUTPUT, state.waterAmountMode)
+        assertEquals(expectedDose, state.previewDoseG, 0.01f)
+        assertEquals(expectedDose * 16f, state.previewWaterMl, 0.01f)
+        assertEquals(300f, requireNotNull(state.previewBeverageG), 0.01f)
+    }
+
+    @Test
+    fun `output mode toggle from in cup selects water as the active input`() {
+        viewModel.setBrewMethod(BrewMethod.V60)
+        viewModel.setRatio(16f)
+        viewModel.appendDigit('3')
+        viewModel.appendDigit('0')
+        viewModel.appendDigit('0')
+        viewModel.toggleBeverageOutputMode()
+
+        viewModel.toggleBeverageOutputMode()
+
+        val state = viewModel.uiState.value
+        assertEquals(InputDirection.WATER, state.inputDirection)
+        assertEquals(WaterAmountMode.WATER_INPUT, state.waterAmountMode)
+        assertEquals(300f / 16f, state.previewDoseG, 0.01f)
+        assertEquals(300f, state.previewWaterMl, 0.01f)
+    }
+
+    @Test
     fun `ordinary dose input previews method-specific coffee output`() {
         viewModel.setBrewMethod(BrewMethod.AEROPRESS)
         viewModel.setRatio(15f)
