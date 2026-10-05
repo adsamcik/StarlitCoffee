@@ -1,0 +1,106 @@
+{
+  "algorithm": "subpixel-contours-schneider-constrained-dp",
+  "android_sha256": "0b62a136f1046175ae517c6be1b5edf216d4bc37be26e74a76f781f6b2b09f30",
+  "contours": [
+    {
+      "candidate_knots": 79,
+      "corners": 1,
+      "segments": 5,
+      "source_points": 3190
+    }
+  ],
+  "dependencies": {
+    "Pillow": "12.3.0",
+    "numpy": "2.3.5",
+    "pypdfium2": "5.13.0",
+    "reportlab": "4.4.9"
+  },
+  "export": {
+    "contour_groups": [
+      [
+        0
+      ]
+    ],
+    "coordinate_decimal_places": 6,
+    "max_path_data_length": 3000,
+    "path_count": 1,
+    "path_data_lengths": [
+      309
+    ]
+  },
+  "normalization": {
+    "bbox": [
+      306,
+      170,
+      949,
+      1122
+    ],
+    "mode": "alpha",
+    "offset": [
+      -1.1827731092436977,
+      -1.571428571428573
+    ],
+    "scale": 0.02100840336134454,
+    "source_size": [
+      1254,
+      1254
+    ]
+  },
+  "parameters": {
+    "error": 0.055,
+    "padding": 2,
+    "viewport": 24.0
+  },
+  "quality": {
+    "actual_sizes": {
+      "24": {
+        "mean_absolute_coverage_error": 0.002212690631808279
+      },
+      "36": {
+        "mean_absolute_coverage_error": 0.0024146695715323166
+      },
+      "48": {
+        "mean_absolute_coverage_error": 0.0024169389978213507
+      }
+    },
+    "boundary": {
+      "mean": 0.017275323470109728,
+      "p99": 0.037938513856089824,
+      "sample_spacing": 0.015,
+      "source_to_vector_max": 0.05075164348260738,
+      "units": "24-unit viewport; sampled distance, not analytic Hausdorff",
+      "vector_to_source_max": 0.05075164348260738
+    },
+    "failures": [],
+    "joins": {
+      "preserved_corner_joins": 1,
+      "smooth_joins": 4,
+      "smooth_max_tangent_mismatch_degrees": 1.8430439999894915e-05
+    },
+    "limits": {
+      "max_actual_size_coverage_mae": 0.015,
+      "max_boundary_p99_viewport_units": 0.09150000000000001,
+      "max_boundary_viewport_units": 0.11574999999999999,
+      "min_iou": 0.97
+    },
+    "passed": true,
+    "silhouette_iou": 0.9949389840128654,
+    "source_topology": {
+      "components": 1,
+      "holes": 0
+    },
+    "vector_topology": {
+      "components": 1,
+      "holes": 0
+    },
+    "winding_preserved": true
+  },
+  "schema": 1,
+  "source_file": "water-input.png",
+  "source_sha256": "7d65df4bf59f959e165408489aef22accd0bbb8a25acbcf9782936d81f846190",
+  "svg_sha256": "da1df7d8f9aa917ab45c2865f72333176eaf52fc88fd8aee9a687acc65a3ee1c",
+  "total_anchors": 5,
+  "total_control_points": 10,
+  "total_segments": 5,
+  "version": "1.1.0"
+}

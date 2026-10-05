@@ -1,0 +1,120 @@
+{
+  "algorithm": "subpixel-contours-schneider-constrained-dp",
+  "android_sha256": "9e56280957ea892c39aaff12ae7adf40e2d9a4ff49609afbf6ce57f42d24ff17",
+  "contours": [
+    {
+      "candidate_knots": 120,
+      "corners": 12,
+      "segments": 23,
+      "source_points": 3668
+    },
+    {
+      "candidate_knots": 26,
+      "corners": 2,
+      "segments": 3,
+      "source_points": 628
+    },
+    {
+      "candidate_knots": 40,
+      "corners": 2,
+      "segments": 5,
+      "source_points": 1246
+    }
+  ],
+  "dependencies": {
+    "Pillow": "12.3.0",
+    "numpy": "2.3.5",
+    "pypdfium2": "5.13.0",
+    "reportlab": "4.4.9"
+  },
+  "export": {
+    "contour_groups": [
+      [
+        0,
+        1,
+        2
+      ]
+    ],
+    "coordinate_decimal_places": 6,
+    "max_path_data_length": 3000,
+    "path_count": 1,
+    "path_data_lengths": [
+      1804
+    ]
+  },
+  "normalization": {
+    "bbox": [
+      302,
+      152,
+      1157,
+      1104
+    ],
+    "mode": "white-background",
+    "offset": [
+      -3.325630252100842,
+      -1.1932773109243708
+    ],
+    "scale": 0.02100840336134454,
+    "source_size": [
+      1254,
+      1254
+    ]
+  },
+  "parameters": {
+    "error": 0.055,
+    "padding": 2,
+    "viewport": 24.0
+  },
+  "quality": {
+    "actual_sizes": {
+      "24": {
+        "mean_absolute_coverage_error": 0.005065359477124183
+      },
+      "36": {
+        "mean_absolute_coverage_error": 0.005443597191963205
+      },
+      "48": {
+        "mean_absolute_coverage_error": 0.005347903050108932
+      }
+    },
+    "boundary": {
+      "mean": 0.017909780714271288,
+      "p99": 0.051630985019606834,
+      "sample_spacing": 0.015,
+      "source_to_vector_max": 0.05368351870903884,
+      "units": "24-unit viewport; sampled distance, not analytic Hausdorff",
+      "vector_to_source_max": 0.053296011916562226
+    },
+    "failures": [],
+    "joins": {
+      "preserved_corner_joins": 16,
+      "smooth_joins": 15,
+      "smooth_max_tangent_mismatch_degrees": 0.0050931601935022735
+    },
+    "limits": {
+      "max_actual_size_coverage_mae": 0.015,
+      "max_boundary_p99_viewport_units": 0.09150000000000001,
+      "max_boundary_viewport_units": 0.11574999999999999,
+      "min_iou": 0.97
+    },
+    "passed": true,
+    "silhouette_iou": 0.9801078267335936,
+    "source_topology": {
+      "components": 2,
+      "holes": 1
+    },
+    "vector_topology": {
+      "components": 2,
+      "holes": 1
+    },
+    "winding_preserved": true
+  },
+  "schema": 1,
+  "source_file": "grinder-c40.png",
+  "source_sha256": "18a4445db3fb98e543dded1e53c7372f9eb2a7ac20dd3129130a84863f0836fb",
+  "svg_sha256": "9323e2ac93916fd4c04e3329b4c69dbec692e5fa9d8accd4d9489f5f17cd9609",
+  "total_anchors": 31,
+  "total_control_points": 62,
+  "total_segments": 31,
+  "version": "1.1.0"
+}

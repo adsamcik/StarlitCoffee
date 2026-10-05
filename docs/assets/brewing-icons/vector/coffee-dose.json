@@ -1,0 +1,127 @@
+{
+  "algorithm": "subpixel-contours-schneider-constrained-dp",
+  "android_sha256": "6ab27531f42f70cd677079602b3da9b38a7144077a63c5f99ad379b889bcbab2",
+  "contours": [
+    {
+      "candidate_knots": 52,
+      "corners": 1,
+      "segments": 4,
+      "source_points": 1932
+    },
+    {
+      "candidate_knots": 52,
+      "corners": 1,
+      "segments": 5,
+      "source_points": 1928
+    },
+    {
+      "candidate_knots": 50,
+      "corners": 1,
+      "segments": 4,
+      "source_points": 1868
+    },
+    {
+      "candidate_knots": 48,
+      "corners": 1,
+      "segments": 4,
+      "source_points": 1790
+    }
+  ],
+  "dependencies": {
+    "Pillow": "12.3.0",
+    "numpy": "2.3.5",
+    "pypdfium2": "5.13.0",
+    "reportlab": "4.4.9"
+  },
+  "export": {
+    "contour_groups": [
+      [
+        0,
+        1,
+        2,
+        3
+      ]
+    ],
+    "coordinate_decimal_places": 6,
+    "max_path_data_length": 3000,
+    "path_count": 1,
+    "path_data_lengths": [
+      1081
+    ]
+  },
+  "normalization": {
+    "bbox": [
+      189,
+      204,
+      1076,
+      1096
+    ],
+    "mode": "alpha",
+    "offset": [
+      -2.181614349775783,
+      -2.5739910313901344
+    ],
+    "scale": 0.02242152466367713,
+    "source_size": [
+      1254,
+      1254
+    ]
+  },
+  "parameters": {
+    "error": 0.055,
+    "padding": 2,
+    "viewport": 24.0
+  },
+  "quality": {
+    "actual_sizes": {
+      "24": {
+        "mean_absolute_coverage_error": 0.004119008714596951
+      },
+      "36": {
+        "mean_absolute_coverage_error": 0.004172718470104091
+      },
+      "48": {
+        "mean_absolute_coverage_error": 0.004222834967320262
+      }
+    },
+    "boundary": {
+      "mean": 0.016958085796590274,
+      "p99": 0.05036618786945559,
+      "sample_spacing": 0.015,
+      "source_to_vector_max": 0.05516801977305028,
+      "units": "24-unit viewport; sampled distance, not analytic Hausdorff",
+      "vector_to_source_max": 0.05462759227479007
+    },
+    "failures": [],
+    "joins": {
+      "preserved_corner_joins": 4,
+      "smooth_joins": 13,
+      "smooth_max_tangent_mismatch_degrees": 4.611958481058316e-05
+    },
+    "limits": {
+      "max_actual_size_coverage_mae": 0.015,
+      "max_boundary_p99_viewport_units": 0.09150000000000001,
+      "max_boundary_viewport_units": 0.11574999999999999,
+      "min_iou": 0.97
+    },
+    "passed": true,
+    "silhouette_iou": 0.9899238646391266,
+    "source_topology": {
+      "components": 4,
+      "holes": 0
+    },
+    "vector_topology": {
+      "components": 4,
+      "holes": 0
+    },
+    "winding_preserved": true
+  },
+  "schema": 1,
+  "source_file": "coffee-dose.png",
+  "source_sha256": "c624c0a78bddf3561c2fbe160d46f2a6be5291d7987c91f3f664c2ebec02242e",
+  "svg_sha256": "fc162b05a111e5c26a27551edbf48c747d22405f5b09ee2d4600e6bc76c1cc4d",
+  "total_anchors": 17,
+  "total_control_points": 34,
+  "total_segments": 17,
+  "version": "1.1.0"
+}

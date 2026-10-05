@@ -1,0 +1,174 @@
+{
+  "algorithm": "subpixel-contours-schneider-constrained-dp",
+  "android_sha256": "6f6b7646cccc7a479e356c9f8a533b07f272a7f60c1f29e02cbf87453cd8a6b9",
+  "contours": [
+    {
+      "candidate_knots": 20,
+      "corners": 0,
+      "segments": 3,
+      "source_points": 822
+    },
+    {
+      "candidate_knots": 38,
+      "corners": 4,
+      "segments": 9,
+      "source_points": 868
+    },
+    {
+      "candidate_knots": 21,
+      "corners": 2,
+      "segments": 3,
+      "source_points": 838
+    },
+    {
+      "candidate_knots": 28,
+      "corners": 4,
+      "segments": 7,
+      "source_points": 1050
+    },
+    {
+      "candidate_knots": 97,
+      "corners": 13,
+      "segments": 21,
+      "source_points": 3648
+    },
+    {
+      "candidate_knots": 17,
+      "corners": 4,
+      "segments": 4,
+      "source_points": 586
+    },
+    {
+      "candidate_knots": 32,
+      "corners": 9,
+      "segments": 11,
+      "source_points": 990
+    },
+    {
+      "candidate_knots": 9,
+      "corners": 2,
+      "segments": 3,
+      "source_points": 302
+    },
+    {
+      "candidate_knots": 13,
+      "corners": 2,
+      "segments": 2,
+      "source_points": 436
+    }
+  ],
+  "dependencies": {
+    "Pillow": "12.3.0",
+    "numpy": "2.3.5",
+    "pypdfium2": "5.13.0",
+    "reportlab": "4.4.9"
+  },
+  "export": {
+    "contour_groups": [
+      [
+        0
+      ],
+      [
+        1
+      ],
+      [
+        2
+      ],
+      [
+        3
+      ],
+      [
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    ],
+    "coordinate_decimal_places": 6,
+    "max_path_data_length": 3000,
+    "path_count": 5,
+    "path_data_lengths": [
+      188,
+      522,
+      191,
+      416,
+      2508
+    ]
+  },
+  "normalization": {
+    "bbox": [
+      319,
+      48,
+      935,
+      1190
+    ],
+    "mode": "white-background",
+    "offset": [
+      1.0192644483362514,
+      1.1593695271453583
+    ],
+    "scale": 0.017513134851138354,
+    "source_size": [
+      1254,
+      1254
+    ]
+  },
+  "parameters": {
+    "error": 0.055,
+    "padding": 2,
+    "viewport": 24.0
+  },
+  "quality": {
+    "actual_sizes": {
+      "24": {
+        "mean_absolute_coverage_error": 0.005548747276688453
+      },
+      "36": {
+        "mean_absolute_coverage_error": 0.005855119825708061
+      },
+      "48": {
+        "mean_absolute_coverage_error": 0.00650531045751634
+      }
+    },
+    "boundary": {
+      "mean": 0.01164824198218144,
+      "p99": 0.0394010954309009,
+      "sample_spacing": 0.015,
+      "source_to_vector_max": 0.05358407973010169,
+      "units": "24-unit viewport; sampled distance, not analytic Hausdorff",
+      "vector_to_source_max": 0.053759535820720745
+    },
+    "failures": [],
+    "joins": {
+      "preserved_corner_joins": 40,
+      "smooth_joins": 23,
+      "smooth_max_tangent_mismatch_degrees": 0.0032362388889532814
+    },
+    "limits": {
+      "max_actual_size_coverage_mae": 0.015,
+      "max_boundary_p99_viewport_units": 0.09150000000000001,
+      "max_boundary_viewport_units": 0.11574999999999999,
+      "min_iou": 0.97
+    },
+    "passed": true,
+    "silhouette_iou": 0.9875995866528884,
+    "source_topology": {
+      "components": 5,
+      "holes": 4
+    },
+    "vector_topology": {
+      "components": 5,
+      "holes": 4
+    },
+    "winding_preserved": true
+  },
+  "schema": 1,
+  "source_file": "grinder-df64-v2.png",
+  "source_sha256": "1db7100f5c296969119ea14e02e4ad50955715744d7b5117d2e634b77dd4fa60",
+  "svg_sha256": "eb1719ecbe3ef8a3b18cf24a5b839e13dca82f4773c7247a8e256fa3cd6e64a0",
+  "total_anchors": 63,
+  "total_control_points": 126,
+  "total_segments": 63,
+  "version": "1.1.0"
+}
