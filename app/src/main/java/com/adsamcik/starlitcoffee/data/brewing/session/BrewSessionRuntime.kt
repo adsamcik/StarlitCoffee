@@ -5,6 +5,7 @@ import android.os.SystemClock
 import androidx.work.WorkManager
 import com.adsamcik.starlitcoffee.notification.DurableBrewSessionStageNotifier
 import com.adsamcik.starlitcoffee.notification.DurableBrewSessionStatusNotifier
+import com.adsamcik.starlitcoffee.notification.BrewSessionNotificationBoundaryStore
 import com.adsamcik.starlitcoffee.data.db.AppDatabase
 import com.adsamcik.starlitcoffee.data.repository.ActiveBrewSessionRepository
 import com.adsamcik.starlitcoffee.data.repository.TransactionRunner
@@ -30,6 +31,7 @@ class BrewSessionRuntime private constructor(
     private val sessionRepository: ActiveBrewSessionRepository,
     private val scheduler: LongSessionScheduler,
     private val statusNotifier: BrewSessionStatusNotifier,
+    private val notificationBoundaryStore: BrewSessionNotificationBoundaryStore?,
 ) {
     /**
      * Reads only indexed scheduling metadata. The worker intentionally does
@@ -55,6 +57,14 @@ class BrewSessionRuntime private constructor(
     /** Clears this session’s quiet ongoing status when it returns to the foreground. */
     fun clearBackgroundStatus(sessionId: SessionId) {
         statusNotifier.clear(sessionId)
+    }
+
+    /** Makes only subsequent stage transitions eligible for system alerts. */
+    fun markScreenBackgrounded(
+        sessionId: SessionId,
+        wallClockMillis: Long = System.currentTimeMillis(),
+    ) {
+        notificationBoundaryStore?.markBackgrounded(sessionId.value, wallClockMillis)
     }
 
     /** Replays durable work and restores the current deadline prompt after startup. */
@@ -105,6 +115,7 @@ class BrewSessionRuntime private constructor(
                 wallClock = WallClock { System.currentTimeMillis() },
                 stageAlertNotifier = DurableBrewSessionStageNotifier(applicationContext),
                 statusNotifier = DurableBrewSessionStatusNotifier(applicationContext),
+                notificationBoundaryStore = BrewSessionNotificationBoundaryStore(applicationContext),
             )
         }
 
@@ -119,6 +130,7 @@ class BrewSessionRuntime private constructor(
             wallClock: WallClock,
             stageAlertNotifier: BrewSessionStageAlertNotifier = NoOpBrewSessionStageAlertNotifier,
             statusNotifier: BrewSessionStatusNotifier = NoOpBrewSessionStatusNotifier,
+            notificationBoundaryStore: BrewSessionNotificationBoundaryStore? = null,
         ): BrewSessionRuntime {
             val repository = ActiveBrewSessionRepository(database.activeBrewSessionDao())
             val scheduler = WorkManagerLongSessionScheduler(
@@ -149,6 +161,7 @@ class BrewSessionRuntime private constructor(
                 sessionRepository = repository,
                 scheduler = scheduler,
                 statusNotifier = statusNotifier,
+                notificationBoundaryStore = notificationBoundaryStore,
             )
         }
     }

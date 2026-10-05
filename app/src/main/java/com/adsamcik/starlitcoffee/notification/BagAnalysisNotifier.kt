@@ -119,7 +119,7 @@ class AndroidBagAnalysisNotifier(
         )
 
         val notification = NotificationCompat.Builder(context, NotificationChannels.BAG_ANALYSIS_ID)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .withStarlitSmallIcon()
             .setContentTitle(title)
             .setContentText(body)
             .setStyle(NotificationCompat.BigTextStyle().bigText(body))

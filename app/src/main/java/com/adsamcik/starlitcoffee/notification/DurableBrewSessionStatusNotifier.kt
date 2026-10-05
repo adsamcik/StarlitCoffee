@@ -79,7 +79,7 @@ class DurableBrewSessionStatusNotifier(
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
         val notification = NotificationCompat.Builder(appContext, NotificationChannels.BREW_STATUS_ID)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .withStarlitSmallIcon()
             .setContentTitle(appContext.getString(R.string.notif_brew_in_progress_title))
             .setContentText(body)
             .setContentIntent(pendingIntent)

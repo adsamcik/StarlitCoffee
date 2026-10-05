@@ -235,9 +235,9 @@ fun BrewSessionScreen(
                 currentOnScreenForegrounded()
             }
             fun markBackground() {
-                foregroundHandle.onPaused()
                 isLifecycleResumed = false
                 currentOnScreenBackgrounded()
+                foregroundHandle.onPaused()
             }
             val observer = LifecycleEventObserver { _, event ->
                 when (event) {
@@ -258,8 +258,8 @@ fun BrewSessionScreen(
             onDispose {
                 lifecycleOwner.lifecycle.removeObserver(observer)
                 val wasResumed = isLifecycleResumed
-                foregroundHandle.dispose()
                 if (wasResumed) currentOnScreenBackgrounded()
+                foregroundHandle.dispose()
             }
         }
     }

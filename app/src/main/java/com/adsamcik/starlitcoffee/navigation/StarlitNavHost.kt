@@ -570,6 +570,11 @@ fun StarlitNavHost() {
                             )
                         },
                         onScreenBackgrounded = {
+                            durableSessionRuntime.markScreenBackgrounded(
+                                com.adsamcik.starlitcoffee.domain.brewing.session.SessionId(
+                                    route.sessionId,
+                                ),
+                            )
                             scope.launch {
                                 durableSessionRuntime.publishBackgroundStatus(
                                     com.adsamcik.starlitcoffee.domain.brewing.session.SessionId(

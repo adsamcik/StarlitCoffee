@@ -165,7 +165,7 @@ class AndroidBrewSessionNotifier(context: Context) : BrewSessionNotifier, Defaul
     @SuppressLint("MissingPermission")
     private fun postStatus(state: BrewUiState) {
         val notification = NotificationCompat.Builder(appContext, NotificationChannels.BREW_STATUS_ID)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .withStarlitSmallIcon()
             .setContentTitle(appContext.getString(R.string.notif_brew_in_progress_title))
             .setContentText(
                 appContext.getString(
@@ -193,7 +193,7 @@ class AndroidBrewSessionNotifier(context: Context) : BrewSessionNotifier, Defaul
             appContext,
             NotificationChannels.brewAlertsId(theme),
         )
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .withStarlitSmallIcon()
             .setContentTitle(title)
             .setContentText(message)
             .setStyle(NotificationCompat.BigTextStyle().bigText(message))

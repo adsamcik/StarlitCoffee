@@ -51,6 +51,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   dose and water to pour with method-aware input-to-cup loss. The estimate is
   available only where a defensible generic model exists and is clearly marked
   as approximate.
+- **Optional brew calibration** — completed brew logs can record precise water-in
+  and in-cup measurements. Future estimates learn conservatively from matching
+  brewing processes and beans while retaining safe built-in defaults for new or
+  lightly sampled setups.
 - **Coffee-use tracking without guided brewing** — active bags now offer a quick
   gram-based usage entry that updates remaining weight, contributes to dose
   estimates, appears in the bag's history, and can be undone immediately.
@@ -87,6 +91,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   method-specific choices, including half-step espresso ratios. On first use
   after upgrading, the previous global ratio is replaced by each method's
   default because its original brewing method was not recorded.
+
+- The calculator now presents coffee, water in, and in-cup output as three clear,
+  directly tappable quantity cards, with expressive selection styling and no
+  extra editing label or explanatory clutter.
+- Notifications now use a quiet monochrome cup-and-steam mark derived from the
+  app icon, keeping status-bar and notification surfaces clean and legible.
 - All 23 supported languages remain available for the app interface and the
   new Pulsar guide. Exact-recipe technical guidance now releases only for
   independently reviewed locales; canonical English is currently eligible,
@@ -157,6 +167,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   installs and sends authentication on the first registry request.
 - Updated diagnostics and logging calls for the upgraded Tracebox API, preserving
   private-value redaction and restoring compilation with the new dependencies.
+- Background brew alerts now begin at the moment the live brew screen is
+  backgrounded, without replaying bloom or pour transitions that were already
+  due while the app was in the foreground.
 - Exact Learn guides now merge authored teaching copy with the executable
   recipe contract, showing dose, every input, ratio semantics, temperature,
   grind scope, equipment, timing, cumulative and incremental water, completion

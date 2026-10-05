@@ -19,6 +19,7 @@ import com.adsamcik.starlitcoffee.data.network.llm.LlmResultCache
 import com.adsamcik.starlitcoffee.data.network.llm.StubLlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
 import com.adsamcik.starlitcoffee.notification.NotificationChannels
+import com.adsamcik.starlitcoffee.notification.withStarlitSmallIcon
 import com.adsamcik.starlitcoffee.scan.BagPhotoExtractor
 import com.adsamcik.starlitcoffee.scan.ScanDeadline
 import com.adsamcik.starlitcoffee.util.BagPhotoProcessingResult
@@ -361,7 +362,7 @@ class BagExtractionWorker(
             applicationContext,
             NotificationChannels.BAG_SCAN_PROGRESS_ID,
         )
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .withStarlitSmallIcon()
             .setContentTitle(applicationContext.getString(R.string.notif_scan_progress_title))
             .setOngoing(true)
             .setOnlyAlertOnce(true)

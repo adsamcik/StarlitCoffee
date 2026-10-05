@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.first
 class DurableBrewSessionStageNotifier(context: Context) : BrewSessionStageAlertNotifier {
     private val appContext = context.applicationContext
     private val preferences = UserPreferencesRepository(appContext)
+    private val notificationBoundaryStore = BrewSessionNotificationBoundaryStore(appContext)
 
     override suspend fun deliver(
         effect: PendingSessionEffect.StageAlert,
@@ -36,7 +37,13 @@ class DurableBrewSessionStageNotifier(context: Context) : BrewSessionStageAlertN
         // Permission denial and an in-app visible transition are terminal
         // conditions, not failures that should leave a permanent outbox retry.
         if (!canPostNotifications() ||
-            BrewSessionVisibilityRegistry.isVisible(effect.sessionId.value)
+            BrewSessionVisibilityRegistry.isVisible(effect.sessionId.value) ||
+            !shouldPublishDurableBrewStageAlert(
+                effect = effect,
+                runtime = session.runtime,
+                backgroundedAtWallClockMillis = notificationBoundaryStore
+                    .backgroundedAtWallClockMillis(effect.sessionId.value),
+            )
         ) return SessionEffectDelivery.Delivered
         val theme = vibrationTheme()
         NotificationChannels.ensureBrewChannels(appContext, theme)
@@ -76,7 +83,7 @@ class DurableBrewSessionStageNotifier(context: Context) : BrewSessionStageAlertN
             appContext,
             NotificationChannels.brewAlertsId(theme),
         )
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .withStarlitSmallIcon()
             .setContentTitle(title)
             .setContentText(body)
             .setStyle(NotificationCompat.BigTextStyle().bigText(body))

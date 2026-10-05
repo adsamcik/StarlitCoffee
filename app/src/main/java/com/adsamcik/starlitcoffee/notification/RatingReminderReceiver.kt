@@ -101,7 +101,7 @@ class RatingReminderReceiver : BroadcastReceiver() {
         val customView = buildRatingRemoteViews(context, brewLogId, title, body)
 
         val notification = NotificationCompat.Builder(context, NotificationChannels.RATING_REMINDER_ID)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .withStarlitSmallIcon()
             .setContentTitle(title)
             .setContentText(body)
             .setStyle(NotificationCompat.DecoratedCustomViewStyle())
