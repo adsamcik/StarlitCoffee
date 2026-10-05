@@ -1,0 +1,13 @@
+{
+  "mode": "built-in imagegen edit",
+  "entries": [
+    {
+      "key": "bowl",
+      "prompt": "Polish image1 into a clean flat filled bowl icon in image3's app symbol style. Preserve the natural round bowl body and tiny foot, using image2 only for anatomy. Remove the floating filled ellipse inside the mouth: make one clean open oval mouth, with filled smooth body underneath it. Uniform perfectly solid opaque mediumgray#626773 on truly transparent background, no gradient, shading, random holes, texture, shadow or text. Clean smooth rounded silhouette, one broad mouth hole and no other decorations. Readable at24px without changing natural body proportions."
+    },
+    {
+      "key": "double_wall_press",
+      "prompt": "Polish image1's double-wall French press into a bold compact icon, preserving its actual anatomy from image2. Keep the same rounded upright body, solid closed lid and knob. Make outer glass rails substantial (atleast60pxwide at1024canvas) and use one smooth broad U-shaped space around a SOLID FILLED lower coffee mass. Plunger must be attached continuously to lid and coffee; eliminate detached internal stem and the hairline liquid-top separator. Uniform perfectly flat solid opaque mediumgray#626773, truly transparent background. Image3 is rounded filled app symbol style. No shading, gradient, texture, random holes, outline-only wireframe, shadows or text. Robust clean functional spaces readable at24px. Preserve real vessel proportions, no elongation or flattening."
+    }
+  ]
+}

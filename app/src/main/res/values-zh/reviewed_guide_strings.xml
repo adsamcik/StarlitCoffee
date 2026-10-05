@@ -1,0 +1,12 @@
+<resources>
+    <string name="action_brew_this_guide">按此配方冲煮</string>
+    <string name="label_freshly_boiled_water">刚煮沸的水</string>
+    <string name="label_machine_temperature">机器控制水温</string>
+    <string name="action_prepare_this_guide">准备冲煮</string>
+    <string name="label_reviewed_guide_english">英文配方</string>
+    <string name="heading_reviewed_sources">配方与来源</string>
+    <string name="msg_reviewed_fill_quantities">请按指定器具的刻度加水。准备时称量实际使用的咖啡。</string>
+    <string name="label_measured_coffee_g">实际加入的咖啡（g）</string>
+    <string name="label_optional_measured_water_g">称量的水（g，可选）</string>
+    <string name="msg_reviewed_equipment_confirm">我的器具符合此配方。</string>
+</resources>

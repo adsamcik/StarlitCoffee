@@ -1,0 +1,69 @@
+{
+  "mode": "built-in imagegen edit",
+  "reason": "Remove generated transparency artifacts; retain physical contours",
+  "entries": [
+    {
+      "key": "carafe",
+      "referenced_image_paths": [
+        "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/generated/carafe.png",
+        "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/references/carafe.png",
+        "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/references/calculator-style.png"
+      ],
+      "prompt": "Correct image1 into a perfectly flat filled vessel icon. Preserve its natural outer silhouette, proportions and real vessel anatomy from image2. Image3 is the app's filled rounded symbol style. CRITICAL: the current image has unwanted patchy holes in its central body. Completely eliminate those artifacts: each filled shape must be one UNIFORM SOLID OPAQUE MEDIUM GRAY #626773 region, exactly the same color throughout. No darker centers, lighting, shading, gradient, translucency or blurred edges. Interior body is COMPLETELY FILLED with no random holes. Only deliberate clean mouth opening, handle opening and structural glass separation may remain transparent. Keep those functional openings smooth, broad and simple. Genuinely transparent background. This is flat printed icon artwork, not a rendered 3D object. No shadow, text, logo, liquid stripes or highlights. Smooth bold silhouette and robust spaces readable at24px. Do not exaggerate height, flatten or narrow it. "
+    },
+    {
+      "key": "double_wall_espresso",
+      "referenced_image_paths": [
+        "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/generated/double_wall_espresso.png",
+        "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/references/double_wall_espresso.png",
+        "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/references/calculator-style.png"
+      ],
+      "prompt": "Correct image1 into a perfectly flat filled vessel icon. Preserve its natural outer silhouette, proportions and real vessel anatomy from image2. Image3 is the app's filled rounded symbol style. CRITICAL: the current image has unwanted patchy holes in its central body. Completely eliminate those artifacts: each filled shape must be one UNIFORM SOLID OPAQUE MEDIUM GRAY #626773 region, exactly the same color throughout. No darker centers, lighting, shading, gradient, translucency or blurred edges. Interior body is COMPLETELY FILLED with no random holes. Only deliberate clean mouth opening, handle opening and structural glass separation may remain transparent. Keep those functional openings smooth, broad and simple. Genuinely transparent background. This is flat printed icon artwork, not a rendered 3D object. No shadow, text, logo, liquid stripes or highlights. Smooth bold silhouette and robust spaces readable at24px. Do not exaggerate height, flatten or narrow it. Keep exactly one clear smooth U-shaped gap between a SOLID FILLED inner cup and substantial outer glass; no extra center holes. Outer glass width and wall gap should each be at least60px at1024px canvas. "
+    },
+    {
+      "key": "double_wall_tumbler",
+      "referenced_image_paths": [
+        "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/generated/double_wall_tumbler.png",
+        "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/references/double_wall_tumbler.png",
+        "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/references/calculator-style.png"
+      ],
+      "prompt": "Correct image1 into a perfectly flat filled vessel icon. Preserve its natural outer silhouette, proportions and real vessel anatomy from image2. Image3 is the app's filled rounded symbol style. CRITICAL: the current image has unwanted patchy holes in its central body. Completely eliminate those artifacts: each filled shape must be one UNIFORM SOLID OPAQUE MEDIUM GRAY #626773 region, exactly the same color throughout. No darker centers, lighting, shading, gradient, translucency or blurred edges. Interior body is COMPLETELY FILLED with no random holes. Only deliberate clean mouth opening, handle opening and structural glass separation may remain transparent. Keep those functional openings smooth, broad and simple. Genuinely transparent background. This is flat printed icon artwork, not a rendered 3D object. No shadow, text, logo, liquid stripes or highlights. Smooth bold silhouette and robust spaces readable at24px. Do not exaggerate height, flatten or narrow it. Keep exactly one clear smooth U-shaped gap between a SOLID FILLED inner cup and substantial outer glass; no extra center holes. Outer glass width and wall gap should each be at least60px at1024px canvas. "
+    },
+    {
+      "key": "double_wall_mug",
+      "referenced_image_paths": [
+        "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/generated/double_wall_mug.png",
+        "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/references/double_wall_mug.png",
+        "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/references/calculator-style.png"
+      ],
+      "prompt": "Correct image1 into a perfectly flat filled vessel icon. Preserve its natural outer silhouette, proportions and real vessel anatomy from image2. Image3 is the app's filled rounded symbol style. CRITICAL: the current image has unwanted patchy holes in its central body. Completely eliminate those artifacts: each filled shape must be one UNIFORM SOLID OPAQUE MEDIUM GRAY #626773 region, exactly the same color throughout. No darker centers, lighting, shading, gradient, translucency or blurred edges. Interior body is COMPLETELY FILLED with no random holes. Only deliberate clean mouth opening, handle opening and structural glass separation may remain transparent. Keep those functional openings smooth, broad and simple. Genuinely transparent background. This is flat printed icon artwork, not a rendered 3D object. No shadow, text, logo, liquid stripes or highlights. Smooth bold silhouette and robust spaces readable at24px. Do not exaggerate height, flatten or narrow it. Keep exactly one clear smooth U-shaped gap between a SOLID FILLED inner cup and substantial outer glass; no extra center holes. Outer glass width and wall gap should each be at least60px at1024px canvas. "
+    },
+    {
+      "key": "spherical_latte",
+      "referenced_image_paths": [
+        "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/generated/spherical_latte.png",
+        "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/references/spherical_latte.png",
+        "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/references/calculator-style.png"
+      ],
+      "prompt": "Correct image1 into a perfectly flat filled vessel icon. Preserve its natural outer silhouette, proportions and real vessel anatomy from image2. Image3 is the app's filled rounded symbol style. CRITICAL: the current image has unwanted patchy holes in its central body. Completely eliminate those artifacts: each filled shape must be one UNIFORM SOLID OPAQUE MEDIUM GRAY #626773 region, exactly the same color throughout. No darker centers, lighting, shading, gradient, translucency or blurred edges. Interior body is COMPLETELY FILLED with no random holes. Only deliberate clean mouth opening, handle opening and structural glass separation may remain transparent. Keep those functional openings smooth, broad and simple. Genuinely transparent background. This is flat printed icon artwork, not a rendered 3D object. No shadow, text, logo, liquid stripes or highlights. Smooth bold silhouette and robust spaces readable at24px. Do not exaggerate height, flatten or narrow it. "
+    },
+    {
+      "key": "faceted_cortado",
+      "referenced_image_paths": [
+        "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/generated/faceted_cortado.png",
+        "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/references/faceted_cortado.png",
+        "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/references/calculator-style.png"
+      ],
+      "prompt": "Correct image1 into a perfectly flat filled vessel icon. Preserve its natural outer silhouette, proportions and real vessel anatomy from image2. Image3 is the app's filled rounded symbol style. CRITICAL: the current image has unwanted patchy holes in its central body. Completely eliminate those artifacts: each filled shape must be one UNIFORM SOLID OPAQUE MEDIUM GRAY #626773 region, exactly the same color throughout. No darker centers, lighting, shading, gradient, translucency or blurred edges. Interior body is COMPLETELY FILLED with no random holes. Only deliberate clean mouth opening, handle opening and structural glass separation may remain transparent. Keep those functional openings smooth, broad and simple. Genuinely transparent background. This is flat printed icon artwork, not a rendered 3D object. No shadow, text, logo, liquid stripes or highlights. Smooth bold silhouette and robust spaces readable at24px. Do not exaggerate height, flatten or narrow it. "
+    },
+    {
+      "key": "french_press",
+      "referenced_image_paths": [
+        "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/generated/french_press.png",
+        "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/references/french_press.png",
+        "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/references/calculator-style.png"
+      ],
+      "prompt": "Correct image1 into a perfectly flat filled vessel icon. Preserve its natural outer silhouette, proportions and real vessel anatomy from image2. Image3 is the app's filled rounded symbol style. CRITICAL: the current image has unwanted patchy holes in its central body. Completely eliminate those artifacts: each filled shape must be one UNIFORM SOLID OPAQUE MEDIUM GRAY #626773 region, exactly the same color throughout. No darker centers, lighting, shading, gradient, translucency or blurred edges. Interior body is COMPLETELY FILLED with no random holes. Only deliberate clean mouth opening, handle opening and structural glass separation may remain transparent. Keep those functional openings smooth, broad and simple. Genuinely transparent background. This is flat printed icon artwork, not a rendered 3D object. No shadow, text, logo, liquid stripes or highlights. Smooth bold silhouette and robust spaces readable at24px. Do not exaggerate height, flatten or narrow it. Keep closed solid lid, connected plunger, side handle and substantial outer glass. Simplify the delicate frame and plunger window to bold filled shapes with robust spaces. One broad U gap around a solid coffee mass, no tiny stripes, no disconnected pinpoints. "
+    }
+  ]
+}

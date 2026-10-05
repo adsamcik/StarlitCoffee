@@ -1,0 +1,505 @@
+{
+  "date": "2026-10-02",
+  "methods": 17,
+  "individual_generation_calls": 20,
+  "entries": [
+    {
+      "method": "chemex",
+      "pass": 1,
+      "tool": "image_gen.imagegen",
+      "transparent_background": true,
+      "prompt_file": "prompts/chemex.txt",
+      "submitted_prompt": "Create a new square brewing-method icon using the two attached images.\r\nImage 1 is equipment geometry reference only. Preserve that brewer's recognizable construction and proportions; remove the photo's background, packaging, text and unrelated objects.\r\nImage 2 is the existing StarlitCoffee icon style reference only. Match its premium tactile enamel/clay treatment, deep ink-navy edges, periwinkle-blue planes, warm ivory highlights and restrained coffee-brown/copper accents. Do not copy its V60 geometry into this method.\r\nOne isolated complete brewer, front three-quarter view, slight view into open tops where relevant, soft upper-left light, rounded deliberate forms and strong readable silhouette at 48 pixels. Stylize surface materials into the shared palette without losing the distinctive hardware. Center the entire object with roughly 8 percent clear margin on every side; full handles, spouts, feet and lids inside the canvas. Genuine transparent background, alpha outside the object, no cast shadow platform, badge, border, scene, letters, numbers, logo, watermark or checkerboard. No hands or brewing action. This is an equipment recognition icon, not an operating instruction.\r\n\r\nMethod: Chemex. Representative model: Six Cup Classic CM-6A.\r\nEquipment anatomy: Glass hourglass body: broad open conical top, narrow waist with a wooden collar and leather tie, rounded lower carafe, and a visible pour-spout channel. Use the Classic's handle-free silhouette.\r\nExclude: No loop handle, separate cone, mechanical valve, plunger, paper packaging, or added mug.\r\nDeliver exactly one transparent square icon.\r\n",
+      "images": [
+        {
+          "file": "references/chemex.jpg",
+          "role": "equipment geometry",
+          "sha256": "ee7e17f6fe02c512f3ba2c4826c55e51471c779b76d8f5d9d9dd2866c60bec3e"
+        },
+        {
+          "file": "../../../../app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp",
+          "role": "existing icon style",
+          "sha256": "19dc531009958fff5e8fe64240b0cb488f64aa79991030fc5b2190587e999639"
+        }
+      ],
+      "output_file": "candidates/chemex.png",
+      "built_in_output_basename": "exec-cff53e57-52a7-41c7-8d6d-8e130e97c298.png",
+      "submitted_prompt_sha256": "81daaefeef1f64d12b7415af50161a3e03482e012f3fda2db933580e786b10d7",
+      "output_sha256": "13a6dbf1c1e76b19baa30f731a95c8e5eed1a585135cd3aabb51419d9514d560"
+    },
+    {
+      "method": "automatic-drip",
+      "pass": 1,
+      "tool": "image_gen.imagegen",
+      "transparent_background": true,
+      "prompt_file": "prompts/automatic-drip.txt",
+      "submitted_prompt": "Create a new square brewing-method icon using the two attached images.\r\nImage 1 is equipment geometry reference only. Preserve that brewer's recognizable construction and proportions; remove the photo's background, packaging, text and unrelated objects.\r\nImage 2 is the existing StarlitCoffee icon style reference only. Match its premium tactile enamel/clay treatment, deep ink-navy edges, periwinkle-blue planes, warm ivory highlights and restrained coffee-brown/copper accents. Do not copy its V60 geometry into this method.\r\nOne isolated complete brewer, front three-quarter view, slight view into open tops where relevant, soft upper-left light, rounded deliberate forms and strong readable silhouette at 48 pixels. Stylize surface materials into the shared palette without losing the distinctive hardware. Center the entire object with roughly 8 percent clear margin on every side; full handles, spouts, feet and lids inside the canvas. Genuine transparent background, alpha outside the object, no cast shadow platform, badge, border, scene, letters, numbers, logo, watermark or checkerboard. No hands or brewing action. This is an equipment recognition icon, not an operating instruction.\r\n\r\nMethod: Automatic drip. Representative model: Moccamaster KBGV Select.\r\nEquipment anatomy: Complete automatic filter machine: tall left heater column and clear water reservoir above it, short shower arm extending to the right filter basket, glass carafe directly below that basket, and a shared low rectangular base. Simplify hardware while retaining this unmistakable arrangement.\r\nExclude: No portafilter, steam wand, bean hopper, espresso group head, separate kettle, or extra cups.\r\nDeliver exactly one transparent square icon.\r\n",
+      "images": [
+        {
+          "file": "references/automatic-drip.png",
+          "role": "equipment geometry",
+          "sha256": "1a92fc7adac2a4021d1421bbed815f21e66cdb6a79b798839652d2144acde464"
+        },
+        {
+          "file": "../../../../app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp",
+          "role": "existing icon style",
+          "sha256": "19dc531009958fff5e8fe64240b0cb488f64aa79991030fc5b2190587e999639"
+        }
+      ],
+      "output_file": "candidates/automatic-drip.png",
+      "built_in_output_basename": "exec-caa6abda-308a-4c50-9ea6-4bb9cc7021bb.png",
+      "submitted_prompt_sha256": "2da7de20105b8f44f16ef596d1f55dd841fdec02aa10317fe6ef8a7d5c7156d7",
+      "output_sha256": "f1470d2f3f13bef31cf6d289b1a8fb894b7684924e6b7493d993cbce09ce98ee"
+    },
+    {
+      "method": "pulsar",
+      "pass": 1,
+      "tool": "image_gen.imagegen",
+      "transparent_background": true,
+      "prompt_file": "prompts/pulsar.txt",
+      "submitted_prompt": "Create a new square brewing-method icon using the two attached images.\r\nImage 1 is equipment geometry reference only. Preserve that brewer's recognizable construction and proportions; remove the photo's background, packaging, text and unrelated objects.\r\nImage 2 is the existing StarlitCoffee icon style reference only. Match its premium tactile enamel/clay treatment, deep ink-navy edges, periwinkle-blue planes, warm ivory highlights and restrained coffee-brown/copper accents. Do not copy its V60 geometry into this method.\r\nOne isolated complete brewer, front three-quarter view, slight view into open tops where relevant, soft upper-left light, rounded deliberate forms and strong readable silhouette at 48 pixels. Stylize surface materials into the shared palette without losing the distinctive hardware. Center the entire object with roughly 8 percent clear margin on every side; full handles, spouts, feet and lids inside the canvas. Genuine transparent background, alpha outside the object, no cast shadow platform, badge, border, scene, letters, numbers, logo, watermark or checkerboard. No hands or brewing action. This is an equipment recognition icon, not an operating instruction.\r\n\r\nMethod: NextLevel Pulsar. Representative model: Original full-size Pulsar.\r\nEquipment anatomy: Straight clear cylindrical brewing chamber, broad flat black shower cap on top, sturdy black footed base, and the small external flow-control lever at the side of the base. Clearly retain the shower cap, chamber and valve as distinct parts.\r\nExclude: No cone, loop handle, piston, plunger rod, carafe, or curved glass hourglass.\r\nDeliver exactly one transparent square icon.\r\n",
+      "images": [
+        {
+          "file": "references/pulsar.jpg",
+          "role": "equipment geometry",
+          "sha256": "266e581d477b06060143efff6c78cbbacc96b1eefd8a058504794955befd5c58"
+        },
+        {
+          "file": "../../../../app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp",
+          "role": "existing icon style",
+          "sha256": "19dc531009958fff5e8fe64240b0cb488f64aa79991030fc5b2190587e999639"
+        }
+      ],
+      "output_file": "rejected/pulsar-v1.png",
+      "built_in_output_basename": "exec-b2357127-8262-4a11-ab20-870052b25bc9.png",
+      "submitted_prompt_sha256": "2d6de703f01f636a5933b5c41a1621d3ac2a64d771db7073ab80602ab3da09eb",
+      "output_sha256": "f50ccfd94f99d40c9e34ffd1843f51812cff1411434ee0b91b19e4ef6245797e"
+    },
+    {
+      "method": "v60",
+      "pass": 1,
+      "tool": "image_gen.imagegen",
+      "transparent_background": true,
+      "prompt_file": "prompts/v60.txt",
+      "submitted_prompt": "Create a new square brewing-method icon using the two attached images.\r\nImage 1 is equipment geometry reference only. Preserve that brewer's recognizable construction and proportions; remove the photo's background, packaging, text and unrelated objects.\r\nImage 2 is the existing StarlitCoffee icon style reference only. Match its premium tactile enamel/clay treatment, deep ink-navy edges, periwinkle-blue planes, warm ivory highlights and restrained coffee-brown/copper accents. Do not copy its V60 geometry into this method.\r\nOne isolated complete brewer, front three-quarter view, slight view into open tops where relevant, soft upper-left light, rounded deliberate forms and strong readable silhouette at 48 pixels. Stylize surface materials into the shared palette without losing the distinctive hardware. Center the entire object with roughly 8 percent clear margin on every side; full handles, spouts, feet and lids inside the canvas. Genuine transparent background, alpha outside the object, no cast shadow platform, badge, border, scene, letters, numbers, logo, watermark or checkerboard. No hands or brewing action. This is an equipment recognition icon, not an operating instruction.\r\n\r\nMethod: Hario V60. Representative model: V60 02.\r\nEquipment anatomy: Open circular cone narrowing toward a single bottom outlet, characteristic spiral ribs, small loop handle on the right, and a flat circular support flange. Match the photographed V60 02 geometry; omit its box.\r\nExclude: No wedge-shaped flat seam, chunky valve base, Switch lever, plunger, packaging or brand marks.\r\nDeliver exactly one transparent square icon.\r\n",
+      "images": [
+        {
+          "file": "references/v60.jpg",
+          "role": "equipment geometry",
+          "sha256": "43e45bec92116879f6093a591b8e87e05709102713a7e5140d0e9d41ec9211fb"
+        },
+        {
+          "file": "../../../../app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp",
+          "role": "existing icon style",
+          "sha256": "19dc531009958fff5e8fe64240b0cb488f64aa79991030fc5b2190587e999639"
+        }
+      ],
+      "output_file": "candidates/v60.png",
+      "built_in_output_basename": "exec-1a01965c-01f1-4ea5-b0bc-b503019e0c7b.png",
+      "submitted_prompt_sha256": "7562998be9afc96549ba2efcae67a3907f36265fa9b584c77e36b66ae0d6755a",
+      "output_sha256": "08feffde26a1eefb68c68990954262b1d9ac5922f406d5167639420d627d24f1"
+    },
+    {
+      "method": "clever",
+      "pass": 1,
+      "tool": "image_gen.imagegen",
+      "transparent_background": true,
+      "prompt_file": "prompts/clever.txt",
+      "submitted_prompt": "Create a new square brewing-method icon using the two attached images.\r\nImage 1 is equipment geometry reference only. Preserve that brewer's recognizable construction and proportions; remove the photo's background, packaging, text and unrelated objects.\r\nImage 2 is the existing StarlitCoffee icon style reference only. Match its premium tactile enamel/clay treatment, deep ink-navy edges, periwinkle-blue planes, warm ivory highlights and restrained coffee-brown/copper accents. Do not copy its V60 geometry into this method.\r\nOne isolated complete brewer, front three-quarter view, slight view into open tops where relevant, soft upper-left light, rounded deliberate forms and strong readable silhouette at 48 pixels. Stylize surface materials into the shared palette without losing the distinctive hardware. Center the entire object with roughly 8 percent clear margin on every side; full handles, spouts, feet and lids inside the canvas. Genuine transparent background, alpha outside the object, no cast shadow platform, badge, border, scene, letters, numbers, logo, watermark or checkerboard. No hands or brewing action. This is an equipment recognition icon, not an operating instruction.\r\n\r\nMethod: Clever Dripper. Representative model: Clever, paper-filter version.\r\nEquipment anatomy: Broad tapered wedge-shaped brewing chamber with a wide opening, large curved right-side handle, broad circular release base and short feet. Isolate the Clever from the brewing photograph. Show an open rim with a simple ivory paper filter, and preserve its chamber-to-release-base proportion.\r\nExclude: No pouring kettle, water stream, table, serving carafe, logos, spiral V60 cone, or external Switch lever. Do not invent a lid or screw insert.\r\nDeliver exactly one transparent square icon.\r\n",
+      "images": [
+        {
+          "file": "references/clever.jpg",
+          "role": "equipment geometry",
+          "sha256": "378acbd47957ad70921daed5ef1a93b11cb9b050fb7115367f303f353ad38b1b"
+        },
+        {
+          "file": "../../../../app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp",
+          "role": "existing icon style",
+          "sha256": "19dc531009958fff5e8fe64240b0cb488f64aa79991030fc5b2190587e999639"
+        }
+      ],
+      "output_file": "candidates/clever.png",
+      "built_in_output_basename": "exec-0a32416a-6b3f-40b7-bc2f-cf735a85dd87.png",
+      "submitted_prompt_sha256": "2ffa21fb253ac90d307356c37b345b508c0fd1dc4f538991e2fad90ab31d864f",
+      "output_sha256": "1ca5f9ef73fc3ea5afaef9855d9bacd2a29d2099f561e7a0cf933f6256e0002e"
+    },
+    {
+      "method": "hario-switch",
+      "pass": 1,
+      "tool": "image_gen.imagegen",
+      "transparent_background": true,
+      "prompt_file": "prompts/hario-switch.txt",
+      "submitted_prompt": "Create a new square brewing-method icon using the two attached images.\r\nImage 1 is equipment geometry reference only. Preserve that brewer's recognizable construction and proportions; remove the photo's background, packaging, text and unrelated objects.\r\nImage 2 is the existing StarlitCoffee icon style reference only. Match its premium tactile enamel/clay treatment, deep ink-navy edges, periwinkle-blue planes, warm ivory highlights and restrained coffee-brown/copper accents. Do not copy its V60 geometry into this method.\r\nOne isolated complete brewer, front three-quarter view, slight view into open tops where relevant, soft upper-left light, rounded deliberate forms and strong readable silhouette at 48 pixels. Stylize surface materials into the shared palette without losing the distinctive hardware. Center the entire object with roughly 8 percent clear margin on every side; full handles, spouts, feet and lids inside the canvas. Genuine transparent background, alpha outside the object, no cast shadow platform, badge, border, scene, letters, numbers, logo, watermark or checkerboard. No hands or brewing action. This is an equipment recognition icon, not an operating instruction.\r\n\r\nMethod: Hario Switch. Representative model: V60 glass Switch 02.\r\nEquipment anatomy: Ribbed glass V60 cone seated in a substantial dark flared silicone valve base, with its external transparent switch lever visibly projecting from the side. The photographed glass cone has no loop handle. Retain the heavier valve base and lever so this cannot read as a plain V60.\r\nExclude: No V60 loop handle, wooden collar, plunger, flat shower lid, mug, or packaging.\r\nDeliver exactly one transparent square icon.\r\n",
+      "images": [
+        {
+          "file": "references/hario-switch.jpg",
+          "role": "equipment geometry",
+          "sha256": "e85a7603a3f828c3264a8b675e18d24b27fac97f845d6fe0dde65c2a5648b9f3"
+        },
+        {
+          "file": "../../../../app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp",
+          "role": "existing icon style",
+          "sha256": "19dc531009958fff5e8fe64240b0cb488f64aa79991030fc5b2190587e999639"
+        }
+      ],
+      "output_file": "candidates/hario-switch.png",
+      "built_in_output_basename": "exec-373713dc-1fda-432b-b6c9-dfe6f60e0bea.png",
+      "submitted_prompt_sha256": "5ad01a0656ed8eae5a4df361c2922b7de1e6a8f5c66cb6a2b0a7c8fa7b67db6e",
+      "output_sha256": "21587170dff443cd06159fb4063c0101306ccdbb9ab831efbce44b471c90d80f"
+    },
+    {
+      "method": "kalita-wave",
+      "pass": 1,
+      "tool": "image_gen.imagegen",
+      "transparent_background": true,
+      "prompt_file": "prompts/kalita-wave.txt",
+      "submitted_prompt": "Create a new square brewing-method icon using the two attached images.\r\nImage 1 is equipment geometry reference only. Preserve that brewer's recognizable construction and proportions; remove the photo's background, packaging, text and unrelated objects.\r\nImage 2 is the existing StarlitCoffee icon style reference only. Match its premium tactile enamel/clay treatment, deep ink-navy edges, periwinkle-blue planes, warm ivory highlights and restrained coffee-brown/copper accents. Do not copy its V60 geometry into this method.\r\nOne isolated complete brewer, front three-quarter view, slight view into open tops where relevant, soft upper-left light, rounded deliberate forms and strong readable silhouette at 48 pixels. Stylize surface materials into the shared palette without losing the distinctive hardware. Center the entire object with roughly 8 percent clear margin on every side; full handles, spouts, feet and lids inside the canvas. Genuine transparent background, alpha outside the object, no cast shadow platform, badge, border, scene, letters, numbers, logo, watermark or checkerboard. No hands or brewing action. This is an equipment recognition icon, not an operating instruction.\r\n\r\nMethod: Kalita Wave. Representative model: Wave 185 stainless steel.\r\nEquipment anatomy: Broad shallow truncated stainless-steel cone with a flat lower floor, horizontal stepped bands, a low round support flange and small right-side loop handle. Keep the wide shallow bowl shape, rather than a pointed V60 cone.\r\nExclude: No spiral ribs, conical pointed bottom, valve lever, plunger, lid, or mug.\r\nDeliver exactly one transparent square icon.\r\n",
+      "images": [
+        {
+          "file": "references/kalita-wave.jpg",
+          "role": "equipment geometry",
+          "sha256": "ecff5ab8992c1d5b71c517fee5628d57c98b3867578ac9c36b0fd406b64949f5"
+        },
+        {
+          "file": "../../../../app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp",
+          "role": "existing icon style",
+          "sha256": "19dc531009958fff5e8fe64240b0cb488f64aa79991030fc5b2190587e999639"
+        }
+      ],
+      "output_file": "candidates/kalita-wave.png",
+      "built_in_output_basename": "exec-2f4f37b5-248d-47cc-bbc9-c0afd0c29960.png",
+      "submitted_prompt_sha256": "d851db2be36fee091c908c7870d22ba07057db15c46b4743b7def99fa693f7d6",
+      "output_sha256": "9ec2ba74a92f7ff0fee065fff4a7e50de807e7436cad831ed713e3fab8813fe3"
+    },
+    {
+      "method": "melitta",
+      "pass": 1,
+      "tool": "image_gen.imagegen",
+      "transparent_background": true,
+      "prompt_file": "prompts/melitta.txt",
+      "submitted_prompt": "Create a new square brewing-method icon using the two attached images.\r\nImage 1 is equipment geometry reference only. Preserve that brewer's recognizable construction and proportions; remove the photo's background, packaging, text and unrelated objects.\r\nImage 2 is the existing StarlitCoffee icon style reference only. Match its premium tactile enamel/clay treatment, deep ink-navy edges, periwinkle-blue planes, warm ivory highlights and restrained coffee-brown/copper accents. Do not copy its V60 geometry into this method.\r\nOne isolated complete brewer, front three-quarter view, slight view into open tops where relevant, soft upper-left light, rounded deliberate forms and strong readable silhouette at 48 pixels. Stylize surface materials into the shared palette without losing the distinctive hardware. Center the entire object with roughly 8 percent clear margin on every side; full handles, spouts, feet and lids inside the canvas. Genuine transparent background, alpha outside the object, no cast shadow platform, badge, border, scene, letters, numbers, logo, watermark or checkerboard. No hands or brewing action. This is an equipment recognition icon, not an operating instruction.\r\n\r\nMethod: Melitta style pour-over. Representative model: Melitta 1x4 plastic wedge filter.\r\nEquipment anatomy: Wide oval opening tapering into a wedge body with a short flat bottom seam, straight vertical interior ribs, right-side loop handle, and broad round support flange. Follow the unboxed 1x4 photograph, including the low front viewing opening at the flange. Keep the wedge visibly different from the circular spiral V60.\r\nExclude: No spiral ribs, circular pointed cone, mechanical valve, packaging, printed brand, or numbers.\r\nDeliver exactly one transparent square icon.\r\n",
+      "images": [
+        {
+          "file": "references/melitta.png",
+          "role": "equipment geometry",
+          "sha256": "6c562c5c7a33392985383e5b67ec7647bdb51d9f79b06b63cee39c6771b6f890"
+        },
+        {
+          "file": "../../../../app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp",
+          "role": "existing icon style",
+          "sha256": "19dc531009958fff5e8fe64240b0cb488f64aa79991030fc5b2190587e999639"
+        }
+      ],
+      "output_file": "rejected/melitta-v1.png",
+      "built_in_output_basename": "exec-0b6c090c-53b1-433c-802a-2bd6ef0aab68.png",
+      "submitted_prompt_sha256": "8bfd598bdb66608408b8e9f444a5fd80ac458ad82704bf5812c12fcbdcc41f40",
+      "output_sha256": "828ed1a4e5423c036cff5c38fb184afa6ed72c392d0cb031b3e8986c3790ae47"
+    },
+    {
+      "method": "turkish",
+      "pass": 1,
+      "tool": "image_gen.imagegen",
+      "transparent_background": true,
+      "prompt_file": "prompts/turkish.txt",
+      "submitted_prompt": "Create a new square brewing-method icon using the two attached images.\r\nImage 1 is equipment geometry reference only. Preserve that brewer's recognizable construction and proportions; remove the photo's background, packaging, text and unrelated objects.\r\nImage 2 is the existing StarlitCoffee icon style reference only. Match its premium tactile enamel/clay treatment, deep ink-navy edges, periwinkle-blue planes, warm ivory highlights and restrained coffee-brown/copper accents. Do not copy its V60 geometry into this method.\r\nOne isolated complete brewer, front three-quarter view, slight view into open tops where relevant, soft upper-left light, rounded deliberate forms and strong readable silhouette at 48 pixels. Stylize surface materials into the shared palette without losing the distinctive hardware. Center the entire object with roughly 8 percent clear margin on every side; full handles, spouts, feet and lids inside the canvas. Genuine transparent background, alpha outside the object, no cast shadow platform, badge, border, scene, letters, numbers, logo, watermark or checkerboard. No hands or brewing action. This is an equipment recognition icon, not an operating instruction.\r\n\r\nMethod: Turkish coffee. Representative model: Soy C1 cezve; representative long-handle pot.\r\nEquipment anatomy: One small copper cezve with a rounded wider lower body, narrower neck, open flared mouth and a very long slim handle rising diagonally to the right. Preserve the full handle and its attachment from the photo; simplify hammered detail into a few soft copper highlights.\r\nExclude: No lid, side loop handle, moka chambers, flame, stove, coffee cup, or steam.\r\nDeliver exactly one transparent square icon.\r\n",
+      "images": [
+        {
+          "file": "references/turkish.jpg",
+          "role": "equipment geometry",
+          "sha256": "c92dfa4e000789653816619ce8672d1c9a97efd3268c7ee52869bf641078051b"
+        },
+        {
+          "file": "../../../../app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp",
+          "role": "existing icon style",
+          "sha256": "19dc531009958fff5e8fe64240b0cb488f64aa79991030fc5b2190587e999639"
+        }
+      ],
+      "output_file": "candidates/turkish.png",
+      "built_in_output_basename": "exec-d74acab7-68a7-4c37-8a18-bb49275ec5f7.png",
+      "submitted_prompt_sha256": "d59a9d57f57b5966bab38d0fbf0509f0a257688d6cd9f02751edef69173f56c0",
+      "output_sha256": "f6da2b9836e8507407701c0c4a39d664dfd690fa2bd6c43a898e946ebae37a19"
+    },
+    {
+      "method": "phin",
+      "pass": 1,
+      "tool": "image_gen.imagegen",
+      "transparent_background": true,
+      "prompt_file": "prompts/phin.txt",
+      "submitted_prompt": "Create a new square brewing-method icon using the two attached images.\r\nImage 1 is equipment geometry reference only. Preserve that brewer's recognizable construction and proportions; remove the photo's background, packaging, text and unrelated objects.\r\nImage 2 is the existing StarlitCoffee icon style reference only. Match its premium tactile enamel/clay treatment, deep ink-navy edges, periwinkle-blue planes, warm ivory highlights and restrained coffee-brown/copper accents. Do not copy its V60 geometry into this method.\r\nOne isolated complete brewer, front three-quarter view, slight view into open tops where relevant, soft upper-left light, rounded deliberate forms and strong readable silhouette at 48 pixels. Stylize surface materials into the shared palette without losing the distinctive hardware. Center the entire object with roughly 8 percent clear margin on every side; full handles, spouts, feet and lids inside the canvas. Genuine transparent background, alpha outside the object, no cast shadow platform, badge, border, scene, letters, numbers, logo, watermark or checkerboard. No hands or brewing action. This is an equipment recognition icon, not an operating instruction.\r\n\r\nMethod: Vietnamese phin. Representative model: Nguyen 4 oz gravity-insert phin.\r\nEquipment anatomy: One assembled Vietnamese gravity phin: short wide cylindrical metal chamber, small side loop handle, shallow fitted cap, and a broad flat perforated support plate below. The exploded photograph supplies the component shapes; assemble the pieces in their real order. The gravity insert rests inside and is hidden beneath the fitted lid.\r\nExclude: No exploded arrangement, arrows, labels, threaded screw or long piston rod, espresso handle, cup, or extra loose pieces.\r\nDeliver exactly one transparent square icon.\r\n",
+      "images": [
+        {
+          "file": "references/phin.png",
+          "role": "equipment geometry",
+          "sha256": "ada0d86fdb10809d97e3d89a2b140beb5ffce01459e3986c235130ccdf843ac0"
+        },
+        {
+          "file": "../../../../app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp",
+          "role": "existing icon style",
+          "sha256": "19dc531009958fff5e8fe64240b0cb488f64aa79991030fc5b2190587e999639"
+        }
+      ],
+      "output_file": "candidates/phin.png",
+      "built_in_output_basename": "exec-70f34f10-d5b8-4dae-a403-2c2801f87319.png",
+      "submitted_prompt_sha256": "b851615fc3707f8b30f4d386941d869617bfd2443ce30eb91e1306b149796efe",
+      "output_sha256": "518198727c59b738109a07d98e38e09323c9e568da6d87604fa6dc43fc195189"
+    },
+    {
+      "method": "french-press",
+      "pass": 1,
+      "tool": "image_gen.imagegen",
+      "transparent_background": true,
+      "prompt_file": "prompts/french-press.txt",
+      "submitted_prompt": "Create a new square brewing-method icon using the two attached images.\r\nImage 1 is equipment geometry reference only. Preserve that brewer's recognizable construction and proportions; remove the photo's background, packaging, text and unrelated objects.\r\nImage 2 is the existing StarlitCoffee icon style reference only. Match its premium tactile enamel/clay treatment, deep ink-navy edges, periwinkle-blue planes, warm ivory highlights and restrained coffee-brown/copper accents. Do not copy its V60 geometry into this method.\r\nOne isolated complete brewer, front three-quarter view, slight view into open tops where relevant, soft upper-left light, rounded deliberate forms and strong readable silhouette at 48 pixels. Stylize surface materials into the shared palette without losing the distinctive hardware. Center the entire object with roughly 8 percent clear margin on every side; full handles, spouts, feet and lids inside the canvas. Genuine transparent background, alpha outside the object, no cast shadow platform, badge, border, scene, letters, numbers, logo, watermark or checkerboard. No hands or brewing action. This is an equipment recognition icon, not an operating instruction.\r\n\r\nMethod: French press. Representative model: Bodum Chambord 1928.\r\nEquipment anatomy: Cylindrical glass jug in a simple metal frame, curved black side handle, short pour spout, domed lid, round plunger knob and central straight rod leading to a visible mesh disc inside the jug. Use the Chambord photograph's silhouette and support feet.\r\nExclude: No V60 cone, separate filter basket, extra mug, kettle, printed markings, or steam.\r\nDeliver exactly one transparent square icon.\r\n",
+      "images": [
+        {
+          "file": "references/french-press.png",
+          "role": "equipment geometry",
+          "sha256": "a5b8c672a2be4f0556d92f1aed50be8d3f66b2b2ef07d063f6fe2f4912e26354"
+        },
+        {
+          "file": "../../../../app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp",
+          "role": "existing icon style",
+          "sha256": "19dc531009958fff5e8fe64240b0cb488f64aa79991030fc5b2190587e999639"
+        }
+      ],
+      "output_file": "candidates/french-press.png",
+      "built_in_output_basename": "exec-427607b3-d5f1-4edd-bdf4-1134202411a4.png",
+      "submitted_prompt_sha256": "46e7640373bf81d963bcf3e01c4956f4b65b067e8e923b21c0c50ba48d70f18e",
+      "output_sha256": "3e3b120fac17ed1c815899ad5c6059e9f2a64983232d9a131951df585744ec8d"
+    },
+    {
+      "method": "aeropress",
+      "pass": 1,
+      "tool": "image_gen.imagegen",
+      "transparent_background": true,
+      "prompt_file": "prompts/aeropress.txt",
+      "submitted_prompt": "Create a new square brewing-method icon using the two attached images.\r\nImage 1 is equipment geometry reference only. Preserve that brewer's recognizable construction and proportions; remove the photo's background, packaging, text and unrelated objects.\r\nImage 2 is the existing StarlitCoffee icon style reference only. Match its premium tactile enamel/clay treatment, deep ink-navy edges, periwinkle-blue planes, warm ivory highlights and restrained coffee-brown/copper accents. Do not copy its V60 geometry into this method.\r\nOne isolated complete brewer, front three-quarter view, slight view into open tops where relevant, soft upper-left light, rounded deliberate forms and strong readable silhouette at 48 pixels. Stylize surface materials into the shared palette without losing the distinctive hardware. Center the entire object with roughly 8 percent clear margin on every side; full handles, spouts, feet and lids inside the canvas. Genuine transparent background, alpha outside the object, no cast shadow platform, badge, border, scene, letters, numbers, logo, watermark or checkerboard. No hands or brewing action. This is an equipment recognition icon, not an operating instruction.\r\n\r\nMethod: AeroPress. Representative model: Original, standard filter cap, upright.\r\nEquipment anatomy: One assembled upright AeroPress Original: dark translucent straight brewing chamber, piston emerging at the top with a broad flat top flange, broad lower support flange and standard filter cap at the bottom. Show a modest extension of the piston so the two overlapping cylinders are clear. Isolate only the brewer from the product photograph.\r\nExclude: No mug, scoop, stirrer, printed numbers, logos, side handle, long French-press rod, flow-control valve, or inverted position.\r\nDeliver exactly one transparent square icon.\r\n",
+      "images": [
+        {
+          "file": "references/aeropress.png",
+          "role": "equipment geometry",
+          "sha256": "5bab114be6356076778d5f72cc9d469d94255bc3f01275e468f62a4ba477c8c6"
+        },
+        {
+          "file": "../../../../app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp",
+          "role": "existing icon style",
+          "sha256": "19dc531009958fff5e8fe64240b0cb488f64aa79991030fc5b2190587e999639"
+        }
+      ],
+      "output_file": "candidates/aeropress.png",
+      "built_in_output_basename": "exec-21c6eaf0-ff68-42d1-98bc-52eaef965fb8.png",
+      "submitted_prompt_sha256": "dca9ce0f899d437cb96f8f4ba55d506b74301f507acf6a2a6332cea70ee168b2",
+      "output_sha256": "e98e28f333f4f433bd70665b9757da8a16204dabd06193151723f45d34dd0405"
+    },
+    {
+      "method": "espresso",
+      "pass": 1,
+      "tool": "image_gen.imagegen",
+      "transparent_background": true,
+      "prompt_file": "prompts/espresso.txt",
+      "submitted_prompt": "Create a new square brewing-method icon using the two attached images.\r\nImage 1 is equipment geometry reference only. Preserve that brewer's recognizable construction and proportions; remove the photo's background, packaging, text and unrelated objects.\r\nImage 2 is the existing StarlitCoffee icon style reference only. Match its premium tactile enamel/clay treatment, deep ink-navy edges, periwinkle-blue planes, warm ivory highlights and restrained coffee-brown/copper accents. Do not copy its V60 geometry into this method.\r\nOne isolated complete brewer, front three-quarter view, slight view into open tops where relevant, soft upper-left light, rounded deliberate forms and strong readable silhouette at 48 pixels. Stylize surface materials into the shared palette without losing the distinctive hardware. Center the entire object with roughly 8 percent clear margin on every side; full handles, spouts, feet and lids inside the canvas. Genuine transparent background, alpha outside the object, no cast shadow platform, badge, border, scene, letters, numbers, logo, watermark or checkerboard. No hands or brewing action. This is an equipment recognition icon, not an operating instruction.\r\n\r\nMethod: Espresso. Representative model: Breville Bambino Plus BES500.\r\nEquipment anatomy: One compact Bambino Plus-style espresso machine: tall rounded rectangular body, clean small circular front controls, portafilter locked under the brew group with its black handle clearly projecting forward, right-side steam wand, and drip tray beneath an open brewing area. Preserve the photographed group-to-tray and wand arrangement.\r\nExclude: No integrated grinder, bean hopper, pressure gauge, extra cups, printed control labels, or automatic-drip basket and carafe.\r\nDeliver exactly one transparent square icon.\r\n",
+      "images": [
+        {
+          "file": "references/espresso.png",
+          "role": "equipment geometry",
+          "sha256": "4dba089bd27ec8bc64229fd1e43489818daada88b6866f2794d3879c86331c90"
+        },
+        {
+          "file": "../../../../app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp",
+          "role": "existing icon style",
+          "sha256": "19dc531009958fff5e8fe64240b0cb488f64aa79991030fc5b2190587e999639"
+        }
+      ],
+      "output_file": "candidates/espresso.png",
+      "built_in_output_basename": "exec-dab32da0-ce5c-48d7-9416-4a302b4a9524.png",
+      "submitted_prompt_sha256": "f9a2d58fe2d230307c11a19988182af19fee3790b50d6c626066eb851ca45b1f",
+      "output_sha256": "a505d8a0710498db6ea777a3f84ae6bdf9057b77d8aeb028ce2a37368a7ffeb6"
+    },
+    {
+      "method": "moka-pot",
+      "pass": 1,
+      "tool": "image_gen.imagegen",
+      "transparent_background": true,
+      "prompt_file": "prompts/moka-pot.txt",
+      "submitted_prompt": "Create a new square brewing-method icon using the two attached images.\r\nImage 1 is equipment geometry reference only. Preserve that brewer's recognizable construction and proportions; remove the photo's background, packaging, text and unrelated objects.\r\nImage 2 is the existing StarlitCoffee icon style reference only. Match its premium tactile enamel/clay treatment, deep ink-navy edges, periwinkle-blue planes, warm ivory highlights and restrained coffee-brown/copper accents. Do not copy its V60 geometry into this method.\r\nOne isolated complete brewer, front three-quarter view, slight view into open tops where relevant, soft upper-left light, rounded deliberate forms and strong readable silhouette at 48 pixels. Stylize surface materials into the shared palette without losing the distinctive hardware. Center the entire object with roughly 8 percent clear margin on every side; full handles, spouts, feet and lids inside the canvas. Genuine transparent background, alpha outside the object, no cast shadow platform, badge, border, scene, letters, numbers, logo, watermark or checkerboard. No hands or brewing action. This is an equipment recognition icon, not an operating instruction.\r\n\r\nMethod: Moka pot. Representative model: Bialetti Moka Express.\r\nEquipment anatomy: Complete closed Moka Express: octagonal lower water chamber, screw-joint waist, octagonal upper collecting chamber with a left pour spout, hinged sloping lid and black knob, large black curved handle on the right, and a small safety valve on the lower chamber. Retain the distinctive two-chamber octagonal silhouette.\r\nExclude: No flames, stove, coffee cup, glass hourglass, percolator cylinder, steam, pressure gauge, or logo.\r\nDeliver exactly one transparent square icon.\r\n",
+      "images": [
+        {
+          "file": "references/moka-pot.jpg",
+          "role": "equipment geometry",
+          "sha256": "f395c7fc48d6ce532c79a5d06c11def868ddb7f75f02d40e4b79093a451d09ea"
+        },
+        {
+          "file": "../../../../app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp",
+          "role": "existing icon style",
+          "sha256": "19dc531009958fff5e8fe64240b0cb488f64aa79991030fc5b2190587e999639"
+        }
+      ],
+      "output_file": "candidates/moka-pot.png",
+      "built_in_output_basename": "exec-c9102641-5753-480e-b4cf-9db10f279dfc.png",
+      "submitted_prompt_sha256": "0eb022aa9ebdad030704c9341363024518efcb8e14f655eba7cc8b7aacdd8096",
+      "output_sha256": "481dd409c3d7bf773c62733c84d16f19f657625c9e587bb7d9c8dff3808f23d4"
+    },
+    {
+      "method": "cold-brew",
+      "pass": 1,
+      "tool": "image_gen.imagegen",
+      "transparent_background": true,
+      "prompt_file": "prompts/cold-brew.txt",
+      "submitted_prompt": "Create a new square brewing-method icon using the two attached images.\r\nImage 1 is equipment geometry reference only. Preserve that brewer's recognizable construction and proportions; remove the photo's background, packaging, text and unrelated objects.\r\nImage 2 is the existing StarlitCoffee icon style reference only. Match its premium tactile enamel/clay treatment, deep ink-navy edges, periwinkle-blue planes, warm ivory highlights and restrained coffee-brown/copper accents. Do not copy its V60 geometry into this method.\r\nOne isolated complete brewer, front three-quarter view, slight view into open tops where relevant, soft upper-left light, rounded deliberate forms and strong readable silhouette at 48 pixels. Stylize surface materials into the shared palette without losing the distinctive hardware. Center the entire object with roughly 8 percent clear margin on every side; full handles, spouts, feet and lids inside the canvas. Genuine transparent background, alpha outside the object, no cast shadow platform, badge, border, scene, letters, numbers, logo, watermark or checkerboard. No hands or brewing action. This is an equipment recognition icon, not an operating instruction.\r\n\r\nMethod: Cold brew. Representative model: Generic covered glass vessel; no integral filter implied.\r\nEquipment anatomy: One generic covered wide-mouth glass steeping jar with a simple screw lid, rounded shoulders, broad cylindrical body, and dark coffee-colored contents well below the lid. Use the single jar at the right of the photo for jar anatomy. Omit all embossing; show a little dark ground-coffee sediment at the bottom to suggest immersion brewing.\r\nExclude: No retail carton, cluster of jars, embossed lettering, measuring marks, integral filter basket, ice, straw, serving tumbler, spigot, or capacity claim.\r\nDeliver exactly one transparent square icon.\r\n",
+      "images": [
+        {
+          "file": "references/cold-brew.jpg",
+          "role": "equipment geometry",
+          "sha256": "b568574786c96150204cb2940324d38e86eae830e8dc96a56130fe70a0c08a70"
+        },
+        {
+          "file": "../../../../app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp",
+          "role": "existing icon style",
+          "sha256": "19dc531009958fff5e8fe64240b0cb488f64aa79991030fc5b2190587e999639"
+        }
+      ],
+      "output_file": "candidates/cold-brew.png",
+      "built_in_output_basename": "exec-8e1b6ad8-bf2f-494d-98ff-2e3b585999f8.png",
+      "submitted_prompt_sha256": "b68a82a008f978ed38a0339268485ed1510ef1ed9d3db210644986d9962f5eeb",
+      "output_sha256": "336db40c7f3c1117b3120014bebbff9884a149b614098864565fd533ed9c58d5"
+    },
+    {
+      "method": "siphon",
+      "pass": 1,
+      "tool": "image_gen.imagegen",
+      "transparent_background": true,
+      "prompt_file": "prompts/siphon.txt",
+      "submitted_prompt": "Create a new square brewing-method icon using the two attached images.\r\nImage 1 is equipment geometry reference only. Preserve that brewer's recognizable construction and proportions; remove the photo's background, packaging, text and unrelated objects.\r\nImage 2 is the existing StarlitCoffee icon style reference only. Match its premium tactile enamel/clay treatment, deep ink-navy edges, periwinkle-blue planes, warm ivory highlights and restrained coffee-brown/copper accents. Do not copy its V60 geometry into this method.\r\nOne isolated complete brewer, front three-quarter view, slight view into open tops where relevant, soft upper-left light, rounded deliberate forms and strong readable silhouette at 48 pixels. Stylize surface materials into the shared palette without losing the distinctive hardware. Center the entire object with roughly 8 percent clear margin on every side; full handles, spouts, feet and lids inside the canvas. Genuine transparent background, alpha outside the object, no cast shadow platform, badge, border, scene, letters, numbers, logo, watermark or checkerboard. No hands or brewing action. This is an equipment recognition icon, not an operating instruction.\r\n\r\nMethod: Siphon. Representative model: Hario Technica TCA-2; representative siphon.\r\nEquipment anatomy: A complete Hario Technica-style siphon: upper straight glass brewing cylinder, descending central glass tube into the round lower globe, gasket at the joined neck, metal stand with a right-side handle supporting the globe, stable base and unlit alcohol lamp centered underneath the globe. Preserve the real joined two-chamber arrangement and stable support.\r\nExclude: No floating disconnected chambers, invented plumbing, pressure gauge, steampunk gear, flame, boiling liquid, coffee cup, or lettering.\r\nDeliver exactly one transparent square icon.\r\n",
+      "images": [
+        {
+          "file": "references/siphon.jpg",
+          "role": "equipment geometry",
+          "sha256": "ac082b2ad0150d09b31d2c650ee3f0d9e4c450b792230e7b6b828c268d4f824d"
+        },
+        {
+          "file": "../../../../app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp",
+          "role": "existing icon style",
+          "sha256": "19dc531009958fff5e8fe64240b0cb488f64aa79991030fc5b2190587e999639"
+        }
+      ],
+      "output_file": "rejected/siphon-v1.png",
+      "built_in_output_basename": "exec-9d5038f0-5d8b-4419-b9fd-43d667684c3a.png",
+      "submitted_prompt_sha256": "f8825dfca1d0f13284a777deeb8002dca44c6eea26ddf4575cc53afe50ddfc69",
+      "output_sha256": "b57d3733aa37f5709c809e30d330a62a272d43b5824cda19230fbeb92f517bf9"
+    },
+    {
+      "method": "percolator",
+      "pass": 1,
+      "tool": "image_gen.imagegen",
+      "transparent_background": true,
+      "prompt_file": "prompts/percolator.txt",
+      "submitted_prompt": "Create a new square brewing-method icon using the two attached images.\r\nImage 1 is equipment geometry reference only. Preserve that brewer's recognizable construction and proportions; remove the photo's background, packaging, text and unrelated objects.\r\nImage 2 is the existing StarlitCoffee icon style reference only. Match its premium tactile enamel/clay treatment, deep ink-navy edges, periwinkle-blue planes, warm ivory highlights and restrained coffee-brown/copper accents. Do not copy its V60 geometry into this method.\r\nOne isolated complete brewer, front three-quarter view, slight view into open tops where relevant, soft upper-left light, rounded deliberate forms and strong readable silhouette at 48 pixels. Stylize surface materials into the shared palette without losing the distinctive hardware. Center the entire object with roughly 8 percent clear margin on every side; full handles, spouts, feet and lids inside the canvas. Genuine transparent background, alpha outside the object, no cast shadow platform, badge, border, scene, letters, numbers, logo, watermark or checkerboard. No hands or brewing action. This is an equipment recognition icon, not an operating instruction.\r\n\r\nMethod: Percolator. Representative model: Presto electric 02822.\r\nEquipment anatomy: One electric percolator with a tall gently tapered cylindrical metal pot, fitted lid and black knob, long raised pouring spout on the left, black curved handle on the right, and a low black electric base. Match the photographed Presto silhouette; simplify tiny details.\r\nExclude: No cord, serving cup, saucer, branding, moka octagons, glass French-press chamber or plunger, tea infuser, or steam.\r\nDeliver exactly one transparent square icon.\r\n",
+      "images": [
+        {
+          "file": "references/percolator.jpg",
+          "role": "equipment geometry",
+          "sha256": "dfe39ed6959a42574d4d87e2959c258e9d551faa27fd87e09c6f0ac99a93809c"
+        },
+        {
+          "file": "../../../../app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp",
+          "role": "existing icon style",
+          "sha256": "19dc531009958fff5e8fe64240b0cb488f64aa79991030fc5b2190587e999639"
+        }
+      ],
+      "output_file": "candidates/percolator.png",
+      "built_in_output_basename": "exec-15c970d8-3e38-4255-89d0-3f29d54eb99e.png",
+      "submitted_prompt_sha256": "264393abf6db33855b75c41d7efedc4ad71ed7240e98805e1f6186c1d7d651ab",
+      "output_sha256": "0a3b3dad38c530b281c88f6d1f13fed09441bd9ad0f75a420cef1a9cd9d4b8ef"
+    },
+    {
+      "method": "pulsar",
+      "pass": 2,
+      "tool": "image_gen.imagegen",
+      "transparent_background": true,
+      "prompt_file": "prompts/pulsar-refinement.txt",
+      "submitted_prompt": "Refine the attached Pulsar icon. Image 1 is the candidate to edit. Image 2 is the equipment anatomy photograph. Image 3 is the existing icon style master only. Correct only the shower-cap underside: the photograph has a shallow clear plastic patterned distributor immediately beneath the dark cap. Replace the exaggerated hanging copper/metal nozzle-like cylinders with that thin, nearly flush translucent plastic distributor. No projecting metal tubes, no copper outlets, no invented plumbing. Keep the same straight transparent chamber, dark top cap, footed base, side flow lever, overall proportions, framing, navy/periwinkle/ivory palette, tactile treatment and upper-left lighting. Keep the full object inside the canvas and preserve a genuine transparent background. No text, logo, measuring marks, shadow platform or new objects. One square icon.",
+      "images": [
+        {
+          "file": "rejected/pulsar-v1.png",
+          "submitted_as": "candidates/pulsar.png",
+          "role": "candidate to refine",
+          "sha256": "f50ccfd94f99d40c9e34ffd1843f51812cff1411434ee0b91b19e4ef6245797e"
+        },
+        {
+          "file": "references/pulsar.jpg",
+          "role": "equipment geometry",
+          "sha256": "266e581d477b06060143efff6c78cbbacc96b1eefd8a058504794955befd5c58"
+        },
+        {
+          "file": "../../../../app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp",
+          "role": "existing icon style",
+          "sha256": "19dc531009958fff5e8fe64240b0cb488f64aa79991030fc5b2190587e999639"
+        }
+      ],
+      "output_file": "candidates/pulsar.png",
+      "built_in_output_basename": "exec-f3427f31-b856-43b9-a405-4d44972583bd.png",
+      "submitted_prompt_sha256": "b73fdcdd002102618d6bd825a7042df04064749b64b2c6d5c28f0c2bb13d7cef",
+      "output_sha256": "5d1bde82c0eabb67ea529cb8c0c3cc9c61677d4a6a34fa7c57aea0b21317a323"
+    },
+    {
+      "method": "melitta",
+      "pass": 2,
+      "tool": "image_gen.imagegen",
+      "transparent_background": true,
+      "prompt_file": "prompts/melitta-refinement.txt",
+      "submitted_prompt": "Refine the attached Melitta icon framing. Image 1 is the candidate to edit. Image 2 is the actual unboxed 1x4 equipment photograph for geometry only. Image 3 is the existing icon style master for style only. Preserve the current brewer's wedge-shaped body, oval opening, straight interior ribs, right loop handle, flat lower seam, round support flange and low viewing opening. Preserve its navy/periwinkle/ivory tactile enamel appearance and lighting. Reduce the entire brewer uniformly and center it so there is at least 8 percent clear canvas on every side, especially beyond the complete right handle. Do not clip, redraw, elongate or remove the handle. Keep the complete brewer as one isolated object on a genuine transparent background, with alpha zero outside the object. Remove any stray background residue. No letters, numbers, logos, border, badge, ground platform or extra objects. One square icon.",
+      "images": [
+        {
+          "file": "rejected/melitta-v1.png",
+          "submitted_as": "candidates/melitta.png",
+          "role": "candidate to refine",
+          "sha256": "828ed1a4e5423c036cff5c38fb184afa6ed72c392d0cb031b3e8986c3790ae47"
+        },
+        {
+          "file": "references/melitta.png",
+          "role": "equipment geometry",
+          "sha256": "6c562c5c7a33392985383e5b67ec7647bdb51d9f79b06b63cee39c6771b6f890"
+        },
+        {
+          "file": "../../../../app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp",
+          "role": "existing icon style",
+          "sha256": "19dc531009958fff5e8fe64240b0cb488f64aa79991030fc5b2190587e999639"
+        }
+      ],
+      "output_file": "candidates/melitta.png",
+      "built_in_output_basename": "exec-a075514c-6af3-4bc8-8e60-2800d9fff1ec.png",
+      "submitted_prompt_sha256": "cbbe4738c58c1467a682b5f33b6310acb5a5504572c05f90fc5fd4707b6b1016",
+      "output_sha256": "dc7f7308ae2d50a7cf1ae763b2d1d7a7ad346782a141c6bee349bf9b95dc16cd"
+    },
+    {
+      "method": "siphon",
+      "pass": 2,
+      "tool": "image_gen.imagegen",
+      "transparent_background": true,
+      "prompt_file": "prompts/siphon-refinement.txt",
+      "submitted_prompt": "Refine only the internal anatomy of the attached siphon icon. Image 1 is the candidate to edit. Image 2 is the Hario Technica equipment photograph for anatomy. Image 3 is the established icon style master only. Remove the large dark cylinder descending from the top lid into the upper glass chamber: that shape comes from the photograph's printed branding, not a physical stopper. The upper chamber should show clear glass under its simple flat lid and a thin pale cloth filter disc seated on the upper chamber floor. Remove the oversized copper perforated disc drawn at the bottom of the long glass stem inside the lower globe. The stem has an open lower end with only a tiny thin wire retaining hook/chain, not a filter plate there. Preserve the joined upper cylinder and lower round globe, gasket, descending glass tube, stand and side handle, stable base, unlit lamp, overall proportions, framing, tactile navy/periwinkle/ivory treatment and lighting. Keep all hardware inside the square canvas and a genuine transparent background. No branding, text, new plumbing, flame or extra objects. This is an assembled equipment recognition icon.",
+      "images": [
+        {
+          "file": "rejected/siphon-v1.png",
+          "submitted_as": "candidates/siphon.png",
+          "role": "candidate to refine",
+          "sha256": "b57d3733aa37f5709c809e30d330a62a272d43b5824cda19230fbeb92f517bf9"
+        },
+        {
+          "file": "references/siphon.jpg",
+          "role": "equipment geometry",
+          "sha256": "ac082b2ad0150d09b31d2c650ee3f0d9e4c450b792230e7b6b828c268d4f824d"
+        },
+        {
+          "file": "../../../../app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp",
+          "role": "existing icon style",
+          "sha256": "19dc531009958fff5e8fe64240b0cb488f64aa79991030fc5b2190587e999639"
+        }
+      ],
+      "output_file": "candidates/siphon.png",
+      "built_in_output_basename": "exec-a0a9a690-1c10-4b94-9d8f-6da486c6b132.png",
+      "submitted_prompt_sha256": "9a898a160e9ddec381c69396f5188b59156ad84f4c236f69ab7c0b5b67810828",
+      "output_sha256": "501ee43ad0322012f879d7eab24181b811f2b9eea17df4ab52f117c8b5356e61"
+    }
+  ]
+}

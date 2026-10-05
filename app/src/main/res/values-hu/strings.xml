@@ -100,11 +100,8 @@
     <string name="label_increase">%1$s növelése</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Főzés előkészítése</string>
     <!-- Prep screen: single concise method + filter specific tip -->
     <string name="action_ready_to_brew_short">Kész a főzésre</string>
-    <string name="prep_tip_label">Előkészítés</string>
-    <string name="label_recipe_heading">Recept</string>
     <string name="label_temp_short">Hőm.</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Nedvesítse be a papírszűrőt az alaptestben (nyitott szeleppel), majd engedje le. Helyezze fel a hengert, adja hozzá az őrleményt, egyengesse el a kávéágyat, tegye fel az elosztósapkát. Nullázza a mérleget.</string>
@@ -114,8 +111,6 @@
     <string name="prep_tip_french_press">Melegítse elő a French presst, majd öntse ki. Adja hozzá az őrleményt, tegye a mérlegre, és nullázza a víz hozzáadása előtt.</string>
     <string name="prep_tip_espresso">Törölje szárazra a szűrőkart. Adagolja be, ossza el egyenletesen, és tömörítse laposra a rögzítés előtt.</string>
     <string name="prep_tip_moka">Töltse fel az alsó kamrát a szelepig. Töltse meg a kosarat őrleménnyel, egyengesse el — ne tömörítse. Óvatosan szerelje össze.</string>
-    <string name="format_prep_grind_specific">Őrlés: %1$s — %2$s beállítása: %3$s</string>
-    <string name="format_prep_grind_generic">Őrlés: %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Szünet</string>
@@ -731,7 +726,6 @@
     <string name="guidance_cue_valve_state">Szelep állapota</string>
     <string name="screen_learning_title">Tanulás</string>
     <string name="msg_learning_subtitle">Szemléletes, lépésről lépésre haladó útmutatók</string>
-    <string name="msg_learning_intro">Válasszon kávékészítőt és receptet, majd haladjon végig egyértelműen, lépésről lépésre.</string>
     <string name="action_show_details">Részletek megjelenítése</string>
     <string name="action_hide_details">Részletek elrejtése</string>
 

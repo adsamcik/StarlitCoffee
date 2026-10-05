@@ -1,0 +1,12 @@
+<resources>
+    <string name="action_brew_this_guide">Főzés e recept szerint</string>
+    <string name="label_freshly_boiled_water">Frissen forralt víz</string>
+    <string name="label_machine_temperature">A gép szabályozza a hőmérsékletet</string>
+    <string name="action_prepare_this_guide">Kávé előkészítése</string>
+    <string name="label_reviewed_guide_english">Angol nyelvű recept</string>
+    <string name="heading_reviewed_sources">Recept és források</string>
+    <string name="msg_reviewed_fill_quantities">Tartsd be a megadott töltési jelöléseket. Mérd le a ténylegesen felhasznált kávét.</string>
+    <string name="label_measured_coffee_g">Betöltött kávé (g)</string>
+    <string name="label_optional_measured_water_g">Lemért víz (g, nem kötelező)</string>
+    <string name="msg_reviewed_equipment_confirm">A felszerelésem megfelel ennek a receptnek.</string>
+</resources>

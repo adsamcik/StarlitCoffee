@@ -18,8 +18,11 @@ internal object SessionExecutionContextSnapshotValidatorV1 {
             value.logPresentation.waterG,
             "Log water",
         )
-        require(value.logPresentation.ratio.isFinite() && value.logPresentation.ratio > 0.0) {
-            "Log ratio must be finite and positive"
+        val presentation = value.logPresentation
+        require(presentation.ratio.isFinite() && if (presentation.hasMassRatio) {
+            presentation.ratio > 0.0
+        } else presentation.ratio == 0.0) {
+            "Log ratio must be positive when known, or explicitly absent"
         }
         return value
     }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_set_brew_reminder">Ustaw przypomnienie</string>
+    <string name="action_edit_brew_reminder">Edytuj przypomnienie</string>
+    <string name="action_remove_brew_reminder">Usuń przypomnienie</string>
+    <string name="label_brew_reminder">Przypomnienie</string>
+    <string name="label_timer_duration">Czas trwania</string>
+    <string name="label_timer_seconds">Sekundy</string>
+    <string name="label_timer_minutes">Minuty</string>
+    <string name="label_timer_hours">Godziny</string>
+    <string name="msg_brew_reminder_origin">Od początku tego kroku. Zmiana czasu trwania zachowuje czas, który już upłynął. Nadal samodzielnie potwierdzasz zakończenie kroku.</string>
+    <string name="msg_brew_reminder_reached">Nadszedł czas przypomnienia. Sprawdź kawę przed kontynuowaniem.</string>
+    <string name="title_cold_brew">Cold brew</string>
+    <string name="title_cold_brew_timer">Minutnik cold brew</string>
+    <string name="action_follow_brew_guide">Postępuj według przewodnika</string>
+    <string name="action_just_set_brew_timer">Tylko ustaw minutnik</string>
+    <string name="action_start_timer">Uruchom minutnik</string>
+    <string name="action_start_steeping">Rozpocznij parzenie</string>
+    <string name="action_end_brew_timer">Zakończ minutnik</string>
+    <string name="action_add_brew_start_time">Dodaj czas rozpoczęcia</string>
+    <string name="label_brew_start_now">Zaczyna się teraz</string>
+    <string name="label_brew_start_earlier">Rozpoczęte wcześniej</string>
+    <string name="label_brew_start_unknown">Nieznany czas rozpoczęcia</string>
+    <string name="label_brew_hours_ago">Ile godzin temu</string>
+    <string name="label_brew_minutes_ago">Ile minut temu</string>
+    <string name="msg_cold_brew_refrigerated">Przechowuj pod przykryciem w lodówce w temperaturze 4 °C lub niższej. Domyślny czas parzenia to 14 godzin.</string>
+    <string name="msg_cold_brew_start_origin">Uruchom, gdy kawa jest całkowicie zwilżona, a przykryte naczynie trafi do lodówki.</string>
+    <string name="msg_brew_start_unknown">Dodaj rzeczywisty czas rozpoczęcia, aby obliczyć przypomnienie. Do tego czasu koniec nie jest szacowany.</string>
+    <string name="msg_brew_timer_ended">Minutnik zakończony</string>
+    <string name="label_brew_extraction_ended">Ekstrakcja zakończona</string>
+    <string name="msg_brew_notifications_disabled">Przypomnienia są wyłączone. Parzenie kawy trwa dalej.</string>
+    <string name="action_allow_brew_notifications">Zezwól na przypomnienia</string>
+    <string name="msg_brew_reminders_may_be_late">Android może opóźniać przypomnienia po opuszczeniu aplikacji.</string>
+    <string name="action_allow_precise_brew_reminders">Zezwól na dokładne przypomnienia</string>
+</resources>

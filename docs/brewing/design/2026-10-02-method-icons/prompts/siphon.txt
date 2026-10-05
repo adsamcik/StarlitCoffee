@@ -1,0 +1,9 @@
+Create a new square brewing-method icon using the two attached images.
+Image 1 is equipment geometry reference only. Preserve that brewer's recognizable construction and proportions; remove the photo's background, packaging, text and unrelated objects.
+Image 2 is the existing StarlitCoffee icon style reference only. Match its premium tactile enamel/clay treatment, deep ink-navy edges, periwinkle-blue planes, warm ivory highlights and restrained coffee-brown/copper accents. Do not copy its V60 geometry into this method.
+One isolated complete brewer, front three-quarter view, slight view into open tops where relevant, soft upper-left light, rounded deliberate forms and strong readable silhouette at 48 pixels. Stylize surface materials into the shared palette without losing the distinctive hardware. Center the entire object with roughly 8 percent clear margin on every side; full handles, spouts, feet and lids inside the canvas. Genuine transparent background, alpha outside the object, no cast shadow platform, badge, border, scene, letters, numbers, logo, watermark or checkerboard. No hands or brewing action. This is an equipment recognition icon, not an operating instruction.
+
+Method: Siphon. Representative model: Hario Technica TCA-2; representative siphon.
+Equipment anatomy: A complete Hario Technica-style siphon: upper straight glass brewing cylinder, descending central glass tube into the round lower globe, gasket at the joined neck, metal stand with a right-side handle supporting the globe, stable base and unlit alcohol lamp centered underneath the globe. Preserve the real joined two-chamber arrangement and stable support.
+Exclude: No floating disconnected chambers, invented plumbing, pressure gauge, steampunk gear, flame, boiling liquid, coffee cup, or lettering.
+Deliver exactly one transparent square icon.

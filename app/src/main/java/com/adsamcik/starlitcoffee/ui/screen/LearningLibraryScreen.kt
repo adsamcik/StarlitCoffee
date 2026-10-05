@@ -40,6 +40,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.data.brewing.guides.ReviewedMethodGuide
 import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileId
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltInP1RecipeDefinition
 import com.adsamcik.starlitcoffee.ui.brewerprofile.P1BrewerProfileSetupOption
@@ -96,6 +97,10 @@ internal sealed interface LearningLibraryGuideOption {
         override val stableId: String,
         @param:StringRes val labelRes: Int,
     ) : LearningLibraryGuideOption
+
+    data class Reviewed(val guide: ReviewedMethodGuide) : LearningLibraryGuideOption {
+        override val stableId: String = guide.id
+    }
 }
 
 internal fun P1BrewerProfileSetupOption.toLearningLibraryProfile():
@@ -121,7 +126,10 @@ internal fun LearningLibraryScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val profileGroups = profiles.groupBy { profile -> brewerMethodGroup(profile.profileId) }
+    val profileGroups = profiles.groupBy { profile ->
+        com.adsamcik.starlitcoffee.domain.brewing.BuiltinBrewingCatalog.instance.findBrewerProfile(profile.profileId)
+            ?.familyId?.value ?: profile.profileId.value
+    }
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -163,7 +171,7 @@ internal fun LearningLibraryScreen(
                     }
                 } else {
                     profileGroups.forEach { (group, groupedProfiles) ->
-                        item(key = "method_${group.name}") {
+                        item(key = "method_$group") {
                             LearningMethodSectionHeader(profile = groupedProfiles.first())
                         }
                         items(
@@ -330,6 +338,7 @@ private fun LearningRecipeRow(
     val guideName = when (guide) {
         is LearningLibraryGuideOption.ExactRecipe -> exactRecipeName(guide.recipe.id)
         is LearningLibraryGuideOption.Standalone -> stringResource(guide.labelRes)
+        is LearningLibraryGuideOption.Reviewed -> guide.guide.name
     }
     val label = splitLearningRecipeLabel(guideName)
     Surface(

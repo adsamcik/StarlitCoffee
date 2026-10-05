@@ -1,0 +1,60 @@
+{
+  "date": "2026-10-04",
+  "entries": [
+    {
+      "key": "carafe",
+      "kind": "opaque body / glass structure",
+      "generator_file": "exec-cc5d7595-59d3-47d3-aaff-800c00deb743.png"
+    },
+    {
+      "key": "double_wall_espresso",
+      "kind": "opaque body / glass structure",
+      "generator_file": "exec-38f4fd6c-1313-4c2e-8c09-8edb51c9a721.png"
+    },
+    {
+      "key": "double_wall_tumbler",
+      "kind": "opaque body / glass structure",
+      "generator_file": "exec-7a557404-aec0-41cb-a966-37526ee8de7c.png"
+    },
+    {
+      "key": "double_wall_mug",
+      "kind": "opaque body / glass structure",
+      "generator_file": "exec-346a0bca-4436-4313-8e02-3598f9e1cf16.png"
+    },
+    {
+      "key": "spherical_latte",
+      "kind": "opaque body / glass structure",
+      "generator_file": "exec-4f6de2c4-e425-4b7b-8b16-e4504319a904.png"
+    },
+    {
+      "key": "faceted_cortado",
+      "kind": "opaque body / glass structure",
+      "generator_file": "exec-b82371e7-ad02-4f1f-87fe-10b85a910d48.png"
+    },
+    {
+      "key": "french_press",
+      "kind": "opaque body / glass structure",
+      "generator_file": "exec-1a1ce283-0a13-4dd8-a54e-12275d4b1aef.png"
+    },
+    {
+      "key": "bowl",
+      "kind": "opening / frame",
+      "generator_file": "exec-5d3a1992-c8dc-4476-8efe-6bbe21631651.png"
+    },
+    {
+      "key": "double_wall_press",
+      "kind": "opening / frame",
+      "generator_file": "exec-a1279de5-db59-4a8e-aeee-af5ea6c408df.png"
+    },
+    {
+      "key": "takeaway",
+      "kind": "readable cap / sleeve seams",
+      "generator_file": "exec-b5d23be7-8b63-4781-9a5e-2b8f5b4ee19e.png"
+    },
+    {
+      "key": "espresso",
+      "kind": "User-directed demitasse and detached saucer distinction",
+      "generator_file": "exec-45016d47-ded4-4507-a484-b94c5db19be1.png"
+    }
+  ]
+}

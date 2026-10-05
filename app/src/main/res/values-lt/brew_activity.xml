@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_active_brews">Vykstantys ruošimai</string>
+    <string name="label_brew_activity_ready">Paruošta pradėti</string>
+    <string name="label_brew_activity_paused">Laikmatis pristabdytas</string>
+    <string name="label_brew_activity_save">Ruošimas išsaugomas</string>
+    <string name="label_brew_activity_timing_reached">Laiko tikslas pasiektas</string>
+    <string name="format_brew_activity_elapsed">Praėjo %1$s</string>
+    <string name="format_brew_activity_time_left">Liko %1$s</string>
+    <string name="format_brew_activity_hours">%1$d val. %2$d min.</string>
+    <string name="format_brew_activity_minutes">%1$d:%2$02d</string>
+    <string name="cd_open_active_brew">Atidaryti %1$s. %2$s</string>
+    <string name="cd_choose_active_brews">Pasirinkti ruošimą. Vyksta: %3$d. %1$s. %2$s</string>
+</resources>

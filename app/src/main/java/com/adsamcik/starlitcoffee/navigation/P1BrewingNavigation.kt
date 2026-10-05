@@ -75,6 +75,8 @@ internal fun NavGraphBuilder.p1BrewingRoutes(
         navController = navController,
         guidancePreferences = guidancePreferences,
         exactRecipeReleaseGate = exactRecipeReleaseGate,
+        brewViewModel = brewViewModel,
+        durableSessionRuntime = durableSessionRuntime,
     )
 }
 
@@ -183,15 +185,15 @@ private fun NavGraphBuilder.p1LearningLibraryRoute(
     exactRecipeReleaseGate: P1ExactRecipeReleaseGate,
 ) {
     composable<Learning> {
+        val reviewedGuides = rememberReviewedMethodGuides()
         val eligibleRecipeIds = exactRecipeReleaseGate.eligibleRecipeIds
         val exactProfiles = remember(eligibleRecipeIds) {
             P1BrewerProfileSetupStateFactory.create(
                 executableRecipeIds = eligibleRecipeIds,
             ).profiles
         }
-        val profiles = remember(exactProfiles) {
-            exactProfiles.map { profile -> profile.toLearningLibraryProfile() } +
-                PULSAR_LEARNING_PROFILE
+        val profiles = remember(exactProfiles, reviewedGuides) {
+            reviewedLearningProfiles(reviewedGuides, exactProfiles.map { it.toLearningLibraryProfile() })
         }
         LearningLibraryScreen(
             profiles = profiles,
@@ -208,6 +210,10 @@ private fun NavGraphBuilder.p1LearningLibraryRoute(
                         brewerProfileId = profile.profileId.value,
                         standaloneGuideId = guide.stableId,
                     )
+                    is LearningLibraryGuideOption.Reviewed -> LearnBrewer(
+                        brewerProfileId = profile.profileId.value,
+                        standaloneGuideId = guide.stableId,
+                    )
                 }
                 navController.navigate(destination)
             },
@@ -220,9 +226,18 @@ private fun NavGraphBuilder.p1LearnBrewerRoute(
     navController: NavHostController,
     guidancePreferences: DurableBrewSessionGuidancePreferences,
     exactRecipeReleaseGate: P1ExactRecipeReleaseGate,
+    brewViewModel: BrewViewModel,
+    durableSessionRuntime: BrewSessionRuntime,
 ) {
     composable<LearnBrewer> learnRoute@{ backStackEntry ->
         val route = backStackEntry.toRoute<LearnBrewer>()
+        val reviewedGuide = reviewedGuideForRoute(route, rememberReviewedMethodGuides())
+        if (reviewedGuide != null) {
+            ReviewedLearnDestination(reviewedGuide, brewViewModel, durableSessionRuntime,
+                onBack = { navController.popBackStack() },
+                onSession = { navController.navigate(BrewSession(it)) { launchSingleTop = true } })
+            return@learnRoute
+        }
         val isPulsarGuide = route.builtInRecipeId == null &&
             route.standaloneGuideId == PulsarLearnGuideCatalog.GUIDE_ID &&
             route.brewerProfileId == PulsarLearnGuideCatalog.profileId.value
@@ -270,10 +285,7 @@ private fun NavGraphBuilder.p1LearnBrewerRoute(
                 guidanceCatalogs = listOf(requireNotNull(recipeGuidanceCatalog)),
             )
         }
-        val exactStageOrder = remember(exactRecipeGuidance) {
-            exactRecipeGuidance.stages.map { stage -> stage.stageId }
-        }
-        val resolution = remember(route, guidancePreferences, resolver, exactStageOrder) {
+        val resolution = remember(route, guidancePreferences, resolver, exactRecipeGuidance) {
             resolver.resolve(
                 LearnGuidanceCatalogRequest(
                     methodFamilyId = exactRecipe.methodFamilyId.value,
@@ -281,7 +293,7 @@ private fun NavGraphBuilder.p1LearnBrewerRoute(
                     preferences = guidancePreferences.copy(
                         sessionOverride = GuidancePresentationLevel.FULL,
                     ),
-                    exactStageOrder = exactStageOrder,
+                    exactStageOrder = exactRecipeGuidance.stages.map { it.stageId },
                 ),
             )
         }
@@ -328,14 +340,7 @@ private fun PulsarLearnDestination(
     )
 }
 
-private val PULSAR_LEARNING_PROFILE = LearningLibraryProfileOption(
-    profileId = BrewerProfileId("pulsar_standard"),
-    displayName = "Pulsar",
-    methodFamilyName = "Valve-controlled no-bypass",
-    guides = listOf(
-        LearningLibraryGuideOption.Standalone(
-            stableId = PulsarLearnGuideCatalog.GUIDE_ID,
-            labelRes = R.string.recipe_pulsar_gagne_20_340,
-        ),
-    ),
-)
+private fun reviewedGuideForRoute(route: LearnBrewer,
+    guides: List<com.adsamcik.starlitcoffee.data.brewing.guides.ReviewedMethodGuide>) = guides.firstOrNull {
+    route.builtInRecipeId == null && it.id == route.standaloneGuideId && it.profileId == route.brewerProfileId
+}

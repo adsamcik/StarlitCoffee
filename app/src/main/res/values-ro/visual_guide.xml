@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="heading_guide_why">De ce acest pas?</string>
+    <string name="action_guide_steps">Pași</string>
+    <string name="action_guide_overview">Prezentare generală</string>
+    <string name="label_guide_untimed">Citește în ritmul tău</string>
+    <string name="action_continue_reading">Continuă lectura</string>
+    <string name="action_read_guide">Citește ghidul</string>
+    <string name="action_read_ahead">Vezi pașii următori</string>
+    <string name="action_return_to_live_brew">Înapoi la preparare</string>
+    <string name="label_guide_done_when">Gata când</string>
+</resources>

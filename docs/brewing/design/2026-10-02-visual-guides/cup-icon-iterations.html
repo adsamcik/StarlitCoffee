@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cup icon iterations · Starlit Coffee</title>
+<style>
+*{box-sizing:border-box}body{margin:0;padding:28px 24px;background:#eeedf7;color:#30323b;font:15px/1.5 system-ui,sans-serif}main{max-width:1120px;margin:auto}a{color:#4f5f91;text-underline-offset:4px}h1{font-size:26px;margin:18px 0 8px}p{max-width:80ch;color:#565c70;margin:0 0 24px}.iteration-table{overflow-x:auto;background:#f9f8ff;border-radius:28px;padding:16px 20px}.iteration-row{display:grid;grid-template-columns:100px 154px 154px 240px minmax(220px,1fr);gap:16px;align-items:center;min-width:930px;padding:16px 0;border-top:1px solid #d8d9e7}.iteration-head{min-height:40px;padding-top:0;border:0;font-size:13px;font-weight:600}.generated{height:128px;width:128px;object-fit:contain;display:block}.size-group{display:flex;align-items:center;gap:16px}.sample{display:flex;flex-direction:column;align-items:center;gap:8px;font-size:12px}.sample svg{display:block;width:var(--icon-size);height:var(--icon-size)}.dark-sizes{background:#292e46;color:#e2e6ff;padding:12px;border-radius:16px;margin-top:10px}.feedback{font-size:13px;line-height:1.5;color:#565c70}.kept{font-size:12px;color:#565c70}footer{font-size:13px;color:#565c70;margin-top:24px}a:focus-visible{outline:3px solid #4f5f91;outline-offset:4px}@media(max-width:650px){body{padding:20px 12px}.iteration-table{padding:16px}}
+</style>
+<main>
+<a href="prototype.html">← App preview</a> · <a href="icon-sizes.html">All icons at actual sizes</a>
+<h1>Historical five-icon exploration</h1>
+<p>This comparison is frozen at the preceding rounded set. The current preview uses the <a href="assets/cup-icons/rebuild-20261004/gallery.html">complete 28-vessel imagegen / SVG rebuild</a>.</p>
+<p>Each vessel was generated separately using the existing artwork and calculator as references, then reviewed by Astra. Targeted edits address gaps, proportions and accidental hollow areas. The selected shapes are translated into smooth monochrome vectors for the preview. On 4 October, the user rejected the third Espresso and Cappuccino variants; the preceding rounded pair is restored.</p>
+<div class="iteration-table" role="table" aria-label="Cup icon visual iterations">
+<div class="iteration-row iteration-head" role="row"><span role="columnheader">Preset</span><span role="columnheader">First generation</span><span role="columnheader">Selected after feedback</span><span role="columnheader">Preview · 24 / 28 / 34 px</span><span role="columnheader">Astra’s feedback</span></div>
+<div id="iterations" role="rowgroup"></div>
+</div>
+<footer>Browser design review only. Generated images, prompts and feedback are retained in <a href="assets/cup-icons/manifest.json">the generation manifest</a>. Android resources remain unchanged.</footer>
+</main>
+<script src="assets/cup-icons/legacy-five-vessel-icons.js?v=historical-rounded-20261004"></script>
+<script>
+const rows=[
+ ['espresso','Espresso','Rounded demitasse with an open handle and detached saucer. The exaggerated third candidate was rejected; this second candidate is restored.'],
+ ['cortado','Cortado','Shorten the glass, broaden its base and strengthen the lower bridges.'],
+ ['cappuccino','Cappuccino','Rounded low bowl with a robust rim. The flatter third candidate was rejected; this second candidate is restored.'],
+ ['mug','Mug','Keep: straight walls and the large D opening are immediately legible.'],
+ ['travel','Travel','Close the lid and fill the hollow sleeve panel; retain one lid gap.']
+];
+const sizes=[24,28,34];
+const samples=id=>sizes.map(size=>`<span class="sample" style="--icon-size:${size}px">${vesselIcon(id)}<span>${size}</span></span>`).join('');
+document.querySelector('#iterations').innerHTML=rows.map(([id,name,feedback])=>`<div class="iteration-row" role="row"><b role="cell">${name}</b><span role="cell"><img class="generated" src="assets/cup-icons/v1/${id}.png" alt="${name}, first generated candidate"></span><span role="cell"><img class="generated" src="assets/cup-icons/${id==='mug'?'v1':'v2'}/${id}.png" alt="${name}, ${id==='mug'?'retained first candidate':'selected second candidate'}">${id==='mug'?'<span class="kept">First candidate retained</span>':''}</span><span role="cell"><span class="size-group">${samples(id)}</span><span class="size-group dark-sizes">${samples(id)}</span></span><span class="feedback" role="cell">${feedback}</span></div>`).join('');
+</script>
+</html>

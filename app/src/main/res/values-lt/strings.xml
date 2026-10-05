@@ -104,11 +104,8 @@
     <string name="label_increase">Padidinti %1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Paruoškite plikymą</string>
     <string name="action_ready_to_brew_short">Plikyti</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Paruošimas</string>
-    <string name="label_recipe_heading">Receptas</string>
     <string name="label_temp_short">Temp.</string>
     <string name="label_bloom_short">Bloomas</string>
     <string name="prep_tip_pulsar_paper">Sudrėkinkite popierinį filtrą pagrinde (vožtuvas atviras) ir nusausinkite. Uždėkite cilindrą, suberkite kavą, išlyginkite sluoksnį, uždėkite paskirstymo dangtelį. Nunulinkite svarstykles.</string>
@@ -118,8 +115,6 @@
     <string name="prep_tip_french_press">Pašildykite presą, tada išpilkite vandenį. Suberkite kavą, pastatykite ant svarstyklių ir nunulinkite prieš pildami vandenį.</string>
     <string name="prep_tip_espresso">Nusausinkite portafiltrą. Įdėkite dozę, paskirstykite ir tolygiai suspauskite prieš įtvirtindami.</string>
     <string name="prep_tip_moka">Pripilkite apatinę kamerą iki vožtuvo. Pripildykite krepšelį kava, išlyginkite — nespauskite. Atsargiai surinkite.</string>
-    <string name="format_prep_grind_specific">Malimas %1$s — nustatykite %2$s į %3$s</string>
-    <string name="format_prep_grind_generic">Malimas %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Pristabdyti</string>
@@ -735,7 +730,6 @@
     <string name="guidance_cue_valve_state">Vožtuvo būsena</string>
     <string name="screen_learning_title">Mokykitės</string>
     <string name="msg_learning_subtitle">Vaizdiniai nuoseklūs kavos ruošimo vadovai</string>
-    <string name="msg_learning_intro">Pasirinkite kavos ruošimo įrenginį ir receptą, tada peržiūrėkite po vieną aiškų žingsnį.</string>
     <string name="action_show_details">Rodyti išsamią informaciją</string>
     <string name="action_hide_details">Slėpti išsamią informaciją</string>
 

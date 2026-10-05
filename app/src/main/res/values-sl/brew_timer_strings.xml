@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_set_brew_reminder">Nastavi opomnik</string>
+    <string name="action_edit_brew_reminder">Uredi opomnik</string>
+    <string name="action_remove_brew_reminder">Odstrani opomnik</string>
+    <string name="label_brew_reminder">Opomnik</string>
+    <string name="label_timer_duration">Trajanje</string>
+    <string name="label_timer_seconds">Sekunde</string>
+    <string name="label_timer_minutes">Minute</string>
+    <string name="label_timer_hours">Ure</string>
+    <string name="msg_brew_reminder_origin">Od začetka tega koraka. Sprememba trajanja ohrani že pretečeni čas. Še vedno sami potrdite, kdaj je korak končan.</string>
+    <string name="msg_brew_reminder_reached">Čas za opomnik je nastopil. Pred nadaljevanjem preverite kavo.</string>
+    <string name="title_cold_brew">Cold brew</string>
+    <string name="title_cold_brew_timer">Časovnik za cold brew</string>
+    <string name="action_follow_brew_guide">Sledi vodniku</string>
+    <string name="action_just_set_brew_timer">Samo nastavi časovnik</string>
+    <string name="action_start_timer">Zaženi časovnik</string>
+    <string name="action_start_steeping">Začni namakanje</string>
+    <string name="action_end_brew_timer">Končaj časovnik</string>
+    <string name="action_add_brew_start_time">Dodaj čas začetka</string>
+    <string name="label_brew_start_now">Začne se zdaj</string>
+    <string name="label_brew_start_earlier">Začelo se je prej</string>
+    <string name="label_brew_start_unknown">Čas začetka ni znan</string>
+    <string name="label_brew_hours_ago">Pred koliko urami</string>
+    <string name="label_brew_minutes_ago">Pred koliko minutami</string>
+    <string name="msg_cold_brew_refrigerated">Hranite pokrito v hladilniku pri 4 °C ali manj. Privzeti čas namakanja je 14 ur.</string>
+    <string name="msg_cold_brew_start_origin">Zaženite, ko je kava povsem namočena in je pokrita posoda v hladilniku.</string>
+    <string name="msg_brew_start_unknown">Dodajte dejanski čas začetka za izračun opomnika. Do takrat se čas konca ne ocenjuje.</string>
+    <string name="msg_brew_timer_ended">Časovnik končan</string>
+    <string name="label_brew_extraction_ended">Ekstrakcija končana</string>
+    <string name="msg_brew_notifications_disabled">Opomniki so izklopljeni. Priprava kave se nadaljuje.</string>
+    <string name="action_allow_brew_notifications">Dovoli opomnike</string>
+    <string name="msg_brew_reminders_may_be_late">Android lahko zakasni opomnike, ko zapustite aplikacijo.</string>
+    <string name="action_allow_precise_brew_reminders">Dovoli natančne opomnike</string>
+</resources>

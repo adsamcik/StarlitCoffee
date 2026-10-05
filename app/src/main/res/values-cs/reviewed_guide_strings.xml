@@ -1,0 +1,12 @@
+<resources>
+    <string name="action_brew_this_guide">Uvařit podle receptu</string>
+    <string name="label_freshly_boiled_water">Čerstvě převařená voda</string>
+    <string name="label_machine_temperature">Teplotu řídí přístroj</string>
+    <string name="action_prepare_this_guide">Připravit kávu</string>
+    <string name="label_reviewed_guide_english">Recept v angličtině</string>
+    <string name="heading_reviewed_sources">Recept a zdroje</string>
+    <string name="msg_reviewed_fill_quantities">Dodržte uvedené rysky vybavení. Při přípravě zvažte kávu, kterou skutečně použijete.</string>
+    <string name="label_measured_coffee_g">Použitá káva (g)</string>
+    <string name="label_optional_measured_water_g">Zvážená voda (g, volitelné)</string>
+    <string name="msg_reviewed_equipment_confirm">Moje vybavení odpovídá tomuto receptu.</string>
+</resources>

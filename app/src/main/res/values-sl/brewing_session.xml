@@ -39,7 +39,12 @@
     <string name="format_brew_stage_recorded_grams">Zabeleženo %1$.0f g</string>
     <string name="format_brew_stage_remaining_grams">Preostalo %1$.0f g</string>
     <string name="label_brew_reference_cues">Referenčne vrednosti</string>
-    <string name="msg_brew_reference_cues_not_completion">Samo kot vodilo. Korak dokončajte z glavnim dejanjem zgoraj.</string>
+    <string name="action_pause_brew_guide">Začasno ustavi vodnik</string>
+    <string name="action_resume_brew_guide">Nadaljuj vodnik</string>
+    <string name="action_pause_brew_clock">Začasno ustavi časovnik</string>
+    <string name="msg_brew_clock_keeps_running">Časovnik teče naprej.</string>
+    <string name="msg_brew_guide_paused">Vodnik je začasno ustavljen. Časovnik teče naprej.</string>
+    <string name="msg_brew_reference_cues_not_completion">Samo kot vodilo. Časovni namig ne dokonča fizičnega koraka.</string>
     <string name="action_show_more_brew_reference_cues">Prikaži več vrednosti</string>
     <string name="action_hide_brew_reference_cues">Skrij dodatne vrednosti</string>
     <string name="label_brew_reference_stage_duration">Trajanje koraka</string>

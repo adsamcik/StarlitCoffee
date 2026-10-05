@@ -165,6 +165,10 @@ class MainActivity : ComponentActivity() {
         /** Builds an intent that returns to one exact durable brew session. */
         fun buildBrewSessionIntent(context: Context, sessionId: String): Intent =
             Intent(context, MainActivity::class.java).apply {
+                // Extras do not participate in PendingIntent identity. A unique encoded data URI
+                // keeps distinct sessions separate even when their request-code hashes collide.
+                data = Uri.Builder().scheme("starlitcoffee").authority("brew-session")
+                    .appendPath(sessionId).build()
                 putExtra(EXTRA_BREW_SESSION_ID, sessionId)
                 addFlags(
                     Intent.FLAG_ACTIVITY_NEW_TASK or

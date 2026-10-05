@@ -1,0 +1,357 @@
+{
+  "date": "2026-10-02",
+  "scope": "Prototype instruction illustrations for the three example guides; generated review candidates, not Android-approved assets",
+  "generator": "built-in image_gen",
+  "style_reference": "assets/instruction_p1_chemex_42_700_stage_04_instruction_default.webp",
+  "equipment_references": [
+    "../2026-10-02-method-icons/references/espresso.png",
+    "../2026-10-02-method-icons/references/cold-brew.jpg"
+  ],
+  "assets": [
+    {
+      "id": "chemex_dose",
+      "file": "assets/guides/chemex_dose-v1.png",
+      "title": "Chemex · Add the coffee",
+      "alt": "Dry grounds enter the seated paper filter in an empty Chemex on a scale.",
+      "prompt": "Use case: scientific-educational. Asset: ONE 4:3 mobile brewing instruction illustration, not a UI or contact sheet. The first reference is the EXACT desired visual style: sophisticated softly rendered instructional objects, realistic warm glass/metal highlights, gentle texture, restrained charcoal organic blob backdrop. Match it closely in finish and visual weight. One large centered action scene, objects occupy about 80% of image height, all wholly in bounds with edge margin. Outside the charcoal organic blob must have genuine transparent alpha. No text, numbers, branding, arrows, timers, scale readouts or extra decorative symbols. No tiny recognition icon, cartoon contour, flat vector, photographic scene or checkerboard. Landscape 4:3. Scene: ADD THE DRY COFFEE. Same handle-free six-cup Classic Chemex, wood collar and leather tie, cream bonded-paper cone with spout channel unobstructed, standing level on a low black rectangular scale. A hand from upper right pours medium-coarse dry grounds from a small plain stainless dosing cup into the seated paper. Grounds form a modest level brown bed at the cone's base. The lower glass carafe is empty and dry. No kettle, water, bubbles, brewing stream, scale digits or liquid coffee. The dose enters the supported filter, not the carafe directly.",
+      "review": "Visual review for action, anatomy, support, headroom, open/closed state, text-free rendering and family consistency. Not physical brewing or production approval.",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "outer_corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256": "c70d26862135a25dc15027a0ceb6e74d92edd583c6d6497d91869cf5df3e8791"
+    },
+    {
+      "id": "cold_mix",
+      "file": "assets/guides/cold_mix-v1.png",
+      "title": "Cold brew · Combine",
+      "alt": "A spoon stirs coffee and cold water in an open jar; the lid rests beside it.",
+      "prompt": "Use case: scientific-educational. Asset: ONE 4:3 mobile brewing instruction illustration, not a UI or contact sheet. The first reference is the EXACT desired visual style: sophisticated softly rendered instructional objects, realistic warm glass/metal highlights, gentle texture, restrained charcoal organic blob backdrop. Match it closely in finish and visual weight. One large centered action scene, objects occupy about 80% of image height, all wholly in bounds with edge margin. Outside the charcoal organic blob must have genuine transparent alpha. No text, numbers, branding, arrows, timers, scale readouts or extra decorative symbols. No tiny recognition icon, cartoon contour, flat vector, photographic scene or checkerboard. Landscape 4:3. Scene: WET ALL THE GROUNDS. Second reference provides only the wide-mouth glass vessel anatomy; ignore its retail packaging, logos and multiple jars. One generous wide-mouth glass jar on a dry low black rectangular scale, three-quarters filled with a cold dark brown water-and-coffee mixture, visible generous headroom. Jar OPEN. A hand from upper right stirs through the mixture with a plain long metal spoon, its bowl visibly immersed. Brown grounds are dispersed through liquid, no dry floating islands. The simple round metal lid rests beside the jar, completely off its mouth. No kettle, heat, steam, ice, sealed-lid stirring or numbers.",
+      "review": "Visual review for action, anatomy, support, headroom, open/closed state, text-free rendering and family consistency. Not physical brewing or production approval.",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "outer_corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256": "d96532c7578f900f1b26779a3afa79b001a8659ff27bd42a732856079401c7a9"
+    },
+    {
+      "id": "chemex_bloom",
+      "file": "assets/guides/chemex_bloom-v1.png",
+      "title": "Chemex · Let it bloom",
+      "alt": "The wetted coffee bed rests in the Chemex on its scale, without an active pour.",
+      "prompt": "Use case: scientific-educational. Asset: ONE 4:3 mobile brewing instruction illustration, not a UI or contact sheet. The first reference is the EXACT desired visual style: sophisticated softly rendered instructional objects, realistic warm glass/metal highlights, gentle texture, restrained charcoal organic blob backdrop. Match it closely in finish and visual weight. One large centered action scene, objects occupy about 80% of image height, all wholly in bounds with edge margin. Outside the charcoal organic blob must have genuine transparent alpha. No text, numbers, branding, arrows, timers, scale readouts or extra decorative symbols. No tiny recognition icon, cartoon contour, flat vector, photographic scene or checkerboard. Landscape 4:3. Scene: RESTING COFFEE BLOOM, same handle-free six-cup Classic Chemex with wood collar, leather tie, seated cream paper and low black scale. Fully wet medium-coarse coffee bed with a few tiny natural bubbles, no large foam, no standing pool. The carafe's large rounded chamber is almost completely EMPTY: ONLY a very thin shallow amber puddle lies across the bottom glass floor, about a few tablespoons, NOT a quarter-full vessel. Early bloom is not finished coffee. No kettle, hand, pouring stream, steam or timer. Make the wet bed and unobstructed spout channel clearly visible.",
+      "review": "Visual review for action, anatomy, support, headroom, open/closed state, text-free rendering and family consistency. Not physical brewing or production approval.",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "outer_corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256": "ab302c3649ef4eae0d13f621c18bb71788c8d63033ee112752a9a698f3a03f79"
+    },
+    {
+      "id": "espresso_tamp",
+      "file": "assets/guides/espresso_tamp-v1.png",
+      "title": "Espresso · Dose and tamp",
+      "alt": "A hand presses a level tamper into a supported portafilter while the other holds its handle.",
+      "prompt": "Use case: scientific-educational. Asset: ONE 4:3 mobile brewing instruction illustration, not a UI or contact sheet. The first reference is the EXACT desired visual style: sophisticated softly rendered instructional objects, realistic warm glass/metal highlights, gentle texture, restrained charcoal organic blob backdrop. Match it closely in finish and visual weight. One large centered action scene, objects occupy about 80% of image height, all wholly in bounds with edge margin. Outside the charcoal organic blob must have genuine transparent alpha. No text, numbers, branding, arrows, timers, scale readouts or extra decorative symbols. No tiny recognition icon, cartoon contour, flat vector, photographic scene or checkerboard. Landscape 4:3. Scene: TAMP LEVEL. Close, large view of a real 54 mm stainless spouted portafilter with a plain black handle and a single-wall two-cup basket, filled with fine brown coffee BELOW the rim. The portafilter basket is supported securely on a thick black rubber tamping mat on a dry stable counter, spouts protected by a cradle/recess. A left hand holds only the black portafilter handle, and a right hand grips the black tamper handle and presses its flat metal base LEVEL into the basket, straight down, no tilt. The tamper fits inside the basket with its base parallel to the basket rim. No machine, water, cup, grounds spraying or twisting graphic. Show the physical contact and safe support clearly.",
+      "review": "Visual review for action, anatomy, support, headroom, open/closed state, text-free rendering and family consistency. Not physical brewing or production approval.",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "outer_corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256": "347ac66ab6dd881fd9b60ddb5f84fa1921edaf57b450c246a1401bbaea702ac0"
+    },
+    {
+      "id": "espresso_lock",
+      "file": "assets/guides/espresso_lock-v1.png",
+      "title": "Espresso · Check and lock",
+      "alt": "A hand turns the portafilter by its handle into the machine's group head; no extraction runs.",
+      "prompt": "Use case: scientific-educational. Asset: ONE 4:3 mobile brewing instruction illustration, not a UI or contact sheet. The first reference is the EXACT desired visual style: sophisticated softly rendered instructional objects, realistic warm glass/metal highlights, gentle texture, restrained charcoal organic blob backdrop. Match it closely in finish and visual weight. One large centered action scene, objects occupy about 80% of image height, all wholly in bounds with edge margin. Outside the charcoal organic blob must have genuine transparent alpha. No text, numbers, branding, arrows, timers, scale readouts or extra decorative symbols. No tiny recognition icon, cartoon contour, flat vector, photographic scene or checkerboard. Landscape 4:3. Scene: LOCK IN THE PREPARED PORTAFILTER. Second image is anatomy ONLY: compact stainless Bambino Plus with exactly three large front buttons and two small vertically stacked controls to their right, right-side wand with black grip, drip tray. Close three-quarter view centered on lower group head and 54 mm spouted portafilter. A hand grips the BLACK HANDLE, turning it into its snug fully locked forward position; basket's bayonet tabs are inserted into group head. The portafilter HAS a long black handle, metal basket body and two spouts, all structurally connected. No extraction, liquid, steam, cup or scale. Do not show a hand touching hot group head or basket metal. Do not invent a pressure gauge, screen, grinder, extra controls or Razor. Razor and reweighing are explained in separate UI text; this image teaches the final secure lock only.",
+      "review": "Visual review for action, anatomy, support, headroom, open/closed state, text-free rendering and family consistency. Not physical brewing or production approval.",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "outer_corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256": "60be3d607004e9781d66c5d830a078f49189df26a2ddc3efc04d43de2c526604"
+    },
+    {
+      "id": "cold_prepare",
+      "file": "assets/guides/cold_prepare-v1.png",
+      "title": "Cold brew · Prepare",
+      "alt": "An empty clean jar, separate lid, spoon, water pitcher and thermometer are ready for preparation.",
+      "prompt": "Use case: scientific-educational. Asset: ONE 4:3 mobile brewing instruction illustration, not a UI or contact sheet. The first reference is the EXACT desired visual style: sophisticated softly rendered instructional objects, realistic warm glass/metal highlights, gentle texture, restrained charcoal organic blob backdrop. Match it closely in finish and visual weight. One large centered action scene, objects occupy about 80% of image height, all wholly in bounds with edge margin. Outside the charcoal organic blob must have genuine transparent alpha. No text, numbers, branding, arrows, timers, scale readouts or extra decorative symbols. No tiny recognition icon, cartoon contour, flat vector, photographic scene or checkerboard. Landscape 4:3. Scene: CLEAN COLD-BREW SETUP. Second reference only supplies a wide-mouth glass jar shape; ignore branded packaging and multiple jars. One empty, clean, generous wide-mouth jar around 1.5 L in visual form, its plain stainless lid resting beside it, a clean long metal spoon and a small clear pitcher of cold clear water grouped neatly on a short dry dark counter surface. The EMPTY jar dominates. Small plain refrigerator thermometer alongside, with no numbers or readable markings. No coffee yet, no completed batch, heat, steam, ice, washing chemicals, milk, retail packaging or floating symbols. Same charcoal organic backdrop, careful warm highlights and realistic glass rendering as first reference.",
+      "review": "Visual review for action, anatomy, support, headroom, open/closed state, text-free rendering and family consistency. Not physical brewing or production approval.",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "outer_corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256": "c441a57377c4c56c2b2a0b4fbb61d87f14d13f11933b9ccf673918db1b4f31ae"
+    },
+    {
+      "id": "espresso_start",
+      "file": "assets/guides/espresso_start-v1.png",
+      "title": "Espresso · Start the shot",
+      "alt": "A hand presses the center shot button; the locked portafilter drips into a cup on a scale.",
+      "prompt": "Use case: scientific-educational. Asset: ONE 4:3 mobile brewing instruction illustration, not a UI or contact sheet. The first reference is the EXACT desired visual style: sophisticated softly rendered instructional objects, realistic warm glass/metal highlights, gentle texture, restrained charcoal organic blob backdrop. Match it closely in finish and visual weight. One large centered action scene, objects occupy about 80% of image height, all wholly in bounds with edge margin. Outside the charcoal organic blob must have genuine transparent alpha. No text, numbers, branding, arrows, timers, scale readouts or extra decorative symbols. No tiny recognition icon, cartoon contour, flat vector, photographic scene or checkerboard. Landscape 4:3. Scene: START THE SHOT. Second reference is exact Bambino Plus hardware anatomy only: three large round front controls, two smaller vertically stacked controls to their right, steam wand at right, low drip tray. Same soft illustrated rendering as first reference. Prepared 54 mm spouted portafilter FULLY LOCKED with black handle projecting forward. A small clear espresso cup is upright on a thin black scale that rests securely on drip tray, directly under BOTH spouts, everything fits below group head. Cup almost empty at start; only first small amber drops, no large yield. A right hand presses the MIDDLE of the three large front buttons (the 2 CUP control); hand does NOT touch or unlock portafilter. No steam, milk jug, screen, gauge, labels, bean hopper, numerical scale reading or extra controls. Show whole machine and hand in bounds.",
+      "review": "Visual review for action, anatomy, support, headroom, open/closed state, text-free rendering and family consistency. Not physical brewing or production approval.",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "outer_corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256": "eb84eb64f57ca0c970ddf87a87340f8e2180ce27d8d111db51d79ed5800f2eb2"
+    },
+    {
+      "id": "cold_filter",
+      "file": "assets/guides/cold_filter-v1.png",
+      "title": "Cold brew · Filter",
+      "alt": "Strained concentrate is poured into paper held in a dripper securely supported on a receiving server.",
+      "prompt": "Use case: scientific-educational. Asset: ONE 4:3 mobile brewing instruction illustration, not a UI or contact sheet. The first reference is the EXACT desired visual style: sophisticated softly rendered instructional objects, realistic warm glass/metal highlights, gentle texture, restrained charcoal organic blob backdrop. Match it closely in finish and visual weight. One large centered action scene, objects occupy about 80% of image height, all wholly in bounds with edge margin. Outside the charcoal organic blob must have genuine transparent alpha. No text, numbers, branding, arrows, timers, scale readouts or extra decorative symbols. No tiny recognition icon, cartoon contour, flat vector, photographic scene or checkerboard. Landscape 4:3. Scene: PAPER FILTER COLD-BREW CONCENTRATE. A hand grips the handle of a clear pouring server containing strained dark brown concentrate and pours a SMALL controlled stream into cream filter paper held inside a rigid plain ribbed dripper. The dripper sits level and securely on a broad-mouth clean receiving glass server; flared dripper base fully supported on receiving rim, NOT floating and NOT unsupported paper. Paper only partly filled, generous visible headroom. Dark filtered liquid collects in receiving server below. A stainless mesh sieve with a small bed of damp grounds rests securely in a shallow dish alongside, showing the earlier straining step is complete. No scale, squeezing, pressing, steaming, hot kettle, spill, overflowing rim, unsupported stack, coffee jar lid pierced by spout, numbers or arrows. Large close scene, same warm rendered glass/paper/metal on charcoal blob as reference.",
+      "review": "Visual review for action, anatomy, support, headroom, open/closed state, text-free rendering and family consistency. Not physical brewing or production approval.",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "outer_corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256": "940738f3b72064ee3b4f4ec06d3f78f294ba0da80b14e38beed4975627245d61"
+    },
+    {
+      "id": "espresso_stop",
+      "file": "assets/guides/espresso_stop-v1.png",
+      "title": "Espresso · Stop by mass",
+      "alt": "A hand presses the center shot button to stop; the portafilter remains locked above the cup and scale.",
+      "prompt": "Use case: scientific-educational. Asset: ONE 4:3 mobile brewing instruction illustration, not a UI or contact sheet. The first reference is the EXACT desired visual style: sophisticated softly rendered instructional objects, realistic warm glass/metal highlights, gentle texture, restrained charcoal organic blob backdrop. Match it closely in finish and visual weight. One large centered action scene, objects occupy about 80% of image height, all wholly in bounds with edge margin. Outside the charcoal organic blob must have genuine transparent alpha. No text, numbers, branding, arrows, timers, scale readouts or extra decorative symbols. No tiny recognition icon, cartoon contour, flat vector, photographic scene or checkerboard. Landscape 4:3. Scene: STOP THE SHOT BY YIELD. Second reference is the already selected matching shot-start illustration; keep EXACTLY that Bambino Plus design, three large front buttons and two vertically stacked small controls, locked spouted portafilter and black handle, right-side steam wand, thin black scale on drip tray, clear cup centered under both spouts. A hand presses the CENTER of the three main buttons to stop. The cup now contains a modest espresso shot with thin golden crema; it is not a full mug. There are ONLY a couple of separated final drops under the spouts, NO continuous flowing streams, no gush. Portafilter remains fully locked and no hand touches its handle. No numeric mass or timer, no illustrated claim of measured yield, no milk/steam, no new controls.",
+      "review": "Visual review for action, anatomy, support, headroom, open/closed state, text-free rendering and family consistency. Not physical brewing or production approval.",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "outer_corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256": "f07f43de1031c24372fe7c48c5a567318d587e4925096dc5e9a87c7c2d71fbc9"
+    },
+    {
+      "id": "espresso_cup",
+      "file": "assets/guides/espresso_cup-v1.png",
+      "title": "Espresso · Taste and finish",
+      "alt": "A small glass cup of espresso rests on a scale with no active flow.",
+      "prompt": "Use case: scientific-educational. Asset: ONE 4:3 mobile brewing instruction illustration, not a UI or contact sheet. The first reference is the EXACT desired visual style: sophisticated softly rendered instructional objects, realistic warm glass/metal highlights, gentle texture, restrained charcoal organic blob backdrop. Match it closely in finish and visual weight. One large centered action scene, objects occupy about 80% of image height, all wholly in bounds with edge margin. Outside the charcoal organic blob must have genuine transparent alpha. No text, numbers, branding, arrows, timers, scale readouts or extra decorative symbols. No tiny recognition icon, cartoon contour, flat vector, photographic scene or checkerboard. Landscape 4:3. Scene: FINISHED ESPRESSO FOR TASTING. One clear small handled espresso cup containing a modest dark espresso shot with a fine golden crema layer, on a low thin black rectangular coffee scale. Same cup form as a clear curved small espresso cup, not a large mug. Large close view, natural subtle glass refraction and warm brown coffee, softly rendered style identical to reference, charcoal organic backdrop. No machine, hand, active pour, steam, milk, spoon, sugar, beans scattered, numerical scale display or timer. This is a finished beverage illustration, not measured actual yield or a temperature guarantee.",
+      "review": "Visual review for action, anatomy, support, headroom, open/closed state, text-free rendering and family consistency. Not physical brewing or production approval.",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "outer_corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256": "a4f31c6dd88cb9e89e31de85367f7b9cdc3afbe5f5dd614cff8c9099e0ad2342"
+    },
+    {
+      "id": "espresso_ready",
+      "file": "assets/guides/espresso_ready-v1.png",
+      "title": "Espresso · Get ready",
+      "alt": "A compact espresso machine has a fitted drip tray, seated water tank and portafilter warming in the group head.",
+      "prompt": "Use case: scientific-educational. Asset: ONE 4:3 mobile brewing instruction illustration, not a UI or contact sheet. The first reference is the EXACT desired visual style: sophisticated softly rendered instructional objects, realistic warm glass/metal highlights, gentle texture, restrained charcoal organic blob backdrop. Match it closely in finish and visual weight. One large centered action scene, objects occupy about 80% of image height, all wholly in bounds with edge margin. Outside the charcoal organic blob must have genuine transparent alpha. No text, numbers, branding, arrows, timers, scale readouts or extra decorative symbols. No tiny recognition icon, cartoon contour, flat vector, photographic scene or checkerboard. Landscape 4:3. Scene: MACHINE READY BEFORE COFFEE PREPARATION. Second reference provides exact already selected Bambino Plus machine geometry. Keep its three large front buttons and two smaller vertically stacked buttons, right-hand steam wand and fitted drip tray. Remove the entire hand, cup, scale, all liquid drips and streams. Keep the spouted portafilter and its LONG BLACK HANDLE, securely locked into group head while warming; there must NOT be orphan spouts or a metal basket without a handle. Machine stands stable, cool water in correctly seated rear tank, tank lid closed. Three main button rings softly white-lit in ready state. No coffee being extracted, no steam, milk, digits, logos, written controls, screen, pressure gauge, bean hopper or extra buttons. One large machine, same charcoal blob and softly rendered metal as first reference.",
+      "review": "Visual review for action, anatomy, support, headroom, open/closed state, text-free rendering and family consistency. Not physical brewing or production approval.",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "outer_corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256": "c55a82030a388b6eaf3303996d216ff2893af51249b27a2280e7bf4f1cc6d3f1"
+    },
+    {
+      "id": "cold_fridge",
+      "file": "assets/guides/cold_fridge-v1.png",
+      "title": "Cold brew · Refrigerate",
+      "alt": "A hand places the closed cold-brew jar upright on a refrigerator shelf.",
+      "prompt": "Use case: scientific-educational. Asset: ONE 4:3 mobile brewing instruction illustration, not a UI or contact sheet. The first reference is the EXACT desired visual style: sophisticated softly rendered instructional objects, realistic warm glass/metal highlights, gentle texture, restrained charcoal organic blob backdrop. Match it closely in finish and visual weight. One large centered action scene, objects occupy about 80% of image height, all wholly in bounds with edge margin. Outside the charcoal organic blob must have genuine transparent alpha. No text, numbers, branding, arrows, timers, scale readouts or extra decorative symbols. No tiny recognition icon, cartoon contour, flat vector, photographic scene or checkerboard. Landscape 4:3. Scene: PUT THE COVERED COLD BREW IN THE REFRIGERATOR. Second reference is wide-mouth jar geometry only; ignore packaging and brands. One generous clear jar filled about three-quarters with dark cold water and coffee grounds, plenty of headroom, plain stainless lid fully CLOSED. A hand grips jar's side safely and places it upright ON a clean stable glass shelf, inside the refrigerator. Show a modest gray refrigerator shelf and partial side/back interior around the jar; keep the scene surrounded by the reference's dark CHARCOAL organic blob. Do NOT replace the full blob with a gray wall. The jar is now visibly on the shelf, hand is setting it down without tilting. No water pouring, open lid, spoon, numeric label, heat, steam, ice, thermometer digits, other food, scale, dangling unstable jar or additional vessels. Exact softly rendered instructional glass and warm subtle texture as first reference.",
+      "review": "Visual review for action, anatomy, support, headroom, open/closed state, text-free rendering and family consistency. Not physical brewing or production approval.",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "outer_corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256": "e75c4aaa37a80307d60e0fd8f5c9cd98c39eeff09835be7696662e6b5466756d"
+    },
+    {
+      "id": "cold_clean",
+      "file": "assets/guides/cold_clean-v1.png",
+      "title": "Cold brew · Clean up",
+      "alt": "Hands wash the open empty jar over a sink with a soft brush; its lid rests separately.",
+      "prompt": "Use case: scientific-educational. Asset: ONE 4:3 mobile brewing instruction illustration, not a UI or contact sheet. The first reference is the EXACT desired visual style: sophisticated softly rendered instructional objects, realistic warm glass/metal highlights, gentle texture, restrained charcoal organic blob backdrop. Match it closely in finish and visual weight. One large centered action scene, objects occupy about 80% of image height, all wholly in bounds with edge margin. Outside the charcoal organic blob must have genuine transparent alpha. No text, numbers, branding, arrows, timers, scale readouts or extra decorative symbols. No tiny recognition icon, cartoon contour, flat vector, photographic scene or checkerboard. Landscape 4:3. Scene: WASH THE EMPTY COLD BREW VESSEL. Second reference supplies wide-mouth jar geometry only; ignore brands and packaging. Large close view of one empty clear wide-mouth jar supported securely above a modest stainless sink. One hand holds jar near its cool glass shoulder, another hand uses a long soft washing brush through OPEN mouth; brush visibly contacts bottom inside jar. A small clear rinse-water stream from a simple faucet reaches jar mouth. Plain stainless lid rests on sink's dry draining ledge. Reusable parts visibly being cleaned, no grounds left, no fresh coffee drink, no stored beverage. Keep compact sink/faucet details within scene with reference's dark charcoal organic backdrop visible around them. No electrical machine or scale in sink, numbers, logos, detergent bottle, kitchen panorama, hot steam, jar under a lid or unsupported floating vessel. Same sophisticated softly rendered objects, realistic glass, warm shading.",
+      "review": "Visual review for action, anatomy, support, headroom, open/closed state, text-free rendering and family consistency. Not physical brewing or production approval.",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "outer_corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256": "28c2dc167afbc1de66b05431faa4db912195fdcd2d92de3cba04902c5ef4d36a"
+    },
+    {
+      "id": "cold_steep",
+      "file": "assets/guides/cold_steep-v1.png",
+      "title": "Cold brew · Steep",
+      "alt": "The covered cold-brew jar rests on a refrigerator shelf.",
+      "prompt": "Use case: scientific-educational. Asset: ONE 4:3 mobile brewing instruction illustration, not a UI or contact sheet. The first reference is the EXACT desired visual style: sophisticated softly rendered instructional objects, realistic warm glass/metal highlights, gentle texture, restrained charcoal organic blob backdrop. Match it closely in finish and visual weight. One large centered action scene, objects occupy about 80% of image height, all wholly in bounds with edge margin. Outside the charcoal organic blob must have genuine transparent alpha. No text, numbers, branding, arrows, timers, scale readouts or extra decorative symbols. No tiny recognition icon, cartoon contour, flat vector, photographic scene or checkerboard. Landscape 4:3. Scene: REFRIGERATED COLD BREW RESTING. Second reference is a matching placement scene. Produce the resting state: REMOVE the entire hand and sleeve, with closed coffee jar upright and already sitting securely on the same refrigerator shelf. One clear wide-mouth jar, plain stainless screw lid fully seated, dark water-and-ground-coffee mixture with headroom and settled grounds. Keep the cool-gray interior only as a contained simple opening framing the jar, with a broad DARK CHARCOAL ORGANIC BLOB border clearly visible around this fridge opening, matching first reference. No full gray backdrop replacing the charcoal blob. The jar is large and centered. No scale, clock, spoon, open lid, symbols, ice or steam. Same warm glass highlights, realistic soft instructional rendering and transparent outer area as reference.",
+      "review": "Visual review for action, anatomy, support, headroom, open/closed state, text-free rendering and family consistency. Not physical brewing or production approval.",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "outer_corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256": "f2310654a87eb1daca0e70d9fbb841449f4457a0cf917f777901857bbaea69ae"
+    },
+    {
+      "id": "cold_dilute",
+      "file": "assets/guides/cold_dilute-v1.png",
+      "title": "Cold brew · Dilute",
+      "alt": "Clear drinking water is poured into coffee concentrate in a glass on a scale.",
+      "prompt": "Use case: scientific-educational. Asset: ONE 4:3 mobile brewing instruction illustration, not a UI or contact sheet. The first reference is the EXACT desired visual style: sophisticated softly rendered instructional objects, realistic warm glass/metal highlights, gentle texture, restrained charcoal organic blob backdrop. Match it closely in finish and visual weight. One large centered action scene, objects occupy about 80% of image height, all wholly in bounds with edge margin. Outside the charcoal organic blob must have genuine transparent alpha. No text, numbers, branding, arrows, timers, scale readouts or extra decorative symbols. No tiny recognition icon, cartoon contour, flat vector, photographic scene or checkerboard. Landscape 4:3. Precise refinement of second image: KEEP its composition, hand and pitcher grip, clear glass vessel, charcoal backdrop, transparent outer area, glass on black scale, fill level and poured CLEAR WATER. Remove ALL opaque golden/milky/creamy swirling plumes inside the coffee. Instead, the glass contains uniform clear-translucent dark AMBER BROWN coffee, slightly lighter transparent amber just at the clear stream's entry, showing glass refraction and visible light transmission. Absolutely no cream, milk, foam or latte-like marbling. Water is visibly colorless transparent, not white. Keep high-quality soft glass/hand rendering exactly like first reference. No labels, numbers or steam. This illustrates dilution with drinking WATER only.",
+      "review": "Visual review for action, anatomy, support, headroom, open/closed state, text-free rendering and family consistency. Not physical brewing or production approval.",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "outer_corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256": "0d8add43991626062bd43eea23d630769a731d7eb63f8012386aff8c4c486fbf"
+    }
+  ]
+}

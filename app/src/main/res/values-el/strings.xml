@@ -100,11 +100,8 @@
     <string name="label_increase">Αυξήστε %1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Προετοιμάστε την παρασκευή σας</string>
     <string name="action_ready_to_brew_short">Έτοιμο για παρασκευή</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Προετοιμασία</string>
-    <string name="label_recipe_heading">Συνταγή</string>
     <string name="label_temp_short">Θερμ.</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Βρέξτε το χάρτινο φίλτρο στη βάση (με ανοιχτή βαλβίδα) και αφήστε το να στραγγίξει. Τοποθετήστε τον κύλινδρο, προσθέστε τον αλεσμένο καφέ, ισιώστε το στρώμα και βάλτε το καπάκι διασποράς. Μηδενίστε τη ζυγαριά.</string>
@@ -114,8 +111,6 @@
     <string name="prep_tip_french_press">Προθερμάνετε την πρέσα και μετά αδειάστε την. Προσθέστε τον αλεσμένο καφέ, βάλτε τη στη ζυγαριά και μηδενίστε πριν προσθέσετε νερό.</string>
     <string name="prep_tip_espresso">Σκουπίστε το portafilter ώστε να είναι στεγνό. Δοσομετρήστε, κατανείμετε και πατήστε επίπεδα πριν το κλειδώσετε.</string>
     <string name="prep_tip_moka">Γεμίστε τον κάτω θάλαμο μέχρι τη βαλβίδα. Γεμίστε το καλαθάκι με αλεσμένο καφέ, ισιώστε — μην τον πατήσετε. Συναρμολογήστε προσεκτικά.</string>
-    <string name="format_prep_grind_specific">Αλέστε %1$s — ρυθμίστε %2$s στο %3$s</string>
-    <string name="format_prep_grind_generic">Αλέστε %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Παύση</string>
@@ -731,7 +726,6 @@
     <string name="guidance_cue_valve_state">Κατάσταση βαλβίδας</string>
     <string name="screen_learning_title">Μάθηση</string>
     <string name="msg_learning_subtitle">Οπτικοί οδηγοί παρασκευής βήμα προς βήμα</string>
-    <string name="msg_learning_intro">Επιλέξτε συσκευή και συνταγή και εξερευνήστε ένα σαφές βήμα κάθε φορά.</string>
     <string name="action_show_details">Εμφάνιση λεπτομερειών</string>
     <string name="action_hide_details">Απόκρυψη λεπτομερειών</string>
 

@@ -157,7 +157,7 @@ data class DurableBrewSessionGuidanceResolution(
  */
 class DurableBrewSessionGuidanceResolver(
     private val brewingCatalog: BrewingCatalog = BuiltinBrewingCatalog.instance,
-    guidanceCatalogs: List<BuiltInGuidanceCatalog> = listOf(LegacyBuiltInGuidanceCatalog.catalog),
+    guidanceCatalogs: List<BuiltInGuidanceCatalog> = listOf(LegacyBuiltInGuidanceCatalog.catalog, ColdBrewGuidanceCatalog.catalog),
     private val instructionAssets: InstructionAssetCatalog? = null,
 ) {
     private val allContent = guidanceCatalogs

@@ -1,0 +1,12 @@
+<resources>
+    <string name="action_brew_this_guide">Ruošti pagal šį receptą</string>
+    <string name="label_freshly_boiled_water">Ką tik užvirintas vanduo</string>
+    <string name="label_machine_temperature">Temperatūrą reguliuoja aparatas</string>
+    <string name="action_prepare_this_guide">Paruošti kavą</string>
+    <string name="label_reviewed_guide_english">Receptas anglų kalba</string>
+    <string name="heading_reviewed_sources">Receptas ir šaltiniai</string>
+    <string name="msg_reviewed_fill_quantities">Laikykitės nurodytų pripildymo žymų. Pasverkite kavą, kurią iš tikrųjų naudosite.</string>
+    <string name="label_measured_coffee_g">Įdėta kava (g)</string>
+    <string name="label_optional_measured_water_g">Pasvertas vanduo (g, neprivaloma)</string>
+    <string name="msg_reviewed_equipment_confirm">Mano įranga atitinka šį receptą.</string>
+</resources>

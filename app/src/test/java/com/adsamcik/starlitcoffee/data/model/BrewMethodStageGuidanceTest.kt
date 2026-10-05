@@ -114,7 +114,7 @@ class BrewMethodStageGuidanceTest {
             BrewMethod.AEROPRESS to (90 to 150),
             BrewMethod.ESPRESSO to (25 to 35),
             BrewMethod.MOKA_POT to (240 to 300),
-            BrewMethod.COLD_BREW to (43_200 to 86_400),
+            BrewMethod.COLD_BREW to (50_400 to 50_400),
         )
 
         expectedTargets.forEach { (method, target) ->

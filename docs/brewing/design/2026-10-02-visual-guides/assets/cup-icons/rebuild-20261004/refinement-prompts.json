@@ -1,0 +1,13 @@
+{
+  "mode": "built-in imagegen edit",
+  "entries": [
+    {
+      "key": "travel",
+      "prompt": "Edit image1 into a polished monochrome reusable travel tumbler icon. Keep its natural tall gently tapered body and framing. The current top is incorrectly an open cup: replace that opening with a SOLID CLOSED SCREW LID, no giant oval mouth. Use a small closed sipping tab on one side. Simplify body to one solid filled mass and one broad curved negative-space separation underneath the screw lid; remove the three thin body stripes. Image2 is the real vessel anatomy; image3 is the app's rounded filled monochrome style. Uniform charcoal fill, genuinely transparent background, smooth clean silhouette, no shading, gradient, texture, shadow, text or logo. Must read cleanly at24 pixels. Preserve shape and do not make taller/narrower."
+    },
+    {
+      "key": "takeaway",
+      "prompt": "Edit image1 into a polished monochrome disposable takeaway coffee cup icon. Keep its naturally tapered body and width. The top is incorrectly an open cup: replace that opening with a SOLID CLOSED FITTED SIP LID with a small raised sip lip, no giant oval mouth. Lid is low stepped plastic cap, distinct from reusable screw-lid travel tumbler. Simplify body to solid filled cup mass with ONE broad curved band indicating a cardboard sleeve; remove unnecessary thin stripes. Image2 is real vessel anatomy; image3 is app's rounded filled monochrome style. Uniform charcoal fill on genuinely transparent background, smooth clean silhouette, no shading, gradient, texture, shadow, text or logo. Readable at24pixels. Preserve believable proportions."
+    }
+  ]
+}

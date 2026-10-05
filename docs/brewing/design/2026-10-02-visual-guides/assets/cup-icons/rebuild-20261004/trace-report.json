@@ -1,0 +1,5669 @@
+{
+  "source": "Generated RGBA alpha; original images preserved unchanged",
+  "path_authoring": "Mechanical spline tracing through tools/monochrome_icons.py; no hand-authored coordinates",
+  "normalization": "Alpha threshold128, bounding-box crop, isotropic fit832 inside1024, centered",
+  "target_sizes": [
+    24,
+    28,
+    34,
+    48
+  ],
+  "icons": {
+    "espresso": {
+      "source_sha256": "1f3c325700316324ed4ea60b402aa4a74741af7c7409046d6fd2fd4e1202b258",
+      "svg_sha256": "3c16e35f94e3c260569104f05325d0cf88cfe42940d19bacf3be879893f64531",
+      "source_bounds": [
+        270,
+        349,
+        1045,
+        973
+      ],
+      "source_topology": {
+        "components": 2,
+        "holes": 2
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 2,
+        "command_count": 45,
+        "svg_bytes": 1799,
+        "topology": {
+          "components": 2,
+          "holes": 2
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.973365843296051,
+            "binary_iou": 0.9862068965517241,
+            "mean_absolute_alpha_error": 0.0071214595809578896,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9726913571357727,
+            "binary_iou": 0.957345971563981,
+            "mean_absolute_alpha_error": 0.007287914864718914,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9711737632751465,
+            "binary_iou": 0.9693877551020408,
+            "mean_absolute_alpha_error": 0.007707442156970501,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9707667231559753,
+            "binary_iou": 0.9631410256410257,
+            "mean_absolute_alpha_error": 0.007802287582308054,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9698429703712463,
+            "binary_iou": 0.9706050554729498,
+            "mean_absolute_alpha_error": 0.008051734417676926,
+            "boundary_p95_px": 1.4142135381698608,
+            "boundary_max_px": 3.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 2
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 2,
+          "command_count": 45,
+          "svg_bytes": 1799,
+          "topology": {
+            "components": 2,
+            "holes": 2
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.973365843296051,
+              "binary_iou": 0.9862068965517241,
+              "mean_absolute_alpha_error": 0.0071214595809578896,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9726913571357727,
+              "binary_iou": 0.957345971563981,
+              "mean_absolute_alpha_error": 0.007287914864718914,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9711737632751465,
+              "binary_iou": 0.9693877551020408,
+              "mean_absolute_alpha_error": 0.007707442156970501,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9707667231559753,
+              "binary_iou": 0.9631410256410257,
+              "mean_absolute_alpha_error": 0.007802287582308054,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9698429703712463,
+              "binary_iou": 0.9706050554729498,
+              "mean_absolute_alpha_error": 0.008051734417676926,
+              "boundary_p95_px": 1.4142135381698608,
+              "boundary_max_px": 3.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 2
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "cortado": {
+      "source_sha256": "038e2753373719023a4d7f8fbba1f2bd16001f3f43fc0a7ec153ec87f45cfb5d",
+      "svg_sha256": "4766e324395fadfef03c6a4c438add0c0427288860197224f731566986120385",
+      "source_bounds": [
+        249,
+        224,
+        1005,
+        1031
+      ],
+      "source_topology": {
+        "components": 1,
+        "holes": 3
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 1,
+        "command_count": 46,
+        "svg_bytes": 1805,
+        "topology": {
+          "components": 1,
+          "holes": 3
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9845641851425171,
+            "binary_iou": 0.967741935483871,
+            "mean_absolute_alpha_error": 0.005930010695010424,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 3,
+              "holes": 3
+            },
+            "candidate_topology": {
+              "components": 3,
+              "holes": 3
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9836630821228027,
+            "binary_iou": 0.9932203389830508,
+            "mean_absolute_alpha_error": 0.006277511361986399,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 3
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 3
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9834073185920715,
+            "binary_iou": 0.9836065573770492,
+            "mean_absolute_alpha_error": 0.006374245509505272,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 3
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 3
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9829370379447937,
+            "binary_iou": 0.9808773903262092,
+            "mean_absolute_alpha_error": 0.006541054230183363,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 3
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 3
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9825992584228516,
+            "binary_iou": 0.9821882951653944,
+            "mean_absolute_alpha_error": 0.006670664064586163,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 3.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 3
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 3
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 1,
+          "command_count": 46,
+          "svg_bytes": 1805,
+          "topology": {
+            "components": 1,
+            "holes": 3
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9845641851425171,
+              "binary_iou": 0.967741935483871,
+              "mean_absolute_alpha_error": 0.005930010695010424,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 3,
+                "holes": 3
+              },
+              "candidate_topology": {
+                "components": 3,
+                "holes": 3
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9836630821228027,
+              "binary_iou": 0.9932203389830508,
+              "mean_absolute_alpha_error": 0.006277511361986399,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 3
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 3
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9834073185920715,
+              "binary_iou": 0.9836065573770492,
+              "mean_absolute_alpha_error": 0.006374245509505272,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 3
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 3
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9829370379447937,
+              "binary_iou": 0.9808773903262092,
+              "mean_absolute_alpha_error": 0.006541054230183363,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 3
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 3
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9825992584228516,
+              "binary_iou": 0.9821882951653944,
+              "mean_absolute_alpha_error": 0.006670664064586163,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 3.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 3
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 3
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "cappuccino": {
+      "source_sha256": "1201332922f650f9b7805f3a8c588198375a60eb2912dbf8848c134f03eb3f2b",
+      "svg_sha256": "761bfddda4b303ba9f92b092c33b4d6a58287051176d10ced2ed722dfb1aae89",
+      "source_bounds": [
+        161,
+        336,
+        1196,
+        1051
+      ],
+      "source_topology": {
+        "components": 1,
+        "holes": 2
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 1,
+        "command_count": 30,
+        "svg_bytes": 1243,
+        "topology": {
+          "components": 1,
+          "holes": 2
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9904093742370605,
+            "binary_iou": 0.9933333333333333,
+            "mean_absolute_alpha_error": 0.0024373638443648815,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9905219078063965,
+            "binary_iou": 0.9897435897435898,
+            "mean_absolute_alpha_error": 0.0024109643418341875,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9894165396690369,
+            "binary_iou": 0.9898648648648649,
+            "mean_absolute_alpha_error": 0.0026901420205831528,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9889651536941528,
+            "binary_iou": 0.9826989619377162,
+            "mean_absolute_alpha_error": 0.0028050111141055822,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9885930418968201,
+            "binary_iou": 0.9888261444190797,
+            "mean_absolute_alpha_error": 0.0028967764228582382,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 1,
+          "command_count": 30,
+          "svg_bytes": 1243,
+          "topology": {
+            "components": 1,
+            "holes": 2
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9904093742370605,
+              "binary_iou": 0.9933333333333333,
+              "mean_absolute_alpha_error": 0.0024373638443648815,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9905219078063965,
+              "binary_iou": 0.9897435897435898,
+              "mean_absolute_alpha_error": 0.0024109643418341875,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9894165396690369,
+              "binary_iou": 0.9898648648648649,
+              "mean_absolute_alpha_error": 0.0026901420205831528,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9889651536941528,
+              "binary_iou": 0.9826989619377162,
+              "mean_absolute_alpha_error": 0.0028050111141055822,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9885930418968201,
+              "binary_iou": 0.9888261444190797,
+              "mean_absolute_alpha_error": 0.0028967764228582382,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "mug": {
+      "source_sha256": "52d7b266f32efe37bf8f95a646911a89fba5bcd0a2fcdf3b77442d9790f461e6",
+      "svg_sha256": "ad804cce440dc3b50ba39f909f86333bb95d8435a2fc40c54f93db88c6968267",
+      "source_bounds": [
+        206,
+        263,
+        1114,
+        1049
+      ],
+      "source_topology": {
+        "components": 1,
+        "holes": 2
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 1,
+        "command_count": 44,
+        "svg_bytes": 1707,
+        "topology": {
+          "components": 1,
+          "holes": 2
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9918587803840637,
+            "binary_iou": 0.9866666666666667,
+            "mean_absolute_alpha_error": 0.003199891187250614,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9917254447937012,
+            "binary_iou": 0.9838709677419355,
+            "mean_absolute_alpha_error": 0.0032513004262000322,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9915221333503723,
+            "binary_iou": 1.0,
+            "mean_absolute_alpha_error": 0.00332790520042181,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 0.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9915214776992798,
+            "binary_iou": 0.9901207464324918,
+            "mean_absolute_alpha_error": 0.0033275464083999395,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.991129994392395,
+            "binary_iou": 0.9918023233225844,
+            "mean_absolute_alpha_error": 0.0034822351299226284,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 1,
+          "command_count": 44,
+          "svg_bytes": 1707,
+          "topology": {
+            "components": 1,
+            "holes": 2
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9918587803840637,
+              "binary_iou": 0.9866666666666667,
+              "mean_absolute_alpha_error": 0.003199891187250614,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9917254447937012,
+              "binary_iou": 0.9838709677419355,
+              "mean_absolute_alpha_error": 0.0032513004262000322,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9915221333503723,
+              "binary_iou": 1.0,
+              "mean_absolute_alpha_error": 0.00332790520042181,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 0.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9915214776992798,
+              "binary_iou": 0.9901207464324918,
+              "mean_absolute_alpha_error": 0.0033275464083999395,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.991129994392395,
+              "binary_iou": 0.9918023233225844,
+              "mean_absolute_alpha_error": 0.0034822351299226284,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "latte_glass": {
+      "source_sha256": "6e72aad161f2dc93b1d17e4f078dd721561e95513c47491e93fd8ec91b9c5227",
+      "svg_sha256": "01e8cecf08b0d661d7e2f78cf9d2542997a6b906484c04bccc6e3fe1e1e558d7",
+      "source_bounds": [
+        193,
+        287,
+        1062,
+        1022
+      ],
+      "source_topology": {
+        "components": 1,
+        "holes": 2
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 1,
+        "command_count": 32,
+        "svg_bytes": 1317,
+        "topology": {
+          "components": 1,
+          "holes": 2
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9863648414611816,
+            "binary_iou": 0.9902912621359223,
+            "mean_absolute_alpha_error": 0.004820261616259813,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 3,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 3,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9859855771064758,
+            "binary_iou": 0.9826388888888888,
+            "mean_absolute_alpha_error": 0.00495198043063283,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 3,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9851280450820923,
+            "binary_iou": 0.981042654028436,
+            "mean_absolute_alpha_error": 0.005258158314973116,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9846295714378357,
+            "binary_iou": 0.9740740740740741,
+            "mean_absolute_alpha_error": 0.005433006212115288,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9841600656509399,
+            "binary_iou": 0.9850224447513812,
+            "mean_absolute_alpha_error": 0.005594589747488499,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 2.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 1,
+          "command_count": 32,
+          "svg_bytes": 1317,
+          "topology": {
+            "components": 1,
+            "holes": 2
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9863648414611816,
+              "binary_iou": 0.9902912621359223,
+              "mean_absolute_alpha_error": 0.004820261616259813,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 3,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 3,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9859855771064758,
+              "binary_iou": 0.9826388888888888,
+              "mean_absolute_alpha_error": 0.00495198043063283,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 3,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9851280450820923,
+              "binary_iou": 0.981042654028436,
+              "mean_absolute_alpha_error": 0.005258158314973116,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9846295714378357,
+              "binary_iou": 0.9740740740740741,
+              "mean_absolute_alpha_error": 0.005433006212115288,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9841600656509399,
+              "binary_iou": 0.9850224447513812,
+              "mean_absolute_alpha_error": 0.005594589747488499,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 2.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "travel": {
+      "source_sha256": "31393648b7dff0a3f7d69a5e0ce5ae81a044029e5fa2b2cfff0d97fa20c649fa",
+      "svg_sha256": "5f8778f55f24ecce8a2014241112111b19af0caf678beeabf8c293479094e091",
+      "source_bounds": [
+        359,
+        124,
+        896,
+        1148
+      ],
+      "source_topology": {
+        "components": 4,
+        "holes": 0
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 4,
+        "command_count": 44,
+        "svg_bytes": 1693,
+        "topology": {
+          "components": 4,
+          "holes": 0
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9867990016937256,
+            "binary_iou": 1.0,
+            "mean_absolute_alpha_error": 0.0035947710275650024,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 0.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 0
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 0
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9867092370986938,
+            "binary_iou": 0.9907407407407407,
+            "mean_absolute_alpha_error": 0.003621448762714863,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 0
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 0
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9863100647926331,
+            "binary_iou": 0.9937888198757764,
+            "mean_absolute_alpha_error": 0.0037282041739672422,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 0
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 0
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9862540364265442,
+            "binary_iou": 0.9720496894409938,
+            "mean_absolute_alpha_error": 0.0037411493249237537,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 3.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 0
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9847926497459412,
+            "binary_iou": 0.9847264182611615,
+            "mean_absolute_alpha_error": 0.0041451845318078995,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 2.0,
+            "reference_topology": {
+              "components": 4,
+              "holes": 0
+            },
+            "candidate_topology": {
+              "components": 4,
+              "holes": 0
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 4,
+          "command_count": 44,
+          "svg_bytes": 1693,
+          "topology": {
+            "components": 4,
+            "holes": 0
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9867990016937256,
+              "binary_iou": 1.0,
+              "mean_absolute_alpha_error": 0.0035947710275650024,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 0.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 0
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 0
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9867092370986938,
+              "binary_iou": 0.9907407407407407,
+              "mean_absolute_alpha_error": 0.003621448762714863,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 0
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 0
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9863100647926331,
+              "binary_iou": 0.9937888198757764,
+              "mean_absolute_alpha_error": 0.0037282041739672422,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 0
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 0
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9862540364265442,
+              "binary_iou": 0.9720496894409938,
+              "mean_absolute_alpha_error": 0.0037411493249237537,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 3.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 0
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9847926497459412,
+              "binary_iou": 0.9847264182611615,
+              "mean_absolute_alpha_error": 0.0041451845318078995,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 2.0,
+              "reference_topology": {
+                "components": 4,
+                "holes": 0
+              },
+              "candidate_topology": {
+                "components": 4,
+                "holes": 0
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "kettle": {
+      "source_sha256": "f632c415228666f907df47251e438c7ff6180a7b8525fadc6d1b1b4f74a42e7b",
+      "svg_sha256": "4a356e1afa2afedd90ab3c9fac025a70379f8966c11d9cad30b2bec2ab4b2dd0",
+      "source_bounds": [
+        126,
+        162,
+        1108,
+        1091
+      ],
+      "source_topology": {
+        "components": 3,
+        "holes": 1
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 3,
+        "command_count": 71,
+        "svg_bytes": 2695,
+        "topology": {
+          "components": 3,
+          "holes": 1
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9905402064323425,
+            "binary_iou": 1.0,
+            "mean_absolute_alpha_error": 0.003084150142967701,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 0.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9895738959312439,
+            "binary_iou": 0.9961977186311787,
+            "mean_absolute_alpha_error": 0.0033963583409786224,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9892638921737671,
+            "binary_iou": 0.9974025974025974,
+            "mean_absolute_alpha_error": 0.0034941311459988356,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9889931082725525,
+            "binary_iou": 0.9787798408488063,
+            "mean_absolute_alpha_error": 0.003579452633857727,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.987845778465271,
+            "binary_iou": 0.9873542222846705,
+            "mean_absolute_alpha_error": 0.003956394270062447,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 3,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 3,
+              "holes": 1
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 3,
+          "command_count": 71,
+          "svg_bytes": 2695,
+          "topology": {
+            "components": 3,
+            "holes": 1
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9905402064323425,
+              "binary_iou": 1.0,
+              "mean_absolute_alpha_error": 0.003084150142967701,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 0.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9895738959312439,
+              "binary_iou": 0.9961977186311787,
+              "mean_absolute_alpha_error": 0.0033963583409786224,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9892638921737671,
+              "binary_iou": 0.9974025974025974,
+              "mean_absolute_alpha_error": 0.0034941311459988356,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9889931082725525,
+              "binary_iou": 0.9787798408488063,
+              "mean_absolute_alpha_error": 0.003579452633857727,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.987845778465271,
+              "binary_iou": 0.9873542222846705,
+              "mean_absolute_alpha_error": 0.003956394270062447,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 3,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 3,
+                "holes": 1
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "mason_jar": {
+      "source_sha256": "b005a40c8ec2f3468714926621d33d0d8d5ad7c228ebc7d0db95a0de76ae7fed",
+      "svg_sha256": "f50ad5ea81d13b6e8af06ede4ca3212e387c2efda249af9587b73b793e854bb9",
+      "source_bounds": [
+        315,
+        192,
+        939,
+        1079
+      ],
+      "source_topology": {
+        "components": 2,
+        "holes": 1
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 2,
+        "command_count": 42,
+        "svg_bytes": 1713,
+        "topology": {
+          "components": 2,
+          "holes": 1
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9931967258453369,
+            "binary_iou": 1.0,
+            "mean_absolute_alpha_error": 0.0026756534352898598,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 0.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 0
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 0
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9928558468818665,
+            "binary_iou": 0.9967948717948718,
+            "mean_absolute_alpha_error": 0.002816126449033618,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9923650026321411,
+            "binary_iou": 0.9913978494623656,
+            "mean_absolute_alpha_error": 0.0030056315008550882,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9918735027313232,
+            "binary_iou": 0.9880434782608696,
+            "mean_absolute_alpha_error": 0.003199891187250614,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9911991953849792,
+            "binary_iou": 0.9917813529753828,
+            "mean_absolute_alpha_error": 0.0034687118604779243,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.4142135381698608,
+            "reference_topology": {
+              "components": 2,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 1
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 2,
+          "command_count": 42,
+          "svg_bytes": 1713,
+          "topology": {
+            "components": 2,
+            "holes": 1
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9931967258453369,
+              "binary_iou": 1.0,
+              "mean_absolute_alpha_error": 0.0026756534352898598,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 0.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 0
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 0
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9928558468818665,
+              "binary_iou": 0.9967948717948718,
+              "mean_absolute_alpha_error": 0.002816126449033618,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9923650026321411,
+              "binary_iou": 0.9913978494623656,
+              "mean_absolute_alpha_error": 0.0030056315008550882,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9918735027313232,
+              "binary_iou": 0.9880434782608696,
+              "mean_absolute_alpha_error": 0.003199891187250614,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9911991953849792,
+              "binary_iou": 0.9917813529753828,
+              "mean_absolute_alpha_error": 0.0034687118604779243,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.4142135381698608,
+              "reference_topology": {
+                "components": 2,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 1
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "tall_latte_glass": {
+      "source_sha256": "8480580ea7cf8e1da51da6c3ebd22fa072dc64149fe8b113be67a8b678b7c283",
+      "svg_sha256": "1fc70a0ef3511a40c7658554fd186c846d5c31194b01ed4f1977b444ef523f11",
+      "source_bounds": [
+        418,
+        141,
+        836,
+        1113
+      ],
+      "source_topology": {
+        "components": 2,
+        "holes": 2
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 2,
+        "command_count": 42,
+        "svg_bytes": 1628,
+        "topology": {
+          "components": 2,
+          "holes": 2
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9846029877662659,
+            "binary_iou": 0.9915966386554622,
+            "mean_absolute_alpha_error": 0.0032543570268899202,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 0
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 0
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9841586351394653,
+            "binary_iou": 0.9941176470588236,
+            "mean_absolute_alpha_error": 0.0033463381696492434,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 0
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 0
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9833220839500427,
+            "binary_iou": 0.9839357429718876,
+            "mean_absolute_alpha_error": 0.0035246622283011675,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9828180074691772,
+            "binary_iou": 0.9731404958677686,
+            "mean_absolute_alpha_error": 0.003632216714322567,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 3
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 3
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9817432165145874,
+            "binary_iou": 0.980123865764079,
+            "mean_absolute_alpha_error": 0.003860353957861662,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 2
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 2,
+          "command_count": 42,
+          "svg_bytes": 1628,
+          "topology": {
+            "components": 2,
+            "holes": 2
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9846029877662659,
+              "binary_iou": 0.9915966386554622,
+              "mean_absolute_alpha_error": 0.0032543570268899202,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 0
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 0
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9841586351394653,
+              "binary_iou": 0.9941176470588236,
+              "mean_absolute_alpha_error": 0.0033463381696492434,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 0
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 0
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9833220839500427,
+              "binary_iou": 0.9839357429718876,
+              "mean_absolute_alpha_error": 0.0035246622283011675,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9828180074691772,
+              "binary_iou": 0.9731404958677686,
+              "mean_absolute_alpha_error": 0.003632216714322567,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 3
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 3
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9817432165145874,
+              "binary_iou": 0.980123865764079,
+              "mean_absolute_alpha_error": 0.003860353957861662,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 2
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "aroma_taster": {
+      "source_sha256": "deb4f0a35da5b682dd30f6fef68f59d0553dd5092fed60400d7542b3f9ae91ec",
+      "svg_sha256": "23181d4ada1505c312502fa9893284235977689d4d178aa5b3bae03bf1b4210d",
+      "source_bounds": [
+        310,
+        176,
+        944,
+        1098
+      ],
+      "source_topology": {
+        "components": 1,
+        "holes": 1
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 1,
+        "command_count": 30,
+        "svg_bytes": 1288,
+        "topology": {
+          "components": 1,
+          "holes": 1
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9930052161216736,
+            "binary_iou": 1.0,
+            "mean_absolute_alpha_error": 0.0023284312337636948,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 0.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 0
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 0
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.992607057094574,
+            "binary_iou": 0.9923076923076923,
+            "mean_absolute_alpha_error": 0.0024659864138811827,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 0
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 0
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9924317598342896,
+            "binary_iou": 0.9791666666666666,
+            "mean_absolute_alpha_error": 0.002523916307836771,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9921823740005493,
+            "binary_iou": 0.9830065359477124,
+            "mean_absolute_alpha_error": 0.002607570728287101,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9917538166046143,
+            "binary_iou": 0.9932689225697148,
+            "mean_absolute_alpha_error": 0.0027492749504745007,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 1,
+          "command_count": 30,
+          "svg_bytes": 1288,
+          "topology": {
+            "components": 1,
+            "holes": 1
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9930052161216736,
+              "binary_iou": 1.0,
+              "mean_absolute_alpha_error": 0.0023284312337636948,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 0.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 0
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 0
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.992607057094574,
+              "binary_iou": 0.9923076923076923,
+              "mean_absolute_alpha_error": 0.0024659864138811827,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 0
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 0
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9924317598342896,
+              "binary_iou": 0.9791666666666666,
+              "mean_absolute_alpha_error": 0.002523916307836771,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9921823740005493,
+              "binary_iou": 0.9830065359477124,
+              "mean_absolute_alpha_error": 0.002607570728287101,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9917538166046143,
+              "binary_iou": 0.9932689225697148,
+              "mean_absolute_alpha_error": 0.0027492749504745007,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "spouted_espresso_server": {
+      "source_sha256": "cc5cb63dc0459c17b7377e83339e6688cc4eab9d50db23de5c990ee6e19eff34",
+      "svg_sha256": "28c648dbe98d0fde90e6864f58f578a13c4b6d0ee63ad127f22c1554af6c36b0",
+      "source_bounds": [
+        204,
+        318,
+        1096,
+        993
+      ],
+      "source_topology": {
+        "components": 1,
+        "holes": 2
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 1,
+        "command_count": 43,
+        "svg_bytes": 1740,
+        "topology": {
+          "components": 1,
+          "holes": 2
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9917036294937134,
+            "binary_iou": 0.9882352941176471,
+            "mean_absolute_alpha_error": 0.002485021948814392,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9913817644119263,
+            "binary_iou": 0.9957081545064378,
+            "mean_absolute_alpha_error": 0.0025810322258621454,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9909688234329224,
+            "binary_iou": 0.9970588235294118,
+            "mean_absolute_alpha_error": 0.0027037111576646566,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9903774857521057,
+            "binary_iou": 0.9884559884559885,
+            "mean_absolute_alpha_error": 0.0028782000299543142,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.989962100982666,
+            "binary_iou": 0.989704383282365,
+            "mean_absolute_alpha_error": 0.003002032171934843,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 1,
+          "command_count": 43,
+          "svg_bytes": 1740,
+          "topology": {
+            "components": 1,
+            "holes": 2
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9917036294937134,
+              "binary_iou": 0.9882352941176471,
+              "mean_absolute_alpha_error": 0.002485021948814392,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9913817644119263,
+              "binary_iou": 0.9957081545064378,
+              "mean_absolute_alpha_error": 0.0025810322258621454,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9909688234329224,
+              "binary_iou": 0.9970588235294118,
+              "mean_absolute_alpha_error": 0.0027037111576646566,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9903774857521057,
+              "binary_iou": 0.9884559884559885,
+              "mean_absolute_alpha_error": 0.0028782000299543142,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.989962100982666,
+              "binary_iou": 0.989704383282365,
+              "mean_absolute_alpha_error": 0.003002032171934843,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "dot_carafe": {
+      "source_sha256": "63ab8865f1e25c1277989724d78115cced47fdd0812ab983f401361f509c94cd",
+      "svg_sha256": "4723e44f51643dbd47d3ad0fdbfecf410add050b2766b191cdab8406e47aa0e0",
+      "source_bounds": [
+        319,
+        159,
+        935,
+        1098
+      ],
+      "source_topology": {
+        "components": 1,
+        "holes": 2
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 1,
+        "command_count": 46,
+        "svg_bytes": 1840,
+        "topology": {
+          "components": 1,
+          "holes": 2
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9934595823287964,
+            "binary_iou": 1.0,
+            "mean_absolute_alpha_error": 0.0018110020318999887,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 0.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9933008551597595,
+            "binary_iou": 0.9953488372093023,
+            "mean_absolute_alpha_error": 0.001855742302723229,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9929532408714294,
+            "binary_iou": 0.9968553459119497,
+            "mean_absolute_alpha_error": 0.001950607169419527,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 3
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 3
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.992636501789093,
+            "binary_iou": 0.9920760697305864,
+            "mean_absolute_alpha_error": 0.0020390795543789864,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.991720974445343,
+            "binary_iou": 0.9923407538020719,
+            "mean_absolute_alpha_error": 0.0022934258449822664,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 1,
+          "command_count": 46,
+          "svg_bytes": 1840,
+          "topology": {
+            "components": 1,
+            "holes": 2
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9934595823287964,
+              "binary_iou": 1.0,
+              "mean_absolute_alpha_error": 0.0018110020318999887,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 0.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9933008551597595,
+              "binary_iou": 0.9953488372093023,
+              "mean_absolute_alpha_error": 0.001855742302723229,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9929532408714294,
+              "binary_iou": 0.9968553459119497,
+              "mean_absolute_alpha_error": 0.001950607169419527,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 3
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 3
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.992636501789093,
+              "binary_iou": 0.9920760697305864,
+              "mean_absolute_alpha_error": 0.0020390795543789864,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.991720974445343,
+              "binary_iou": 0.9923407538020719,
+              "mean_absolute_alpha_error": 0.0022934258449822664,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "lid_server": {
+      "source_sha256": "ecc7150426171b16c50b29ea2c29fe2e609fa822273f3f2bce13ea3e8945734d",
+      "svg_sha256": "1a0930c7745873da7875a302d58dec16f658a812c43ee16e0c3f13d06a511413",
+      "source_bounds": [
+        146,
+        220,
+        1108,
+        1057
+      ],
+      "source_topology": {
+        "components": 2,
+        "holes": 0
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 2,
+        "command_count": 33,
+        "svg_bytes": 1393,
+        "topology": {
+          "components": 2,
+          "holes": 0
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9938852190971375,
+            "binary_iou": 0.9826086956521739,
+            "mean_absolute_alpha_error": 0.0024305556435137987,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9937042593955994,
+            "binary_iou": 0.9936102236421726,
+            "mean_absolute_alpha_error": 0.0025060023181140423,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.993685245513916,
+            "binary_iou": 0.9957081545064378,
+            "mean_absolute_alpha_error": 0.002510346472263336,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9934431910514832,
+            "binary_iou": 0.9912663755458515,
+            "mean_absolute_alpha_error": 0.0026092727202922106,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9931851625442505,
+            "binary_iou": 0.9939389289550407,
+            "mean_absolute_alpha_error": 0.002712115179747343,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 0
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 0
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 2,
+          "command_count": 33,
+          "svg_bytes": 1393,
+          "topology": {
+            "components": 2,
+            "holes": 0
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9938852190971375,
+              "binary_iou": 0.9826086956521739,
+              "mean_absolute_alpha_error": 0.0024305556435137987,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9937042593955994,
+              "binary_iou": 0.9936102236421726,
+              "mean_absolute_alpha_error": 0.0025060023181140423,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.993685245513916,
+              "binary_iou": 0.9957081545064378,
+              "mean_absolute_alpha_error": 0.002510346472263336,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9934431910514832,
+              "binary_iou": 0.9912663755458515,
+              "mean_absolute_alpha_error": 0.0026092727202922106,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9931851625442505,
+              "binary_iou": 0.9939389289550407,
+              "mean_absolute_alpha_error": 0.002712115179747343,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 0
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 0
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "beehive_server": {
+      "source_sha256": "beeb6c9ab5aea875e01e5fef7dcba9a4913e3b65cd462045d124086460fcbc56",
+      "svg_sha256": "674d3402de67bd830c9005be1595d7d50ae5f2700b3c72f45eb045974e74b174",
+      "source_bounds": [
+        242,
+        158,
+        1012,
+        1124
+      ],
+      "source_topology": {
+        "components": 3,
+        "holes": 1
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 3,
+        "command_count": 52,
+        "svg_bytes": 2061,
+        "topology": {
+          "components": 3,
+          "holes": 1
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9906636476516724,
+            "binary_iou": 0.9846938775510204,
+            "mean_absolute_alpha_error": 0.003213507356122136,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 4,
+              "holes": 3
+            },
+            "candidate_topology": {
+              "components": 4,
+              "holes": 3
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9905403256416321,
+            "binary_iou": 0.9846153846153847,
+            "mean_absolute_alpha_error": 0.0032613046932965517,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 3,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 3,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9899641275405884,
+            "binary_iou": 0.9875930521091811,
+            "mean_absolute_alpha_error": 0.0034568151459097862,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 3,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 3,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9900121688842773,
+            "binary_iou": 0.9836272040302267,
+            "mean_absolute_alpha_error": 0.0034432869870215654,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 3,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 3,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9895632266998291,
+            "binary_iou": 0.990267209343479,
+            "mean_absolute_alpha_error": 0.003601313568651676,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 3,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 3,
+              "holes": 1
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 3,
+          "command_count": 52,
+          "svg_bytes": 2061,
+          "topology": {
+            "components": 3,
+            "holes": 1
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9906636476516724,
+              "binary_iou": 0.9846938775510204,
+              "mean_absolute_alpha_error": 0.003213507356122136,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 4,
+                "holes": 3
+              },
+              "candidate_topology": {
+                "components": 4,
+                "holes": 3
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9905403256416321,
+              "binary_iou": 0.9846153846153847,
+              "mean_absolute_alpha_error": 0.0032613046932965517,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 3,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 3,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9899641275405884,
+              "binary_iou": 0.9875930521091811,
+              "mean_absolute_alpha_error": 0.0034568151459097862,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 3,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 3,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9900121688842773,
+              "binary_iou": 0.9836272040302267,
+              "mean_absolute_alpha_error": 0.0034432869870215654,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 3,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 3,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9895632266998291,
+              "binary_iou": 0.990267209343479,
+              "mean_absolute_alpha_error": 0.003601313568651676,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 3,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 3,
+                "holes": 1
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "barista_server": {
+      "source_sha256": "5bb7d85722362ba17bbae6956ae5e7cf84f8706baa6d9dfad0701d8e5fac6158",
+      "svg_sha256": "c2429b95b613188df551f0d91e3c98d3583ce4bed94b87fc62f598eaca54d2e7",
+      "source_bounds": [
+        201,
+        231,
+        1114,
+        1064
+      ],
+      "source_topology": {
+        "components": 1,
+        "holes": 2
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 1,
+        "command_count": 41,
+        "svg_bytes": 1648,
+        "topology": {
+          "components": 1,
+          "holes": 2
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9922202825546265,
+            "binary_iou": 0.9956521739130435,
+            "mean_absolute_alpha_error": 0.003029684303328395,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9921084642410278,
+            "binary_iou": 0.993421052631579,
+            "mean_absolute_alpha_error": 0.0030762304086238146,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9921330213546753,
+            "binary_iou": 0.9846491228070176,
+            "mean_absolute_alpha_error": 0.003063301555812359,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9914354681968689,
+            "binary_iou": 0.9910714285714286,
+            "mean_absolute_alpha_error": 0.0033343546092510223,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9910352230072021,
+            "binary_iou": 0.9922754185782064,
+            "mean_absolute_alpha_error": 0.003488697810098529,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 1,
+          "command_count": 41,
+          "svg_bytes": 1648,
+          "topology": {
+            "components": 1,
+            "holes": 2
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9922202825546265,
+              "binary_iou": 0.9956521739130435,
+              "mean_absolute_alpha_error": 0.003029684303328395,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9921084642410278,
+              "binary_iou": 0.993421052631579,
+              "mean_absolute_alpha_error": 0.0030762304086238146,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9921330213546753,
+              "binary_iou": 0.9846491228070176,
+              "mean_absolute_alpha_error": 0.003063301555812359,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9914354681968689,
+              "binary_iou": 0.9910714285714286,
+              "mean_absolute_alpha_error": 0.0033343546092510223,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9910352230072021,
+              "binary_iou": 0.9922754185782064,
+              "mean_absolute_alpha_error": 0.003488697810098529,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "angular_server": {
+      "source_sha256": "d952ddb46a6a9a56b4ee84c92ddc31fff3939e0072ec659e2fae7ec1dd635814",
+      "svg_sha256": "ce3a53db2735f9b8da4fe39a5e8a91d826cc8f5c18bbcb2271e572d67fddf7a4",
+      "source_bounds": [
+        208,
+        176,
+        1046,
+        1078
+      ],
+      "source_topology": {
+        "components": 1,
+        "holes": 1
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 1,
+        "command_count": 33,
+        "svg_bytes": 1418,
+        "topology": {
+          "components": 1,
+          "holes": 1
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9925766587257385,
+            "binary_iou": 0.9959839357429718,
+            "mean_absolute_alpha_error": 0.003179465886205435,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9919353127479553,
+            "binary_iou": 0.9969788519637462,
+            "mean_absolute_alpha_error": 0.003461384680122137,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9917076230049133,
+            "binary_iou": 0.9801980198019802,
+            "mean_absolute_alpha_error": 0.003555193543434143,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9912009239196777,
+            "binary_iou": 0.9918533604887984,
+            "mean_absolute_alpha_error": 0.0037751910276710987,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.990808367729187,
+            "binary_iou": 0.9913213587053175,
+            "mean_absolute_alpha_error": 0.003942691721022129,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 1,
+          "command_count": 33,
+          "svg_bytes": 1418,
+          "topology": {
+            "components": 1,
+            "holes": 1
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9925766587257385,
+              "binary_iou": 0.9959839357429718,
+              "mean_absolute_alpha_error": 0.003179465886205435,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9919353127479553,
+              "binary_iou": 0.9969788519637462,
+              "mean_absolute_alpha_error": 0.003461384680122137,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9917076230049133,
+              "binary_iou": 0.9801980198019802,
+              "mean_absolute_alpha_error": 0.003555193543434143,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9912009239196777,
+              "binary_iou": 0.9918533604887984,
+              "mean_absolute_alpha_error": 0.0037751910276710987,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.990808367729187,
+              "binary_iou": 0.9913213587053175,
+              "mean_absolute_alpha_error": 0.003942691721022129,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "ceramic_latte_bowl": {
+      "source_sha256": "e8d4870258f9c530dbe50726d1539f5e29c3e21fef395f570eade381d3677115",
+      "svg_sha256": "b456996b2872af39ee82931cfb57f5b896f801633d2122e6951b6de2d6a1b6c7",
+      "source_bounds": [
+        121,
+        275,
+        1133,
+        1023
+      ],
+      "source_topology": {
+        "components": 1,
+        "holes": 1
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 1,
+        "command_count": 27,
+        "svg_bytes": 1167,
+        "topology": {
+          "components": 1,
+          "holes": 1
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9867091774940491,
+            "binary_iou": 0.9939759036144579,
+            "mean_absolute_alpha_error": 0.0036900872364640236,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 0
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9869706034660339,
+            "binary_iou": 0.9861751152073732,
+            "mean_absolute_alpha_error": 0.003621448762714863,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9863334894180298,
+            "binary_iou": 0.9937304075235109,
+            "mean_absolute_alpha_error": 0.00379605102352798,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9861815571784973,
+            "binary_iou": 0.9655172413793104,
+            "mean_absolute_alpha_error": 0.0038364653009921312,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9853368997573853,
+            "binary_iou": 0.9861348005502063,
+            "mean_absolute_alpha_error": 0.004067394882440567,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 2.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 1,
+          "command_count": 27,
+          "svg_bytes": 1167,
+          "topology": {
+            "components": 1,
+            "holes": 1
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9867091774940491,
+              "binary_iou": 0.9939759036144579,
+              "mean_absolute_alpha_error": 0.0036900872364640236,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 0
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9869706034660339,
+              "binary_iou": 0.9861751152073732,
+              "mean_absolute_alpha_error": 0.003621448762714863,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9863334894180298,
+              "binary_iou": 0.9937304075235109,
+              "mean_absolute_alpha_error": 0.00379605102352798,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9861815571784973,
+              "binary_iou": 0.9655172413793104,
+              "mean_absolute_alpha_error": 0.0038364653009921312,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9853368997573853,
+              "binary_iou": 0.9861348005502063,
+              "mean_absolute_alpha_error": 0.004067394882440567,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 2.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "thermal_carafe": {
+      "source_sha256": "1f2b938063a2e108eb082ea4016d7cdc5e7434f90d8999bd3de1cfd2c8846e8d",
+      "svg_sha256": "5f124509275677fb914b0824d00b1ee9a7c8343c8cc2accf5ab3827613a123c3",
+      "source_bounds": [
+        349,
+        141,
+        975,
+        1130
+      ],
+      "source_topology": {
+        "components": 3,
+        "holes": 1
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 3,
+        "command_count": 57,
+        "svg_bytes": 2145,
+        "topology": {
+          "components": 3,
+          "holes": 1
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9884688854217529,
+            "binary_iou": 0.9945652173913043,
+            "mean_absolute_alpha_error": 0.0035266880877316,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.988390326499939,
+            "binary_iou": 1.0,
+            "mean_absolute_alpha_error": 0.003551420522853732,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 0.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9884330630302429,
+            "binary_iou": 0.9861878453038674,
+            "mean_absolute_alpha_error": 0.0035348397213965654,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 2.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9876396059989929,
+            "binary_iou": 0.9817415730337079,
+            "mean_absolute_alpha_error": 0.003781998762860894,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 2.8284270763397217,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9859890937805176,
+            "binary_iou": 0.9864104733933994,
+            "mean_absolute_alpha_error": 0.004289395175874233,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 2.0,
+            "reference_topology": {
+              "components": 3,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 3,
+              "holes": 1
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 3,
+          "command_count": 57,
+          "svg_bytes": 2145,
+          "topology": {
+            "components": 3,
+            "holes": 1
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9884688854217529,
+              "binary_iou": 0.9945652173913043,
+              "mean_absolute_alpha_error": 0.0035266880877316,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.988390326499939,
+              "binary_iou": 1.0,
+              "mean_absolute_alpha_error": 0.003551420522853732,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 0.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9884330630302429,
+              "binary_iou": 0.9861878453038674,
+              "mean_absolute_alpha_error": 0.0035348397213965654,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 2.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9876396059989929,
+              "binary_iou": 0.9817415730337079,
+              "mean_absolute_alpha_error": 0.003781998762860894,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 2.8284270763397217,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9859890937805176,
+              "binary_iou": 0.9864104733933994,
+              "mean_absolute_alpha_error": 0.004289395175874233,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 2.0,
+              "reference_topology": {
+                "components": 3,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 3,
+                "holes": 1
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "takeaway": {
+      "source_sha256": "8f096284caa958b37ccb15182d6ece325578eaeb8b7d74702ccaa8ad6950af5c",
+      "svg_sha256": "8b84a1dc7e1a94b2d1e2ac2c3f7ab42c415bc6f022353030c5f593614373f5d1",
+      "source_bounds": [
+        281,
+        146,
+        981,
+        1133
+      ],
+      "source_topology": {
+        "components": 2,
+        "holes": 1
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 2,
+        "command_count": 47,
+        "svg_bytes": 1924,
+        "topology": {
+          "components": 2,
+          "holes": 1
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.989281952381134,
+            "binary_iou": 1.0,
+            "mean_absolute_alpha_error": 0.003111383644863963,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 0.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 0
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 0
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9888720512390137,
+            "binary_iou": 0.9956896551724138,
+            "mean_absolute_alpha_error": 0.0032362944912165403,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 0
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 0
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9889386892318726,
+            "binary_iou": 0.9738372093023255,
+            "mean_absolute_alpha_error": 0.0032125653233379126,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.98800128698349,
+            "binary_iou": 0.9835329341317365,
+            "mean_absolute_alpha_error": 0.0034892430994659662,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9867959022521973,
+            "binary_iou": 0.9873245338361617,
+            "mean_absolute_alpha_error": 0.0038430006243288517,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 1
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 2,
+          "command_count": 47,
+          "svg_bytes": 1924,
+          "topology": {
+            "components": 2,
+            "holes": 1
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.989281952381134,
+              "binary_iou": 1.0,
+              "mean_absolute_alpha_error": 0.003111383644863963,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 0.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 0
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 0
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9888720512390137,
+              "binary_iou": 0.9956896551724138,
+              "mean_absolute_alpha_error": 0.0032362944912165403,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 0
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 0
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9889386892318726,
+              "binary_iou": 0.9738372093023255,
+              "mean_absolute_alpha_error": 0.0032125653233379126,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.98800128698349,
+              "binary_iou": 0.9835329341317365,
+              "mean_absolute_alpha_error": 0.0034892430994659662,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9867959022521973,
+              "binary_iou": 0.9873245338361617,
+              "mean_absolute_alpha_error": 0.0038430006243288517,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 1
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "carafe": {
+      "source_sha256": "d33596fbd328cf8b6e2528b25c80cc860b2aed630f2d29a696f9f6cad8105af8",
+      "svg_sha256": "41adeba34fd88c4e2f47d0141b259063459a22ce5e1a30bdb4fc022857040b38",
+      "source_bounds": [
+        230,
+        123,
+        1024,
+        1165
+      ],
+      "source_topology": {
+        "components": 1,
+        "holes": 1
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 1,
+        "command_count": 25,
+        "svg_bytes": 1104,
+        "topology": {
+          "components": 1,
+          "holes": 1
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9948133826255798,
+            "binary_iou": 0.9950980392156863,
+            "mean_absolute_alpha_error": 0.0018586601363494992,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 0
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 0
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9946563243865967,
+            "binary_iou": 0.996415770609319,
+            "mean_absolute_alpha_error": 0.0019157662754878402,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9942822456359863,
+            "binary_iou": 0.9952267303102625,
+            "mean_absolute_alpha_error": 0.002048985566943884,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9942696690559387,
+            "binary_iou": 0.9926739926739927,
+            "mean_absolute_alpha_error": 0.0020543981809169054,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9939953088760376,
+            "binary_iou": 0.9939112662862982,
+            "mean_absolute_alpha_error": 0.002151608932763338,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 1,
+          "command_count": 25,
+          "svg_bytes": 1104,
+          "topology": {
+            "components": 1,
+            "holes": 1
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9948133826255798,
+              "binary_iou": 0.9950980392156863,
+              "mean_absolute_alpha_error": 0.0018586601363494992,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 0
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 0
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9946563243865967,
+              "binary_iou": 0.996415770609319,
+              "mean_absolute_alpha_error": 0.0019157662754878402,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9942822456359863,
+              "binary_iou": 0.9952267303102625,
+              "mean_absolute_alpha_error": 0.002048985566943884,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9942696690559387,
+              "binary_iou": 0.9926739926739927,
+              "mean_absolute_alpha_error": 0.0020543981809169054,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9939953088760376,
+              "binary_iou": 0.9939112662862982,
+              "mean_absolute_alpha_error": 0.002151608932763338,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "french_press": {
+      "source_sha256": "458013132e6b58b68b2e6276505822e553905ce231ee5f45f7baf542d3dfd69b",
+      "svg_sha256": "11d4d6560ea47cb79b9a4ad7cc112f7df6444fcf8e82a01958c3f8436179e377",
+      "source_bounds": [
+        224,
+        55,
+        1116,
+        1199
+      ],
+      "source_topology": {
+        "components": 3,
+        "holes": 2
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 3,
+        "command_count": 79,
+        "svg_bytes": 2956,
+        "topology": {
+          "components": 3,
+          "holes": 2
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9820166230201721,
+            "binary_iou": 0.9933333333333333,
+            "mean_absolute_alpha_error": 0.004609204828739166,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 0
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 0
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9822745323181152,
+            "binary_iou": 0.9951219512195122,
+            "mean_absolute_alpha_error": 0.004531812388449907,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9810032844543457,
+            "binary_iou": 0.9875,
+            "mean_absolute_alpha_error": 0.004844290670007467,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 2.8284270763397217,
+            "reference_topology": {
+              "components": 1,
+              "holes": 3
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 3
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9793851971626282,
+            "binary_iou": 0.9696485623003195,
+            "mean_absolute_alpha_error": 0.005262799561023712,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 2.2360680103302,
+            "reference_topology": {
+              "components": 1,
+              "holes": 5
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 4
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9760606288909912,
+            "binary_iou": 0.9741614317885504,
+            "mean_absolute_alpha_error": 0.006126074586063623,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 2.0,
+            "reference_topology": {
+              "components": 3,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 3,
+              "holes": 2
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 3,
+          "command_count": 79,
+          "svg_bytes": 2956,
+          "topology": {
+            "components": 3,
+            "holes": 2
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9820166230201721,
+              "binary_iou": 0.9933333333333333,
+              "mean_absolute_alpha_error": 0.004609204828739166,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 0
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 0
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9822745323181152,
+              "binary_iou": 0.9951219512195122,
+              "mean_absolute_alpha_error": 0.004531812388449907,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9810032844543457,
+              "binary_iou": 0.9875,
+              "mean_absolute_alpha_error": 0.004844290670007467,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 2.8284270763397217,
+              "reference_topology": {
+                "components": 1,
+                "holes": 3
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 3
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9793851971626282,
+              "binary_iou": 0.9696485623003195,
+              "mean_absolute_alpha_error": 0.005262799561023712,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 2.2360680103302,
+              "reference_topology": {
+                "components": 1,
+                "holes": 5
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 4
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9760606288909912,
+              "binary_iou": 0.9741614317885504,
+              "mean_absolute_alpha_error": 0.006126074586063623,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 2.0,
+              "reference_topology": {
+                "components": 3,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 3,
+                "holes": 2
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "bowl": {
+      "source_sha256": "7d6a9eb5ccaa813a6499af0815254677f6d14c73c51645ebc0abc088d92a7596",
+      "svg_sha256": "03748ea2a4d1d3d32f7ef73f17994cf05b9306901a59bf8f10d757c7c6341760",
+      "source_bounds": [
+        172,
+        334,
+        1082,
+        976
+      ],
+      "source_topology": {
+        "components": 1,
+        "holes": 1
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 1,
+        "command_count": 28,
+        "svg_bytes": 1182,
+        "topology": {
+          "components": 1,
+          "holes": 1
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9905822277069092,
+            "binary_iou": 0.9806451612903225,
+            "mean_absolute_alpha_error": 0.0024986385833472013,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 0
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9904405474662781,
+            "binary_iou": 1.0,
+            "mean_absolute_alpha_error": 0.0025360144209116697,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 0.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.990059494972229,
+            "binary_iou": 0.9873417721518988,
+            "mean_absolute_alpha_error": 0.0026358640752732754,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9895495772361755,
+            "binary_iou": 0.9918433931484503,
+            "mean_absolute_alpha_error": 0.0027709694113582373,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9891008734703064,
+            "binary_iou": 0.9892931153580474,
+            "mean_absolute_alpha_error": 0.0028886382933706045,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 1,
+          "command_count": 28,
+          "svg_bytes": 1182,
+          "topology": {
+            "components": 1,
+            "holes": 1
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9905822277069092,
+              "binary_iou": 0.9806451612903225,
+              "mean_absolute_alpha_error": 0.0024986385833472013,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 0
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9904405474662781,
+              "binary_iou": 1.0,
+              "mean_absolute_alpha_error": 0.0025360144209116697,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 0.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.990059494972229,
+              "binary_iou": 0.9873417721518988,
+              "mean_absolute_alpha_error": 0.0026358640752732754,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9895495772361755,
+              "binary_iou": 0.9918433931484503,
+              "mean_absolute_alpha_error": 0.0027709694113582373,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9891008734703064,
+              "binary_iou": 0.9892931153580474,
+              "mean_absolute_alpha_error": 0.0028886382933706045,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "double_wall_espresso": {
+      "source_sha256": "c8345b74544ee36e6e4436ea01d2df9201925bd2eeaa0e6e8ebaba2dc92eb2cb",
+      "svg_sha256": "1722e0d258d6ccf647d9c1d006ef38414d6e1b4d1805871b970c4313f9550ae6",
+      "source_bounds": [
+        202,
+        204,
+        1051,
+        1052
+      ],
+      "source_topology": {
+        "components": 1,
+        "holes": 2
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 1,
+        "command_count": 36,
+        "svg_bytes": 1479,
+        "topology": {
+          "components": 1,
+          "holes": 2
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9873425960540771,
+            "binary_iou": 0.9923076923076923,
+            "mean_absolute_alpha_error": 0.00552151445299387,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9877879023551941,
+            "binary_iou": 0.991044776119403,
+            "mean_absolute_alpha_error": 0.005327131133526564,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9872280955314636,
+            "binary_iou": 0.9904214559386973,
+            "mean_absolute_alpha_error": 0.00556007819250226,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9871142506599426,
+            "binary_iou": 0.9791666666666666,
+            "mean_absolute_alpha_error": 0.005616830196231604,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9866135716438293,
+            "binary_iou": 0.9880740041268842,
+            "mean_absolute_alpha_error": 0.005837594158947468,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 1,
+          "command_count": 36,
+          "svg_bytes": 1479,
+          "topology": {
+            "components": 1,
+            "holes": 2
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9873425960540771,
+              "binary_iou": 0.9923076923076923,
+              "mean_absolute_alpha_error": 0.00552151445299387,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9877879023551941,
+              "binary_iou": 0.991044776119403,
+              "mean_absolute_alpha_error": 0.005327131133526564,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9872280955314636,
+              "binary_iou": 0.9904214559386973,
+              "mean_absolute_alpha_error": 0.00556007819250226,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9871142506599426,
+              "binary_iou": 0.9791666666666666,
+              "mean_absolute_alpha_error": 0.005616830196231604,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9866135716438293,
+              "binary_iou": 0.9880740041268842,
+              "mean_absolute_alpha_error": 0.005837594158947468,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "double_wall_tumbler": {
+      "source_sha256": "914b5452fb854fc344d02c767473c75f5f60fe6da6f6b3677a83818469cc6b14",
+      "svg_sha256": "93c8ff42ab2aa1137833be7d18fb837b639e3107d0018d7d243819fd221497ce",
+      "source_bounds": [
+        195,
+        175,
+        1059,
+        1101
+      ],
+      "source_topology": {
+        "components": 1,
+        "holes": 2
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 1,
+        "command_count": 40,
+        "svg_bytes": 1636,
+        "topology": {
+          "components": 1,
+          "holes": 2
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9886237382888794,
+            "binary_iou": 0.9957264957264957,
+            "mean_absolute_alpha_error": 0.004609204828739166,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 4
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 4
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9879866242408752,
+            "binary_iou": 0.9937106918238994,
+            "mean_absolute_alpha_error": 0.0048719486221671104,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9877318143844604,
+            "binary_iou": 0.9894291754756871,
+            "mean_absolute_alpha_error": 0.0049698082730174065,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9875994920730591,
+            "binary_iou": 0.9892588614393125,
+            "mean_absolute_alpha_error": 0.0050228070467710495,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9871150851249695,
+            "binary_iou": 0.9869787746500075,
+            "mean_absolute_alpha_error": 0.00522060040384531,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 1,
+          "command_count": 40,
+          "svg_bytes": 1636,
+          "topology": {
+            "components": 1,
+            "holes": 2
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9886237382888794,
+              "binary_iou": 0.9957264957264957,
+              "mean_absolute_alpha_error": 0.004609204828739166,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 4
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 4
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9879866242408752,
+              "binary_iou": 0.9937106918238994,
+              "mean_absolute_alpha_error": 0.0048719486221671104,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9877318143844604,
+              "binary_iou": 0.9894291754756871,
+              "mean_absolute_alpha_error": 0.0049698082730174065,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9875994920730591,
+              "binary_iou": 0.9892588614393125,
+              "mean_absolute_alpha_error": 0.0050228070467710495,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9871150851249695,
+              "binary_iou": 0.9869787746500075,
+              "mean_absolute_alpha_error": 0.00522060040384531,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "double_wall_mug": {
+      "source_sha256": "628d139953c934ddaa04af63f4d52d172bd5abe2d0638ffe5e863c8f9e1624a3",
+      "svg_sha256": "54abb12d2481729f2345a7b6b9f24b93906b4b9ddecdeb5c2365e3f784776900",
+      "source_bounds": [
+        148,
+        185,
+        1175,
+        1106
+      ],
+      "source_topology": {
+        "components": 1,
+        "holes": 3
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 1,
+        "command_count": 52,
+        "svg_bytes": 1954,
+        "topology": {
+          "components": 1,
+          "holes": 3
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9829633235931396,
+            "binary_iou": 0.981042654028436,
+            "mean_absolute_alpha_error": 0.006066176574677229,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 6
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 5
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9826667904853821,
+            "binary_iou": 0.9822064056939501,
+            "mean_absolute_alpha_error": 0.006177471484988928,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 5
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 5
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.982137143611908,
+            "binary_iou": 0.9803921568627451,
+            "mean_absolute_alpha_error": 0.006364068016409874,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 3
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 3
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9818307161331177,
+            "binary_iou": 0.9636363636363636,
+            "mean_absolute_alpha_error": 0.006464460864663124,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 3
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 3
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9809066653251648,
+            "binary_iou": 0.9800068499015326,
+            "mean_absolute_alpha_error": 0.0067994361743330956,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 2.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 3
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 3
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 1,
+          "command_count": 52,
+          "svg_bytes": 1954,
+          "topology": {
+            "components": 1,
+            "holes": 3
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9829633235931396,
+              "binary_iou": 0.981042654028436,
+              "mean_absolute_alpha_error": 0.006066176574677229,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 6
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 5
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9826667904853821,
+              "binary_iou": 0.9822064056939501,
+              "mean_absolute_alpha_error": 0.006177471484988928,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 5
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 5
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.982137143611908,
+              "binary_iou": 0.9803921568627451,
+              "mean_absolute_alpha_error": 0.006364068016409874,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 3
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 3
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9818307161331177,
+              "binary_iou": 0.9636363636363636,
+              "mean_absolute_alpha_error": 0.006464460864663124,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 3
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 3
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9809066653251648,
+              "binary_iou": 0.9800068499015326,
+              "mean_absolute_alpha_error": 0.0067994361743330956,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 2.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 3
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 3
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "spherical_latte": {
+      "source_sha256": "72ee5d15dfc243ee0f0906351a750bb12ce8ecb6fbccce250b40c8899318aefa",
+      "svg_sha256": "45d4df85954fa8c3c6286a3e61fe1bc79e5bf4fceefe702b947d9b50853fd2a6",
+      "source_bounds": [
+        128,
+        265,
+        1179,
+        1076
+      ],
+      "source_topology": {
+        "components": 1,
+        "holes": 2
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 1,
+        "command_count": 34,
+        "svg_bytes": 1372,
+        "topology": {
+          "components": 1,
+          "holes": 2
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9917179346084595,
+            "binary_iou": 0.9838709677419355,
+            "mean_absolute_alpha_error": 0.0026552285999059677,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9913532137870789,
+            "binary_iou": 0.9960159362549801,
+            "mean_absolute_alpha_error": 0.0027711084112524986,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9910619258880615,
+            "binary_iou": 0.9868073878627969,
+            "mean_absolute_alpha_error": 0.0028631521854549646,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.990540623664856,
+            "binary_iou": 0.9904632152588556,
+            "mean_absolute_alpha_error": 0.0030313862953335047,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9903361201286316,
+            "binary_iou": 0.9889592157235997,
+            "mean_absolute_alpha_error": 0.0030952603556215763,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 1,
+          "command_count": 34,
+          "svg_bytes": 1372,
+          "topology": {
+            "components": 1,
+            "holes": 2
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9917179346084595,
+              "binary_iou": 0.9838709677419355,
+              "mean_absolute_alpha_error": 0.0026552285999059677,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9913532137870789,
+              "binary_iou": 0.9960159362549801,
+              "mean_absolute_alpha_error": 0.0027711084112524986,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9910619258880615,
+              "binary_iou": 0.9868073878627969,
+              "mean_absolute_alpha_error": 0.0028631521854549646,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.990540623664856,
+              "binary_iou": 0.9904632152588556,
+              "mean_absolute_alpha_error": 0.0030313862953335047,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9903361201286316,
+              "binary_iou": 0.9889592157235997,
+              "mean_absolute_alpha_error": 0.0030952603556215763,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "faceted_cortado": {
+      "source_sha256": "8283d394464838d2e8e24b6f9e4e51a02f51ad947020bc000638cf8879002559",
+      "svg_sha256": "833db0f01c24c64a640d003ee98c9c83c111aa41c615208b650cf1bd0e3506a7",
+      "source_bounds": [
+        182,
+        129,
+        1072,
+        1099
+      ],
+      "source_topology": {
+        "components": 4,
+        "holes": 1
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 4,
+        "command_count": 66,
+        "svg_bytes": 2587,
+        "topology": {
+          "components": 4,
+          "holes": 1
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9876583218574524,
+            "binary_iou": 0.9913419913419913,
+            "mean_absolute_alpha_error": 0.00465005449950695,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9874426126480103,
+            "binary_iou": 0.9803921568627451,
+            "mean_absolute_alpha_error": 0.004731892608106136,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 3.1622776985168457,
+            "reference_topology": {
+              "components": 1,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 1
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9866908192634583,
+            "binary_iou": 0.9732142857142857,
+            "mean_absolute_alpha_error": 0.005007123574614525,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 3.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 5
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 5
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9862527847290039,
+            "binary_iou": 0.9680729760547321,
+            "mean_absolute_alpha_error": 0.005172589793801308,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 3,
+              "holes": 4
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 4
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9850859642028809,
+            "binary_iou": 0.9857744994731296,
+            "mean_absolute_alpha_error": 0.0056208595633506775,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 4,
+              "holes": 1
+            },
+            "candidate_topology": {
+              "components": 4,
+              "holes": 1
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 4,
+          "command_count": 66,
+          "svg_bytes": 2587,
+          "topology": {
+            "components": 4,
+            "holes": 1
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9876583218574524,
+              "binary_iou": 0.9913419913419913,
+              "mean_absolute_alpha_error": 0.00465005449950695,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9874426126480103,
+              "binary_iou": 0.9803921568627451,
+              "mean_absolute_alpha_error": 0.004731892608106136,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 3.1622776985168457,
+              "reference_topology": {
+                "components": 1,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 1
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9866908192634583,
+              "binary_iou": 0.9732142857142857,
+              "mean_absolute_alpha_error": 0.005007123574614525,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 3.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 5
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 5
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9862527847290039,
+              "binary_iou": 0.9680729760547321,
+              "mean_absolute_alpha_error": 0.005172589793801308,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 3,
+                "holes": 4
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 4
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9850859642028809,
+              "binary_iou": 0.9857744994731296,
+              "mean_absolute_alpha_error": 0.0056208595633506775,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 4,
+                "holes": 1
+              },
+              "candidate_topology": {
+                "components": 4,
+                "holes": 1
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    },
+    "double_wall_press": {
+      "source_sha256": "e5614fd746f825c4453bcf9f487126e8360f336744c87bdd880782e270282a19",
+      "svg_sha256": "de42d69f2b2fd532f700e290973a703edbacc945bae3591c5e81973269c59a76",
+      "source_bounds": [
+        343,
+        114,
+        911,
+        1145
+      ],
+      "source_topology": {
+        "components": 2,
+        "holes": 0
+      },
+      "selected": {
+        "tolerance_px": 2.0,
+        "path_count": 2,
+        "command_count": 57,
+        "svg_bytes": 2246,
+        "topology": {
+          "components": 2,
+          "holes": 0
+        },
+        "metrics": [
+          {
+            "size_px": 24,
+            "soft_iou": 0.9845762252807617,
+            "binary_iou": 0.9928571428571429,
+            "mean_absolute_alpha_error": 0.0035879628267139196,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 28,
+            "soft_iou": 0.9846590757369995,
+            "binary_iou": 1.0,
+            "mean_absolute_alpha_error": 0.0035714285913854837,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 0.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 34,
+            "soft_iou": 0.9844023585319519,
+            "binary_iou": 0.9898648648648649,
+            "mean_absolute_alpha_error": 0.003619648516178131,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 3.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 2
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 2
+            }
+          },
+          {
+            "size_px": 48,
+            "soft_iou": 0.9840397834777832,
+            "binary_iou": 0.9857142857142858,
+            "mean_absolute_alpha_error": 0.003695193212479353,
+            "boundary_p95_px": 0.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 1,
+              "holes": 3
+            },
+            "candidate_topology": {
+              "components": 1,
+              "holes": 3
+            }
+          },
+          {
+            "size_px": 256,
+            "soft_iou": 0.9825965166091919,
+            "binary_iou": 0.9844511793385162,
+            "mean_absolute_alpha_error": 0.004043878056108952,
+            "boundary_p95_px": 1.0,
+            "boundary_max_px": 1.0,
+            "reference_topology": {
+              "components": 2,
+              "holes": 0
+            },
+            "candidate_topology": {
+              "components": 2,
+              "holes": 0
+            }
+          }
+        ],
+        "passes": true
+      },
+      "attempts": [
+        {
+          "tolerance_px": 2.0,
+          "path_count": 2,
+          "command_count": 57,
+          "svg_bytes": 2246,
+          "topology": {
+            "components": 2,
+            "holes": 0
+          },
+          "metrics": [
+            {
+              "size_px": 24,
+              "soft_iou": 0.9845762252807617,
+              "binary_iou": 0.9928571428571429,
+              "mean_absolute_alpha_error": 0.0035879628267139196,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 28,
+              "soft_iou": 0.9846590757369995,
+              "binary_iou": 1.0,
+              "mean_absolute_alpha_error": 0.0035714285913854837,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 0.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 34,
+              "soft_iou": 0.9844023585319519,
+              "binary_iou": 0.9898648648648649,
+              "mean_absolute_alpha_error": 0.003619648516178131,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 3.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 2
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 2
+              }
+            },
+            {
+              "size_px": 48,
+              "soft_iou": 0.9840397834777832,
+              "binary_iou": 0.9857142857142858,
+              "mean_absolute_alpha_error": 0.003695193212479353,
+              "boundary_p95_px": 0.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 1,
+                "holes": 3
+              },
+              "candidate_topology": {
+                "components": 1,
+                "holes": 3
+              }
+            },
+            {
+              "size_px": 256,
+              "soft_iou": 0.9825965166091919,
+              "binary_iou": 0.9844511793385162,
+              "mean_absolute_alpha_error": 0.004043878056108952,
+              "boundary_p95_px": 1.0,
+              "boundary_max_px": 1.0,
+              "reference_topology": {
+                "components": 2,
+                "holes": 0
+              },
+              "candidate_topology": {
+                "components": 2,
+                "holes": 0
+              }
+            }
+          ],
+          "passes": true
+        }
+      ]
+    }
+  }
+}

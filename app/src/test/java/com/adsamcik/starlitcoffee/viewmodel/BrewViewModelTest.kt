@@ -101,6 +101,32 @@ class BrewViewModelTest {
     }
 
     @Test
+    fun `confirmed brew freezes its pack and exact grind and repeated completion consumes once`() {
+        val vm = createPersistenceViewModel()
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "First", weightG = 100f))
+        vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Second", weightG = 200f))
+        val first = vm.coffeeBags.value.first { it.name == "First" }.id
+        val second = vm.coffeeBags.value.first { it.name == "Second" }.id
+        vm.selectBag(first); vm.setMethod(BrewMethod.PULSAR); vm.setAmount("20")
+        vm.setFilterType(FilterType.PAPER)
+        vm.setGrinder("1zpresso-zp6-special")
+        vm.saveGrindSetting("1.14", com.adsamcik.starlitcoffee.data.model.GrindSaveScope.BREW)
+        vm.beginLegacyBrew()
+        vm.selectBag(second); vm.setAmount("30")
+        vm.saveGrindSetting("2.7", com.adsamcik.starlitcoffee.data.model.GrindSaveScope.BREW)
+        vm.logBrew(); vm.logBrew()
+        assertEquals(1, vm.brewLogs.value.size)
+        val log = vm.brewLogs.value.single()
+        assertEquals(first, log.coffeeBagId); assertEquals(20f, log.doseG, 0.01f); assertEquals("1.14", log.grindSetting)
+        assertNotNull(log.sourceSessionId); assertNotNull(log.brewSnapshotJson)
+        assertEquals(80f, vm.coffeeBags.value.first { it.id == first }.weightG)
+        assertEquals(200f, vm.coffeeBags.value.first { it.id == second }.weightG)
+        vm.abandonLegacyBrew(); vm.beginLegacyBrew(); vm.logBrew()
+        assertEquals(2, vm.brewLogs.value.size)
+        assertEquals(170f, vm.coffeeBags.value.first { it.id == second }.weightG)
+    }
+
+    @Test
     fun `coffee to water with Pulsar default ratio`() {
         viewModel.setMethod(BrewMethod.PULSAR)
         viewModel.setInputMode(InputMode.COFFEE_TO_WATER)
@@ -386,8 +412,8 @@ class BrewViewModelTest {
         assertEquals(400f, state.waterG, 0.01f)
         assertEquals(0f, state.bloomG, 0.01f)
         assertEquals(0, state.effectivePulseCount)
-        assertEquals(43_200, state.timeTargetLowS)
-        assertEquals(86_400, state.timeTargetHighS)
+        assertEquals(50_400, state.timeTargetLowS)
+        assertEquals(50_400, state.timeTargetHighS)
         assertNull(state.ratioWarning)
     }
 
@@ -978,7 +1004,7 @@ class BrewViewModelTest {
 
         persistenceViewModel.saveRecipe("Specific Grind")
 
-        assertEquals("5.0–6.0", persistenceViewModel.savedRecipes.value.first().grindSetting)
+        assertEquals(persistenceViewModel.uiState.value.preparedGrind.displayValue, persistenceViewModel.savedRecipes.value.first().grindSetting)
     }
 
     @Test
@@ -1633,7 +1659,7 @@ class BrewViewModelTest {
     }
 
     @Test
-    fun `manual setDecafBrew overrides bag and flags mismatch`() {
+    fun `type switching clears incompatible pack and restores the previous regular choice`() {
         val vm = createPersistenceViewModel()
         vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Regular Bag", isDecaf = false))
         val regularBagId = vm.coffeeBags.value.first().id
@@ -1642,19 +1668,20 @@ class BrewViewModelTest {
         assertFalse(vm.uiState.value.isDecafBrew)
         assertFalse(vm.uiState.value.decafMismatchWithBag)
 
-        // User manually toggles decaf on → override disagrees with bag.
         vm.setDecafBrew(true)
         assertTrue(vm.uiState.value.isDecafBrew)
-        assertTrue(vm.uiState.value.decafMismatchWithBag)
+        assertNull(vm.selectedBagId.value)
+        assertFalse(vm.uiState.value.decafMismatchWithBag)
 
         // syncDecafToBag clears override and returns to bag's state.
-        vm.syncDecafToBag()
+        vm.setDecafBrew(false)
+        assertEquals(regularBagId, vm.selectedBagId.value)
         assertFalse(vm.uiState.value.isDecafBrew)
         assertFalse(vm.uiState.value.decafMismatchWithBag)
     }
 
     @Test
-    fun `manual decaf override persists across bag changes`() {
+    fun `choosing an identified regular pack adopts its type`() {
         val vm = createPersistenceViewModel()
         vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Regular A", isDecaf = false))
         vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Regular B", isDecaf = false))
@@ -1664,12 +1691,12 @@ class BrewViewModelTest {
         vm.selectBag(bagA)
         vm.setDecafBrew(true)  // override
         assertTrue(vm.uiState.value.isDecafBrew)
-        assertTrue(vm.uiState.value.decafMismatchWithBag)
+        assertFalse(vm.uiState.value.decafMismatchWithBag)
 
         // Switching bags keeps the override (no silent clobber).
         vm.selectBag(bagB)
-        assertTrue(vm.uiState.value.isDecafBrew)
-        assertTrue(vm.uiState.value.decafMismatchWithBag)
+        assertFalse(vm.uiState.value.isDecafBrew)
+        assertFalse(vm.uiState.value.decafMismatchWithBag)
     }
 
     @Test
@@ -1684,7 +1711,7 @@ class BrewViewModelTest {
     }
 
     @Test
-    fun `selectBag auto-switches method to last used with that bag`() {
+    fun `selecting a pack preserves method despite its earlier brew history`() {
         val vm = createPersistenceViewModel()
         vm.addCoffeeBag(BrewViewModel.CoffeeBagInput(name = "Kenya AA"))
         val bagId = vm.coffeeBags.value.first().id
@@ -1702,7 +1729,7 @@ class BrewViewModelTest {
 
         // Re-selecting the bag should restore the last-used method for it.
         vm.selectBag(bagId)
-        assertEquals(BrewMethod.AEROPRESS, vm.uiState.value.method)
+        assertEquals(BrewMethod.V60, vm.uiState.value.method)
     }
 
     @Test

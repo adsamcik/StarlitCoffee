@@ -1,0 +1,533 @@
+{
+  "method_id": "moka-pot",
+  "title": "Moka pot brewing guide",
+  "scope": "Classic aluminum Bialetti Moka Express used at its normal valve-limited water fill and full loose basket, such as a 3-cup model; excludes Brikka, electric moka, and other pressure devices. Cold-fill beginner procedure with an explicitly app-authored first-gurgle endpoint adaptation.",
+  "research_date": "2026-10-02",
+  "review_status": "editorially_reviewed",
+  "physical_brew_tested": false,
+  "sources": [
+    {
+      "id": "bialetti-manual",
+      "title": "Bialetti Moka Express multilingual instruction and warning sheet (original manufacturer manual hosted by Amazon)",
+      "url": "https://m.media-amazon.com/images/I/913VOwvygKL.pdf",
+      "author_or_organization": "Bialetti Industrie S.p.A.",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Cold-water fill to the safety valve's lower edge",
+        "Moka-specific grounds without pressing",
+        "Secure assembly without using handle as lever",
+        "Closed lid during use",
+        "Orient safety valve away from user",
+        "Never heat without water",
+        "Cool completely before opening",
+        "Check seal and components before troubleshooting",
+        "No detergent, abrasives, or dishwasher for aluminum Moka Express"
+      ]
+    },
+    {
+      "id": "bialetti-use",
+      "title": "How to use the Moka Express?",
+      "url": "https://bialetti-cookware.zendesk.com/hc/en-us/articles/5416235346322-How-to-use-the-Moka-Express",
+      "author_or_organization": "Bialetti / The Cookware Company Europe BV support",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Just-below-valve fill",
+        "Loose basket without pressing",
+        "Low-to-medium heat with flame below sides",
+        "Prompt removal from heat without boiling finished coffee",
+        "Broad 180–360-second size/heat-dependent reference, not a guaranteed finish",
+        "Classic Moka Express is not directly induction compatible"
+      ]
+    },
+    {
+      "id": "bialetti-valve",
+      "title": "The Moka valve: a tiny component of remarkable importance",
+      "url": "https://www.bialetti.com/us_en/learn-and-brew/post/the-moka-valve-a-tiny-component-of-remarkable-importance",
+      "author_or_organization": "Bialetti Industrie S.p.A.",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Water just below safety valve",
+        "Valve venting indicates abnormal operation",
+        "Too fine, pressed grounds and excessive heat are possible causes",
+        "Water remaining in boiler after brewing is normal",
+        "Periodic valve maintenance according to the fitted valve design"
+      ]
+    },
+    {
+      "id": "bialetti-clean",
+      "title": "How to clean the coffee pot at home: natural and effective remedies",
+      "url": "https://www.bialetti.com/it_en/inspiration/post/how-to-clean-the-coffee-pot-at-home-natural-and-effective-remedies",
+      "author_or_organization": "Bialetti Industrie S.p.A.",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Clean after use; remove old oils rather than retaining dirt",
+        "Cool before disassembly",
+        "Water washing and full drying",
+        "No soap or dishwasher for the discussed Moka care",
+        "New-pot water-filled commissioning cycle followed by at least three discarded coffee brews",
+        "Periodic filter, gasket, and descaling care"
+      ]
+    },
+    {
+      "id": "illy-moka",
+      "title": "What is a Moka Pot?",
+      "url": "https://illy.com.au/pages/what-is-a-moka-pot",
+      "author_or_organization": "illy Australia",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Cold-start equipment-fill procedure",
+        "Full loose basket",
+        "Low heat",
+        "Remove as coffee starts to gurgle",
+        "Stir collected coffee before serving"
+      ]
+    },
+    {
+      "id": "illy-faq",
+      "title": "Frequently Asked Questions — moka pot/stovetop grind",
+      "url": "https://illy.com.au/pages/faqs",
+      "author_or_organization": "illy Australia",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Moka grind is coarser than espresso and finer than drip/French press",
+        "Method-specific preground moka coffee"
+      ]
+    },
+    {
+      "id": "blue-bottle",
+      "title": "How to Make Moka Pot Coffee",
+      "url": "https://cdn.bluebottlecoffee.com/us/eng/brew-guides/moka-pot",
+      "author_or_organization": "Blue Bottle Coffee",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Separate 6-cup example: about 20–22 g coffee and approximately 345 g reservoir water",
+        "Optional hot-water start",
+        "Grind roughly granulated sugar, coarser than machine espresso",
+        "No tamping; lower water if it enters funnel",
+        "Medium heat with flame inside base",
+        "Hiss/gurgle completion cue and immediate heat removal",
+        "Potholder for handling"
+      ]
+    },
+    {
+      "id": "comandante-faq",
+      "title": "Comandante FAQ — grind starting points and click zero",
+      "url": "https://comandantegrinder.com/pages/faq",
+      "author_or_organization": "Comandante",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "14–20-click stovetop starting range",
+        "Manufacturer click-zero definition",
+        "Ranges are starting points and depend on coffee/recipe/preference",
+        "Finer generally increases extraction; coarser decreases it"
+      ]
+    },
+    {
+      "id": "venus-manual",
+      "title": "Bialetti Venus multilingual manufacturer manual (mirror)",
+      "url": "https://manuals.plus/m/add151ed4a29e1de3f3161b2b1ea38229e9326e5ec6b4555975b169f29c946fe_optim.pdf",
+      "author_or_organization": "Bialetti Industrie S.p.A.",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Cold fill, loose basket, closed lid, cool before opening",
+        "This manual edition permits dishwasher but recommends hand washing without detergent",
+        "Induction suitability has size/model limitations"
+      ]
+    },
+    {
+      "id": "venus-current",
+      "title": "Bialetti Venus Induction Moka Pot — current regional product/care page",
+      "url": "https://bialetti.ph/product/venus/",
+      "author_or_organization": "Bialetti Philippines",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Stainless body and model-specific advertised capacity",
+        "Current regional Venus care page says water-only washing and no dishwasher",
+        "Capacity varies with water loading, coffee and grind"
+      ]
+    }
+  ],
+  "recipe": {
+    "name": "Cold-fill Moka Express at equipment fill, with first-gurgle stop",
+    "provenance": "app_authored_synthesis",
+    "source_ids": [
+      "bialetti-manual",
+      "bialetti-use",
+      "illy-moka",
+      "bialetti-valve"
+    ],
+    "equipment": [
+      "Complete classic aluminum Bialetti Moka Express, such as the 3-cup model",
+      "Compatible gas/electric/ceramic hob",
+      "Moka-ground coffee or grinder",
+      "Cold drinking water",
+      "Spoon and cup",
+      "Heat protection and heatproof trivet",
+      "Optional scale to record this pot's fill quantities"
+    ],
+    "coffee_dose_g": null,
+    "brew_water_g": null,
+    "brew_water_ml": null,
+    "ice_g": 0,
+    "target_beverage_g": null,
+    "ratio_basis": "equipment_fill",
+    "ratio_value": null,
+    "water_temperature_c": {
+      "min": null,
+      "max": null,
+      "control": "user"
+    },
+    "grind_description": "Moka-specific grind; coarser than machine espresso and finer than ordinary drip, roughly granulated sugar. Never powder-fine espresso grounds or tamping.",
+    "expected_time_s": {
+      "min": null,
+      "max": null,
+      "clock_start": "Assembled pot placed on active heat source",
+      "clock_end": "Pot removed from heat at first gurgling completion cue"
+    },
+    "completion_signal": "First gurgling change prompts heat removal; discharge settles and brewed coffee is collected in upper chamber. Keep lid closed during heating on Moka Express. If a different model permits viewing the outlet, pale/bubbly/sputtering flow is an app-authored additional stopping cue.",
+    "scaling": "equipment_bound",
+    "steps": [
+      {
+        "id": "inspect",
+        "instruction": "Inspect cold pot's gasket, filter plate, funnel and valve for correct placement, cleanliness and damage. Complete the supplied first-use procedure when new; never heat dry.",
+        "why": "Sound, clear components are prerequisites for controlled pressure and sealing.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "All required components intact, clean and properly seated; new-pot commissioning completed.",
+        "source_ids": [
+          "bialetti-manual",
+          "bialetti-clean"
+        ]
+      },
+      {
+        "id": "fill_water",
+        "instruction": "Fill lower chamber with cold drinking water just below valve's lower edge; insert funnel. Remove excess if water enters coffee basket.",
+        "why": "The actual pot's valve level, not a generic ratio, determines reservoir fill.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "water_add_ml": null,
+        "water_cumulative_ml": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Valve remains uncovered and basket is not flooded.",
+        "source_ids": [
+          "bialetti-valve",
+          "bialetti-manual",
+          "blue-bottle"
+        ]
+      },
+      {
+        "id": "fill_coffee",
+        "instruction": "Completely fill basket with loose moka-ground coffee, level gently without pressing, and remove grounds from sealing rim.",
+        "why": "A clean rim seals properly; packed or excessively fine grounds restrict passage.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Full loose level basket and clean sealing rim.",
+        "source_ids": [
+          "bialetti-use",
+          "illy-faq",
+          "bialetti-valve"
+        ]
+      },
+      {
+        "id": "assemble",
+        "instruction": "Tighten metal sections securely while cold, without excessive force or levering by handle; close lid and orient safety valve away from yourself and others.",
+        "why": "Correct closure controls leaks; closed lid and valve orientation follow this model's manual and keep a possible steam jet away from people.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Securely assembled pot with closed lid and unobstructed valve directed away from people.",
+        "source_ids": [
+          "bialetti-manual"
+        ]
+      },
+      {
+        "id": "heat",
+        "instruction": "Place pot stably on compatible active hob; start optional observation clock now. Use controlled low-to-medium heat, with gas flame confined beneath base and handle clear. Stay nearby.",
+        "why": "Controlled heating avoids forcing rapid delivery and overheating the finished coffee.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": 0,
+        "duration_s": null,
+        "completion": "Coffee delivery begins; no joint leakage or abnormal valve discharge.",
+        "source_ids": [
+          "bialetti-use",
+          "bialetti-manual",
+          "illy-moka"
+        ]
+      },
+      {
+        "id": "stop",
+        "instruction": "Remove from heat at the first gurgling change, using handle and heat protection. Keep clear of steam and let remaining discharge settle on a heatproof trivet.",
+        "why": "This app-authored endpoint follows illy's cue rather than a generic timer or the goal of emptying the reservoir.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Heat removed; active discharge settles. A small boiler residue may remain.",
+        "source_ids": [
+          "illy-moka",
+          "bialetti-valve",
+          "blue-bottle",
+          "bialetti-manual"
+        ]
+      },
+      {
+        "id": "serve_cool_clean",
+        "instruction": "Once discharge settles, lift lid by knob from a safe position, stir and pour carefully. Allow complete cooling before unscrewing. Rinse aluminum parts with warm water without detergent or abrasives; dry fully and store unclosed.",
+        "why": "Stirring mixes collected coffee; full cooldown protects against hot metal, liquid and pressure, and compatible care protects aluminum.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Coffee served; completely cool, clean, dry pot ready for storage.",
+        "source_ids": [
+          "illy-moka",
+          "bialetti-manual",
+          "bialetti-clean"
+        ]
+      }
+    ]
+  },
+  "variants": [
+    {
+      "name": "Blue Bottle 6-cup hot-start option",
+      "how_it_differs": "Separate published example of about 20–22 g coffee and approximately 345 g reservoir water, with optional hot filling and medium heat. Quantity remains subordinate to actual valve level; safely protect against the already hot base. It changes warm-up timing and does not make the cold procedure a Blue Bottle recipe. Do not infer exact beverage yield or a universal ratio.",
+      "source_ids": [
+        "blue-bottle",
+        "bialetti-valve",
+        "bialetti-manual"
+      ]
+    },
+    {
+      "name": "Another pot size or stainless/induction model",
+      "how_it_differs": "Use the pot's own reservoir and basket geometry and approved hob, not linear gram scaling. Classic aluminum Moka Express is not directly induction compatible. Stainless Venus care differs by model/edition/region; read supplied manual before detergent or dishwasher use.",
+      "source_ids": [
+        "bialetti-use",
+        "venus-manual",
+        "venus-current"
+      ]
+    },
+    {
+      "name": "Comandante C40 grind example",
+      "how_it_differs": "App's 14–20-click range matches the manufacturer's stovetop starting range and stated click zero. The app-selected 17-click midpoint is not a published universal optimum; retain model/standard-axle calibration limits and do not transfer to other grinders or Red Clix.",
+      "source_ids": [
+        "comandante-faq"
+      ]
+    },
+    {
+      "name": "Visible-flow cue where another model permits it",
+      "how_it_differs": "App-authored conservative visual cue: if the supplied manual allows viewing flow, remove heat as flow pales or becomes bubbly/sputtering. It must not override Moka Express's closed-lid instruction. This precise color cue has not been independently verified as a universal maker rule.",
+      "source_ids": [
+        "bialetti-manual",
+        "illy-moka",
+        "blue-bottle"
+      ]
+    }
+  ],
+  "troubleshooting": [
+    {
+      "symptom": "No coffee, joint leakage or safety-valve venting",
+      "check_first": "Turn off heat and cool completely. Check presence/condition/position of parts, valve-limited water fill, clear filter passages, clean rim and sound seal.",
+      "adjustment": "Correct assembly or replace damaged parts with compatible maker parts; ensure loose moka-specific grounds. Never force flow by extra heat or open hot. Stop use and contact maker if abnormal venting persists.",
+      "source_ids": [
+        "bialetti-manual",
+        "bialetti-valve"
+      ]
+    },
+    {
+      "symptom": "Harsh or burnt cup",
+      "check_first": "Check that controlled heat was used and finished coffee was not left boiling.",
+      "adjustment": "First reduce heat and remove at initial gurgle; if needed after a repeat, try slightly coarser moka grounds. Taste adjustment is app-authored, not a certain diagnosis.",
+      "source_ids": [
+        "bialetti-use",
+        "illy-moka",
+        "comandante-faq"
+      ]
+    },
+    {
+      "symptom": "Thin or sharp cup",
+      "check_first": "Check full loose basket, intended water level, clear paths and sound seal.",
+      "adjustment": "After equipment checks, try a small finer adjustment while remaining coarser than machine espresso. App-authored taste suggestion; never tamp or exceed safe fill.",
+      "source_ids": [
+        "bialetti-use",
+        "illy-faq",
+        "comandante-faq"
+      ]
+    },
+    {
+      "symptom": "Water remains in boiler",
+      "check_first": "Check whether coffee delivery ended normally without joint leaks or abnormal valve venting.",
+      "adjustment": "Small residual water is normal; do not keep heating to empty the boiler. Quantify output on an actual brew if repeatability is needed.",
+      "source_ids": [
+        "bialetti-valve"
+      ]
+    }
+  ],
+  "safety": [
+    "Never heat the pot without water. A manufacturer-prescribed water-filled commissioning/descaling cycle is different from an empty dry run.",
+    "Fill below safety valve's lower edge; never cover, block or bypass it. Keep fitted valve maintained according to exact model instructions.",
+    "Use moka-specific grounds and a full loose basket; never tamp. Check gasket, filter plate and funnel before heating.",
+    "Assemble securely before heat and never use handle as tightening lever. Keep Moka Express lid closed during use and orient safety valve away from yourself and others.",
+    "Use compatible stable hob with controlled heat; keep gas flame inside base and handle clear. Stay nearby and keep children away.",
+    "If leakage or abnormal valve venting occurs, stop heat and allow cooling; never open hot or force a blockage with extra heat.",
+    "Keep face/hands clear of steam and hot coffee. Handle with heat protection and place on heatproof surface.",
+    "Wait for complete cooling and settled pressure before unscrewing or cleaning.",
+    "For classic aluminum Moka Express, hand wash with warm water without detergent/abrasives; no dishwasher. Do not automatically apply a roaster's coffee-cleaner suggestion to aluminum.",
+    "Stainless steel does not establish detergent/dishwasher compatibility; follow exact model/manual edition. Dry fully and store unclosed."
+  ],
+  "app_audit": [
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:189",
+      "finding": "MOKA_POT retains defaultRatio 10, warnings below 8/above 12, FINE descriptor, null capacity, and 240–300-second targets. Geometry and loose basket fill are not encoded by those generic numbers.",
+      "severity": "medium",
+      "change_recommendation": "Use equipment-fill semantics and pot-specific measured quantities; distinguish moka texture from machine espresso, and keep completion observational rather than a generic 4–5-minute promise.",
+      "source_ids": [
+        "bialetti-use",
+        "bialetti-valve",
+        "illy-faq"
+      ]
+    },
+    {
+      "path": "app/src/main/res/values/strings.xml:426",
+      "finding": "instruction_moka_start says to heat with lid open; prep_tip_moka at line 122 says fill to the valve. The maker manual requires lid closed during use and fill at/below the valve's lower edge.",
+      "severity": "high",
+      "change_recommendation": "Align legacy starting copy with exact model's closed-lid requirement and explicitly say below valve's lower edge; retain no-tamping guidance. Review translations separately.",
+      "source_ids": [
+        "bialetti-manual",
+        "bialetti-valve"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/BrewTimerScreen.kt:760",
+      "finding": "methodTimerGuidanceRes reads BrewMethod.stageGuidance resources and switches to timerReadyRes when elapsedSeconds reaches timeTargetLowS; metadata displays positive generic target times. Moka inherits ACTIVE_TIMER and the no-bloom LaunchedEffect at line 136 auto-starts at screen entry, potentially before heat application. Temperature rendering at line 808 guards both values >0, so Moka 0/0 is hidden.",
+      "severity": "medium",
+      "change_recommendation": "Make Moka status and metadata depend on heat/flow observation, without claiming the 240-second ready threshold predicts completion. Start any observation/reference clock explicitly when heat is applied. Preserve hidden-temperature handling; no displayed 0 °C defect was established.",
+      "source_ids": [
+        "bialetti-use",
+        "illy-moka"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/GrindPrepScreen.kt:458",
+      "finding": "Recipe rows omit Moka's 0/0 temperature because both must be positive, but show ratio and time targets when positive.",
+      "severity": "info",
+      "change_recommendation": "Preserve omission of unknown temperature. Replace generic ratio/time targets with pot-fill and observational guidance when implementing reviewed content.",
+      "source_ids": [
+        "bialetti-use",
+        "bialetti-valve"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/session/LegacyStagePlanFactory.kt:70",
+      "finding": "Moka already has manual heat and observe-flow stages, critical below-valve safety and gentle-heat warning. There is no generic countdown completion in this typed plan.",
+      "severity": "info",
+      "change_recommendation": "Preserve the manual stage contract and existing safety; align legacy timer copy instead of treating the typed plan as a countdown bug.",
+      "source_ids": [
+        "bialetti-manual",
+        "bialetti-use"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/LegacyBuiltInGuidanceCatalog.kt:336",
+      "finding": "Existing Moka guidance already uses observed flow, low-to-medium heat, pale/sputter stop cues, below-valve fill, component checks, loose basket, no hot opening, cooldown and cleaning. The exact pale-color cue is app-authored observational guidance, not a verified universal maker rule.",
+      "severity": "info",
+      "change_recommendation": "Preserve correct flow and pressure safeguards; qualify lid viewing by equipment manual and add model-compatible cleaning when implementing the guide.",
+      "source_ids": [
+        "bialetti-manual",
+        "bialetti-use",
+        "illy-moka",
+        "blue-bottle"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/BeverageOutputEstimator.kt:53",
+      "finding": "Moka correctly returns null, with a comment explaining pot/protocol-specific output; no generic reservoir-to-cup coefficient is supported.",
+      "severity": "info",
+      "change_recommendation": "Preserve fail-closed behavior. Any output estimate requires pot-specific observed calibration and a clearly labelled basis.",
+      "source_ids": [
+        "bialetti-valve",
+        "venus-current"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/BrewCalculator.kt:80",
+      "finding": "Legacy calculator still uses BrewMethod output semantics and an absorption/apparent-loss coefficient to calculate predictedCupVolumeG. Moka inherits WATER_IN_MINUS_ABSORPTION in BrewMethod; this is distinct from BeverageOutputEstimator's null model.",
+      "severity": "medium",
+      "change_recommendation": "Keep any generic legacy predicted cup quantity out of reviewed Moka output claims; use measured pot-specific output rather than a transferable grounds-retention constant.",
+      "source_ids": [
+        "bialetti-valve",
+        "venus-current"
+      ]
+    },
+    {
+      "path": "app/src/main/assets/grinders.json:187",
+      "finding": "Comandante C40 MOKA_POT entry uses verified manufacturer 14–20-click stovetop range and standard axle/zero note; suggestedStart 17 is the app's midpoint. Decaf adaptation text elsewhere prescribes model-relative offsets; no universal Moka offset was verified here.",
+      "severity": "info",
+      "change_recommendation": "Retain sourced range and calibration limits, label midpoint as app selected, and do not claim transferable grinder clicks or universal decaf adjustment.",
+      "source_ids": [
+        "comandante-faq",
+        "illy-faq"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1ExactGuidanceFactualErrata.kt",
+      "finding": "Checked current exact recipe catalog/errata and August learning-guide factual audit: Moka has no exact P1 recipe or Moka factual erratum in these files; current Moka guidance lives in the legacy catalog and typed manual plan.",
+      "severity": "info",
+      "change_recommendation": "Treat new content as method-specific research and preserve historical source assets. Catalog presence does not prove full everyday UI/localization support.",
+      "source_ids": []
+    }
+  ],
+  "uncertainties": [
+    "No physical brew, taste test, measured reservoir/basket quantity, exact beverage yield, device execution or localization review was performed.",
+    "Numeric doses and reservoir volumes are intentionally null in the equipment-fill baseline. The 3-cup example does not establish a universally safe milliliter fill or fixed basket mass.",
+    "First-gurgle endpoint is an explicitly app-authored adaptation using illy's published cold-start cue; Bialetti's manual describes removing when collector is full. No universal exact pale-color threshold is verified.",
+    "Bialetti support uses espresso-ground wording, but its instruction manual forbids fine espresso-machine grinding. The descriptive coarser-than-espresso guidance is supported by illy and Blue Bottle.",
+    "Blue Bottle's 345 g reservoir is approximate for its 6-cup example; safe actual valve fill overrides that number. Its hot-water tip does not state an exact temperature or guarantee a finish time.",
+    "Venus mirrored manufacturer manual permits dishwasher while current Bialetti Philippines product page forbids it; unresolved edition/region difference. Follow supplied exact manual; use water hand washing while unresolved.",
+    "Bialetti manual landing URL https://www.bialetti.com/it_en/manuals returned an internal fetch error; original manufacturer instruction sheet hosted by Amazon was successfully read. PDF screenshot failed, so no unextracted numeric fill table was relied upon.",
+    "Darkwoods moka PDF URL https://darkwoodscoffee.co.uk/guides/moka-pot-brew-guide.pdf returned an internal fetch error; it is not used as verified recipe evidence.",
+    "illy Australia's moka page has an erroneous French Press Instructions heading above a clearly moka-specific cold-start sequence; its actual instruction text was read, and unsupported pressure/history claims were not adopted.",
+    "Exact click calibration beyond stated standard Comandante axle/zero and a universal decaf Moka grind or timing adjustment were not verified."
+  ],
+  "do_not_claim": [
+    "A universal 1:10 coffee-to-water mass ratio for moka pots.",
+    "Every moka pot finishes in 240–300 seconds or exactly 180–360 seconds.",
+    "Moka 0/0 temperature sentinel is visibly displayed as 0 °C in checked UI.",
+    "The typed Moka stage plan completes automatically by generic countdown.",
+    "Reservoir input equals collected beverage or all reservoir water must be forced through.",
+    "Grams and milliliters are interchangeable exact quantities.",
+    "Moka grounds should be machine-espresso fine or tamped.",
+    "Hot-water start is the Bialetti cold-fill manufacturer procedure.",
+    "All moka pots should be heated with lids open.",
+    "All stainless pots are dishwasher safe or all coffee cleaners are aluminum compatible.",
+    "Brikka, electric moka and classic Moka Express share one identical procedure.",
+    "A fixed C40 midpoint, transferable grinder setting or decaf timing shortcut guarantees good extraction.",
+    "Research/arithmetic checks establish a kitchen test, measured yield, release readiness or reviewed translation."
+  ]
+}

@@ -100,11 +100,8 @@
     <string name="label_increase">Lisää %1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Valmistele kahvi</string>
 <string name="action_ready_to_brew_short">Valmis aloittamaan</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Valmistelu</string>
-    <string name="label_recipe_heading">Resepti</string>
     <string name="label_temp_short">Lämpö</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Kostuta paperisuodatin alaosassa (venttiili auki) ja anna valua. Kiinnitä sylinteri, lisää kahvijauhe, tasoita peti ja aseta hajotuskansi. Nollaa vaaka.</string>
@@ -114,8 +111,6 @@
     <string name="prep_tip_french_press">Esilämmitä pressopannu ja tyhjennä se. Lisää kahvijauhe, aseta vaa\'alle ja nollaa ennen veden lisäämistä.</string>
     <string name="prep_tip_espresso">Pyyhi suodatinkahva kuivaksi. Annostele, jaa tasaisesti ja tamppaa suoraksi ennen kiinnittämistä.</string>
     <string name="prep_tip_moka">Täytä alaosa venttiiliin asti. Täytä siivilä kahvijauheella ja tasoita — älä tampaa. Kokoa varovasti.</string>
-    <string name="format_prep_grind_specific">Jauhatus %1$s — aseta %2$s arvoon %3$s</string>
-    <string name="format_prep_grind_generic">Jauhatus %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Keskeytä</string>
@@ -731,7 +726,6 @@
     <string name="guidance_cue_valve_state">Venttiilin tila</string>
     <string name="screen_learning_title">Opi</string>
     <string name="msg_learning_subtitle">Havainnolliset vaiheittaiset valmistusohjeet</string>
-    <string name="msg_learning_intro">Valitse suodatinlaite ja resepti ja etene yksi selkeä vaihe kerrallaan.</string>
     <string name="action_show_details">Näytä tiedot</string>
     <string name="action_hide_details">Piilota tiedot</string>
 

@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Reviewed brewing guides** — More → Learn includes 17 source-backed procedures
+  with equipment details, quantities, clock origins, completion cues and optional
+  explanations. Read at your own pace or prepare a durable brew from the same
+  recipe. The 30 g / 480 g Chemex guide remains separate from the 42 g / 700 g recipe.
+- **App-wide brew timers** — running brews remain accessible across navigation
+  and continue outside the app. Custom reminders, quiet ongoing notifications
+  and due alerts use the persisted session. Cold-brew Start offers a guide or a
+  timer, with a refrigerated default and editable duration or start time.
+- **Coffee and grind memory** — preparation remembers compatible settings for a
+  coffee type, coffee or physical pack, with a temporary setting for one brew.
+  Existing stock and brew-history links survive the database upgrade.
 - **Illustrated equipment choices** — a consistent, theme-tinted family of
   brewing-method, filter and grinder visuals across setup, set selection,
   preparation and brew history. Onboarding can create multiple brewing sets,

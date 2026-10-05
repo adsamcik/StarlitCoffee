@@ -43,6 +43,10 @@ def prepare_mask(source: Path, mask: Path) -> None:
 def main() -> None:
     magick = trace.require_tools()
     manifest = json.loads((ASSETS / "equipment-imagegen-manifest.json").read_text(encoding="utf-8"))
+    approved_methods = json.loads((ASSETS / "native-method-family/manifest.json").read_text(encoding="utf-8"))
+    prototype_source = ROOT / approved_methods["prototype_source"]
+    if hashlib.sha256(prototype_source.read_bytes().replace(b"\r\n", b"\n")).hexdigest() != approved_methods["prototype_sha256"]:
+        raise ValueError("Method recognition source changed; review before rebuilding equipment art")
     selected = []
     failures = []
     reports = {"path_authoring": "mechanical traces plus explicit approved vector overrides",
@@ -52,6 +56,13 @@ def main() -> None:
         temp = Path(temporary)
         for entry in manifest:
             key = entry["key"]
+            approved_hash = approved_methods["native_sha256"].get(f"equipment_{key}.xml")
+            if approved_hash is not None:
+                installed = DRAWABLES / f"equipment_{key}.xml"
+                if hashlib.sha256(installed.read_bytes().replace(b"\r\n", b"\n")).hexdigest() != approved_hash:
+                    raise ValueError(f"Approved method vector differs: {key}; run import_approved_method_vectors.cjs")
+                print(f"Preserved approved method vector: {key}", flush=True)
+                continue
             spec = trace.IconSpec(key, ROOT / entry["source"], ASSETS / f"equipment-{key}-mask.png",
                                  ASSETS / f"equipment-{key}-mask.png", ASSETS / f"equipment-{key}-traced.svg",
                                  DRAWABLES / f"equipment_{key}.xml")

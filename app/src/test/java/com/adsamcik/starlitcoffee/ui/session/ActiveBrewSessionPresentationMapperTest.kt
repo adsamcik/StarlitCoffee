@@ -46,6 +46,24 @@ import org.junit.Test
 class ActiveBrewSessionPresentationMapperTest {
 
     @Test
+    fun `guide paused presentation preserves countdown action safety and physical confirmation rules`() {
+        val safety = StageSafetyMessage("hot_liquid", StageSafetySeverity.WARNING)
+        val plan = plan(stage("bloom", BrewStageAction.BLOOM, "bloom_instruction",
+            StageCompletionMode.Countdown(30_000L), safety = listOf(safety)))
+        val runtime = startedRuntime(plan, "guide-paused", 1_000L).copy(isGuidancePaused = true)
+        val entity = ActiveBrewSessionEntityMapper.create(recipe(), runtime, executionContext(), 1_000L)
+        val presentation = ActiveBrewSessionPresentationMapper.map(ActiveBrewSessionEntityMapper.restore(entity), 11_000L)
+            as ActiveBrewSessionPresentation.Available
+        assertTrue(presentation.isGuidancePaused)
+        assertEquals(BrewSessionStatus.RUNNING, presentation.status)
+        assertEquals(10_000L, presentation.totalActiveElapsedMillis)
+        assertEquals(20_000L, (presentation.currentStage!!.completion as BrewStageCompletionPresentation.Countdown).remainingMillis)
+        assertEquals(listOf(safety), presentation.safetyMessages)
+        assertTrue(presentation.actions.canPause)
+        assertFalse(presentation.actions.canFinish)
+    }
+
+    @Test
     fun `restored countdown session exposes current stage timers safety and semantic accessibility`() {
         val plan = plan(
             stage(
@@ -136,7 +154,7 @@ class ActiveBrewSessionPresentationMapperTest {
         assertFalse(ready.actions.canResume)
         assertFalse(ready.actions.canManualAdvance)
         assertFalse(ready.actions.canSkip)
-        assertFalse(ready.actions.canCancel)
+        assertTrue(ready.actions.canCancel)
         assertFalse(ready.actions.canFinish)
         assertFalse(ready.actions.canRecordActual)
 

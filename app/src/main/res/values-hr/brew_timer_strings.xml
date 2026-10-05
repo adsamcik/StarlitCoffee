@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_set_brew_reminder">Postavi podsjetnik</string>
+    <string name="action_edit_brew_reminder">Uredi podsjetnik</string>
+    <string name="action_remove_brew_reminder">Ukloni podsjetnik</string>
+    <string name="label_brew_reminder">Podsjetnik</string>
+    <string name="label_timer_duration">Trajanje</string>
+    <string name="label_timer_seconds">Sekunde</string>
+    <string name="label_timer_minutes">Minute</string>
+    <string name="label_timer_hours">Sati</string>
+    <string name="msg_brew_reminder_origin">Od početka ovog koraka. Promjena trajanja zadržava već proteklo vrijeme. I dalje sami potvrđujete kada je korak dovršen.</string>
+    <string name="msg_brew_reminder_reached">Vrijeme je za podsjetnik. Provjerite kavu prije nastavka.</string>
+    <string name="title_cold_brew">Cold brew</string>
+    <string name="title_cold_brew_timer">Mjerač vremena za cold brew</string>
+    <string name="action_follow_brew_guide">Slijedi vodič</string>
+    <string name="action_just_set_brew_timer">Samo postavi mjerač vremena</string>
+    <string name="action_start_timer">Pokreni mjerač vremena</string>
+    <string name="action_start_steeping">Započni namakanje</string>
+    <string name="action_end_brew_timer">Završi mjerač vremena</string>
+    <string name="action_add_brew_start_time">Dodaj vrijeme početka</string>
+    <string name="label_brew_start_now">Počinje sada</string>
+    <string name="label_brew_start_earlier">Počelo ranije</string>
+    <string name="label_brew_start_unknown">Vrijeme početka nepoznato</string>
+    <string name="label_brew_hours_ago">Prije koliko sati</string>
+    <string name="label_brew_minutes_ago">Prije koliko minuta</string>
+    <string name="msg_cold_brew_refrigerated">Držite pokriveno u hladnjaku na 4 °C ili niže. Zadano trajanje namakanja je 14 sati.</string>
+    <string name="msg_cold_brew_start_origin">Pokrenite kada je kava potpuno namočena i pokrivena posuda stavljena u hladnjak.</string>
+    <string name="msg_brew_start_unknown">Dodajte stvarno vrijeme početka za izračun podsjetnika. Do tada se vrijeme završetka ne procjenjuje.</string>
+    <string name="msg_brew_timer_ended">Mjerač vremena završen</string>
+    <string name="label_brew_extraction_ended">Ekstrakcija završena</string>
+    <string name="msg_brew_notifications_disabled">Podsjetnici su isključeni. Priprema kave se nastavlja.</string>
+    <string name="action_allow_brew_notifications">Dopusti podsjetnike</string>
+    <string name="msg_brew_reminders_may_be_late">Android može odgoditi podsjetnike kada napustite aplikaciju.</string>
+    <string name="action_allow_precise_brew_reminders">Dopusti točne podsjetnike</string>
+</resources>

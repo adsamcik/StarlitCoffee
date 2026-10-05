@@ -1,0 +1,441 @@
+{
+  "method_id": "hario-switch",
+  "title": "Hario Switch brewing guide",
+  "scope": "Original glass Switch 02 SSD-200-B, using the manual's 20 g coffee / approximately 240 mL input-water steep-and-release procedure. Rinsing follows Hario's compatible V60-paper instructions; starting the approximate two-minute steep after filling is an explicit editorial clock clarification. Glass 03, hybrid and continuously open variants are separate notes.",
+  "research_date": "2026-10-02",
+  "review_status": "editorially_reviewed",
+  "physical_brew_tested": false,
+  "sources": [
+    {
+      "id": "switch_manual",
+      "title": "Immersion Dripper SWITCH SSD-200 instruction manual",
+      "url": "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+      "author_or_organization": "HARIO Co., Ltd.",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "20 g medium-ground coffee, approximately 240 mL hot input water, approximately two-minute steep, then release; no numeric brewing-water temperature or total-time deadline.",
+        "02 paper; raised lever retains water; lever flat with base drains and stays released; approximately 200 mL finished-capacity label.",
+        "Gentle pressing, stable server placement before filling, no touching/carrying after hot water is added, ball retention, secure glass seating, gloves for disassembly, nonabrasive cleaning and dishwasher permission."
+      ]
+    },
+    {
+      "id": "switch_sizes",
+      "title": "V60 SWITCH Glass Dripper",
+      "url": "https://www.hario-usa.com/products/switch-immersion-dripper",
+      "author_or_organization": "Hario USA",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Glass SSD-200-B is listed as 200 mL finished capacity; SSD-360-B as 360 mL capacity, without an explicit safe maximum closed-fill quantity.",
+        "Switch supports V60-style flowing use and immersion; heatproof glass bowl, silicone base, PCT resin switch and stainless-steel ball."
+      ]
+    },
+    {
+      "id": "switch_paper_sizes",
+      "title": "V60 Glass Switch Immersion Dripper product information",
+      "url": "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+      "author_or_organization": "HARIO USA official store",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "02 and 03 glass versions are supplied with matching 02 and 03 V60 paper respectively; listed capacities 200 and 360 mL.",
+        "PCT resin lever, silicone base and stainless-steel ball. The page's ceramic heading conflicts with its glass product text and is not used as material evidence."
+      ]
+    },
+    {
+      "id": "v60_intermediate",
+      "title": "Intermediate V60 Brew Guide",
+      "url": "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+      "author_or_organization": "Hario UK",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Rinse V60 02 paper and discard rinse water; weigh 15 g coffee and tare; 92–96°C, approximately 30-second bloom, circular pour until scale reads 250 g.",
+        "Approximately 2.5-minute drainage language is contextual rather than a guaranteed Switch completion time; header says 250 mL but operational pour target explicitly says 250 g."
+      ]
+    },
+    {
+      "id": "ole_boen",
+      "title": "Ole Kristian Bøen's Switch Recipe",
+      "url": "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+      "author_or_organization": "Ole Kristian Bøen, published by HARIO Europe",
+      "source_type": "original_creator",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Switch 02, 16.5 g medium-fine coffee, 96°C water and 3:00–3:15 expected total time.",
+        "Closed 50 g bloom for 40 seconds; open and add 100 g centrally; close at 1:30 and add 90 g circularly; release at 2:10. Explicit mass additions sum to 240 g, while header states 240 mL."
+      ]
+    },
+    {
+      "id": "uk_switch_recipe_text",
+      "title": "How to Brew with the Hario V60 Switch: verified recipe text",
+      "url": "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch",
+      "author_or_organization": "Hario UK",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "A distinct September 18, 2026 regional recipe states 15 g medium coffee, 250 g water at 92–94°C, closed 50 g bloom for 30 seconds, fill to 250 g and release at a two-minute mark. Its opening paragraph says 92°C.",
+        "The text is verified as published; conflicting clock descriptions, universal capacity and extraction explanations are not adopted as verified hardware or scientific claims."
+      ]
+    },
+    {
+      "id": "uk_switch_unresolved_claims",
+      "title": "How to Brew with the Hario V60 Switch: unresolved specifications and explanations",
+      "url": "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch",
+      "author_or_organization": "Hario UK",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "partial",
+      "supports": [
+        "Evidence of an unresolved publication conflict only: the article calls two minutes closed steeping while its staged recipe blooms first and releases at two minutes; its about-300-mL cone assertion lacks a precise model/fill basis.",
+        "No support claimed for universal immunity to over-extraction, mandatory coarse grind, a lid on the original glass Switch, or a universal safe 300 mL fill."
+      ]
+    },
+    {
+      "id": "current_manual_link_blocked",
+      "title": "Current manual link from Hario USA product page",
+      "url": "https://www.hario.com/product/SSD-200.pdf",
+      "author_or_organization": "HARIO Co., Ltd.",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "blocked",
+      "supports": [
+        "Access limitation only: the linked URL returned HTTP 403. No additional manual revision claims are supported."
+      ]
+    },
+    {
+      "id": "historical_kurasu_blocked",
+      "title": "Historical Hario Switch recipe URL recorded by the app",
+      "url": "https://kurasu.kyoto/blogs/recipe/hario-switch-recipe",
+      "author_or_organization": "Kurasu",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "blocked",
+      "supports": [
+        "Access limitation only: inaccessible through the research tool. Bøen's current recipe is verified separately at Hario Europe."
+      ]
+    },
+    {
+      "id": "catalog_blocked",
+      "title": "2025 English product catalog",
+      "url": "https://hario.cc/PDF/2025_English_Catalog_Items.pdf",
+      "author_or_organization": "HARIO Co., Ltd.",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "blocked",
+      "supports": [
+        "Access limitation only: the tool refused the approximately 15 MB document. No specifications are inferred from its search snippet."
+      ]
+    }
+  ],
+  "recipe": {
+    "name": "Hario Switch 02 manual steep-and-release",
+    "provenance": "manufacturer_procedure",
+    "source_ids": [
+      "switch_manual",
+      "v60_intermediate"
+    ],
+    "equipment": [
+      "Original glass Hario Switch 02 SSD-200-B, assembled with ball and movable lever",
+      "Hario V60 cone paper 02",
+      "Stable heat-safe server with adequate room for the brew",
+      "Kettle",
+      "Coffee scale",
+      "Timer",
+      "Heat-safe graduated vessel for the approximately 240 mL input-water example"
+    ],
+    "coffee_dose_g": 20,
+    "brew_water_g": null,
+    "brew_water_ml": 240,
+    "ice_g": 0,
+    "target_beverage_g": null,
+    "ratio_basis": "volume_per_mass",
+    "ratio_value": 12,
+    "quantity_precision": "240 mL is approximate input volume. 12 mL/g is volume per mass, not a mass-based 1:12 ratio. The manual's approximately 200 mL finished-capacity label is not an exact beverage target.",
+    "water_temperature_c": {
+      "min": null,
+      "max": null,
+      "control": "user; manual specifies hot water without a measured target"
+    },
+    "grind_description": "Medium grind as the manual's English text states; Japanese text describes medium-fine. No exact grinder setting is established.",
+    "expected_time_s": {
+      "min": null,
+      "max": null,
+      "clock_start": "First brew water touches the coffee; separate approximate 120-second steep countdown starts when filling is complete",
+      "clock_end": "Standing water is gone and continuous drainage has become occasional drops"
+    },
+    "completion_signal": "No standing water above the bed and continuous flow has diminished to occasional drops; leave the hot brewer in place until safe to handle.",
+    "scaling": "revalidate_batch_size",
+    "steps": [
+      {
+        "id": "prepare",
+        "instruction": "Place the assembled Switch 02 on its server. Fold the 02 paper seam, fit the cone, rinse with hot water with the lever flat/open, then discard drained rinse water.",
+        "why": "Wet the paper and warm the server before brewing.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Paper seated and wet; rinse drained and discarded; brewer stable.",
+        "source_ids": [
+          "switch_manual",
+          "v60_intermediate"
+        ]
+      },
+      {
+        "id": "close_and_add_coffee",
+        "instruction": "Raise the lever to close the valve and add 20 g medium-ground coffee.",
+        "why": "The raised lever allows the ball to seal the outlet and retain brew water.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "20 g coffee loaded; lever raised.",
+        "source_ids": [
+          "switch_manual"
+        ]
+      },
+      {
+        "id": "fill",
+        "water_add_ml": 240,
+        "water_cumulative_ml": 240,
+        "instruction": "Pour approximately 240 mL hot water over the grounds, keeping liquid below the paper top and leaving the brewer on its server. Begin the separate total-time log at first water.",
+        "why": "The closed valve retains the brew for immersion.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": 0,
+        "duration_s": null,
+        "completion": "Recipe water added and grounds wet; no overflow or unintended leakage.",
+        "source_ids": [
+          "switch_manual"
+        ]
+      },
+      {
+        "id": "steep",
+        "instruction": "After filling, start an approximately two-minute steep countdown. Leave the valve closed; optional stirring is omitted from this first-brew path.",
+        "why": "This follows the manual's pour-then-steep order using an explicit editorial countdown origin.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": 120,
+        "time_precision": "approximate; measured from filling completion, not total brew elapsed",
+        "completion": "Approximately two minutes of post-fill steeping elapsed.",
+        "source_ids": [
+          "switch_manual"
+        ]
+      },
+      {
+        "id": "release",
+        "instruction": "Press the lever gently until it lies flat with the base to open the valve. Keep the filled hot brewer in place.",
+        "why": "Opening releases coffee through the paper into the server; the lever stays open without continued finger pressure.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Coffee flows into the server; brewer remains stable.",
+        "source_ids": [
+          "switch_manual"
+        ]
+      },
+      {
+        "id": "finish",
+        "instruction": "Observe until standing water is gone and continuous drainage has become occasional drops. Wait until safe to handle before removing the hot brewer; serve from the server.",
+        "why": "Drainage depends on coffee, grind and paper, so a fixed timer cannot establish completion.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "No standing water and no continuous stream; hot glass is handled only when safe.",
+        "source_ids": [
+          "switch_manual",
+          "v60_intermediate"
+        ]
+      }
+    ]
+  },
+  "variants": [
+    {
+      "name": "Weighed-water adaptation of the manual",
+      "provenance": "app_authored_synthesis",
+      "how_it_differs": "Using 20 g coffee and 240 g input water is a convenient mass-based 1:12 adaptation; it must not be presented as the manual's literal approximately 240 mL wording. No temperature or exact beverage yield is added.",
+      "source_ids": [
+        "switch_manual"
+      ]
+    },
+    {
+      "name": "Ole Kristian Bøen's Switch 02 hybrid",
+      "how_it_differs": "16.5 g medium-fine coffee at 96°C; first-water clock. Closed 50 g bloom to 40 s; open and add 100 g centrally to 150 g; at 90 s close and add 90 g circularly to 240 g; release at 130 s; expected completion 180–195 s, observing drainage. Published heading says 240 mL but the explicit pours sum to 240 g.",
+      "source_ids": [
+        "ole_boen"
+      ]
+    },
+    {
+      "name": "Switch 02 kept open for V60 gravity brewing",
+      "how_it_differs": "Valve stays flat/open from rinse through completion. Use Hario's separate 15 g/250 g V60 operation, 92–96°C, approximately 30-second bloom and small circular pouring; confirm drainage rather than imposing an immersion release.",
+      "source_ids": [
+        "switch_sizes",
+        "v60_intermediate"
+      ]
+    },
+    {
+      "name": "Larger original glass Switch 03",
+      "how_it_differs": "03 is advertised at 360 mL capacity and comes with matching 03 V60 paper. A larger closed fill needs capacity/headroom and drainage checks; neither 360 mL nor a V60 cup-count rating establishes a universal input-water amount.",
+      "source_ids": [
+        "switch_sizes",
+        "switch_paper_sizes"
+      ]
+    }
+  ],
+  "troubleshooting": [
+    {
+      "symptom": "Water escapes while the lever is raised",
+      "check_first": "After cooling, check that the ball is present, the glass sits securely in the base and the lever moves correctly.",
+      "adjustment": "Reassemble according to the manual with gloves; check retention over the server before brewing again. Replace damaged parts rather than forcing the valve.",
+      "source_ids": [
+        "switch_manual"
+      ]
+    },
+    {
+      "symptom": "Slow drainage after release",
+      "check_first": "Confirm the lever is flat/open, paper is correctly seated and the cooled outlet assembly is clear and correctly assembled.",
+      "adjustment": "After equipment checks, try a slightly coarser grind with the same dose and water; compare taste and flow. No universal drainage deadline is established.",
+      "source_ids": [
+        "switch_manual",
+        "uk_switch_recipe_text"
+      ]
+    },
+    {
+      "symptom": "Sharp or thin coffee",
+      "check_first": "Confirm measured coffee and input water, full wetting, and the intended post-fill steep rather than an accidentally open valve.",
+      "adjustment": "App-authored taste suggestion: try a slightly longer steep or slightly finer grind, one variable at a time. Bean and water differences can also affect taste.",
+      "source_ids": [
+        "switch_manual"
+      ]
+    },
+    {
+      "symptom": "Harsh or drying coffee",
+      "check_first": "Check that steeping was not prolonged unintentionally and that excess agitation or drainage restriction did not change the procedure.",
+      "adjustment": "App-authored taste suggestion: try a shorter steep or a slightly coarser grind, changing one variable at a time. Do not infer extraction percentage from taste alone.",
+      "source_ids": [
+        "switch_manual"
+      ]
+    }
+  ],
+  "safety": [
+    "Set the brewer securely on a stable server or drip stand before adding hot water; do not touch or carry the filled hot dripper. Leave it in place until drained and safe to handle.",
+    "Press the lever gently; excessive force can overturn the brewer and spill hot liquid.",
+    "Do not use cracked, chipped or deeply scratched glass, or strike/scrape it with metal utensils. Avoid sudden cooling of hot glass or wet/cold contact that can cause thermal shock.",
+    "After cooling, clean with neutral detergent and a soft nonabrasive sponge. The manual allows dishwasher use subject to the dishwasher's instructions.",
+    "Keep the removable stainless-steel ball from being lost during washing. Wear gloves when detaching or attaching the glass and base, follow the assembly diagram, reseat securely and confirm lever movement before reuse.",
+    "Keep the brewer away from children; do not add water past the paper's top or assume advertised capacity is a safe brim-fill allowance."
+  ],
+  "app_audit": [
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BuiltInP1RecipeCatalog.kt:416",
+      "finding": "switch_official_20_240 sets inputG=240 and ratioValue=12 with OFFICIAL_PROCEDURE/HIGH attribution, and time=range(150,180). The manual specifies approximately 240 mL and approximately two-minute steeping, without that total-time range. HOT_UNSPECIFIED and unresolved beverage output are correctly retained.",
+      "severity": "medium",
+      "change_recommendation": "Preserve the source record, but describe the runtime 240 g target as a weighed app adaptation, or model the original volume directly. Keep steep duration distinct from total completion and remove unsupported source attribution for the 150–180 s total window.",
+      "source_ids": [
+        "switch_manual"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/session/P1ImmersionStagePlans.kt:79",
+      "finding": "The official plan starts ADD_WATER at brew elapsed 0, follows it with a 120 s steep countdown, but gives RELEASE a brew-elapsed start target of exactly 120 s. Those cues conflict whenever filling takes time, and the manual's approximate timing is typed as EXACT.",
+      "severity": "medium",
+      "change_recommendation": "Choose and expose one clock convention. For the manual's pour-then-steep order, time approximately 120 s from fill completion and do not add an incompatible fixed elapsed-release target. Keep observation-based drawdown.",
+      "source_ids": [
+        "switch_manual"
+      ]
+    },
+    {
+      "path": "app/src/main/assets/p1_exact_guidance_2026_07_27.json:2983",
+      "finding": "The loaded immutable projection says Add 20 g coffee and 240 g water, Steep for 2:00 after the preceding stage, then release At 2:00. It also says drawdown is usually under about one minute. The projection is consumed by P1ExactGuidanceCatalog; current factual errata has no Switch branch.",
+      "severity": "medium",
+      "change_recommendation": "Keep immutable provenance intact. Correct live guidance through a reviewed adapter/erratum to label mass adaptation, distinguish steep and elapsed clocks, avoid unsupported drainage deadlines, and retain the observable finish cue.",
+      "source_ids": [
+        "switch_manual"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/session/P1ImmersionStagePlans.kt:109",
+      "finding": "The Bøen typed plan correctly uses 50/100/90 g additions, cumulative 50/150/240 g, 96°C, open-pour start 40 s, close/final pour 90 s, release 130 s and expected finish 180–195 s. Projected guidance explicitly re-closes the valve for the final pour.",
+      "severity": "info",
+      "change_recommendation": "Preserve the sequence and source-stage identity; explain first-water timing and hybrid phases. Add current direct Hario Europe attribution while retaining the historical SRC-KURASU-SWITCH provenance; do not merge with the simple manual baseline.",
+      "source_ids": [
+        "ole_boen"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/session/P1ImmersionStagePlans.kt:159",
+      "finding": "switch_gravity_15_250 uses a 30 s approximate bloom, 92–96°C, cumulative 250 g and observation-based drawdown with 150 s only a STARTING_POINT. Projected guidance says lever open throughout. This is consistent with the separate V60 operation, not the immersion manual.",
+      "severity": "info",
+      "change_recommendation": "Preserve continuously open behavior and contextual timing. Display it as V60-style gravity use of the Switch with its separate source, not as the official Switch immersion recipe.",
+      "source_ids": [
+        "switch_sizes",
+        "v60_intermediate"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1BuiltInGuidanceCatalog.kt:369",
+      "finding": "Shared Switch guidance says close/open the valve without describing up versus flat positions. Safety copy covers stability and hot glass, but omits the manual's gentle-press, missing-ball and cooled assembly checks.",
+      "severity": "low",
+      "change_recommendation": "Add concise up=closed and flat=draining cues; place gentle pressing and no carrying while hot at the relevant action, with assembly/ball checks in troubleshooting and cleanup detail.",
+      "source_ids": [
+        "switch_manual"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BuiltinBrewerProfileRecipeDefaults.kt:202",
+      "finding": "The generic steep-and-release defaults also used by hario_switch are 1:16, 90–96°C and 120–240 s, with BrewWaterMinusRetention(2.0 g/g) explicitly an estimated output model. These differ from the named manual and Bøen recipes.",
+      "severity": "info",
+      "change_recommendation": "Keep generic defaults visibly distinct from named recipes. Retain estimate labeling and an unresolved/measured output path; do not promote 2.0 g/g to a brewer-specific physical fact or fixed yield guarantee.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt",
+      "finding": "No Hario Switch enum entry exists in the everyday BrewMethod registry, despite profile/exact-catalog entries. app/src/main/assets/grinders.json also has no Switch-specific entry.",
+      "severity": "info",
+      "change_recommendation": "Document this support boundary. Any future everyday-method integration needs recipe/workflow, filter-size and unit decisions; catalog presence does not prove localization or exact grinder settings.",
+      "source_ids": []
+    },
+    {
+      "path": "docs/brewing/learning-guide-factual-audit-2026-08-19.md:41",
+      "finding": "The prior audit calls the 20 g/240 g official recipe a match and confirms approximately two-minute steeping, but does not note the manual's approximately 240 mL quantity or current clock conflict. Bøen and open-switch distinctions remain correct.",
+      "severity": "low",
+      "change_recommendation": "Append current evidence clarifying units and timing while preserving the historical audit's date and scope; do not claim the named variants were absent or already corrected by Switch-specific factual errata.",
+      "source_ids": [
+        "switch_manual",
+        "ole_boen",
+        "v60_intermediate"
+      ]
+    }
+  ],
+  "uncertainties": [
+    "The original manual's English grind description is medium; its Japanese wording is medium-fine. This is a starting texture, not a calibrated grinder setting.",
+    "The manual does not define timer-zero as first-water contact. The guide explicitly uses approximately two minutes after filling and leaves total brew duration unknown.",
+    "The 02 approximately 200 mL label concerns finished capacity; 03 is listed at 360 mL capacity by current US product text, whose wording does not define a universal safe closed-fill limit. Exact beverage yield and absorption are unverified.",
+    "The current Hario.com manual link returned HTTP 403; an original Hario-hosted manual at hario.cc was fully readable. Revision equivalence of the inaccessible current link is unverified.",
+    "The historical Kurasu URL could not be read. Bøen's direct Hario Europe recipe was fully read; its heading uses mL while explicit pours use g.",
+    "The current Hario UK Switch article is verified as published but mixes two-minute steeping with a bloom-first/two-minute elapsed release, presents an unqualified about-300-mL cone capacity and suggests a lid. Those statements are not used to define the original glass brewer's hardware or this baseline.",
+    "The 2025 English catalog exceeded the web tool's size limit; a purported Hario catalog mirror at ibodr.com timed out. No search-snippet-only capacity facts are treated as verified.",
+    "Taste-adjustment directions and the no-standing-water/intermittent-drop completion wording are app-authored practical explanations consistent with adjustable grind/steep and observed drainage, not universal extraction diagnostics.",
+    "This is English research content. No physical brewing, Android device execution, release validation or translation approval was performed."
+  ],
+  "do_not_claim": [
+    "The manual prescribes exact 240 g input, a mass-based 1:12 ratio, 96°C, or a fixed total finish deadline.",
+    "The approximate two-minute steep is the entire brew including filling and drainage.",
+    "20 g/approximately 240 mL, Bøen's hybrid and 15 g/250 g open-switch V60 use are one interchangeable recipe.",
+    "02 always holds a safe 300 mL closed fill, 03's 360 mL rating is a precise input target, or every large batch can be doubled unchanged.",
+    "A specific grinder number, exact beverage yield, universal 2 g/g retention or decaf time shortcut is established.",
+    "Immersion cannot over-extract, bitterness always means too-fine grind, or one-minute drainage proves correctness.",
+    "The raised lever opens the valve, the lever must be held while draining, or the filled hot brewer can be lifted/swirl-carried safely.",
+    "Exact-catalog entries establish everyday BrewMethod, localized or physically brewed support."
+  ]
+}

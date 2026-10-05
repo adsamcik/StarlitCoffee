@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="heading_guide_why">为什么需要这一步？</string>
+    <string name="action_guide_steps">步骤</string>
+    <string name="action_guide_overview">概览</string>
+    <string name="label_guide_untimed">按自己的节奏阅读</string>
+    <string name="action_continue_reading">继续阅读</string>
+    <string name="action_read_guide">阅读指南</string>
+    <string name="action_read_ahead">查看后续步骤</string>
+    <string name="action_return_to_live_brew">返回冲煮</string>
+    <string name="label_guide_done_when">完成条件</string>
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_title_short">Valmistelu</string>
+    <string name="prep_equipment_station">Valmistele välineet</string>
+    <string name="prep_beverage_yield">Kupissa</string>
+    <string name="prep_recipe_details">Reseptin tiedot</string>
+    <string name="prep_grinder_range">Suositeltu alue</string>
+    <string name="prep_grinder_adjustment">Säädä %1$s maun mukaan</string>
+    <string name="prep_grind_from_zero">Nollasta</string>
+    <string name="prep_grind_on_dial">Säätöasteikolla</string>
+    <string name="prep_grind_no_extra_clicks">%1$d · ei lisänaksautuksia</string>
+    <string name="prep_grind_dial_breakdown">%1$d + %2$s</string>
+    <plurals name="prep_clicks">
+        <item quantity="one">%1$d naksautus</item>
+        <item quantity="other">%1$d naksautusta</item>
+    </plurals>
+</resources>

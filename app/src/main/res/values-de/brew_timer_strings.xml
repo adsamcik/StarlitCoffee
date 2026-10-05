@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_set_brew_reminder">Erinnerung einstellen</string>
+    <string name="action_edit_brew_reminder">Erinnerung bearbeiten</string>
+    <string name="action_remove_brew_reminder">Erinnerung entfernen</string>
+    <string name="label_brew_reminder">Erinnerung</string>
+    <string name="label_timer_duration">Dauer</string>
+    <string name="label_timer_seconds">Sekunden</string>
+    <string name="label_timer_minutes">Minuten</string>
+    <string name="label_timer_hours">Stunden</string>
+    <string name="msg_brew_reminder_origin">Ab Beginn dieses Schritts. Eine Änderung der Dauer behält die verstrichene Zeit bei. Du bestätigst weiterhin selbst, wann der Schritt fertig ist.</string>
+    <string name="msg_brew_reminder_reached">Erinnerungszeit erreicht. Prüfe den Kaffee, bevor du fortfährst.</string>
+    <string name="title_cold_brew">Cold Brew</string>
+    <string name="title_cold_brew_timer">Cold-Brew-Timer</string>
+    <string name="action_follow_brew_guide">Anleitung folgen</string>
+    <string name="action_just_set_brew_timer">Nur Timer einstellen</string>
+    <string name="action_start_timer">Timer starten</string>
+    <string name="action_start_steeping">Ziehen lassen starten</string>
+    <string name="action_end_brew_timer">Timer beenden</string>
+    <string name="action_add_brew_start_time">Startzeit hinzufügen</string>
+    <string name="label_brew_start_now">Beginnt jetzt</string>
+    <string name="label_brew_start_earlier">Früher begonnen</string>
+    <string name="label_brew_start_unknown">Startzeit unbekannt</string>
+    <string name="label_brew_hours_ago">Stunden zuvor</string>
+    <string name="label_brew_minutes_ago">Minuten zuvor</string>
+    <string name="msg_cold_brew_refrigerated">Abgedeckt bei höchstens 4 °C im Kühlschrank aufbewahren. Die voreingestellte Ziehzeit beträgt 14 Stunden.</string>
+    <string name="msg_cold_brew_start_origin">Starte, wenn der Kaffee vollständig nass ist und das abgedeckte Gefäß in den Kühlschrank kommt.</string>
+    <string name="msg_brew_start_unknown">Gib die tatsächliche Startzeit ein, um eine Erinnerung zu berechnen. Bis dahin wird keine Endzeit geschätzt.</string>
+    <string name="msg_brew_timer_ended">Timer beendet</string>
+    <string name="label_brew_extraction_ended">Extraktion beendet</string>
+    <string name="msg_brew_notifications_disabled">Erinnerungen sind aus. Dein Brühvorgang läuft weiter.</string>
+    <string name="action_allow_brew_notifications">Erinnerungen erlauben</string>
+    <string name="msg_brew_reminders_may_be_late">Android kann Erinnerungen verzögern, während du die App verlassen hast.</string>
+    <string name="action_allow_precise_brew_reminders">Genaue Erinnerungen erlauben</string>
+</resources>

@@ -67,6 +67,8 @@ object BuiltinBrewingCatalog {
             MethodFamilyDefinition(MethodFamilyId("steep_and_release"), "Steep and release"),
             MethodFamilyDefinition(MethodFamilyId("heated_unfiltered"), "Heated unfiltered"),
             MethodFamilyDefinition(MethodFamilyId("automatic_batch"), "Automatic batch"),
+            MethodFamilyDefinition(MethodFamilyId("vacuum_siphon"), "Siphon"),
+            MethodFamilyDefinition(MethodFamilyId("electric_percolation"), "Electric percolator"),
             MethodFamilyDefinition(
                 MethodFamilyId("restricted_flow_gravity_concentrate"),
                 "Restricted-flow gravity concentrate",
@@ -173,6 +175,12 @@ object BuiltinBrewingCatalog {
             ),
         ),
         brewerProfiles = listOf(
+            profile("hario_technica_tcar3", "vacuum_siphon", "Hario Technica TCAR-3",
+                OutputModel.UserMeasuredOutput,
+                safety = setOf(SafetyTag.HOT_LIQUID, SafetyTag.HOT_GLASS, SafetyTag.OPEN_FLAME)),
+            profile("presto_02822", "electric_percolation", "Presto 02822",
+                OutputModel.UserMeasuredOutput,
+                safety = setOf(SafetyTag.HOT_LIQUID, SafetyTag.HOT_METAL)),
             profile(
                 "pulsar_standard",
                 "valve_controlled_no_bypass",

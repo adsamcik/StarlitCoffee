@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_title_short">Ettevalmistus</string>
+    <string name="prep_equipment_station">Valmista tarvikud ette</string>
+    <string name="prep_beverage_yield">Tassis</string>
+    <string name="prep_recipe_details">Retsepti üksikasjad</string>
+    <string name="prep_grinder_range">Soovituslik vahemik</string>
+    <string name="prep_grinder_adjustment">Kohanda maitse järgi %1$s võrra</string>
+    <string name="prep_grind_from_zero">Nullist</string>
+    <string name="prep_grind_on_dial">Skaalal</string>
+    <string name="prep_grind_no_extra_clicks">%1$d · lisaklikke pole</string>
+    <string name="prep_grind_dial_breakdown">%1$d + %2$s</string>
+    <plurals name="prep_clicks">
+        <item quantity="one">%1$d klikk</item>
+        <item quantity="other">%1$d klikki</item>
+    </plurals>
+</resources>

@@ -3,6 +3,14 @@ package com.adsamcik.starlitcoffee.ui.guidance
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltInRecipeId
 
 internal fun P1ExactRecipeGuidance.applyVerifiedFactualErrata(): P1ExactRecipeGuidance = when (recipeId) {
+    CHEMEX_RECIPE_ID -> copy(
+        recipeApproach = "App-authored six-cup 42 g / 700 g starting recipe with bonded paper.",
+        evidenceStatus = "App-authored starting recipe",
+        confidence = "medium; handling is sourced, recipe timing and taste are unvalidated",
+        originalSourceOrProvenance =
+            "CHEMEX FAQ supports filter fit, airflow and handling. The dose, pours, temperature and time " +
+                "are app choices, not a verified CHEMEX or creator recipe.",
+    )
     CEZVE_SINGLE_RISE_RECIPE_ID -> copy(
         recipeApproach =
             "App-authored conservative adaptation: mix before low heat and stop at the first " +
@@ -33,8 +41,47 @@ internal fun P1ExactStageGuidance.applyVerifiedFactualErrata(): P1ExactStageGuid
     return when (recipeId) {
         CLEVER_WATER_FIRST_RECIPE_ID -> applyCleverWaterFirstErrata()
         CUP_ONE_RECIPE_ID -> applyCupOneSafetyErrata()
+        CHEMEX_RECIPE_ID -> applyChemexHandlingErrata()
         else -> this
     }
+}
+
+/**
+ * Reviewed six-cup handling, 2026-10-04:
+ * https://chemexcoffeemaker.com/pages/faq
+ * https://bluebottlecoffee.com/us/eng/brew-guides/chemex
+ * These sources do not validate the app's 42/700 quantities or time range.
+ * The historical manifest, stage identities and executable targets are retained.
+ * Production exact guidance remains gated to technically reviewed English.
+ */
+private fun P1ExactStageGuidance.applyChemexHandlingErrata(): P1ExactStageGuidance = when (sourceStageId) {
+    "stage_02" -> {
+        val instruction = "Rinse the paper and discard all rinse water. Add 42 g of ground coffee, " +
+            "gently level the bed and zero the scale before the first brewing pour."
+        val completion = "Paper is wet, rinse water is discarded, and 42 g of ground coffee is ready on a zeroed scale."
+        copy(
+            completionCriterion = completion,
+            full = full.copy(imperativeInstruction = instruction, observableCompletionCue = completion),
+            concise = concise.copy(currentAction = instruction, completionCue = completion),
+            focused = focused.copy(actionLabel = instruction),
+        )
+    }
+    "stage_06" -> {
+        val completion = "Standing water above the bed is gone and continuous flow has become occasional drips."
+        copy(
+            completionCriterion = completion,
+            observableSigns = completion,
+            full = full.copy(
+                conciseExplanation = "Observe the drainage; the recipe time range is a starting reference, not a completion signal.",
+                observableCompletionCue = completion,
+                optionalPracticalTip = "You do not need to wait for every last drip. Remove the wet filter carefully.",
+                accessibleAltText = "Chemex with the spout air channel open, no standing water above the coffee bed, " +
+                    "and occasional drips into the carafe.",
+            ),
+            concise = concise.copy(completionCue = completion),
+        )
+    }
+    else -> this
 }
 
 private fun P1ExactStageGuidance.applyCleverWaterFirstErrata(): P1ExactStageGuidance =
@@ -108,4 +155,5 @@ private val CLEVER_WATER_FIRST_RECIPE_ID = BuiltInRecipeId("clever_water_first_1
 private val CEZVE_SINGLE_RISE_RECIPE_ID = BuiltInRecipeId("cezve_turkish_single_rise_6_65")
 private val CEZVE_REPEATED_RISE_RECIPE_ID = BuiltInRecipeId("cezve_bounded_repeated_rise_12_130")
 private val CUP_ONE_RECIPE_ID = BuiltInRecipeId("auto_cupone_20_300")
+private val CHEMEX_RECIPE_ID = BuiltInRecipeId("chemex_42_700")
 private val DIGIT_TOKEN = Regex("\\d+")

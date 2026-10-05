@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_set_brew_reminder">Imposta promemoria</string>
+    <string name="action_edit_brew_reminder">Modifica promemoria</string>
+    <string name="action_remove_brew_reminder">Rimuovi promemoria</string>
+    <string name="label_brew_reminder">Promemoria</string>
+    <string name="label_timer_duration">Durata</string>
+    <string name="label_timer_seconds">Secondi</string>
+    <string name="label_timer_minutes">Minuti</string>
+    <string name="label_timer_hours">Ore</string>
+    <string name="msg_brew_reminder_origin">Dall’inizio di questo passaggio. Modificare la durata mantiene il tempo già trascorso. Confermi sempre tu quando il passaggio è finito.</string>
+    <string name="msg_brew_reminder_reached">È l’ora del promemoria. Controlla il caffè prima di continuare.</string>
+    <string name="title_cold_brew">Cold brew</string>
+    <string name="title_cold_brew_timer">Timer cold brew</string>
+    <string name="action_follow_brew_guide">Segui la guida</string>
+    <string name="action_just_set_brew_timer">Imposta solo il timer</string>
+    <string name="action_start_timer">Avvia timer</string>
+    <string name="action_start_steeping">Inizia l’infusione</string>
+    <string name="action_end_brew_timer">Termina timer</string>
+    <string name="action_add_brew_start_time">Aggiungi ora di inizio</string>
+    <string name="label_brew_start_now">Inizia ora</string>
+    <string name="label_brew_start_earlier">Iniziato prima</string>
+    <string name="label_brew_start_unknown">Ora di inizio sconosciuta</string>
+    <string name="label_brew_hours_ago">Quante ore fa</string>
+    <string name="label_brew_minutes_ago">Quanti minuti fa</string>
+    <string name="msg_cold_brew_refrigerated">Tieni coperto in frigorifero a 4 °C o meno. L’infusione predefinita dura 14 ore.</string>
+    <string name="msg_cold_brew_start_origin">Avvia quando il caffè è completamente bagnato e il recipiente coperto viene messo in frigorifero.</string>
+    <string name="msg_brew_start_unknown">Aggiungi l’ora di inizio effettiva per calcolare un promemoria. Fino ad allora non viene stimata un’ora di fine.</string>
+    <string name="msg_brew_timer_ended">Timer terminato</string>
+    <string name="label_brew_extraction_ended">Estrazione terminata</string>
+    <string name="msg_brew_notifications_disabled">I promemoria sono disattivati. La preparazione del caffè continua.</string>
+    <string name="action_allow_brew_notifications">Consenti promemoria</string>
+    <string name="msg_brew_reminders_may_be_late">Android potrebbe ritardare i promemoria quando esci dall’app.</string>
+    <string name="action_allow_precise_brew_reminders">Consenti promemoria precisi</string>
+</resources>

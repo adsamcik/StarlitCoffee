@@ -28,7 +28,7 @@ object LegacyStagePlanFactory {
     ): BrewStagePlan = when (method) {
         BrewMethod.PULSAR,
         BrewMethod.V60,
-        -> bloomPlan(method)
+        -> bloomPlan(method, bloomDurationSeconds)
 
         BrewMethod.CHEMEX -> chemexPlan(bloomDurationSeconds)
 
@@ -129,12 +129,12 @@ object LegacyStagePlanFactory {
         )
     }
 
-    private fun bloomPlan(method: BrewMethod): BrewStagePlan = plan(
+    private fun bloomPlan(method: BrewMethod, bloomDurationSeconds: Int): BrewStagePlan = plan(
         method = method,
         countdownStage(
             id = "${method.name.lowercase()}_bloom",
             action = BrewStageAction.BLOOM,
-            durationMillis = secondsToMillis(method.bloomDurationSeconds),
+            durationMillis = secondsToMillis(bloomDurationSeconds),
         ),
         manualStage("${method.name.lowercase()}_manual_brew", BrewStageAction.POUR),
     )

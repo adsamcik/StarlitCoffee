@@ -1,0 +1,12 @@
+<resources>
+    <string name="action_brew_this_guide">Brew this recipe</string>
+    <string name="label_freshly_boiled_water">Freshly boiled water</string>
+    <string name="label_machine_temperature">Machine controls the temperature</string>
+    <string name="action_prepare_this_guide">Prepare brew</string>
+    <string name="label_reviewed_guide_english">Recipe in English</string>
+    <string name="heading_reviewed_sources">Recipe &amp; sources</string>
+    <string name="msg_reviewed_fill_quantities">Use the specified equipment fill levels. Weigh the coffee you actually load when preparing this brew.</string>
+    <string name="label_measured_coffee_g">Coffee you loaded (g)</string>
+    <string name="label_optional_measured_water_g">Weighed water (g, optional)</string>
+    <string name="msg_reviewed_equipment_confirm">My equipment matches this recipe.</string>
+</resources>

@@ -1,0 +1,12 @@
+<resources>
+    <string name="action_brew_this_guide">Pripremi prema ovom receptu</string>
+    <string name="label_freshly_boiled_water">Svježe prokuhana voda</string>
+    <string name="label_machine_temperature">Uređaj regulira temperaturu</string>
+    <string name="action_prepare_this_guide">Pripremi kavu</string>
+    <string name="label_reviewed_guide_english">Recept na engleskom</string>
+    <string name="heading_reviewed_sources">Recept i izvori</string>
+    <string name="msg_reviewed_fill_quantities">Poštujte navedene oznake punjenja. Izvažite kavu koju doista koristite.</string>
+    <string name="label_measured_coffee_g">Dodana kava (g)</string>
+    <string name="label_optional_measured_water_g">Izvagana voda (g, neobavezno)</string>
+    <string name="msg_reviewed_equipment_confirm">Moja oprema odgovara ovom receptu.</string>
+</resources>

@@ -508,7 +508,7 @@ fun BrewLogDetailScreen(
                 estimatedWaterInputG = if (directBeverageYield) {
                     null
                 } else {
-                    measurementContext?.plannedWaterInputG ?: entity.waterG
+                    measurementContext?.plannedWaterInputG ?: entity.waterG.takeIf { it > 0f }
                 },
                 estimatedBeverageOutputG = displayedBeverageOutputG,
                 measuredWaterInputG = entity.measuredWaterInputG.takeIf { measurementContext != null },
@@ -526,6 +526,10 @@ fun BrewLogDetailScreen(
             )
 
             Spacer(modifier = Modifier.height(12.dp))
+            entity.reviewedRecipe()?.quantities?.brewWaterInputMl?.let { ml ->
+                Text("${stringResource(R.string.label_water)}: ${formatNumber(ml)} mL",
+                    style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(8.dp))
+            }
 
             ElevatedCard(
                 shape = MaterialTheme.shapes.large,

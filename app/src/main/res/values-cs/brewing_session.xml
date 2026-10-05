@@ -39,7 +39,12 @@
     <string name="format_brew_stage_recorded_grams">Zaznamenáno %1$.0f g</string>
     <string name="format_brew_stage_remaining_grams">Zbývá %1$.0f g</string>
     <string name="label_brew_reference_cues">Referenční údaje</string>
-    <string name="msg_brew_reference_cues_not_completion">Pouze orientační. Dokončete krok hlavní akcí výše.</string>
+    <string name="action_pause_brew_guide">Pozastavit průvodce</string>
+    <string name="action_resume_brew_guide">Pokračovat v průvodci</string>
+    <string name="action_pause_brew_clock">Pozastavit časovač</string>
+    <string name="msg_brew_clock_keeps_running">Časovač běží dál.</string>
+    <string name="msg_brew_guide_paused">Průvodce je pozastavený. Časovač běží dál.</string>
+    <string name="msg_brew_reference_cues_not_completion">Pouze orientačně. Časový údaj nepotvrzuje dokončení fyzického kroku.</string>
     <string name="action_show_more_brew_reference_cues">Zobrazit další údaje</string>
     <string name="action_hide_brew_reference_cues">Skrýt další údaje</string>
     <string name="label_brew_reference_stage_duration">Délka kroku</string>

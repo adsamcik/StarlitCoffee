@@ -39,6 +39,8 @@ internal fun BarcodeBrewEntry(
     onScan: () -> Unit,
     onViewBeans: () -> Unit,
     onSelectBag: (Long) -> Unit,
+    showScanAction: Boolean = true,
+    requireExplicitSelection: Boolean = false,
 ) {
     var pendingBarcode by rememberSaveable { mutableStateOf<String?>(null) }
     LaunchedEffect(scannedBarcode) {
@@ -50,14 +52,16 @@ internal fun BarcodeBrewEntry(
     val matches = remember(pendingBarcode, bags) {
         pendingBarcode?.let { inStockBagsForBarcode(it, bags) }.orEmpty()
     }
-    LaunchedEffect(pendingBarcode, matches, inventoryLoaded) {
-        if (pendingBarcode != null && inventoryLoaded && matches.size == 1) {
+    val canAutoSelect = !requireExplicitSelection && inventoryLoaded
+    val needsSelection = requireExplicitSelection || matches.size > 1
+    LaunchedEffect(pendingBarcode, matches, canAutoSelect) {
+        if (canAutoSelect && pendingBarcode != null && matches.size == 1) {
             pendingBarcode = null
             onSelectBag(matches.single().id)
         }
     }
 
-    if (hasInStockBarcodeBags(bags)) {
+    if (showScanAction && hasInStockBarcodeBags(bags)) {
         AssistChip(
             onClick = onScan,
             label = { Text(stringResource(R.string.action_scan_to_brew)) },
@@ -83,7 +87,7 @@ internal fun BarcodeBrewEntry(
                 }
             },
         )
-    } else if (pendingBarcode != null && inventoryLoaded && matches.size > 1) {
+    } else if (pendingBarcode != null && inventoryLoaded && needsSelection) {
         BarcodeBrewBagPicker(
             bags = matches,
             onDismiss = { pendingBarcode = null },
@@ -112,9 +116,13 @@ private fun BarcodeBrewBagPicker(
             ) {
                 Text(stringResource(R.string.msg_barcode_brew_choose_bag))
                 bags.forEach { bag ->
-                    TextButton(onClick = { onSelect(bag.id) }, modifier = Modifier.fillMaxWidth()) {
+                    TextButton(
+                        onClick = { onSelect(bag.id) },
+                        modifier = Modifier.fillMaxWidth().heightIn(min = 64.dp).testTag("barcode_brew_pack_${bag.id}"),
+                    ) {
                         Column(modifier = Modifier.fillMaxWidth()) {
                             Text(bag.name, style = MaterialTheme.typography.titleSmall)
+                            Text(stringResource(R.string.prep_pack_number, bag.packNumber))
                             bag.roaster?.let { Text(it) }
                             val status = stringResource(
                                 if (bag.status == "OPEN") R.string.bag_status_open else R.string.bag_status_sealed,

@@ -28,6 +28,7 @@ import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.model.BrewRating
 import com.adsamcik.starlitcoffee.ui.util.labelRes
+import com.adsamcik.starlitcoffee.ui.screen.reviewedRecipe
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -43,7 +44,8 @@ fun ShareableBrewCard(
     val locale = LocalLocale.current.platformLocale
     val dateFormat = SimpleDateFormat("MMM d, yyyy", locale)
     val brewRating = BrewRating.fromStoredValue(brew.rating)
-    val methodName = brew.method.lowercase().replaceFirstChar { it.uppercase() }
+    val reviewedRecipe = brew.reviewedRecipe()
+    val methodName = reviewedRecipe?.reviewedGuide?.methodName ?: brew.method.lowercase().replaceFirstChar { it.uppercase() }
     val filterLabel = when (brew.filterType) {
         "PAPER" -> "Paper"
         "METAL_19K" -> "19K Metal"
@@ -101,8 +103,16 @@ fun ShareableBrewCard(
                 horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
                 RecipeDetail(label = stringResource(R.string.label_coffee), value = "${"%.0f".format(brew.doseG)}g")
-                RecipeDetail(label = stringResource(R.string.label_water), value = "${"%.0f".format(brew.waterG)}g")
-                RecipeDetail(label = stringResource(R.string.label_ratio), value = "1:${"%.0f".format(brew.ratio)}")
+                val sourceWater = reviewedRecipe?.quantities?.let { quantities ->
+                    quantities.brewWaterInputG?.let { "${"%.0f".format(it)}g" }
+                        ?: quantities.brewWaterInputMl?.let { "${"%.0f".format(it)} mL" }
+                }
+                if (sourceWater != null || reviewedRecipe == null) {
+                    RecipeDetail(label = stringResource(R.string.label_water), value = sourceWater ?: "${"%.0f".format(brew.waterG)}g")
+                }
+                if (brew.ratio > 0 && reviewedRecipe?.quantities?.brewWaterInputMl == null) {
+                    RecipeDetail(label = stringResource(R.string.label_ratio), value = "1:${"%.0f".format(brew.ratio)}")
+                }
                 if (filterLabel != null) {
                     RecipeDetail(label = stringResource(R.string.label_filter), value = filterLabel)
                 }
@@ -187,7 +197,8 @@ fun shareBrewCard(
     bagName: String?,
     flavorTags: List<String>,
 ) {
-    val methodName = brew.method.lowercase().replaceFirstChar { it.uppercase() }
+    val reviewedRecipe = brew.reviewedRecipe()
+    val methodName = reviewedRecipe?.reviewedGuide?.methodName ?: brew.method.lowercase().replaceFirstChar { it.uppercase() }
     val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
     val dateStr = dateFormat.format(Date(brew.createdAt))
     val brewRating = BrewRating.fromStoredValue(brew.rating)
@@ -204,7 +215,7 @@ fun shareBrewCard(
         if (bagName != null) append(" · $bagName")
         appendLine()
         appendLine()
-        append("☕ ${"%.0f".format(brew.doseG)}g  💧 ${"%.0f".format(brew.waterG)}g  📐 1:${"%.0f".format(brew.ratio)}")
+        append(brewShareQuantities(brew))
         if (filterLabel != null) append("  🔽 $filterLabel")
         appendLine()
         if (brewRating != null) {
@@ -227,4 +238,17 @@ fun shareBrewCard(
     }
 
     context.startActivity(Intent.createChooser(shareIntent, "Share your brew"))
+}
+
+internal fun brewShareQuantities(brew: BrewLogEntity): String = buildString {
+    val recipe = brew.reviewedRecipe()
+    append("☕ ${"%.0f".format(brew.doseG)}g")
+    if (recipe != null) {
+        recipe.quantities.brewWaterInputG?.let { append("  💧 ${"%.0f".format(it)}g") }
+            ?: recipe.quantities.brewWaterInputMl?.let { append("  💧 ${"%.0f".format(it)} mL") }
+        recipe.quantities.targetBeverageYieldG?.let { append("  → ${"%.0f".format(it)}g in cup") }
+    } else append("  💧 ${"%.0f".format(brew.waterG)}g")
+    if (brew.ratio > 0 && recipe?.quantities?.brewWaterInputMl == null) {
+        append("  📐 1:${"%.0f".format(brew.ratio)}")
+    }
 }

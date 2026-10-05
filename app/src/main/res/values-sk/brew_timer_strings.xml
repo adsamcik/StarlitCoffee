@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_set_brew_reminder">Nastaviť pripomenutie</string>
+    <string name="action_edit_brew_reminder">Upraviť pripomenutie</string>
+    <string name="action_remove_brew_reminder">Odstrániť pripomenutie</string>
+    <string name="label_brew_reminder">Pripomenutie</string>
+    <string name="label_timer_duration">Trvanie</string>
+    <string name="label_timer_seconds">Sekundy</string>
+    <string name="label_timer_minutes">Minúty</string>
+    <string name="label_timer_hours">Hodiny</string>
+    <string name="msg_brew_reminder_origin">Od začiatku tohto kroku. Zmena trvania zachová už uplynutý čas. Dokončenie kroku stále potvrdzujete sami.</string>
+    <string name="msg_brew_reminder_reached">Čas pripomenutia nastal. Pred pokračovaním skontrolujte kávu.</string>
+    <string name="title_cold_brew">Cold brew</string>
+    <string name="title_cold_brew_timer">Časovač cold brew</string>
+    <string name="action_follow_brew_guide">Postupovať podľa sprievodcu</string>
+    <string name="action_just_set_brew_timer">Iba nastaviť časovač</string>
+    <string name="action_start_timer">Spustiť časovač</string>
+    <string name="action_start_steeping">Začať lúhovanie</string>
+    <string name="action_end_brew_timer">Ukončiť časovač</string>
+    <string name="action_add_brew_start_time">Pridať čas začiatku</string>
+    <string name="label_brew_start_now">Začínam teraz</string>
+    <string name="label_brew_start_earlier">Začalo skôr</string>
+    <string name="label_brew_start_unknown">Čas začiatku neznámy</string>
+    <string name="label_brew_hours_ago">Pred koľkými hodinami</string>
+    <string name="label_brew_minutes_ago">Pred koľkými minútami</string>
+    <string name="msg_cold_brew_refrigerated">Uchovávajte zakryté v chladničke pri 4 °C alebo menej. Predvolená doba lúhovania je 14 hodín.</string>
+    <string name="msg_cold_brew_start_origin">Spustite, keď je káva úplne namočená a zakrytá nádoba je v chladničke.</string>
+    <string name="msg_brew_start_unknown">Zadajte skutočný čas začiatku na výpočet pripomenutia. Dovtedy sa čas dokončenia neodhaduje.</string>
+    <string name="msg_brew_timer_ended">Časovač ukončený</string>
+    <string name="label_brew_extraction_ended">Extrakcia dokončená</string>
+    <string name="msg_brew_notifications_disabled">Pripomenutia sú vypnuté. Príprava kávy pokračuje.</string>
+    <string name="action_allow_brew_notifications">Povoliť pripomenutia</string>
+    <string name="msg_brew_reminders_may_be_late">Android môže pripomenutia oneskoriť, keď ste mimo aplikácie.</string>
+    <string name="action_allow_precise_brew_reminders">Povoliť presné pripomenutia</string>
+</resources>

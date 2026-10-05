@@ -1,0 +1,689 @@
+{
+  "methods": 17,
+  "passed": 17,
+  "generation_calls": 20,
+  "generation_history_errors": [],
+  "checks": "Design candidate checks: input hashes, submitted/saved prompt agreement, 2 image inputs per initial call and 3 per refinement, readable photos, square output, real alpha, border alpha <=1, and >=3 percent margin for pixels with alpha >=16. Raw alpha bounds and residue are retained; passing does not certify production alpha cleanup or hardware accuracy.",
+  "results": [
+    {
+      "id": "chemex",
+      "reference_sha256": "ee7e17f6fe02c512f3ba2c4826c55e51471c779b76d8f5d9d9dd2866c60bec3e",
+      "prompt_sha256": "25c2cbd282d26d231810cbef84583a5f512f9b0b7e551a7ee87f6577402cf41d",
+      "candidate_sha256": "13a6dbf1c1e76b19baa30f731a95c8e5eed1a585135cd3aabb51419d9514d560",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "raw_nonzero_bounds": [
+        0,
+        48,
+        1210,
+        1182
+      ],
+      "visible_object_alpha_threshold": 16,
+      "visible_object_bounds": [
+        273,
+        101,
+        1020,
+        1174
+      ],
+      "clear_margins": [
+        0.2177,
+        0.0805,
+        0.1866,
+        0.0638
+      ],
+      "fully_transparent_border": false,
+      "border_max_alpha": 1,
+      "border_nonzero_pixels": 1,
+      "production_alpha_cleanup_needed": true,
+      "errors": [],
+      "passed": true
+    },
+    {
+      "id": "automatic-drip",
+      "reference_sha256": "1a92fc7adac2a4021d1421bbed815f21e66cdb6a79b798839652d2144acde464",
+      "prompt_sha256": "6e3c3629c83e2c5da3beb564e5b52bd877b7f8b16d328ac400b9f57575e009bf",
+      "candidate_sha256": "f1470d2f3f13bef31cf6d289b1a8fb894b7684924e6b7493d993cbce09ce98ee",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "raw_nonzero_bounds": [
+        0,
+        27,
+        1218,
+        1238
+      ],
+      "visible_object_alpha_threshold": 16,
+      "visible_object_bounds": [
+        127,
+        77,
+        1129,
+        1167
+      ],
+      "clear_margins": [
+        0.1013,
+        0.0614,
+        0.0997,
+        0.0694
+      ],
+      "fully_transparent_border": false,
+      "border_max_alpha": 1,
+      "border_nonzero_pixels": 64,
+      "production_alpha_cleanup_needed": true,
+      "errors": [],
+      "passed": true
+    },
+    {
+      "id": "pulsar",
+      "reference_sha256": "266e581d477b06060143efff6c78cbbacc96b1eefd8a058504794955befd5c58",
+      "prompt_sha256": "b3c2c795c29ef7084c44ef9bc21cb0192f6c420eaaacaa68905e1286e7042009",
+      "candidate_sha256": "5d1bde82c0eabb67ea529cb8c0c3cc9c61677d4a6a34fa7c57aea0b21317a323",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "raw_nonzero_bounds": [
+        156,
+        79,
+        1111,
+        1236
+      ],
+      "visible_object_alpha_threshold": 16,
+      "visible_object_bounds": [
+        289,
+        82,
+        992,
+        1139
+      ],
+      "clear_margins": [
+        0.2305,
+        0.0654,
+        0.2089,
+        0.0917
+      ],
+      "fully_transparent_border": true,
+      "border_max_alpha": 0,
+      "border_nonzero_pixels": 0,
+      "production_alpha_cleanup_needed": false,
+      "errors": [],
+      "passed": true
+    },
+    {
+      "id": "v60",
+      "reference_sha256": "43e45bec92116879f6093a591b8e87e05709102713a7e5140d0e9d41ec9211fb",
+      "prompt_sha256": "0607ca64951dc9439e003796cb060f6572cb17b626fce2c85ce657c02f99f356",
+      "candidate_sha256": "08feffde26a1eefb68c68990954262b1d9ac5922f406d5167639420d627d24f1",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "raw_nonzero_bounds": [
+        0,
+        8,
+        1232,
+        1254
+      ],
+      "visible_object_alpha_threshold": 16,
+      "visible_object_bounds": [
+        132,
+        186,
+        1211,
+        1095
+      ],
+      "clear_margins": [
+        0.1053,
+        0.1483,
+        0.0343,
+        0.1268
+      ],
+      "fully_transparent_border": false,
+      "border_max_alpha": 1,
+      "border_nonzero_pixels": 79,
+      "production_alpha_cleanup_needed": true,
+      "errors": [],
+      "passed": true
+    },
+    {
+      "id": "clever",
+      "reference_sha256": "378acbd47957ad70921daed5ef1a93b11cb9b050fb7115367f303f353ad38b1b",
+      "prompt_sha256": "8c978982d5fecfc223e11b7160bfc789b757ff057453c59c447dd1c45b48366b",
+      "candidate_sha256": "1ca5f9ef73fc3ea5afaef9855d9bacd2a29d2099f561e7a0cf933f6256e0002e",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "raw_nonzero_bounds": [
+        0,
+        19,
+        1226,
+        1198
+      ],
+      "visible_object_alpha_threshold": 16,
+      "visible_object_bounds": [
+        174,
+        158,
+        1202,
+        1085
+      ],
+      "clear_margins": [
+        0.1388,
+        0.126,
+        0.0415,
+        0.1348
+      ],
+      "fully_transparent_border": false,
+      "border_max_alpha": 1,
+      "border_nonzero_pixels": 3,
+      "production_alpha_cleanup_needed": true,
+      "errors": [],
+      "passed": true
+    },
+    {
+      "id": "hario-switch",
+      "reference_sha256": "e85a7603a3f828c3264a8b675e18d24b27fac97f845d6fe0dde65c2a5648b9f3",
+      "prompt_sha256": "25db743b81e4f3ffa8b9fc19f399206bf97cd1dd6ecf2b5711fe0b62cf66e69e",
+      "candidate_sha256": "21587170dff443cd06159fb4063c0101306ccdbb9ab831efbce44b471c90d80f",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "raw_nonzero_bounds": [
+        0,
+        19,
+        1208,
+        1254
+      ],
+      "visible_object_alpha_threshold": 16,
+      "visible_object_bounds": [
+        174,
+        134,
+        1091,
+        1160
+      ],
+      "clear_margins": [
+        0.1388,
+        0.1069,
+        0.13,
+        0.075
+      ],
+      "fully_transparent_border": false,
+      "border_max_alpha": 1,
+      "border_nonzero_pixels": 49,
+      "production_alpha_cleanup_needed": true,
+      "errors": [],
+      "passed": true
+    },
+    {
+      "id": "kalita-wave",
+      "reference_sha256": "ecff5ab8992c1d5b71c517fee5628d57c98b3867578ac9c36b0fd406b64949f5",
+      "prompt_sha256": "2b592f1d2db0e208a483dd81c741604a76890e5b109b3697afdefd46e994d22d",
+      "candidate_sha256": "9ec2ba74a92f7ff0fee065fff4a7e50de807e7436cad831ed713e3fab8813fe3",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "raw_nonzero_bounds": [
+        0,
+        47,
+        1236,
+        1181
+      ],
+      "visible_object_alpha_threshold": 16,
+      "visible_object_bounds": [
+        93,
+        245,
+        1216,
+        1021
+      ],
+      "clear_margins": [
+        0.0742,
+        0.1954,
+        0.0303,
+        0.1858
+      ],
+      "fully_transparent_border": false,
+      "border_max_alpha": 1,
+      "border_nonzero_pixels": 4,
+      "production_alpha_cleanup_needed": true,
+      "errors": [],
+      "passed": true
+    },
+    {
+      "id": "melitta",
+      "reference_sha256": "6c562c5c7a33392985383e5b67ec7647bdb51d9f79b06b63cee39c6771b6f890",
+      "prompt_sha256": "62824d9379dca84a80fea88cdfc8b254ad19cc5d76c044ef17c7a8a38047fb8b",
+      "candidate_sha256": "dc7f7308ae2d50a7cf1ae763b2d1d7a7ad346782a141c6bee349bf9b95dc16cd",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "raw_nonzero_bounds": [
+        113,
+        53,
+        1190,
+        1206
+      ],
+      "visible_object_alpha_threshold": 16,
+      "visible_object_bounds": [
+        207,
+        249,
+        1142,
+        1061
+      ],
+      "clear_margins": [
+        0.1651,
+        0.1986,
+        0.0893,
+        0.1539
+      ],
+      "fully_transparent_border": true,
+      "border_max_alpha": 0,
+      "border_nonzero_pixels": 0,
+      "production_alpha_cleanup_needed": false,
+      "errors": [],
+      "passed": true
+    },
+    {
+      "id": "turkish",
+      "reference_sha256": "c92dfa4e000789653816619ce8672d1c9a97efd3268c7ee52869bf641078051b",
+      "prompt_sha256": "d0744e5324ebb1d5b26865acdf58acae370451474a23fdac885e681b79605496",
+      "candidate_sha256": "f6da2b9836e8507407701c0c4a39d664dfd690fa2bd6c43a898e946ebae37a19",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "raw_nonzero_bounds": [
+        57,
+        48,
+        1205,
+        1235
+      ],
+      "visible_object_alpha_threshold": 16,
+      "visible_object_bounds": [
+        146,
+        152,
+        1200,
+        1087
+      ],
+      "clear_margins": [
+        0.1164,
+        0.1212,
+        0.0431,
+        0.1332
+      ],
+      "fully_transparent_border": true,
+      "border_max_alpha": 0,
+      "border_nonzero_pixels": 0,
+      "production_alpha_cleanup_needed": false,
+      "errors": [],
+      "passed": true
+    },
+    {
+      "id": "phin",
+      "reference_sha256": "ada0d86fdb10809d97e3d89a2b140beb5ffce01459e3986c235130ccdf843ac0",
+      "prompt_sha256": "6e2556a91669913f07e9ca7cb0894bb0a5335509c2398718366aa797b17d72e1",
+      "candidate_sha256": "518198727c59b738109a07d98e38e09323c9e568da6d87604fa6dc43fc195189",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "raw_nonzero_bounds": [
+        0,
+        21,
+        1228,
+        1254
+      ],
+      "visible_object_alpha_threshold": 16,
+      "visible_object_bounds": [
+        181,
+        137,
+        1118,
+        1117
+      ],
+      "clear_margins": [
+        0.1443,
+        0.1093,
+        0.1085,
+        0.1093
+      ],
+      "fully_transparent_border": false,
+      "border_max_alpha": 1,
+      "border_nonzero_pixels": 35,
+      "production_alpha_cleanup_needed": true,
+      "errors": [],
+      "passed": true
+    },
+    {
+      "id": "french-press",
+      "reference_sha256": "a5b8c672a2be4f0556d92f1aed50be8d3f66b2b2ef07d063f6fe2f4912e26354",
+      "prompt_sha256": "1d1ee741c52e3f07cfc72478bae47bad64c524e1aa0039ec7455b20fd7711349",
+      "candidate_sha256": "3e3b120fac17ed1c815899ad5c6059e9f2a64983232d9a131951df585744ec8d",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "raw_nonzero_bounds": [
+        57,
+        21,
+        1235,
+        1254
+      ],
+      "visible_object_alpha_threshold": 16,
+      "visible_object_bounds": [
+        306,
+        59,
+        1140,
+        1182
+      ],
+      "clear_margins": [
+        0.244,
+        0.047,
+        0.0909,
+        0.0574
+      ],
+      "fully_transparent_border": false,
+      "border_max_alpha": 1,
+      "border_nonzero_pixels": 12,
+      "production_alpha_cleanup_needed": true,
+      "errors": [],
+      "passed": true
+    },
+    {
+      "id": "aeropress",
+      "reference_sha256": "5bab114be6356076778d5f72cc9d469d94255bc3f01275e468f62a4ba477c8c6",
+      "prompt_sha256": "f375160b2a36d34dcc5e517856c77a2ceea1d19f55410321e4f5996cb0c295c2",
+      "candidate_sha256": "e98e28f333f4f433bd70665b9757da8a16204dabd06193151723f45d34dd0405",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "raw_nonzero_bounds": [
+        97,
+        21,
+        1200,
+        1228
+      ],
+      "visible_object_alpha_threshold": 16,
+      "visible_object_bounds": [
+        301,
+        76,
+        947,
+        1146
+      ],
+      "clear_margins": [
+        0.24,
+        0.0606,
+        0.2448,
+        0.0861
+      ],
+      "fully_transparent_border": true,
+      "border_max_alpha": 0,
+      "border_nonzero_pixels": 0,
+      "production_alpha_cleanup_needed": false,
+      "errors": [],
+      "passed": true
+    },
+    {
+      "id": "espresso",
+      "reference_sha256": "4dba089bd27ec8bc64229fd1e43489818daada88b6866f2794d3879c86331c90",
+      "prompt_sha256": "c4d41e901dc6b9bd975f65ba1f8027090087bfebd6e75b8b27df9dea493d54e6",
+      "candidate_sha256": "a505d8a0710498db6ea777a3f84ae6bdf9057b77d8aeb028ce2a37368a7ffeb6",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "raw_nonzero_bounds": [
+        33,
+        33,
+        1230,
+        1232
+      ],
+      "visible_object_alpha_threshold": 16,
+      "visible_object_bounds": [
+        242,
+        100,
+        1016,
+        1158
+      ],
+      "clear_margins": [
+        0.193,
+        0.0797,
+        0.1898,
+        0.0766
+      ],
+      "fully_transparent_border": true,
+      "border_max_alpha": 0,
+      "border_nonzero_pixels": 0,
+      "production_alpha_cleanup_needed": false,
+      "errors": [],
+      "passed": true
+    },
+    {
+      "id": "moka-pot",
+      "reference_sha256": "f395c7fc48d6ce532c79a5d06c11def868ddb7f75f02d40e4b79093a451d09ea",
+      "prompt_sha256": "6fc205539a4b43ac09b089d1d025fa62a25266f7521550e35fb5a4b5bb528b63",
+      "candidate_sha256": "481dd409c3d7bf773c62733c84d16f19f657625c9e587bb7d9c8dff3808f23d4",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "raw_nonzero_bounds": [
+        49,
+        51,
+        1230,
+        1254
+      ],
+      "visible_object_alpha_threshold": 16,
+      "visible_object_bounds": [
+        179,
+        91,
+        1152,
+        1168
+      ],
+      "clear_margins": [
+        0.1427,
+        0.0726,
+        0.0813,
+        0.0686
+      ],
+      "fully_transparent_border": false,
+      "border_max_alpha": 1,
+      "border_nonzero_pixels": 2,
+      "production_alpha_cleanup_needed": true,
+      "errors": [],
+      "passed": true
+    },
+    {
+      "id": "cold-brew",
+      "reference_sha256": "b568574786c96150204cb2940324d38e86eae830e8dc96a56130fe70a0c08a70",
+      "prompt_sha256": "1d187804a3ccf5b1cc39fc42fb549126febe996d6e6fe97f3c0bc54886fbc8b7",
+      "candidate_sha256": "336db40c7f3c1117b3120014bebbff9884a149b614098864565fd533ed9c58d5",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "raw_nonzero_bounds": [
+        89,
+        47,
+        1095,
+        1254
+      ],
+      "visible_object_alpha_threshold": 16,
+      "visible_object_bounds": [
+        300,
+        138,
+        955,
+        1122
+      ],
+      "clear_margins": [
+        0.2392,
+        0.11,
+        0.2384,
+        0.1053
+      ],
+      "fully_transparent_border": false,
+      "border_max_alpha": 1,
+      "border_nonzero_pixels": 32,
+      "production_alpha_cleanup_needed": true,
+      "errors": [],
+      "passed": true
+    },
+    {
+      "id": "siphon",
+      "reference_sha256": "ac082b2ad0150d09b31d2c650ee3f0d9e4c450b792230e7b6b828c268d4f824d",
+      "prompt_sha256": "de167a81e3a9ed6b14425b64f571e3f9f323e769888e158bac8e9ea7896de6b8",
+      "candidate_sha256": "501ee43ad0322012f879d7eab24181b811f2b9eea17df4ab52f117c8b5356e61",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "raw_nonzero_bounds": [
+        97,
+        46,
+        1210,
+        1214
+      ],
+      "visible_object_alpha_threshold": 16,
+      "visible_object_bounds": [
+        389,
+        49,
+        918,
+        1208
+      ],
+      "clear_margins": [
+        0.3102,
+        0.0391,
+        0.2679,
+        0.0367
+      ],
+      "fully_transparent_border": true,
+      "border_max_alpha": 0,
+      "border_nonzero_pixels": 0,
+      "production_alpha_cleanup_needed": false,
+      "errors": [],
+      "passed": true
+    },
+    {
+      "id": "percolator",
+      "reference_sha256": "dfe39ed6959a42574d4d87e2959c258e9d551faa27fd87e09c6f0ac99a93809c",
+      "prompt_sha256": "24d31f5c530a5bcd0c254b873885a64c3fbaa08e4219698f47fec29e12d505aa",
+      "candidate_sha256": "0a3b3dad38c530b281c88f6d1f13fed09441bd9ad0f75a420cef1a9cd9d4b8ef",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "raw_nonzero_bounds": [
+        49,
+        41,
+        1240,
+        1234
+      ],
+      "visible_object_alpha_threshold": 16,
+      "visible_object_bounds": [
+        190,
+        64,
+        1111,
+        1174
+      ],
+      "clear_margins": [
+        0.1515,
+        0.051,
+        0.114,
+        0.0638
+      ],
+      "fully_transparent_border": true,
+      "border_max_alpha": 0,
+      "border_nonzero_pixels": 0,
+      "production_alpha_cleanup_needed": false,
+      "errors": [],
+      "passed": true
+    }
+  ]
+}

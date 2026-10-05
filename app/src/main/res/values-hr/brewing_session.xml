@@ -39,7 +39,12 @@
     <string name="format_brew_stage_recorded_grams">Zabilježeno %1$.0f g</string>
     <string name="format_brew_stage_remaining_grams">Preostalo %1$.0f g</string>
     <string name="label_brew_reference_cues">Referentne vrijednosti</string>
-    <string name="msg_brew_reference_cues_not_completion">Samo kao smjernica. Dovršite korak glavnom radnjom iznad.</string>
+    <string name="action_pause_brew_guide">Pauziraj vodič</string>
+    <string name="action_resume_brew_guide">Nastavi vodič</string>
+    <string name="action_pause_brew_clock">Pauziraj mjerač vremena</string>
+    <string name="msg_brew_clock_keeps_running">Mjerač vremena nastavlja raditi.</string>
+    <string name="msg_brew_guide_paused">Vodič je pauziran. Mjerač vremena nastavlja raditi.</string>
+    <string name="msg_brew_reference_cues_not_completion">Samo kao smjernica. Vremenska naznaka ne dovršava fizički korak.</string>
     <string name="action_show_more_brew_reference_cues">Prikaži više vrijednosti</string>
     <string name="action_hide_brew_reference_cues">Sakrij dodatne vrijednosti</string>
     <string name="label_brew_reference_stage_duration">Trajanje faze</string>

@@ -1,0 +1,54 @@
+{
+  "learn_brewer_icon_batch.webp": {
+    "original_path": "app/src/main/res/drawable-nodpi/learn_brewer_icon_batch.webp",
+    "sha256": "845081bbecd37e8149402d6e86d16e21c2c025c3f47b63c1f939733204f5db28"
+  },
+  "learn_brewer_icon_carafe.webp": {
+    "original_path": "app/src/main/res/drawable-nodpi/learn_brewer_icon_carafe.webp",
+    "sha256": "44084f2c788a70247a828b02b3c1661960618f769ef35f3c1f9a8346486598f3"
+  },
+  "learn_brewer_icon_cezve.webp": {
+    "original_path": "app/src/main/res/drawable-nodpi/learn_brewer_icon_cezve.webp",
+    "sha256": "aeec556fa114d1089c396c8e279265fab70b1ef2b185d0fc863e3825367fbc6b"
+  },
+  "learn_brewer_icon_clever.webp": {
+    "original_path": "app/src/main/res/drawable-nodpi/learn_brewer_icon_clever.webp",
+    "sha256": "5e1e19beddeb6e3201cb51dd810d2f1e0c8b46c359c0e72a5b2de7ed9715c528"
+  },
+  "learn_brewer_icon_conical.webp": {
+    "original_path": "app/src/main/res/drawable-nodpi/learn_brewer_icon_conical.webp",
+    "sha256": "bbb90250e642f7ca723a5c28c7711f6a0b2440b2cd7c6830244422eff78c6f54"
+  },
+  "learn_brewer_icon_phin.webp": {
+    "original_path": "app/src/main/res/drawable-nodpi/learn_brewer_icon_phin.webp",
+    "sha256": "7cf5171d85413d0c869358ed746b5fae0d92838c36736afa3481f44480fa98c8"
+  },
+  "learn_brewer_icon_pulsar.webp": {
+    "original_path": "app/src/main/res/drawable-nodpi/learn_brewer_icon_pulsar.webp",
+    "sha256": "46de8ae013b29edcfa1943029b95445f548df0e502e7ce09953cb4ae6a2a2c61"
+  },
+  "learn_brewer_icon_single_cup.webp": {
+    "original_path": "app/src/main/res/drawable-nodpi/learn_brewer_icon_single_cup.webp",
+    "sha256": "526fc0eac695135fd5fa76e63c89d06d0bb8b92d9f19d07efa08fda778a7acce"
+  },
+  "learn_brewer_icon_switch.webp": {
+    "original_path": "app/src/main/res/drawable-nodpi/learn_brewer_icon_switch.webp",
+    "sha256": "5df95eedd2a5d4fb9d4152687861152d0897b5d30f3577b7e59f4f60bec039d3"
+  },
+  "learn_brewer_icon_v60.webp": {
+    "original_path": "app/src/main/res/drawable-nodpi/learn_brewer_icon_v60.webp",
+    "sha256": "59dea721d878710cea51a660348276166e68708fee0e47838508bddbc303e666"
+  },
+  "learn_brewer_icon_v60_02.webp": {
+    "original_path": "app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp",
+    "sha256": "19dc531009958fff5e8fe64240b0cb488f64aa79991030fc5b2190587e999639"
+  },
+  "learn_brewer_icon_wave_185.webp": {
+    "original_path": "app/src/main/res/drawable-nodpi/learn_brewer_icon_wave_185.webp",
+    "sha256": "69210b7ee8de567216a7e2649a29a0df141a10c43938de90e9496655972624a7"
+  },
+  "learn_brewer_icon_wedge.webp": {
+    "original_path": "app/src/main/res/drawable-nodpi/learn_brewer_icon_wedge.webp",
+    "sha256": "8695a75e5b76cc5779b1e75fae84db1d8c442394fdbbf236c0cacd38c48f55ca"
+  }
+}

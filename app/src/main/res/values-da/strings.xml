@@ -100,11 +100,8 @@
     <string name="label_increase">Øg %1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Forbered dit bryg</string>
     <string name="action_ready_to_brew_short">Klar til at brygge</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Forberedelse</string>
-    <string name="label_recipe_heading">Opskrift</string>
     <string name="label_temp_short">Temp.</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Fugt papirfilteret i bunden (ventil åben), og lad det dryppe af. Monter cylinderen, tilsæt kaffe, jævn bedet, og sæt dispersionslåget på. Tarér vægten.</string>
@@ -114,8 +111,6 @@
     <string name="prep_tip_french_press">Forvarm stempelkanden, og tøm den. Tilsæt kaffe, sæt den på vægten, og tarér, før du tilsætter vand.</string>
     <string name="prep_tip_espresso">Tør portafilteret af. Doser, fordel, og tamp plant, før du låser det i.</string>
     <string name="prep_tip_moka">Fyld bundkammeret op til ventilen. Fyld kurven med kaffe, jævn — tamp ikke. Saml forsigtigt.</string>
-    <string name="format_prep_grind_specific">Mal %1$s — indstil %2$s til %3$s</string>
-    <string name="format_prep_grind_generic">Mal %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Pause</string>
@@ -730,7 +725,6 @@
     <string name="guidance_cue_valve_state">Ventilstatus</string>
     <string name="screen_learning_title">Lær</string>
     <string name="msg_learning_subtitle">Visuelle bryggeguides trin for trin</string>
-    <string name="msg_learning_intro">Vælg en brygger og en opskrift, og gennemgå derefter ét tydeligt trin ad gangen.</string>
     <string name="action_show_details">Vis detaljer</string>
     <string name="action_hide_details">Skjul detaljer</string>
 

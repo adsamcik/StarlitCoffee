@@ -69,10 +69,10 @@ class BrewSessionFinalizerTest {
         val rotated = requireNotNull(fixture.coffeeBagDao.getByIdOnce(fixture.nextBagId))
         assertEquals("FINISHED", depleted.status)
         assertEquals(0f, depleted.weightG)
-        assertEquals("6.5", depleted.grindSetting)
-        assertEquals("OPEN", rotated.status)
+        assertEquals("5.5", depleted.grindSetting)
+        assertEquals("SEALED", rotated.status)
         assertEquals(250f, rotated.weightG)
-        assertEquals("6.5", rotated.grindSetting)
+        assertEquals(null, rotated.grindSetting)
 
         val persisted = requireNotNull(fixture.sessionDao.current(fixture.sessionId.value))
         val restored = ActiveBrewSessionEntityMapper.restore(persisted)
@@ -149,6 +149,7 @@ class BrewSessionFinalizerTest {
                 status = "OPEN",
                 weightG = 15f,
                 grindSetting = "5.5",
+                coffeeId = 42L,
                 createdAt = 1L,
             ),
         )
@@ -158,6 +159,7 @@ class BrewSessionFinalizerTest {
                 roaster = "Starlit",
                 status = "SEALED",
                 weightG = 250f,
+                coffeeId = 42L,
                 createdAt = 2L,
             ),
         )

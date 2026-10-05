@@ -117,6 +117,22 @@ Start with the architecture decisions in [docs/adr](docs/adr) and the current
 implementation report in
 [docs/plans/2026-08-04-brewing-platform-implementation-report.md](docs/plans/2026-08-04-brewing-platform-implementation-report.md).
 
+The [brewing guide research pack](docs/brewing/research/2026-10-02-method-guides/README.md)
+contains English guides and an accuracy audit for 17 brewing methods. It records
+recipe provenance, equipment limits, and sources separately from app support.
+
+The [visual guide design](docs/brewing/design/2026-10-02-visual-guides/DESIGN.md)
+includes an [interactive prototype](docs/brewing/design/2026-10-02-visual-guides/prototype.html)
+for brewing alongside the guide or exploring the same steps at your own pace.
+Chemex, espresso, and cold brew demonstrate the shared workflow; the design maps
+all 17 researched methods. This is a design proposal, with
+[browser review notes](docs/brewing/design/2026-10-02-visual-guides/REVIEW.md), before
+Android implementation.
+
+The [method icon review](docs/brewing/design/2026-10-02-method-icons/README.md)
+pairs equipment photographs with individual generator briefs and transparent
+candidates for all 17 methods, using the existing brewer icon style.
+
 ## Contributing and security
 
 The baseline-free quality and exception policy is documented in

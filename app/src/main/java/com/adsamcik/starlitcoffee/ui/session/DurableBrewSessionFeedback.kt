@@ -36,6 +36,7 @@ fun DurableBrewSessionFeedback(
     enabled: Boolean,
 ) {
     val context = LocalContext.current
+    val cuesEnabled = enabled && !presentation.isGuidancePaused
     val vibrator = remember(context) { context.durableBrewVibrator() }
     val stage = presentation.currentStage
     var previousStageId by remember(presentation.sessionId) { mutableStateOf<StageInstanceId?>(null) }
@@ -45,14 +46,14 @@ fun DurableBrewSessionFeedback(
         mutableStateOf<BrewSessionStatus?>(null)
     }
 
-    LaunchedEffect(presentation.sessionId, stage?.stageInstanceId, presentation.status, enabled) {
+    LaunchedEffect(presentation.sessionId, stage?.stageInstanceId, presentation.status, cuesEnabled) {
         val priorStageId = previousStageId
         val priorStageAction = previousStageAction
         val priorStatus = observedStatus
         val runningStageChanged = presentation.status == BrewSessionStatus.RUNNING &&
             priorStageId != null &&
             priorStageId != stage?.stageInstanceId
-        if (enabled && runningStageChanged) {
+        if (cuesEnabled && runningStageChanged) {
             if (priorStageAction == BrewStageAction.BLOOM) {
                 vibrator.playDurableCue(vibrationTheme, BrewVibrationEvent.BLOOM_COMPLETE)
                 playDurableTone(ToneGenerator.TONE_PROP_BEEP2, 250)
@@ -62,7 +63,7 @@ fun DurableBrewSessionFeedback(
             }
             dimController.wake()
         } else if (
-            enabled && presentation.justCompletedFrom(priorStatus)
+            cuesEnabled && presentation.justCompletedFrom(priorStatus)
         ) {
             vibrator.playDurableCue(vibrationTheme, BrewVibrationEvent.TARGET_REACHED)
             playDurableTone(ToneGenerator.TONE_PROP_BEEP2, 250)
@@ -74,7 +75,7 @@ fun DurableBrewSessionFeedback(
     }
 
     val currentMinute = (presentation.totalActiveElapsedMillis / MILLIS_PER_MINUTE).toInt()
-    LaunchedEffect(presentation.sessionId, currentMinute, presentation.status, enabled) {
+    LaunchedEffect(presentation.sessionId, currentMinute, presentation.status, cuesEnabled) {
         val previousMinute = observedMinute
         if (
             shouldPlayDurableMinuteCue(
@@ -83,7 +84,7 @@ fun DurableBrewSessionFeedback(
                 completion = stage?.completion,
                 previousMinute = previousMinute,
                 currentMinute = currentMinute,
-                enabled = enabled,
+                enabled = cuesEnabled,
             )
         ) {
             vibrator.playDurableCue(vibrationTheme, BrewVibrationEvent.MINUTE)
@@ -95,9 +96,9 @@ fun DurableBrewSessionFeedback(
     val bloomWarningSeconds = (stage?.completion as? BrewStageCompletionPresentation.Countdown)
         ?.remainingMillis
         ?.let { remaining -> ((remaining.coerceAtLeast(0L) + 999L) / 1_000L).toInt() }
-    LaunchedEffect(presentation.sessionId, stage?.stageInstanceId, bloomWarningSeconds, enabled) {
+    LaunchedEffect(presentation.sessionId, stage?.stageInstanceId, bloomWarningSeconds, cuesEnabled) {
         if (
-            enabled && stage?.action == BrewStageAction.BLOOM &&
+            cuesEnabled && stage?.action == BrewStageAction.BLOOM &&
                 bloomWarningSeconds?.let { seconds -> seconds in 1..3 } == true
         ) {
             vibrator.playDurableCue(vibrationTheme, BrewVibrationEvent.BLOOM_WARNING)

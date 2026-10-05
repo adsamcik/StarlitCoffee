@@ -104,11 +104,8 @@
     <string name="label_increase">Zwiększ %1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Przygotuj parzenie</string>
 <string name="action_ready_to_brew_short">Gotowe do parzenia</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Przygotowanie</string>
-    <string name="label_recipe_heading">Przepis</string>
     <string name="label_temp_short">Temp.</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Zwilż papierowy filtr w podstawie (zawór otwarty) i pozwól wodzie spłynąć. Zamontuj cylinder, wsyp kawę, wyrównaj złoże, załóż pokrywkę dyspersyjną. Wytaruj wagę.</string>
@@ -118,8 +115,6 @@
     <string name="prep_tip_french_press">Rozgrzej French Press, potem wylej wodę. Wsyp kawę, postaw na wadze i wytaruj przed dodaniem wody.</string>
     <string name="prep_tip_espresso">Wytrzyj kolbę do sucha. Odmierz dawkę, rozprowadź ją równo i ubij poziomo przed zapięciem.</string>
     <string name="prep_tip_moka">Napełnij dolną komorę do zaworu. Wsyp kawę do sitka, wyrównaj — nie ubijaj. Ostrożnie skręć kawiarkę.</string>
-    <string name="format_prep_grind_specific">Zmiel %1$s — ustaw %2$s na %3$s</string>
-    <string name="format_prep_grind_generic">Zmiel %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Wstrzymaj</string>
@@ -734,7 +729,6 @@
     <string name="guidance_cue_valve_state">Stan zaworu</string>
     <string name="screen_learning_title">Nauka</string>
     <string name="msg_learning_subtitle">Ilustrowane instrukcje parzenia krok po kroku</string>
-    <string name="msg_learning_intro">Wybierz zaparzacz i przepis, a następnie poznawaj kolejne jasne kroki.</string>
     <string name="action_show_details">Pokaż szczegóły</string>
     <string name="action_hide_details">Ukryj szczegóły</string>
 

@@ -1,0 +1,126 @@
+{
+  "research_date": "2026-10-02",
+  "baseline_commit": "490fc2d4",
+  "scope": "Primary-source research, beginner guides, and factual audit; not a physical brew or localization review",
+  "methods": [
+    {
+      "id": "chemex",
+      "title": "Chemex",
+      "existing_support": "existing",
+      "guide": "methods/chemex.md",
+      "evidence": "methods/chemex.json"
+    },
+    {
+      "id": "automatic-drip",
+      "title": "Automatic drip",
+      "existing_support": "catalog",
+      "guide": "methods/automatic-drip.md",
+      "evidence": "methods/automatic-drip.json"
+    },
+    {
+      "id": "pulsar",
+      "title": "NextLevel Pulsar",
+      "existing_support": "existing",
+      "guide": "methods/pulsar.md",
+      "evidence": "methods/pulsar.json"
+    },
+    {
+      "id": "v60",
+      "title": "Hario V60",
+      "existing_support": "existing",
+      "guide": "methods/v60.md",
+      "evidence": "methods/v60.json"
+    },
+    {
+      "id": "clever",
+      "title": "Clever Dripper",
+      "existing_support": "catalog",
+      "guide": "methods/clever.md",
+      "evidence": "methods/clever.json"
+    },
+    {
+      "id": "hario-switch",
+      "title": "Hario Switch",
+      "existing_support": "catalog",
+      "guide": "methods/hario-switch.md",
+      "evidence": "methods/hario-switch.json"
+    },
+    {
+      "id": "kalita-wave",
+      "title": "Kalita Wave",
+      "existing_support": "catalog",
+      "guide": "methods/kalita-wave.md",
+      "evidence": "methods/kalita-wave.json"
+    },
+    {
+      "id": "melitta",
+      "title": "Melitta style pour over",
+      "existing_support": "catalog",
+      "guide": "methods/melitta.md",
+      "evidence": "methods/melitta.json"
+    },
+    {
+      "id": "turkish",
+      "title": "Turkish coffee",
+      "existing_support": "catalog",
+      "guide": "methods/turkish.md",
+      "evidence": "methods/turkish.json"
+    },
+    {
+      "id": "phin",
+      "title": "Vietnamese phin",
+      "existing_support": "catalog",
+      "guide": "methods/phin.md",
+      "evidence": "methods/phin.json"
+    },
+    {
+      "id": "french-press",
+      "title": "French press",
+      "existing_support": "existing",
+      "guide": "methods/french-press.md",
+      "evidence": "methods/french-press.json"
+    },
+    {
+      "id": "aeropress",
+      "title": "AeroPress",
+      "existing_support": "existing",
+      "guide": "methods/aeropress.md",
+      "evidence": "methods/aeropress.json"
+    },
+    {
+      "id": "espresso",
+      "title": "Espresso",
+      "existing_support": "existing",
+      "guide": "methods/espresso.md",
+      "evidence": "methods/espresso.json"
+    },
+    {
+      "id": "moka-pot",
+      "title": "Moka pot",
+      "existing_support": "existing",
+      "guide": "methods/moka-pot.md",
+      "evidence": "methods/moka-pot.json"
+    },
+    {
+      "id": "cold-brew",
+      "title": "Cold brew",
+      "existing_support": "existing",
+      "guide": "methods/cold-brew.md",
+      "evidence": "methods/cold-brew.json"
+    },
+    {
+      "id": "siphon",
+      "title": "Siphon",
+      "existing_support": "new",
+      "guide": "methods/siphon.md",
+      "evidence": "methods/siphon.json"
+    },
+    {
+      "id": "percolator",
+      "title": "Percolator",
+      "existing_support": "new",
+      "guide": "methods/percolator.md",
+      "evidence": "methods/percolator.json"
+    }
+  ]
+}

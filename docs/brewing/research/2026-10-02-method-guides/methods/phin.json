@@ -1,0 +1,408 @@
+{
+  "method_id": "phin",
+  "title": "Vietnamese phin brewing guide",
+  "scope": "Nguyen Coffee Supply single-serving 4 oz stainless steel gravity phin with a loose drop-in disc; explicit rounded metric volume adaptation, not a universal screw-phin recipe",
+  "research_date": "2026-10-02",
+  "review_status": "editorially_reviewed",
+  "physical_brew_tested": false,
+  "sources": [
+    {
+      "id": "nguyen_traditional",
+      "title": "Phin Filter: traditional Vietnamese drip guide",
+      "url": "https://nguyencoffeesupply.com/blogs/vietnamese-coffee-brew-guide/traditional-vietnamese-drip-phin",
+      "author_or_organization": "Nguyen Coffee Supply",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "14 g dose; 4 oz water; 1 oz initial pour and 45-second wait; 195–200 F; disc before wetting; serving options",
+        "Printed 1:2 lacks a common-unit definition and is not a verified mass ratio"
+      ]
+    },
+    {
+      "id": "nguyen_dialing",
+      "title": "Dialing In Your Phin: How to Make the Best Vietnamese Phin Coffee",
+      "url": "https://nguyencoffeesupply.com/blogs/news/dialing-in-your-phin-how-to-make-the-best-vietnamese-phin-coffee?_pos=1&_psq=dialin&_ss=e&_v=1.0",
+      "author_or_organization": "Nguyen Coffee Supply",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Single-serving 4 oz phin scope; first drip by two minutes and last near five",
+        "Finer grind slows flow; loose gravity-disc lift and release can restore gas-stalled flow"
+      ]
+    },
+    {
+      "id": "nguyen_care",
+      "title": "How to Use & Clean a Vietnamese Phin Filter",
+      "url": "https://nguyencoffeesupply.com/blogs/news/using-and-maintaining-a-vietnamese-phin-filter?_pos=2&_psq=phin+filter&_ss=e&_v=1.0",
+      "author_or_organization": "Nguyen Coffee Supply",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Dry parts and soft washing; avoid abrasives; dishwasher permission for this maker's phins",
+        "Alternative insert-after-bloom troubleshooting technique; timing is not a strict pass/fail rule"
+      ]
+    },
+    {
+      "id": "nguyen_hardware",
+      "title": "Phin Filter FAQ: Every Question Answered",
+      "url": "https://nguyencoffeesupply.com/pages/master-phin-filter-faq",
+      "author_or_organization": "Nguyen Coffee Supply",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Stainless steel brewer, separate gravity disc, plate, chamber and lid; no paper; lid as coaster",
+        "Water and soap cleaning; fine grind and sufficient dose for the 4 oz size; dilution and serving are optional"
+      ]
+    },
+    {
+      "id": "nam_hardware",
+      "title": "Phin Filter (Black)",
+      "url": "https://www.nam.coffee/products/phin-filter-black",
+      "author_or_organization": "Nam Coffee",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "A different 8 oz aluminum phin with recommended hand washing; dishwasher permission must not be generalized"
+      ]
+    },
+    {
+      "id": "trung_nguyen_thien_pdf",
+      "title": "Cà Phê Rang Xay Trung Nguyên Legend Thiên product declaration and packaging",
+      "url": "https://trungnguyenlegend.com/wp-content/uploads/2021/04/61.-CA-PHE-RANG-XAY-TNLG-THIEN.pdf",
+      "author_or_organization": "Trung Nguyên Legend",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "partial",
+      "supports": [
+        "PDF identified as a 15-page original manufacturer document; recipe text was unavailable and the requested page screenshot timed out; no recipe claim relies on it"
+      ]
+    }
+  ],
+  "recipe": {
+    "name": "4 oz gravity phin: rounded metric volume adaptation",
+    "provenance": "app_authored_synthesis",
+    "source_ids": [
+      "nguyen_traditional",
+      "nguyen_dialing",
+      "nguyen_care",
+      "nguyen_hardware"
+    ],
+    "equipment": [
+      "Nguyen Coffee Supply 4 oz stainless steel gravity phin with its loose disc, plate, chamber and lid",
+      "Stable heat-safe cup supporting the plate",
+      "Kettle",
+      "Coffee scale",
+      "Graduated water measure",
+      "Timer",
+      "Grinder or appropriately ground coffee"
+    ],
+    "coffee_dose_g": 14,
+    "brew_water_g": null,
+    "brew_water_ml": 118,
+    "ice_g": 0,
+    "target_beverage_g": null,
+    "ratio_basis": "volume_per_mass",
+    "ratio_value": 8.4285714286,
+    "water_temperature_c": {
+      "min": 91,
+      "max": 93,
+      "control": "user"
+    },
+    "grind_description": "Fine, with visible sand-like particles; dial to this phin rather than a universal grinder number",
+    "expected_time_s": {
+      "min": null,
+      "max": null,
+      "approximate_target_s": 300,
+      "first_drip_reference_s": 120,
+      "clock_start": "Initial water first touches coffee; app-authored clock convention because source does not state origin",
+      "clock_end": "Standing water has drained and dripping ends; around 300 seconds is a reference, not a forced stop"
+    },
+    "completion_signal": "No standing brew water remains and dripping has ended; first drip is an earlier diagnostic cue",
+    "scaling": "equipment_bound",
+    "adaptation_notes": [
+      "Interpret the US roaster's ounces of water as US fluid ounces, not ounces by mass",
+      "4 US fl oz is approximately 118.3 ml, rounded to 118 ml; 1 US fl oz is approximately 29.6 ml, rounded to 30 ml; remaining volume is 88 ml",
+      "195–200 F is approximately 90.6–93.3 C; selected metric range is 91–93 C",
+      "Do not read the source's printed 1:2 as a grams-to-grams ratio"
+    ],
+    "steps": [
+      {
+        "id": "prepare",
+        "instruction": "Use clean dry parts; seat the plate and chamber firmly on a stable heat-safe cup.",
+        "why": "Clear holes and stable support prevent blocked flow and spills.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "water_add_ml": null,
+        "water_cumulative_ml": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Holes are clean; brewer sits flat without rocking.",
+        "source_ids": [
+          "nguyen_care",
+          "nguyen_hardware"
+        ]
+      },
+      {
+        "id": "coffee_and_disc",
+        "instruction": "Add 14 g coffee, gently level it, and rest the loose disc flat on top without compressing.",
+        "why": "The bed is even and the insert remains free to rise.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "water_add_ml": null,
+        "water_cumulative_ml": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Level coffee bed with a freely resting disc.",
+        "source_ids": [
+          "nguyen_traditional",
+          "nguyen_hardware"
+        ]
+      },
+      {
+        "id": "initial_wetting",
+        "instruction": "Start timing at first water contact, gently add 30 ml, and wait until the timer reads 45 seconds.",
+        "why": "The bed wets and begins swelling before the main fill.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "water_add_ml": 30,
+        "water_cumulative_ml": 30,
+        "start_s": 0,
+        "duration_s": 45,
+        "completion": "Coffee has absorbed the initial pour and begun swelling.",
+        "source_ids": [
+          "nguyen_traditional",
+          "nguyen_care"
+        ]
+      },
+      {
+        "id": "main_fill",
+        "instruction": "Add 88 ml more, keeping below the rim; allow drainage if needed to finish the measured pour, then cover.",
+        "why": "Complete the chosen volume without overflowing the chamber.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "water_add_ml": 88,
+        "water_cumulative_ml": 118,
+        "start_s": 45,
+        "duration_s": null,
+        "completion": "118 ml total added without overflow; lid is on.",
+        "source_ids": [
+          "nguyen_traditional",
+          "nguyen_hardware"
+        ]
+      },
+      {
+        "id": "observe_drainage",
+        "instruction": "Observe the first drip, then wait for drainage and the last drops.",
+        "why": "First flow and completion are separate cues; elapsed time guides diagnosis.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "water_add_ml": null,
+        "water_cumulative_ml": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Water has drained and dripping ends; reference first drip by about 120 seconds and completion near 300 seconds.",
+        "source_ids": [
+          "nguyen_dialing",
+          "nguyen_care"
+        ]
+      },
+      {
+        "id": "serve",
+        "instruction": "Protect hands from hot metal, remove the phin onto its inverted lid or heat-safe tray, and serve.",
+        "why": "Separate brewer removal from optional dilution, condensed milk or ice.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "water_add_ml": null,
+        "water_cumulative_ml": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Phin is supported safely and coffee is ready for the chosen serving.",
+        "source_ids": [
+          "nguyen_hardware",
+          "nguyen_traditional"
+        ]
+      }
+    ]
+  },
+  "variants": [
+    {
+      "name": "Optional condensed milk or iced serving",
+      "how_it_differs": "Keep extraction unchanged; stir milk into collected coffee and add ice separately. No fixed milk, dilution or ice quantity is established by this baseline.",
+      "source_ids": [
+        "nguyen_traditional",
+        "nguyen_hardware"
+      ]
+    },
+    {
+      "name": "Alternative gravity-disc bloom order",
+      "how_it_differs": "Nguyen's care article suggests initial wetting before inserting the disc for stalled brews. This is a different procedure from the traditional guide followed here, not an instruction to switch order mid-brew.",
+      "source_ids": [
+        "nguyen_care",
+        "nguyen_traditional"
+      ]
+    },
+    {
+      "name": "Different phin size or material",
+      "how_it_differs": "Select a model-specific recipe and care instructions; Nam's 8 oz aluminum phin recommends hand washing. Do not automatically scale this 4 oz example.",
+      "source_ids": [
+        "nam_hardware",
+        "nguyen_dialing"
+      ]
+    },
+    {
+      "name": "Screw or slot-lock insert",
+      "how_it_differs": "Requires model-specific assembly and recipe evidence; a loose gravity-disc procedure does not validate threaded adjustment or a supplier's slot-lock procedure. No exact screw recipe is established here.",
+      "source_ids": [
+        "nguyen_hardware"
+      ]
+    }
+  ],
+  "troubleshooting": [
+    {
+      "symptom": "No drip or persistent stall",
+      "check_first": "Clean holes, dry parts, correct seating and an uncompressed loose disc.",
+      "adjustment": "For this gravity disc only, safely lift and release it briefly with a utensil to vent gas; otherwise let it cool. If the next brew still stalls, grind slightly coarser.",
+      "source_ids": [
+        "nguyen_care",
+        "nguyen_dialing"
+      ]
+    },
+    {
+      "symptom": "Very fast, weak brew",
+      "check_first": "Confirm measured coffee dose, flat disc and even bed.",
+      "adjustment": "Try a slightly finer grind next brew with water and dose unchanged.",
+      "source_ids": [
+        "nguyen_dialing",
+        "nguyen_hardware"
+      ]
+    },
+    {
+      "symptom": "Pleasant flavor but too concentrated",
+      "check_first": "Taste before adding milk or ice and confirm the input volume.",
+      "adjustment": "Dilute the collected coffee to taste, recording that water separately from extraction.",
+      "source_ids": [
+        "nguyen_hardware"
+      ]
+    },
+    {
+      "symptom": "Harsh or sour despite reasonable drainage",
+      "check_first": "Check temperature and the chosen bean/roast; timing alone is not a diagnosis.",
+      "adjustment": "Compare one controlled change next brew; begin with a small temperature or grind adjustment within this equipment's usable range.",
+      "source_ids": [
+        "nguyen_dialing"
+      ]
+    }
+  ],
+  "safety": [
+    "Place the complete brewer on a level surface and a heat-safe cup that fully supports the plate before pouring.",
+    "Keep water below the rim; do not force a full chamber to accept the remaining pour.",
+    "Chamber, plate, lid and disc become hot; use heat protection and keep hands out of the water path.",
+    "A gravity disc rests loosely; never push down or squeeze to force flow, and do not transfer its venting technique to threaded hardware.",
+    "Let parts cool before removing grounds; wash with soap and a soft sponge, rinse and dry; avoid abrasive pads and steel wool.",
+    "Follow the actual brewer's cleaning instructions; Nguyen's dishwasher permission does not cover Nam's aluminum model or all phins."
+  ],
+  "app_audit": [
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BuiltInP1RecipeCatalog.kt:572",
+      "finding": "Gravity recipe stores 14 g / 118 g, 8.43 mass ratio and 91–96 C with ORIGINAL_CREATOR_RECIPE/HIGH attribution. Current Nguyen water is in ounces by volume and temperature is 195–200 F; mass conversion and upper temperature are adaptations.",
+      "severity": "medium",
+      "change_recommendation": "Preserve volume with an explicit unit basis or label a deliberately chosen mass-based adaptation; align temperature to source and downgrade exact-creator attribution accordingly.",
+      "source_ids": [
+        "nguyen_traditional"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/session/P1PhinStagePlans.kt:14",
+      "finding": "Typed gravity stages encode 30 g plus 88 g, cumulative 118 g, and 91–96 C; first drip is no later than 120 s and finish is approximate 300 s. The observational time distinction is sound; the water unit is an unlabeled adaptation.",
+      "severity": "medium",
+      "change_recommendation": "Correct water units and temperature consistently with catalog and live guidance; retain observation-based completion instead of forcing a timer deadline.",
+      "source_ids": [
+        "nguyen_traditional",
+        "nguyen_dialing"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1ExactGuidanceFactualErrata.kt",
+      "finding": "No phin erratum exists. P1ExactGuidanceCatalog applies this file to recipe and stage data, so the immutable p1_exact_guidance_2026_07_27.json currently supplies creator attribution and mass-based water wording to live guidance.",
+      "severity": "medium",
+      "change_recommendation": "Add a reviewed runtime provenance/unit correction for phin; preserve the immutable historical source projection.",
+      "source_ids": [
+        "nguyen_traditional"
+      ]
+    },
+    {
+      "path": "docs/brewing/learning-guide-factual-audit-2026-08-19.md:49",
+      "finding": "Historical audit says 14 g / 118 g and a 30 g bloom match the source, while acknowledging 4 oz water. Current source says initial 1 oz, not 30 g; the historical verdict does not resolve the volume/mass mismatch.",
+      "severity": "medium",
+      "change_recommendation": "Record this later correction and its date; do not rely on the old match verdict as current unit proof.",
+      "source_ids": [
+        "nguyen_traditional"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BuiltinBrewerProfileRecipeDefaults.kt:250",
+      "finding": "Generic phin default is 1:5 input-water mass ratio, 90–96 C, 180–360 s and CollectedConcentrate(retainedWaterGPerCoffeeG=0.0). BrewingCatalog.kt:389 repeats zero retention; Recipe.kt:242 uses it to estimate concentrate as full brew input when no target is supplied.",
+      "severity": "medium",
+      "change_recommendation": "Treat 1:5 as an explicit generic starting point, separate from the named Nguyen recipe; use measured output or an unresolved estimate instead of asserting zero retention.",
+      "source_ids": [
+        "nguyen_traditional",
+        "nguyen_dialing"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BuiltInP1RecipeCatalog.kt:591",
+      "finding": "18 g / 120 g screw-insert profile has BATTLE_TESTED/MEDIUM status. Its Dragon Coffee URL is a supplier's spoon-dose, slot-lock insert, fill-to-level procedure, not a verified threaded-screw manufacturer procedure or those exact numeric quantities. No physical test evidence was found in this research pass.",
+      "severity": "medium",
+      "change_recommendation": "Identify an exact threaded model and primary procedure; label existing quantities as an app-authored profile and avoid claiming battle testing without test provenance.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1ExactRecipeReleaseGate.kt:88",
+      "finding": "Production readiness already retains BLOCK-PHIN-PRIMARY-HARDWARE-EVIDENCE for phin_screw_18_120. This research confirms that exact primary hardware/recipe evidence is still unresolved.",
+      "severity": "info",
+      "change_recommendation": "Keep the existing blocker until model-specific primary evidence is reviewed; this guide does not clear it or establish release readiness.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt",
+      "finding": "No phin everyday enum entry exists. Generic profile and two exact-catalog recipes do exist; P1BuiltInGuidanceCatalog uses equipment-specific assembly and observed drainage. grinders.json has no dedicated phin target.",
+      "severity": "info",
+      "change_recommendation": "Describe current support as generic profile/exact catalog. Future everyday support must include hardware-sensitive defaults, unit semantics and localized content rather than claiming catalog presence covers the whole flow.",
+      "source_ids": []
+    }
+  ],
+  "supplemental_audit_evidence": [
+    {
+      "title": "Dragon Coffee: Brewing Information",
+      "url": "https://trung-nguyen-coffee.co.uk/page_brewing.php",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "classification": "Supplier's own procedure; secondary for Trung Nguyen manufacturer attribution",
+      "supports": "The recipe specifies a slot/indentation locking disc, three rounded teaspoons, about 20 ml pre-wet for 20 seconds, then near-top fill; this is not direct evidence for a threaded 18 g/120 g recipe"
+    }
+  ],
+  "uncertainties": [
+    "Nguyen's printed 1:2 or FAQ 2:1 does not establish a dimensionless mass ratio beside 14 g / 4 oz; this guide uses the explicit dose and water volume, with the US-fluid-ounce interpretation stated.",
+    "The source says fill to the top without establishing usable chamber headroom with this bed; keep below the rim and allow drainage if required by the measured-volume adaptation.",
+    "Source timing origin is unstated; initial wetting is the app-authored clock convention. Approximate finish is not a hard 300-second window.",
+    "Traditional and care pages differ on disc-before versus disc-after-bloom order; this baseline follows traditional order consistently.",
+    "The Trung Nguyen Thien manufacturer PDF opened as 15 pages without extracted text, but its recipe screenshot timed out; the 2025 Chat Tien Phong manufacturer PDF also timed out. No recipe quantities are treated as verified from either.",
+    "Exact screw-thread hardware, 18 g/120 g recipe, 25 g pre-wet and 5–8-minute timing lack verified manufacturer/original-creator support in this pass; the variant is not a validated baseline and the existing production release blocker remains open.",
+    "No physical brew, localization review, Android device execution or release validation was performed; measured beverage yield and usable capacity with grounds remain untested."
+  ],
+  "do_not_claim": [
+    "Water volume in milliliters equals exact mass in grams.",
+    "The printed 1:2 is a grams-to-grams coffee/water ratio.",
+    "118 ml input produces 118 g concentrate or any universal beverage yield.",
+    "Every phin has the same capacity, insert mechanics, grind or completion time.",
+    "A threaded disc or twist-lock disc uses the loose gravity-disc venting technique.",
+    "A source supplier's slot-lock guide verifies a screw-thread manufacturer recipe.",
+    "All phins are dishwasher safe, or a reviewed exact catalog establishes full everyday/localized support.",
+    "The research draft was physically brewed or establishes release readiness."
+  ]
+}

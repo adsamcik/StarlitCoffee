@@ -39,7 +39,12 @@
     <string name="format_brew_stage_recorded_grams">Înregistrat %1$.0f g</string>
     <string name="format_brew_stage_remaining_grams">Au rămas %1$.0f g</string>
     <string name="label_brew_reference_cues">Repere</string>
-    <string name="msg_brew_reference_cues_not_completion">Doar pentru orientare. Finalizați pasul cu acțiunea principală de mai sus.</string>
+    <string name="action_pause_brew_guide">Pune ghidul pe pauză</string>
+    <string name="action_resume_brew_guide">Continuă ghidul</string>
+    <string name="action_pause_brew_clock">Pune cronometrul pe pauză</string>
+    <string name="msg_brew_clock_keeps_running">Cronometrul continuă.</string>
+    <string name="msg_brew_guide_paused">Ghidul este pe pauză. Cronometrul continuă.</string>
+    <string name="msg_brew_reference_cues_not_completion">Doar orientativ. Un reper de timp nu încheie un pas fizic.</string>
     <string name="action_show_more_brew_reference_cues">Afișați mai multe repere</string>
     <string name="action_hide_brew_reference_cues">Ascundeți reperele suplimentare</string>
     <string name="label_brew_reference_stage_duration">Durata etapei</string>

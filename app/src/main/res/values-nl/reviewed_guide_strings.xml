@@ -1,0 +1,12 @@
+<resources>
+    <string name="action_brew_this_guide">Zet volgens dit recept</string>
+    <string name="label_freshly_boiled_water">Vers gekookt water</string>
+    <string name="label_machine_temperature">Het apparaat regelt de temperatuur</string>
+    <string name="action_prepare_this_guide">Koffie voorbereiden</string>
+    <string name="label_reviewed_guide_english">Recept in het Engels</string>
+    <string name="heading_reviewed_sources">Recept en bronnen</string>
+    <string name="msg_reviewed_fill_quantities">Volg de aangegeven vulmarkeringen. Weeg de koffie die je daadwerkelijk gebruikt.</string>
+    <string name="label_measured_coffee_g">Toegevoegde koffie (g)</string>
+    <string name="label_optional_measured_water_g">Gewogen water (g, optioneel)</string>
+    <string name="msg_reviewed_equipment_confirm">Mijn apparatuur past bij dit recept.</string>
+</resources>

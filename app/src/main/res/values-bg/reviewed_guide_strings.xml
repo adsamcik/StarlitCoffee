@@ -1,0 +1,12 @@
+<resources>
+    <string name="action_brew_this_guide">Приготви по тази рецепта</string>
+    <string name="label_freshly_boiled_water">Току-що преварена вода</string>
+    <string name="label_machine_temperature">Машината регулира температурата</string>
+    <string name="action_prepare_this_guide">Подготви кафето</string>
+    <string name="label_reviewed_guide_english">Рецепта на английски</string>
+    <string name="heading_reviewed_sources">Рецепта и източници</string>
+    <string name="msg_reviewed_fill_quantities">Спазвайте посочените отметки за пълнене. Претеглете кафето, което действително използвате.</string>
+    <string name="label_measured_coffee_g">Добавено кафе (g)</string>
+    <string name="label_optional_measured_water_g">Претеглена вода (g, по избор)</string>
+    <string name="msg_reviewed_equipment_confirm">Моето оборудване съответства на тази рецепта.</string>
+</resources>

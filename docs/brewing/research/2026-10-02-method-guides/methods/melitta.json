@@ -1,0 +1,395 @@
+{
+  "method_id": "melitta",
+  "title": "Melitta style wedge pour-over brewing guide",
+  "scope": "App-authored 20 g / 320 g beginner baseline for the current European Melitta plastic 1x4 ribbed two-outlet dripper and matching 1x4 wedge paper; separate US #2/#4 and Japanese single-hole variants.",
+  "research_date": "2026-10-02",
+  "review_status": "editorially_reviewed",
+  "physical_brew_tested": false,
+  "sources": [
+    {
+      "id": "melitta_eu_1x4",
+      "title": "Black Coffee Filtercone to fit 1x4 Filter Papers",
+      "url": "https://www.melitta-international.com/accessories/Manual-Coffee-Preparation/Coffeefilters-pots/Coffee-Filter-1x4",
+      "author_or_organization": "Melitta Europa GmbH & Co. KG",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Current plastic 1x4 dripper has internal ribs and two outlets",
+        "1x2, 1x4 and 1x6 variants exist",
+        "Selected product is dishwasher safe",
+        "Side openings permit checking coffee level"
+      ]
+    },
+    {
+      "id": "melitta_filter_faq",
+      "title": "FAQ - Filters",
+      "url": "https://www.melitta.co.uk/faq/filter-papers",
+      "author_or_organization": "Melitta",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Correct filter size follows the holder or brewer instructions",
+        "Fold both embossed seams for stable paper seating",
+        "Incorrect sizing can cause folding or tearing",
+        "Regional historic size systems are not all one family"
+      ]
+    },
+    {
+      "id": "sweet_marias_filtercone",
+      "title": "Drip/Pourover/Filtercone Brewer Tip Sheet",
+      "url": "https://library.sweetmarias.com/wp-content/uploads/2020/08/Drip-Brewing-Pourover-Filtercone-Tip-Sheet.pdf",
+      "author_or_organization": "Sweet Maria's Coffee",
+      "source_type": "original_creator",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Rinse paper with hot water and preheat vessels",
+        "Medium to medium-fine grind starting region",
+        "Adjust grind using drainage and taste",
+        "Weight measurement avoids coffee-volume density differences",
+        "Bloom wets coffee and releases gases",
+        "Pour onto coffee to avoid side-paper bypass",
+        "Dose, grind, temperature, contact and agitation affect extraction"
+      ]
+    },
+    {
+      "id": "melitta_us_64007",
+      "title": "1-Cup Pour-Over Coffee Brew Cone - Black, SKU 64007",
+      "url": "https://shoponline.melitta.com/products/1-cup-pour-over-coffee-brew-cone-black",
+      "author_or_organization": "Melitta USA",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "US SKU 64007 explicitly supports #2 or #4 cone paper",
+        "Fold paper seams and use a mug or jar",
+        "Viewing opening helps avoid cup overfill",
+        "This plastic product is top-rack dishwasher safe"
+      ]
+    },
+    {
+      "id": "melitta_japan_hasami",
+      "title": "Brewing with Melitta single-hole Hasami Coffee Filter",
+      "url": "https://www.melitta.co.jp/enjoyment/how_to/brewing_with_hasamicoffeefilter/",
+      "author_or_organization": "Melitta Japan",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Named Japanese Hasami models have one outlet and ribs",
+        "Use papers matching the stated 1x1 or 1x2 size",
+        "Preheat ceramic, porcelain and glass filter holders",
+        "Published Hasami technique uses a short bloom then one remaining-water addition"
+      ]
+    },
+    {
+      "id": "voltage_pulse",
+      "title": "Brewing with the Melitta",
+      "url": "https://voltagecoffee.com/melitta/",
+      "author_or_organization": "VoltageCoffee",
+      "source_type": "original_creator",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Published 23.5 g coffee and 400 g input-water example",
+        "Published additions 50, 50, 100, 100 and 100 g",
+        "Instruction durations 40, 25, 30, 30 and 90 seconds sum to 215 seconds",
+        "Source has inconsistent headline, card and bloom timings; verified access is not endorsement of every technical claim"
+      ]
+    }
+  ],
+  "recipe": {
+    "name": "Two-outlet 1x4 beginner baseline, 20 g / 320 g",
+    "provenance": "app_authored_synthesis",
+    "source_ids": [
+      "melitta_eu_1x4",
+      "melitta_filter_faq",
+      "sweet_marias_filtercone"
+    ],
+    "equipment": [
+      "Current European Melitta plastic 1x4 dripper with two outlets and ribs",
+      "Matching 1x4 wedge paper",
+      "Stable heat-safe server with room for whole batch and clearance below outlets",
+      "Kettle",
+      "Scale",
+      "Timer",
+      "Grinder or freshly ground coffee"
+    ],
+    "coffee_dose_g": 20,
+    "brew_water_g": 320,
+    "brew_water_ml": null,
+    "ice_g": 0,
+    "target_beverage_g": null,
+    "ratio_basis": "brew_water_input",
+    "ratio_value": 16,
+    "water_temperature_c": {
+      "min": 94,
+      "max": 94,
+      "control": "user"
+    },
+    "grind_description": "Medium starting texture with visible small granules, not powder; no transferable grinder number.",
+    "expected_time_s": {
+      "min": null,
+      "max": null,
+      "clock_start": "First brew water touching coffee; includes bloom pouring time",
+      "clock_end": "No standing pool above the bed and stream has reduced to occasional drips"
+    },
+    "completion_signal": "After all 320 g is added, standing water has drained and the outlet stream becomes occasional drips; remove dripper carefully.",
+    "scaling": "revalidate_batch_size",
+    "steps": [
+      {
+        "id": "setup",
+        "instruction": "Place dripper and server securely; check both outlets are clean, the server opening is clear and coffee cannot reach the outlets.",
+        "why": "Check hardware restrictions and stability before adjusting grind.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Stable assembly with open outlets and room for the whole batch.",
+        "source_ids": [
+          "melitta_eu_1x4"
+        ]
+      },
+      {
+        "id": "rinse",
+        "instruction": "Fold bottom and side seams of matching 1x4 wedge paper, seat it, rinse with hot water and discard rinse water.",
+        "why": "Seats paper and preheats equipment without counting rinse water in the recipe.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Paper fits without crumpling; server contains no rinse water.",
+        "source_ids": [
+          "melitta_filter_faq",
+          "sweet_marias_filtercone"
+        ]
+      },
+      {
+        "id": "coffee",
+        "instruction": "Add 20 g medium-ground coffee, level gently and tare the scale; do not tare again between pours.",
+        "why": "The scale then measures cumulative brew-water input only.",
+        "water_add_g": 0,
+        "water_cumulative_g": 0,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Level coffee bed and zeroed scale.",
+        "source_ids": [
+          "sweet_marias_filtercone"
+        ]
+      },
+      {
+        "id": "bloom",
+        "instruction": "Start timer at first water contact and gently wet all grounds with 40 g; wait until the clock reaches 30 seconds including pouring time.",
+        "why": "A selected 2:1 bloom allowance wets the bed before larger additions.",
+        "water_add_g": 40,
+        "water_cumulative_g": 40,
+        "start_s": 0,
+        "duration_s": 30,
+        "completion": "All grounds are wet and clock reads 0:30; visible foam is not required.",
+        "source_ids": [
+          "sweet_marias_filtercone"
+        ]
+      },
+      {
+        "id": "first_main_pour",
+        "instruction": "Add 140 g gently over coffee to reach 180 g total. Pause if necessary to stay below the paper edge and rim; wait until the standing water has largely drained.",
+        "why": "Split additions leave headroom while maintaining a clear cumulative scale target.",
+        "water_add_g": 140,
+        "water_cumulative_g": 180,
+        "start_s": 30,
+        "duration_s": null,
+        "completion": "Scale reads 180 g and standing water has largely drained.",
+        "source_ids": [
+          "melitta_eu_1x4",
+          "sweet_marias_filtercone"
+        ]
+      },
+      {
+        "id": "last_pour",
+        "instruction": "Add the remaining 140 g gently over coffee, pausing to preserve headroom, and stop at 320 g total.",
+        "why": "Completes the weighed input-water recipe without flooding.",
+        "water_add_g": 140,
+        "water_cumulative_g": 320,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Scale reads 320 g; no overflow or paper collapse.",
+        "source_ids": [
+          "melitta_eu_1x4",
+          "sweet_marias_filtercone"
+        ]
+      },
+      {
+        "id": "drain_serve",
+        "instruction": "Wait for standing water to disappear and the stream to become occasional drips, remove the hot dripper onto a heat-safe dish, mix the server and serve.",
+        "why": "Observable drainage decides completion; measured input is not a promised beverage yield.",
+        "water_add_g": 0,
+        "water_cumulative_g": 320,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "No standing pool remains and the server contains mixed brewed coffee.",
+        "source_ids": [
+          "sweet_marias_filtercone",
+          "melitta_eu_1x4"
+        ]
+      }
+    ]
+  },
+  "variants": [
+    {
+      "name": "US one-cup plastic SKU 64007",
+      "how_it_differs": "Manufacturer explicitly accepts #2 or #4 wedge paper; this permission does not establish interchangeability for every regional Melitta dripper or increase dripper capacity. Top-rack dishwasher care is model-specific.",
+      "source_ids": [
+        "melitta_us_64007",
+        "melitta_filter_faq"
+      ]
+    },
+    {
+      "name": "Japanese single-hole Hasami",
+      "how_it_differs": "Named 1x1/1x2 ceramic models have one outlet and their own paper sizes; maker procedure blooms briefly then adds remaining water once. This guide's two-outlet recipe is not their official procedure.",
+      "source_ids": [
+        "melitta_japan_hasami"
+      ]
+    },
+    {
+      "name": "Voltage 23.5 g / 400 g pulse recipe",
+      "how_it_differs": "Original page uses 50 + 50 + 100 + 100 + 100 g. Its timing is internally inconsistent and its single-hole scope must not be silently extended to all Melitta models.",
+      "source_ids": [
+        "voltage_pulse",
+        "melitta_eu_1x4",
+        "melitta_japan_hasami"
+      ]
+    }
+  ],
+  "troubleshooting": [
+    {
+      "symptom": "Slow drainage or pooling",
+      "check_first": "Confirm correctly sized and seated paper, clean outlets, clear server opening, outlet clearance above brewed liquid and pours below the rim.",
+      "adjustment": "After setup checks, grind slightly coarser for the next brew; do not force water through or add extra water.",
+      "source_ids": [
+        "melitta_filter_faq",
+        "melitta_eu_1x4",
+        "sweet_marias_filtercone"
+      ]
+    },
+    {
+      "symptom": "Fast drainage and weak coffee",
+      "check_first": "Confirm weighed dose, complete bed wetting and pouring onto coffee rather than bare side paper.",
+      "adjustment": "Try slightly finer grinding next time, with other variables unchanged.",
+      "source_ids": [
+        "sweet_marias_filtercone"
+      ]
+    },
+    {
+      "symptom": "Sharp, bitter or drying taste despite sound setup",
+      "check_first": "Confirm recipe quantities, kettle temperature and even wetting; consider the coffee's roast and inherent flavor.",
+      "adjustment": "For unpleasant sharpness try finer grinding; for bitter or drying taste try coarser grinding or lower temperature, changing one variable per brew. These are app-authored starting diagnostics, not certain causes.",
+      "source_ids": [
+        "sweet_marias_filtercone"
+      ]
+    }
+  ],
+  "safety": [
+    "Keep server and dripper stable and hands clear of hot liquid.",
+    "Keep liquid below paper edge and dripper rim; pause pours when headroom is insufficient.",
+    "Do not allow rising brewed coffee to submerge outlets; monitor the server level.",
+    "Cool used grounds before discarding the paper; wash, rinse and dry equipment and clear both outlets.",
+    "Selected European plastic 1x4 dripper is dishwasher safe; US SKU 64007 specifies top rack. Follow separate care instructions for other models."
+  ],
+  "app_audit": [
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt",
+      "finding": "No standalone MELITTA enum method. The exact recipe and generic wedge profile are separate from legacy everyday methods; grinders.json has no Melitta-specific mapping.",
+      "severity": "info",
+      "change_recommendation": "Do not present exact-catalog presence as complete everyday-method, grinder or localization support. If adding everyday support, use wedge geometry and equipment-dependent capacity.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BrewingCatalog.kt:234",
+      "finding": "manual_wedge_generic correctly uses wedge_paper, separate from conical profiles, but represents no specific outlet arrangement.",
+      "severity": "info",
+      "change_recommendation": "Retain wedge distinction and describe actual model/paper compatibility; do not imply every Melitta dripper has one small hole.",
+      "source_ids": [
+        "melitta_eu_1x4",
+        "melitta_us_64007",
+        "melitta_japan_hasami"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BuiltInP1RecipeCatalog.kt:322",
+      "finding": "wedge_pulse_23_5_400 stores correct 23.5/400 quantities and rounded 17.02 ratio, 91-96 C approximation, 210-240 s range, six stages and BATTLE_TESTED evidence label. Current webpage evidence does not establish repeatable validation, and timing is internally inconsistent.",
+      "severity": "medium",
+      "change_recommendation": "Describe a published-web-recipe adaptation with medium confidence, document timing ambiguity, and avoid treating the evidence class as physical validation.",
+      "source_ids": [
+        "voltage_pulse"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/session/P1ManualGravityStagePlans.kt:270",
+      "finding": "Typed plan has 40 s bloom and additions/cumulative totals 50/50, 50/100, 100/200, 100/300, 100/400. The 25,30,30,90 s source step durations are absent; final observation targets 210-240 s. Correct water arithmetic does not resolve published timing contradictions.",
+      "severity": "medium",
+      "change_recommendation": "Keep observable drainage and label the timing interpretation as an adaptation; make clock origin and bloom interval explicit rather than claim exact source transcription.",
+      "source_ids": [
+        "voltage_pulse"
+      ]
+    },
+    {
+      "path": "app/src/main/res/raw/p1_exact_guidance.json",
+      "finding": "Live wedge recipe calls intermediate pulses condition-dependent and mostly drained, then targets about 3:30-4:00. Side-paper warning attributes fines collecting near restricted outlet; all physical warning fields except that final warning are None. P1ExactGuidanceCatalog loads this resource and applies factual errata.",
+      "severity": "medium",
+      "change_recommendation": "Use clear wet-bed and below-rim pour cues, explain side-paper bypass, add model-aware paper-fit and outlet/headroom checks, and label the adapted schedule. Avoid an unverified universal fines-through-paper outlet-clog mechanism.",
+      "source_ids": [
+        "sweet_marias_filtercone",
+        "melitta_filter_faq",
+        "melitta_eu_1x4",
+        "voltage_pulse"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1ExactGuidanceFactualErrata.kt",
+      "finding": "Current factual errata cover Clever, cezve and Cup-One but contain no Melitta override; the current timing/provenance interpretation remains live.",
+      "severity": "info",
+      "change_recommendation": "Apply future factual corrections through live guidance/catalog paths while preserving immutable historical source projections.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BuiltinBrewerProfileRecipeDefaults.kt:186",
+      "finding": "Generic manual wedge inherits manual gravity 1:16, 93-96 C, 150-210 s, equipment configuration capacity and 2.0 g/g water-retention output estimate.",
+      "severity": "medium",
+      "change_recommendation": "Treat temperature and ratio as starting choices; do not make the shared time window a hardware deadline or retention coefficient a promised yield. Revalidate actual model and batch.",
+      "source_ids": [
+        "sweet_marias_filtercone",
+        "melitta_eu_1x4"
+      ]
+    },
+    {
+      "path": "docs/brewing/learning-guide-factual-audit-2026-08-19.md:36",
+      "finding": "Historic audit says Voltage pulse schedule and 3:30-4:00 match without recording the source's contradictory step-duration arithmetic or 30/40 s bloom prose.",
+      "severity": "medium",
+      "change_recommendation": "Append a dated follow-up distinguishing correct quantities from ambiguous timing; do not retrospectively alter historical provenance or claim the source changed without archived comparison.",
+      "source_ids": [
+        "voltage_pulse"
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Baseline 20/320, 94 C, 40/140/140 additions and 30 s first-contact bloom are app-authored starting choices and have not been physically brewed.",
+    "No verified universal maximum slurry capacity, outlet diameter or finish time; liquid headroom must be observed.",
+    "Current Voltage recipe duration sum is 215 s but prose says 210 s and card says 240 s; separate prose says 30 s bloom while instructions say 40 s.",
+    "No archived same-page comparison establishes whether Voltage changed since the historical audit.",
+    "US and European filter compatibility must follow the exact brewer label; Japanese regional numeric paper sizes are not automatically equivalent.",
+    "Beverage yield depends on coffee retention and drainage and is not measured here.",
+    "No device execution, localization review or kitchen test was performed."
+  ],
+  "do_not_claim": [
+    "All Melitta drippers have one small outlet or all are interchangeable with V60.",
+    "#4 paper safely increases a smaller dripper's supported liquid capacity.",
+    "Voltage's current timing is one unambiguous exact 3:30-4:00 recipe.",
+    "Bloom performs no extraction, guarantees foaming or makes every coffee perfect.",
+    "Fines universally pass through intact paper and clog the dripper hole.",
+    "A fixed 2 g/g retention or 30-second decaf shortcut applies to every wedge brew.",
+    "320 g input water equals 320 ml by definition or a 320 g beverage.",
+    "This draft establishes physical-brew validation or release readiness."
+  ]
+}

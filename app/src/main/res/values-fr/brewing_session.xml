@@ -39,7 +39,12 @@
     <string name="format_brew_stage_recorded_grams">Enregistré %1$.0f g</string>
     <string name="format_brew_stage_remaining_grams">%1$.0f g restants</string>
     <string name="label_brew_reference_cues">Repères</string>
-    <string name="msg_brew_reference_cues_not_completion">À titre indicatif uniquement. Terminez l\'étape avec l\'action principale ci-dessus.</string>
+    <string name="action_pause_brew_guide">Mettre le guide en pause</string>
+    <string name="action_resume_brew_guide">Reprendre le guide</string>
+    <string name="action_pause_brew_clock">Mettre le minuteur en pause</string>
+    <string name="msg_brew_clock_keeps_running">Le minuteur continue.</string>
+    <string name="msg_brew_guide_paused">Guide en pause. Le minuteur continue.</string>
+    <string name="msg_brew_reference_cues_not_completion">À titre indicatif. Une indication de temps ne termine pas une étape physique.</string>
     <string name="action_show_more_brew_reference_cues">Afficher plus de repères</string>
     <string name="action_hide_brew_reference_cues">Masquer les repères supplémentaires</string>
     <string name="label_brew_reference_stage_duration">Durée de l\'étape</string>

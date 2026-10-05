@@ -104,11 +104,8 @@
     <string name="label_increase">Povečajte %1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Pripravite se na kuhanje</string>
     <string name="action_ready_to_brew_short">Začnite kuhanje</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Priprava</string>
-    <string name="label_recipe_heading">Recept</string>
     <string name="label_temp_short">Temp.</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Zmočite papirnati filter v osnovi (ventil odprt) in odcedite. Namestite valj, dodajte mleto kavo, poravnajte plast, namestite razpršilni pokrovček. Tarirajte tehtnico.</string>
@@ -118,8 +115,6 @@
     <string name="prep_tip_french_press">Ogrejte posodo in jo nato izpraznite. Dodajte mleto kavo, postavite na tehtnico in tarirajte, preden dolijete vodo.</string>
     <string name="prep_tip_espresso">Obrišite ročko do suhega. Odmerite, porazdelite in enakomerno potlačite, preden jo vpnete.</string>
     <string name="prep_tip_moka">Napolnite spodnji del do ventila. Košarico napolnite z mleto kavo, poravnajte — ne tlačite. Previdno sestavite.</string>
-    <string name="format_prep_grind_specific">Mletje %1$s — nastavite %2$s na %3$s</string>
-    <string name="format_prep_grind_generic">Mletje %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Premor</string>
@@ -735,7 +730,6 @@
     <string name="guidance_cue_valve_state">Stanje ventila</string>
     <string name="screen_learning_title">Nauči se</string>
     <string name="msg_learning_subtitle">Slikovni vodniki za pripravo po korakih</string>
-    <string name="msg_learning_intro">Izberite pripravljalnik in recept, nato pa raziščite en jasen korak naenkrat.</string>
     <string name="action_show_details">Pokaži podrobnosti</string>
     <string name="action_hide_details">Skrij podrobnosti</string>
 

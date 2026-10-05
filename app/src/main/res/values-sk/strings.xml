@@ -104,11 +104,8 @@
     <string name="label_increase">Zvýšiť %1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Pripravte si všetko</string>
 <string name="action_ready_to_brew_short">Pripravené na prípravu</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Príprava</string>
-    <string name="label_recipe_heading">Recept</string>
     <string name="label_temp_short">Teplota</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Navlhčite papierový filter v základni (ventil otvorený) a nechajte odtiecť. Nasaďte valec, pridajte kávu, zarovnajte lôžko a položte disperzný kryt. Vytárujte váhu.</string>
@@ -118,8 +115,6 @@
     <string name="prep_tip_french_press">Predhrejte French Press a potom ho vyprázdnite. Pridajte kávu, položte na váhu a pred pridaním vody vytárujte.</string>
     <string name="prep_tip_espresso">Utrite páku dosucha. Nadávkujte, rovnomerne rozprestrite a utlačte do roviny pred nasadením.</string>
     <string name="prep_tip_moka">Naplňte spodnú komoru po ventil. Naplňte košík kávou, zarovnajte — neutláčajte. Opatrne zložte.</string>
-    <string name="format_prep_grind_specific">Pomeľte %1$s — nastavte %2$s na %3$s</string>
-    <string name="format_prep_grind_generic">Pomeľte %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Pozastaviť</string>
@@ -734,7 +729,6 @@
     <string name="guidance_cue_valve_state">Stav ventilu</string>
     <string name="screen_learning_title">Naučiť sa</string>
     <string name="msg_learning_subtitle">Názorné návody na prípravu krok za krokom</string>
-    <string name="msg_learning_intro">Vyberte si zariadenie a recept a potom postupujte po jednom jasnom kroku.</string>
     <string name="action_show_details">Zobraziť podrobnosti</string>
     <string name="action_hide_details">Skryť podrobnosti</string>
 

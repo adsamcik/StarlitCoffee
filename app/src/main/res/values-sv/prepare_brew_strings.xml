@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_title_short">Förbered</string>
+    <string name="prep_equipment_station">Förbered bryggaren</string>
+    <string name="prep_beverage_yield">I koppen</string>
+    <string name="prep_recipe_details">Receptdetaljer</string>
+    <string name="prep_grinder_range">Rekommenderat intervall</string>
+    <string name="prep_grinder_adjustment">Justera med %1$s efter smak</string>
+    <string name="prep_grind_from_zero">Från noll</string>
+    <string name="prep_grind_on_dial">På vredet</string>
+    <string name="prep_grind_no_extra_clicks">%1$d · inga extra klick</string>
+    <string name="prep_grind_dial_breakdown">%1$d + %2$s</string>
+    <plurals name="prep_clicks">
+        <item quantity="one">%1$d klick</item>
+        <item quantity="other">%1$d klick</item>
+    </plurals>
+</resources>

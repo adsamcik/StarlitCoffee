@@ -1,0 +1,237 @@
+{
+  "revision": 2,
+  "reason": "User rejected the independent prototype and overly glossy icon treatment; preserve existing visual language.",
+  "role": "Learn recognition only; Brew equipment silhouettes and teaching art retain their distinct roles.",
+  "methods": [
+    {
+      "id": "chemex",
+      "name": "Chemex",
+      "reference_file": "references/chemex.jpg",
+      "source_url": "https://chemexcoffeemaker.com/products/six-cup-classic-chemex",
+      "file": "selected-v2/chemex.webp",
+      "origin": "Exact reuse of shipping Learn art",
+      "source_file": "app/src/main/res/drawable-nodpi/learn_brewer_icon_carafe.webp",
+      "sha256": "44084f2c788a70247a828b02b3c1661960618f769ef35f3c1f9a8346486598f3",
+      "note": "Existing recognition art retained; named photo is a geometry reference, not a claim of exact model depiction."
+    },
+    {
+      "id": "automatic-drip",
+      "name": "Automatic drip",
+      "reference_file": "references/automatic-drip.png",
+      "source_url": "https://us.moccamaster.com/collections/all-brewers/products/kbgv",
+      "file": "selected-v2/automatic-drip.webp",
+      "origin": "Exact reuse of shipping Learn art",
+      "source_file": "app/src/main/res/drawable-nodpi/learn_brewer_icon_batch.webp",
+      "sha256": "845081bbecd37e8149402d6e86d16e21c2c025c3f47b63c1f939733204f5db28",
+      "note": "Existing recognition art retained; named photo is a geometry reference, not a claim of exact model depiction."
+    },
+    {
+      "id": "pulsar",
+      "name": "NextLevel Pulsar",
+      "reference_file": "references/pulsar.jpg",
+      "source_url": "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "file": "selected-v2/pulsar.webp",
+      "origin": "Exact reuse of shipping Learn art",
+      "source_file": "app/src/main/res/drawable-nodpi/learn_brewer_icon_pulsar.webp",
+      "sha256": "46de8ae013b29edcfa1943029b95445f548df0e502e7ce09953cb4ae6a2a2c61",
+      "note": "Existing recognition art retained; named photo is a geometry reference, not a claim of exact model depiction."
+    },
+    {
+      "id": "v60",
+      "name": "Hario V60",
+      "reference_file": "references/v60.jpg",
+      "source_url": "https://www.hario-usa.com/products/v60-plastic-coffee-dripper-02",
+      "file": "selected-v2/v60.webp",
+      "origin": "Exact reuse of shipping Learn art",
+      "source_file": "app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp",
+      "sha256": "19dc531009958fff5e8fe64240b0cb488f64aa79991030fc5b2190587e999639",
+      "note": "Existing recognition art retained; named photo is a geometry reference, not a claim of exact model depiction."
+    },
+    {
+      "id": "clever",
+      "name": "Clever Dripper",
+      "reference_file": "references/clever.jpg",
+      "source_url": "https://crema-coffee.com/pages/clever-dripper-brewing-guide",
+      "file": "selected-v2/clever.webp",
+      "origin": "Exact reuse of shipping Learn art",
+      "source_file": "app/src/main/res/drawable-nodpi/learn_brewer_icon_clever.webp",
+      "sha256": "5e1e19beddeb6e3201cb51dd810d2f1e0c8b46c359c0e72a5b2de7ed9715c528",
+      "note": "Existing recognition art retained; named photo is a geometry reference, not a claim of exact model depiction."
+    },
+    {
+      "id": "hario-switch",
+      "name": "Hario Switch",
+      "reference_file": "references/hario-switch.jpg",
+      "source_url": "https://www.hario-usa.com/products/switch-immersion-dripper",
+      "file": "selected-v2/hario-switch.webp",
+      "origin": "Exact reuse of shipping Learn art",
+      "source_file": "app/src/main/res/drawable-nodpi/learn_brewer_icon_switch.webp",
+      "sha256": "5df95eedd2a5d4fb9d4152687861152d0897b5d30f3577b7e59f4f60bec039d3",
+      "note": "Existing recognition art retained; named photo is a geometry reference, not a claim of exact model depiction."
+    },
+    {
+      "id": "kalita-wave",
+      "name": "Kalita Wave",
+      "reference_file": "references/kalita-wave.jpg",
+      "source_url": "https://kalitausa.com/products/kalita-wave-185-stainless-steel-coffee-dripper",
+      "file": "selected-v2/kalita-wave.webp",
+      "origin": "Exact reuse of shipping Learn art",
+      "source_file": "app/src/main/res/drawable-nodpi/learn_brewer_icon_wave_185.webp",
+      "sha256": "69210b7ee8de567216a7e2649a29a0df141a10c43938de90e9496655972624a7",
+      "note": "Existing recognition art retained; named photo is a geometry reference, not a claim of exact model depiction."
+    },
+    {
+      "id": "melitta",
+      "name": "Melitta style pour-over",
+      "reference_file": "references/melitta.png",
+      "source_url": "https://www.melitta-international.com/accessories/Manual-Coffee-Preparation/Coffeefilters-pots/Coffee-Filter-1x4",
+      "file": "selected-v2/melitta.webp",
+      "origin": "Exact reuse of shipping Learn art",
+      "source_file": "app/src/main/res/drawable-nodpi/learn_brewer_icon_wedge.webp",
+      "sha256": "8695a75e5b76cc5779b1e75fae84db1d8c442394fdbbf236c0cacd38c48f55ca",
+      "note": "Existing recognition art retained; named photo is a geometry reference, not a claim of exact model depiction."
+    },
+    {
+      "id": "turkish",
+      "name": "Turkish coffee",
+      "reference_file": "references/turkish.jpg",
+      "source_url": "https://soy.com.tr/products/cezve-turkish-coffee-pots-soy-c1-serve-1",
+      "file": "selected-v2/turkish.webp",
+      "origin": "Exact reuse of shipping Learn art",
+      "source_file": "app/src/main/res/drawable-nodpi/learn_brewer_icon_cezve.webp",
+      "sha256": "aeec556fa114d1089c396c8e279265fab70b1ef2b185d0fc863e3825367fbc6b",
+      "note": "Existing recognition art retained; named photo is a geometry reference, not a claim of exact model depiction."
+    },
+    {
+      "id": "phin",
+      "name": "Vietnamese phin",
+      "reference_file": "references/phin.png",
+      "source_url": "https://nguyencoffeesupply.com/pages/master-phin-filter-faq",
+      "file": "selected-v2/phin.webp",
+      "origin": "Exact reuse of shipping Learn art",
+      "source_file": "app/src/main/res/drawable-nodpi/learn_brewer_icon_phin.webp",
+      "sha256": "7cf5171d85413d0c869358ed746b5fae0d92838c36736afa3481f44480fa98c8",
+      "note": "Existing recognition art retained; named photo is a geometry reference, not a claim of exact model depiction."
+    },
+    {
+      "id": "french-press",
+      "name": "French press",
+      "reference_file": "references/french-press.png",
+      "source_url": "https://www.stumptowncoffee.com/products/bodum-french-press-8-cup?variant=40006917718184",
+      "file": "selected-v2/french-press.png",
+      "origin": "New family extension",
+      "prompt_file": "prompts-v2/french-press.txt",
+      "status": "Inspected at full size and beside shipping neighbors; user-review candidate",
+      "input_files": [
+        "references/french-press.png",
+        "style-references/learn-brewer-icons-contact.png",
+        "style-references/learn_brewer_icon_clever.webp",
+        "style-references/learn_brewer_icon_batch.webp"
+      ],
+      "sha256": "8cadc41244b84311343e330d4afd93025b07f447a74cedca3e670c657349bc19"
+    },
+    {
+      "id": "aeropress",
+      "name": "AeroPress",
+      "reference_file": "references/aeropress.png",
+      "source_url": "https://aeropress.com/products/aeropress-coffee-maker",
+      "file": "selected-v2/aeropress-refined.png",
+      "origin": "New family extension",
+      "prompt_file": "prompts-v2/aeropress-refinement.txt",
+      "status": "Inspected at full size and beside shipping neighbors; user-review candidate",
+      "input_files": [
+        "selected-v2/aeropress.png",
+        "references/aeropress.png",
+        "style-references/learn-brewer-icons-contact.png",
+        "style-references/learn_brewer_icon_clever.webp",
+        "style-references/learn_brewer_icon_batch.webp"
+      ],
+      "sha256": "cc0f0d9f0372c396f174800e4acb4c78a1f4f1d1458e566051787394992cb8a6"
+    },
+    {
+      "id": "espresso",
+      "name": "Espresso",
+      "reference_file": "references/espresso.png",
+      "source_url": "https://www.breville.com/en-us/product/bes500",
+      "file": "selected-v2/espresso.png",
+      "origin": "New family extension",
+      "prompt_file": "prompts-v2/espresso.txt",
+      "status": "Inspected at full size and beside shipping neighbors; user-review candidate",
+      "input_files": [
+        "references/espresso.png",
+        "style-references/learn-brewer-icons-contact.png",
+        "style-references/learn_brewer_icon_clever.webp",
+        "style-references/learn_brewer_icon_batch.webp"
+      ],
+      "sha256": "9657fa81cac1540ff17478faae2ee2d9a9af06d98d864a703d2df188ae2b8b9e"
+    },
+    {
+      "id": "moka-pot",
+      "name": "Moka pot",
+      "reference_file": "references/moka-pot.jpg",
+      "source_url": "https://www.bialetti.com/it_en/moka-express.html",
+      "file": "selected-v2/moka-pot.png",
+      "origin": "New family extension",
+      "prompt_file": "prompts-v2/moka-pot.txt",
+      "status": "Inspected at full size and beside shipping neighbors; user-review candidate",
+      "input_files": [
+        "references/moka-pot.jpg",
+        "style-references/learn-brewer-icons-contact.png",
+        "style-references/learn_brewer_icon_clever.webp",
+        "style-references/learn_brewer_icon_batch.webp"
+      ],
+      "sha256": "440a8ffb6f9fdb88a85e227fa31901302de60e6b3d1ecd85ff8b707d0dcc59ac"
+    },
+    {
+      "id": "cold-brew",
+      "name": "Cold brew",
+      "reference_file": "references/cold-brew.jpg",
+      "source_url": "https://www.ballmasonjars.com/products/jars/canning-jars/ball%C2%AE-mason-jars-lids%2C-wide-mouth/SP_1888124.html",
+      "file": "selected-v2/cold-brew.png",
+      "origin": "New family extension",
+      "prompt_file": "prompts-v2/cold-brew.txt",
+      "status": "Inspected at full size and beside shipping neighbors; user-review candidate",
+      "input_files": [
+        "references/cold-brew.jpg",
+        "style-references/learn-brewer-icons-contact.png",
+        "style-references/learn_brewer_icon_clever.webp",
+        "style-references/learn_brewer_icon_batch.webp"
+      ],
+      "sha256": "6210d8727353fe0e26e4ad386c032808e460c70ddd4a4c8a91a481a1b0c6b558"
+    },
+    {
+      "id": "siphon",
+      "name": "Siphon",
+      "reference_file": "references/siphon.jpg",
+      "source_url": "https://shop.hariocorp.co.jp/products/tca-2",
+      "file": "selected-v2/siphon.png",
+      "origin": "New family extension",
+      "prompt_file": "prompts-v2/siphon.txt",
+      "status": "Inspected at full size and beside shipping neighbors; user-review candidate",
+      "input_files": [
+        "references/siphon.jpg",
+        "style-references/learn-brewer-icons-contact.png",
+        "style-references/learn_brewer_icon_clever.webp",
+        "style-references/learn_brewer_icon_batch.webp"
+      ],
+      "sha256": "d047f542f221a08c3e0d74fa2463f20d80bec9caf6b4b90d03a0ff4f6b5add45"
+    },
+    {
+      "id": "percolator",
+      "name": "Percolator",
+      "reference_file": "references/percolator.jpg",
+      "source_url": "https://www.gopresto.com/product/presto-6-cup-stainless-steel-coffee-maker-02822",
+      "file": "selected-v2/percolator.png",
+      "origin": "New family extension",
+      "prompt_file": "prompts-v2/percolator.txt",
+      "status": "Inspected at full size and beside shipping neighbors; user-review candidate",
+      "input_files": [
+        "references/percolator.jpg",
+        "style-references/learn-brewer-icons-contact.png",
+        "style-references/learn_brewer_icon_clever.webp",
+        "style-references/learn_brewer_icon_batch.webp"
+      ],
+      "sha256": "e7b8b8e914c3c41c62eb2f2421db4f958c925a6ab1e4a17d4cb5c326debf1e54"
+    }
+  ]
+}

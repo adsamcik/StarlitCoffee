@@ -1,0 +1,233 @@
+{
+  "tool": "built-in image_gen",
+  "entries": [
+    {
+      "method": "french-press",
+      "submitted_prompt": "Use case: stylized-concept. Asset: a StarlitCoffee Learn recognition icon, displayed at 48-52 dp inside an existing 68 dp tonal badge.\nInput roles: Image 1 is the real equipment photograph, for anatomical construction only. Image 2 is the SHIPPED StarlitCoffee Learn icon family, the exact visual language to extend. Images 3 and 4 are individual shipped Clever and automatic-drip icons, for line weight, compact form, muted materials, glass treatment, and shading. Do not reproduce the contact sheet, labels, badges or other equipment. Deliver one icon only.\nPrimary request: extend that existing illustrated family with the requested brewer. Match the reference icons' softly illustrated, compact, simplified dimensional appearance. Muted periwinkle planes, dark navy outlines, warm ivory rim and restrained brown coffee accent. Essential readable equipment parts, modest soft highlights, matte/satin finish. Keep glass almost clear/ivory like the Clever, not bright blue. Preserve the photo's mechanical anatomy while simplifying its small textures and controls to the reference icons' detail level.\nAvoid a new visual style: no shiny chrome product render, luminous bright blue glass, mirror-metal reflections, bright white specular streaks, elaborate machining, oversaturated blue, dramatic studio light, realistic photo texture or tiny control labels. Do not make the object more reflective or complex than its neighboring shipped icons.\nComposition: same front three-quarter view and modest view into open tops as the existing family. Exactly one complete object, compact silhouette, centered with 8 percent clear margin on all sides. All handles, feet, lids and spouts fit. No ground shadow, scene, cup, hand, action, badge, border, letters, numbers, logo, watermark, checkerboard or background. Genuine transparent alpha.\n\nMethod: French press. Representative anatomy: Bodum Chambord 1928.\nEquipment: Cylindrical glass jug in a simple metal frame, curved black side handle, short pour spout, domed lid, round plunger knob and central straight rod leading to a visible mesh disc inside the jug. Use the Chambord photograph's silhouette and support feet.\nExclude: No V60 cone, separate filter basket, extra mug, kettle, printed markings, or steam.",
+      "submitted_prompt_sha256": "537ec67ed8416886fb138760d6f88be4e559779444d51260eaa61a2f30898e2a",
+      "prompt_file": "prompts-v2/french-press.txt",
+      "transparent_background": true,
+      "input_files": [
+        {
+          "file": "references/french-press.png",
+          "sha256": "a5b8c672a2be4f0556d92f1aed50be8d3f66b2b2ef07d063f6fe2f4912e26354"
+        },
+        {
+          "file": "style-references/learn-brewer-icons-contact.png",
+          "sha256": "9aeec3e5ecc19fda02c03029a2452203ffb2c445b99058fd39dacf59013d1edc"
+        },
+        {
+          "file": "style-references/learn_brewer_icon_clever.webp",
+          "sha256": "5e1e19beddeb6e3201cb51dd810d2f1e0c8b46c359c0e72a5b2de7ed9715c528"
+        },
+        {
+          "file": "style-references/learn_brewer_icon_batch.webp",
+          "sha256": "845081bbecd37e8149402d6e86d16e21c2c025c3f47b63c1f939733204f5db28"
+        }
+      ],
+      "output_file": "selected-v2/french-press.png",
+      "output_sha256": "8cadc41244b84311343e330d4afd93025b07f447a74cedca3e670c657349bc19",
+      "original_output_path": "C:\\Users\\adam-\\.codex\\generated_images\\01a0f260-3e88-74c0-a33c-aebce2792907\\exec-ac628edb-8094-492a-96a2-981d2cba9251.png"
+    },
+    {
+      "method": "aeropress",
+      "submitted_prompt": "Use case: stylized-concept. Asset: a StarlitCoffee Learn recognition icon, displayed at 48-52 dp inside an existing 68 dp tonal badge.\nInput roles: Image 1 is the real equipment photograph, for anatomical construction only. Image 2 is the SHIPPED StarlitCoffee Learn icon family, the exact visual language to extend. Images 3 and 4 are individual shipped Clever and automatic-drip icons, for line weight, compact form, muted materials, glass treatment, and shading. Do not reproduce the contact sheet, labels, badges or other equipment. Deliver one icon only.\nPrimary request: extend that existing illustrated family with the requested brewer. Match the reference icons' softly illustrated, compact, simplified dimensional appearance. Muted periwinkle planes, dark navy outlines, warm ivory rim and restrained brown coffee accent. Essential readable equipment parts, modest soft highlights, matte/satin finish. Keep glass almost clear/ivory like the Clever, not bright blue. Preserve the photo's mechanical anatomy while simplifying its small textures and controls to the reference icons' detail level.\nAvoid a new visual style: no shiny chrome product render, luminous bright blue glass, mirror-metal reflections, bright white specular streaks, elaborate machining, oversaturated blue, dramatic studio light, realistic photo texture or tiny control labels. Do not make the object more reflective or complex than its neighboring shipped icons.\nComposition: same front three-quarter view and modest view into open tops as the existing family. Exactly one complete object, compact silhouette, centered with 8 percent clear margin on all sides. All handles, feet, lids and spouts fit. No ground shadow, scene, cup, hand, action, badge, border, letters, numbers, logo, watermark, checkerboard or background. Genuine transparent alpha.\n\nMethod: AeroPress. Representative anatomy: Original, standard filter cap, upright.\nEquipment: One assembled upright AeroPress Original: dark translucent straight brewing chamber, piston emerging at the top with a broad flat top flange, broad lower support flange and standard filter cap at the bottom. Show a modest extension of the piston so the two overlapping cylinders are clear. Isolate only the brewer from the product photograph.\nExclude: No mug, scoop, stirrer, printed numbers, logos, side handle, long French-press rod, flow-control valve, or inverted position.",
+      "submitted_prompt_sha256": "7a5a73cf5316b8f3334a527246328913b2e7898755d194169d3df5e923e37db6",
+      "prompt_file": "prompts-v2/aeropress.txt",
+      "transparent_background": true,
+      "input_files": [
+        {
+          "file": "references/aeropress.png",
+          "sha256": "5bab114be6356076778d5f72cc9d469d94255bc3f01275e468f62a4ba477c8c6"
+        },
+        {
+          "file": "style-references/learn-brewer-icons-contact.png",
+          "sha256": "9aeec3e5ecc19fda02c03029a2452203ffb2c445b99058fd39dacf59013d1edc"
+        },
+        {
+          "file": "style-references/learn_brewer_icon_clever.webp",
+          "sha256": "5e1e19beddeb6e3201cb51dd810d2f1e0c8b46c359c0e72a5b2de7ed9715c528"
+        },
+        {
+          "file": "style-references/learn_brewer_icon_batch.webp",
+          "sha256": "845081bbecd37e8149402d6e86d16e21c2c025c3f47b63c1f939733204f5db28"
+        }
+      ],
+      "output_file": "selected-v2/aeropress.png",
+      "output_sha256": "94c9505d72ea1ace60dc637b666fc75eed7b66f40580f123eda6ea393072366d",
+      "original_output_path": "C:\\Users\\adam-\\.codex\\generated_images\\01a0f260-3e88-74c0-a33c-aebce2792907\\exec-e2a979ea-dd3e-4fd4-8242-1db61b64bdde.png"
+    },
+    {
+      "method": "espresso",
+      "submitted_prompt": "Use case: stylized-concept. Asset: a StarlitCoffee Learn recognition icon, displayed at 48-52 dp inside an existing 68 dp tonal badge.\nInput roles: Image 1 is the real equipment photograph, for anatomical construction only. Image 2 is the SHIPPED StarlitCoffee Learn icon family, the exact visual language to extend. Images 3 and 4 are individual shipped Clever and automatic-drip icons, for line weight, compact form, muted materials, glass treatment, and shading. Do not reproduce the contact sheet, labels, badges or other equipment. Deliver one icon only.\nPrimary request: extend that existing illustrated family with the requested brewer. Match the reference icons' softly illustrated, compact, simplified dimensional appearance. Muted periwinkle planes, dark navy outlines, warm ivory rim and restrained brown coffee accent. Essential readable equipment parts, modest soft highlights, matte/satin finish. Keep glass almost clear/ivory like the Clever, not bright blue. Preserve the photo's mechanical anatomy while simplifying its small textures and controls to the reference icons' detail level.\nAvoid a new visual style: no shiny chrome product render, luminous bright blue glass, mirror-metal reflections, bright white specular streaks, elaborate machining, oversaturated blue, dramatic studio light, realistic photo texture or tiny control labels. Do not make the object more reflective or complex than its neighboring shipped icons.\nComposition: same front three-quarter view and modest view into open tops as the existing family. Exactly one complete object, compact silhouette, centered with 8 percent clear margin on all sides. All handles, feet, lids and spouts fit. No ground shadow, scene, cup, hand, action, badge, border, letters, numbers, logo, watermark, checkerboard or background. Genuine transparent alpha.\n\nMethod: Espresso. Representative anatomy: Breville Bambino Plus BES500.\nEquipment: One compact Bambino Plus-style espresso machine: tall rounded rectangular body, clean small circular front controls, portafilter locked under the brew group with its black handle clearly projecting forward, right-side steam wand, and drip tray beneath an open brewing area. Preserve the photographed group-to-tray and wand arrangement.\nExclude: No integrated grinder, bean hopper, pressure gauge, extra cups, printed control labels, or automatic-drip basket and carafe.",
+      "submitted_prompt_sha256": "d51dec058b8f60f3cb7280ba271d9b08e5a3b426d4a94e750c17da70da30da0f",
+      "prompt_file": "prompts-v2/espresso.txt",
+      "transparent_background": true,
+      "input_files": [
+        {
+          "file": "references/espresso.png",
+          "sha256": "4dba089bd27ec8bc64229fd1e43489818daada88b6866f2794d3879c86331c90"
+        },
+        {
+          "file": "style-references/learn-brewer-icons-contact.png",
+          "sha256": "9aeec3e5ecc19fda02c03029a2452203ffb2c445b99058fd39dacf59013d1edc"
+        },
+        {
+          "file": "style-references/learn_brewer_icon_clever.webp",
+          "sha256": "5e1e19beddeb6e3201cb51dd810d2f1e0c8b46c359c0e72a5b2de7ed9715c528"
+        },
+        {
+          "file": "style-references/learn_brewer_icon_batch.webp",
+          "sha256": "845081bbecd37e8149402d6e86d16e21c2c025c3f47b63c1f939733204f5db28"
+        }
+      ],
+      "output_file": "selected-v2/espresso.png",
+      "output_sha256": "9657fa81cac1540ff17478faae2ee2d9a9af06d98d864a703d2df188ae2b8b9e",
+      "original_output_path": "C:\\Users\\adam-\\.codex\\generated_images\\01a0f260-3e88-74c0-a33c-aebce2792907\\exec-11c38ef3-8e4b-449c-8a4d-f2a86207daf7.png"
+    },
+    {
+      "method": "moka-pot",
+      "submitted_prompt": "Use case: stylized-concept. Asset: a StarlitCoffee Learn recognition icon, displayed at 48-52 dp inside an existing 68 dp tonal badge.\nInput roles: Image 1 is the real equipment photograph, for anatomical construction only. Image 2 is the SHIPPED StarlitCoffee Learn icon family, the exact visual language to extend. Images 3 and 4 are individual shipped Clever and automatic-drip icons, for line weight, compact form, muted materials, glass treatment, and shading. Do not reproduce the contact sheet, labels, badges or other equipment. Deliver one icon only.\nPrimary request: extend that existing illustrated family with the requested brewer. Match the reference icons' softly illustrated, compact, simplified dimensional appearance. Muted periwinkle planes, dark navy outlines, warm ivory rim and restrained brown coffee accent. Essential readable equipment parts, modest soft highlights, matte/satin finish. Keep glass almost clear/ivory like the Clever, not bright blue. Preserve the photo's mechanical anatomy while simplifying its small textures and controls to the reference icons' detail level.\nAvoid a new visual style: no shiny chrome product render, luminous bright blue glass, mirror-metal reflections, bright white specular streaks, elaborate machining, oversaturated blue, dramatic studio light, realistic photo texture or tiny control labels. Do not make the object more reflective or complex than its neighboring shipped icons.\nComposition: same front three-quarter view and modest view into open tops as the existing family. Exactly one complete object, compact silhouette, centered with 8 percent clear margin on all sides. All handles, feet, lids and spouts fit. No ground shadow, scene, cup, hand, action, badge, border, letters, numbers, logo, watermark, checkerboard or background. Genuine transparent alpha.\n\nMethod: Moka pot. Representative anatomy: Bialetti Moka Express.\nEquipment: Complete closed Moka Express: octagonal lower water chamber, screw-joint waist, octagonal upper collecting chamber with a left pour spout, hinged sloping lid and black knob, large black curved handle on the right, and a small safety valve on the lower chamber. Retain the distinctive two-chamber octagonal silhouette.\nExclude: No flames, stove, coffee cup, glass hourglass, percolator cylinder, steam, pressure gauge, or logo.",
+      "submitted_prompt_sha256": "95726794f7216b5a0f958bdefb4e69061b3b17331fdd893211e5ed62f517281d",
+      "prompt_file": "prompts-v2/moka-pot.txt",
+      "transparent_background": true,
+      "input_files": [
+        {
+          "file": "references/moka-pot.jpg",
+          "sha256": "f395c7fc48d6ce532c79a5d06c11def868ddb7f75f02d40e4b79093a451d09ea"
+        },
+        {
+          "file": "style-references/learn-brewer-icons-contact.png",
+          "sha256": "9aeec3e5ecc19fda02c03029a2452203ffb2c445b99058fd39dacf59013d1edc"
+        },
+        {
+          "file": "style-references/learn_brewer_icon_clever.webp",
+          "sha256": "5e1e19beddeb6e3201cb51dd810d2f1e0c8b46c359c0e72a5b2de7ed9715c528"
+        },
+        {
+          "file": "style-references/learn_brewer_icon_batch.webp",
+          "sha256": "845081bbecd37e8149402d6e86d16e21c2c025c3f47b63c1f939733204f5db28"
+        }
+      ],
+      "output_file": "selected-v2/moka-pot.png",
+      "output_sha256": "440a8ffb6f9fdb88a85e227fa31901302de60e6b3d1ecd85ff8b707d0dcc59ac",
+      "original_output_path": "C:\\Users\\adam-\\.codex\\generated_images\\01a0f260-3e88-74c0-a33c-aebce2792907\\exec-22efe02a-5c7a-4000-aa99-bce91ece0b90.png"
+    },
+    {
+      "method": "cold-brew",
+      "submitted_prompt": "Use case: stylized-concept. Asset: a StarlitCoffee Learn recognition icon, displayed at 48-52 dp inside an existing 68 dp tonal badge.\nInput roles: Image 1 is the real equipment photograph, for anatomical construction only. Image 2 is the SHIPPED StarlitCoffee Learn icon family, the exact visual language to extend. Images 3 and 4 are individual shipped Clever and automatic-drip icons, for line weight, compact form, muted materials, glass treatment, and shading. Do not reproduce the contact sheet, labels, badges or other equipment. Deliver one icon only.\nPrimary request: extend that existing illustrated family with the requested brewer. Match the reference icons' softly illustrated, compact, simplified dimensional appearance. Muted periwinkle planes, dark navy outlines, warm ivory rim and restrained brown coffee accent. Essential readable equipment parts, modest soft highlights, matte/satin finish. Keep glass almost clear/ivory like the Clever, not bright blue. Preserve the photo's mechanical anatomy while simplifying its small textures and controls to the reference icons' detail level.\nAvoid a new visual style: no shiny chrome product render, luminous bright blue glass, mirror-metal reflections, bright white specular streaks, elaborate machining, oversaturated blue, dramatic studio light, realistic photo texture or tiny control labels. Do not make the object more reflective or complex than its neighboring shipped icons.\nComposition: same front three-quarter view and modest view into open tops as the existing family. Exactly one complete object, compact silhouette, centered with 8 percent clear margin on all sides. All handles, feet, lids and spouts fit. No ground shadow, scene, cup, hand, action, badge, border, letters, numbers, logo, watermark, checkerboard or background. Genuine transparent alpha.\n\nMethod: Cold brew. Representative anatomy: Generic covered glass vessel; no integral filter implied.\nEquipment: One generic covered wide-mouth glass steeping jar with a simple screw lid, rounded shoulders, broad cylindrical body, and dark coffee-colored contents well below the lid. Use the single jar at the right of the photo for jar anatomy. Omit all embossing; show a little dark ground-coffee sediment at the bottom to suggest immersion brewing.\nExclude: No retail carton, cluster of jars, embossed lettering, measuring marks, integral filter basket, ice, straw, serving tumbler, spigot, or capacity claim.",
+      "submitted_prompt_sha256": "788f32f284b723969c07ec7904197080df777fac7516d62c2a8932512b6faad4",
+      "prompt_file": "prompts-v2/cold-brew.txt",
+      "transparent_background": true,
+      "input_files": [
+        {
+          "file": "references/cold-brew.jpg",
+          "sha256": "b568574786c96150204cb2940324d38e86eae830e8dc96a56130fe70a0c08a70"
+        },
+        {
+          "file": "style-references/learn-brewer-icons-contact.png",
+          "sha256": "9aeec3e5ecc19fda02c03029a2452203ffb2c445b99058fd39dacf59013d1edc"
+        },
+        {
+          "file": "style-references/learn_brewer_icon_clever.webp",
+          "sha256": "5e1e19beddeb6e3201cb51dd810d2f1e0c8b46c359c0e72a5b2de7ed9715c528"
+        },
+        {
+          "file": "style-references/learn_brewer_icon_batch.webp",
+          "sha256": "845081bbecd37e8149402d6e86d16e21c2c025c3f47b63c1f939733204f5db28"
+        }
+      ],
+      "output_file": "selected-v2/cold-brew.png",
+      "output_sha256": "6210d8727353fe0e26e4ad386c032808e460c70ddd4a4c8a91a481a1b0c6b558",
+      "original_output_path": "C:\\Users\\adam-\\.codex\\generated_images\\01a0f260-3e88-74c0-a33c-aebce2792907\\exec-33d23de6-392e-4beb-831a-ab9f0366ad89.png"
+    },
+    {
+      "method": "siphon",
+      "submitted_prompt": "Use case: stylized-concept. Asset: a StarlitCoffee Learn recognition icon, displayed at 48-52 dp inside an existing 68 dp tonal badge.\nInput roles: Image 1 is the real equipment photograph, for anatomical construction only. Image 2 is the SHIPPED StarlitCoffee Learn icon family, the exact visual language to extend. Images 3 and 4 are individual shipped Clever and automatic-drip icons, for line weight, compact form, muted materials, glass treatment, and shading. Do not reproduce the contact sheet, labels, badges or other equipment. Deliver one icon only.\nPrimary request: extend that existing illustrated family with the requested brewer. Match the reference icons' softly illustrated, compact, simplified dimensional appearance. Muted periwinkle planes, dark navy outlines, warm ivory rim and restrained brown coffee accent. Essential readable equipment parts, modest soft highlights, matte/satin finish. Keep glass almost clear/ivory like the Clever, not bright blue. Preserve the photo's mechanical anatomy while simplifying its small textures and controls to the reference icons' detail level.\nAvoid a new visual style: no shiny chrome product render, luminous bright blue glass, mirror-metal reflections, bright white specular streaks, elaborate machining, oversaturated blue, dramatic studio light, realistic photo texture or tiny control labels. Do not make the object more reflective or complex than its neighboring shipped icons.\nComposition: same front three-quarter view and modest view into open tops as the existing family. Exactly one complete object, compact silhouette, centered with 8 percent clear margin on all sides. All handles, feet, lids and spouts fit. No ground shadow, scene, cup, hand, action, badge, border, letters, numbers, logo, watermark, checkerboard or background. Genuine transparent alpha.\n\nMethod: Siphon. Representative anatomy: Hario Technica TCA-2; representative siphon.\nEquipment: A complete Hario Technica-style siphon: upper straight glass brewing cylinder, descending central glass tube into the round lower globe, gasket at the joined neck, metal stand with a right-side handle supporting the globe, stable base and unlit alcohol lamp centered underneath the globe. Preserve the real joined two-chamber arrangement and stable support.\nExclude: No floating disconnected chambers, invented plumbing, pressure gauge, steampunk gear, flame, boiling liquid, coffee cup, or lettering.\nSiphon details: no dark stopper in the upper chamber. Cloth filter rests on the floor of the upper chamber; thin chain and small retaining hook at lower stem end, never a second filter disc. Keep joined chambers and stable stand.",
+      "submitted_prompt_sha256": "8f2487d95aafd9513c27cdbde93e1342b218cc33417e725595e0d8dc48d6eac8",
+      "prompt_file": "prompts-v2/siphon.txt",
+      "transparent_background": true,
+      "input_files": [
+        {
+          "file": "references/siphon.jpg",
+          "sha256": "ac082b2ad0150d09b31d2c650ee3f0d9e4c450b792230e7b6b828c268d4f824d"
+        },
+        {
+          "file": "style-references/learn-brewer-icons-contact.png",
+          "sha256": "9aeec3e5ecc19fda02c03029a2452203ffb2c445b99058fd39dacf59013d1edc"
+        },
+        {
+          "file": "style-references/learn_brewer_icon_clever.webp",
+          "sha256": "5e1e19beddeb6e3201cb51dd810d2f1e0c8b46c359c0e72a5b2de7ed9715c528"
+        },
+        {
+          "file": "style-references/learn_brewer_icon_batch.webp",
+          "sha256": "845081bbecd37e8149402d6e86d16e21c2c025c3f47b63c1f939733204f5db28"
+        }
+      ],
+      "output_file": "selected-v2/siphon.png",
+      "output_sha256": "d047f542f221a08c3e0d74fa2463f20d80bec9caf6b4b90d03a0ff4f6b5add45",
+      "original_output_path": "C:\\Users\\adam-\\.codex\\generated_images\\01a0f260-3e88-74c0-a33c-aebce2792907\\exec-ec118b78-7956-4e72-92d1-c4b3d1b41480.png"
+    },
+    {
+      "method": "percolator",
+      "submitted_prompt": "Use case: stylized-concept. Asset: a StarlitCoffee Learn recognition icon, displayed at 48-52 dp inside an existing 68 dp tonal badge.\nInput roles: Image 1 is the real equipment photograph, for anatomical construction only. Image 2 is the SHIPPED StarlitCoffee Learn icon family, the exact visual language to extend. Images 3 and 4 are individual shipped Clever and automatic-drip icons, for line weight, compact form, muted materials, glass treatment, and shading. Do not reproduce the contact sheet, labels, badges or other equipment. Deliver one icon only.\nPrimary request: extend that existing illustrated family with the requested brewer. Match the reference icons' softly illustrated, compact, simplified dimensional appearance. Muted periwinkle planes, dark navy outlines, warm ivory rim and restrained brown coffee accent. Essential readable equipment parts, modest soft highlights, matte/satin finish. Keep glass almost clear/ivory like the Clever, not bright blue. Preserve the photo's mechanical anatomy while simplifying its small textures and controls to the reference icons' detail level.\nAvoid a new visual style: no shiny chrome product render, luminous bright blue glass, mirror-metal reflections, bright white specular streaks, elaborate machining, oversaturated blue, dramatic studio light, realistic photo texture or tiny control labels. Do not make the object more reflective or complex than its neighboring shipped icons.\nComposition: same front three-quarter view and modest view into open tops as the existing family. Exactly one complete object, compact silhouette, centered with 8 percent clear margin on all sides. All handles, feet, lids and spouts fit. No ground shadow, scene, cup, hand, action, badge, border, letters, numbers, logo, watermark, checkerboard or background. Genuine transparent alpha.\n\nMethod: Percolator. Representative anatomy: Presto electric 02822.\nEquipment: One electric percolator with a tall gently tapered cylindrical metal pot, fitted lid and black knob, long raised pouring spout on the left, black curved handle on the right, and a low black electric base. Match the photographed Presto silhouette; simplify tiny details.\nExclude: No cord, serving cup, saucer, branding, moka octagons, glass French-press chamber or plunger, tea infuser, or steam.",
+      "submitted_prompt_sha256": "da8abff6dabdb6369231b791ca4bfe070d44de08ab87c6d4f21fc02ade1c3711",
+      "prompt_file": "prompts-v2/percolator.txt",
+      "transparent_background": true,
+      "input_files": [
+        {
+          "file": "references/percolator.jpg",
+          "sha256": "dfe39ed6959a42574d4d87e2959c258e9d551faa27fd87e09c6f0ac99a93809c"
+        },
+        {
+          "file": "style-references/learn-brewer-icons-contact.png",
+          "sha256": "9aeec3e5ecc19fda02c03029a2452203ffb2c445b99058fd39dacf59013d1edc"
+        },
+        {
+          "file": "style-references/learn_brewer_icon_clever.webp",
+          "sha256": "5e1e19beddeb6e3201cb51dd810d2f1e0c8b46c359c0e72a5b2de7ed9715c528"
+        },
+        {
+          "file": "style-references/learn_brewer_icon_batch.webp",
+          "sha256": "845081bbecd37e8149402d6e86d16e21c2c025c3f47b63c1f939733204f5db28"
+        }
+      ],
+      "output_file": "selected-v2/percolator.png",
+      "output_sha256": "e7b8b8e914c3c41c62eb2f2421db4f958c925a6ab1e4a17d4cb5c326debf1e54",
+      "original_output_path": "C:\\Users\\adam-\\.codex\\generated_images\\01a0f260-3e88-74c0-a33c-aebce2792907\\exec-98586bdb-f9f3-491f-9d75-2422ff08f431.png"
+    },
+    {
+      "method": "aeropress",
+      "submitted_prompt": "Edit the AeroPress icon in Image 1 with one anatomical correction. Image 2 is the real AeroPress Original equipment photograph. Images 3, 4 and 5 are the shipping StarlitCoffee Learn family and individual Clever/batch style references.\nPreserve the current icon's composition, muted transparent plastic, navy outlines, compact simplified illustration, lower chamber, filter cap, spacing and actual transparent background.\nCorrect only the top of the emerging piston: the AeroPress plunger has a CLOSED flat press surface across its broad top flange. The candidate mistakenly shows an open hollow oval. Fill that top with a solid flat dark navy press plate, seen as a shallow oval in this angle, with one modest soft periwinkle highlight. The upper piston must be clearly distinct from the lower brewing chamber. Do not add an open rim, hole, handle, long rod, lid knob, mug, lettering, numbers, logo, bright glare, badge or scene. Exactly one fully assembled upright AeroPress, all flanges inside the existing safe margins, genuine transparent alpha.",
+      "submitted_prompt_sha256": "30cdc4da7c66efe333e3f750752495c646f0bece833fc54fe905f2c3686ebe11",
+      "prompt_file": "prompts-v2/aeropress-refinement.txt",
+      "transparent_background": true,
+      "input_files": [
+        {
+          "file": "selected-v2/aeropress.png",
+          "sha256": "94c9505d72ea1ace60dc637b666fc75eed7b66f40580f123eda6ea393072366d"
+        },
+        {
+          "file": "references/aeropress.png",
+          "sha256": "5bab114be6356076778d5f72cc9d469d94255bc3f01275e468f62a4ba477c8c6"
+        },
+        {
+          "file": "style-references/learn-brewer-icons-contact.png",
+          "sha256": "9aeec3e5ecc19fda02c03029a2452203ffb2c445b99058fd39dacf59013d1edc"
+        },
+        {
+          "file": "style-references/learn_brewer_icon_clever.webp",
+          "sha256": "5e1e19beddeb6e3201cb51dd810d2f1e0c8b46c359c0e72a5b2de7ed9715c528"
+        },
+        {
+          "file": "style-references/learn_brewer_icon_batch.webp",
+          "sha256": "845081bbecd37e8149402d6e86d16e21c2c025c3f47b63c1f939733204f5db28"
+        }
+      ],
+      "output_file": "selected-v2/aeropress-refined.png",
+      "output_sha256": "cc0f0d9f0372c396f174800e4acb4c78a1f4f1d1458e566051787394992cb8a6",
+      "original_output_path": "C:\\Users\\adam-\\.codex\\generated_images\\01a0f260-3e88-74c0-a33c-aebce2792907\\exec-771cbcc3-8b82-4c67-b6bc-89a0afa4b6e0.png"
+    }
+  ]
+}

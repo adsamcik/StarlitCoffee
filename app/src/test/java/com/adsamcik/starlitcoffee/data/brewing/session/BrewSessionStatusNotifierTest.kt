@@ -16,6 +16,18 @@ import org.junit.Test
 class BrewSessionStatusNotifierTest {
 
     @Test
+    fun `guide pause retains quiet running status instead of clearing physical timer`() = runTest {
+        val sessionId = SessionId("status-guide-paused")
+        val repository = repositoryWithStartedSession(sessionId)
+        coordinatorFor(repository).dispatch(sessionId, SessionEvent.SetGuidancePaused(true))
+        val notifier = RecordingStatusNotifier()
+        publishRestoredBrewSessionStatus(sessionId, repository, notifier)
+        assertTrue(notifier.cleared.isEmpty())
+        assertTrue(notifier.published.single().runtime.isGuidancePaused)
+        assertEquals(BrewSessionStatus.RUNNING, notifier.published.single().runtime.status)
+    }
+
+    @Test
     fun `publishes only an exactly restored running snapshot`() = runTest {
         val sessionId = SessionId("status-running")
         val repository = repositoryWithStartedSession(sessionId)

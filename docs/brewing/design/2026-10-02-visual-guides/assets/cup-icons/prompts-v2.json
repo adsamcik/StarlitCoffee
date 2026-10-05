@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-03",
+  "tool": "built-in image_gen",
+  "transparent_background": true,
+  "reference_roles": [
+    "V1 generated candidate: edit target",
+    "Calculator: accepted filled monochrome style"
+  ],
+  "prompts": [
+    {
+      "id": "espresso",
+      "prompt": "Use case: precise-object-edit. Image 1 is the edit target, a generated monochrome cup icon. Image 2 is the accepted app style reference; match its flat filled rounded calculator symbols, not the screenshot layout. Change only the single cup symbol as specified. Preserve a genuinely transparent square background, one flat uniform near-black ink (#30323b) with zero texture, gradient, glow, shadow, perspective lighting or stray pixels. All rim/handle openings and the specified gaps must be true transparent alpha. Return exactly one complete centered icon, no text, tiled sheet or UI. Keep even transparent padding and fill about 80–85% of the canvas's longest dimension with the icon. Shape and broad negative spaces must stay readable at 24 px. Keep the petite rounded cup and small right handle, but increase the uninterrupted gap between cup and saucer to about 7% of the entire icon height so it remains clearly separate when rendered at 24 px. Make the saucer much shallower: thickness about 5–6% of the complete icon height, with rounded tips and no upturned giant bowl. Widen the narrow left side of the handle opening slightly. Preserve a broad single mouth opening and solid filled cup body."
+    },
+    {
+      "id": "cortado",
+      "prompt": "Use case: precise-object-edit. Image 1 is the edit target, a generated monochrome cup icon. Image 2 is the accepted app style reference; match its flat filled rounded calculator symbols, not the screenshot layout. Change only the single cup symbol as specified. Preserve a genuinely transparent square background, one flat uniform near-black ink (#30323b) with zero texture, gradient, glow, shadow, perspective lighting or stray pixels. All rim/handle openings and the specified gaps must be true transparent alpha. Return exactly one complete centered icon, no text, tiled sheet or UI. Keep even transparent padding and fill about 80–85% of the canvas's longest dimension with the icon. Shape and broad negative spaces must stay readable at 24 px. Make this genuinely squat: height from outer mouth top to glass base must be only 75–80% of the outer rim width. Broaden the base to roughly 78% of outer rim width and keep sides straight with a modest taper. Raise the lower negative-space slot and thicken the bottom/side bridges so the base reads as heavy glass, not a thin outline. Preserve exactly one broad oval mouth and one simple base slot, both real transparent cutouts. No handle, lid, saucer, reflection or extra details."
+    },
+    {
+      "id": "cappuccino",
+      "prompt": "Use case: precise-object-edit. Image 1 is the edit target, a generated monochrome cup icon. Image 2 is the accepted app style reference; match its flat filled rounded calculator symbols, not the screenshot layout. Change only the single cup symbol as specified. Preserve a genuinely transparent square background, one flat uniform near-black ink (#30323b) with zero texture, gradient, glow, shadow, perspective lighting or stray pixels. All rim/handle openings and the specified gaps must be true transparent alpha. Return exactly one complete centered icon, no text, tiled sheet or UI. Keep even transparent padding and fill about 80–85% of the canvas's longest dimension with the icon. Shape and broad negative spaces must stay readable at 24 px. Keep the wide low rounded bowl silhouette and the clear right handle unchanged. Increase the upper rim band to about 7% of the icon's full width so it remains a continuous solid band at 24 px. Keep one broad elliptical mouth opening; make no extra rim line. Preserve the large open loop, solid bowl body and absence of saucer. Do not make the bowl taller or mug-like."
+    },
+    {
+      "id": "travel",
+      "prompt": "Use case: precise-object-edit. Image 1 is the edit target, a generated monochrome cup icon. Image 2 is the accepted app style reference; match its flat filled rounded calculator symbols, not the screenshot layout. Change only the single cup symbol as specified. Preserve a genuinely transparent square background, one flat uniform near-black ink (#30323b) with zero texture, gradient, glow, shadow, perspective lighting or stray pixels. All rim/handle openings and the specified gaps must be true transparent alpha. Return exactly one complete centered icon, no text, tiled sheet or UI. Keep even transparent padding and fill about 80–85% of the canvas's longest dimension with the icon. Shape and broad negative spaces must stay readable at 24 px. Preserve the narrow tall tapered takeaway cup and strongly projecting snap-on lid. Completely fill the open ellipse in the lid: the lid must be closed and solid, with no mouth, drinking hole or other cutout. Completely fill the large hollow sleeve panel: the entire body must be a solid silhouette, with no body holes or sleeve outline. Reduce total lid height about 20%; retain a low stepped crown with rounded shoulders. Keep only one robust transparent gap immediately below the lid, about 6% of total icon height, with no additional body separators. No handle or saucer."
+    }
+  ]
+}

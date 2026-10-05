@@ -120,6 +120,7 @@ fun CalculatorBrewScreen(
     scannedBarcodeResult: String? = null,
     onScannedBarcodeResultConsumed: () -> Unit = {},
     onNavigateToSettings: (() -> Unit)? = null,
+    isStartingBrew: Boolean = false,
 ) {
     val state by calculatorViewModel.uiState.collectAsStateWithLifecycle()
     val brewState by brewViewModel.uiState.collectAsStateWithLifecycle()
@@ -381,7 +382,7 @@ fun CalculatorBrewScreen(
     val keyboard: @Composable () -> Unit = {
         CalculatorKeyboard(
             presets = state.availablePresets,
-            hasValidExpression = state.hasValidExpression,
+            hasValidExpression = state.hasValidExpression && !isStartingBrew,
             isCompactHeight = isCompactHeight,
             isTallHeight = isTallHeight,
             onDigit = { calculatorViewModel.appendDigit(it) },

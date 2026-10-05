@@ -39,7 +39,12 @@
     <string name="format_brew_stage_recorded_grams">Vastgelegd %1$.0f g</string>
     <string name="format_brew_stage_remaining_grams">%1$.0f g resterend</string>
     <string name="label_brew_reference_cues">Referentiewaarden</string>
-    <string name="msg_brew_reference_cues_not_completion">Alleen ter indicatie. Voltooi de stap met de hoofdactie hierboven.</string>
+    <string name="action_pause_brew_guide">Handleiding pauzeren</string>
+    <string name="action_resume_brew_guide">Handleiding hervatten</string>
+    <string name="action_pause_brew_clock">Timer pauzeren</string>
+    <string name="msg_brew_clock_keeps_running">De timer loopt door.</string>
+    <string name="msg_brew_guide_paused">Handleiding gepauzeerd. De timer loopt door.</string>
+    <string name="msg_brew_reference_cues_not_completion">Alleen ter indicatie. Een tijdsaanduiding voltooit geen fysieke stap.</string>
     <string name="action_show_more_brew_reference_cues">Meer referentiewaarden tonen</string>
     <string name="action_hide_brew_reference_cues">Extra referentiewaarden verbergen</string>
     <string name="label_brew_reference_stage_duration">Duur van de stap</string>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_set_brew_reminder">Iestatīt atgādinājumu</string>
+    <string name="action_edit_brew_reminder">Rediģēt atgādinājumu</string>
+    <string name="action_remove_brew_reminder">Noņemt atgādinājumu</string>
+    <string name="label_brew_reminder">Atgādinājums</string>
+    <string name="label_timer_duration">Ilgums</string>
+    <string name="label_timer_seconds">Sekundes</string>
+    <string name="label_timer_minutes">Minūtes</string>
+    <string name="label_timer_hours">Stundas</string>
+    <string name="msg_brew_reminder_origin">No šī soļa sākuma. Ilguma maiņa saglabā jau pagājušo laiku. Jūs joprojām paši apstiprināt, kad solis ir pabeigts.</string>
+    <string name="msg_brew_reminder_reached">Pienācis atgādinājuma laiks. Pirms turpināšanas pārbaudiet kafiju.</string>
+    <string name="title_cold_brew">Cold brew</string>
+    <string name="title_cold_brew_timer">Cold brew taimeris</string>
+    <string name="action_follow_brew_guide">Sekot ceļvedim</string>
+    <string name="action_just_set_brew_timer">Tikai iestatīt taimeri</string>
+    <string name="action_start_timer">Sākt taimeri</string>
+    <string name="action_start_steeping">Sākt mērcēšanu</string>
+    <string name="action_end_brew_timer">Beigt taimeri</string>
+    <string name="action_add_brew_start_time">Pievienot sākuma laiku</string>
+    <string name="label_brew_start_now">Sākas tagad</string>
+    <string name="label_brew_start_earlier">Sākts agrāk</string>
+    <string name="label_brew_start_unknown">Sākuma laiks nav zināms</string>
+    <string name="label_brew_hours_ago">Pirms cik stundām</string>
+    <string name="label_brew_minutes_ago">Pirms cik minūtēm</string>
+    <string name="msg_cold_brew_refrigerated">Glabājiet pārklātu ledusskapī 4 °C vai zemākā temperatūrā. Noklusētais mērcēšanas laiks ir 14 stundas.</string>
+    <string name="msg_cold_brew_start_origin">Sāciet, kad kafija ir pilnībā samitrināta un pārklātais trauks ir ievietots ledusskapī.</string>
+    <string name="msg_brew_start_unknown">Pievienojiet faktisko sākuma laiku, lai aprēķinātu atgādinājumu. Līdz tam beigu laiks netiek lēsts.</string>
+    <string name="msg_brew_timer_ended">Taimeris beidzies</string>
+    <string name="label_brew_extraction_ended">Ekstrakcija pabeigta</string>
+    <string name="msg_brew_notifications_disabled">Atgādinājumi ir izslēgti. Kafijas pagatavošana turpinās.</string>
+    <string name="action_allow_brew_notifications">Atļaut atgādinājumus</string>
+    <string name="msg_brew_reminders_may_be_late">Android var aizkavēt atgādinājumus, kad iziet no lietotnes.</string>
+    <string name="action_allow_precise_brew_reminders">Atļaut precīzus atgādinājumus</string>
+</resources>

@@ -98,11 +98,8 @@
     <string name="label_increase">增加%1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">准备冲煮</string>
 <string name="action_ready_to_brew_short">准备好了</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">准备</string>
-    <string name="label_recipe_heading">配方</string>
     <string name="label_temp_short">温度</string>
     <string name="label_bloom_short">闷蒸</string>
     <string name="prep_tip_pulsar_paper">润湿底座中的纸滤纸（阀门打开）并沥干。装上筒身，加入咖啡粉，铺平粉层，放上分水盖。将秤归零。</string>
@@ -112,8 +109,6 @@
     <string name="prep_tip_french_press">预热法压壶后倒掉热水。加入咖啡粉，放到秤上，注水前归零。</string>
     <string name="prep_tip_espresso">擦干粉碗手柄。称量粉量、均匀布粉并水平压粉后再扣上。</string>
     <string name="prep_tip_moka">下壶加水到阀门处。粉杯装入咖啡粉并刮平—不要压粉。小心拧紧组装。</string>
-    <string name="format_prep_grind_specific">研磨 %1$s — 将 %2$s 设为 %3$s</string>
-    <string name="format_prep_grind_generic">研磨 %1$s — %2$s（%3$s）</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">暂停</string>
@@ -727,7 +722,6 @@
     <string name="guidance_cue_valve_state">阀门状态</string>
     <string name="screen_learning_title">学习</string>
     <string name="msg_learning_subtitle">图解分步冲煮指南</string>
-    <string name="msg_learning_intro">选择冲煮器具和配方，然后逐步查看清晰的操作说明。</string>
     <string name="action_show_details">显示详细信息</string>
     <string name="action_hide_details">隐藏详细信息</string>
 

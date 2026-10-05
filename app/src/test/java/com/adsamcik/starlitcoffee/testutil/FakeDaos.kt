@@ -180,6 +180,17 @@ internal class FakeCoffeeBagDao(
     override suspend fun findNextSealed(name: String, roaster: String?): CoffeeBagEntity? =
         bags.find { it.name == name && it.roaster == roaster && it.status == "SEALED" }
 
+    override suspend fun findNextPack(coffeeId: Long, excludedId: Long): CoffeeBagEntity? = bags
+        .filter { it.coffeeId == coffeeId && it.id != excludedId && it.status == "SEALED" && (it.weightG == null || it.weightG > 0) }
+        .minByOrNull { it.packNumber }
+
+    override suspend fun nextPackNumber(coffeeId: Long): Int =
+        (bags.filter { it.coffeeId == coffeeId }.maxOfOrNull { it.packNumber } ?: 0) + 1
+
+    override suspend fun markOpenedOnUse(id: Long, openedAt: Long) {
+        bags.find { it.id == id && it.status == "SEALED" }?.let { update(it.copy(status = "OPEN", openedDate = openedAt)) }
+    }
+
     override suspend fun getDistinctOrigins(): List<String> = bags.mapNotNull { it.origin }.distinct()
 
     override suspend fun getDistinctRegions(): List<String> = bags.mapNotNull { it.region }.distinct()

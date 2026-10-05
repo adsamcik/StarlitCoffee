@@ -382,7 +382,9 @@ class BagExtractionWorker(
         val app = applicationContext as? StarlitCoffeeApp
         return BagPhotoExtractor(
             appContext = applicationContext,
-            coffeeBagRepository = CoffeeBagRepository(db.coffeeBagDao()),
+            coffeeBagRepository = CoffeeBagRepository(
+                db.coffeeBagDao(), db.coffeeIdentityDao(), com.adsamcik.starlitcoffee.data.repository.TransactionRunner.room(db),
+            ),
             qrLinkMetadataExplorer = SafeQrLinkMetadataExplorer(),
             llmProvider = app?.llmProvider ?: StubLlmInferenceProvider(),
             ocrService = app?.ocrService,

@@ -39,7 +39,12 @@
     <string name="format_brew_stage_recorded_grams">Salvestatud %1$.0f g</string>
     <string name="format_brew_stage_remaining_grams">Jäänud %1$.0f g</string>
     <string name="label_brew_reference_cues">Võrdlusnäidud</string>
-    <string name="msg_brew_reference_cues_not_completion">Ainult suuniseks. Lõpeta etapp ülal oleva põhitoiminguga.</string>
+    <string name="action_pause_brew_guide">Peata juhend</string>
+    <string name="action_resume_brew_guide">Jätka juhendit</string>
+    <string name="action_pause_brew_clock">Peata taimer</string>
+    <string name="msg_brew_clock_keeps_running">Taimer töötab edasi.</string>
+    <string name="msg_brew_guide_paused">Juhend on peatatud. Taimer töötab edasi.</string>
+    <string name="msg_brew_reference_cues_not_completion">Ainult suuniseks. Ajavihje ei lõpeta füüsilist sammu.</string>
     <string name="action_show_more_brew_reference_cues">Kuva rohkem näite</string>
     <string name="action_hide_brew_reference_cues">Peida lisanäidud</string>
     <string name="label_brew_reference_stage_duration">Etapi kestus</string>

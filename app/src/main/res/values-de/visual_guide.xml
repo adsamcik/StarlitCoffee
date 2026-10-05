@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="heading_guide_why">Warum dieser Schritt?</string>
+    <string name="action_guide_steps">Schritte</string>
+    <string name="action_guide_overview">Übersicht</string>
+    <string name="label_guide_untimed">Im eigenen Tempo lesen</string>
+    <string name="action_continue_reading">Weiterlesen</string>
+    <string name="action_read_guide">Anleitung lesen</string>
+    <string name="action_read_ahead">Vorauslesen</string>
+    <string name="action_return_to_live_brew">Zurück zur Zubereitung</string>
+    <string name="label_guide_done_when">Fertig, wenn</string>
+</resources>

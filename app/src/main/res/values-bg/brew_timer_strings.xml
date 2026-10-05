@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_set_brew_reminder">Задаване на напомняне</string>
+    <string name="action_edit_brew_reminder">Редактиране на напомнянето</string>
+    <string name="action_remove_brew_reminder">Премахване на напомнянето</string>
+    <string name="label_brew_reminder">Напомняне</string>
+    <string name="label_timer_duration">Продължителност</string>
+    <string name="label_timer_seconds">Секунди</string>
+    <string name="label_timer_minutes">Минути</string>
+    <string name="label_timer_hours">Часове</string>
+    <string name="msg_brew_reminder_origin">От началото на тази стъпка. Промяната на продължителността запазва изминалото време. Вие потвърждавате кога стъпката е завършена.</string>
+    <string name="msg_brew_reminder_reached">Времето за напомняне настъпи. Проверете кафето, преди да продължите.</string>
+    <string name="title_cold_brew">Колд брю</string>
+    <string name="title_cold_brew_timer">Таймер за колд брю</string>
+    <string name="action_follow_brew_guide">Следване на ръководството</string>
+    <string name="action_just_set_brew_timer">Само задаване на таймер</string>
+    <string name="action_start_timer">Стартиране на таймера</string>
+    <string name="action_start_steeping">Начало на накисването</string>
+    <string name="action_end_brew_timer">Край на таймера</string>
+    <string name="action_add_brew_start_time">Добавяне на начален час</string>
+    <string name="label_brew_start_now">Започва сега</string>
+    <string name="label_brew_start_earlier">Започнало по-рано</string>
+    <string name="label_brew_start_unknown">Началният час е неизвестен</string>
+    <string name="label_brew_hours_ago">Преди колко часа</string>
+    <string name="label_brew_minutes_ago">Преди колко минути</string>
+    <string name="msg_cold_brew_refrigerated">Дръжте покрито в хладилник при 4 °C или по-ниска температура. Времето за накисване по подразбиране е 14 часа.</string>
+    <string name="msg_cold_brew_start_origin">Стартирайте, когато кафето е напълно намокрено и покритият съд е поставен в хладилника.</string>
+    <string name="msg_brew_start_unknown">Добавете действителния начален час, за да се изчисли напомняне. Дотогава не се прогнозира краен час.</string>
+    <string name="msg_brew_timer_ended">Таймерът е приключил</string>
+    <string name="label_brew_extraction_ended">Екстракцията е приключила</string>
+    <string name="msg_brew_notifications_disabled">Напомнянията са изключени. Приготвянето на кафето продължава.</string>
+    <string name="action_allow_brew_notifications">Разрешаване на напомняния</string>
+    <string name="msg_brew_reminders_may_be_late">Android може да забави напомнянията, когато напуснете приложението.</string>
+    <string name="action_allow_precise_brew_reminders">Разрешаване на точни напомняния</string>
+</resources>

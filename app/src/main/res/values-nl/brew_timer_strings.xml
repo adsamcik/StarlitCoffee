@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_set_brew_reminder">Herinnering instellen</string>
+    <string name="action_edit_brew_reminder">Herinnering wijzigen</string>
+    <string name="action_remove_brew_reminder">Herinnering verwijderen</string>
+    <string name="label_brew_reminder">Herinnering</string>
+    <string name="label_timer_duration">Duur</string>
+    <string name="label_timer_seconds">Seconden</string>
+    <string name="label_timer_minutes">Minuten</string>
+    <string name="label_timer_hours">Uren</string>
+    <string name="msg_brew_reminder_origin">Vanaf het begin van deze stap. Bij een andere duur blijft de verstreken tijd behouden. Je bevestigt zelf wanneer de stap klaar is.</string>
+    <string name="msg_brew_reminder_reached">Tijd voor de herinnering. Controleer de koffie voordat je doorgaat.</string>
+    <string name="title_cold_brew">Cold brew</string>
+    <string name="title_cold_brew_timer">Cold-brewtimer</string>
+    <string name="action_follow_brew_guide">Handleiding volgen</string>
+    <string name="action_just_set_brew_timer">Alleen timer instellen</string>
+    <string name="action_start_timer">Timer starten</string>
+    <string name="action_start_steeping">Laten trekken starten</string>
+    <string name="action_end_brew_timer">Timer beëindigen</string>
+    <string name="action_add_brew_start_time">Starttijd toevoegen</string>
+    <string name="label_brew_start_now">Begint nu</string>
+    <string name="label_brew_start_earlier">Eerder begonnen</string>
+    <string name="label_brew_start_unknown">Starttijd onbekend</string>
+    <string name="label_brew_hours_ago">Uren geleden</string>
+    <string name="label_brew_minutes_ago">Minuten geleden</string>
+    <string name="msg_cold_brew_refrigerated">Bewaar afgedekt in de koelkast bij maximaal 4 °C. De standaard trektijd is 14 uur.</string>
+    <string name="msg_cold_brew_start_origin">Start wanneer de koffie helemaal nat is en de afgedekte kan in de koelkast staat.</string>
+    <string name="msg_brew_start_unknown">Voeg de werkelijke starttijd toe om een herinnering te berekenen. Tot die tijd wordt geen eindtijd geschat.</string>
+    <string name="msg_brew_timer_ended">Timer beëindigd</string>
+    <string name="label_brew_extraction_ended">Extractie voltooid</string>
+    <string name="msg_brew_notifications_disabled">Herinneringen staan uit. Je koffie blijft trekken.</string>
+    <string name="action_allow_brew_notifications">Herinneringen toestaan</string>
+    <string name="msg_brew_reminders_may_be_late">Android kan herinneringen vertragen als je de app verlaat.</string>
+    <string name="action_allow_precise_brew_reminders">Precieze herinneringen toestaan</string>
+</resources>

@@ -24,6 +24,7 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetyMessage
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetySeverity
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageTargetQualifier
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageTimeReference
+import com.adsamcik.starlitcoffee.domain.brewing.session.UserBrewTimer
 
 /**
  * Resource-free state for the durable-brew screen.
@@ -45,6 +46,12 @@ sealed interface ActiveBrewSessionPresentation {
         val safetyMessages: List<StageSafetyMessage>,
         val actions: BrewSessionActionAvailability,
         val accessibility: BrewSessionAccessibilityPresentation,
+        val isGuidancePaused: Boolean = false,
+        val userTimer: UserBrewTimer? = null,
+        val userTimerRemainingMillis: Long? = null,
+        val hasPhysicalClockStarted: Boolean = true,
+        val isPhysicalOriginKnown: Boolean = true,
+        val isTimerOnly: Boolean = false,
     ) : ActiveBrewSessionPresentation
 
     /**
@@ -324,7 +331,8 @@ object ActiveBrewSessionPresentationMapper {
             currentStageNumber = runtime.currentStageIndex?.plus(1),
         )
         val elapsedDelta = runningWallClockDelta(runtime, nowWallClockMillis)
-        val totalElapsed = saturatingAdd(runtime.totalActiveElapsedMillis, elapsedDelta)
+        val totalElapsed = runtime.physicalClock?.endedElapsedMillis
+            ?: saturatingAdd(runtime.totalActiveElapsedMillis, elapsedDelta)
         val safetyMessages = currentStage?.definition?.safetyMessages?.toList().orEmpty()
         val presentedCurrentStage = currentStagePresentation(
             currentStage = currentStage,
@@ -341,6 +349,14 @@ object ActiveBrewSessionPresentationMapper {
             sessionId = runtime.sessionId.value,
             status = runtime.status,
             totalActiveElapsedMillis = totalElapsed,
+            isGuidancePaused = runtime.isGuidancePaused,
+            userTimer = runtime.userTimer,
+            hasPhysicalClockStarted = runtime.hasPhysicalClockStarted,
+            isPhysicalOriginKnown = runtime.isPhysicalOriginKnown,
+            isTimerOnly = runtime.physicalClock?.timerOnly == true,
+            userTimerRemainingMillis = runtime.userTimer?.takeIf { runtime.isPhysicalOriginKnown }?.remainingMillis(
+                presentedCurrentStage?.elapsedActiveMillis ?: 0L,
+            ),
             stageProgress = stageProgress,
             currentStage = presentedCurrentStage,
             safetyMessages = safetyMessages,
@@ -401,7 +417,7 @@ object ActiveBrewSessionPresentationMapper {
         )
     }
 
-    private fun referenceCuePresentations(
+    internal fun referenceCuePresentations(
         targets: StageReferenceTargets,
     ): List<BrewStageReferenceCuePresentation> = buildList {
         targets.timeTargets.forEach { target ->
@@ -545,18 +561,20 @@ object ActiveBrewSessionPresentationMapper {
         currentStage: CurrentBrewStagePresentation?,
     ): BrewSessionActionAvailability {
         val activeStage = currentStage?.runStatus == StageRunStatus.ACTIVE
-        val canOperate = runtime.status in ACTIVE_SESSION_STATUSES && activeStage
+        val awaitingStart = !runtime.hasPhysicalClockStarted &&
+            runtime.physicalClock?.startStageId == currentStage?.stageInstanceId
+        val canOperate = runtime.status in ACTIVE_SESSION_STATUSES && activeStage && !awaitingStart
         val canManualAdvance = canOperate &&
             currentStage.completion.allowsManualAdvance() &&
             currentStage.advanceConstraint.isSatisfied
         return BrewSessionActionAvailability(
-            canStart = runtime.status == BrewSessionStatus.READY &&
-                currentStage?.runStatus == StageRunStatus.PENDING,
-            canPause = runtime.status == BrewSessionStatus.RUNNING && activeStage,
+            canStart = (runtime.status == BrewSessionStatus.READY &&
+                currentStage?.runStatus == StageRunStatus.PENDING) || awaitingStart,
+            canPause = runtime.status == BrewSessionStatus.RUNNING && activeStage && runtime.hasPhysicalClockStarted,
             canResume = runtime.status == BrewSessionStatus.PAUSED && activeStage,
             canManualAdvance = canManualAdvance,
             canSkip = canOperate && runtime.currentStage?.definition?.isSkippable == true,
-            canCancel = canOperate,
+            canCancel = canOperate || runtime.status == BrewSessionStatus.READY || awaitingStart,
             canFinish = canManualAdvance &&
                 runtime.currentStageIndex == runtime.stagePlan.stages.lastIndex,
             canRecordActual = canOperate,

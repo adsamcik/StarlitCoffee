@@ -36,9 +36,11 @@ private class SessionTransitionReducer {
             is SessionEvent.Start -> start(state, now)
             is SessionEvent.Pause -> pause(state, now)
             is SessionEvent.Resume -> resume(state, now)
-            is SessionEvent.Tick -> advanceTime(state, now, TimeAdvanceSource.MONOTONIC)
-            is SessionEvent.Reconcile -> advanceTime(state, now, TimeAdvanceSource.WALL_RECONCILE)
-            is SessionEvent.Restore -> advanceTime(state, now, TimeAdvanceSource.WALL_RESTORE)
+            is SessionEvent.SetGuidancePaused -> state.withGuidancePaused(event.paused, now)?.let(::Reduction)
+            is SessionEvent.SetTimerTarget -> editTimer(state, event, now)
+            is SessionEvent.EstablishClockOrigin -> state.withEstablishedClockOrigin(event, now)?.let(::Reduction)
+            is SessionEvent.Tick, is SessionEvent.Reconcile, is SessionEvent.Restore ->
+                reconcileTime(state, now, event)
             is SessionEvent.ManualAdvance -> manualAdvance(state, now)
             is SessionEvent.RecordActual -> recordActual(state, event.value, now)
             is SessionEvent.RecordObservation -> recordObservation(state, event.observationId, now)
@@ -51,7 +53,9 @@ private class SessionTransitionReducer {
 
         return persistTransition(
             previous = state,
-            reduction = reduction,
+            reduction = reconcileUserTimer(state, reduction.state, now).let { timer ->
+                Reduction(timer.state, reduction.effects + timer.effects)
+            },
             eventId = event.eventId,
         )
     }
@@ -60,23 +64,35 @@ private class SessionTransitionReducer {
         state: SessionRuntimeState,
         now: SessionClockReading,
     ): Reduction? {
+        if (state.status == BrewSessionStatus.RUNNING && !state.hasPhysicalClockStarted) {
+            if (state.physicalClock?.startStageId != state.currentStage?.instanceId) return null
+            return state.startPhysicalClock(now)?.let(::Reduction)
+        }
         if (state.status != BrewSessionStatus.READY) return null
         val effects = mutableListOf<PendingSessionEffect>()
         val started = state.copy(
             status = BrewSessionStatus.RUNNING,
-            startedAtWallClockMillis = now.wallClockMillis,
             updatedAtWallClockMillis = now.wallClockMillis,
-            activeClockAnchor = ActiveClockAnchor(now.monotonicMillis, now.wallClockMillis),
-        )
+        ).startPhysicalClock(now) ?: return null
         val activated = activateCurrentStage(started, now, effects)
         return completeAutomaticStages(activated, now, effects)
+    }
+
+    private fun editTimer(
+        state: SessionRuntimeState,
+        event: SessionEvent.SetTimerTarget,
+        now: SessionClockReading,
+    ): Reduction? {
+        val advanced = advanceTime(state, now, TimeAdvanceSource.MONOTONIC) ?: Reduction(state)
+        val edited = advanced.state.withTimerTarget(event, now)
+        return if (edited == state) null else Reduction(edited, advanced.effects)
     }
 
     private fun pause(
         state: SessionRuntimeState,
         now: SessionClockReading,
     ): Reduction? {
-        if (state.status != BrewSessionStatus.RUNNING) return null
+        if (state.status != BrewSessionStatus.RUNNING || !state.hasPhysicalClockStarted) return null
         val advanced = advanceTime(state, now, TimeAdvanceSource.MONOTONIC) ?: return null
         var working = advanced.state
         val effects = advanced.effects.toMutableList()
@@ -117,7 +133,7 @@ private class SessionTransitionReducer {
         now: SessionClockReading,
         source: TimeAdvanceSource,
     ): Reduction? {
-        if (state.status != BrewSessionStatus.RUNNING) return null
+        if (state.status != BrewSessionStatus.RUNNING || !state.hasPhysicalClockStarted) return null
         val anchor = state.activeClockAnchor
             ?: ActiveClockAnchor(monotonicMillis = null, wallClockMillis = now.wallClockMillis)
         val (observedDelta, appliedDelta, kind) = when (source) {
@@ -162,7 +178,8 @@ private class SessionTransitionReducer {
         )
         val updated = state.copy(
             stageProgress = updatedProgress,
-            totalActiveElapsedMillis = saturatingAdd(state.totalActiveElapsedMillis, appliedDelta),
+            totalActiveElapsedMillis = state.physicalClock?.endedElapsedMillis
+                ?: saturatingAdd(state.totalActiveElapsedMillis, appliedDelta),
             activeClockAnchor = ActiveClockAnchor(now.monotonicMillis, now.wallClockMillis),
             updatedAtWallClockMillis = now.wallClockMillis,
             lastClockReconciliation = ClockReconciliation(
@@ -174,10 +191,21 @@ private class SessionTransitionReducer {
         return completeAutomaticStages(updated, now, mutableListOf())
     }
 
+    private fun reconcileTime(state: SessionRuntimeState, now: SessionClockReading, event: SessionEvent): Reduction? {
+        val reduction = advanceTime(state, now, event.timeAdvanceSource()) ?: return null
+        if (event !is SessionEvent.Reconcile || !event.rescheduleDeadline) return reduction
+        val active = currentStageWithProgress(reduction.state) ?: return reduction
+        val effects = reduction.effects.toMutableList()
+        cancelDeadline(reduction.state, active.first, "clock_change", effects)
+        scheduleDeadline(reduction.state, active.first, active.second, now, effects)
+        return Reduction(reduction.state, effects)
+    }
+
     private fun manualAdvance(
         state: SessionRuntimeState,
         now: SessionClockReading,
     ): Reduction? {
+        if (state.isAwaitingPhysicalClockStart()) return null
         val timeAdjusted = if (state.status == BrewSessionStatus.RUNNING) {
             advanceTime(state, now, TimeAdvanceSource.MONOTONIC)
         } else {
@@ -212,7 +240,7 @@ private class SessionTransitionReducer {
         var working = timeAdjusted?.state ?: state
         val effects = timeAdjusted?.effects?.toMutableList() ?: mutableListOf()
         val currentIndex = working.currentStageIndex ?: return timeAdjusted
-        if (currentIndex != working.stagePlan.stages.lastIndex) return timeAdjusted
+        if (currentIndex != working.stagePlan.stages.lastIndex || working.isAwaitingPhysicalClockStart()) return timeAdjusted
         val current = currentStageWithProgress(working) ?: return timeAdjusted
         if (
             !current.first.definition.completionMode.allowsManualAdvance(current.second.elapsedActiveMillis) ||
@@ -343,7 +371,7 @@ private class SessionTransitionReducer {
         state: SessionRuntimeState,
         now: SessionClockReading,
     ): Reduction? {
-        if (state.status !in setOf(BrewSessionStatus.RUNNING, BrewSessionStatus.PAUSED)) return null
+        if (state.status !in setOf(BrewSessionStatus.READY, BrewSessionStatus.RUNNING, BrewSessionStatus.PAUSED)) return null
         val timeAdjusted = if (state.status == BrewSessionStatus.RUNNING) {
             advanceTime(state, now, TimeAdvanceSource.MONOTONIC)
         } else {
@@ -351,7 +379,7 @@ private class SessionTransitionReducer {
         }
         var working = timeAdjusted?.state ?: state
         val effects = timeAdjusted?.effects?.toMutableList() ?: mutableListOf()
-        if (working.status !in setOf(BrewSessionStatus.RUNNING, BrewSessionStatus.PAUSED)) {
+        if (working.status !in setOf(BrewSessionStatus.READY, BrewSessionStatus.RUNNING, BrewSessionStatus.PAUSED)) {
             return timeAdjusted
         }
         val currentIndex = working.currentStageIndex
@@ -434,10 +462,11 @@ private class SessionTransitionReducer {
                 index,
                 progress.copy(
                     status = StageRunStatus.ACTIVE,
-                    startedAtWallClockMillis = now.wallClockMillis,
+                    startedAtWallClockMillis = if (stage.instanceId == state.physicalClock?.startStageId &&
+                        !state.isPhysicalOriginKnown) null else progress.startedAtWallClockMillis ?: now.wallClockMillis,
                 ),
             ),
-            activeClockAnchor = if (state.status == BrewSessionStatus.RUNNING) {
+            activeClockAnchor = if (state.status == BrewSessionStatus.RUNNING && state.hasPhysicalClockStarted) {
                 ActiveClockAnchor(now.monotonicMillis, now.wallClockMillis)
             } else {
                 null
@@ -483,6 +512,11 @@ private class SessionTransitionReducer {
             StageRunStatus.COMPLETED
         }
         var working = state.copy(
+            physicalClock = state.physicalClock?.let { clock ->
+                if (clock.endStageId == stage.instanceId) {
+                    clock.copy(endedElapsedMillis = state.totalActiveElapsedMillis)
+                } else clock
+            },
             stageProgress = state.stageProgress.replaceAt(
                 index,
                 progress.copy(
@@ -496,9 +530,10 @@ private class SessionTransitionReducer {
         )
         val nextIndex = index + 1
         return if (nextIndex >= working.stagePlan.stages.size) {
-            effects += PendingSessionEffect.FinalizeBrewLog(
-                effectId = effectId(working, "finalize_brew_log"),
-                sessionId = working.sessionId,
+            effects += if (working.physicalClock?.timerOnly == true) {
+                PendingSessionEffect.CancelSessionWork(effectId(working, "end_timer_work"), working.sessionId)
+            } else PendingSessionEffect.FinalizeBrewLog(
+                effectId = effectId(working, "finalize_brew_log"), sessionId = working.sessionId,
             )
             working.copy(
                 status = BrewSessionStatus.COMPLETED,
@@ -580,31 +615,35 @@ private class SessionTransitionReducer {
     ): SessionRuntimeState {
         val knownIds = (state.pendingEffects.map(PendingSessionEffect::effectId) +
             state.acknowledgedEffectIds).toMutableSet()
-        val newEffects = candidates.filter { candidate -> knownIds.add(candidate.effectId) }
+        val newEffects = candidates.filter { candidate ->
+            !(state.isGuidancePaused && candidate is PendingSessionEffect.StageAlert) && knownIds.add(candidate.effectId)
+        }
         return if (newEffects.isEmpty()) state else state.copy(pendingEffects = state.pendingEffects + newEffects)
     }
 
-    private fun List<StageRuntimeProgress>.replaceAt(
-        index: Int,
-        value: StageRuntimeProgress,
-    ): List<StageRuntimeProgress> = toMutableList().also { it[index] = value }
-
-    private fun effectId(state: SessionRuntimeState, suffix: String): SessionEffectId =
-        SessionEffectId("${state.sessionId.value}:$suffix")
-
     private fun deadlineToken(state: SessionRuntimeState, stage: CompiledBrewStage): String =
         "${state.sessionId.value}:${stage.instanceId.persistentKey}:deadline"
-
-    private enum class TimeAdvanceSource {
-        MONOTONIC,
-        WALL_RESTORE,
-        WALL_RECONCILE,
-    }
 
     private data class Reduction(
         val state: SessionRuntimeState,
         val effects: List<PendingSessionEffect> = emptyList(),
     )
+}
+
+private fun effectId(state: SessionRuntimeState, suffix: String): SessionEffectId =
+    SessionEffectId("${state.sessionId.value}:$suffix")
+
+private fun List<StageRuntimeProgress>.replaceAt(
+    index: Int,
+    value: StageRuntimeProgress,
+): List<StageRuntimeProgress> = toMutableList().also { it[index] = value }
+
+private enum class TimeAdvanceSource { MONOTONIC, WALL_RESTORE, WALL_RECONCILE }
+
+private fun SessionEvent.timeAdvanceSource(): TimeAdvanceSource = when (this) {
+    is SessionEvent.Restore -> TimeAdvanceSource.WALL_RESTORE
+    is SessionEvent.Reconcile -> if (useMonotonicClock) TimeAdvanceSource.MONOTONIC else TimeAdvanceSource.WALL_RECONCILE
+    else -> TimeAdvanceSource.MONOTONIC
 }
 
 private data class ActiveStage(
@@ -632,7 +671,28 @@ private fun activeStageWithProgress(state: SessionRuntimeState): ActiveStage? {
 }
 
 private fun SessionRuntimeState.acceptsStageInput(): Boolean =
-    status == BrewSessionStatus.RUNNING || status == BrewSessionStatus.PAUSED
+    (status == BrewSessionStatus.RUNNING || status == BrewSessionStatus.PAUSED) && !isAwaitingPhysicalClockStart()
+
+private fun SessionRuntimeState.isAwaitingPhysicalClockStart(): Boolean =
+    !hasPhysicalClockStarted && physicalClock?.startStageId == currentStage?.instanceId
+
+private fun SessionRuntimeState.withGuidancePaused(
+    paused: Boolean,
+    now: SessionClockReading,
+): SessionRuntimeState? {
+    if (!acceptsStageInput() || isGuidancePaused == paused) return null
+    // Do not reconcile, advance, cancel or restart the physical clock here.
+    // Drop queued discretionary cues so resuming guidance cannot replay them.
+    return copy(
+        isGuidancePaused = paused,
+        updatedAtWallClockMillis = now.wallClockMillis,
+        pendingEffects = if (paused) {
+            pendingEffects.filterNot { it is PendingSessionEffect.StageAlert }
+        } else {
+            pendingEffects
+        },
+    )
+}
 
 private fun ActiveStage.isAutomaticCompletionDue(brewElapsedMillis: Long): Boolean =
     stage.definition.advanceConstraint.isSatisfied(

@@ -1,0 +1,127 @@
+{
+  "date": "2026-10-04",
+  "initial": [
+    {
+      "key": "espresso",
+      "generator_file": "exec-02a99909-c5cc-48b9-94d9-13ae6084ff1f.png"
+    },
+    {
+      "key": "cortado",
+      "generator_file": "exec-d2cff3cc-ce1e-4e05-8a7a-5ff08d9287b5.png"
+    },
+    {
+      "key": "cappuccino",
+      "generator_file": "exec-e4fbaeaf-f250-4dfc-9d35-87fe461d4130.png"
+    },
+    {
+      "key": "mug",
+      "generator_file": "exec-f5477361-81cf-4576-99c0-af8017480f9d.png"
+    },
+    {
+      "key": "travel",
+      "generator_file": "exec-6adefea1-1aca-486e-94dc-ca6bb63444f5.png"
+    },
+    {
+      "key": "takeaway",
+      "generator_file": "exec-aa0d849d-008c-4771-8819-2663e8d8f66f.png"
+    },
+    {
+      "key": "latte_glass",
+      "generator_file": "exec-190815c7-b205-426c-b720-562ba94c22af.png"
+    },
+    {
+      "key": "carafe",
+      "generator_file": "exec-7d4702d0-b879-4f65-a9f1-2f3ab69fdfb1.png"
+    },
+    {
+      "key": "double_wall_mug",
+      "generator_file": "exec-27805758-f054-4863-aaf6-59c146451e02.png"
+    },
+    {
+      "key": "french_press",
+      "generator_file": "exec-c6f8f603-061d-45fe-8bd6-325a910e2de2.png"
+    },
+    {
+      "key": "mason_jar",
+      "generator_file": "exec-1342f328-5e04-4471-b889-80793717f4f8.png"
+    },
+    {
+      "key": "bowl",
+      "generator_file": "exec-49081f5c-7477-461d-8e2a-cc923d4821cc.png"
+    },
+    {
+      "key": "aroma_taster",
+      "generator_file": "exec-ef206fdc-3b4c-4898-a477-831066ae9ac2.png"
+    },
+    {
+      "key": "kettle",
+      "generator_file": "exec-96d82a79-2bff-4909-ad15-9055d796950d.png"
+    },
+    {
+      "key": "tall_latte_glass",
+      "generator_file": "exec-695b2507-ed1e-406e-a12a-3321faed53c1.png"
+    },
+    {
+      "key": "spherical_latte",
+      "generator_file": "exec-bfbf0ee7-94cd-4c82-bdfb-63203f7c8f45.png"
+    },
+    {
+      "key": "double_wall_tumbler",
+      "generator_file": "exec-b006ffae-75d6-4f21-88da-53de19a3ab52.png"
+    },
+    {
+      "key": "barista_server",
+      "generator_file": "exec-db413765-9216-413e-b668-ac20cc6a3984.png"
+    },
+    {
+      "key": "angular_server",
+      "generator_file": "exec-acaccc4f-690d-4b0c-bba4-31a66423c934.png"
+    },
+    {
+      "key": "lid_server",
+      "generator_file": "exec-c56bfbfc-714b-4567-a1c3-dca17c63f6bc.png"
+    },
+    {
+      "key": "dot_carafe",
+      "generator_file": "exec-ef7b0c70-b78c-4d1d-b668-e9a65669202b.png"
+    },
+    {
+      "key": "double_wall_espresso",
+      "generator_file": "exec-ab846b53-6364-4cea-90be-67803c2f8bb2.png"
+    },
+    {
+      "key": "spouted_espresso_server",
+      "generator_file": "exec-ae301e77-8925-46f5-8575-9e5826312938.png"
+    },
+    {
+      "key": "ceramic_latte_bowl",
+      "generator_file": "exec-bf45ba08-b8ce-4d9b-ad80-a3163270cb82.png"
+    },
+    {
+      "key": "faceted_cortado",
+      "generator_file": "exec-9dceba82-44f0-4d09-893b-213f935e9d02.png"
+    },
+    {
+      "key": "thermal_carafe",
+      "generator_file": "exec-758b88f9-aecd-4f3b-85b9-d3041d9e953b.png"
+    },
+    {
+      "key": "beehive_server",
+      "generator_file": "exec-45dcbb15-765a-4e22-bc26-412bd3ca83e6.png"
+    },
+    {
+      "key": "double_wall_press",
+      "generator_file": "exec-a7eb5503-5878-4fa7-81cb-ca225cc3207b.png"
+    }
+  ],
+  "lid_refinements": [
+    {
+      "key": "travel",
+      "generator_file": "exec-f956dcbc-085e-4d4c-8e40-ccd388f52350.png"
+    },
+    {
+      "key": "takeaway",
+      "generator_file": "exec-6fd23aef-160b-4d20-8029-6f186ec7f7d1.png"
+    }
+  ]
+}

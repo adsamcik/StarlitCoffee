@@ -100,11 +100,8 @@
     <string name="label_increase">Verhoog %1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Bereiding voorbereiden</string>
 <string name="action_ready_to_brew_short">Klaar om te zetten</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Voorbereiding</string>
-    <string name="label_recipe_heading">Recept</string>
     <string name="label_temp_short">Temp</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Maak het papieren filter nat in de basis (ventiel open) en laat uitlekken. Plaats de cilinder, voeg de maling toe, egaliseer het bed en plaats de dispersiedop. Tarreer de weegschaal.</string>
@@ -114,8 +111,6 @@
     <string name="prep_tip_french_press">Verwarm de pers voor en leeg hem. Voeg gemalen koffie toe, zet op de weegschaal en tarreer voordat je water toevoegt.</string>
     <string name="prep_tip_espresso">Veeg de portafilter droog. Doseer, verdeel en tamp vlak voordat je hem vastzet.</string>
     <string name="prep_tip_moka">Vul de onderste kamer tot het ventiel. Vul het mandje met gemalen koffie, strijk vlak — niet tampen. Zet voorzichtig in elkaar.</string>
-    <string name="format_prep_grind_specific">Maal %1$s — stel %2$s in op %3$s</string>
-    <string name="format_prep_grind_generic">Maal %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Pauzeren</string>
@@ -730,7 +725,6 @@
     <string name="guidance_cue_valve_state">Klepstatus</string>
     <string name="screen_learning_title">Leren</string>
     <string name="msg_learning_subtitle">Visuele zetgidsen, stap voor stap</string>
-    <string name="msg_learning_intro">Kies een koffiezetter en recept en doorloop steeds één duidelijke stap.</string>
     <string name="action_show_details">Details tonen</string>
     <string name="action_hide_details">Details verbergen</string>
 

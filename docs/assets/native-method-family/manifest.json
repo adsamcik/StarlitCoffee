@@ -1,0 +1,32 @@
+{
+  "prototype_source": "docs/brewing/design/2026-10-02-visual-guides/method-icons.js",
+  "prototype_sha256": "e597e9e53c15fee836e80f0bf9c98b2ce6fe3ab7a2efc2a19a08ae25cb61c1b4",
+  "prototype_review": "docs/brewing/design/2026-10-02-visual-guides/REVIEW.md",
+  "pulsar_source": "docs/assets/native-method-family/pulsar-approved.xml",
+  "pulsar_sha256": "d45ca9489bb3b9d4643ecc45a17607d81ac012c5df1b4524bb2626c288f2e164",
+  "pulsar_origin_commit": "2fff9e14",
+  "pulsar_origin_path": "docs/assets/pulsar-imagegen-vector/equipment_pulsar.xml",
+  "prototype_fill_rule": "evenodd",
+  "role": "decorative method recognition; never instruction-scene approval",
+  "native_sha256": {
+    "equipment_chemex.xml": "1f66b74b35bb1e5ec875f0fe81d0a6d71465a099887ee2322c377b9d662e253e",
+    "equipment_v60.xml": "42040c413ff326e7a0c954be8e09e9d3d5b12fa9b679287f1c904ce5d358c812",
+    "equipment_espresso.xml": "aa2b86cc40fd96c5f2240ada7af95adf3dddfb1ad42a038cdeae2bc15d4f1714",
+    "equipment_cold_brew.xml": "64bd2146835e32a33c5e5643c6fac38bc1b0392dc8815888cf2bf4768c1cb04e",
+    "equipment_kalita_wave.xml": "ff178a7d5c239179d58375bf19d58c36dc527bc434206c5f2942ee8eeecd8f94",
+    "equipment_wedge.xml": "320cc56363c7802fdb004b7631de7e29e4f958ac1c6611271d06d1c44db82aa0",
+    "equipment_aeropress.xml": "79fd65156113ca17e9122828e542d649d16ea4c1f81d133c4ba20ab5afaf7c1d",
+    "equipment_french_press.xml": "db65bb6df7e351bd259d245f6cabe2b5324654845c2dc369e40276ffe4f4f3a9",
+    "equipment_clever.xml": "f79495d4374dd47dddf204ad56f2e05da1ae57bb50f391e19d9d7f11a31e337d",
+    "equipment_hario_switch.xml": "2e4a691de6fde0c7ab20e1e0105b60434d757d8ebf623ca3e25000edb371d306",
+    "equipment_melitta.xml": "53b66bb454e198b2a76dc08284737c227a8474c424670117b4dd930aaba6ea89",
+    "equipment_automatic_drip.xml": "4d4b7776a07dca501f0450d178756aa3d346a9090f6926c5c21a51d484b20908",
+    "equipment_moka_pot.xml": "f80df480299c1dbe709fe786b740fa028db87e5c5f01f920cd6c35671d3e85d1",
+    "equipment_turkish.xml": "bbfc5cef7af09dc19d4db6e1e3ca8d6128ba21267837b94eaf8e75d907587796",
+    "equipment_phin.xml": "53a7fbe381dea37fcd41fdee8ab87a56be11aabd0b54385824195cf87b08f971",
+    "equipment_siphon.xml": "ed6fbb41758792199930ea01a6b2755240ca0e9b32b32bd760fff0b3ccc03023",
+    "equipment_percolator.xml": "1ee2faec3cbd3242764dc2db2a90895f5fc239a22bfeaf0d57ebf639ab7ecf0a",
+    "equipment_pulsar.xml": "d45ca9489bb3b9d4643ecc45a17607d81ac012c5df1b4524bb2626c288f2e164"
+  },
+  "text_hash_encoding": "UTF-8 with LF line endings"
+}

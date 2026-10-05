@@ -1,0 +1,519 @@
+{
+  "method_id": "pulsar",
+  "title": "NextLevel Pulsar brewing guide",
+  "scope": "Full-size NextLevel Pulsar with a compatible paper filter, using the 20 g example of Jonathan Gagne's published steeped-bloom percolation recipe; everyday app defaults, metal discs and Mini procedures are separately identified.",
+  "research_date": "2026-10-02",
+  "review_status": "editorially_reviewed",
+  "physical_brew_tested": false,
+  "sources": [
+    {
+      "id": "manufacturer_guide",
+      "title": "Pulsar User Guide",
+      "url": "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+      "author_or_organization": "NextLevel Brewer Co",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Paper assembly and rinse",
+        "Horizontal closed valve and recommended 12-to-3-o'clock travel",
+        "General closed-start 3x bloom lasting 30-60 seconds",
+        "Low water level and normal slowing near the end",
+        "Base-only lifting, cleaning and disassembled storage",
+        "General 15-40 g dosing and 4-7 minute range; these are not the chosen creator recipe's exact targets"
+      ]
+    },
+    {
+      "id": "manufacturer_product",
+      "title": "NextLevel Pulsar Brewer",
+      "url": "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "author_or_organization": "NextLevel Brewer Co",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "380 mL chamber liquid volume",
+        "Manufacturer-selected 20 g / 340 g batch",
+        "Flow valve, dispersion cap and no-bypass design"
+      ]
+    },
+    {
+      "id": "gagne",
+      "title": "The Pulsar Dripper",
+      "url": "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/",
+      "author_or_organization": "Jonathan Gagne / Coffee ad Astra",
+      "source_type": "original_creator",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "20-30 g recipe with relatively coarse grind",
+        "Wet-base paper priming to minimize trapped air",
+        "Open-start 3x bloom, close at first dripping, gentle agitation",
+        "99 C for the author's light roasts",
+        "Release at 60 seconds and small pulses maintaining roughly 1 cm above the bed",
+        "1:17 total input ratio and 210-270 second target"
+      ]
+    },
+    {
+      "id": "rao",
+      "title": "NextLevel Pulsar Recipes and Recommendations",
+      "url": "https://www.scottrao.com/blog/pulsar-recipe",
+      "author_or_organization": "Scott Rao",
+      "source_type": "original_creator",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "25 g dose, 17:1 input water ratio, 75 g bloom and water just off the boil",
+        "45-60 second recipe-outline bloom; detailed release sequence begins around 45-50 seconds",
+        "1-2 cm water level, short bursts and final gentle swirl",
+        "Firm barrel assembly with threaded end downward",
+        "Personal 20 g minimum recommendation, rather than a hardware limit"
+      ]
+    },
+    {
+      "id": "kaldi",
+      "title": "NextLevel Pulsar Dripper Brew Recipe",
+      "url": "https://kaldiscoffee.com/blogs/recipes/nextlevel-pulsar-dripper-brew-recipe",
+      "author_or_organization": "Kaldi's Coffee",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Closed-start 20 g paper recipe with 60 mL bloom and 320 mL total",
+        "Upright open and horizontal closed valve",
+        "Published ZP6 5-6 and Fellow Ode Gen 2 printed 5.2 suggestions in that recipe's context",
+        "One-minute release, 100 mL first post-bloom pour then roughly 40 mL pulses",
+        "Recipe mixes volume wording with dose-weight multiples; no exact mass conversion is claimed here"
+      ]
+    },
+    {
+      "id": "manufacturer_metal",
+      "title": "Pulsar Stainless Steel Filter Discs: verified care instructions",
+      "url": "https://nextlevelbrewer.com/shop/pulsar-stainless-steel-filter-discs/",
+      "author_or_organization": "NextLevel Brewer Co",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Actual manufacturer care text read through hidden in-app browser after web-fetch timeouts",
+        "Current product detail lists 2 x 40k",
+        "Metal may tolerate less agitation before clogging than paper",
+        "Dump grounds with barrel inserted, then disassemble and carefully remove disc with valve open",
+        "Wash after each use and protect thin discs in storage case"
+      ]
+    },
+    {
+      "id": "manufacturer_metal_specifications",
+      "title": "Pulsar Stainless Steel Filter Discs: partial 19K/40K specification evidence",
+      "url": "https://nextlevelbrewer.com/shop/pulsar-stainless-steel-filter-discs/",
+      "author_or_organization": "NextLevel Brewer Co",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "partial",
+      "supports": [
+        "The accessible page establishes current 40k product shorthand and general metal care only",
+        "Exact 19K/40K hole-count specification and comparative clarity ranking remain unverified",
+        "Customer reviews mentioning 19k are not manufacturer specifications"
+      ]
+    },
+    {
+      "id": "manufacturer_mini",
+      "title": "NextLevel Pulsar Mini Recipes",
+      "url": "https://nextlevelbrewer.com/pulsar-mini-recipes/",
+      "author_or_organization": "NextLevel Brewer Co",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Mini adaption requires reconsidering dose, bed depth, grind and agitation",
+        "Mini wet-base paper priming is less successful; dry-filter start suggested",
+        "Both brewers use the same valve; filters and recipe behavior differ"
+      ]
+    },
+    {
+      "id": "manufacturer_suggestions",
+      "title": "Brewing Suggestions",
+      "url": "https://nextlevelbrewer.com/brewing-suggestions/",
+      "author_or_organization": "NextLevel Brewer Co",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "General 94 C and 1:17 starting suggestions provide context for the app's everyday default",
+        "General suggestions do not establish an exact 45-second, five-pulse recipe or universal decaf finish target"
+      ]
+    }
+  ],
+  "recipe": {
+    "name": "Jonathan Gagne steeped bloom, 20 g / 340 g paper example",
+    "provenance": "published_recipe",
+    "source_ids": [
+      "gagne"
+    ],
+    "equipment": [
+      "Full-size NextLevel Pulsar with base, barrel and dispersion cap",
+      "Compatible Pulsar paper filter",
+      "Stable heat-safe server that supports the brewer level and holds the collected brew",
+      "Gram scale",
+      "Timer",
+      "Burr grinder",
+      "Kettle; gooseneck optional"
+    ],
+    "coffee_dose_g": 20,
+    "brew_water_g": 340,
+    "brew_water_ml": null,
+    "ice_g": 0,
+    "target_beverage_g": null,
+    "ratio_basis": "brew_water_input",
+    "ratio_value": 17,
+    "water_temperature_c": {
+      "min": 99,
+      "max": 99,
+      "control": "user"
+    },
+    "grind_description": "Relatively coarse and even, a little coarser than a typical 20 g V60 grind; tune on this brewer without inferring a grinder dial value or precise micron conversion.",
+    "expected_time_s": {
+      "min": 210,
+      "max": 270,
+      "clock_start": "Start the timer as the first 60 g bloom pour begins",
+      "clock_end": "Final drawdown: standing water has gone and flow has subsided to final drips"
+    },
+    "completion_signal": "No standing water above the coffee bed and the final drawdown has subsided; close the valve and lift only by the base. The time range is a comparison target, not forced completion.",
+    "scaling": "revalidate_batch_size",
+    "steps": [
+      {
+        "id": "prime_paper",
+        "instruction": "With the barrel off, close the valve, add a shallow water layer just above the ridges, place dry paper on it, open over the sink, and close again. Fit the barrel firmly, threaded end downward.",
+        "why": "Seat the filter with minimal trapped air. This rinse is discarded and excluded from the brew input.",
+        "water_add_g": null,
+        "water_cumulative_g": 0,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Paper flat on ridges; barrel firmly seated with no leak. Valve closed.",
+        "source_ids": [
+          "gagne",
+          "rao"
+        ]
+      },
+      {
+        "id": "dose_level_tare",
+        "instruction": "Place level on a stable server and scale, add 20 g coffee, level gently without tamping, fit the cap and tare. Stabilize the base while operating the valve: horizontal is closed, upright is open.",
+        "why": "A level coffee bed and supported brewer allow even wetting and safe valve operation.",
+        "water_add_g": 0,
+        "water_cumulative_g": 0,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Level coffee bed, cap fitted and scale reads zero.",
+        "source_ids": [
+          "gagne",
+          "manufacturer_guide",
+          "kaldi"
+        ]
+      },
+      {
+        "id": "open_start_bloom",
+        "instruction": "Open the valve, start the timer and pour 60 g through the dispersion cap. Close as soon as dripping begins, even during the pour, and finish reaching 60 g. Holding only the base, swirl gently to wet dry pockets.",
+        "why": "The brief open start displaces air between coffee particles; closing then retains the bloom. Avoid driving fines into the paper with strong agitation.",
+        "water_add_g": 60,
+        "water_cumulative_g": 60,
+        "start_s": 0,
+        "duration_s": null,
+        "completion": "Scale at 60 g, grounds wet, valve closed and bloom retained.",
+        "source_ids": [
+          "gagne"
+        ]
+      },
+      {
+        "id": "retained_bloom",
+        "instruction": "Keep the valve closed until elapsed time reaches 60 seconds from the beginning of the first pour.",
+        "why": "Allow saturation before draining resumes; 60 seconds is an elapsed release point, not an extra wait after pouring.",
+        "water_add_g": 0,
+        "water_cumulative_g": 60,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Elapsed timer reads 60 seconds; retained bloom remains wet.",
+        "source_ids": [
+          "gagne"
+        ]
+      },
+      {
+        "id": "open_and_pulse",
+        "instruction": "At elapsed 60 seconds open the valve fully. Add 280 g through the cap in small pulses, keeping about 1 cm of water over the bed; stop at 340 g cumulative. With a gooseneck kettle, Gagne recommends relatively fast circular pouring to avoid digging holes; ordinary kettles also work. No fixed pulse count, size or universal pouring rate is specified.",
+        "why": "The low pool supports ongoing percolation while limiting unnecessarily tall water levels. The total already includes the 60 g bloom.",
+        "water_add_g": 280,
+        "water_cumulative_g": 340,
+        "start_s": 60,
+        "duration_s": null,
+        "completion": "340 g cumulative brew water has entered; level safely below rim.",
+        "source_ids": [
+          "gagne"
+        ]
+      },
+      {
+        "id": "drain_and_serve",
+        "instruction": "Let final drawdown finish with the valve open. Once standing water is gone and flow subsides, close, lift only by the base, set down safely, and serve.",
+        "why": "Slowing as the water level drops is normal; drainage rather than a timer deadline determines removal.",
+        "water_add_g": 0,
+        "water_cumulative_g": 340,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Final drawdown complete; brewer safely removed by the base.",
+        "source_ids": [
+          "manufacturer_guide",
+          "gagne"
+        ]
+      }
+    ]
+  },
+  "variants": [
+    {
+      "name": "App everyday default",
+      "how_it_differs": "App-authored combination: 1:17, 3x closed-start bloom for 45 seconds, 93-96 C, five equal post-bloom pulses and 210-270 second reference. At a chosen 20 g dose this is 60 g bloom plus five 56 g pulses. No creator source establishes that entire combination. General manufacturer suggestions support a roughly 94 C start and 30-60 second blooms. Do not relabel it Gagne.",
+      "source_ids": [
+        "manufacturer_guide",
+        "manufacturer_suggestions"
+      ]
+    },
+    {
+      "name": "Scott Rao's 25 g example",
+      "how_it_differs": "25 g coffee and 425 g total input at 1:17, 75 g bloom, just-off-boil water, recipe-outline 45-60 second bloom, approximately 1-2 cm water level and final gentle swirl. In the detailed sequence he adds water around 45-50 seconds before opening. This is not the 20 g / 340 g Gagne workflow.",
+      "source_ids": [
+        "rao"
+      ]
+    },
+    {
+      "name": "Kaldi's 20 g paper recipe",
+      "how_it_differs": "20 g dose, closed-start bloom stated as 60 mL or 3x dose, release at 60 seconds, then 100 mL and roughly 40 mL pulses to 320 mL total. Published ZP6 5-6 and Ode Gen 2 printed 5.2 suggestions belong to this recipe and filter. Source mixes grams and milliliters; an exact 320 g mass recipe is not asserted.",
+      "source_ids": [
+        "kaldi"
+      ]
+    },
+    {
+      "name": "Metal disc",
+      "how_it_differs": "Reusable filtration with separate agitation and care behavior. Manufacturer warns it may clog with less agitation than paper. Retain and protect the disc; dump grounds while barrel remains fitted, then disassemble. No exact dose, temperature, pulse schedule or comparative 19K/40K clarity recipe verified; specification evidence remains partial.",
+      "source_ids": [
+        "manufacturer_metal",
+        "manufacturer_metal_specifications"
+      ]
+    },
+    {
+      "name": "Pulsar Mini",
+      "how_it_differs": "Smaller filter and different bed depth require recipe reassessment. Manufacturer favors a dry-filter start because floating paper on a wet base works less well; do not reuse the full-size priming procedure automatically.",
+      "source_ids": [
+        "manufacturer_mini"
+      ]
+    },
+    {
+      "name": "Steep-and-release",
+      "how_it_differs": "Manufacturer also permits retaining all recipe water, stirring, steeping then releasing. This uses a different grind/contact-time model and must fit the chamber with coffee and headroom; no exact beginner recipe is invented here.",
+      "source_ids": [
+        "manufacturer_guide"
+      ]
+    }
+  ],
+  "troubleshooting": [
+    {
+      "symptom": "Little flow or a stalled drawdown",
+      "check_first": "Ensure valve is fully open, filter flat, barrel correctly assembled, brewer level and cap clean. Distinguish normal gradual slowing at a low water level from a stall.",
+      "adjustment": "For the next brew reduce agitation; if it still stalls, try a coarser grind. The manufacturer's water-first bloom is a separate experiment, not an automatic alteration of the named recipe.",
+      "source_ids": [
+        "manufacturer_guide",
+        "gagne"
+      ]
+    },
+    {
+      "symptom": "Fast, thin or sour cup",
+      "check_first": "Confirm dose, 340 g cumulative input including bloom, temperature and wetting; verify no assembly leak bypassed the grounds.",
+      "adjustment": "Try a slightly finer grind with otherwise unchanged procedure. Taste remains the deciding evidence.",
+      "source_ids": [
+        "gagne",
+        "rao"
+      ]
+    },
+    {
+      "symptom": "Drying harshness or bitter roast character",
+      "check_first": "Check for excessive agitation, very fine grind and a tall water pool; identify whether the roast is more developed than the chosen light-roast example.",
+      "adjustment": "Try coarser or less agitation. For a more developed roast, separately test cooler water. Do not add a universal grinder-click count.",
+      "source_ids": [
+        "gagne",
+        "manufacturer_guide"
+      ]
+    },
+    {
+      "symptom": "Sticky or leaking valve",
+      "check_first": "After cooling and cleaning, inspect correct insertion and damaged parts. Do not fight a stiff valve while an unsupported hot brewer can tip.",
+      "adjustment": "Follow manufacturer maintenance instructions for food-safe silicone lubrication and fully inserted valve, or contact manufacturer if damaged or still leaking.",
+      "source_ids": [
+        "manufacturer_guide"
+      ]
+    }
+  ],
+  "safety": [
+    "Lift the assembled brewer only by its base whenever it contains hot brew water; never lift it by the barrel walls.",
+    "Support the brewer and server level and stabilize the base during valve operation. Stop pouring before approaching the rim; ensure server capacity is sufficient.",
+    "Chamber liquid volume is 380 mL; coffee displaces space. It is not a 380 g cumulative-water limit or permission to retain 340 g plus coffee without checking level.",
+    "Keep brewer parts off hot surfaces, inspect for damage and wash before first use. Hand washing is encouraged; dishwasher use is allowed but detergent residues can affect taste. Avoid chlorine or bleach.",
+    "After cooling, dispose of paper/grounds, rinse and wipe oils from the barrel; store with barrel removed. Metal discs require the separate manufacturer cleanup, washing and protective storage procedure."
+  ],
+  "app_audit": [
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:86",
+      "finding": "Current PULSAR defaults: 1:17, 3x bloom, five pulses, 93-96 C, 210-270 seconds and medium-coarse grind; constructor inheritance supplies 45-second bloom, 2.0 g/g apparent loss and standard decaf timing. At an example 20 g dose, BrewCalculator computes 340 g water, 60 g bloom, 280 g remaining and five 56 g pulses, cumulative 60/116/172/228/284/340.",
+      "severity": "info",
+      "change_recommendation": "Describe this as an app-authored everyday starting recipe. Keep it distinct from Gagne's 99 C, 60-second release and water-level-controlled pulses; retain input-water accounting.",
+      "source_ids": [
+        "gagne",
+        "manufacturer_guide",
+        "manufacturer_suggestions"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/PulsarBuiltInGuidanceCatalog.kt:292",
+      "finding": "Current shared completion: 'When drawdown is complete, remove the brewer carefully and serve the coffee.' Shared warning at line 311: 'Hot water and brewed coffee can burn. Keep hands clear of the hot liquid and use a stable surface.' Neither gives manufacturer base-only lifting. The separate Learn resource's stage 8 already does.",
+      "severity": "high",
+      "change_recommendation": "Add lift-only-by-base to always-visible shared safety and completion, including handling during agitation. Preserve the correct Learn warning.",
+      "source_ids": [
+        "manufacturer_guide"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/BrewCalculator.kt:74",
+      "finding": "Current BrewMethod.kt:98 is 'capacityMaxG = 380'. BrewCalculator lines 74-75 calculate 'if (method.capacityMaxG != null && waterG > method.capacityMaxG)' then 'kotlin.math.ceil(waterG.toDouble() / method.capacityMaxG).toInt() - 1'. This divides cumulative input mass by a chamber liquid-volume specification of 380 mL. Draining percolation can use more cumulative water than instantaneous chamber capacity and coffee occupies space.",
+      "severity": "medium",
+      "change_recommendation": "Model volume/headroom separately from cumulative recipe water. Use low-water-level and overflow cues; do not describe total input exceeding 380 g as a required reservoir refill.",
+      "source_ids": [
+        "manufacturer_product",
+        "manufacturer_guide"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/BeverageOutputEstimator.kt:33",
+      "finding": "Pulsar prediction uses 2.2 g apparent loss per g coffee with PROTOCOL_SENSITIVE caveat; BrewMethod.kt:79/BrewCalculator.kt:41 fall back to 2.0. For 20/340 these predict 296 g and 300 g respectively without personal calibration. No reviewed source establishes either as universal or a fixed beverage target.",
+      "severity": "medium",
+      "change_recommendation": "Preserve estimated-output wording, consolidate estimation semantics where displayed, and use measured calibration when available. Do not place a predicted yield in the exact creator recipe as a verified target.",
+      "source_ids": [
+        "gagne",
+        "manufacturer_guide"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:80",
+      "finding": "Pulsar inherits STANDARD decaf policy, subtracting 30 seconds from both target bounds via BrewCalculator.kt:63, making 180-240 seconds. The reviewed Pulsar creator/manufacturer sources do not establish a universal decaf timing shortcut.",
+      "severity": "medium",
+      "change_recommendation": "Remove unsupported automatic time subtraction or clearly label it an unvalidated app heuristic; tune by observed drainage and taste. Do not silently modify a named fixed recipe for decaf.",
+      "source_ids": [
+        "gagne",
+        "rao",
+        "manufacturer_guide"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewDerivation.kt:158",
+      "finding": "Roast-date rule makes Pulsar bloom 55 s at <=7 days, 45 s through 21 days, and 35 s thereafter. Prep/timer use effectiveBloomDurationSeconds, but LegacyBrewSessionStartFactory.kt:124 passes the static 45 s for Pulsar, and LegacyStagePlanFactory.kt:29,140 compiles it. Exact age thresholds and offsets are not supported by reviewed sources.",
+      "severity": "medium",
+      "change_recommendation": "Resolve timing consistency between displayed and durable recipes. Keep named Gagne 60-second release intact and classify any freshness adaptation as separately reviewed app behavior rather than a source requirement.",
+      "source_ids": [
+        "gagne",
+        "manufacturer_guide"
+      ]
+    },
+    {
+      "path": "app/src/main/res/raw/pulsar_learn_guidance.json:30",
+      "finding": "Learn correctly contains paper priming, 20/340 at 1:17, 60 g open-start bloom, first-drip closure, 99 C, release at 60 s, remaining 280 g, low pool and observable drawdown with base-only lifting. Stage 3 completion says both 60 g and first drops, before stage 4 closes; this can imply waiting for 60 g despite earlier dripping. It explains initial open bloom as displacing air below paper rather than Gagne's between-particle air. Central pouring tip differs from his gooseneck circular-pattern advice.",
+      "severity": "low",
+      "change_recommendation": "Keep existing quantities. Merge or clarify the closure cue during the bloom pour, revise air explanation, and describe steady circular pouring through the cap for a gooseneck kettle while retaining ordinary-kettle support. This is a minor procedural clarification, not an unresolved wholesale recipe contradiction.",
+      "source_ids": [
+        "gagne"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/PulsarLearnGuideCatalog.kt:14",
+      "finding": "PulsarLearnGuideCatalog is a standalone timer-free educational guide, intentionally outside exact-session P1 recipe contracts. BuiltInP1RecipeCatalog and P1ExactGuidanceFactualErrata contain no Pulsar recipe/erratum. Numeric target extraction in all 23 raw*/pulsar_learn_guidance.json locale files matched 20/340, 60, 99, 60-second release, 280 remaining, 1 cm, 210-270 second target and eight stages.",
+      "severity": "info",
+      "change_recommendation": "Do not claim P1 catalog presence, full everyday support or approved translation from the existence of this Learn guide. Translation semantics, images, accessibility speech and device behavior require their own review.",
+      "source_ids": [
+        "gagne"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/PulsarBuiltInGuidanceCatalog.kt:201",
+      "finding": "Comment explicitly excludes claims about 19K/40K behavior, but content applies by standard brewer profile and tells users to prepare their selected compatible filter, use a closed bloom and open for remaining water. BrewTimerScreen.kt:680 likewise closes through the entire bloom and opens afterward. This matches the general paper manual but is not an exact Gagne recipe and has no separately verified metal recipe.",
+      "severity": "medium",
+      "change_recommendation": "Keep general paper-default procedure identified; gate or supplement metal guidance with the selected filter's own care/agitation information. Never present the profile-wide copy as proof of metal timings or as Gagne's open-start technique.",
+      "source_ids": [
+        "manufacturer_guide",
+        "gagne",
+        "manufacturer_metal"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/FilterType.kt:15",
+      "finding": "METAL_19K description asserts '19,000 holes' and METAL_40K at line 20 asserts '40,000 holes' plus 'cleaner than 19K'. BrewingCatalog.kt:84,91 marks both filter profiles HIGH confidence. Current actual manufacturer page lists 2 x 40k and generic metal body/agitation/care; customer review mentions 19k, but exact counts or comparative filtering performance remain partial evidence.",
+      "severity": "medium",
+      "change_recommendation": "Retain compatibility identifiers if needed but replace unsupported hole-count/performance assertions with verified medium/care facts and reassess confidence. Do not turn product shorthand or customer testimony into a technical specification.",
+      "source_ids": [
+        "manufacturer_metal",
+        "manufacturer_metal_specifications"
+      ]
+    },
+    {
+      "path": "app/src/main/assets/grinders.json:116",
+      "finding": "Paper-only ZP6 5-6 band uses app-selected 5.2; Ode Gen 2 entry at line 201 preserves published printed 5.2 as 5 plus two thirds. Asset version 4 explicitly removed metal predictions; DefaultGrinders.kt:40 preserves paper-only ZP6 fallback. Kaldi's source recipe is 20 g / 320 mL rather than Gagne's 20 g / 340 g.",
+      "severity": "info",
+      "change_recommendation": "Preserve filter and exact-model boundaries and source notation; identify the source recipe context and app-chosen ZP6 point. Do not infer grinder values for metal, different burrs/calibration, or a different recipe. Keep unsupported combinations generic.",
+      "source_ids": [
+        "kaldi"
+      ]
+    },
+    {
+      "path": "app/src/main/res/values/strings.xml:445",
+      "finding": "Generic Pulsar troubleshooting prescribes 2-4 clicks coarser; line 451 prescribes 3-5 clicks plus rest 7+ days. Click magnitude differs by grinder and reviewed sources provide no universal seven-day rest rule. Line 448's dose >=20 g resembles Rao's personal preference, whereas manufacturer supports 15-40 g.",
+      "severity": "medium",
+      "change_recommendation": "Check valve/filter/setup first, reduce agitation then use a small grinder-specific or texture-based change. Frame dose changes as recipe-dependent bed-depth choices and fresh-coffee gas as observable behavior; remove universal increments/rest deadlines.",
+      "source_ids": [
+        "manufacturer_guide",
+        "rao",
+        "gagne"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:264",
+      "finding": "Generated Pulsar ratio presets label 1:16 Bright, 1:17 Balanced and 1:18 Rich, although more input water normally reduces concentration for a similar extraction. Flavour cannot be fixed from ratio alone. strings.xml:87 says Most users brew 20-25 g without population evidence.",
+      "severity": "low",
+      "change_recommendation": "Use concrete strength labels for ratio choices and describe 20-25 g as a useful starting range, rather than a surveyed majority or guaranteed flavour.",
+      "source_ids": [
+        "gagne",
+        "rao"
+      ]
+    },
+    {
+      "path": "docs/brewing/learning-guide-factual-audit-2026-08-19.md:23",
+      "finding": "Historical audit calls the 60 g bloom closed-valve without restating the brief open start; current Learn resource already contains the open-start step. General user-guide 4-7 minute timing and Gagne's 210-270 s target cover different recipe scopes.",
+      "severity": "info",
+      "change_recommendation": "Treat the previous audit as historical evidence. Record this fresh review without rewriting immutable projections or reporting an already-present open-start step as missing.",
+      "source_ids": [
+        "gagne",
+        "manufacturer_guide"
+      ]
+    }
+  ],
+  "uncertainties": [
+    "No physical brew, device execution, release validation or approved localization review was performed.",
+    "Metal evidence is partial: the manufacturer's actual care text was verified through the in-app browser after repeated web-fetch timeouts; direct terminal retrieval was blocked by socket permissions. Exact 19K/40K hole-count specifications and comparative clarity were not verified.",
+    "Gagne's recipe selects light roasts and 99 C; darker roasts, changed dose, different paper generation, water chemistry, grinder distribution and altitude may change the best starting point and total time.",
+    "Rao's outline says 45-60 seconds while the detailed sequence adds water around 45-50 seconds before opening. It is retained as a range rather than rewritten to an exact 60-second release.",
+    "Kaldi's published recipe mixes mass multiples and water volumes. Its 320 mL total is not silently converted to exact mass.",
+    "No universal beverage-retention coefficient, decaf timing adjustment, roast-age bloom offset or precise grinder conversion was established.",
+    "General manufacturer 4-7 minute timing is not a contradiction with the selected creator 210-270 second example; the procedures and batch scopes differ."
+  ],
+  "do_not_claim": [
+    "The everyday 45-second, 93-96 C and five-equal-pulse default is Jonathan Gagne's exact published recipe.",
+    "The brewer must finish by 270 seconds, regardless of recipe, coffee or taste.",
+    "380 mL instantaneous chamber volume is 380 g maximum cumulative brew water, or all 340 g can always be safely retained with the coffee.",
+    "340 g input water equals 340 g or 340 mL collected coffee.",
+    "Metal 19K and 40K use the paper recipe unchanged, have verified exact hole counts, or a proven clarity ranking.",
+    "A grinder micron estimate determines a precise dial value on arbitrary hardware or calibration.",
+    "All decaf should finish 30 seconds sooner or all fresh coffee requires a fixed seven-day rest.",
+    "An educational Learn guide or numeric parity across locales establishes exact-session support, translated-language accuracy, image accuracy, physical brewing success or release readiness."
+  ]
+}

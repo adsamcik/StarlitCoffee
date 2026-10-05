@@ -1,21 +1,13 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.togetherWith
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -35,12 +27,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.AutoStories
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.ExpandLess
-import androidx.compose.material.icons.filled.ExpandMore
-import androidx.compose.material.icons.outlined.WarningAmber
 import androidx.compose.material3.Button
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
@@ -53,16 +40,18 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -79,6 +68,16 @@ import com.adsamcik.starlitcoffee.ui.guidance.P1ExactLearnStageFacts
 import com.adsamcik.starlitcoffee.ui.guidance.ResolvedLearnGuidanceContent
 import com.adsamcik.starlitcoffee.ui.guidance.findApprovedAssetForContent
 
+import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.key
+import com.adsamcik.starlitcoffee.ui.session.ActiveBrewSessionPresentationMapper
+import com.adsamcik.starlitcoffee.ui.session.BrewStageReferenceCuePresentation
+import com.adsamcik.starlitcoffee.data.brewing.guides.ReviewedMethodGuide
+import com.adsamcik.starlitcoffee.ui.guidance.learnFacts
+
 private val LearnStepContentMaxWidth = 720.dp
 
 /**
@@ -94,140 +93,151 @@ fun LearnBrewerScreen(
     modifier: Modifier = Modifier,
     instructionAssets: InstructionAssetCatalog? = null,
     exactGuide: P1ExactLearnGuide? = null,
+    initialStepIndex: Int = 0,
+    initiallyReading: Boolean = false,
+    reviewedGuide: ReviewedMethodGuide? = null,
+    onBrewGuide: (() -> Unit)? = null,
 ) {
     val steps = resolution.content
-    var currentStepIndex by rememberSaveable(steps.firstOrNull()?.id?.value) {
-        mutableIntStateOf(0)
-    }
+    val stageFacts = exactGuide?.stageFactsByContentId ?: reviewedGuide?.learnFacts().orEmpty()
+    val guideKey = steps.firstOrNull()?.id?.value
+    var currentStepIndex by rememberSaveable(guideKey) { mutableIntStateOf(initialStepIndex) }
+    var reading by rememberSaveable(guideKey) { mutableStateOf(initiallyReading) }
+    var showSteps by rememberSaveable(guideKey) { mutableStateOf(false) }
     val safeStepIndex = currentStepIndex.coerceIn(0, (steps.size - 1).coerceAtLeast(0))
     val currentStep = steps.getOrNull(safeStepIndex)
-    var detailsExpanded by rememberSaveable(currentStep?.id?.value) {
-        mutableStateOf(false)
-    }
+    var detailsExpanded by rememberSaveable(currentStep?.id?.value) { mutableStateOf(false) }
+    val available = resolution.availability is LearnGuidanceCatalogAvailability.Available && currentStep != null
+    val returnToOverview = { reading = false }
+    BackHandler(enabled = reading && !showSteps, onBack = returnToOverview)
 
     Scaffold(
         modifier = modifier,
         topBar = {
             TopAppBar(
                 title = {
-                    Text(
-                        text = title,
-                        modifier = Modifier.semantics { heading() },
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
+                    Text(if (reading && exactGuide != null) title.substringBefore(" · ") else title,
+                        Modifier.semantics { heading() }, maxLines = 1, overflow = TextOverflow.Ellipsis,
+                        style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
                 },
                 navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.action_back),
-                        )
+                    IconButton(onClick = if (reading) returnToOverview else onBack) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.action_back))
+                    }
+                },
+                actions = {
+                    if (available && reading) {
+                        TextButton(onClick = { showSteps = true }) {
+                            Text(stringResource(R.string.action_guide_steps))
+                        }
                     }
                 },
             )
         },
         containerColor = MaterialTheme.colorScheme.surface,
         bottomBar = {
-            currentStep?.let {
+            if (available && reading) {
                 LearningStepControls(
                     stepIndex = safeStepIndex,
                     totalSteps = steps.size,
-                    onPrevious = {
-                        currentStepIndex = (safeStepIndex - 1).coerceAtLeast(0)
-                    },
+                    onPrevious = { currentStepIndex = (safeStepIndex - 1).coerceAtLeast(0) },
                     onNext = {
-                        if (safeStepIndex == steps.lastIndex) {
-                            onBack()
-                        } else {
-                            currentStepIndex = safeStepIndex + 1
-                        }
+                        if (safeStepIndex == steps.lastIndex) reading = false
+                        else currentStepIndex = safeStepIndex + 1
                     },
                 )
             }
         },
     ) { innerPadding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding),
-        ) {
-            LazyColumn(
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .widthIn(max = LearnStepContentMaxWidth)
-                    .fillMaxWidth()
-                    .fillMaxHeight(),
-                contentPadding = PaddingValues(horizontal = 20.dp, vertical = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-            ) {
-                if (
-                    resolution.availability !is LearnGuidanceCatalogAvailability.Available ||
-                    currentStep == null
+        Box(Modifier.fillMaxSize().padding(innerPadding)) {
+            // Each reading position owns its scroll state; a new step starts at its action.
+            key(reading, safeStepIndex) {
+                LazyColumn(
+                    modifier = Modifier.align(Alignment.TopCenter).widthIn(max = LearnStepContentMaxWidth)
+                        .fillMaxWidth().fillMaxHeight(),
+                    contentPadding = PaddingValues(horizontal = 20.dp, vertical = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(20.dp),
                 ) {
-                    item(key = "guidance_unavailable") {
-                        Text(
-                            text = stringResource(R.string.msg_brew_guidance_unavailable),
-                            style = MaterialTheme.typography.bodyLarge,
-                        )
-                    }
-                } else {
-                    exactGuide?.let { guide ->
-                        item(key = "exact_recipe_summary") {
-                            ExactLearnRecipeOverview(guide)
+                    if (!available) {
+                        item { Text(stringResource(R.string.msg_brew_guidance_unavailable)) }
+                    } else if (!reading) {
+                        item {
+                            Text(stringResource(R.string.label_guide_untimed),
+                                style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
                         }
-                    }
-                    item(key = "learning_step") {
-                        Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                            LearningStepProgress(
-                                stepNumber = safeStepIndex + 1,
-                                totalSteps = steps.size,
-                            )
-                            AnimatedContent(
-                                targetState = safeStepIndex,
-                                modifier = Modifier.fillMaxWidth(),
-                                transitionSpec = {
-                                    val direction = if (targetState > initialState) 1 else -1
-                                    val enter = slideInHorizontally(
-                                        animationSpec = tween(
-                                            durationMillis = 320,
-                                            easing = FastOutSlowInEasing,
-                                        ),
-                                    ) { fullWidth -> direction * fullWidth / 4 } +
-                                        fadeIn(
-                                            animationSpec = tween(
-                                                durationMillis = 220,
-                                                delayMillis = 60,
-                                            ),
-                                        )
-                                    val exit = slideOutHorizontally(
-                                        animationSpec = tween(
-                                            durationMillis = 220,
-                                            easing = FastOutSlowInEasing,
-                                        ),
-                                    ) { fullWidth -> -direction * fullWidth / 6 } +
-                                        fadeOut(animationSpec = tween(durationMillis = 160))
-                                    enter.togetherWith(exit)
-                                },
-                                label = "learning_step_content_change",
-                            ) { animatedStepIndex ->
-                                val animatedStep = steps[animatedStepIndex]
-                                LearningStepContent(
-                                    content = animatedStep,
-                                    exactFacts = exactGuide?.stageFactsByContentId?.get(animatedStep.id),
-                                    visualAsset = instructionAssets
-                                        ?.findApprovedAssetForContent(animatedStep.id),
-                                    detailsExpanded = detailsExpanded &&
-                                        animatedStepIndex == safeStepIndex,
-                                    onToggleDetails = { detailsExpanded = !detailsExpanded },
-                                )
+                        steps.firstOrNull()?.let { introduction ->
+                            instructionAssets?.findApprovedAssetForContent(introduction.id)?.let { asset ->
+                                item { ApprovedInstructionAssetImage(asset, introduction.altText) }
                             }
+                        }
+                        exactGuide?.let { guide -> item { ExactLearnRecipeOverview(guide) } }
+                        reviewedGuide?.let { guide -> item { ReviewedGuideOverview(guide) } }
+                        item {
+                            Button(onClick = { reading = true },
+                                modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp)) {
+                                Text(stringResource(if (safeStepIndex > 0) R.string.action_continue_reading else R.string.action_read_guide))
+                            }
+                        }
+                        onBrewGuide?.let { start -> item {
+                            FilledTonalButton(onClick = start, modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp)) {
+                                Text(stringResource(R.string.action_brew_this_guide))
+                            }
+                        } }
+                        itemsIndexed(steps, key = { _, step -> step.id.value }) { index, step ->
+                            GuideStepListItem(index, steps.size, step, stageFacts[step.id], index == safeStepIndex) {
+                                currentStepIndex = index
+                                reading = true
+                            }
+                        }
+                    } else {
+                        item {
+                            LearningStepProgress(safeStepIndex + 1, steps.size)
+                        }
+                        item {
+                            val step = requireNotNull(currentStep)
+                            LearningStepContent(step, stageFacts[step.id],
+                                instructionAssets?.findApprovedAssetForContent(step.id), detailsExpanded,
+                                onToggleDetails = { detailsExpanded = !detailsExpanded },
+                                equipmentProfileId = reviewedGuide?.profileId)
                         }
                     }
                 }
             }
+        }
+    }
+    if (showSteps && available) {
+        ModalBottomSheet(onDismissRequest = { showSteps = false }) {
+            LazyColumn(Modifier.fillMaxWidth().heightIn(max = 600.dp),
+                contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                itemsIndexed(steps, key = { _, step -> step.id.value }) { index, step ->
+                    GuideStepListItem(index, steps.size, step, stageFacts[step.id], index == safeStepIndex) {
+                        currentStepIndex = index
+                        showSteps = false
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun GuideStepListItem(
+    index: Int,
+    total: Int,
+    step: ResolvedLearnGuidanceContent,
+    facts: P1ExactLearnStageFacts?,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
+    Surface(onClick = onClick, modifier = Modifier.fillMaxWidth().heightIn(min = 64.dp).semantics { this.selected = selected },
+        shape = MaterialTheme.shapes.large,
+        color = if (selected) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainerLow) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Text(stringResource(R.string.format_scan_stage_step, index + 1, total),
+                style = MaterialTheme.typography.labelMedium)
+            val action = facts?.title ?: facts?.action?.label()
+            Text(action ?: step.instruction.ifBlank { step.warning.orEmpty() },
+                style = MaterialTheme.typography.titleMedium)
         }
     }
 }
@@ -239,149 +249,54 @@ private fun LearningStepContent(
     visualAsset: InstructionAssetRecord?,
     detailsExpanded: Boolean,
     onToggleDetails: () -> Unit,
+    equipmentProfileId: String? = null,
 ) {
-    ElevatedCard(
-        modifier = Modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.extraLarge,
-        colors = CardDefaults.elevatedCardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+    GuideStepCanvas(
+        copy = GuideStepCopy(
+            instruction = content.instruction,
+            target = content.target.takeIf { exactFacts?.startCondition == null },
+            completionCue = content.completionCue,
+            essentialOperations = listOfNotNull(
+                exactFacts?.equipmentState?.takeUnless { it == "As specified" }?.let {
+                    "${stringResource(R.string.label_exact_learn_equipment_state)}: $it"
+                },
+                content.nextAction,
+            ),
+            warning = content.warning,
+            safetyCritical = content.safetyCritical,
+            explanation = listOfNotNull(exactFacts?.explanation, content.explanation, content.tip)
+                .filterNot { it == "None" }.distinct(),
+            altText = content.altText,
         ),
-    ) {
-        Column(
-            modifier = Modifier.animateContentSize(),
-        ) {
-                visualAsset?.let { asset ->
-                    Surface(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(10.dp),
-                        shape = MaterialTheme.shapes.extraLarge,
-                        color = MaterialTheme.colorScheme.surfaceContainerHighest,
-                    ) {
-                        ApprovedInstructionAssetImage(
-                            asset = asset,
-                            contentDescription = content.altText,
-                            modifier = Modifier.padding(6.dp),
-                        )
-                    }
-                }
-
-                Column(
-                    modifier = Modifier.padding(
-                        start = 20.dp,
-                        top = if (visualAsset == null) 20.dp else 8.dp,
-                        end = 20.dp,
-                        bottom = 20.dp,
-                    ),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                ) {
-                    content.instruction.takeIf(String::isNotBlank)?.let { instruction ->
-                        Text(
-                            text = instruction,
-                            style = MaterialTheme.typography.headlineSmall,
-                            fontWeight = FontWeight.Bold,
-                        )
-                    }
-
-                    exactFacts?.let { facts -> ExactLearnStageTargets(facts) }
-
-                    content.warning?.let { warning ->
-                        LearnGuidanceWarning(
-                            warning = warning,
-                            safetyCritical = content.safetyCritical,
-                        )
-                    }
-
-                    content.completionCue?.takeIf(String::isNotBlank)?.let { cue ->
-                        LearningCompletionCue(cue)
-                    }
-
-                    val details = content.additionalLearningDetails(includeTarget = exactFacts == null)
-                    if (details.isNotEmpty()) {
-                        FilledTonalButton(
-                            onClick = onToggleDetails,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .heightIn(min = 52.dp),
-                        ) {
-                            Text(
-                                text = stringResource(
-                                    if (detailsExpanded) {
-                                        R.string.action_hide_details
-                                    } else {
-                                        R.string.action_show_details
-                                    },
-                                ),
-                                modifier = Modifier.weight(1f),
-                            )
-                            Icon(
-                                imageVector = if (detailsExpanded) {
-                                    Icons.Filled.ExpandLess
-                                } else {
-                                    Icons.Filled.ExpandMore
-                                },
-                                contentDescription = null,
-                            )
-                        }
-
-                        AnimatedVisibility(
-                            visible = detailsExpanded,
-                            enter = fadeIn() + expandVertically(expandFrom = Alignment.Top),
-                            exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.Top),
-                        ) {
-                            Surface(
-                                shape = MaterialTheme.shapes.extraLarge,
-                                color = MaterialTheme.colorScheme.surfaceContainerHighest,
-                                modifier = Modifier.fillMaxWidth(),
-                            ) {
-                                Column(
-                                    modifier = Modifier.padding(16.dp),
-                                    verticalArrangement = Arrangement.spacedBy(14.dp),
-                                ) {
-                                    details.forEach { detail ->
-                                        LearningDetailRow(detail)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-        }
-    }
+        visualAsset = visualAsset,
+        title = exactFacts?.title ?: exactFacts?.action?.label(),
+        expanded = detailsExpanded,
+        onExpandedChange = { onToggleDetails() },
+        targets = exactFacts?.takeIf { facts ->
+            listOf(facts.startCondition, facts.timing, facts.addedWater, facts.cumulativeWater,
+                facts.beverageYield, facts.temperatureTarget).any { it != null } ||
+                ActiveBrewSessionPresentationMapper.referenceCuePresentations(facts.referenceTargets).isNotEmpty()
+        }?.let { facts -> { ExactLearnStageTargets(facts) } },
+        equipmentProfileId = equipmentProfileId,
+    )
 }
 
 @Composable
 private fun ExactLearnRecipeOverview(guide: P1ExactLearnGuide) {
-    ElevatedCard(
-        modifier = Modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.extraLarge,
-        colors = CardDefaults.elevatedCardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
-        ),
-    ) {
-        Column(
-            modifier = Modifier.padding(20.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.heading_exact_learn_recipe_summary),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.semantics { heading() },
-            )
-            DetailsRow(
-                stringResource(R.string.label_coffee),
-                formatMass(guide.recipe.quantities.dryCoffeeDoseG),
-            )
-            guide.recipe.quantities.brewWaterInputG?.let { grams ->
-                DetailsRow(stringResource(R.string.label_brewer_profile_input_water), formatMass(grams))
+    var expanded by rememberSaveable(guide.recipe.id.value) { mutableStateOf(false) }
+    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            GuideQuantity(stringResource(R.string.label_coffee),
+                formatMass(guide.recipe.quantities.dryCoffeeDoseG), Modifier.weight(1f))
+            val water = guide.recipe.quantities.brewWaterInputG ?: guide.recipe.quantities.reservoirInputG
+            water?.let { grams ->
+                GuideQuantity(stringResource(if (guide.recipe.quantities.brewWaterInputG != null)
+                    R.string.label_brewer_profile_input_water else R.string.label_brewer_profile_input_reservoir_water),
+                    formatMass(grams), Modifier.weight(1f))
             }
-            guide.recipe.quantities.reservoirInputG?.let { grams ->
-                DetailsRow(
-                    stringResource(R.string.label_brewer_profile_input_reservoir_water),
-                    formatMass(grams),
-                )
-            }
+        }
+        ConnectedGuideDisclosure(stringResource(R.string.heading_exact_learn_recipe_summary), expanded,
+            onExpandedChange = { expanded = it }) {
             guide.recipe.quantities.iceG.takeIf { grams -> grams > 0.0 }?.let { grams ->
                 DetailsRow(stringResource(R.string.label_exact_recipe_brew_ice), formatMass(grams))
             }
@@ -421,6 +336,19 @@ private fun ExactLearnRecipeOverview(guide: P1ExactLearnGuide) {
                 stringResource(R.string.label_exact_learn_provenance),
                 "${guide.guidance.evidenceStatus} · ${guide.guidance.originalSourceOrProvenance}",
             )
+
+        }
+    }
+}
+
+@Composable
+internal fun GuideQuantity(label: String, value: String, modifier: Modifier = Modifier) {
+    Surface(modifier, shape = MaterialTheme.shapes.extraLarge,
+        color = MaterialTheme.colorScheme.primaryContainer,
+        contentColor = MaterialTheme.colorScheme.onPrimaryContainer) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            Text(value, style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold)
+            Text(label, style = MaterialTheme.typography.labelLarge)
         }
     }
 }
@@ -437,11 +365,9 @@ private fun ExactLearnStageTargets(facts: P1ExactLearnStageFacts) {
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            Text(
-                stringResource(R.string.heading_exact_learn_stage_targets),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-            )
+            val cues = ActiveBrewSessionPresentationMapper.referenceCuePresentations(facts.referenceTargets)
+            val primaryCue = cues.firstOrNull { it is BrewStageReferenceCuePresentation.Mass } ?: cues.firstOrNull()
+            primaryCue?.let { ReferenceCueRow(it, prominent = true) }
             facts.startCondition?.let {
                 DetailsRow(stringResource(R.string.label_exact_learn_start), it)
             }
@@ -460,7 +386,6 @@ private fun ExactLearnStageTargets(facts: P1ExactLearnStageFacts) {
             facts.temperatureTarget?.let { target ->
                 DetailsRow(stringResource(R.string.label_temperature), stageTemperatureLabel(target))
             }
-            DetailsRow(stringResource(R.string.label_exact_learn_equipment_state), facts.equipmentState)
         }
     }
 }
@@ -580,83 +505,7 @@ private fun LearningStepProgress(
 }
 
 @Composable
-private fun LearningCompletionCue(cue: String) {
-    Surface(
-        shape = MaterialTheme.shapes.extraLarge,
-        color = MaterialTheme.colorScheme.tertiaryContainer,
-        contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
-        modifier = Modifier
-            .fillMaxWidth()
-            .semantics(mergeDescendants = true) {},
-    ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Surface(
-                modifier = Modifier.size(36.dp),
-                shape = CircleShape,
-                color = MaterialTheme.colorScheme.tertiary,
-                contentColor = MaterialTheme.colorScheme.onTertiary,
-            ) {
-                Box(contentAlignment = Alignment.Center) {
-                    Icon(
-                        imageVector = Icons.Filled.Check,
-                        contentDescription = null,
-                        modifier = Modifier.size(20.dp),
-                    )
-                }
-            }
-            Text(
-                text = cue,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.SemiBold,
-            )
-        }
-    }
-}
-
-@Composable
-private fun LearningDetailRow(detail: String) {
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalAlignment = Alignment.Top,
-    ) {
-        Surface(
-            modifier = Modifier
-                .padding(top = 7.dp)
-                .size(7.dp),
-            shape = CircleShape,
-            color = MaterialTheme.colorScheme.primary,
-        ) {}
-        Text(
-            text = detail,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-    }
-}
-
-@Composable
-private fun ResolvedLearnGuidanceContent.additionalLearningDetails(
-    includeTarget: Boolean,
-): List<String> {
-    val details = mutableListOf<String>()
-    if (includeTarget) target?.takeIf(String::isNotBlank)?.let(details::add)
-    explanation?.takeIf(String::isNotBlank)?.let(details::add)
-    tip?.takeIf(String::isNotBlank)?.let(details::add)
-    nextAction?.takeIf(String::isNotBlank)?.let(details::add)
-    controlRequirements.forEach { cue ->
-        cue.localizedLabel().takeIf(String::isNotBlank)?.let(details::add)
-    }
-    utilities.forEach { utility ->
-        utility.localizedLabel().takeIf(String::isNotBlank)?.let(details::add)
-    }
-    return details
-}
-
-@Composable
+@OptIn(ExperimentalLayoutApi::class)
 private fun LearningStepControls(
     stepIndex: Int,
     totalSteps: Int,
@@ -673,12 +522,13 @@ private fun LearningStepControls(
                 .padding(horizontal = 20.dp, vertical = 14.dp),
             contentAlignment = Alignment.Center,
         ) {
-            Row(
+            FlowRow(
                 modifier = Modifier
                     .widthIn(max = LearnStepContentMaxWidth)
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalAlignment = Alignment.CenterVertically,
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                maxItemsInEachRow = if (LocalDensity.current.fontScale > 1.3f) 1 else 2,
             ) {
                 FilledTonalButton(
                     onClick = onPrevious,
@@ -704,7 +554,7 @@ private fun LearningStepControls(
                     Text(
                         stringResource(
                             if (isLastStep) {
-                                R.string.action_finish
+                                R.string.action_guide_overview
                             } else {
                                 R.string.action_next
                             },
@@ -720,53 +570,6 @@ private fun LearningStepControls(
                         contentDescription = null,
                     )
                 }
-            }
-        }
-    }
-}
-
-@Composable
-private fun LearnGuidanceWarning(
-    warning: String,
-    safetyCritical: Boolean,
-) {
-    val containerColor = if (safetyCritical) {
-        MaterialTheme.colorScheme.errorContainer
-    } else {
-        MaterialTheme.colorScheme.tertiaryContainer
-    }
-    val contentColor = if (safetyCritical) {
-        MaterialTheme.colorScheme.onErrorContainer
-    } else {
-        MaterialTheme.colorScheme.onTertiaryContainer
-    }
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .semantics(mergeDescendants = true) {},
-        shape = MaterialTheme.shapes.extraLarge,
-        color = containerColor,
-        contentColor = contentColor,
-    ) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            verticalAlignment = Alignment.Top,
-        ) {
-            Icon(
-                imageVector = Icons.Outlined.WarningAmber,
-                contentDescription = null,
-                modifier = Modifier.size(20.dp),
-            )
-            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text(
-                    text = stringResource(R.string.label_warning),
-                    style = MaterialTheme.typography.labelLarge,
-                )
-                Text(
-                    text = warning,
-                    style = MaterialTheme.typography.bodyMedium,
-                )
             }
         }
     }

@@ -102,11 +102,8 @@
     <string name="label_increase">Aumenta %1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Prepara la tua estrazione</string>
 <string name="action_ready_to_brew_short">Tutto pronto</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Preparazione</string>
-    <string name="label_recipe_heading">Ricetta</string>
     <string name="label_temp_short">Temp</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Bagna il filtro di carta nella base (valvola aperta) e fai scolare. Monta il cilindro, aggiungi il caffè macinato, livella il letto, posiziona il tappo di dispersione. Tara la bilancia.</string>
@@ -116,8 +113,6 @@
     <string name="prep_tip_french_press">Preriscalda la pressa, poi svuotala. Aggiungi il caffè macinato, metti sulla bilancia e tara prima di aggiungere acqua.</string>
     <string name="prep_tip_espresso">Asciuga il portafiltro. Dosa, distribuisci e pressa in piano prima di agganciare.</string>
     <string name="prep_tip_moka">Riempi la camera inferiore fino alla valvola. Riempi il filtro con il caffè macinato, livella — non pressare. Assembla con attenzione.</string>
-    <string name="format_prep_grind_specific">Macina %1$s — imposta %2$s su %3$s</string>
-    <string name="format_prep_grind_generic">Macina %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Pausa</string>
@@ -733,7 +728,6 @@
     <string name="guidance_cue_valve_state">Stato della valvola</string>
     <string name="screen_learning_title">Impara</string>
     <string name="msg_learning_subtitle">Guide visive alla preparazione passo dopo passo</string>
-    <string name="msg_learning_intro">Scegli una caffettiera e una ricetta, poi scopri un passaggio chiaro alla volta.</string>
     <string name="action_show_details">Mostra dettagli</string>
     <string name="action_hide_details">Nascondi dettagli</string>
 

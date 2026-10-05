@@ -39,7 +39,12 @@
     <string name="format_brew_stage_recorded_grams">Καταγράφηκαν %1$.0f g</string>
     <string name="format_brew_stage_remaining_grams">Απομένουν %1$.0f g</string>
     <string name="label_brew_reference_cues">Σημεία αναφοράς</string>
-    <string name="msg_brew_reference_cues_not_completion">Μόνο για καθοδήγηση. Ολοκληρώστε το βήμα με την κύρια ενέργεια παραπάνω.</string>
+    <string name="action_pause_brew_guide">Παύση οδηγού</string>
+    <string name="action_resume_brew_guide">Συνέχιση οδηγού</string>
+    <string name="action_pause_brew_clock">Παύση χρονομέτρου</string>
+    <string name="msg_brew_clock_keeps_running">Το χρονόμετρο συνεχίζει.</string>
+    <string name="msg_brew_guide_paused">Ο οδηγός είναι σε παύση. Το χρονόμετρο συνεχίζει.</string>
+    <string name="msg_brew_reference_cues_not_completion">Μόνο για καθοδήγηση. Μια χρονική ένδειξη δεν ολοκληρώνει μια φυσική ενέργεια.</string>
     <string name="action_show_more_brew_reference_cues">Εμφάνιση περισσότερων σημείων</string>
     <string name="action_hide_brew_reference_cues">Απόκρυψη πρόσθετων σημείων</string>
     <string name="label_brew_reference_stage_duration">Διάρκεια σταδίου</string>

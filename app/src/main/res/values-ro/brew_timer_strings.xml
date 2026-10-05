@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_set_brew_reminder">Setează un memento</string>
+    <string name="action_edit_brew_reminder">Editează mementoul</string>
+    <string name="action_remove_brew_reminder">Elimină mementoul</string>
+    <string name="label_brew_reminder">Memento</string>
+    <string name="label_timer_duration">Durată</string>
+    <string name="label_timer_seconds">Secunde</string>
+    <string name="label_timer_minutes">Minute</string>
+    <string name="label_timer_hours">Ore</string>
+    <string name="msg_brew_reminder_origin">De la începutul acestui pas. Schimbarea duratei păstrează timpul deja scurs. Confirmi în continuare când pasul este gata.</string>
+    <string name="msg_brew_reminder_reached">A sosit timpul mementoului. Verifică prepararea înainte de a continua.</string>
+    <string name="title_cold_brew">Cold brew</string>
+    <string name="title_cold_brew_timer">Temporizator cold brew</string>
+    <string name="action_follow_brew_guide">Urmează ghidul</string>
+    <string name="action_just_set_brew_timer">Setează doar temporizatorul</string>
+    <string name="action_start_timer">Pornește temporizatorul</string>
+    <string name="action_start_steeping">Începe infuzarea</string>
+    <string name="action_end_brew_timer">Încheie temporizatorul</string>
+    <string name="action_add_brew_start_time">Adaugă ora de început</string>
+    <string name="label_brew_start_now">Începe acum</string>
+    <string name="label_brew_start_earlier">A început mai devreme</string>
+    <string name="label_brew_start_unknown">Ora de început necunoscută</string>
+    <string name="label_brew_hours_ago">Cu câte ore în urmă</string>
+    <string name="label_brew_minutes_ago">Cu câte minute în urmă</string>
+    <string name="msg_cold_brew_refrigerated">Păstrează acoperit la frigider, la 4 °C sau mai puțin. Durata implicită de infuzare este de 14 ore.</string>
+    <string name="msg_cold_brew_start_origin">Pornește când cafeaua este complet umezită și recipientul acoperit este pus în frigider.</string>
+    <string name="msg_brew_start_unknown">Adaugă ora reală de început pentru a calcula un memento. Până atunci nu se estimează ora de finalizare.</string>
+    <string name="msg_brew_timer_ended">Temporizator încheiat</string>
+    <string name="label_brew_extraction_ended">Extracție încheiată</string>
+    <string name="msg_brew_notifications_disabled">Mementourile sunt dezactivate. Prepararea cafelei continuă.</string>
+    <string name="action_allow_brew_notifications">Permite mementouri</string>
+    <string name="msg_brew_reminders_may_be_late">Android poate întârzia mementourile când părăsești aplicația.</string>
+    <string name="action_allow_precise_brew_reminders">Permite mementouri exacte</string>
+</resources>

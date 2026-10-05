@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_title_short">Προετοιμασία</string>
+    <string name="prep_equipment_station">Ετοιμάστε τον εξοπλισμό</string>
+    <string name="prep_beverage_yield">Στο φλιτζάνι</string>
+    <string name="prep_recipe_details">Λεπτομέρειες συνταγής</string>
+    <string name="prep_grinder_range">Προτεινόμενο εύρος</string>
+    <string name="prep_grinder_adjustment">Προσαρμόστε κατά %1$s ανάλογα με τη γεύση</string>
+    <string name="prep_grind_from_zero">Από το μηδέν</string>
+    <string name="prep_grind_on_dial">Στον επιλογέα</string>
+    <string name="prep_grind_no_extra_clicks">%1$d · χωρίς επιπλέον κλικ</string>
+    <string name="prep_grind_dial_breakdown">%1$d + %2$s</string>
+    <plurals name="prep_clicks">
+        <item quantity="one">%1$d κλικ</item>
+        <item quantity="other">%1$d κλικ</item>
+    </plurals>
+</resources>

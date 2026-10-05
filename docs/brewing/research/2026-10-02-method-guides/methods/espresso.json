@@ -1,0 +1,434 @@
+{
+  "method_id": "espresso",
+  "title": "Espresso brewing guide",
+  "scope": "One conventional pump-machine shot on a Breville Bambino Plus BES500 with the supplied 54 mm two-cup single-wall unpressurized basket; pressurized, lever and portable equipment remain contextual variants.",
+  "research_date": "2026-10-02",
+  "review_status": "editorially_reviewed",
+  "physical_brew_tested": false,
+  "sources": [
+    {
+      "id": "breville_bes500_manual",
+      "title": "The Bambino Plus BES500 instruction book, USCM T23",
+      "url": "https://assets.breville.com/BES500/BES500_USCM_IB_T23_LR.pdf",
+      "author_or_organization": "Breville",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Supplied two-cup basket 16-19 g; single versus dual wall; Razor clearance check; PID and pre-infusion; button start/stop; hot-pressure safety and model-specific maintenance."
+      ]
+    },
+    {
+      "id": "counter_culture_recipe",
+      "title": "Quick + Easy Espresso",
+      "url": "https://counterculturecoffee.com/pages/quick-easy-espresso",
+      "author_or_organization": "Counter Culture Coffee, Jenna, National Wholesale Education Manager",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Published 18 g dose, 36 g cup yield and 25-35 second comparison; even distribution, level tamp and taste-based adjustment. Clock origin is not stated."
+      ]
+    },
+    {
+      "id": "barista_hustle_time",
+      "title": "Espresso Recipes: Time",
+      "url": "https://www.baristahustle.com/espresso-recipes-time/",
+      "author_or_organization": "Barista Hustle, Matt Perger",
+      "source_type": "original_creator",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Pump-start to pump-stop convention; dose then yield then time; time advisory relative to target yield; finer does not indefinitely improve extraction."
+      ]
+    },
+    {
+      "id": "barista_hustle_channeling",
+      "title": "Barista One B1 3.02 - Channelling",
+      "url": "https://www.baristahustle.com/lesson/b1-3-02-channelling/",
+      "author_or_organization": "Barista Hustle",
+      "source_type": "original_creator",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Uneven distribution and tamp cause uneven flow; strong channels can produce spraying or watery turbulent flow."
+      ]
+    },
+    {
+      "id": "baratza_encore_esp_manual",
+      "title": "Encore ESP Operations Manual, January 2023 v1.0",
+      "url": "https://assets.breville.com/ZCG495/manual-encoreesp-v1-0-en-010923.pdf",
+      "author_or_organization": "Baratza",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Setting 15 is a starting point for 18 g medium-roast espresso; dose, roast, recipe and grinder shim configuration affect applicability."
+      ]
+    },
+    {
+      "id": "flair_58_guide",
+      "title": "Flair 58 Quick Start Guide, after May 2023, linked by manufacturer tutorials",
+      "url": "https://cdn.shopify.com/s/files/1/0983/8097/2334/files/flair_58_2023_brew_guide_feb_2023_v4_web_0930537d-e313-4f83-a544-33ab56b5983c.pdf",
+      "author_or_organization": "Flair Espresso",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Lever-specific preheating, manually filling the cylinder, pressure gauge and lever operation, and expelling remaining water before removal; pump workflow is not universal."
+      ]
+    },
+    {
+      "id": "wacaco_picopresso",
+      "title": "Picopresso manufacturer product and operation description",
+      "url": "https://www.wacaco.com/products/picopresso",
+      "author_or_organization": "Wacaco",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Portable manually pumped espresso; the brewer does not heat water. No portable safety procedure is inferred from the pump-machine guide."
+      ]
+    },
+    {
+      "id": "flair_old_link",
+      "title": "Older Flair 58 manual URL",
+      "url": "https://flairespresso.com/wp-content/uploads/2021/04/Flair_58_manual_Jan_2021_website.pdf",
+      "author_or_organization": "Flair Espresso",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "blocked",
+      "supports": [
+        "No claims: direct fetch returned 404; replaced by the manufacturer's currently linked guide."
+      ]
+    },
+    {
+      "id": "breville_cleanup_tutorial",
+      "title": "How to clean portafilter and filter basket, Bambino Plus",
+      "url": "https://www.breville.com/inspiration/en-au/tutorials/the-bambino-plus/cleaning-guides/how-to-clean-portafilter-and-filter-basket",
+      "author_or_organization": "Breville",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "blocked",
+      "supports": [
+        "No claims: fetch failed on both original and inspiration host; maintenance is evidenced by the verified instruction book."
+      ]
+    }
+  ],
+  "recipe": {
+    "name": "Bambino Plus measured 18 g to 36 g beginner adaptation",
+    "provenance": "app_authored_synthesis",
+    "source_ids": [
+      "counter_culture_recipe",
+      "breville_bes500_manual",
+      "barista_hustle_time"
+    ],
+    "equipment": [
+      "Breville Bambino Plus BES500",
+      "Supplied 54 mm two-cup single-wall unpressurized basket, specified 16-19 g",
+      "Compatible tamper and Razor dose tool",
+      "Espresso-capable burr grinder",
+      "Scale reading 0.1 g, cup and timer",
+      "Dry cloth and knock box"
+    ],
+    "coffee_dose_g": 18,
+    "brew_water_g": null,
+    "brew_water_ml": null,
+    "ice_g": 0,
+    "target_beverage_g": 36,
+    "ratio_basis": "beverage_output",
+    "ratio_value": 2,
+    "water_temperature_c": {
+      "min": null,
+      "max": null,
+      "control": "machine_controlled_no_user_brew_setpoint"
+    },
+    "grind_description": "Espresso-fine; dial by measured yield, flow and taste rather than a universal powder texture or grinder number.",
+    "expected_time_s": {
+      "min": 25,
+      "max": 35,
+      "clock_start": "Pump begins when the shot is started; include the factory pre-infusion. This is our explicit convention; Counter Culture does not state its clock origin.",
+      "clock_end": "Pump stops at the selected beverage mass; record settled cup mass separately if drips continue."
+    },
+    "preinfusion_s": null,
+    "preinfusion_control": "Leave factory pre-infusion unchanged; duration is not verified or invented.",
+    "completion_signal": "Stop pump so settled yield approaches twice the actual dose: 36 g for 18 g. After trimming, keep dose within 16-19 g or reprepare. If the preset stops first, record the result without restarting that shot. Yield and taste own the endpoint, not a mandatory time stop or blonding alone.",
+    "scaling": "equipment_bound",
+    "steps": [
+      {
+        "id": "prepare_machine",
+        "instruction": "Complete first-use setup, seat a filled potable-water tank and drip tray, and wait for ready lights.",
+        "why": "Establish safe normal operation.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Machine ready on a stable dry counter.",
+        "source_ids": [
+          "breville_bes500_manual"
+        ]
+      },
+      {
+        "id": "prepare_basket",
+        "instruction": "Fit the specified single-wall basket and warm and dry the portafilter as directed.",
+        "why": "Use the intended basket and repeatable starting condition.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Clean dry basket ready for grounds.",
+        "source_ids": [
+          "breville_bes500_manual"
+        ]
+      },
+      {
+        "id": "dose_and_tamp",
+        "instruction": "Tare the empty portafilter, grind and weigh 18 g of grounds, distribute evenly, then tamp level and firmly.",
+        "why": "Measure actual grounds; even resistance reduces preferential flow.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Even compacted coffee bed.",
+        "source_ids": [
+          "counter_culture_recipe",
+          "barista_hustle_channeling"
+        ]
+      },
+      {
+        "id": "check_fit",
+        "instruction": "Apply the Razor clearance check, reweigh after trimming, and keep actual dose within 16-19 g; otherwise reprepare. Clear the rim, briefly flush, and lock in securely. Target twice actual dose.",
+        "why": "Respect basket fit and maintain the chosen output ratio.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Portafilter secure without forcing; actual dose and matching yield recorded.",
+        "source_ids": [
+          "breville_bes500_manual",
+          "counter_culture_recipe"
+        ]
+      },
+      {
+        "id": "start_shot",
+        "instruction": "Tare the cup on the scale. Press 2 CUP and start the timer with pump start; retain factory pre-infusion.",
+        "why": "Track beverage mass with an explicit clock.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": 0,
+        "duration_s": null,
+        "completion": "Pump running and mass accumulating; clock includes pre-infusion.",
+        "source_ids": [
+          "breville_bes500_manual",
+          "barista_hustle_time"
+        ]
+      },
+      {
+        "id": "stop_and_taste",
+        "instruction": "Press the running shot button at twice actual dose: 36 g for 18 g. Record pump-stop time and settled yield, then taste when cool enough. If the preset stops first, record without restarting; use manual or programmed-shot instructions next brew.",
+        "why": "Yield precedes advisory time; a preset stop is not a reason to restart the same extraction.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Pump stopped; recorded cup yield compared with the selected target.",
+        "source_ids": [
+          "breville_bes500_manual",
+          "barista_hustle_time",
+          "counter_culture_recipe"
+        ]
+      },
+      {
+        "id": "clean",
+        "instruction": "Stop and let flow settle before opening. If pressure or blockage is suspected, leave locked, switch off, cool and contact Breville if unresolved. Remove grounds and clean as directed.",
+        "why": "Hot pressurized parts require the correct procedure.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Equipment safely cleaned; switched off, unplugged and cooled for further maintenance.",
+        "source_ids": [
+          "breville_bes500_manual"
+        ]
+      }
+    ]
+  },
+  "variants": [
+    {
+      "name": "Dual-wall pressurized basket",
+      "how_it_differs": "Basket restriction changes flow interpretation and permits preground coffee; use the machine's matching basket and dosing instructions.",
+      "source_ids": [
+        "breville_bes500_manual"
+      ]
+    },
+    {
+      "name": "Flair 58 lever",
+      "how_it_differs": "Separate preheat, manual cylinder fill, lever/gauge control and purge sequence; use its own start convention and pressure-release procedure.",
+      "source_ids": [
+        "flair_58_guide"
+      ]
+    },
+    {
+      "name": "Picopresso portable",
+      "how_it_differs": "Requires externally heated water and manual pumping; pump-machine button and warmup steps do not apply. Consult its manual before opening.",
+      "source_ids": [
+        "wacaco_picopresso"
+      ]
+    },
+    {
+      "name": "Different basket or multiple drinks",
+      "how_it_differs": "Revalidate compatible dose and headspace; two separate shots are the beginner way to serve twice this recipe.",
+      "source_ids": [
+        "breville_bes500_manual"
+      ]
+    }
+  ],
+  "troubleshooting": [
+    {
+      "symptom": "Spraying, irregular watery flow or unstable results",
+      "check_first": "Distribution, level tamp, basket fit and clean rim; visible flow cannot exclude every small channel.",
+      "adjustment": "Repeat consistent preparation before grinding finer; then change one variable.",
+      "source_ids": [
+        "barista_hustle_channeling",
+        "barista_hustle_time"
+      ]
+    },
+    {
+      "symptom": "Consistently fast, thin or sharply sour",
+      "check_first": "Actual dose and output mass are correct; preparation is repeatable.",
+      "adjustment": "Try slightly finer grind at the same dose and yield; taste again. Yield can later be adjusted separately.",
+      "source_ids": [
+        "counter_culture_recipe",
+        "barista_hustle_time"
+      ]
+    },
+    {
+      "symptom": "Consistently slow or harsh",
+      "check_first": "Rule out irregular preparation and blockage.",
+      "adjustment": "Try slightly coarser grind while retaining comparison dose and yield.",
+      "source_ids": [
+        "counter_culture_recipe",
+        "barista_hustle_time"
+      ]
+    },
+    {
+      "symptom": "Nothing flows",
+      "check_first": "Stop; verify seated water tank, basket cleanliness and dose clearance before another shot.",
+      "adjustment": "Correct equipment state; use a slightly coarser grind only once those checks pass.",
+      "source_ids": [
+        "breville_bes500_manual",
+        "barista_hustle_time"
+      ]
+    }
+  ],
+  "safety": [
+    "Never unlock during extraction. Stop and let flow settle. If pressure or blockage is suspected, leave locked, switch off, cool and contact Breville if unresolved.",
+    "Keep clear of hot metal, water and steam; use handles.",
+    "Switch off, unplug and cool before maintenance; never immerse the machine.",
+    "Use model-specific cleaning and descaling procedures."
+  ],
+  "app_audit": [
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:164",
+      "finding": "Espresso already defaults to ratio 2, BEVERAGE_YIELD, 25-35 seconds, no bloom/pulses, null capacity, zero absorption and no decaf time adjustment.",
+      "severity": "info",
+      "change_recommendation": "Preserve the correct output semantics; a basket-scoped guide may enrich current defaults without claiming the ratio is missing.",
+      "source_ids": [
+        "counter_culture_recipe"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/calculator/CalculatorQuantityTarget.kt:17",
+      "finding": "WATER_IN is unavailable for espresso, while IN_CUP is available. CalculatorRatioOptions.kt already offers espresso ratios 1, 1.5, 2, 2.5 and 3.",
+      "severity": "info",
+      "change_recommendation": "Keep quantity and ratio ownership intact.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/LegacyBrewSessionStartFactory.kt:250",
+      "finding": "DirectTargetBeverageYield converts legacy state.waterG into targetBeverageYieldG with dry-dose/beverage-yield ratio roles; it does not populate brewWaterInputG. BeverageOutputEstimator.kt deliberately returns null for espresso.",
+      "severity": "info",
+      "change_recommendation": "Preserve typed quantity roles; do not add a retention coefficient or reservoir estimate for espresso.",
+      "source_ids": [
+        "barista_hustle_time"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/GrindPrepScreen.kt:452",
+      "finding": "RecipeSection always labels state.waterG as label_water, although it means collected espresso mass. It also always renders the enum's 90-94 C band without model-control context.",
+      "severity": "medium",
+      "change_recommendation": "Render beverage-yield mass for espresso and explain temperature only where the actual machine offers brew control.",
+      "source_ids": [
+        "counter_culture_recipe",
+        "breville_bes500_manual"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/BrewTimerScreen.kt:136",
+      "finding": "Non-bloom active timers auto-start on screen entry. Espresso therefore has no established pump-start or first-drip measurement origin in this legacy screen.",
+      "severity": "medium",
+      "change_recommendation": "Align an explicit start action with the chosen clock; include pre-infusion and distinguish it from first-drip clocks.",
+      "source_ids": [
+        "barista_hustle_time"
+      ]
+    },
+    {
+      "path": "app/src/main/res/values/strings.xml:425",
+      "finding": "instruction_espresso_stop says stop at target yield or when the shot blondes; BrewTimerScreen.methodTimerGuidanceRes selects it once the low time target is reached. Typed LegacyBuiltInGuidanceCatalog already says selected beverage target.",
+      "severity": "medium",
+      "change_recommendation": "Use selected yield as the normal stop cue and treat time/stream color as observations. Preserve the already-correct typed guidance.",
+      "source_ids": [
+        "barista_hustle_time"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/session/LegacyStagePlanFactory.kt:65",
+      "finding": "Typed espresso uses one manual OBSERVE stage, avoiding automatic completion from the short time range. BrewingCatalog models pump, lever and portable as separate profiles; basket pressurised status is unknown for generic baskets.",
+      "severity": "info",
+      "change_recommendation": "Preserve manual completion; any named hardware guide should carry its actual basket and operating constraints. BuiltInP1RecipeCatalog/P1ExactGuidanceFactualErrata contain no espresso exact recipe or espresso erratum, and the 2026-08-19 factual audit does not cover espresso.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/GrindDescriptor.kt:7",
+      "finding": "VERY_FINE, used by espresso fallback, says Like powdered sugar. The model-specific asset has separate ESP settings and should not be replaced by a universal dial value.",
+      "severity": "low",
+      "change_recommendation": "Prefer espresso-fine guidance tied to flow and taste; texture alone does not establish a working espresso setting.",
+      "source_ids": [
+        "breville_bes500_manual",
+        "barista_hustle_time"
+      ]
+    },
+    {
+      "path": "app/src/main/assets/grinders.json:260",
+      "finding": "Encore ESP has rangeStart=rangeEnd=suggestedStart=15, specifically an 18 g medium-roast manufacturer starting point. C40 7-13 and Niche Zero 10-20 are model-scoped; their upstream pages were not reverified in this pass.",
+      "severity": "info",
+      "change_recommendation": "Retain the supported Encore ESP scope and calibration limitations; do not promise guaranteed flow from setting 15 or silently generalize it.",
+      "source_ids": [
+        "baratza_encore_esp_manual"
+      ]
+    },
+    {
+      "path": "app/src/main/assets/grinders.json:14",
+      "finding": "Decaf metadata asserts universal coarser adjustments plus exact roast/process step modifiers. No primary evidence for those fixed espresso modifiers was verified here.",
+      "severity": "low",
+      "change_recommendation": "Keep those modifiers out of this researched recipe; review exact model and bean evidence separately before describing them as universal facts.",
+      "source_ids": []
+    }
+  ],
+  "uncertainties": [
+    "Counter Culture's published 25-35 seconds does not state clock origin; pump-start timing is our explicit adaptation.",
+    "Numeric Bambino brew-temperature setpoint, factory pre-infusion duration and a pressure-release wait were not verified; leave them null, and use model instructions.",
+    "The basket's 16-19 g specification does not guarantee every roast at 18 g fits; the clearance check may require a different measured dose and corresponding yield.",
+    "C40, Niche Zero and fixed decaf/roast/process modifiers were inspected in code but not independently revalidated against original sources.",
+    "The older Flair manual URL returned 404; its current manufacturer-linked guide was read. Breville cleanup tutorial access failed, so verified manual maintenance controls this guide.",
+    "No physical brewing, device execution, accessibility speech, translation approval or release validation occurred."
+  ],
+  "do_not_claim": [
+    "Every espresso uses 9 bar, 18 g, 1:2 or a 30-second endpoint.",
+    "All double baskets fit this dose or pump-machine directions transfer to levers and portable brewers.",
+    "36 g beverage is 36 ml, reservoir fill, or the mass of water passing through the coffee.",
+    "The app still lacks espresso 1:2 beverage-yield semantics.",
+    "A fixed grinder number, decaf time shortcut, pre-infusion duration, retention coefficient or pressure-release wait works universally.",
+    "Blonding or an apparently even stream proves that the selected yield or extraction is correct."
+  ]
+}

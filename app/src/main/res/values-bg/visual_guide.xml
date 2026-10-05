@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="heading_guide_why">Защо тази стъпка?</string>
+    <string name="action_guide_steps">Стъпки</string>
+    <string name="action_guide_overview">Преглед</string>
+    <string name="label_guide_untimed">Четете със собствено темпо</string>
+    <string name="action_continue_reading">Продължете да четете</string>
+    <string name="action_read_guide">Прочетете ръководството</string>
+    <string name="action_read_ahead">Прочетете напред</string>
+    <string name="action_return_to_live_brew">Обратно към приготвянето</string>
+    <string name="label_guide_done_when">Готово, когато</string>
+</resources>

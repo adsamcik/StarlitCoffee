@@ -39,7 +39,12 @@
     <string name="format_brew_stage_recorded_grams">Записано %1$.0f g</string>
     <string name="format_brew_stage_remaining_grams">Остават %1$.0f g</string>
     <string name="label_brew_reference_cues">Ориентири</string>
-    <string name="msg_brew_reference_cues_not_completion">Само за ориентир. Завършете стъпката с основното действие по-горе.</string>
+    <string name="action_pause_brew_guide">Пауза на ръководството</string>
+    <string name="action_resume_brew_guide">Продължи ръководството</string>
+    <string name="action_pause_brew_clock">Пауза на таймера</string>
+    <string name="msg_brew_clock_keeps_running">Таймерът продължава да работи.</string>
+    <string name="msg_brew_guide_paused">Ръководството е на пауза. Таймерът продължава да работи.</string>
+    <string name="msg_brew_reference_cues_not_completion">Само за ориентир. Времевият сигнал не завършва физическата стъпка.</string>
     <string name="action_show_more_brew_reference_cues">Покажи още ориентири</string>
     <string name="action_hide_brew_reference_cues">Скрий допълнителните ориентири</string>
     <string name="label_brew_reference_stage_duration">Продължителност на етапа</string>

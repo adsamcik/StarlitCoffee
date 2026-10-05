@@ -1,0 +1,666 @@
+{
+  "date": "2026-10-04",
+  "scope": "All 28 native vessel designs; visual prototype only",
+  "mode": "Built-in image_gen; one call per concept or refinement",
+  "generation_calls": 41,
+  "path_authoring": "Mechanical repository spline tracing; no hand-authored coordinates",
+  "prompt_files": [
+    "prompts.json",
+    "refinement-prompts.json",
+    "refinement-opaque-prompts.json",
+    "refinement-structure-prompts.json",
+    "refinement-takeaway-prompt.json",
+    "refinement-espresso-prompt.json"
+  ],
+  "references": [
+    {
+      "file": "references/espresso.png",
+      "sha256": "82c633f24031a0653dda74c3f435fd416dbd0cbb1ec6c39c7febe8d7c968d20d",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/cortado.png",
+      "sha256": "6f8ca3158ec067ccca87c0285ff3790447f6df365a7ea7bafe8fe262ce16af51",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/cappuccino.png",
+      "sha256": "1a0276c8c0619832f8a4689fadac0b5d5dff3ee398c41157355fbf2410805644",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/mug.png",
+      "sha256": "419a927be413e8212080e5fd41890b0f655459ebbbd8711dd91918d13f2dd43d",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/travel.png",
+      "sha256": "5b83123667c5bcaf349b93ceb529a17a5431a6b1b6d7c46baca11d682c266c2b",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/takeaway.png",
+      "sha256": "a4b75b2563c3765114af601db862ad1073e075900b9a37bb54bbe8c948f52bdf",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/latte_glass.png",
+      "sha256": "4d42243bd6642e90b50dbf9ee2af5ab15d9100e6b094102d00057f2ef7e75bab",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/carafe.png",
+      "sha256": "7a672145587c6c6f7d810234d81927ab2031ce77d6a6f2fc6a8e398c6ddbf107",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/french_press.png",
+      "sha256": "c579fd5ec972926c60e3d61bc50bfa7717045c7e386b3563548d665f81fdfaf4",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/kettle.png",
+      "sha256": "1d8c7ee9161028877ba55075270c686448ef4f1ee33f7f79d89357891bbd7df5",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/mason_jar.png",
+      "sha256": "5f9f92b2502b41ea5186fd34279ace209a0fdf016d43559242034fc9d75e980a",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/bowl.png",
+      "sha256": "7eaeff495062ab18a598ebb3a74343e4a02ffa1910e22ada5356ed097d4a3cd7",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/double_wall_espresso.png",
+      "sha256": "f9c9074584294f9911cb3733bd378c3dae8bfed836e167b2f36d2669ba49e74b",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/double_wall_tumbler.png",
+      "sha256": "d68bcf7f78aad51951f2119a7d83d7cfe59949555466e38f039bf1d05d05d7f7",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/double_wall_mug.png",
+      "sha256": "31ccbde4172bb94e34a1a938ba1a47a1989f2a7b91bd6e2386c4c0e4d99a3bbf",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/tall_latte_glass.png",
+      "sha256": "8ace7cf0ee662e48e7479630f445781df91cc348b080333c80c035b6092d4941",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/aroma_taster.png",
+      "sha256": "6f140856510850f89d058ea304c7785fc5953a15537ca8405b522628f0fcf6a5",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/spherical_latte.png",
+      "sha256": "2d2a39a6337b0262e676bc0761dccf46c0d5c3ca5e98bfec2f56035cabc95bf9",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/spouted_espresso_server.png",
+      "sha256": "f12e23cab23732c7255e942a5e08f3fc080276695e2d75d24c163755b8b2101b",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/dot_carafe.png",
+      "sha256": "ca2d9d5dc8aaabef69f4d3a182d64074a19cee61bb92d05b285952081dd5e50e",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/lid_server.png",
+      "sha256": "f0c852902ea8297840f78187daba0413c15132c5a45cf42efcf52e82041b0fb7",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/beehive_server.png",
+      "sha256": "a34fa0713a90bc29f25e4e6138646a9b2e8c3b2e018a70222ef917a083b124eb",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/barista_server.png",
+      "sha256": "02d9b533a72852927e81951d34a70d445c57dd082405e94750306e066448a977",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/angular_server.png",
+      "sha256": "21fbb76de840d83087ac35e7dd99b4dd211ad2d4fca352ef25b7c2dfc58745fa",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/faceted_cortado.png",
+      "sha256": "16307bcfbad5f04c6a93aa12a132d507cf114aa2e29a0b70a698a41d84325c7e",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/ceramic_latte_bowl.png",
+      "sha256": "7f0561c918a2c9485577457a3bb654a888d44c8f5ba7b2e00671c1eb692c5f59",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/thermal_carafe.png",
+      "sha256": "9e5de0b7d3eb990a44af7f7d21826b184d3f60cb6ca2f6a3a01c8cbce3801bf9",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/double_wall_press.png",
+      "sha256": "3d8fdfe21a3ab24d5ffa070a70b80240f175b712c2962810abe80a1f86c9f009",
+      "role": "Unchanged native vessel anatomy"
+    },
+    {
+      "file": "references/calculator-style.png",
+      "sha256": "db2e94cc80d86d0fa0aef6e2715115cde3c63a74d8048cefd93cc99d1a2bfec4",
+      "role": "Unchanged user-supplied accepted calculator style"
+    }
+  ],
+  "generator_outputs": [
+    {
+      "key": "espresso",
+      "revision": 1,
+      "selected": false,
+      "generator_file": "exec-02a99909-c5cc-48b9-94d9-13ae6084ff1f.png",
+      "file": "discarded/espresso-v1.png",
+      "sha256": "e38cea19e442f62d59aedc4e0253ee70fea815b8c985c181138f9119e42447bd"
+    },
+    {
+      "key": "espresso",
+      "revision": 2,
+      "selected": true,
+      "generator_file": "exec-45016d47-ded4-4507-a484-b94c5db19be1.png",
+      "file": "generated/espresso.png",
+      "sha256": "1f3c325700316324ed4ea60b402aa4a74741af7c7409046d6fd2fd4e1202b258"
+    },
+    {
+      "key": "cortado",
+      "revision": 1,
+      "selected": true,
+      "generator_file": "exec-d2cff3cc-ce1e-4e05-8a7a-5ff08d9287b5.png",
+      "file": "generated/cortado.png",
+      "sha256": "038e2753373719023a4d7f8fbba1f2bd16001f3f43fc0a7ec153ec87f45cfb5d"
+    },
+    {
+      "key": "cappuccino",
+      "revision": 1,
+      "selected": true,
+      "generator_file": "exec-e4fbaeaf-f250-4dfc-9d35-87fe461d4130.png",
+      "file": "generated/cappuccino.png",
+      "sha256": "1201332922f650f9b7805f3a8c588198375a60eb2912dbf8848c134f03eb3f2b"
+    },
+    {
+      "key": "mug",
+      "revision": 1,
+      "selected": true,
+      "generator_file": "exec-f5477361-81cf-4576-99c0-af8017480f9d.png",
+      "file": "generated/mug.png",
+      "sha256": "52d7b266f32efe37bf8f95a646911a89fba5bcd0a2fcdf3b77442d9790f461e6"
+    },
+    {
+      "key": "travel",
+      "revision": 1,
+      "selected": false,
+      "generator_file": "exec-6adefea1-1aca-486e-94dc-ca6bb63444f5.png",
+      "file": "discarded/travel-v1.png",
+      "sha256": "f11024603023e051f683b8d7e8fc8b3be8538bcd4ffae7a58623858a110d0b41"
+    },
+    {
+      "key": "travel",
+      "revision": 2,
+      "selected": true,
+      "generator_file": "exec-f956dcbc-085e-4d4c-8e40-ccd388f52350.png",
+      "file": "generated/travel.png",
+      "sha256": "31393648b7dff0a3f7d69a5e0ce5ae81a044029e5fa2b2cfff0d97fa20c649fa"
+    },
+    {
+      "key": "takeaway",
+      "revision": 1,
+      "selected": false,
+      "generator_file": "exec-aa0d849d-008c-4771-8819-2663e8d8f66f.png",
+      "file": "discarded/takeaway-v1.png",
+      "sha256": "1e441d55ce532fecf4f6cf792204a45a0909d2227a92770e55ff23f440c9087b"
+    },
+    {
+      "key": "takeaway",
+      "revision": 2,
+      "selected": false,
+      "generator_file": "exec-6fd23aef-160b-4d20-8029-6f186ec7f7d1.png",
+      "file": "discarded/takeaway-v2.png",
+      "sha256": "7038e89805cb9c6c8a69aa9f3ab0905bea0b510df3b6ff77b029c7636e2f1518"
+    },
+    {
+      "key": "takeaway",
+      "revision": 3,
+      "selected": true,
+      "generator_file": "exec-b5d23be7-8b63-4781-9a5e-2b8f5b4ee19e.png",
+      "file": "generated/takeaway.png",
+      "sha256": "8f096284caa958b37ccb15182d6ece325578eaeb8b7d74702ccaa8ad6950af5c"
+    },
+    {
+      "key": "latte_glass",
+      "revision": 1,
+      "selected": true,
+      "generator_file": "exec-190815c7-b205-426c-b720-562ba94c22af.png",
+      "file": "generated/latte_glass.png",
+      "sha256": "6e72aad161f2dc93b1d17e4f078dd721561e95513c47491e93fd8ec91b9c5227"
+    },
+    {
+      "key": "carafe",
+      "revision": 1,
+      "selected": false,
+      "generator_file": "exec-7d4702d0-b879-4f65-a9f1-2f3ab69fdfb1.png",
+      "file": "discarded/carafe-v1.png",
+      "sha256": "ffc2c75ee90bc6b70e992be8964ede76c3be497311123eedb6b27cf1748fcc57"
+    },
+    {
+      "key": "carafe",
+      "revision": 2,
+      "selected": true,
+      "generator_file": "exec-cc5d7595-59d3-47d3-aaff-800c00deb743.png",
+      "file": "generated/carafe.png",
+      "sha256": "d33596fbd328cf8b6e2528b25c80cc860b2aed630f2d29a696f9f6cad8105af8"
+    },
+    {
+      "key": "french_press",
+      "revision": 1,
+      "selected": false,
+      "generator_file": "exec-c6f8f603-061d-45fe-8bd6-325a910e2de2.png",
+      "file": "discarded/french_press-v1.png",
+      "sha256": "5532daff8b47732772c0b39339bc7665a368c3ed8cbd1ce49abe2d5d5738922d"
+    },
+    {
+      "key": "french_press",
+      "revision": 2,
+      "selected": true,
+      "generator_file": "exec-1a1ce283-0a13-4dd8-a54e-12275d4b1aef.png",
+      "file": "generated/french_press.png",
+      "sha256": "458013132e6b58b68b2e6276505822e553905ce231ee5f45f7baf542d3dfd69b"
+    },
+    {
+      "key": "kettle",
+      "revision": 1,
+      "selected": true,
+      "generator_file": "exec-96d82a79-2bff-4909-ad15-9055d796950d.png",
+      "file": "generated/kettle.png",
+      "sha256": "f632c415228666f907df47251e438c7ff6180a7b8525fadc6d1b1b4f74a42e7b"
+    },
+    {
+      "key": "mason_jar",
+      "revision": 1,
+      "selected": true,
+      "generator_file": "exec-1342f328-5e04-4471-b889-80793717f4f8.png",
+      "file": "generated/mason_jar.png",
+      "sha256": "b005a40c8ec2f3468714926621d33d0d8d5ad7c228ebc7d0db95a0de76ae7fed"
+    },
+    {
+      "key": "bowl",
+      "revision": 1,
+      "selected": false,
+      "generator_file": "exec-49081f5c-7477-461d-8e2a-cc923d4821cc.png",
+      "file": "discarded/bowl-v1.png",
+      "sha256": "aa216232b77308f079fce37d43cb036febd7f1b5b6407b2bedeb766feb333cf5"
+    },
+    {
+      "key": "bowl",
+      "revision": 2,
+      "selected": true,
+      "generator_file": "exec-5d3a1992-c8dc-4476-8efe-6bbe21631651.png",
+      "file": "generated/bowl.png",
+      "sha256": "7d6a9eb5ccaa813a6499af0815254677f6d14c73c51645ebc0abc088d92a7596"
+    },
+    {
+      "key": "double_wall_espresso",
+      "revision": 1,
+      "selected": false,
+      "generator_file": "exec-ab846b53-6364-4cea-90be-67803c2f8bb2.png",
+      "file": "discarded/double_wall_espresso-v1.png",
+      "sha256": "e4f02e33175f29405d79e2934937150a79aea657a4b0038d0742cb50e6fbec32"
+    },
+    {
+      "key": "double_wall_espresso",
+      "revision": 2,
+      "selected": true,
+      "generator_file": "exec-38f4fd6c-1313-4c2e-8c09-8edb51c9a721.png",
+      "file": "generated/double_wall_espresso.png",
+      "sha256": "c8345b74544ee36e6e4436ea01d2df9201925bd2eeaa0e6e8ebaba2dc92eb2cb"
+    },
+    {
+      "key": "double_wall_tumbler",
+      "revision": 1,
+      "selected": false,
+      "generator_file": "exec-b006ffae-75d6-4f21-88da-53de19a3ab52.png",
+      "file": "discarded/double_wall_tumbler-v1.png",
+      "sha256": "6ea41e5cf3975f94fc85f0ed75c32bf9082a91e5767e24d0879d7b501985116b"
+    },
+    {
+      "key": "double_wall_tumbler",
+      "revision": 2,
+      "selected": true,
+      "generator_file": "exec-7a557404-aec0-41cb-a966-37526ee8de7c.png",
+      "file": "generated/double_wall_tumbler.png",
+      "sha256": "914b5452fb854fc344d02c767473c75f5f60fe6da6f6b3677a83818469cc6b14"
+    },
+    {
+      "key": "double_wall_mug",
+      "revision": 1,
+      "selected": false,
+      "generator_file": "exec-27805758-f054-4863-aaf6-59c146451e02.png",
+      "file": "discarded/double_wall_mug-v1.png",
+      "sha256": "ddcf5c1315771ab40c37ab0903410bac7126d11b656a58b36b13501cdad00781"
+    },
+    {
+      "key": "double_wall_mug",
+      "revision": 2,
+      "selected": true,
+      "generator_file": "exec-346a0bca-4436-4313-8e02-3598f9e1cf16.png",
+      "file": "generated/double_wall_mug.png",
+      "sha256": "628d139953c934ddaa04af63f4d52d172bd5abe2d0638ffe5e863c8f9e1624a3"
+    },
+    {
+      "key": "tall_latte_glass",
+      "revision": 1,
+      "selected": true,
+      "generator_file": "exec-695b2507-ed1e-406e-a12a-3321faed53c1.png",
+      "file": "generated/tall_latte_glass.png",
+      "sha256": "8480580ea7cf8e1da51da6c3ebd22fa072dc64149fe8b113be67a8b678b7c283"
+    },
+    {
+      "key": "aroma_taster",
+      "revision": 1,
+      "selected": true,
+      "generator_file": "exec-ef206fdc-3b4c-4898-a477-831066ae9ac2.png",
+      "file": "generated/aroma_taster.png",
+      "sha256": "deb4f0a35da5b682dd30f6fef68f59d0553dd5092fed60400d7542b3f9ae91ec"
+    },
+    {
+      "key": "spherical_latte",
+      "revision": 1,
+      "selected": false,
+      "generator_file": "exec-bfbf0ee7-94cd-4c82-bdfb-63203f7c8f45.png",
+      "file": "discarded/spherical_latte-v1.png",
+      "sha256": "ca26830cd80fa2d8de6c77e9b027c16a06bbf21521af72440c1f6172a9e44e19"
+    },
+    {
+      "key": "spherical_latte",
+      "revision": 2,
+      "selected": true,
+      "generator_file": "exec-4f6de2c4-e425-4b7b-8b16-e4504319a904.png",
+      "file": "generated/spherical_latte.png",
+      "sha256": "72ee5d15dfc243ee0f0906351a750bb12ce8ecb6fbccce250b40c8899318aefa"
+    },
+    {
+      "key": "spouted_espresso_server",
+      "revision": 1,
+      "selected": true,
+      "generator_file": "exec-ae301e77-8925-46f5-8575-9e5826312938.png",
+      "file": "generated/spouted_espresso_server.png",
+      "sha256": "cc5cb63dc0459c17b7377e83339e6688cc4eab9d50db23de5c990ee6e19eff34"
+    },
+    {
+      "key": "dot_carafe",
+      "revision": 1,
+      "selected": true,
+      "generator_file": "exec-ef7b0c70-b78c-4d1d-b668-e9a65669202b.png",
+      "file": "generated/dot_carafe.png",
+      "sha256": "63ab8865f1e25c1277989724d78115cced47fdd0812ab983f401361f509c94cd"
+    },
+    {
+      "key": "lid_server",
+      "revision": 1,
+      "selected": true,
+      "generator_file": "exec-c56bfbfc-714b-4567-a1c3-dca17c63f6bc.png",
+      "file": "generated/lid_server.png",
+      "sha256": "ecc7150426171b16c50b29ea2c29fe2e609fa822273f3f2bce13ea3e8945734d"
+    },
+    {
+      "key": "beehive_server",
+      "revision": 1,
+      "selected": true,
+      "generator_file": "exec-45dcbb15-765a-4e22-bc26-412bd3ca83e6.png",
+      "file": "generated/beehive_server.png",
+      "sha256": "beeb6c9ab5aea875e01e5fef7dcba9a4913e3b65cd462045d124086460fcbc56"
+    },
+    {
+      "key": "barista_server",
+      "revision": 1,
+      "selected": true,
+      "generator_file": "exec-db413765-9216-413e-b668-ac20cc6a3984.png",
+      "file": "generated/barista_server.png",
+      "sha256": "5bb7d85722362ba17bbae6956ae5e7cf84f8706baa6d9dfad0701d8e5fac6158"
+    },
+    {
+      "key": "angular_server",
+      "revision": 1,
+      "selected": true,
+      "generator_file": "exec-acaccc4f-690d-4b0c-bba4-31a66423c934.png",
+      "file": "generated/angular_server.png",
+      "sha256": "d952ddb46a6a9a56b4ee84c92ddc31fff3939e0072ec659e2fae7ec1dd635814"
+    },
+    {
+      "key": "faceted_cortado",
+      "revision": 1,
+      "selected": false,
+      "generator_file": "exec-9dceba82-44f0-4d09-893b-213f935e9d02.png",
+      "file": "discarded/faceted_cortado-v1.png",
+      "sha256": "5c8a3046f8893105a95d6b4c7a09519aec58d5f770f01515ac071e904bb6b4c4"
+    },
+    {
+      "key": "faceted_cortado",
+      "revision": 2,
+      "selected": true,
+      "generator_file": "exec-b82371e7-ad02-4f1f-87fe-10b85a910d48.png",
+      "file": "generated/faceted_cortado.png",
+      "sha256": "8283d394464838d2e8e24b6f9e4e51a02f51ad947020bc000638cf8879002559"
+    },
+    {
+      "key": "ceramic_latte_bowl",
+      "revision": 1,
+      "selected": true,
+      "generator_file": "exec-bf45ba08-b8ce-4d9b-ad80-a3163270cb82.png",
+      "file": "generated/ceramic_latte_bowl.png",
+      "sha256": "e8d4870258f9c530dbe50726d1539f5e29c3e21fef395f570eade381d3677115"
+    },
+    {
+      "key": "thermal_carafe",
+      "revision": 1,
+      "selected": true,
+      "generator_file": "exec-758b88f9-aecd-4f3b-85b9-d3041d9e953b.png",
+      "file": "generated/thermal_carafe.png",
+      "sha256": "1f2b938063a2e108eb082ea4016d7cdc5e7434f90d8999bd3de1cfd2c8846e8d"
+    },
+    {
+      "key": "double_wall_press",
+      "revision": 1,
+      "selected": false,
+      "generator_file": "exec-a7eb5503-5878-4fa7-81cb-ca225cc3207b.png",
+      "file": "discarded/double_wall_press-v1.png",
+      "sha256": "fe8c4f20c0b30d863cbd08671554fff161e8dd2928febcd764f4e17cf1c9a274"
+    },
+    {
+      "key": "double_wall_press",
+      "revision": 2,
+      "selected": true,
+      "generator_file": "exec-a1279de5-db59-4a8e-aeee-af5ea6c408df.png",
+      "file": "generated/double_wall_press.png",
+      "sha256": "e5614fd746f825c4453bcf9f487126e8360f336744c87bdd880782e270282a19"
+    }
+  ],
+  "selected_vectors": [
+    {
+      "key": "espresso",
+      "file": "svg/espresso.svg",
+      "sha256": "3c16e35f94e3c260569104f05325d0cf88cfe42940d19bacf3be879893f64531",
+      "source": "generated/espresso.png"
+    },
+    {
+      "key": "cortado",
+      "file": "svg/cortado.svg",
+      "sha256": "4766e324395fadfef03c6a4c438add0c0427288860197224f731566986120385",
+      "source": "generated/cortado.png"
+    },
+    {
+      "key": "cappuccino",
+      "file": "svg/cappuccino.svg",
+      "sha256": "761bfddda4b303ba9f92b092c33b4d6a58287051176d10ced2ed722dfb1aae89",
+      "source": "generated/cappuccino.png"
+    },
+    {
+      "key": "mug",
+      "file": "svg/mug.svg",
+      "sha256": "ad804cce440dc3b50ba39f909f86333bb95d8435a2fc40c54f93db88c6968267",
+      "source": "generated/mug.png"
+    },
+    {
+      "key": "travel",
+      "file": "svg/travel.svg",
+      "sha256": "5f8778f55f24ecce8a2014241112111b19af0caf678beeabf8c293479094e091",
+      "source": "generated/travel.png"
+    },
+    {
+      "key": "takeaway",
+      "file": "svg/takeaway.svg",
+      "sha256": "8b84a1dc7e1a94b2d1e2ac2c3f7ab42c415bc6f022353030c5f593614373f5d1",
+      "source": "generated/takeaway.png"
+    },
+    {
+      "key": "latte_glass",
+      "file": "svg/latte_glass.svg",
+      "sha256": "01e8cecf08b0d661d7e2f78cf9d2542997a6b906484c04bccc6e3fe1e1e558d7",
+      "source": "generated/latte_glass.png"
+    },
+    {
+      "key": "carafe",
+      "file": "svg/carafe.svg",
+      "sha256": "41adeba34fd88c4e2f47d0141b259063459a22ce5e1a30bdb4fc022857040b38",
+      "source": "generated/carafe.png"
+    },
+    {
+      "key": "french_press",
+      "file": "svg/french_press.svg",
+      "sha256": "11d4d6560ea47cb79b9a4ad7cc112f7df6444fcf8e82a01958c3f8436179e377",
+      "source": "generated/french_press.png"
+    },
+    {
+      "key": "kettle",
+      "file": "svg/kettle.svg",
+      "sha256": "4a356e1afa2afedd90ab3c9fac025a70379f8966c11d9cad30b2bec2ab4b2dd0",
+      "source": "generated/kettle.png"
+    },
+    {
+      "key": "mason_jar",
+      "file": "svg/mason_jar.svg",
+      "sha256": "f50ad5ea81d13b6e8af06ede4ca3212e387c2efda249af9587b73b793e854bb9",
+      "source": "generated/mason_jar.png"
+    },
+    {
+      "key": "bowl",
+      "file": "svg/bowl.svg",
+      "sha256": "03748ea2a4d1d3d32f7ef73f17994cf05b9306901a59bf8f10d757c7c6341760",
+      "source": "generated/bowl.png"
+    },
+    {
+      "key": "double_wall_espresso",
+      "file": "svg/double_wall_espresso.svg",
+      "sha256": "1722e0d258d6ccf647d9c1d006ef38414d6e1b4d1805871b970c4313f9550ae6",
+      "source": "generated/double_wall_espresso.png"
+    },
+    {
+      "key": "double_wall_tumbler",
+      "file": "svg/double_wall_tumbler.svg",
+      "sha256": "93c8ff42ab2aa1137833be7d18fb837b639e3107d0018d7d243819fd221497ce",
+      "source": "generated/double_wall_tumbler.png"
+    },
+    {
+      "key": "double_wall_mug",
+      "file": "svg/double_wall_mug.svg",
+      "sha256": "54abb12d2481729f2345a7b6b9f24b93906b4b9ddecdeb5c2365e3f784776900",
+      "source": "generated/double_wall_mug.png"
+    },
+    {
+      "key": "tall_latte_glass",
+      "file": "svg/tall_latte_glass.svg",
+      "sha256": "1fc70a0ef3511a40c7658554fd186c846d5c31194b01ed4f1977b444ef523f11",
+      "source": "generated/tall_latte_glass.png"
+    },
+    {
+      "key": "aroma_taster",
+      "file": "svg/aroma_taster.svg",
+      "sha256": "23181d4ada1505c312502fa9893284235977689d4d178aa5b3bae03bf1b4210d",
+      "source": "generated/aroma_taster.png"
+    },
+    {
+      "key": "spherical_latte",
+      "file": "svg/spherical_latte.svg",
+      "sha256": "45d4df85954fa8c3c6286a3e61fe1bc79e5bf4fceefe702b947d9b50853fd2a6",
+      "source": "generated/spherical_latte.png"
+    },
+    {
+      "key": "spouted_espresso_server",
+      "file": "svg/spouted_espresso_server.svg",
+      "sha256": "28c648dbe98d0fde90e6864f58f578a13c4b6d0ee63ad127f22c1554af6c36b0",
+      "source": "generated/spouted_espresso_server.png"
+    },
+    {
+      "key": "dot_carafe",
+      "file": "svg/dot_carafe.svg",
+      "sha256": "4723e44f51643dbd47d3ad0fdbfecf410add050b2766b191cdab8406e47aa0e0",
+      "source": "generated/dot_carafe.png"
+    },
+    {
+      "key": "lid_server",
+      "file": "svg/lid_server.svg",
+      "sha256": "1a0930c7745873da7875a302d58dec16f658a812c43ee16e0c3f13d06a511413",
+      "source": "generated/lid_server.png"
+    },
+    {
+      "key": "beehive_server",
+      "file": "svg/beehive_server.svg",
+      "sha256": "674d3402de67bd830c9005be1595d7d50ae5f2700b3c72f45eb045974e74b174",
+      "source": "generated/beehive_server.png"
+    },
+    {
+      "key": "barista_server",
+      "file": "svg/barista_server.svg",
+      "sha256": "c2429b95b613188df551f0d91e3c98d3583ce4bed94b87fc62f598eaca54d2e7",
+      "source": "generated/barista_server.png"
+    },
+    {
+      "key": "angular_server",
+      "file": "svg/angular_server.svg",
+      "sha256": "ce3a53db2735f9b8da4fe39a5e8a91d826cc8f5c18bbcb2271e572d67fddf7a4",
+      "source": "generated/angular_server.png"
+    },
+    {
+      "key": "faceted_cortado",
+      "file": "svg/faceted_cortado.svg",
+      "sha256": "833db0f01c24c64a640d003ee98c9c83c111aa41c615208b650cf1bd0e3506a7",
+      "source": "generated/faceted_cortado.png"
+    },
+    {
+      "key": "ceramic_latte_bowl",
+      "file": "svg/ceramic_latte_bowl.svg",
+      "sha256": "b456996b2872af39ee82931cfb57f5b896f801633d2122e6951b6de2d6a1b6c7",
+      "source": "generated/ceramic_latte_bowl.png"
+    },
+    {
+      "key": "thermal_carafe",
+      "file": "svg/thermal_carafe.svg",
+      "sha256": "5f124509275677fb914b0824d00b1ee9a7c8343c8cc2accf5ab3827613a123c3",
+      "source": "generated/thermal_carafe.png"
+    },
+    {
+      "key": "double_wall_press",
+      "file": "svg/double_wall_press.svg",
+      "sha256": "de42d69f2b2fd532f700e290973a703edbacc945bae3591c5e81973269c59a76",
+      "source": "generated/double_wall_press.png"
+    }
+  ],
+  "trace_report": "trace-report.json",
+  "gallery": "gallery.html",
+  "review": "Astra: complete family and subsequent Espresso/Cappuccino distinction pass saved light/dark 24/28/34px review; not user acceptance",
+  "limits": "Fine seams soften at 24px. Related vessels require labels. Native rendering and measured recognition remain unverified."
+}

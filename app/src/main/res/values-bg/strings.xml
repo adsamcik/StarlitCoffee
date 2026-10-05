@@ -100,11 +100,8 @@
     <string name="label_increase">Увеличете %1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Подгответе приготвянето</string>
 <string name="action_ready_to_brew_short">Готово за приготвяне</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Подготовка</string>
-    <string name="label_recipe_heading">Рецепта</string>
     <string name="label_temp_short">Темп.</string>
     <string name="label_bloom_short">Блум</string>
     <string name="prep_tip_pulsar_paper">Намокрете хартиения филтър в основата (с отворен клапан) и оставете да се отцеди. Монтирайте цилиндъра, добавете смляното кафе, изравнете леглото и поставете дисперсионната капачка. Тарирайте везната.</string>
@@ -114,8 +111,6 @@
     <string name="prep_tip_french_press">Подгрейте френската преса и я изпразнете. Добавете смляното кафе, поставете върху везната и тарирайте преди да добавите вода.</string>
     <string name="prep_tip_espresso">Подсушете портафилтъра. Дозирайте, разпределете и тампирайте равномерно преди да го заключите.</string>
     <string name="prep_tip_moka">Напълнете долната камера до клапана. Напълнете кошничката със смляно кафе, изравнете — не тампирайте. Сглобете внимателно.</string>
-    <string name="format_prep_grind_specific">Смелете %1$s — настройте %2$s на %3$s</string>
-    <string name="format_prep_grind_generic">Смелете %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Пауза</string>
@@ -731,7 +726,6 @@
     <string name="guidance_cue_valve_state">Състояние на клапана</string>
     <string name="screen_learning_title">Научи</string>
     <string name="msg_learning_subtitle">Нагледни ръководства стъпка по стъпка</string>
-    <string name="msg_learning_intro">Изберете уред и рецепта, след което разгледайте всяка ясна стъпка поотделно.</string>
     <string name="action_show_details">Покажи подробности</string>
     <string name="action_hide_details">Скрий подробностите</string>
 

@@ -5,6 +5,7 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.BrewSessionStatus
 import com.adsamcik.starlitcoffee.domain.brewing.session.SessionId
 import com.adsamcik.starlitcoffee.domain.brewing.session.SessionRuntimeState
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageCompletionMode
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageRunStatus
 import com.adsamcik.starlitcoffee.data.brewing.session.ActiveBrewSessionTestFixtures
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -48,11 +49,15 @@ class DurableBrewSessionStatusNotifierTest {
             ),
         ).copy(
             status = BrewSessionStatus.RUNNING,
+            stageProgress = listOf(com.adsamcik.starlitcoffee.domain.brewing.session.StageRuntimeProgress(
+                StageRunStatus.ACTIVE)),
             totalActiveElapsedMillis = 5_000L,
             activeClockAnchor = ActiveClockAnchor(monotonicMillis = null, wallClockMillis = 10_000L),
         )
 
-        assertEquals(8_500L, durableBrewStatusElapsedMillis(runtime, nowWallClockMillis = 13_500L))
-        assertEquals(5_000L, durableBrewStatusElapsedMillis(runtime, nowWallClockMillis = 9_000L))
+        assertEquals(5_000L, durableBrewStatusPresentation(runtime, nowWallClockMillis = 13_500L)
+            ?.chronometerWallClockMillis)
+        assertEquals(4_000L, durableBrewStatusPresentation(runtime, nowWallClockMillis = 9_000L)
+            ?.chronometerWallClockMillis)
     }
 }

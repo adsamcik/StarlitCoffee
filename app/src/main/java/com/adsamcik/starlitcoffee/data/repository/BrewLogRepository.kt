@@ -58,6 +58,13 @@ class BrewLogRepository(
 
     suspend fun insertLog(entity: BrewLogEntity): Long = brewLogDao.insert(entity)
 
+    suspend fun insertOnce(entity: BrewLogEntity): SessionLogWriteResult {
+        val sourceId = requireNotNull(entity.sourceSessionId)
+        val inserted = brewLogDao.insertIfSourceSessionIsNew(entity)
+        return if (inserted > 0) SessionLogWriteResult(inserted, true)
+        else SessionLogWriteResult(requireNotNull(brewLogDao.getBySourceSessionId(sourceId)).id, false)
+    }
+
     suspend fun updateRating(logId: Long, rating: Float, notes: String?) =
         brewLogDao.updateRating(logId, rating, notes)
 
@@ -132,4 +139,3 @@ class BrewLogRepository(
         else -> true
     }
 }
-

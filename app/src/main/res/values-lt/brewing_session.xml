@@ -39,7 +39,12 @@
     <string name="format_brew_stage_recorded_grams">Užfiksuota %1$.0f g</string>
     <string name="format_brew_stage_remaining_grams">Liko %1$.0f g</string>
     <string name="label_brew_reference_cues">Atskaitos reikšmės</string>
-    <string name="msg_brew_reference_cues_not_completion">Tik orientacijai. Užbaikite žingsnį pagrindiniu veiksmu aukščiau.</string>
+    <string name="action_pause_brew_guide">Pristabdyti vadovą</string>
+    <string name="action_resume_brew_guide">Tęsti vadovą</string>
+    <string name="action_pause_brew_clock">Pristabdyti laikmatį</string>
+    <string name="msg_brew_clock_keeps_running">Laikmatis veikia toliau.</string>
+    <string name="msg_brew_guide_paused">Vadovas pristabdytas. Laikmatis veikia toliau.</string>
+    <string name="msg_brew_reference_cues_not_completion">Tik orientacijai. Laiko nuoroda neužbaigia fizinio veiksmo.</string>
     <string name="action_show_more_brew_reference_cues">Rodyti daugiau orientyrų</string>
     <string name="action_hide_brew_reference_cues">Slėpti papildomus orientyrus</string>
     <string name="label_brew_reference_stage_duration">Etapo trukmė</string>

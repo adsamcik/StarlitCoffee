@@ -39,7 +39,12 @@
     <string name="format_brew_stage_recorded_grams">已记录 %1$.0f 克</string>
     <string name="format_brew_stage_remaining_grams">还剩 %1$.0f 克</string>
     <string name="label_brew_reference_cues">参考提示</string>
-    <string name="msg_brew_reference_cues_not_completion">仅供参考。请使用上方的主要操作完成此步骤。</string>
+    <string name="action_pause_brew_guide">暂停引导</string>
+    <string name="action_resume_brew_guide">继续引导</string>
+    <string name="action_pause_brew_clock">暂停计时</string>
+    <string name="msg_brew_clock_keeps_running">计时仍在继续。</string>
+    <string name="msg_brew_guide_paused">引导已暂停，计时仍在继续。</string>
+    <string name="msg_brew_reference_cues_not_completion">仅供参考。计时提示不会完成实际操作步骤。</string>
     <string name="action_show_more_brew_reference_cues">显示更多提示</string>
     <string name="action_hide_brew_reference_cues">隐藏其他提示</string>
     <string name="label_brew_reference_stage_duration">步骤时长</string>

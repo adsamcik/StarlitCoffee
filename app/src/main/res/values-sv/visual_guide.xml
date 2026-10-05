@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="heading_guide_why">Varför detta steg?</string>
+    <string name="action_guide_steps">Steg</string>
+    <string name="action_guide_overview">Översikt</string>
+    <string name="label_guide_untimed">Läs i din egen takt</string>
+    <string name="action_continue_reading">Fortsätt läsa</string>
+    <string name="action_read_guide">Läs guiden</string>
+    <string name="action_read_ahead">Läs framåt</string>
+    <string name="action_return_to_live_brew">Tillbaka till bryggningen</string>
+    <string name="label_guide_done_when">Klart när</string>
+</resources>

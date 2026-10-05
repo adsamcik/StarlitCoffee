@@ -1,0 +1,482 @@
+{
+  "method_id": "automatic-drip",
+  "title": "Automatic drip brewing guide",
+  "scope": "A published 63 g / 1,000 g reservoir-input example for an automatic paper-filter brewer rated for that batch; separate KBGV Select and Cup-One procedures must not be transferred to unidentified machines.",
+  "research_date": "2026-10-02",
+  "review_status": "editorially_reviewed",
+  "physical_brew_tested": false,
+  "sources": [
+    {
+      "id": "counterculture",
+      "title": "Quick + Easy Automatic Brewer",
+      "url": "https://counterculturecoffee.com/pages/auto-drip",
+      "author_or_organization": "Counter Culture Coffee",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Published 63 g coffee / 1,000 g reservoir-water example",
+        "Medium-coarse starting grind",
+        "Wait for full cycle"
+      ]
+    },
+    {
+      "id": "dose-us",
+      "title": "How much coffee should I use in my Moccamaster?",
+      "url": "https://support.moccamaster.com/hc/en-us/articles/1500009389881-How-much-coffee-should-I-use-in-my-Moccamaster",
+      "author_or_organization": "Moccamaster USA",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "USA volume/dose chart: 55 g per 1 L, 28 g per 0.5 L",
+        "Cup-One chart label 0.3 L / 10 oz and 17 g",
+        "Taste-strength adjustment by adding water to served coffee"
+      ]
+    },
+    {
+      "id": "kbgv-quick",
+      "title": "KBGV Select quick brew guide",
+      "url": "https://support.moccamaster.com/hc/en-us/article_attachments/1500014339002",
+      "author_or_organization": "Moccamaster USA",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "#4 paper",
+        "Half selector for 4–6 cups; full selector for 8–10 cups",
+        "1.25 L nominal capacity",
+        "Approximately 4–6 minutes",
+        "Turn off if carafe emptied; outlet arm is hot"
+      ]
+    },
+    {
+      "id": "select-eu",
+      "title": "Technivorm Moccamaster user manual, including KBG Select",
+      "url": "https://www.moccamaster.eu/pub/media/handleidingen/talen/Manual_SELECT.pdf",
+      "author_or_organization": "Technivorm Moccamaster",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "European recommendation 60 g/L",
+        "Half setting slows water feed",
+        "Overflow checks: drip stop, grind, decaf and softened water",
+        "Fill with a separate clean jug"
+      ]
+    },
+    {
+      "id": "cupone-nl",
+      "title": "Technivorm Cup-One manual, scanned Dutch edition",
+      "url": "https://www.moccamaster.nl/pub/media/handleidingen/Gebruiksaanwijzing-Cup-One-2.0-zonder-wegwerpbeker.pdf",
+      "author_or_organization": "Technivorm Moccamaster",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Visually read pages 3–9",
+        "18–21 g at reservoir mark",
+        "#1 paper and small outlet",
+        "Approximately 240 seconds; reported 92–96 °C",
+        "Let filter drain before mug removal"
+      ]
+    },
+    {
+      "id": "cupone-us",
+      "title": "Moccamaster Cup-One product and operating facts",
+      "url": "https://us.moccamaster.com/products/cup-one",
+      "author_or_organization": "Moccamaster USA",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "No drip stop",
+        "Nominal 0.33 L / 10 oz label",
+        "Current page says power off 12 minutes after brewing",
+        "Machine heats the water"
+      ]
+    },
+    {
+      "id": "filters",
+      "title": "What size filter does my Moccamaster use?",
+      "url": "https://support.moccamaster.com/hc/en-us/articles/1500009392081-What-size-filter-does-my-Moccamaster-use",
+      "author_or_organization": "Moccamaster USA",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Most Moccamaster machines use #4; Cup-One requires #1; Grand has a different flat paper"
+      ]
+    },
+    {
+      "id": "grind",
+      "title": "Can grind size make my coffee taste bitter or weak?",
+      "url": "https://support.moccamaster.com/hc/en-us/articles/1500009385562-Can-grind-size-make-my-coffee-taste-bitter-or-weak",
+      "author_or_organization": "Moccamaster USA",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Moccamaster medium-coarse texture",
+        "Fine grind can contribute to bitterness; coarse or uneven grind to weak extraction"
+      ]
+    },
+    {
+      "id": "manual-us",
+      "title": "Moccamaster USA brewer instruction manual",
+      "url": "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159",
+      "author_or_organization": "Moccamaster USA / Technivorm",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Manufacturer cup/table mapping",
+        "First-use plain-water flush",
+        "Do not remove lids or vessels while brewing",
+        "Unplug and cool before cleaning; do not immerse",
+        "Hand-wash glass carafe"
+      ]
+    },
+    {
+      "id": "cleaning",
+      "title": "How frequently should I descale and clean my brewer, and what should I use?",
+      "url": "https://support.moccamaster.com/hc/en-us/articles/1500009428621-How-frequently-should-I-descale-and-clean-my-brewer-and-what-should-I-use",
+      "author_or_organization": "Moccamaster USA",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Descale every 100 cycles, more often for hard water",
+        "Follow product directions",
+        "Current USA guidance advises against vinegar"
+      ]
+    },
+    {
+      "id": "sca-kbgv",
+      "title": "New SCA Certified Home Brewer: Technivorm Moccamaster KBGV Select",
+      "url": "https://sca.coffee/sca-news/2023/10/10/new-sca-certified-home-brewer-technivorm-moccamaster-kbgv-select-fjpd6",
+      "author_or_organization": "Specialty Coffee Association",
+      "source_type": "standard",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "KBGV Select laboratory certification",
+        "Selector changes saturation time and hotplate temperature"
+      ]
+    },
+    {
+      "id": "sca-historical-requirements",
+      "title": "2017 SCA Certified Home Brewer Program requirements, historical link",
+      "url": "https://sca.coffee/s/2017-SCA-CHB-Program-Requirements-ba6g.pdf",
+      "author_or_organization": "Specialty Coffee Association",
+      "source_type": "standard",
+      "accessed": "2026-10-02",
+      "access_status": "blocked",
+      "supports": [
+        "Records an inaccessible historical requirements link; no recipe claim is taken from this source"
+      ]
+    }
+  ],
+  "recipe": {
+    "name": "Counter Culture automatic-brewer 63 g / 1,000 g example",
+    "provenance": "published_recipe",
+    "source_ids": [
+      "counterculture"
+    ],
+    "equipment": [
+      "Automatic paper-filter brewer whose manual permits a 1,000 g reservoir-water batch with 63 g coffee",
+      "Manufacturer-matched basket and paper",
+      "Matching carafe and required lids",
+      "Gram scale",
+      "Clean filling jug",
+      "Burr grinder or appropriately ground coffee"
+    ],
+    "coffee_dose_g": 63,
+    "brew_water_g": 1000,
+    "brew_water_ml": null,
+    "ice_g": 0,
+    "target_beverage_g": null,
+    "ratio_basis": "brew_water_input",
+    "ratio_value": 15.873015873015873,
+    "water_temperature_c": {
+      "min": null,
+      "max": null,
+      "control": "machine"
+    },
+    "grind_description": "Medium-coarse, slightly finer than kosher salt; a texture reference, not a universal dial setting.",
+    "expected_time_s": {
+      "min": null,
+      "max": null,
+      "clock_start": "Pressing the machine brew switch, if recording elapsed time",
+      "clock_end": "Water delivery has ended and basket drainage has finished; obey model completion instructions"
+    },
+    "completion_signal": "Machine cycle completes and coffee finishes draining into the receiving vessel. Power-off timing is not assumed to equal brew completion.",
+    "scaling": "revalidate_batch_size",
+    "steps": [
+      {
+        "id": "prepare",
+        "instruction": "With the machine off, check its allowed batch, filter and receiving vessel; complete required first-use flushing and seat the correct paper.",
+        "why": "Batch and filter compatibility prevent misuse; preparation differs between models.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Clean compatible basket, paper and carafe are ready; rinse water has been discarded.",
+        "source_ids": [
+          "manual-us",
+          "filters"
+        ]
+      },
+      {
+        "id": "water",
+        "instruction": "Weigh 1,000 g drinking water separately and transfer it from a clean jug to the reservoir without exceeding its maximum.",
+        "why": "This quantity is reservoir input; it does not promise 1,000 g beverage output.",
+        "water_add_g": 1000,
+        "water_cumulative_g": 1000,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "The measured batch is in the reservoir and within the machine's allowed capacity.",
+        "source_ids": [
+          "counterculture",
+          "select-eu"
+        ]
+      },
+      {
+        "id": "coffee",
+        "instruction": "Grind 63 g medium-coarse, put it in the basket paper and gently level the loose bed without pressing it down.",
+        "why": "An even bed helps water reach the coffee; grounds need room to swell.",
+        "water_add_g": 0,
+        "water_cumulative_g": 1000,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Dose is loaded, with room for swelling and no grounds obstructing the basket rim.",
+        "source_ids": [
+          "counterculture",
+          "select-eu"
+        ]
+      },
+      {
+        "id": "start",
+        "instruction": "Seat basket, receiving vessel and required lids; select the model's batch setting if present, then press brew.",
+        "why": "Correct assembly keeps hot liquid contained and activates any automatic drip stop.",
+        "water_add_g": 0,
+        "water_cumulative_g": 1000,
+        "start_s": 0,
+        "duration_s": null,
+        "completion": "The machine delivers water and coffee drains normally without overflow.",
+        "source_ids": [
+          "counterculture",
+          "manual-us",
+          "kbgv-quick"
+        ]
+      },
+      {
+        "id": "finish",
+        "instruction": "Let the machine complete its cycle and the basket finish draining; keep the receiving vessel in place until flow ends.",
+        "why": "Reservoir emptying and delayed power shutdown do not establish the same completion boundary on every model.",
+        "water_add_g": 0,
+        "water_cumulative_g": 1000,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Water delivery has ended and no significant coffee flow remains.",
+        "source_ids": [
+          "counterculture",
+          "cupone-us"
+        ]
+      },
+      {
+        "id": "serve",
+        "instruction": "Serve using the vessel handle, then switch off when appropriate; do not heat an empty glass carafe.",
+        "why": "The beverage and vessel remain hot after the cycle.",
+        "water_add_g": 0,
+        "water_cumulative_g": 1000,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Coffee is served safely; actual collected output may be recorded separately.",
+        "source_ids": [
+          "manual-us",
+          "kbgv-quick"
+        ]
+      }
+    ]
+  },
+  "variants": [
+    {
+      "name": "KBGV Select, USA 1 L table",
+      "how_it_differs": "55 g coffee / 1,000 ml reservoir water, #4 cone paper, matching glass carafe with lid, full selector (8 manufacturer cups). Approximate 240–360 seconds from starting, followed by drainage confirmation. Heat is machine-controlled.",
+      "source_ids": [
+        "dose-us",
+        "kbgv-quick",
+        "filters"
+      ]
+    },
+    {
+      "name": "KBGV Select, USA small batch",
+      "how_it_differs": "28 g coffee / 500 ml reservoir water, #4 cone paper, half selector (4 manufacturer cups). The USA quick guide assigns half to 4–6 cups and full to 8–10. The selector does not dispense a separately measured water quantity.",
+      "source_ids": [
+        "dose-us",
+        "kbgv-quick",
+        "sca-kbgv"
+      ]
+    },
+    {
+      "name": "European Select dosing alternative",
+      "how_it_differs": "60 g/L by volume gives 30 g / 500 ml or 60 g / 1,000 ml. This manufacturer recommendation differs from the USA 55 g/L table; it is not an exact water-mass conversion. European KBG Select operating details must be checked against that model's manual.",
+      "source_ids": [
+        "select-eu",
+        "dose-us"
+      ]
+    },
+    {
+      "name": "Moccamaster Cup-One marked-fill example",
+      "how_it_differs": "20 g selected within the older scanned Dutch manual's 18–21 g range; use #1 paper and actual reservoir fill mark. Approximately 240 seconds; machine-reported 92–96 °C. Use its compatible mug, at least the older manual's 300 ml minimum. Older manual describes shutoff after water transfer; current USA product lists delayed power-off. End by tank-empty plus basket-drained, separately from power-off. Reservoir mass, exact fill volume and beverage yield are unspecified here.",
+      "source_ids": [
+        "cupone-nl",
+        "cupone-us",
+        "filters"
+      ]
+    }
+  ],
+  "troubleshooting": [
+    {
+      "symptom": "Basket overflow or unusually slow drainage",
+      "check_first": "Stop safely, cool, then check correct filter seating, receiving vessel placement and unobstructed basket outlet; inspect Cup-One's small hole while unplugged.",
+      "adjustment": "If assembly is correct, try a slightly coarser grind. Follow model descaling instructions if water delivery is slow. Recheck Select batch setting.",
+      "source_ids": [
+        "select-eu",
+        "cupone-nl",
+        "grind",
+        "cleaning"
+      ]
+    },
+    {
+      "symptom": "Bitter or harsh coffee",
+      "check_first": "Confirm recipe amounts, free drainage, cleanliness and excessive hotplate holding.",
+      "adjustment": "Try a slightly coarser grind in the next otherwise identical batch; serve promptly.",
+      "source_ids": [
+        "grind",
+        "select-eu"
+      ]
+    },
+    {
+      "symptom": "Weak coffee",
+      "check_first": "Confirm measured dose, reservoir input and correct batch setting before changing the recipe.",
+      "adjustment": "If grind is clearly too coarse, try slightly finer. Taste again before another change.",
+      "source_ids": [
+        "grind",
+        "dose-us",
+        "sca-kbgv"
+      ]
+    },
+    {
+      "symptom": "Correctly brewed coffee is stronger than desired",
+      "check_first": "Confirm the normal model-specific recipe was followed and drainage is healthy.",
+      "adjustment": "For the Moccamaster procedure, add hot water to the served cup to taste.",
+      "source_ids": [
+        "dose-us"
+      ]
+    }
+  ],
+  "safety": [
+    "Use each appliance's manual for minimum/maximum batch and filter compatibility; a generic recipe does not approve every machine.",
+    "Keep hands clear of steam and hot outlet arms; use receiving-vessel handles.",
+    "On Moccamaster, leave required lids, basket and receiving vessel in place during brewing.",
+    "Switch off, unplug and cool before cleaning or clearing an outlet; never immerse the appliance.",
+    "Cup-One has no drip stop: keep its mug in place until coffee finishes draining.",
+    "Do not continue heating an empty glass carafe; hand-wash Moccamaster glass carafes.",
+    "Descaling and cleaner product directions are model-specific; current USA guidance advises against vinegar."
+  ],
+  "app_audit": [
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BuiltInP1RecipeCatalog.kt",
+      "finding": "Lines 510–545 bind both batch recipes to moccamaster_kbgv_select with #4 equipment, but the live English stage text in app/src/main/res/raw/p1_exact_guidance.json:4279–4720 has no half/full selector instruction. The 1 L batch is below the model's 1.25 L maximum.",
+      "severity": "medium",
+      "change_recommendation": "Add live model-specific selector guidance: half for the 500 g weighed-input example and full for the 1,000 g example, with explicit mass-versus-volume distinction. Keep official USA and European volume recipes separately attributed; do not call 1 L maximum capacity.",
+      "source_ids": [
+        "kbgv-quick",
+        "dose-us",
+        "select-eu",
+        "sca-kbgv"
+      ]
+    },
+    {
+      "path": "app/src/main/res/raw/p1_exact_guidance.json",
+      "finding": "Lines 4344 and 4371 say Reservoir at 500 g mark even though manufacturer reservoir markings represent volume and cup labels.",
+      "severity": "medium",
+      "change_recommendation": "Apply a live correction that says the separately weighed 500 g input is added within capacity; remove the invented gram-labelled mark. Preserve historical projection evidence.",
+      "source_ids": [
+        "dose-us",
+        "manual-us"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1ExactGuidanceFactualErrata.kt",
+      "finding": "Cup-One warnings already correct unplugging/cooling and wait-for-flow safety, but stage completion still inherits Machine switches off after water transfer and After auto-off from raw guidance lines 4880 and 4921. The older manual supports immediate shutoff; the current USA product describes delayed power-off.",
+      "severity": "medium",
+      "change_recommendation": "Preserve existing warning fixes and change live Cup-One stage boundaries to delivery ending, then drainage ending; avoid a model-independent power-switch shutdown deadline.",
+      "source_ids": [
+        "cupone-nl",
+        "cupone-us"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BrewingCatalog.kt",
+      "finding": "Lines 377–385 define automatic_single_cup_generic with cone and #1 alternatives, but the exact auto_cupone_20_300 recipe is specifically a Cup-One procedure.",
+      "severity": "medium",
+      "change_recommendation": "Require explicit Cup-One model identity before offering its full-mark and small-outlet instructions; otherwise use only the identified machine's supported basket, capacity and cycle.",
+      "source_ids": [
+        "filters",
+        "cupone-nl"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BuiltinBrewerProfileRecipeDefaults.kt",
+      "finding": "Lines 234–251 correctly make temperature unavailable as a user recommendation, time machine-controlled and the input role reservoir water. Its 1:16 default is a starting choice distinct from the exact 60 g/1,000 g recipes.",
+      "severity": "info",
+      "change_recommendation": "Retain machine-control semantics; display chosen recipe quantities and ratio provenance together instead of implying one universal official ratio.",
+      "source_ids": [
+        "counterculture",
+        "dose-us",
+        "select-eu"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt",
+      "finding": "Automatic drip is not an everyday BrewMethod enum value. The recipe/profile catalog is present, and grinders.json has no automatic/Moccamaster method entry.",
+      "severity": "info",
+      "change_recommendation": "Treat everyday-method integration and grinder/localization coverage as separate future work; use descriptive grind rather than extrapolated dial numbers.",
+      "source_ids": [
+        "counterculture",
+        "grind"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/Recipe.kt:235",
+      "finding": "ReservoirToEstimatedOutput defaults internalRetentionG to0.0. Generic automatic defaults use that model; RecipeCalculator subtracts only internal retention from reservoir input. An uncalibrated configuration therefore yields an expected beverage mass equal to reservoir input, without an allowance for the selected coffee-bed/protocol losses.",
+      "severity": "medium",
+      "change_recommendation": "Keep expected output unresolved or require a justified protocol-specific model; distinguish prediction from actual measured beverage. Preserve reservoir input as its own quantity.",
+      "source_ids": []
+    }
+  ],
+  "uncertainties": [
+    "Cup-One operating instructions specify the actual mark. The USA product's nominal 0.33 L / 10 oz label and dosing chart's 0.3 L / 10 oz label are not exact conversions; no exact fill mass or output mass is asserted.",
+    "Older Cup-One manual and newer regional product pages describe different automatic power-off timing. Drainage is the completion cue used here.",
+    "The scanned Dutch Cup-One manual was downloaded from the official manufacturer link and visually read because PDF text extraction was blank. The previously cited Belgian PDF produced text/screenshot failures.",
+    "The historical 2017 SCA requirements URL returned 404 on direct opening despite indexed text. Its timing criteria were not treated as current instructions; current SCA certification announcement was read separately.",
+    "USA and European Moccamaster dose recommendations differ. Both are starting points; the guide identifies the source instead of silently combining them.",
+    "Other automatic brewers' controls, allowed batches, filter geometry and finish time need their own manuals. Generic baseline completion time remains null.",
+    "No physical brew, exact grinder calibration, appliance measurement, localization review, app execution or release validation was performed."
+  ],
+  "do_not_claim": [
+    "All automatic brewers use #4 paper or support this 1,000 g batch.",
+    "A Cup-One reservoir mark is exactly 300 g, 330 g or 10 US fluid ounces in every model.",
+    "Reservoir input equals collected beverage output, or one retention coefficient predicts every machine.",
+    "Manufacturer cup marks denote ordinary drinking mugs or exact US-volume conversions.",
+    "The user must set a manual kettle temperature, bloom or pulse schedule for an automatic brewer.",
+    "An empty reservoir or automatic power-off guarantees that basket drainage has finished.",
+    "The KBGV Select half/full selector measures or halves the reservoir water for the user.",
+    "SCA certification guarantees every bean, recipe and kitchen batch tastes correct.",
+    "Decaf requires a universal 30-second shorter machine cycle.",
+    "Catalog presence proves full everyday-method, grinder, localization or physical-brewing support."
+  ]
+}

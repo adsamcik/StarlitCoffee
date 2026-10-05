@@ -1,0 +1,247 @@
+{
+  "superseded_by": "rebuild-20261004/manifest.json",
+  "historical_vector_file": "legacy-five-vessel-icons.js",
+  "date": "2026-10-03",
+  "scope": "Visual prototype cup preset exploration; no Android resources changed",
+  "tool": "built-in image_gen",
+  "generation_calls": 11,
+  "prompt_files": [
+    "prompts-v1.json",
+    "prompts-v2.json",
+    "prompts-v3.json"
+  ],
+  "references": [
+    {
+      "file": "reference-calculator.jpg",
+      "sha256": "b7f200603e37ff8ce9c124f6c9143f4e75d8cace3a3f36b32cac3f04ef923d78",
+      "role": "Accepted monochrome style before this revision"
+    },
+    {
+      "file": "reference-sizes.jpg",
+      "sha256": "c5a705eb6c75ed700871ff07b3b25ccc0bc14863f71bb14e5e56200428fafca4",
+      "role": "Accepted monochrome style before this revision"
+    },
+    {
+      "file": "../current-ui/vessel-espresso.png",
+      "sha256": "82c633f24031a0653dda74c3f435fd416dbd0cbb1ec6c39c7febe8d7c968d20d",
+      "role": "espresso vessel anatomy only"
+    },
+    {
+      "file": "../current-ui/vessel-cortado.png",
+      "sha256": "6f8ca3158ec067ccca87c0285ff3790447f6df365a7ea7bafe8fe262ce16af51",
+      "role": "cortado vessel anatomy only"
+    },
+    {
+      "file": "../current-ui/vessel-cappuccino.png",
+      "sha256": "1a0276c8c0619832f8a4689fadac0b5d5dff3ee398c41157355fbf2410805644",
+      "role": "cappuccino vessel anatomy only"
+    },
+    {
+      "file": "../current-ui/vessel-mug.png",
+      "sha256": "419a927be413e8212080e5fd41890b0f655459ebbbd8711dd91918d13f2dd43d",
+      "role": "mug vessel anatomy only"
+    },
+    {
+      "file": "../current-ui/vessel-travel.png",
+      "sha256": "5b83123667c5bcaf349b93ceb529a17a5431a6b1b6d7c46baca11d682c266c2b",
+      "role": "travel vessel anatomy only"
+    }
+  ],
+  "outputs": [
+    {
+      "file": "v1/cappuccino.png",
+      "sha256": "cfcf6b1d3d5de0fe95f7145f55fb3209a31d6cc00dba75286dcddafc811b403e",
+      "bytes": 339451,
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "v1/cortado.png",
+      "sha256": "cddb0907e8a241d279bfcbbe4a3316645bb4c04400c96ca8170b1838fb75d68b",
+      "bytes": 299262,
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "v1/espresso.png",
+      "sha256": "0fd81a1cfbd6493154725923d9dca5a7ef68654f801c72c604bef642c5a575b1",
+      "bytes": 314379,
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "v1/mug.png",
+      "sha256": "725dfe03550f4aea72c29fd372415508ffa17154f1b67a8fa90c4326804cee5d",
+      "bytes": 441190,
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "v1/travel.png",
+      "sha256": "a9680c8aa1c4d698efbcf4ec58d717b4e7f728b7ce22d54764ed940507b4270d",
+      "bytes": 306708,
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "v2/cappuccino.png",
+      "sha256": "60b104806fb1319d1708755415a242a92cfc02ac1d412e31a952e1058a77ae69",
+      "bytes": 345059,
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "v2/cortado.png",
+      "sha256": "f4b9b784bbfad3fd2fe241f4e9cb8fa251d71f7c470ce3e3783a63d581beccc0",
+      "bytes": 404554,
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "v2/espresso.png",
+      "sha256": "557b6e8dbc4a8b8110ce64191dec2cdb5f32f995478d5ede42b99beabfcc128d",
+      "bytes": 325703,
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "v2/travel.png",
+      "sha256": "a98af8b47ea33638fe5d3abb40a4260dc8fdf5a72b0cce807ba6fc8329aa229b",
+      "bytes": 346236,
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "v3/espresso.png",
+      "sha256": "15075534da9d19e530e9ffe87409ee8f3a214de767fbcb2368919be2aa140964",
+      "bytes": 213302,
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "v3/cappuccino.png",
+      "sha256": "a1b7dcd0fc762ee0770afdda5bd92ad7b666e383bc4916b87d330a9af50522a9",
+      "bytes": 299364,
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    }
+  ],
+  "reviewer": "gpt-6-astra",
+  "selection": [
+    {
+      "id": "espresso",
+      "selected_generation": "v2",
+      "first_review": "Widen cup-saucer gap, flatten saucer and open handle.",
+      "second_review": "Preserve v2 shape; guarantee a 2-unit cup-saucer gap in the final vector.",
+      "third_review": "Retain narrow upright demitasse; body10x12, compact loop and detached shallow saucer. Keep materially smaller than mug.",
+      "user_review_2026_10_04": "Third candidate rejected by the user; second candidate restored without further shape changes."
+    },
+    {
+      "id": "cortado",
+      "selected_generation": "v2",
+      "first_review": "Shorten glass, broaden base and strengthen lower bridges.",
+      "second_review": "Keep v2; use squat proportions with robust base slot and bridge."
+    },
+    {
+      "id": "cappuccino",
+      "selected_generation": "v2",
+      "first_review": "Keep low wide bowl and strengthen thin upper rim.",
+      "second_review": "Keep v2; preserve bowl and open handle, with a thicker upper rim.",
+      "third_review": "Retain shallow broad curved bowl; body18x9.5, immediately curved sides and horizontal handle opening.",
+      "user_review_2026_10_04": "Third candidate rejected by the user; second candidate restored without further shape changes."
+    },
+    {
+      "id": "mug",
+      "selected_generation": "v1",
+      "first_review": "Keep tall straight walls and generous D handle.",
+      "second_review": "Retain v1; no generator revision needed."
+    },
+    {
+      "id": "travel",
+      "selected_generation": "v2",
+      "first_review": "Fill open lid ellipse and large hollow sleeve panel.",
+      "second_review": "Keep closed solid v2 silhouette; use a robust lid-body gap."
+    }
+  ],
+  "adaptation": "Hand-authored smooth currentColor compound paths in ../../vessel-icons.js. Generated PNGs are preserved unchanged. Vector geometry normalizes framing, removes raster grain and stray alpha specks, and guarantees small-size cutout clearance.",
+  "final_review": "4 October 2026: user rejected v3 Espresso and Cappuccino despite earlier Astra approval. Restored the complete rounded vector set from cb272bd5, which the user had described as otherwise looking good. v3 images and previous review notes remain historical evidence, not the selected design.",
+  "validation_status": "Restored vessel-icons.js matches cb272bd5 byte for byte. No further generation or visual acceptance claim. Native rendering and measured recognition remain unverified.",
+  "followup_scope": "User requested more distinction after accepting the overall style. Only Espresso and Cappuccino received a third generator edit and updated vector paths; other three contours unchanged."
+}

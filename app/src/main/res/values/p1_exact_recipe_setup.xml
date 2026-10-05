@@ -16,7 +16,6 @@
     <string name="separator_exact_recipe_quantity_roles"> + </string>
     <string name="separator_exact_recipe_equipment_alternatives" translatable="false"> or </string>
     <string name="heading_exact_learn_recipe_summary" translatable="false">Recipe at a glance</string>
-    <string name="heading_exact_learn_stage_targets" translatable="false">Exact targets</string>
     <string name="label_exact_learn_grind" translatable="false">Grind</string>
     <string name="msg_exact_learn_grind_source_scoped" translatable="false">Follow the source description; an exact grinder setting and particle size are not specified.</string>
     <string name="label_exact_learn_completion" translatable="false">Finish by</string>

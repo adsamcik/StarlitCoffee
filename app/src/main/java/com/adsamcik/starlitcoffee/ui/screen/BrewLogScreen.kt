@@ -547,7 +547,7 @@ private fun BrewLogStatsRow(log: BrewLogEntity) {
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         InsightChip(
-            label = stringResource(
+            label = log.reviewedRecipe()?.let { reviewedBrewLogQuantityLabel(it) } ?: stringResource(
                 R.string.format_dose_water_ratio,
                 log.doseG,
                 log.waterG,
