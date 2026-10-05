@@ -8,5 +8,5 @@ enum class CalculationQuantityIconType(
 ) {
     COFFEE_DOSE(R.drawable.calculation_icon_coffee_dose),
     WATER_IN(R.drawable.calculation_icon_water_input),
-    CUP_OUTPUT(R.drawable.vessel_icon_cappuccino),
+    CUP_OUTPUT(R.drawable.calculation_icon_cup_output),
 }

@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.notification
 
 import android.content.Context
+import androidx.core.content.edit
 
 /** Durable lifecycle boundary shared by the live screen and notification worker. */
 internal class BrewSessionNotificationBoundaryStore(context: Context) {
@@ -14,7 +15,7 @@ internal class BrewSessionNotificationBoundaryStore(context: Context) {
         wallClockMillis: Long = System.currentTimeMillis(),
     ) {
         if (sessionId.isBlank()) return
-        preferences.edit().putLong(key(sessionId), wallClockMillis).apply()
+        preferences.edit { putLong(key(sessionId), wallClockMillis) }
     }
 
     fun backgroundedAtWallClockMillis(sessionId: String): Long? {
