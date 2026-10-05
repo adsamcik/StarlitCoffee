@@ -1,0 +1,304 @@
+{
+  "evaluatedRevision": "2c75a3f",
+  "date": "2026-09-17",
+  "kind": "JVM synthetic/fake-provider tests; no live model or device measurements",
+  "suites": [
+    {
+      "name": "com.adsamcik.starlitcoffee.arch.MindlayerInferencePrewarmGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.605,
+      "timestamp": "2026-09-17T05:40:36.809Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.data.network.llm.CoffeeBagCorpusExtractionTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 2.652,
+      "timestamp": "2026-09-17T05:40:37.449Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.data.network.llm.LlmCallGateTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.069,
+      "timestamp": "2026-09-17T05:40:40.109Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.data.network.llm.LlmResultCacheTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.026,
+      "timestamp": "2026-09-17T05:40:40.185Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.data.network.llm.MindlayerLlmInferenceProviderTest",
+      "tests": 79,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.468,
+      "timestamp": "2026-09-17T05:40:40.256Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.data.network.ocr.FallbackOcrServiceTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.039,
+      "timestamp": "2026-09-17T05:40:40.730Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.data.network.ocr.MindlayerOcrServiceTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.072,
+      "timestamp": "2026-09-17T05:40:40.777Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.data.network.ocr.ProblemRegionClassifierTest",
+      "tests": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.016,
+      "timestamp": "2026-09-17T05:40:40.863Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.data.work.BagAnalysisNotificationWorkerTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.01,
+      "timestamp": "2026-09-17T05:40:40.885Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.data.work.BagDraftStoreTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.149,
+      "timestamp": "2026-09-17T05:40:40.904Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.data.work.BagExtractionCheckpointStoreTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.042,
+      "timestamp": "2026-09-17T05:40:41.059Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.data.work.BagExtractionInputStoreTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1,
+      "seconds": 0.839,
+      "timestamp": "2026-09-17T05:40:41.115Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.data.work.BagExtractionPayloadTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.21,
+      "timestamp": "2026-09-17T05:40:41.986Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.data.work.BagExtractionResultStoreTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1,
+      "seconds": 0.51,
+      "timestamp": "2026-09-17T05:40:42.203Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.data.work.BagExtractionSchedulerTest",
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.091,
+      "timestamp": "2026-09-17T05:40:42.720Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.data.work.BagExtractionStartupRecoveryTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.055,
+      "timestamp": "2026-09-17T05:40:42.814Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.data.work.BagExtractionWorkerDeliveryTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.022,
+      "timestamp": "2026-09-17T05:40:42.876Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.data.work.BagReviewQueueTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.007,
+      "timestamp": "2026-09-17T05:40:42.902Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.MindlayerReconnectTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 1.393,
+      "timestamp": "2026-09-17T05:40:35.403Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.scan.AiIntegrationAuditProbeTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.155,
+      "timestamp": "2026-09-17T05:40:42.941Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.scan.BagFieldContextMapperTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.017,
+      "timestamp": "2026-09-17T05:40:43.101Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.scan.BagPhotoExtractorCombineTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.036,
+      "timestamp": "2026-09-17T05:40:43.126Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.scan.BagPhotoExtractorProgressTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.107,
+      "timestamp": "2026-09-17T05:40:43.167Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.scan.BagPhotoExtractorRefineTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.078,
+      "timestamp": "2026-09-17T05:40:43.280Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.scan.BagPhotoExtractorRetryTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.025,
+      "timestamp": "2026-09-17T05:40:43.363Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.scan.benchmark.BenchmarkScorerTest",
+      "tests": 42,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.08,
+      "timestamp": "2026-09-17T05:40:43.420Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.scan.observability.LlmPassDiagnosticTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.011,
+      "timestamp": "2026-09-17T05:40:43.504Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.scan.observability.MindlayerConnectionStatusTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.027,
+      "timestamp": "2026-09-17T05:40:43.519Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.scan.observability.ScanCorrectionLogTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.016,
+      "timestamp": "2026-09-17T05:40:43.551Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.scan.ScanDeadlineTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.012,
+      "timestamp": "2026-09-17T05:40:43.395Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.util.MindlayerStartupPolicyTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.007,
+      "timestamp": "2026-09-17T05:40:43.571Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.viewmodel.BagScanCaptureViewModelTest",
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.233,
+      "timestamp": "2026-09-17T05:40:43.596Z"
+    },
+    {
+      "name": "com.adsamcik.starlitcoffee.viewmodel.BrewBagScanTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.469,
+      "timestamp": "2026-09-17T05:40:43.834Z"
+    }
+  ]
+}
