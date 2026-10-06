@@ -5,7 +5,7 @@ python tools/import_approved_vessel_vectors.py [--check]
 Uses only the standard library. Source hashes and nonzero winding are part of
 the reviewed artwork contract. Android viewports come from viewBox, not the
 SVG's nominal 24px display size.
-The authored travel refinement is separate from the historical traced sources.
+The standardized authored family is separate from the historical traced sources.
 """
 import argparse
 import hashlib
@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004"
 DRAWABLE = ROOT / "app/src/main/res/drawable"
 SVG_NS = "{http://www.w3.org/2000/svg}"
-REFINEMENT = SOURCE.parent / "travel-refinement-20261006"
+REFINEMENT = SOURCE.parent / "consistent-20261006"
 
 
 def source_for(key: str, report: dict) -> tuple[Path, str]:
@@ -26,7 +26,7 @@ def source_for(key: str, report: dict) -> tuple[Path, str]:
         entry = refinements[key]
         if entry["based_on_svg_sha256"] != report["icons"][key]["svg_sha256"]:
             raise ValueError(f"Refinement baseline changed: {key}")
-        return REFINEMENT / f"{key}.svg", entry["svg_sha256"]
+        return REFINEMENT / f"svg/{key}.svg", entry["svg_sha256"]
     return SOURCE / f"svg/{key}.svg", report["icons"][key]["svg_sha256"]
 
 
@@ -50,8 +50,8 @@ def convert(source: Path, expected_hash: str) -> str:
     if not paths:
         raise ValueError(f"Empty SVG: {source.name}")
     lines = [
-        '<!-- Authored travel cup refinement; tools/import_approved_vessel_vectors.py -->'
-        if source.parent == REFINEMENT else
+        '<!-- Standardized vessel contour; tools/import_approved_vessel_vectors.py -->'
+        if source.parent == REFINEMENT / "svg" else
         '<!-- Approved generated cup contour; tools/import_approved_vessel_vectors.py -->',
         '<vector xmlns:android="http://schemas.android.com/apk/res/android"',
         '    android:width="24dp" android:height="24dp"',
@@ -76,6 +76,8 @@ def main() -> None:
     for entry in catalog["entries"]:
         key = entry["key"]
         exports[DRAWABLE / f"vessel_icon_{key}.xml"] = convert(*source_for(key, report))
+    # Keep the generic quantity cup on the same geometry as its preset and nav cup.
+    exports[DRAWABLE / "calculation_icon_cup_output.xml"] = exports[DRAWABLE / "vessel_icon_cappuccino.xml"]
     for destination, contents in exports.items():
         if args.check:
             if not destination.exists() or destination.read_text(encoding="utf-8") != contents:

@@ -37,7 +37,7 @@ def main():
         vectors[key] = [path.attrib['d'] for path in paths]
     labels = [[entry['key'],entry['label']] for entry in catalog]
     source = '''/* Generated from reviewed SVGs in assets/cup-icons.
-   Original traced family plus the authored travel-refinement-20261006 source.
+   Shared authored family in consistent-20261006; historical traces preserved.
    All 28 native preset keys; currentColor and nonzero winding preserve holes.
    Run rebuild-20261004/build_preview.py after source changes; do not hand-edit paths. */
 'use strict';

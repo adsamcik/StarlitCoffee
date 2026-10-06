@@ -78,8 +78,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **Clearer travel cup icon** — smoother lid and body shapes with subtle,
-  even seams between the cap, sealing rim and cup.
+- **Consistent cup and vessel icons** — all 28 choices share rounded filled
+  shapes, balanced rims and handles, and restrained openings and seams. Cups,
+  glasses, servers and presses retain their distinctive shapes.
 - **Simpler cup preset settings** — clear cup rows and a labeled Add preset action,
   with calculator visibility in the same card and reset in its menu. Decorative
   color dots and the unused color picker are removed; saved cup amounts stay intact.

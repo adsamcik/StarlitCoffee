@@ -13,10 +13,11 @@ The original generator image and traced SVG in `../rebuild-20261004/` remain
 unchanged. This refinement is hand-authored vector artwork, not a new raster
 generation or an automatic trace. `report.json` records both source hashes.
 
-`tools/import_approved_vessel_vectors.py` selects this source for `travel`,
-checks the hash, and copies its paths into the native drawable. The other 27
-icons retain their reviewed sources. The browser preview uses the same selection
-through `rebuild-20261004/build_preview.py`.
+This closer-seam artwork is reused unchanged by the complete
+`consistent-20261006` family. Its builder copies these paths for `travel`.
+`tools/import_approved_vessel_vectors.py` now selects that complete family and
+checks its source hashes. The browser preview uses the same selection through
+`rebuild-20261004/build_preview.py`.
 
 ```text
 python tools/import_approved_vessel_vectors.py --check

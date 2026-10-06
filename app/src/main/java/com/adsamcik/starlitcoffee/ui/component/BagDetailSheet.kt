@@ -17,7 +17,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.LocalCafe
 import androidx.compose.material.icons.filled.Scale
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
@@ -37,6 +36,7 @@ import androidx.compose.material3.rememberBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.ui.util.PresetIcon
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -653,7 +653,8 @@ fun BagDetailSheet(
                         .padding(top = 8.dp)
                         .height(52.dp),
                 ) {
-                    Icon(Icons.Filled.LocalCafe, contentDescription = null)
+                    PresetIcon("cappuccino", contentDescription = null,
+                        modifier = Modifier.size(24.dp))
                     Spacer(modifier = Modifier.size(8.dp))
                     Text(stringResource(R.string.action_brew_now))
                 }

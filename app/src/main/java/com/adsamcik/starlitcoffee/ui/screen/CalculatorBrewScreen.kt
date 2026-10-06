@@ -33,7 +33,6 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.BookmarkAdd
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.LocalCafe
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -343,8 +342,8 @@ fun CalculatorBrewScreen(
                     )
                 },
                 leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Filled.LocalCafe,
+                    PresetIcon(
+                        iconName = "cappuccino",
                         contentDescription = null,
                         modifier = Modifier.size(InputChipDefaults.IconSize),
                     )
