@@ -675,21 +675,41 @@ internal fun BrewSettingsToolbar(
     onManage: (() -> Unit)?,
     onBackspace: () -> Unit,
 ) {
+    val ratioOptions = selectedMethod.calculatorRatioOptions(ratio)
+    val ratioPicker: @Composable (Modifier) -> Unit = { modifier ->
+        RatioDropdown(
+            label = "1:${formatCalculatorRatio(ratio)}",
+            options = ratioOptions.map { value ->
+                RatioOption("1:${formatCalculatorRatio(value)}", value == ratio) { onRatioChange(value) }
+            },
+            modifier = modifier,
+            contentDescription = stringResource(R.string.cd_ratio, formatCalculatorRatio(ratio)),
+        )
+    }
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        Row(modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            BrewingSetPicker(sets, selectedSetId, grinderData, onSetChange, onManage,
-                modifier = Modifier.weight(1f).fillMaxHeight(), showSummary = true)
-            val ratioOptions = selectedMethod.calculatorRatioOptions(ratio)
-            RatioDropdown(
-                label = "1:${formatCalculatorRatio(ratio)}",
-                options = ratioOptions.map { value ->
-                    RatioOption("1:${formatCalculatorRatio(value)}", value == ratio) { onRatioChange(value) }
-                },
-                modifier = Modifier.fillMaxHeight(),
-                contentDescription = stringResource(R.string.cd_ratio, formatCalculatorRatio(ratio)),
-            )
-            CalculatorBackspaceButton(onBackspace, Modifier.fillMaxHeight())
+        BoxWithConstraints(Modifier.fillMaxWidth()) {
+            val stackControls = maxWidth < 360.dp && LocalDensity.current.fontScale > 1.2f
+            if (stackControls) {
+                // Give the brewer name room when larger text leaves too little
+                // width beside the ratio and delete controls.
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    BrewingSetPicker(sets, selectedSetId, grinderData, onSetChange, onManage,
+                        modifier = Modifier.fillMaxWidth(), showSummary = true)
+                    Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        ratioPicker(Modifier.weight(1f).fillMaxHeight())
+                        CalculatorBackspaceButton(onBackspace, Modifier.fillMaxHeight())
+                    }
+                }
+            } else {
+                Row(modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    BrewingSetPicker(sets, selectedSetId, grinderData, onSetChange, onManage,
+                        modifier = Modifier.weight(1f).fillMaxHeight(), showSummary = true)
+                    ratioPicker(Modifier.fillMaxHeight())
+                    CalculatorBackspaceButton(onBackspace, Modifier.fillMaxHeight())
+                }
+            }
         }
         recoverableSessionId?.let { id ->
             AssistChip(onClick = { onResumeSession(id) }, label = { Text(stringResource(R.string.action_resume)) })
@@ -715,7 +735,7 @@ private fun RatioDropdown(
         targetValue = if (expanded) 180f else 0f,
         label = "RatioDropdownArrow",
     )
-    Box(modifier = modifier) {
+    Box(modifier = modifier, propagateMinConstraints = true) {
         Surface(
             onClick = { expanded = true },
             modifier = Modifier.fillMaxHeight().heightIn(min = 56.dp).widthIn(min = 88.dp)

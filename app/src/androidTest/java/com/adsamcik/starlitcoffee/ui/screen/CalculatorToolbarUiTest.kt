@@ -121,7 +121,9 @@ class CalculatorToolbarUiTest {
 
         assertTouchTarget("brewing_set_picker")
         assertTouchTarget("calculator_ratio_picker")
-        assertEquals(bounds("brewing_set_picker").height, bounds("calculator_ratio_picker").height, 0.5f)
+        assertEquals(288f * pixelsPerDp, bounds("brewing_set_picker").width, 0.5f)
+        assertTrue(bounds("brewing_set_picker").bottom <= bounds("calculator_ratio_picker").top)
+        assertEquals(bounds("calculator_backspace").height, bounds("calculator_ratio_picker").height, 0.5f)
         assertSeparate(bounds("brewing_set_picker"), bounds("calculator_ratio_picker"))
         val pickerTexts = composeRule.onNodeWithTag("brewing_set_picker").fetchSemanticsNode()
             .config[SemanticsProperties.Text].map { it.text }

@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   controls still available above the keypad.
 - **Clearer cup shortcuts** — evenly spaced cups show their saved volumes;
   narrow windows and larger text scroll without hiding custom presets.
+  Brewer controls stack on narrow screens with larger text to remain readable.
 - **Reviewed brewing guides** — More → Learn includes 17 source-backed procedures
   with equipment details, quantities, clock origins, completion cues and optional
   explanations. Read at your own pace or prepare a durable brew from the same
