@@ -1,5 +1,13 @@
 # Consistent cup and vessel family
 
+**Historical, rejected manual experiment.** The user requires every artwork
+edit to go through image generation and mechanical tracing. This pack is no
+longer selected by the app or browser. Its source and report remain only as
+historical evidence. The replacement is
+[`generated-consistency-20261006`](../generated-consistency-20261006/README.md).
+The construction and validation below describe the earlier experiment;
+the shared preview image links now display the current generated family.
+
 6 October 2026. The user requested a consistent visual language after the
 travel-cup refinement. This set covers all 28 preset choices and the generic
 quantity cup. It follows the existing filled, monochrome cup family.
@@ -21,7 +29,7 @@ generation. The original generator pixels, traces and preceding refinements
 remain preserved in their historical folders.
 
 `report.json` records the selected SVG hashes and original reference hashes.
-The native importer and browser preview select these same sources. The generic
+At the time of this experiment, the native importer and browser preview selected these sources. The generic
 quantity cup copies Cappuccino, which also supplies the Brew navigation icon
 and cup artwork on Brew actions. Preset keys, labels and fallback mappings stay
 compatible with saved presets.

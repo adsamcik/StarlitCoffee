@@ -5,7 +5,8 @@ python tools/import_approved_vessel_vectors.py [--check]
 Uses only the standard library. Source hashes and nonzero winding are part of
 the reviewed artwork contract. Android viewports come from viewBox, not the
 SVG's nominal 24px display size.
-The standardized authored family is separate from the historical traced sources.
+Every selected contour must have a preserved image-generator source and a
+passing mechanical trace. Hand-authored replacements are historical only.
 """
 import argparse
 import hashlib
@@ -17,17 +18,34 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004"
 DRAWABLE = ROOT / "app/src/main/res/drawable"
 SVG_NS = "{http://www.w3.org/2000/svg}"
-REFINEMENT = SOURCE.parent / "consistent-20261006"
+GENERATED = SOURCE.parent / "generated-consistency-20261006"
 
 
 def source_for(key: str, report: dict) -> tuple[Path, str]:
-    refinements = json.loads((REFINEMENT / "report.json").read_text(encoding="utf-8"))["icons"]
-    if key in refinements:
-        entry = refinements[key]
-        if entry["based_on_svg_sha256"] != report["icons"][key]["svg_sha256"]:
-            raise ValueError(f"Refinement baseline changed: {key}")
-        return REFINEMENT / f"svg/{key}.svg", entry["svg_sha256"]
-    return SOURCE / f"svg/{key}.svg", report["icons"][key]["svg_sha256"]
+    traces = json.loads((GENERATED / "trace-report.json").read_text(encoding="utf-8"))["icons"]
+    provenance = json.loads((GENERATED / "generation-records.json").read_text(encoding="utf-8"))
+    if provenance["tool"] != "built-in image_gen.imagegen":
+        raise ValueError("Vessel artwork must come from the image generator")
+    if set(traces) != set(report["icons"]) or set(provenance["icons"]) != set(report["icons"]):
+        raise ValueError("Generated family must cover every native vessel")
+    entry, record = traces[key], provenance["icons"][key]
+    if not entry["selected"] or not entry["selected"]["passes"]:
+        raise ValueError(f"Generated contour has not passed tracing checks: {key}")
+    if record["anatomy_reference_sha256"] != report["icons"][key]["source_sha256"]:
+        raise ValueError(f"Original generated reference changed: {key}")
+    if not record["prompt"] or not record["transparent_background"] or not record["generator_file"].startswith("exec-"):
+        raise ValueError(f"Missing generator provenance: {key}")
+    raster = GENERATED / f"generated/{key}.png"
+    actual = hashlib.sha256(raster.read_bytes()).hexdigest()
+    if actual != entry["source_sha256"] or actual != record["source_sha256"]:
+        raise ValueError(f"Generated source changed after tracing: {key}")
+    for reference in record["references"]:
+        path = (GENERATED / reference["path"]).resolve()
+        if path.parent not in {(SOURCE / "generated").resolve(), (GENERATED / "generated").resolve()}:
+            raise ValueError(f"Reference must be preserved generator artwork: {key}")
+        if hashlib.sha256(path.read_bytes()).hexdigest() != reference["sha256"]:
+            raise ValueError(f"Generator reference changed: {key}")
+    return GENERATED / f"svg/{key}.svg", entry["svg_sha256"]
 
 
 def convert(source: Path, expected_hash: str) -> str:
@@ -50,9 +68,7 @@ def convert(source: Path, expected_hash: str) -> str:
     if not paths:
         raise ValueError(f"Empty SVG: {source.name}")
     lines = [
-        '<!-- Standardized vessel contour; tools/import_approved_vessel_vectors.py -->'
-        if source.parent == REFINEMENT / "svg" else
-        '<!-- Approved generated cup contour; tools/import_approved_vessel_vectors.py -->',
+        '<!-- Image-generated vessel contour, mechanically traced; tools/import_approved_vessel_vectors.py -->',
         '<vector xmlns:android="http://schemas.android.com/apk/res/android"',
         '    android:width="24dp" android:height="24dp"',
         f'    android:viewportWidth="{width}" android:viewportHeight="{height}">',

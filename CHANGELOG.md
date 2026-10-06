@@ -78,9 +78,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **Consistent cup and vessel icons** — all 28 choices share rounded filled
-  shapes, balanced rims and handles, and restrained openings and seams. Cups,
-  glasses, servers and presses retain their distinctive shapes.
+- **Consistent cup and vessel icons** — all 28 choices are refined through image
+  generation, preserving their original vessel profiles with balanced rims,
+  rounded handles and restrained seams. The generated contours are traced for
+  crisp, theme-tinted rendering throughout the app.
 - **Simpler cup preset settings** — clear cup rows and a labeled Add preset action,
   with calculator visibility in the same card and reset in its menu. Decorative
   color dots and the unused color picker are removed; saved cup amounts stay intact.

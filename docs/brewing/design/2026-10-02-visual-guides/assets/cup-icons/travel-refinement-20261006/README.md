@@ -1,5 +1,11 @@
 # Travel cup refinement
 
+**Historical hand-authored experiment.** This artwork is no longer selected
+by the app or browser. All current edits go through image generation and
+mechanical tracing; see
+[`generated-consistency-20261006`](../generated-consistency-20261006/README.md).
+The workflow and validation below describe this earlier revision.
+
 6 October 2026. Refines the travel cup requested by the user, retaining the
 existing filled icon family and its tall, tapered reusable-cup silhouette.
 
@@ -15,7 +21,7 @@ generation or an automatic trace. `report.json` records both source hashes.
 
 This closer-seam artwork is reused unchanged by the complete
 `consistent-20261006` family. Its builder copies these paths for `travel`.
-`tools/import_approved_vessel_vectors.py` now selects that complete family and
+At the time, `tools/import_approved_vessel_vectors.py` selected that complete family and
 checks its source hashes. The browser preview uses the same selection through
 `rebuild-20261004/build_preview.py`.
 
