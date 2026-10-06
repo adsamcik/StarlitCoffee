@@ -745,4 +745,6 @@
     <string name="msg_could_not_open_label_recognition_setup">Настройката не можа да бъде отворена. Опитайте отново или въведете подробностите ръчно.</string>
     <string name="announce_label_details_ready">Подробностите от етикета са готови за преглед.</string>
     <string name="announce_label_recognition_no_result">Не са намерени подробности на етикета. Въведете подробностите ръчно.</string>
+    <string name="label_show_cup_presets">Показване на предварителните настройки за чаши</string>
+    <string name="msg_show_cup_presets_hint">Изключете, за да скриете реда с чаши над клавиатурата.</string>
 </resources>

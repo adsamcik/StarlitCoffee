@@ -751,4 +751,6 @@
     <string name="msg_could_not_open_label_recognition_setup">Nepavyko atidaryti sąrankos. Bandykite dar kartą arba įveskite informaciją rankiniu būdu.</string>
     <string name="announce_label_details_ready">Etiketės informacija paruošta peržiūrėti.</string>
     <string name="announce_label_recognition_no_result">Etiketėje informacijos nerasta. Įveskite informaciją rankiniu būdu.</string>
+    <string name="label_show_cup_presets">Rodyti puodelių ruošinius</string>
+    <string name="msg_show_cup_presets_hint">Išjunkite, kad paslėptumėte puodelių eilutę virš klaviatūros.</string>
 </resources>

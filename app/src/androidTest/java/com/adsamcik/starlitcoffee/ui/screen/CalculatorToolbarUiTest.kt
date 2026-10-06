@@ -22,12 +22,13 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertContentDescriptionEquals
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performScrollToIndex
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -129,10 +130,11 @@ class CalculatorToolbarUiTest {
         assertEquals(288f * pixelsPerDp, bounds("toolbar_capture").width, 0.5f)
         val backspaceBefore = bounds("calculator_backspace")
         assertTouchTarget("calculator_backspace")
-        assertTrue(bounds("calculator_cup_presets").right <= backspaceBefore.left + 0.5f)
+        assertSeparate(bounds("calculator_cup_presets"), backspaceBefore)
         saveCapture("narrow-large-text-long-setup")
 
-        composeRule.onNodeWithTag("calculator_preset_5").performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithTag("calculator_cup_presets").performScrollToIndex(4)
+        composeRule.onNodeWithTag("calculator_preset_5").assertIsDisplayed()
         assertTouchTarget("calculator_preset_5")
         assertSeparate(bounds("calculator_preset_5"), bounds("calculator_backspace"))
         assertEquals(backspaceBefore, bounds("calculator_backspace"))
@@ -152,10 +154,42 @@ class CalculatorToolbarUiTest {
         var backspaces = 0
         show(widthDp = 288, presets = emptyList(), onBackspace = { backspaces++ })
         cups.forEach { composeRule.onNodeWithTag("calculator_preset_${it.id}").assertDoesNotExist() }
+        composeRule.onNodeWithTag("calculator_preset_bar").assertDoesNotExist()
         assertTouchTarget("calculator_backspace")
         composeRule.onNodeWithTag("calculator_backspace").performClick()
         composeRule.runOnIdle { assertEquals(1, backspaces) }
         saveCapture("empty-presets")
+    }
+
+    @Test
+    fun hiddenPresetsLeaveBrewerRatioAndBackspaceAboveTheWorkingKeypad() {
+        val digits = mutableListOf<Char>()
+        var backspaces = 0
+        show(showCupPresets = false, onDigit = digits::add, onBackspace = { backspaces++ })
+        composeRule.onNodeWithTag("calculator_preset_bar").assertDoesNotExist()
+        assertTouchTarget("brewing_set_picker")
+        assertTouchTarget("calculator_ratio_picker")
+        assertTouchTarget("calculator_backspace")
+        composeRule.onNodeWithText("7").performClick()
+        composeRule.onNodeWithTag("calculator_backspace").performClick()
+        composeRule.runOnIdle {
+            assertEquals(listOf('7'), digits)
+            assertEquals(1, backspaces)
+        }
+        saveCapture("hidden-presets")
+    }
+
+    @Test
+    fun customPresetsBeyondFiveRemainReachableAndShowTheirSavedVolume() {
+        val custom = CupPreset(6, "Weekend", "mug", 30f, 510f)
+        val pressed = mutableListOf<Long>()
+        show(presets = cups + custom, onPreset = { pressed.add(it.id) })
+        composeRule.onNodeWithTag("calculator_cup_presets").performScrollToIndex(5)
+        composeRule.onNodeWithTag("calculator_preset_6").assertIsDisplayed()
+            .assertContentDescriptionEquals(custom.name)
+            .assertTextEquals("510 ${context.getString(R.string.unit_ml)}")
+            .performClick()
+        composeRule.runOnIdle { assertEquals(listOf(6L), pressed) }
     }
 
     private fun show(
@@ -164,11 +198,13 @@ class CalculatorToolbarUiTest {
         dark: Boolean = false,
         sets: List<BrewingSet> = listOf(home, work),
         presets: List<CupPreset> = cups,
+        showCupPresets: Boolean = true,
         sessionId: String? = null,
         onSet: (String) -> Unit = {},
         onRatio: (Float) -> Unit = {},
         onPreset: (CupPreset) -> Unit = {},
         onBackspace: () -> Unit = {},
+        onDigit: (Char) -> Unit = {},
         onResume: (String) -> Unit = {},
         onManage: () -> Unit = {},
     ) {
@@ -188,8 +224,12 @@ class CalculatorToolbarUiTest {
                                 grinderData, ratio,
                                 onSetChange = { selectedId = it; onSet(it) },
                                 onRatioChange = { ratio = it; onRatio(it) },
-                                recoverableSessionId = sessionId, onResumeSession = onResume, onManage = onManage)
-                            CalculatorPresetBar(presets, onPreset, onBackspace)
+                                recoverableSessionId = sessionId, onResumeSession = onResume, onManage = onManage,
+                                onBackspace = onBackspace)
+                            CalculatorKeyboard(presets, showCupPresets, hasValidExpression = true,
+                                isCompactHeight = false, isTallHeight = false,
+                                onDigit = onDigit, onDecimal = {}, onOperator = {}, onPreset = onPreset,
+                                onClear = {}, onBrew = {})
                         }
                     }
                 }

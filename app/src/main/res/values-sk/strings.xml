@@ -750,4 +750,6 @@
     <string name="msg_could_not_open_label_recognition_setup">Nastavenie sa nepodarilo otvoriť. Skúste to znova alebo zadajte podrobnosti manuálne.</string>
     <string name="announce_label_details_ready">Podrobnosti zo štítku sú pripravené na kontrolu.</string>
     <string name="announce_label_recognition_no_result">Na štítku sa nenašli žiadne podrobnosti. Zadajte ich manuálne.</string>
+    <string name="label_show_cup_presets">Zobrazovať predvoľby šálok</string>
+    <string name="msg_show_cup_presets_hint">Vypnutím skryjete riadok šálok nad klávesnicou.</string>
 </resources>

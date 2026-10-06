@@ -5,6 +5,7 @@ import com.adsamcik.starlitcoffee.data.repository.CupPresetResetter
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
@@ -30,6 +31,30 @@ class SettingsViewModelTest {
     @After
     fun tearDown() {
         Dispatchers.resetMain()
+    }
+
+    @Test
+    fun `cup visibility save failure keeps the current choice and permits retry`() = runTest(dispatcher) {
+        var shouldFail = true
+        val store = object : TestUserPreferencesStore() {
+            override suspend fun updateShowCupPresets(enabled: Boolean) {
+                if (shouldFail) error("DataStore failure")
+                super.updateShowCupPresets(enabled)
+            }
+        }
+        var showCups = true
+        val viewModel = SettingsViewModel(store)
+        val collection = backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
+            store.userPreferences.collect { showCups = it.showCupPresets }
+        }
+        viewModel.updateShowCupPresets(false)
+        assertTrue(showCups)
+        assertEquals(SettingsFailure.SAVE, viewModel.uiState.value.failure)
+        shouldFail = false
+        viewModel.updateShowCupPresets(false)
+        assertFalse(showCups)
+        assertNull(viewModel.uiState.value.failure)
+        collection.cancel()
     }
 
     @Test

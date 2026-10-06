@@ -750,4 +750,6 @@
     <string name="msg_could_not_open_label_recognition_setup">Nie udało się otworzyć konfiguracji. Spróbuj ponownie lub wprowadź szczegóły ręcznie.</string>
     <string name="announce_label_details_ready">Szczegóły z etykiety są gotowe do sprawdzenia.</string>
     <string name="announce_label_recognition_no_result">Nie znaleziono szczegółów na etykiecie. Wprowadź je ręcznie.</string>
+    <string name="label_show_cup_presets">Pokaż zapisane ustawienia filiżanek</string>
+    <string name="msg_show_cup_presets_hint">Wyłącz, aby ukryć rząd filiżanek nad klawiaturą.</string>
 </resources>

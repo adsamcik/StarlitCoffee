@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -371,6 +372,7 @@ fun CalculatorBrewScreen(
             recoverableSessionId = recoverableSessionId,
             onResumeSession = onResumeSession,
             onManage = onNavigateToSettings,
+            onBackspace = calculatorViewModel::backspace,
         )
         if (state.setSaveFailed && newSetId == null) {
             TextButton(onClick = calculatorViewModel::retrySetupSave) {
@@ -382,6 +384,7 @@ fun CalculatorBrewScreen(
     val keyboard: @Composable () -> Unit = {
         CalculatorKeyboard(
             presets = state.availablePresets,
+            showCupPresets = state.preferencesLoaded && state.showCupPresets,
             hasValidExpression = state.hasValidExpression && !isStartingBrew,
             isCompactHeight = isCompactHeight,
             isTallHeight = isTallHeight,
@@ -389,7 +392,6 @@ fun CalculatorBrewScreen(
             onDecimal = { calculatorViewModel.appendDecimal() },
             onOperator = { calculatorViewModel.appendOperator(it) },
             onPreset = { calculatorViewModel.appendPreset(it) },
-            onBackspace = { calculatorViewModel.backspace() },
             onClear = { calculatorViewModel.clear() },
             onBrew = {
                 selectedBagId?.let(brewViewModel::selectBagForBrewing)
@@ -671,6 +673,7 @@ internal fun BrewSettingsToolbar(
     recoverableSessionId: String?,
     onResumeSession: (String) -> Unit,
     onManage: (() -> Unit)?,
+    onBackspace: () -> Unit,
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
         Row(modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min),
@@ -686,6 +689,7 @@ internal fun BrewSettingsToolbar(
                 modifier = Modifier.fillMaxHeight(),
                 contentDescription = stringResource(R.string.cd_ratio, formatCalculatorRatio(ratio)),
             )
+            CalculatorBackspaceButton(onBackspace, Modifier.fillMaxHeight())
         }
         recoverableSessionId?.let { id ->
             AssistChip(onClick = { onResumeSession(id) }, label = { Text(stringResource(R.string.action_resume)) })
@@ -799,8 +803,9 @@ private fun RatioDropdown(
 }
 
 @Composable
-private fun CalculatorKeyboard(
+internal fun CalculatorKeyboard(
     presets: List<CupPreset>,
+    showCupPresets: Boolean,
     hasValidExpression: Boolean,
     isCompactHeight: Boolean,
     isTallHeight: Boolean,
@@ -808,7 +813,6 @@ private fun CalculatorKeyboard(
     onDecimal: () -> Unit,
     onOperator: (CalcOp) -> Unit,
     onPreset: (CupPreset) -> Unit,
-    onBackspace: () -> Unit,
     onClear: () -> Unit,
     onBrew: () -> Unit,
 ) {
@@ -825,11 +829,8 @@ private fun CalculatorKeyboard(
     Column(
         verticalArrangement = Arrangement.spacedBy(rowSpacing),
     ) {
-        CalculatorPresetBar(presets, onPreset, onBackspace)
-
-        // Visual breath between the preset/utility row and the calculation rows.
-        if (!isCompactHeight) {
-            Spacer(modifier = Modifier.height(2.dp))
+        if (showCupPresets && presets.isNotEmpty()) {
+            CalculatorPresetBar(presets, onPreset)
         }
 
         // Rows 2-5: Number pad + operators + brew button.
@@ -888,38 +889,58 @@ private fun CalculatorKeyboard(
 internal fun CalculatorPresetBar(
     presets: List<CupPreset>,
     onPreset: (CupPreset) -> Unit,
-    onBackspace: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Row(modifier = modifier.fillMaxWidth().testTag("calculator_preset_bar"),
-        horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-        if (presets.isNotEmpty()) {
-            Surface(modifier = Modifier.weight(1f),
-                shape = RoundedCornerShape(16.dp),
-                color = MaterialTheme.colorScheme.surfaceContainerLow) {
-                // Cups scroll on small windows; delete stays in place with its own touch target.
-                LazyRow(modifier = Modifier.testTag("calculator_cup_presets"),
-                    contentPadding = PaddingValues(horizontal = 4.dp),
-                    horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally)) {
-                    items(presets.take(5)) { preset ->
-                        IconButton(onClick = { onPreset(preset) },
-                            modifier = Modifier.size(48.dp).testTag("calculator_preset_${preset.id}")) {
-                            PresetIcon(preset.iconName, preset.name, Modifier.size(34.dp))
-                        }
+    if (presets.isEmpty()) return
+    val fontScale = LocalDensity.current.fontScale
+    val unit = stringResource(R.string.unit_ml)
+    BoxWithConstraints(modifier = modifier.fillMaxWidth().testTag("calculator_preset_bar")) {
+        // Share the available width on phones; scroll every saved cup on narrow
+        // windows or with larger text instead of squeezing or hiding shortcuts.
+        val visibleCount = minOf(presets.size, 5)
+        val itemWidth = maxOf(64.dp * fontScale, (maxWidth - 8.dp * (visibleCount - 1)) / visibleCount)
+        LazyRow(
+            modifier = Modifier.fillMaxWidth().testTag("calculator_cup_presets"),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            items(presets, key = { it.id }) { preset ->
+                Surface(
+                    onClick = { onPreset(preset) },
+                    modifier = Modifier.width(itemWidth).heightIn(min = 64.dp)
+                        .testTag("calculator_preset_${preset.id}"),
+                    shape = RoundedCornerShape(12.dp),
+                    color = MaterialTheme.colorScheme.surfaceContainerLow,
+                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                ) {
+                    Column(
+                        modifier = Modifier.padding(horizontal = 4.dp, vertical = 6.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                    ) {
+                        PresetIcon(preset.iconName, preset.name, Modifier.size(28.dp))
+                        Text(
+                            text = quantityCardSpokenValue(formatQuantityCardAmount(preset.waterMl), unit),
+                            style = MaterialTheme.typography.labelMedium,
+                            textAlign = TextAlign.Center,
+                        )
                     }
                 }
             }
-        } else {
-            Spacer(Modifier.weight(1f))
         }
-        FilledTonalIconButton(onClick = onBackspace,
-            modifier = Modifier.size(48.dp).testTag("calculator_backspace"),
-            shape = RoundedCornerShape(16.dp),
-            colors = IconButtonDefaults.filledTonalIconButtonColors(
-                containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-                contentColor = MaterialTheme.colorScheme.onSurfaceVariant)) {
-            Icon(Icons.AutoMirrored.Filled.Backspace, stringResource(R.string.cd_backspace), Modifier.size(22.dp))
-        }
+    }
+}
+
+@Composable
+private fun CalculatorBackspaceButton(onBackspace: () -> Unit, modifier: Modifier = Modifier) {
+    FilledTonalIconButton(
+        onClick = onBackspace,
+        modifier = modifier.width(48.dp).heightIn(min = 56.dp).testTag("calculator_backspace"),
+        shape = RoundedCornerShape(16.dp),
+        colors = IconButtonDefaults.filledTonalIconButtonColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            contentColor = MaterialTheme.colorScheme.onSurfaceVariant),
+    ) {
+        Icon(Icons.AutoMirrored.Filled.Backspace, stringResource(R.string.cd_backspace), Modifier.size(22.dp))
     }
 }
 

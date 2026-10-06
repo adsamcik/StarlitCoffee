@@ -744,4 +744,6 @@
     <string name="msg_could_not_open_label_recognition_setup">De installatie kon niet worden geopend. Probeer het opnieuw of voer de details handmatig in.</string>
     <string name="announce_label_details_ready">De details van het etiket zijn klaar om te controleren.</string>
     <string name="announce_label_recognition_no_result">Er zijn geen details op het etiket gevonden. Voer de details handmatig in.</string>
+    <string name="label_show_cup_presets">Kopvoorinstellingen tonen</string>
+    <string name="msg_show_cup_presets_hint">Schakel uit om de rij koppen boven het toetsenblok te verbergen.</string>
 </resources>

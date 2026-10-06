@@ -985,4 +985,6 @@
     <string name="action_allow_brew_notifications">Allow reminders</string>
     <string name="msg_brew_reminders_may_be_late">Android may delay reminders while you’re away.</string>
     <string name="action_allow_precise_brew_reminders">Allow precise reminders</string>
+    <string name="label_show_cup_presets">Show cup presets</string>
+    <string name="msg_show_cup_presets_hint">Turn off to hide the cup row above the keypad.</string>
 </resources>

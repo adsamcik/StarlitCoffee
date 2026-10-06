@@ -253,6 +253,15 @@ fun SettingsScreen(
 
             // Cup presets — keeps its add/reset actions and tappable list.
             SettingsGroup {
+                SettingsSwitchRow(
+                    title = stringResource(R.string.label_show_cup_presets),
+                    summary = stringResource(R.string.msg_show_cup_presets_hint),
+                    checked = prefs.showCupPresets,
+                    enabled = !isBusy,
+                    onCheckedChange = viewModel::updateShowCupPresets,
+                    modifier = Modifier.testTag("settings_show_cup_presets"),
+                )
+                SettingsRowDivider()
                 Column(modifier = Modifier.padding(20.dp)) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),

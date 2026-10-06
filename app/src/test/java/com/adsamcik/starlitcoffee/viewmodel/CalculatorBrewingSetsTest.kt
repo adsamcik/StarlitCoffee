@@ -40,6 +40,23 @@ class CalculatorBrewingSetsTest {
     @After fun teardown() = Dispatchers.resetMain()
 
     @Test
+    fun `cup visibility updates without changing the amount or selected brewing set`() {
+        val store = SetStore(listOf(home, work))
+        val vm = CalculatorViewModel(presets, store)
+        vm.clear()
+        vm.appendDigit('3')
+        val setup = vm.currentSetup()
+        store.userPreferences.value = store.userPreferences.value.copy(showCupPresets = false)
+        assertFalse(vm.uiState.value.showCupPresets)
+        assertEquals(setup, vm.currentSetup())
+        assertEquals(home.id, vm.uiState.value.activeBrewingSetId)
+        val restarted = CalculatorViewModel(presets, store)
+        assertFalse(restarted.uiState.value.showCupPresets)
+        store.userPreferences.value = store.userPreferences.value.copy(showCupPresets = true)
+        assertTrue(vm.uiState.value.showCupPresets)
+    }
+
+    @Test
     fun `sets using the same method remember their own input and survive restart`() {
         val store = SetStore(listOf(home, work, espresso))
         val vm = CalculatorViewModel(presets, store)

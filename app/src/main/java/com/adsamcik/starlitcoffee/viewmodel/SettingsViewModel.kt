@@ -114,6 +114,10 @@ class SettingsViewModel(
         persist { preferences.updateSkipMethodSelection(enabled) }
     }
 
+    fun updateShowCupPresets(enabled: Boolean) {
+        persist { preferences.updateShowCupPresets(enabled) }
+    }
+
     fun updateShowBrewingInstructions(enabled: Boolean) {
         persist { preferences.updateShowBrewingInstructions(enabled) }
     }

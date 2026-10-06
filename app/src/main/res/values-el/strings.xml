@@ -745,4 +745,6 @@
     <string name="msg_could_not_open_label_recognition_setup">Δεν ήταν δυνατό το άνοιγμα της ρύθμισης. Προσπαθήστε ξανά ή εισαγάγετε τις λεπτομέρειες χειροκίνητα.</string>
     <string name="announce_label_details_ready">Οι λεπτομέρειες της ετικέτας είναι έτοιμες για έλεγχο.</string>
     <string name="announce_label_recognition_no_result">Δεν βρέθηκαν λεπτομέρειες στην ετικέτα. Εισαγάγετε τις λεπτομέρειες χειροκίνητα.</string>
+    <string name="label_show_cup_presets">Εμφάνιση προεπιλογών φλιτζανιών</string>
+    <string name="msg_show_cup_presets_hint">Απενεργοποιήστε για να κρύψετε τη σειρά φλιτζανιών πάνω από το πληκτρολόγιο.</string>
 </resources>

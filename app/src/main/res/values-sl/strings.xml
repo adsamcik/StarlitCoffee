@@ -751,4 +751,6 @@
     <string name="msg_could_not_open_label_recognition_setup">Nastavitve ni bilo mogoče odpreti. Poskusite znova ali vnesite podrobnosti ročno.</string>
     <string name="announce_label_details_ready">Podrobnosti z oznake so pripravljene za pregled.</string>
     <string name="announce_label_recognition_no_result">Na oznaki ni bilo najdenih podrobnosti. Vnesite jih ročno.</string>
+    <string name="label_show_cup_presets">Prikaži prednastavitve skodelic</string>
+    <string name="msg_show_cup_presets_hint">Izklopite, da skrijete vrstico skodelic nad tipkovnico.</string>
 </resources>

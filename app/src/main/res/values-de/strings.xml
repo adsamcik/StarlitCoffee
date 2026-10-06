@@ -745,4 +745,6 @@
     <string name="msg_could_not_open_label_recognition_setup">Die Einrichtung konnte nicht geöffnet werden. Versuchen Sie es erneut oder geben Sie die Details manuell ein.</string>
     <string name="announce_label_details_ready">Die Details vom Etikett sind zur Überprüfung bereit.</string>
     <string name="announce_label_recognition_no_result">Es wurden keine Details auf dem Etikett gefunden. Geben Sie die Details manuell ein.</string>
+    <string name="label_show_cup_presets">Tassenvoreinstellungen anzeigen</string>
+    <string name="msg_show_cup_presets_hint">Ausschalten, um die Tassenreihe über dem Zahlenfeld auszublenden.</string>
 </resources>

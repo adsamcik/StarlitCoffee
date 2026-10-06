@@ -29,6 +29,9 @@ internal open class TestUserPreferencesStore(
     override suspend fun updateDefaultFilterType(filterType: FilterType?) = Unit
     override suspend fun updateSelectedGrinder(grinderId: String?) = Unit
     override suspend fun updateSkipMethodSelection(enabled: Boolean) = Unit
+    override suspend fun updateShowCupPresets(enabled: Boolean) {
+        state.value = state.value.copy(showCupPresets = enabled)
+    }
     override suspend fun updateShowBrewingInstructions(enabled: Boolean) = Unit
     override suspend fun updateShowEnglishBrewingTerms(enabled: Boolean) = Unit
     override suspend fun updateBloomSpritesheetWeights(weights: Map<String, Int>) = Unit

@@ -51,6 +51,7 @@ data class CalcUiState(
     val brewMethod: BrewMethod = BrewMethod.PULSAR,
     val beverageOutputCalibration: BeverageOutputCalibration.Profile? = null,
     val availablePresets: List<CupPreset> = emptyList(),
+    val showCupPresets: Boolean = true,
     val hasValidExpression: Boolean = false,
     val filterType: FilterType? = null,
     val grinderId: String? = null,
@@ -126,7 +127,7 @@ class CalculatorViewModel(
                 _uiState.update { restoreSetup(it.copy(brewMethod = method), setup) }
             }
             initializeSetSelection(method)
-            _uiState.update { it.copy(preferencesLoaded = true) }
+            _uiState.update { it.copy(preferencesLoaded = true, showCupPresets = initialPreferences.showCupPresets) }
             if (userPreferencesRepository != null) {
                 viewModelScope.launch { userPreferencesRepository.userPreferences.collect(::applySetPreferences) }
             }
@@ -475,7 +476,7 @@ class CalculatorViewModel(
                     else -> set
                 }
             }
-            val updated = it.copy(brewingSets = sets)
+            val updated = it.copy(brewingSets = sets, showCupPresets = preferences.showCupPresets)
             if (restore) restoreSet(updated, sets.first { set -> set.id == selected.id }) else updated
         }
     }

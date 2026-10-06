@@ -745,4 +745,6 @@
     <string name="msg_could_not_open_label_recognition_setup">Seadistamist ei saanud avada. Proovige uuesti või sisestage üksikasjad käsitsi.</string>
     <string name="announce_label_details_ready">Sildi üksikasjad on ülevaatamiseks valmis.</string>
     <string name="announce_label_recognition_no_result">Sildilt ei leitud üksikasju. Sisestage need käsitsi.</string>
+    <string name="label_show_cup_presets">Kuva tassi eelseadistused</string>
+    <string name="msg_show_cup_presets_hint">Lülitage välja, et peita tasside rida klahvistiku kohal.</string>
 </resources>

@@ -4,8 +4,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
@@ -15,6 +17,7 @@ import androidx.lifecycle.ViewModelStore
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.calculator.CalculatorQuantityTarget
 import com.adsamcik.starlitcoffee.data.db.AppDatabase
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
@@ -34,6 +37,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Rule
 import org.junit.Test
@@ -44,6 +48,44 @@ import java.util.UUID
 @RunWith(AndroidJUnit4::class)
 class CalculatorBrewingSetsUiTest {
     @get:Rule val composeRule = createComposeRule()
+
+    @Test
+    fun settingsCanHideAndRestoreCupPresetsWithoutLosingTheRecipe() {
+        val fixture = fixture()
+        try {
+            runBlocking { fixture.preferences.updateShowCupPresets(true) }
+            show(fixture)
+            composeRule.waitUntil(10_000) { fixture.calculator.uiState.value.preferencesLoaded }
+            val originalSetup = fixture.calculator.currentSetup()
+            composeRule.onNodeWithTag("calculator_preset_bar").assertIsDisplayed()
+            manage()
+            composeRule.onNodeWithTag("settings_show_cup_presets").performScrollTo().performClick()
+            composeRule.waitUntil(10_000) { !fixture.calculator.uiState.value.showCupPresets }
+            val context = InstrumentationRegistry.getInstrumentation().targetContext
+            composeRule.onNodeWithContentDescription(context.getString(R.string.action_back)).performClick()
+            composeRule.onNodeWithTag("calculator_preset_bar").assertDoesNotExist()
+            composeRule.onNodeWithTag("brewing_set_picker").assertIsDisplayed()
+            composeRule.onNodeWithTag("calculator_ratio_picker").assertIsDisplayed()
+            composeRule.onNodeWithTag("calculator_backspace").assertIsDisplayed()
+            assertEquals(originalSetup, fixture.calculator.currentSetup())
+            val reloaded = UserPreferencesRepository(context)
+            assertFalse(runBlocking { reloaded.userPreferences.first() }.showCupPresets)
+            lateinit var restarted: CalculatorViewModel
+            composeRule.runOnIdle {
+                restarted = CalculatorViewModel(fixture.presets, reloaded)
+                fixture.store.put("cup-visibility-restarted", restarted)
+            }
+            composeRule.waitUntil(10_000) { restarted.uiState.value.preferencesLoaded }
+            assertFalse(restarted.uiState.value.showCupPresets)
+            assertEquals(originalSetup, restarted.currentSetup())
+            manage()
+            composeRule.onNodeWithTag("settings_show_cup_presets").performScrollTo().performClick()
+            composeRule.waitUntil(10_000) { fixture.calculator.uiState.value.showCupPresets }
+            composeRule.onNodeWithContentDescription(context.getString(R.string.action_back)).performClick()
+            composeRule.onNodeWithTag("calculator_preset_bar").assertIsDisplayed()
+            assertEquals(originalSetup, fixture.calculator.currentSetup())
+        } finally { fixture.close() }
+    }
 
     @Test
     fun homeWorkAndEspressoSetsRememberInputThroughSettingsEditsDeletionAndRestart() {

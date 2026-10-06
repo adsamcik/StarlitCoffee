@@ -748,4 +748,6 @@
     <string name="msg_could_not_open_label_recognition_setup">Impossibile aprire la configurazione. Riprova o inserisci i dettagli manualmente.</string>
     <string name="announce_label_details_ready">I dettagli dell\'etichetta sono pronti per la verifica.</string>
     <string name="announce_label_recognition_no_result">Non sono stati trovati dettagli sull\'etichetta. Inserisci i dettagli manualmente.</string>
+    <string name="label_show_cup_presets">Mostra le tazze preimpostate</string>
+    <string name="msg_show_cup_presets_hint">Disattiva per nascondere la fila di tazze sopra la tastiera.</string>
 </resources>

@@ -745,4 +745,6 @@
     <string name="msg_could_not_open_label_recognition_setup">Nem sikerült megnyitni a beállítást. Próbálja újra, vagy adja meg a részleteket kézzel.</string>
     <string name="announce_label_details_ready">A címke részletei készen állnak az ellenőrzésre.</string>
     <string name="announce_label_recognition_no_result">Nem találtunk részleteket a címkén. Adja meg őket kézzel.</string>
+    <string name="label_show_cup_presets">Csésze-előbeállítások megjelenítése</string>
+    <string name="msg_show_cup_presets_hint">Kikapcsolásával elrejtheti a csészék sorát a billentyűzet felett.</string>
 </resources>

@@ -48,6 +48,7 @@ data class UserPreferences(
     val calculatorSetups: Map<BrewMethod, CalculatorSetup> = emptyMap(),
     val brewingSets: List<BrewingSet> = emptyList(),
     val activeBrewingSetId: String? = null,
+    val showCupPresets: Boolean = true,
     val skipMethodSelection: Boolean = false,
     val dimModeEnabled: Boolean = true,
     val dimModeTrueBlack: Boolean = true,
@@ -112,6 +113,7 @@ interface UserPreferencesStore : BrewingSetWriter {
     suspend fun updateDefaultFilterType(filterType: FilterType?)
     suspend fun updateSelectedGrinder(grinderId: String?)
     suspend fun updateSkipMethodSelection(enabled: Boolean)
+    suspend fun updateShowCupPresets(enabled: Boolean)
     suspend fun updateShowBrewingInstructions(enabled: Boolean)
     suspend fun updateShowEnglishBrewingTerms(enabled: Boolean)
     suspend fun updateBloomSpritesheetWeights(weights: Map<String, Int>)
@@ -136,6 +138,7 @@ internal object UserPreferenceKeys {
     val LAST_USED_RATIO = floatPreferencesKey("last_used_ratio")
     val DEFAULT_INPUT_DIRECTION = stringPreferencesKey("default_input_direction")
     val SKIP_METHOD_SELECTION = booleanPreferencesKey("skip_method_selection")
+    val SHOW_CUP_PRESETS = booleanPreferencesKey("show_cup_presets")
     val DIM_MODE_ENABLED = booleanPreferencesKey("dim_mode_enabled")
     val DIM_MODE_TRUE_BLACK = booleanPreferencesKey("dim_mode_true_black")
     val DIM_MODE_REDUCE_BRIGHTNESS = booleanPreferencesKey("dim_mode_reduce_brightness")
@@ -229,6 +232,12 @@ abstract class UserPreferencesWriter protected constructor(
     override suspend fun updateDimModeForceDarkInLight(enabled: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[UserPreferenceKeys.DIM_MODE_FORCE_DARK_IN_LIGHT] = enabled
+        }
+    }
+
+    override suspend fun updateShowCupPresets(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[UserPreferenceKeys.SHOW_CUP_PRESETS] = enabled
         }
     }
 
@@ -329,6 +338,7 @@ class UserPreferencesRepository(context: Context) :
                 selectedGrinderId = setSelection.active.setup.grinderId,
                 brewingSets = setSelection.sets,
                 activeBrewingSetId = setSelection.activeId,
+                showCupPresets = prefs[UserPreferenceKeys.SHOW_CUP_PRESETS] ?: true,
                 qrLinkExplorerEnabled = prefs[UserPreferenceKeys.QR_LINK_EXPLORER_ENABLED] ?: false,
                 lastUsedRatio = prefs[UserPreferenceKeys.LAST_USED_RATIO] ?: 17f,
                 defaultInputDirection = prefs[UserPreferenceKeys.DEFAULT_INPUT_DIRECTION] ?: "DOSE",

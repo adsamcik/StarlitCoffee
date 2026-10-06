@@ -745,4 +745,6 @@
     <string name="msg_could_not_open_label_recognition_setup">Det gick inte att öppna installationen. Försök igen eller ange detaljerna manuellt.</string>
     <string name="announce_label_details_ready">Detaljerna från etiketten är klara att granskas.</string>
     <string name="announce_label_recognition_no_result">Inga detaljer hittades på etiketten. Ange detaljerna manuellt.</string>
+    <string name="label_show_cup_presets">Visa koppförval</string>
+    <string name="msg_show_cup_presets_hint">Stäng av för att dölja koppraden ovanför knappsatsen.</string>
 </resources>
