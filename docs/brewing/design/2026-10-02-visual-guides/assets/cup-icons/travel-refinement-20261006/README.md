@@ -4,8 +4,9 @@
 existing filled icon family and its tall, tapered reusable-cup silhouette.
 
 The authored SVG has three smooth filled shapes: a closed cap with a connected
-sip tab, a curved sealing rim, and the cup body. Wider curved gaps separate the
-parts at calculator and settings sizes. No new stroke, color, shadow or body
+sip tab, a curved sealing rim, and the cup body. Following user feedback,
+the gaps are narrower and the sip tab softer, keeping the cup visually joined.
+No new stroke, color, shadow or body
 decoration is introduced.
 
 The original generator image and traced SVG in `../rebuild-20261004/` remain
@@ -27,8 +28,11 @@ shows 24, 28, 32 and 44 dp vector previews at 420 dpi. Reproduce it with this
 folder's `render_comparison.py` and ImageMagick.
 
 Validation passed: all 28 native exports match their selected SVG hashes and
-paths; the other 27 drawable contents are unchanged; debug and Android test APKs
-build. Five existing native checks passed on an isolated API 34 / 420 dpi
-emulator, covering all 28 icons at 24 dp, the calculator at 28 dp, and settings
-at 32 dp in light, dark and narrow layouts with larger text. The resulting
-screenshots were visually reviewed. This establishes emulator rendering.
+paths; the other 27 drawable contents are unchanged. The closer seams were
+reviewed in 24–44 dp vector previews, and the debug APK builds.
+
+The preceding wider-gap revision passed five existing native checks on an
+isolated API 34 / 420 dpi emulator, covering all 28 icons at 24 dp, the calculator
+at 28 dp, and settings at 32 dp in light, dark and narrow layouts with larger text. The resulting
+screenshots were visually reviewed. Those emulator checks have not been rerun
+for the closer-seam revision.

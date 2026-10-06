@@ -3,12 +3,12 @@
   "authoring": "Hand-authored vector refinement requested by the user; historical generator images and traced SVGs preserved.",
   "icons": {
     "travel": {
-      "svg_sha256": "509b54eb918f338aa3ac59a012faac5b8611c5ae54837f75afad419238ac448f",
+      "svg_sha256": "630c61c6d130b12893fc58db63c966649a5cef6ea80d4d87fc38a74de19d8426",
       "based_on_svg_sha256": "5f8778f55f24ecce8a2014241112111b19af0caf678beeabf8c293479094e091",
       "shapes": "Closed cap with connected sip tab, curved sealing rim, tapered opaque cup body",
       "central_gap_units": [
-        74,
-        58
+        25,
+        24
       ],
       "viewport": "0 0 1024 1024"
     }
