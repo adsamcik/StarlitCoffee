@@ -20,9 +20,4 @@
         <item>Tahuline cortado-klaas</item><item>Keraamiline lattekauss</item>
         <item>Termokarahvin</item><item>Topeltseinaga presskann</item>
     </string-array>
-    <string-array name="preset_color_labels">
-        <item>Vaikimisi</item><item>Pruun</item><item>Šokolaad</item><item>Peruu</item>
-        <item>Terasinine</item><item>Mereroheline</item><item>Lilla</item><item>Karmiinpunane</item>
-        <item>Oranž</item><item>Kiltkivi</item>
-    </string-array>
 </resources>

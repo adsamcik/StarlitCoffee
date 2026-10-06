@@ -20,9 +20,4 @@
         <item>Copo facetado de cortado</item><item>Taça de latte em cerâmica</item>
         <item>Jarra térmica</item><item>Prensa de parede dupla</item>
     </string-array>
-    <string-array name="preset_color_labels">
-        <item>Predefinido</item><item>Castanho</item><item>Chocolate</item><item>Peru</item>
-        <item>Azul-aço</item><item>Verde-mar</item><item>Roxo</item><item>Carmesim</item>
-        <item>Laranja</item><item>Ardósia</item>
-    </string-array>
 </resources>

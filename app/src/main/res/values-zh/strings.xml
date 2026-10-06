@@ -141,7 +141,6 @@
     <string name="label_cup_presets">杯量预设</string>
     <string name="action_add_preset">添加预设</string>
     <string name="action_reset_defaults">恢复默认</string>
-    <string name="msg_presets_hint">预设会在计算器上显示为快捷按钮</string>
     <string name="label_brew_methods">冲煮方式</string>
     <string name="msg_methods_hint">已选方式会优先显示。点按可切换。</string>
     <string name="label_default_method">默认方式</string>
@@ -523,7 +522,6 @@
     <string name="label_volume_ml">容量（ml）</string>
     <string name="msg_dose_from_ratio">咖啡粉量会根据你的粉水比计算</string>
     <string name="label_icon">图标</string>
-    <string name="label_color">颜色</string>
     <string name="action_add">添加</string>
     <string name="screen_add_cup_preset_title">添加杯量预设</string>
     <string name="screen_edit_cup_preset_title">编辑杯量预设</string>
@@ -740,6 +738,6 @@
     <string name="msg_could_not_open_label_recognition_setup">无法打开设置。请重试，或手动输入详细信息。</string>
     <string name="announce_label_details_ready">标签详细信息已准备好供您检查。</string>
     <string name="announce_label_recognition_no_result">未找到标签详细信息。请手动输入详细信息。</string>
-    <string name="label_show_cup_presets">显示杯量预设</string>
-    <string name="msg_show_cup_presets_hint">关闭后隐藏数字键盘上方的杯量预设栏。</string>
+    <string name="label_show_cup_presets">在计算器中显示</string>
+    <string name="cd_cup_preset_options">杯量预设选项</string>
 </resources>

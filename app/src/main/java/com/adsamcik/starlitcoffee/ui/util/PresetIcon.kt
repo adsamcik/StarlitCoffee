@@ -90,16 +90,3 @@ val availablePresetIcons = listOf(
     "thermal_carafe",
     "double_wall_press",
 )
-
-val presetColorPalette: List<String?> = listOf(
-    null,
-    "#8B4513",
-    "#D2691E",
-    "#CD853F",
-    "#4682B4",
-    "#2E8B57",
-    "#9370DB",
-    "#DC143C",
-    "#FF8C00",
-    "#708090",
-)

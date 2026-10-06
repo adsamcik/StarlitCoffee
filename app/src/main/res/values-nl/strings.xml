@@ -143,7 +143,6 @@
     <string name="label_cup_presets">Kop-presets</string>
     <string name="action_add_preset">Preset toevoegen</string>
     <string name="action_reset_defaults">Standaardwaarden herstellen</string>
-    <string name="msg_presets_hint">Presets verschijnen als snelle knoppen in de calculator</string>
     <string name="label_brew_methods">Zetmethoden</string>
     <string name="msg_methods_hint">Geselecteerde methoden verschijnen eerst. Tik om te schakelen.</string>
     <string name="label_default_method">Standaardmethode</string>
@@ -526,7 +525,6 @@
     <string name="label_volume_ml">Volume (ml)</string>
     <string name="msg_dose_from_ratio">Koffiedosis wordt berekend uit je verhouding</string>
     <string name="label_icon">Pictogram</string>
-    <string name="label_color">Kleur</string>
     <string name="action_add">Toevoegen</string>
     <string name="screen_add_cup_preset_title">Kop-preset toevoegen</string>
     <string name="screen_edit_cup_preset_title">Kop-preset bewerken</string>
@@ -744,6 +742,6 @@
     <string name="msg_could_not_open_label_recognition_setup">De installatie kon niet worden geopend. Probeer het opnieuw of voer de details handmatig in.</string>
     <string name="announce_label_details_ready">De details van het etiket zijn klaar om te controleren.</string>
     <string name="announce_label_recognition_no_result">Er zijn geen details op het etiket gevonden. Voer de details handmatig in.</string>
-    <string name="label_show_cup_presets">Kopvoorinstellingen tonen</string>
-    <string name="msg_show_cup_presets_hint">Schakel uit om de rij koppen boven het toetsenblok te verbergen.</string>
+    <string name="label_show_cup_presets">Tonen op rekenmachine</string>
+    <string name="cd_cup_preset_options">Opties voor kopvoorinstellingen</string>
 </resources>

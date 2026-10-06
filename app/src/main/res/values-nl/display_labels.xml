@@ -20,9 +20,4 @@
         <item>Gefacetteerd cortadoglas</item><item>Keramische lattekom</item>
         <item>Thermoskaraf</item><item>Dubbelwandige French press</item>
     </string-array>
-    <string-array name="preset_color_labels">
-        <item>Standaard</item><item>Bruin</item><item>Chocolade</item><item>Peru</item>
-        <item>Staalblauw</item><item>Zeegroen</item><item>Paars</item><item>Karmozijn</item>
-        <item>Oranje</item><item>Leisteen</item>
-    </string-array>
 </resources>

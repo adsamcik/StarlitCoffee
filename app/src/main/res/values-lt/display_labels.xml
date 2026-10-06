@@ -20,9 +20,4 @@
         <item>Briaunuota kortado stiklinė</item><item>Keraminis latės dubenėlis</item>
         <item>Terminis grafinas</item><item>Dvisienis presas</item>
     </string-array>
-    <string-array name="preset_color_labels">
-        <item>Numatytoji</item><item>Ruda</item><item>Šokoladinė</item><item>Peru</item>
-        <item>Plieno mėlyna</item><item>Jūros žalia</item><item>Violetinė</item><item>Tamsiai raudona</item>
-        <item>Oranžinė</item><item>Skalūno</item>
-    </string-array>
 </resources>

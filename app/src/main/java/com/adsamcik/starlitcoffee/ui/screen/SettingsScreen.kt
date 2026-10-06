@@ -4,7 +4,6 @@ import android.content.ActivityNotFoundException
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -22,17 +21,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Restore
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeFlexibleTopAppBar
@@ -56,9 +47,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.core.graphics.toColorInt
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.testTag
@@ -84,7 +72,7 @@ import com.adsamcik.starlitcoffee.ui.component.SettingsRowDivider
 import com.adsamcik.starlitcoffee.ui.component.SettingsSectionHeader
 import com.adsamcik.starlitcoffee.ui.component.SettingsSelectorBlock
 import com.adsamcik.starlitcoffee.ui.component.SettingsSwitchRow
-import com.adsamcik.starlitcoffee.ui.util.PresetIcon
+import com.adsamcik.starlitcoffee.ui.component.CupPresetsSettings
 import com.adsamcik.starlitcoffee.util.VibrationHelper
 import com.adsamcik.starlitcoffee.BuildConfig
 import android.Manifest
@@ -251,123 +239,15 @@ fun SettingsScreen(
                 )
             }
 
-            // Cup presets — keeps its add/reset actions and tappable list.
-            SettingsGroup {
-                SettingsSwitchRow(
-                    title = stringResource(R.string.label_show_cup_presets),
-                    summary = stringResource(R.string.msg_show_cup_presets_hint),
-                    checked = prefs.showCupPresets,
-                    enabled = !isBusy,
-                    onCheckedChange = viewModel::updateShowCupPresets,
-                    modifier = Modifier.testTag("settings_show_cup_presets"),
-                )
-                SettingsRowDivider()
-                Column(modifier = Modifier.padding(20.dp)) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Text(
-                            text = stringResource(R.string.label_cup_presets),
-                            style = MaterialTheme.typography.titleMedium,
-                            modifier = Modifier.semantics { heading() },
-                        )
-                        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                            FilledTonalIconButton(
-                                onClick = {
-                                    if (!isBusy) onNavigateToCupPresetEditor(null)
-                                },
-                                enabled = !isBusy,
-                                modifier = Modifier.size(48.dp),
-                            ) {
-                                Icon(
-                                    Icons.Filled.Add,
-                                    contentDescription = stringResource(R.string.action_add_preset),
-                                    modifier = Modifier.size(24.dp),
-                                )
-                            }
-                            IconButton(
-                                onClick = { showResetPresetsDialog = true },
-                                enabled = !isBusy,
-                                modifier = Modifier.size(48.dp),
-                            ) {
-                                Icon(
-                                    Icons.Filled.Restore,
-                                    contentDescription = stringResource(R.string.action_reset_defaults),
-                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    modifier = Modifier.size(24.dp),
-                                )
-                            }
-                        }
-                    }
-                    Text(
-                        text = stringResource(R.string.msg_presets_hint),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    cupPresets.forEach { preset ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable(enabled = !isBusy) {
-                                    onNavigateToCupPresetEditor(preset.id)
-                                }
-                                .padding(vertical = 8.dp),
-                            horizontalArrangement = Arrangement.spacedBy(12.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            val dotColor = preset.colorHex?.let {
-                                try { Color(it.toColorInt()) } catch (_: IllegalArgumentException) { null }
-                            } ?: MaterialTheme.colorScheme.secondaryContainer
-                            Box(
-                                modifier = Modifier
-                                    .size(40.dp)
-                                    .background(
-                                        MaterialTheme.colorScheme.surfaceContainerHighest,
-                                        CircleShape,
-                                    ),
-                                contentAlignment = Alignment.Center,
-                            ) {
-                                PresetIcon(
-                                    iconName = preset.iconName,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(24.dp),
-                                )
-                                Box(
-                                    modifier = Modifier
-                                        .align(Alignment.BottomEnd)
-                                        .size(8.dp)
-                                        .clip(CircleShape)
-                                        .background(dotColor)
-                                        .border(
-                                            1.dp,
-                                            MaterialTheme.colorScheme.surfaceContainerLow,
-                                            CircleShape,
-                                        ),
-                                )
-                            }
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text(
-                                    text = preset.name,
-                                    style = MaterialTheme.typography.titleMedium,
-                                )
-                                Text(
-                                    text = "${preset.waterMl.toInt()} ${stringResource(R.string.unit_ml)}",
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
-                            }
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                    }
-                }
-            }
+            CupPresetsSettings(
+                presets = cupPresets,
+                showOnCalculator = prefs.showCupPresets,
+                enabled = !isBusy,
+                onShowOnCalculatorChange = viewModel::updateShowCupPresets,
+                onEdit = { onNavigateToCupPresetEditor(it) },
+                onAdd = { onNavigateToCupPresetEditor(null) },
+                onReset = { showResetPresetsDialog = true },
+            )
 
             // The same named sets are selected here and on the Brew screen.
             // Brew flow toggles.

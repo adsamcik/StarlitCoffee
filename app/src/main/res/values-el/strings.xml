@@ -143,7 +143,6 @@
     <string name="label_cup_presets">Προεπιλογές φλιτζανιού</string>
     <string name="action_add_preset">Προσθήκη προεπιλογής</string>
     <string name="action_reset_defaults">Επαναφορά προεπιλογών</string>
-    <string name="msg_presets_hint">Οι προεπιλογές εμφανίζονται ως γρήγορα κουμπιά στην αριθμομηχανή</string>
     <string name="label_brew_methods">Μέθοδοι παρασκευής</string>
     <string name="msg_methods_hint">Οι επιλεγμένες μέθοδοι εμφανίζονται πρώτες. Πατήστε για εναλλαγή.</string>
     <string name="label_default_method">Προεπιλεγμένη μέθοδος</string>
@@ -527,7 +526,6 @@
     <string name="label_volume_ml">Όγκος (ml)</string>
     <string name="msg_dose_from_ratio">Η δόση καφέ υπολογίζεται από την αναλογία σας</string>
     <string name="label_icon">Εικονίδιο</string>
-    <string name="label_color">Χρώμα</string>
     <string name="action_add">Προσθήκη</string>
     <string name="screen_add_cup_preset_title">Προσθήκη προεπιλογής φλιτζανιού</string>
     <string name="screen_edit_cup_preset_title">Επεξεργασία προεπιλογής φλιτζανιού</string>
@@ -745,6 +743,6 @@
     <string name="msg_could_not_open_label_recognition_setup">Δεν ήταν δυνατό το άνοιγμα της ρύθμισης. Προσπαθήστε ξανά ή εισαγάγετε τις λεπτομέρειες χειροκίνητα.</string>
     <string name="announce_label_details_ready">Οι λεπτομέρειες της ετικέτας είναι έτοιμες για έλεγχο.</string>
     <string name="announce_label_recognition_no_result">Δεν βρέθηκαν λεπτομέρειες στην ετικέτα. Εισαγάγετε τις λεπτομέρειες χειροκίνητα.</string>
-    <string name="label_show_cup_presets">Εμφάνιση προεπιλογών φλιτζανιών</string>
-    <string name="msg_show_cup_presets_hint">Απενεργοποιήστε για να κρύψετε τη σειρά φλιτζανιών πάνω από το πληκτρολόγιο.</string>
+    <string name="label_show_cup_presets">Εμφάνιση στην αριθμομηχανή</string>
+    <string name="cd_cup_preset_options">Επιλογές προεπιλογών φλιτζανιών</string>
 </resources>

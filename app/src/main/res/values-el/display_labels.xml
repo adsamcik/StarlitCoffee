@@ -22,9 +22,4 @@
         <item>Πολυεδρικό ποτήρι κορτάδο</item><item>Κεραμικό μπολ λάτε</item>
         <item>Θερμική καράφα</item><item>Διπλότοιχη πρέσα</item>
     </string-array>
-    <string-array name="preset_color_labels">
-        <item>Προεπιλογή</item><item>Καφέ</item><item>Σοκολατί</item><item>Περού</item>
-        <item>Ατσάλινο μπλε</item><item>Πράσινο της θάλασσας</item><item>Μωβ</item><item>Βυσσινί</item>
-        <item>Πορτοκαλί</item><item>Σχιστόλιθος</item>
-    </string-array>
 </resources>

@@ -24,9 +24,4 @@
         <item>Фасетирана чаша за кортадо</item><item>Керамична купа за лате</item>
         <item>Термокана</item><item>Двустенна преса</item>
     </string-array>
-    <string-array name="preset_color_labels">
-        <item>По подразбиране</item><item>Кафяво</item><item>Шоколадово</item><item>Перу</item>
-        <item>Стоманеносиньо</item><item>Морскозелено</item><item>Лилаво</item><item>Малиново</item>
-        <item>Оранжево</item><item>Шистово</item>
-    </string-array>
 </resources>

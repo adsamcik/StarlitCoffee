@@ -143,7 +143,6 @@
     <string name="label_cup_presets">Tassen-Voreinstellungen</string>
     <string name="action_add_preset">Voreinstellung hinzufügen</string>
     <string name="action_reset_defaults">Auf Standard zurücksetzen</string>
-    <string name="msg_presets_hint">Voreinstellungen erscheinen als Schnelltasten im Rechner</string>
     <string name="label_brew_methods">Brühmethoden</string>
     <string name="msg_methods_hint">Ausgewählte Methoden erscheinen zuerst. Zum Umschalten tippen.</string>
     <string name="label_default_method">Standardmethode</string>
@@ -527,7 +526,6 @@
     <string name="label_volume_ml">Volumen (ml)</string>
     <string name="msg_dose_from_ratio">Die Kaffeemenge wird aus Ihrem Verhältnis berechnet</string>
     <string name="label_icon">Symbol</string>
-    <string name="label_color">Farbe</string>
     <string name="action_add">Hinzufügen</string>
     <string name="screen_add_cup_preset_title">Tassen-Voreinstellung hinzufügen</string>
     <string name="screen_edit_cup_preset_title">Tassen-Voreinstellung bearbeiten</string>
@@ -745,6 +743,6 @@
     <string name="msg_could_not_open_label_recognition_setup">Die Einrichtung konnte nicht geöffnet werden. Versuchen Sie es erneut oder geben Sie die Details manuell ein.</string>
     <string name="announce_label_details_ready">Die Details vom Etikett sind zur Überprüfung bereit.</string>
     <string name="announce_label_recognition_no_result">Es wurden keine Details auf dem Etikett gefunden. Geben Sie die Details manuell ein.</string>
-    <string name="label_show_cup_presets">Tassenvoreinstellungen anzeigen</string>
-    <string name="msg_show_cup_presets_hint">Ausschalten, um die Tassenreihe über dem Zahlenfeld auszublenden.</string>
+    <string name="label_show_cup_presets">Im Rechner anzeigen</string>
+    <string name="cd_cup_preset_options">Optionen für Tassenvorlagen</string>
 </resources>

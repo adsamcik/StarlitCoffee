@@ -143,7 +143,6 @@
     <string name="label_cup_presets">Tassi eelseaded</string>
     <string name="action_add_preset">Lisa eelseade</string>
     <string name="action_reset_defaults">Taasta vaikeseaded</string>
-    <string name="msg_presets_hint">Eelseaded ilmuvad kalkulaatoris kiirnuppudena</string>
     <string name="label_brew_methods">Valmistusviisid</string>
     <string name="msg_methods_hint">Valitud viisid kuvatakse esimesena. Puuduta lülitamiseks.</string>
     <string name="label_default_method">Vaikeviis</string>
@@ -527,7 +526,6 @@
     <string name="label_volume_ml">Maht (ml)</string>
     <string name="msg_dose_from_ratio">Kohvikogus arvutatakse sinu suhte põhjal</string>
     <string name="label_icon">Ikoon</string>
-    <string name="label_color">Värv</string>
     <string name="action_add">Lisa</string>
     <string name="screen_add_cup_preset_title">Lisa tassi eelseade</string>
     <string name="screen_edit_cup_preset_title">Muuda tassi eelseadet</string>
@@ -745,6 +743,6 @@
     <string name="msg_could_not_open_label_recognition_setup">Seadistamist ei saanud avada. Proovige uuesti või sisestage üksikasjad käsitsi.</string>
     <string name="announce_label_details_ready">Sildi üksikasjad on ülevaatamiseks valmis.</string>
     <string name="announce_label_recognition_no_result">Sildilt ei leitud üksikasju. Sisestage need käsitsi.</string>
-    <string name="label_show_cup_presets">Kuva tassi eelseadistused</string>
-    <string name="msg_show_cup_presets_hint">Lülitage välja, et peita tasside rida klahvistiku kohal.</string>
+    <string name="label_show_cup_presets">Näita kalkulaatoris</string>
+    <string name="cd_cup_preset_options">Tassi eelseadete valikud</string>
 </resources>

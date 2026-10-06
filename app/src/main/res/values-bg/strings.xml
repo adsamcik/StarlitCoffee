@@ -143,7 +143,6 @@
     <string name="label_cup_presets">Предварителни чаши</string>
     <string name="action_add_preset">Добавете предварителна настройка</string>
     <string name="action_reset_defaults">Върнете настройките по подразбиране</string>
-    <string name="msg_presets_hint">Предварителните настройки се показват като бързи бутони в калкулатора</string>
     <string name="label_brew_methods">Методи за приготвяне</string>
     <string name="msg_methods_hint">Избраните методи се показват първи. Докоснете, за да включите или изключите.</string>
     <string name="label_default_method">Метод по подразбиране</string>
@@ -527,7 +526,6 @@
     <string name="label_volume_ml">Обем (ml)</string>
     <string name="msg_dose_from_ratio">Дозата кафе се изчислява от Вашето съотношение</string>
     <string name="label_icon">Икона</string>
-    <string name="label_color">Цвят</string>
     <string name="action_add">Добавете</string>
     <string name="screen_add_cup_preset_title">Добавете предварителна чаша</string>
     <string name="screen_edit_cup_preset_title">Редактирайте предварителна чаша</string>
@@ -745,6 +743,6 @@
     <string name="msg_could_not_open_label_recognition_setup">Настройката не можа да бъде отворена. Опитайте отново или въведете подробностите ръчно.</string>
     <string name="announce_label_details_ready">Подробностите от етикета са готови за преглед.</string>
     <string name="announce_label_recognition_no_result">Не са намерени подробности на етикета. Въведете подробностите ръчно.</string>
-    <string name="label_show_cup_presets">Показване на предварителните настройки за чаши</string>
-    <string name="msg_show_cup_presets_hint">Изключете, за да скриете реда с чаши над клавиатурата.</string>
+    <string name="label_show_cup_presets">Показване в калкулатора</string>
+    <string name="cd_cup_preset_options">Опции за чашите</string>
 </resources>

@@ -20,9 +20,4 @@
         <item>Bicchiere cortado sfaccettato</item><item>Ciotola da latte in ceramica</item>
         <item>Caraffa termica</item><item>French press a doppia parete</item>
     </string-array>
-    <string-array name="preset_color_labels">
-        <item>Predefinito</item><item>Marrone</item><item>Cioccolato</item><item>Perù</item>
-        <item>Blu acciaio</item><item>Verde mare</item><item>Viola</item><item>Cremisi</item>
-        <item>Arancione</item><item>Ardesia</item>
-    </string-array>
 </resources>

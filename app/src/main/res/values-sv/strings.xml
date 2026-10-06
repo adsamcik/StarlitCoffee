@@ -143,7 +143,6 @@
     <string name="label_cup_presets">Koppförval</string>
     <string name="action_add_preset">Lägg till förval</string>
     <string name="action_reset_defaults">Återställ standard</string>
-    <string name="msg_presets_hint">Förval visas som snabbknappar i kalkylatorn</string>
     <string name="label_brew_methods">Bryggmetoder</string>
     <string name="msg_methods_hint">Valda metoder visas först. Tryck för att växla.</string>
     <string name="label_default_method">Standardmetod</string>
@@ -527,7 +526,6 @@
     <string name="label_volume_ml">Volym (ml)</string>
     <string name="msg_dose_from_ratio">Kaffedosen beräknas från ditt förhållande</string>
     <string name="label_icon">Ikon</string>
-    <string name="label_color">Färg</string>
     <string name="action_add">Lägg till</string>
     <string name="screen_add_cup_preset_title">Lägg till koppförval</string>
     <string name="screen_edit_cup_preset_title">Redigera koppförval</string>
@@ -745,6 +743,6 @@
     <string name="msg_could_not_open_label_recognition_setup">Det gick inte att öppna installationen. Försök igen eller ange detaljerna manuellt.</string>
     <string name="announce_label_details_ready">Detaljerna från etiketten är klara att granskas.</string>
     <string name="announce_label_recognition_no_result">Inga detaljer hittades på etiketten. Ange detaljerna manuellt.</string>
-    <string name="label_show_cup_presets">Visa koppförval</string>
-    <string name="msg_show_cup_presets_hint">Stäng av för att dölja koppraden ovanför knappsatsen.</string>
+    <string name="label_show_cup_presets">Visa i kalkylatorn</string>
+    <string name="cd_cup_preset_options">Alternativ för koppförval</string>
 </resources>

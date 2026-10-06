@@ -21,9 +21,4 @@
         <item>Fasetoitu cortado-lasi</item><item>Keraaminen latte-kulho</item>
         <item>Termokarahvi</item><item>Kaksiseinäinen pressopannu</item>
     </string-array>
-    <string-array name="preset_color_labels">
-        <item>Oletus</item><item>Ruskea</item><item>Suklaa</item><item>Peru</item>
-        <item>Teräksensininen</item><item>Merenvihreä</item><item>Violetti</item><item>Karmiininpunainen</item>
-        <item>Oranssi</item><item>Liuske</item>
-    </string-array>
 </resources>

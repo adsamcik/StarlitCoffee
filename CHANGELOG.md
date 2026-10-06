@@ -78,6 +78,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Simpler cup preset settings** — clear cup rows and a labeled Add preset action,
+  with calculator visibility in the same card and reset in its menu. Decorative
+  color dots and the unused color picker are removed; saved cup amounts stay intact.
 - Optional AI label recognition now uses Mindlayer `1.0.0-alpha.9` and resumes
   after idle disconnect or automatic reconnection without repeating setup.
 - **More expressive bloom animations** — all 44 animations now grow and unfold

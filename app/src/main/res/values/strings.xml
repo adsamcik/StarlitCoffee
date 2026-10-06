@@ -166,7 +166,6 @@
     <string name="label_cup_presets">Cup presets</string>
     <string name="action_add_preset">Add preset</string>
     <string name="action_reset_defaults">Reset to defaults</string>
-    <string name="msg_presets_hint">Presets appear as quick buttons on the calculator</string>
     <string name="label_brew_methods">Brew methods</string>
     <string name="msg_methods_hint">Selected methods appear first. Tap to toggle.</string>
     <string name="label_default_method">Default method</string>
@@ -662,7 +661,6 @@
     <string name="label_volume_ml">Volume (ml)</string>
     <string name="msg_dose_from_ratio">Coffee dose is calculated from your ratio</string>
     <string name="label_icon">Icon</string>
-    <string name="label_color">Color</string>
     <string name="action_add">Add</string>
     <string name="screen_add_cup_preset_title">Add cup preset</string>
     <string name="screen_edit_cup_preset_title">Edit cup preset</string>
@@ -858,18 +856,6 @@
         <item>Thermal carafe</item>
         <item>Double-wall press</item>
     </string-array>
-    <string-array name="preset_color_labels">
-        <item>Default</item>
-        <item>Brown</item>
-        <item>Chocolate</item>
-        <item>Peru</item>
-        <item>Steel blue</item>
-        <item>Sea green</item>
-        <item>Purple</item>
-        <item>Crimson</item>
-        <item>Orange</item>
-        <item>Slate</item>
-    </string-array>
 
 
     <!-- P1 Brewer Profile Setup and Durable Guidance -->
@@ -985,6 +971,6 @@
     <string name="action_allow_brew_notifications">Allow reminders</string>
     <string name="msg_brew_reminders_may_be_late">Android may delay reminders while you’re away.</string>
     <string name="action_allow_precise_brew_reminders">Allow precise reminders</string>
-    <string name="label_show_cup_presets">Show cup presets</string>
-    <string name="msg_show_cup_presets_hint">Turn off to hide the cup row above the keypad.</string>
+    <string name="label_show_cup_presets">Show on calculator</string>
+    <string name="cd_cup_preset_options">Cup preset options</string>
 </resources>

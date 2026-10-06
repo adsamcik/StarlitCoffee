@@ -20,9 +20,4 @@
         <item>Verre à cortado facetté</item><item>Bol à latte en céramique</item>
         <item>Carafe isotherme</item><item>Cafetière à piston double paroi</item>
     </string-array>
-    <string-array name="preset_color_labels">
-        <item>Par défaut</item><item>Marron</item><item>Chocolat</item><item>Pérou</item>
-        <item>Bleu acier</item><item>Vert marin</item><item>Violet</item><item>Cramoisi</item>
-        <item>Orange</item><item>Ardoise</item>
-    </string-array>
 </resources>

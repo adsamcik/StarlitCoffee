@@ -143,7 +143,6 @@
     <string name="label_cup_presets">Kupin esiasetukset</string>
     <string name="action_add_preset">Lisää esiasetus</string>
     <string name="action_reset_defaults">Palauta oletukset</string>
-    <string name="msg_presets_hint">Esiasetukset näkyvät pikapainikkeina laskimessa</string>
     <string name="label_brew_methods">Valmistustavat</string>
     <string name="msg_methods_hint">Valitut tavat näkyvät ensin. Napauta vaihtaaksesi.</string>
     <string name="label_default_method">Oletusvalmistustapa</string>
@@ -527,7 +526,6 @@
     <string name="label_volume_ml">Tilavuus (ml)</string>
     <string name="msg_dose_from_ratio">Kahviannos lasketaan suhteesi perusteella</string>
     <string name="label_icon">Kuvake</string>
-    <string name="label_color">Väri</string>
     <string name="action_add">Lisää</string>
     <string name="screen_add_cup_preset_title">Lisää kupin esiasetus</string>
     <string name="screen_edit_cup_preset_title">Muokkaa kupin esiasetusta</string>
@@ -745,6 +743,6 @@
     <string name="msg_could_not_open_label_recognition_setup">Asennusta ei voitu avata. Yritä uudelleen tai syötä tiedot manuaalisesti.</string>
     <string name="announce_label_details_ready">Tarran tiedot ovat valmiina tarkistettaviksi.</string>
     <string name="announce_label_recognition_no_result">Tarrasta ei löytynyt tietoja. Syötä tiedot manuaalisesti.</string>
-    <string name="label_show_cup_presets">Näytä kuppiesiasetukset</string>
-    <string name="msg_show_cup_presets_hint">Poista käytöstä piilottaaksesi kuppirivin näppäimistön yläpuolelta.</string>
+    <string name="label_show_cup_presets">Näytä laskimessa</string>
+    <string name="cd_cup_preset_options">Kuppiesiasetusten valinnat</string>
 </resources>

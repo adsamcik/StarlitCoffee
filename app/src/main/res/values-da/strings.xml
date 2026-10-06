@@ -143,7 +143,6 @@
     <string name="label_cup_presets">Kopforudindstillinger</string>
     <string name="action_add_preset">Tilføj forudindstilling</string>
     <string name="action_reset_defaults">Nulstil til standarder</string>
-    <string name="msg_presets_hint">Forudindstillinger vises som hurtigknapper i beregneren</string>
     <string name="label_brew_methods">Brygmetoder</string>
     <string name="msg_methods_hint">Valgte metoder vises først. Tryk for at slå til eller fra.</string>
     <string name="label_default_method">Standardmetode</string>
@@ -526,7 +525,6 @@
     <string name="label_volume_ml">Volumen (ml)</string>
     <string name="msg_dose_from_ratio">Kaffedosis beregnes ud fra dit forhold</string>
     <string name="label_icon">Ikon</string>
-    <string name="label_color">Farve</string>
     <string name="action_add">Tilføj</string>
     <string name="screen_add_cup_preset_title">Tilføj kopforudindstilling</string>
     <string name="screen_edit_cup_preset_title">Rediger kopforudindstilling</string>
@@ -744,6 +742,6 @@
     <string name="msg_could_not_open_label_recognition_setup">Kunne ikke åbne opsætningen. Prøv igen, eller indtast oplysningerne manuelt.</string>
     <string name="announce_label_details_ready">Oplysningerne fra etiketten er klar til gennemgang.</string>
     <string name="announce_label_recognition_no_result">Der blev ikke fundet oplysninger på etiketten. Indtast oplysningerne manuelt.</string>
-    <string name="label_show_cup_presets">Vis kopforvalg</string>
-    <string name="msg_show_cup_presets_hint">Slå fra for at skjule rækken med kopper over tastaturet.</string>
+    <string name="label_show_cup_presets">Vis på lommeregneren</string>
+    <string name="cd_cup_preset_options">Muligheder for kopforvalg</string>
 </resources>

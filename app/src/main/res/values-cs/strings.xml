@@ -139,7 +139,6 @@
     <string name="label_cup_presets">Předvolby šálků</string>
     <string name="action_add_preset">Přidat předvolbu</string>
     <string name="action_reset_defaults">Obnovit výchozí</string>
-    <string name="msg_presets_hint">Předvolby se zobrazí jako tlačítka na kalkulačce</string>
     <string name="label_brew_methods">Metody přípravy</string>
     <string name="msg_methods_hint">Vybrané metody se zobrazí jako první. Klepněte pro přepnutí.</string>
     <string name="label_default_method">Výchozí metoda</string>
@@ -558,7 +557,6 @@
     <string name="label_volume_ml">Objem (ml)</string>
     <string name="msg_dose_from_ratio">Dávka kávy se vypočítá z vašeho poměru</string>
     <string name="label_icon">Ikona</string>
-    <string name="label_color">Barva</string>
     <string name="action_add">Přidat</string>
     <string name="screen_add_cup_preset_title">Přidat předvolbu šálku</string>
     <string name="screen_edit_cup_preset_title">Upravit předvolbu šálku</string>
@@ -778,6 +776,6 @@
     <string name="msg_could_not_open_label_recognition_setup">Nastavení se nepodařilo otevřít. Zkuste to znovu nebo zadejte podrobnosti ručně.</string>
     <string name="announce_label_details_ready">Podrobnosti ze štítku jsou připravené ke kontrole.</string>
     <string name="announce_label_recognition_no_result">Na štítku nebyly nalezeny žádné podrobnosti. Zadejte je ručně.</string>
-    <string name="label_show_cup_presets">Zobrazovat předvolby šálků</string>
-    <string name="msg_show_cup_presets_hint">Vypnutím skryjete řádek šálků nad klávesnicí.</string>
+    <string name="label_show_cup_presets">Zobrazit v kalkulačce</string>
+    <string name="cd_cup_preset_options">Možnosti předvoleb šálků</string>
 </resources>

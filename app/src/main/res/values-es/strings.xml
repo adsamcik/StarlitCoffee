@@ -145,7 +145,6 @@
     <string name="label_cup_presets">Preajustes de taza</string>
     <string name="action_add_preset">Añadir preajuste</string>
     <string name="action_reset_defaults">Restablecer valores predeterminados</string>
-    <string name="msg_presets_hint">Los preajustes aparecen como botones rápidos en la calculadora</string>
     <string name="label_brew_methods">Métodos de preparación</string>
     <string name="msg_methods_hint">Los métodos seleccionados aparecen primero. Toca para activar o desactivar.</string>
     <string name="label_default_method">Método predeterminado</string>
@@ -529,7 +528,6 @@
     <string name="label_volume_ml">Volumen (ml)</string>
     <string name="msg_dose_from_ratio">La dosis de café se calcula a partir de tu ratio</string>
     <string name="label_icon">Icono</string>
-    <string name="label_color">Color</string>
     <string name="action_add">Añadir</string>
     <string name="screen_add_cup_preset_title">Añadir preajuste de taza</string>
     <string name="screen_edit_cup_preset_title">Editar preajuste de taza</string>
@@ -748,6 +746,6 @@
     <string name="msg_could_not_open_label_recognition_setup">No se pudo abrir la configuración. Inténtalo de nuevo o introduce los detalles manualmente.</string>
     <string name="announce_label_details_ready">Los detalles de la etiqueta están listos para revisar.</string>
     <string name="announce_label_recognition_no_result">No se encontraron detalles en la etiqueta. Introduce los detalles manualmente.</string>
-    <string name="label_show_cup_presets">Mostrar tamaños de taza guardados</string>
-    <string name="msg_show_cup_presets_hint">Desactiva para ocultar la fila de tazas sobre el teclado.</string>
+    <string name="label_show_cup_presets">Mostrar en la calculadora</string>
+    <string name="cd_cup_preset_options">Opciones de tazas predefinidas</string>
 </resources>

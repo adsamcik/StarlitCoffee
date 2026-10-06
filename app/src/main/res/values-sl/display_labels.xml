@@ -20,9 +20,4 @@
         <item>Fasetiran kozarec za cortado</item><item>Keramična skleda za latte</item>
         <item>Termovrč</item><item>Dvostenska preša</item>
     </string-array>
-    <string-array name="preset_color_labels">
-        <item>Privzeto</item><item>Rjava</item><item>Čokoladna</item><item>Peru</item>
-        <item>Jekleno modra</item><item>Morsko zelena</item><item>Vijolična</item><item>Škrlatna</item>
-        <item>Oranžna</item><item>Skrilasta</item>
-    </string-array>
 </resources>

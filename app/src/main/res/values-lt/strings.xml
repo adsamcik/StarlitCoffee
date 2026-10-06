@@ -147,7 +147,6 @@
     <string name="label_cup_presets">Puodelių šablonai</string>
     <string name="action_add_preset">Pridėti šabloną</string>
     <string name="action_reset_defaults">Atkurti numatytuosius</string>
-    <string name="msg_presets_hint">Šablonai rodomi kaip spartieji mygtukai skaičiuoklėje</string>
     <string name="label_brew_methods">Plikymo būdai</string>
     <string name="msg_methods_hint">Pasirinkti būdai rodomi pirmiausia. Bakstelėkite, kad perjungtumėte.</string>
     <string name="label_default_method">Numatytasis būdas</string>
@@ -531,7 +530,6 @@
     <string name="label_volume_ml">Tūris (ml)</string>
     <string name="msg_dose_from_ratio">Kavos dozė apskaičiuojama pagal jūsų santykį</string>
     <string name="label_icon">Piktograma</string>
-    <string name="label_color">Spalva</string>
     <string name="action_add">Pridėti</string>
     <string name="screen_add_cup_preset_title">Pridėti puodelio šabloną</string>
     <string name="screen_edit_cup_preset_title">Redaguoti puodelio šabloną</string>
@@ -751,6 +749,6 @@
     <string name="msg_could_not_open_label_recognition_setup">Nepavyko atidaryti sąrankos. Bandykite dar kartą arba įveskite informaciją rankiniu būdu.</string>
     <string name="announce_label_details_ready">Etiketės informacija paruošta peržiūrėti.</string>
     <string name="announce_label_recognition_no_result">Etiketėje informacijos nerasta. Įveskite informaciją rankiniu būdu.</string>
-    <string name="label_show_cup_presets">Rodyti puodelių ruošinius</string>
-    <string name="msg_show_cup_presets_hint">Išjunkite, kad paslėptumėte puodelių eilutę virš klaviatūros.</string>
+    <string name="label_show_cup_presets">Rodyti skaičiuotuve</string>
+    <string name="cd_cup_preset_options">Puodelių ruošinių parinktys</string>
 </resources>

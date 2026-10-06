@@ -21,9 +21,4 @@
         <item>Vaso facetado de cortado</item><item>Cuenco cerámico de latte</item>
         <item>Jarra térmica</item><item>Prensa de doble pared</item>
     </string-array>
-    <string-array name="preset_color_labels">
-        <item>Predeterminado</item><item>Marrón</item><item>Chocolate</item><item>Perú</item>
-        <item>Azul acero</item><item>Verde mar</item><item>Morado</item><item>Carmesí</item>
-        <item>Naranja</item><item>Pizarra</item>
-    </string-array>
 </resources>

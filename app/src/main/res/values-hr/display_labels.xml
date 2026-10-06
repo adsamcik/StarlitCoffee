@@ -21,9 +21,4 @@
         <item>Fasetirana čaša za cortado</item><item>Keramička zdjela za latte</item>
         <item>Termalni vrč</item><item>Dvostruka francuska preša</item>
     </string-array>
-    <string-array name="preset_color_labels">
-        <item>Zadano</item><item>Smeđa</item><item>Čokoladna</item><item>Peru</item>
-        <item>Čeličnoplava</item><item>Morskozelena</item><item>Ljubičasta</item><item>Grimizna</item>
-        <item>Narančasta</item><item>Škriljevac</item>
-    </string-array>
 </resources>

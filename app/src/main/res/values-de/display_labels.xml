@@ -22,9 +22,4 @@
         <item>Facettiertes Cortadoglas</item><item>Keramische Latte-Schale</item>
         <item>Thermokaraffe</item><item>Doppelwandige Pressstempelkanne</item>
     </string-array>
-    <string-array name="preset_color_labels">
-        <item>Standard</item><item>Braun</item><item>Schokolade</item><item>Peru</item>
-        <item>Stahlblau</item><item>Seegrün</item><item>Violett</item><item>Karminrot</item>
-        <item>Orange</item><item>Schiefer</item>
-    </string-array>
 </resources>

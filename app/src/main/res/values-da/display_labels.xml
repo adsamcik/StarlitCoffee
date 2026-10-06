@@ -22,9 +22,4 @@
         <item>Facetteret cortadoglas</item><item>Keramisk latteskål</item>
         <item>Termokaraffel</item><item>Dobbeltvægget stempelkande</item>
     </string-array>
-    <string-array name="preset_color_labels">
-        <item>Standard</item><item>Brun</item><item>Chokolade</item><item>Peru</item>
-        <item>Stålblå</item><item>Havgrøn</item><item>Lilla</item><item>Karmoisin</item>
-        <item>Orange</item><item>Skifer</item>
-    </string-array>
 </resources>
