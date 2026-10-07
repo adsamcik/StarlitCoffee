@@ -15,6 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import com.adsamcik.mindlayer.sdk.ConsentRequestResult
 import com.adsamcik.mindlayer.sdk.MindlayerConsent
 import com.adsamcik.starlitcoffee.R
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -89,8 +90,12 @@ fun rememberMindlayerConsentFlow(onOutcome: (ConsentOutcome) -> Unit): Mindlayer
     ) { result ->
         inProgress.value = false
         callback.value(
-            if (result.resultCode == Activity.RESULT_OK) ConsentOutcome.GRANTED
-            else ConsentOutcome.DECLINED,
+            when {
+                result.resultCode == Activity.RESULT_OK -> ConsentOutcome.GRANTED
+                result.data?.hasExtra(ActivityResultContracts.StartIntentSenderForResult.EXTRA_SEND_INTENT_EXCEPTION) == true ->
+                    ConsentOutcome.FAILED
+                else -> ConsentOutcome.DECLINED
+            },
         )
     }
 
@@ -99,34 +104,42 @@ fun rememberMindlayerConsentFlow(onOutcome: (ConsentOutcome) -> Unit): Mindlayer
             if (inProgress.value) return@request
             inProgress.value = true
             scope.launch {
-                val result = withContext(Dispatchers.IO) { MindlayerConsent.requestConsent(appContext) }
-                when (result) {
-                    // Keep inProgress = true until the launcher result arrives.
-                    is ConsentRequestResult.Available ->
-                        launcher.launch(IntentSenderRequest.Builder(result.intentSender).build())
+                try {
+                    val result = withContext(Dispatchers.IO) { MindlayerConsent.requestConsent(appContext) }
+                    when (result) {
+                        // Keep inProgress = true until the launcher result arrives.
+                        is ConsentRequestResult.Available ->
+                            launcher.launch(IntentSenderRequest.Builder(result.intentSender).build())
 
-                    ConsentRequestResult.AlreadyApproved -> {
-                        inProgress.value = false
-                        callback.value(ConsentOutcome.ALREADY_APPROVED)
-                    }
+                        ConsentRequestResult.AlreadyApproved -> {
+                            inProgress.value = false
+                            callback.value(ConsentOutcome.ALREADY_APPROVED)
+                        }
 
-                    is ConsentRequestResult.Denied -> {
-                        inProgress.value = false
-                        callback.value(
-                            if (result.untilEpochMs == null) ConsentOutcome.DENIED_PERMANENT
-                            else ConsentOutcome.DENIED_TEMPORARY,
-                        )
-                    }
+                        is ConsentRequestResult.Denied -> {
+                            inProgress.value = false
+                            callback.value(
+                                if (result.untilEpochMs == null) ConsentOutcome.DENIED_PERMANENT
+                                else ConsentOutcome.DENIED_TEMPORARY,
+                            )
+                        }
 
-                    ConsentRequestResult.ServiceUnavailable -> {
-                        inProgress.value = false
-                        callback.value(ConsentOutcome.SERVICE_UNAVAILABLE)
-                    }
+                        ConsentRequestResult.ServiceUnavailable -> {
+                            inProgress.value = false
+                            callback.value(ConsentOutcome.SERVICE_UNAVAILABLE)
+                        }
 
-                    is ConsentRequestResult.Failed -> {
-                        inProgress.value = false
-                        callback.value(ConsentOutcome.FAILED)
+                        is ConsentRequestResult.Failed -> {
+                            inProgress.value = false
+                            callback.value(ConsentOutcome.FAILED)
+                        }
                     }
+                } catch (error: CancellationException) {
+                    inProgress.value = false
+                    throw error
+                } catch (_: Exception) {
+                    inProgress.value = false
+                    callback.value(ConsentOutcome.FAILED)
                 }
             }
             Unit

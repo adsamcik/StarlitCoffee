@@ -431,15 +431,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">Deschide Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">Necesită Android 12 sau o versiune ulterioară.</string>
     <string name="label_ai_service">Serviciu AI (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Obțineți Mindlayer de pe Google Play</string>
-    <string name="msg_mindlayer_install_recommendation">Instalați Mindlayer de pe Google Play pentru a citi etichetele pachetelor de cafea cu IA privată pe dispozitiv. Puteți face acest lucru mai târziu în Setări.</string>
     <string name="action_test_connection">Testați conexiunea</string>
     <string name="action_run_test_prompt">Rulați promptul de test</string>
     <string name="label_testing">Se testează…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">Activați AI</string>
     <string name="consent_requesting">Se solicită acces AI…</string>
     <string name="consent_granted">AI activat</string>
     <string name="consent_already_approved">AI este deja activat</string>

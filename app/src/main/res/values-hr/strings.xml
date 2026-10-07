@@ -431,15 +431,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">Otvori Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">Potreban je Android 12 ili noviji.</string>
     <string name="label_ai_service">AI usluga (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Preuzmite Mindlayer na Google Playu</string>
-    <string name="msg_mindlayer_install_recommendation">Instalirajte Mindlayer s Google Playa za čitanje oznaka pakiranja kave uz privatni AI na uređaju. To možete učiniti kasnije u Postavkama.</string>
     <string name="action_test_connection">Testirajte vezu</string>
     <string name="action_run_test_prompt">Pokrenite testni upit</string>
     <string name="label_testing">Testiranje…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">Omogućite AI</string>
     <string name="consent_requesting">Traženje pristupa AI-ju…</string>
     <string name="consent_granted">AI omogućen</string>
     <string name="consent_already_approved">AI je već omogućen</string>

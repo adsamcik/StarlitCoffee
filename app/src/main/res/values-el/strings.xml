@@ -429,15 +429,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">Άνοιγμα Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">Απαιτεί Android 12 ή νεότερη έκδοση.</string>
     <string name="label_ai_service">Υπηρεσία AI (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Λήψη του Mindlayer από το Google Play</string>
-    <string name="msg_mindlayer_install_recommendation">Εγκαταστήστε το Mindlayer από το Google Play για να διαβάζετε ετικέτες συσκευασιών καφέ με ιδιωτική AI στη συσκευή. Μπορείτε να το κάνετε αργότερα στις Ρυθμίσεις.</string>
     <string name="action_test_connection">Δοκιμή σύνδεσης</string>
     <string name="action_run_test_prompt">Εκτέλεση δοκιμαστικού prompt</string>
     <string name="label_testing">Δοκιμή…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">Ενεργοποίηση AI</string>
     <string name="consent_requesting">Αίτημα πρόσβασης AI…</string>
     <string name="consent_granted">Η AI ενεργοποιήθηκε</string>
     <string name="consent_already_approved">Η AI είναι ήδη ενεργοποιημένη</string>

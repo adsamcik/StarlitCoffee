@@ -159,6 +159,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Mindlayer connection and prompt tests now guide users through installation and
+  approval, enable enhanced label recognition, and continue the selected test.
+  The regular Settings control identifies Mindlayer, supports enabling and
+  disabling it, opens Mindlayer for model setup and integration options, and
+  links to Google Play for installation and updates.
 - AI label checks now start with a bounded context instead of oversized model
   warmup. Requests that exceed the available context receive one smaller retry
   that preserves the original label text and the scan deadline.

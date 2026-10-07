@@ -139,7 +139,25 @@ class SettingsViewModel(
     }
 
     fun updateLabelRecognitionPreference(preference: RecognitionPreference) {
-        persist { preferences.updateLabelRecognitionPreference(preference) }
+        viewModelScope.launch { saveLabelRecognitionPreference(preference) }
+    }
+
+    /** Setup must await a successful opt-in before reconnecting or running the requested test. */
+    suspend fun saveLabelRecognitionPreference(preference: RecognitionPreference): Boolean {
+        if (_uiState.value.operation != SettingsOperation.IDLE) return false
+        _uiState.update { it.copy(operation = SettingsOperation.SAVING, failure = null, completion = null) }
+        return try {
+            preferences.updateLabelRecognitionPreference(preference)
+            true
+        } catch (error: CancellationException) {
+            throw error
+        } catch (error: Exception) {
+            Tracebox.log.error(error, LogTemplate.of("Label recognition preference save failed"))
+            _uiState.update { it.copy(failure = SettingsFailure.SAVE) }
+            false
+        } finally {
+            _uiState.update { it.copy(operation = SettingsOperation.IDLE) }
+        }
     }
 
     fun updateDimModeEnabled(enabled: Boolean) {

@@ -431,15 +431,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">Abrir Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">Requer Android 12 ou posterior.</string>
     <string name="label_ai_service">Serviço de IA (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Obter o Mindlayer no Google Play</string>
-    <string name="msg_mindlayer_install_recommendation">Instale o Mindlayer a partir do Google Play para ler rótulos de embalagens de café com IA privada no dispositivo. Pode fazê-lo mais tarde nas Definições.</string>
     <string name="action_test_connection">Testar ligação</string>
     <string name="action_run_test_prompt">Executar prompt de teste</string>
     <string name="label_testing">A testar…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">Ativar IA</string>
     <string name="consent_requesting">A pedir acesso à IA…</string>
     <string name="consent_granted">IA ativada</string>
     <string name="consent_already_approved">A IA já está ativada</string>

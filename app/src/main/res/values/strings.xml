@@ -144,8 +144,8 @@
     <string name="label_settings_section_appearance">Appearance</string>
     <string name="label_settings_section_notifications">Notifications</string>
     <string name="label_settings_section_scanning">Scanning</string>
-    <string name="label_enhanced_label_recognition">Enhanced label recognition</string>
-    <string name="msg_enhanced_label_recognition">Look for more bag details on this device when available. Basic on-device text reading from the label remains available.</string>
+    <string name="label_enhanced_label_recognition">Enhanced label recognition (Mindlayer)</string>
+    <string name="msg_enhanced_label_recognition">Use Mindlayer’s private, on-device AI to read more bag details. Basic label reading remains available when this is off.</string>
     <string name="label_label_recognition_privacy">Label recognition and privacy</string>
     <string name="msg_label_recognition_privacy">Learn what stays on your device and when network lookups are used.</string>
     <string name="msg_could_not_open_privacy_policy">Could not open the privacy policy.</string>
@@ -532,9 +532,11 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_google_play" translatable="false">Google Play</string>
+    <string name="action_open_mindlayer">Open Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">Requires Android 12 or later.</string>
     <string name="label_ai_service">AI Service (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Get Mindlayer on Google Play</string>
-    <string name="msg_mindlayer_install_recommendation">Install Mindlayer from Google Play to read bag labels with private, on-device AI. You can do this later in Settings.</string>
     <string name="action_test_connection">Test Connection</string>
     <string name="action_run_test_prompt">Run Test Prompt</string>
     <string name="label_testing">Testing…</string>
@@ -561,7 +563,6 @@
     <string name="cd_open_coffee_draft">Open %1$s. %2$s</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">Enable label recognition</string>
     <string name="consent_requesting">Requesting label-recognition access…</string>
     <string name="consent_granted">Label recognition enabled</string>
     <string name="consent_already_approved">Label recognition is already enabled</string>

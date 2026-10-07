@@ -433,15 +433,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">Atidaryti Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">Reikia Android 12 arba naujesnės versijos.</string>
     <string name="label_ai_service">DI paslauga (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Gaukite Mindlayer iš Google Play</string>
-    <string name="msg_mindlayer_install_recommendation">Įdiekite Mindlayer iš Google Play, kad galėtumėte skaityti kavos pakuočių etiketes naudodami privatų įrenginyje veikiantį DI. Tai galite padaryti vėliau nustatymuose.</string>
     <string name="action_test_connection">Tikrinti ryšį</string>
     <string name="action_run_test_prompt">Paleisti bandomąją užklausą</string>
     <string name="label_testing">Tikrinama…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">Įjungti DI</string>
     <string name="consent_requesting">Prašoma DI prieigos…</string>
     <string name="consent_granted">DI įjungtas</string>
     <string name="consent_already_approved">DI jau įjungtas</string>

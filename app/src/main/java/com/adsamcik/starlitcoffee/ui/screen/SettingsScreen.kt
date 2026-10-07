@@ -89,6 +89,7 @@ import com.adsamcik.starlitcoffee.scan.observability.ScanBugReporter
 import com.adsamcik.starlitcoffee.scan.observability.ScanSessionRingBuffer
 import com.adsamcik.starlitcoffee.ui.component.DestructiveActionDialog
 import com.adsamcik.starlitcoffee.ui.component.MindlayerDiagnosticsCard
+import com.adsamcik.starlitcoffee.ui.component.MindlayerSettingsRow
 import com.adsamcik.starlitcoffee.ui.component.ScanHistoryDialog
 import com.adsamcik.starlitcoffee.ui.component.formatSessionForShare
 import com.adsamcik.starlitcoffee.util.RecognitionPreference
@@ -288,16 +289,11 @@ fun SettingsScreen(
             // ---------- Scanning ----------
             SettingsSectionHeader(stringResource(R.string.label_settings_section_scanning))
             SettingsGroup {
-                SettingsSwitchRow(
-                    title = stringResource(R.string.label_enhanced_label_recognition),
-                    summary = stringResource(R.string.msg_enhanced_label_recognition),
-                    checked = prefs.labelRecognitionPreference == RecognitionPreference.ENABLED,
+                MindlayerSettingsRow(
+                    preference = prefs.labelRecognitionPreference,
                     enabled = !isBusy,
-                    onCheckedChange = { enabled ->
-                        viewModel.updateLabelRecognitionPreference(
-                            if (enabled) RecognitionPreference.ENABLED else RecognitionPreference.DISABLED,
-                        )
-                    },
+                    enableRecognition = { viewModel.saveLabelRecognitionPreference(RecognitionPreference.ENABLED) },
+                    disableRecognition = { viewModel.saveLabelRecognitionPreference(RecognitionPreference.DISABLED) },
                 )
                 SettingsRowDivider()
                 SettingsNavigationRow(
@@ -371,7 +367,10 @@ fun SettingsScreen(
             // ---------- Developer (debug only) ----------
             if (BuildConfig.DEBUG) {
                 SettingsSectionHeader(stringResource(R.string.label_settings_section_developer))
-                MindlayerDiagnosticsCard()
+                MindlayerDiagnosticsCard(
+                    enableRecognition = { viewModel.saveLabelRecognitionPreference(RecognitionPreference.ENABLED) },
+                    enabled = !isBusy,
+                )
                 ScanDebugCard(viewModel = viewModel, operationState = operationState)
                 // Phase 3 — opt-in, on-device capture of model-vs-user field
                 // corrections, used to measure extraction quality on real bags.

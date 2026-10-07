@@ -1,11 +1,11 @@
 package com.adsamcik.starlitcoffee.scan.observability
 
 import android.content.Context
-import com.adsamcik.mindlayer.sdk.ConnectionState
 import com.adsamcik.mindlayer.sdk.InferenceBackend
 import com.adsamcik.mindlayer.sdk.InferenceEvent
 import com.adsamcik.mindlayer.sdk.Mindlayer
 import com.adsamcik.mindlayer.sdk.MindlayerException
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.withTimeoutOrNull
 
 data class ConnectionTestResult(
@@ -121,6 +121,8 @@ object MindlayerConnectionTester {
                 testResult = null,
                 errorMessage = null,
             )
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             errorResultFor(e)
         } finally {
@@ -208,6 +210,8 @@ object MindlayerConnectionTester {
                 ),
                 errorMessage = null,
             )
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             errorResultFor(e)
         } finally {

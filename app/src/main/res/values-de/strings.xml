@@ -429,15 +429,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">Mindlayer öffnen</string>
+    <string name="msg_mindlayer_requires_android">Erfordert Android 12 oder neuer.</string>
     <string name="label_ai_service">KI-Dienst (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Mindlayer bei Google Play holen</string>
-    <string name="msg_mindlayer_install_recommendation">Installiere Mindlayer über Google Play, um Kaffeebeutel-Etiketten mit privater KI auf dem Gerät zu lesen. Das kannst du später in den Einstellungen tun.</string>
     <string name="action_test_connection">Verbindung testen</string>
     <string name="action_run_test_prompt">Test-Prompt ausführen</string>
     <string name="label_testing">Wird getestet…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">KI aktivieren</string>
     <string name="consent_requesting">KI-Zugriff wird angefordert…</string>
     <string name="consent_granted">KI aktiviert</string>
     <string name="consent_already_approved">KI ist bereits aktiviert</string>

@@ -425,15 +425,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">打开 Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">需要 Android 12 或更高版本。</string>
     <string name="label_ai_service">AI服务（Mindlayer）</string>
     <string name="action_mindlayer_google_play">从 Google Play 获取 Mindlayer</string>
-    <string name="msg_mindlayer_install_recommendation">从 Google Play 安装 Mindlayer，即可使用设备端私密 AI 读取咖啡袋标签。您也可以稍后在“设置”中安装。</string>
     <string name="action_test_connection">测试连接</string>
     <string name="action_run_test_prompt">运行测试提示词</string>
     <string name="label_testing">测试中…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">启用 AI</string>
     <string name="consent_requesting">正在请求 AI 访问权限…</string>
     <string name="consent_granted">AI 已启用</string>
     <string name="consent_already_approved">AI 已经启用</string>

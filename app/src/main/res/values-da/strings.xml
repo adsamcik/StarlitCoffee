@@ -428,15 +428,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">Åbn Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">Kræver Android 12 eller nyere.</string>
     <string name="label_ai_service">AI-tjeneste (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Hent Mindlayer på Google Play</string>
-    <string name="msg_mindlayer_install_recommendation">Installer Mindlayer fra Google Play for at læse kaffeposeetiketter med privat AI på enheden. Du kan gøre det senere i Indstillinger.</string>
     <string name="action_test_connection">Test forbindelse</string>
     <string name="action_run_test_prompt">Kør testprompt</string>
     <string name="label_testing">Tester…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">Aktivér AI</string>
     <string name="consent_requesting">Anmoder om AI-adgang…</string>
     <string name="consent_granted">AI aktiveret</string>
     <string name="consent_already_approved">AI er allerede aktiveret</string>

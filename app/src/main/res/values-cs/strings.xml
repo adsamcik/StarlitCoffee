@@ -460,15 +460,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">Otevřít Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">Vyžaduje Android 12 nebo novější.</string>
     <string name="label_ai_service">Služba AI (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Získat Mindlayer z Google Play</string>
-    <string name="msg_mindlayer_install_recommendation">Nainstalujte Mindlayer z Google Play pro čtení etiket balení kávy pomocí soukromé AI přímo v zařízení. Můžete to udělat později v Nastavení.</string>
     <string name="action_test_connection">Otestovat připojení</string>
     <string name="action_run_test_prompt">Spustit testovací prompt</string>
     <string name="label_testing">Testování…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">Povolit AI</string>
     <string name="consent_requesting">Žádost o přístup k AI…</string>
     <string name="consent_granted">AI povolena</string>
     <string name="consent_already_approved">AI je už povolena</string>

@@ -429,15 +429,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">Avaa Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">Vaatii Android 12:n tai uudemman.</string>
     <string name="label_ai_service">Tekoälypalvelu (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Hanki Mindlayer Google Playsta</string>
-    <string name="msg_mindlayer_install_recommendation">Asenna Mindlayer Google Playsta, jotta voit lukea kahvipakkausten etiketit yksityisellä laitteessa toimivalla tekoälyllä. Voit tehdä tämän myöhemmin Asetuksissa.</string>
     <string name="action_test_connection">Testaa yhteys</string>
     <string name="action_run_test_prompt">Suorita testikehote</string>
     <string name="label_testing">Testataan…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">Ota tekoäly käyttöön</string>
     <string name="consent_requesting">Pyydetään tekoälyn käyttöoikeutta…</string>
     <string name="consent_granted">Tekoäly käytössä</string>
     <string name="consent_already_approved">Tekoäly on jo käytössä</string>
