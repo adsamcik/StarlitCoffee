@@ -6,6 +6,8 @@ Each board compares a short brew ready to start bloom with a cold brew already s
 
 Follow-up: [ten scenario boards, two per direction](scenario-pairs/README.md) separately explore basic and concurrent timers, and learning a method while brewing with another long brew still running.
 
+Latest feedback: [a strictly minimal baseline](minimal-baseline/README.md) reduces the design to two focused mockups, basic/concurrent timing and guided preparation with a background cold brew.
+
 | Direction | Central idea | Trade-off |
 | --- | --- | --- |
 | 01 Focus | One current instruction and quantity, compact recipe facts, one primary control. Closest to the older timer. | Upcoming stages need a disclosure. |
