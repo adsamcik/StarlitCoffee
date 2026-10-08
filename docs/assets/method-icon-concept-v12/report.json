@@ -1,0 +1,53 @@
+{
+  "status": "preview only; production resource differs from this export",
+  "source": "Root-authored pass 3 of 5 after Astra comparison of pass 2 to the front photo",
+  "svg_sha256": "3539075c99da27af12fe88cfb69feb53ab4799c0b1cedb0680715750698502b1",
+  "android_sha256": "547271d2cedf4c07c2f86e77802aeeaacaaf05c9885c67eed50ac48433ce139f",
+  "production_resource_matches": false,
+  "alpha_bounds_px": {
+    "24": [
+      4,
+      1,
+      19,
+      23
+    ],
+    "28": [
+      5,
+      1,
+      22,
+      27
+    ],
+    "34": [
+      6,
+      2,
+      27,
+      32
+    ],
+    "44": [
+      8,
+      3,
+      35,
+      41
+    ],
+    "88": [
+      17,
+      6,
+      69,
+      82
+    ],
+    "1024": [
+      204,
+      79,
+      788,
+      942
+    ]
+  },
+  "validation": "direct SVG rendering and lossless Android path export; no native app capture",
+  "revision": {
+    "iteration": 3,
+    "parent_version": 11,
+    "subtitle": "Deeper continuous band above the foot openings",
+    "source": "Root-authored pass 3 of 5 after Astra comparison of pass 2 to the front photo",
+    "changes": "Lower both opening roofs and their corner points by 0.3 units. Retain widths, shoulder profile and the y29.4 foot baseline; the solid band is now about 56 percent of the base height."
+  }
+}

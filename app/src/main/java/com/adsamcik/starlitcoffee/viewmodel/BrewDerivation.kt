@@ -7,6 +7,7 @@ import com.adsamcik.starlitcoffee.data.model.CoffeeRoastLevel
 import com.adsamcik.starlitcoffee.data.model.DecafProcess
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.model.GrinderDataProvider
+import com.adsamcik.starlitcoffee.data.model.recommendationFor
 import com.adsamcik.starlitcoffee.domain.BrewCalculator
 
 /**
@@ -190,16 +191,8 @@ internal object BrewDerivation {
         val grinder = grinderData.grinders.find { it.id == grinderId }
             ?: return GrindResult.Generic(method.defaultGrindDescriptor)
 
-        // Try exact filterType match first, then fall back to filter-agnostic recommendation
-        var recommendation = grinderData.recommendations.find { rec ->
-            rec.grinderId == grinder.id &&
-                rec.methodId == method.name &&
-                rec.filterType == filterType
-        } ?: grinderData.recommendations.find { rec ->
-            rec.grinderId == grinder.id &&
-                rec.methodId == method.name &&
-                rec.filterType == null
-        } ?: return GrindResult.Generic(method.defaultGrindDescriptor)
+        var recommendation = grinderData.recommendationFor(grinder.id, method, filterType)
+            ?: return GrindResult.Generic(method.defaultGrindDescriptor)
 
         // Decaf offset: start COARSER, not finer. Decaf beans shatter into more
         // fines at the same grinder gap, which reduces bed permeability and slows
@@ -215,11 +208,18 @@ internal object BrewDerivation {
             if (decafSteps > 0) {
                 val offset = recommendation.adjustmentStepSize * decafSteps
                 val stepLabel = if (decafSteps == 1) "1 step coarser" else "$decafSteps steps coarser"
+                val adjusted = (recommendation.suggestedStart + offset).coerceAtMost(recommendation.rangeEnd)
+                val normalized = (grinder.dial?.normalize(adjusted) ?: adjusted)
+                    .coerceIn(recommendation.rangeStart, recommendation.rangeEnd)
+                val adjustment = if (normalized > recommendation.suggestedStart) {
+                    "$stepLabel (more fines → coarsen for permeability)"
+                } else {
+                    "same start at the published guidance boundary; tune by taste"
+                }
                 recommendation = recommendation.copy(
-                    suggestedStart = (recommendation.suggestedStart + offset)
-                        .coerceAtMost(recommendation.rangeEnd),
+                    suggestedStart = normalized,
                     adjustmentNote = recommendation.adjustmentNote +
-                        " · Decaf: $stepLabel (more fines → coarsen for permeability)" +
+                        " · Decaf: $adjustment" +
                         processNote,
                 )
             } else {
@@ -231,7 +231,7 @@ internal object BrewDerivation {
             }
         }
 
-        if (calibrationStyle == null) {
+        if (calibrationStyle == null || recommendation.rangeStart == recommendation.rangeEnd) {
             return GrindResult.Specific(recommendation, grinder)
         }
 
@@ -243,8 +243,8 @@ internal object BrewDerivation {
 
         return GrindResult.Specific(
             recommendation.copy(
-                rangeStart = adjustedStart,
-                rangeEnd = adjustedEnd,
+                rangeStart = grinder.dial?.lowerBound(adjustedStart) ?: adjustedStart,
+                rangeEnd = grinder.dial?.upperBound(adjustedEnd) ?: adjustedEnd,
             ),
             grinder,
         )
@@ -282,6 +282,7 @@ internal object BrewDerivation {
         val baseSteps = when (method) {
             BrewMethod.PULSAR,
             BrewMethod.V60,
+            BrewMethod.CHEMEX,
             BrewMethod.MOKA_POT,
             BrewMethod.ESPRESSO -> 1
             BrewMethod.FRENCH_PRESS,

@@ -111,6 +111,7 @@ enum class LlmEnrichmentStatus {
     SUCCEEDED,
     FAILED,
     UNAVAILABLE,
+    AUTHORIZATION_REQUIRED,
     SETUP_REQUIRED,
     TIMED_OUT,
 }

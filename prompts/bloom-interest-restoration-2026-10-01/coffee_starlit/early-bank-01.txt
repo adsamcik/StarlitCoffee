@@ -1,0 +1,16 @@
+Create a transparent3 by3 square sprite bank of NINE complete early Starlit Coffee poses leading INTO the supplied following pose. Reference shows the same mature-size bean, five permanent star sites, round junction light and the first small left-loop stroke. All nine must use exactly that bean size, texture, position and baseline. The only changes are ignition, star arrival and central light formation; no plant or steam plume.
+
+The five fixed star sites are reference's TOP above all loops, UPPER-LEFT, UPPER-RIGHT, LOWER-LEFT beside bean, LOWER-RIGHT beside bean. Each star appears at its final site and then stays there in every later pose. Never move an established star to make room. No extra glitter dots. Round central light is not a star.
+
+Nine row-major poses:
+1 Only the complete brown bean, same outer silhouette as reference, seam dark. ZERO stars, no orb, no loop strand.
+2 Bean seam glows warm gold, and ONE small star appears at the permanent UPPER-LEFT site. No other stars.
+3 Retain upper-left star. A SECOND star appears at permanent LOWER-LEFT site. Gold seam grows brighter. Exactly TWO stars.
+4 Retain both left stars. A THIRD star appears at permanent UPPER-RIGHT site. Exactly THREE stars.
+5 Retain the three stars. A FOURTH star appears at permanent LOWER-RIGHT site. Exactly FOUR stars.
+6 Retain all four side stars. The FIFTH star appears at permanent TOP site. Exactly FIVE stars, now all final sites established.
+7 Keep all FIVE stars fixed. Fine warm threads rise a short distance from the bean's opening toward the future central light; no loop yet.
+8 Keep all FIVE stars fixed. Threads gather into the small round junction light at exactly the reference's central position. No loop yet.
+9 Keep all FIVE stars and the round center. A tiny short strand starts extending LEFT from the center, shorter than the following reference's left curved stroke. This must lead directly into the reference without a size or bean change.
+
+Stars are crisp small gold five-point shapes matching reference, with restrained glow and identical size once born. No star disappears, shifts or duplicates. Keep the five sites inside the reference footprint. True transparent alpha background, uniform equal cells, ample margins and completely empty gutters, whole uncut artwork. Warm tactile painted bean, luminous fine gold threads. No text, counts printed in image, labels, guides, grid, border, background, cup, leaves, petals or extra decoration.

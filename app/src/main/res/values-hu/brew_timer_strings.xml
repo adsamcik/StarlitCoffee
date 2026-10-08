@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_set_brew_reminder">Emlékeztető beállítása</string>
+    <string name="action_edit_brew_reminder">Emlékeztető szerkesztése</string>
+    <string name="action_remove_brew_reminder">Emlékeztető eltávolítása</string>
+    <string name="label_brew_reminder">Emlékeztető</string>
+    <string name="label_timer_duration">Időtartam</string>
+    <string name="label_timer_seconds">Másodperc</string>
+    <string name="label_timer_minutes">Perc</string>
+    <string name="label_timer_hours">Óra</string>
+    <string name="msg_brew_reminder_origin">Ennek a lépésnek a kezdetétől. Az időtartam módosítása megőrzi az eltelt időt. Továbbra is Ön erősíti meg a lépés befejezését.</string>
+    <string name="msg_brew_reminder_reached">Elérkezett az emlékeztető ideje. Folytatás előtt ellenőrizze a kávét.</string>
+    <string name="title_cold_brew">Cold brew</string>
+    <string name="title_cold_brew_timer">Cold brew időzítő</string>
+    <string name="action_follow_brew_guide">Útmutató követése</string>
+    <string name="action_just_set_brew_timer">Csak időzítő beállítása</string>
+    <string name="action_start_timer">Időzítő indítása</string>
+    <string name="action_start_steeping">Áztatás indítása</string>
+    <string name="action_end_brew_timer">Időzítő befejezése</string>
+    <string name="action_add_brew_start_time">Kezdési idő hozzáadása</string>
+    <string name="label_brew_start_now">Most kezdődik</string>
+    <string name="label_brew_start_earlier">Korábban kezdődött</string>
+    <string name="label_brew_start_unknown">Ismeretlen kezdési idő</string>
+    <string name="label_brew_hours_ago">Hány órája</string>
+    <string name="label_brew_minutes_ago">Hány perce</string>
+    <string name="msg_cold_brew_refrigerated">Lefedve, hűtőben, legfeljebb 4 °C-on tartsa. Az alapértelmezett áztatási idő 14 óra.</string>
+    <string name="msg_cold_brew_start_origin">Akkor indítsa, amikor a kávé teljesen átnedvesedett, és a lefedett edény a hűtőbe kerül.</string>
+    <string name="msg_brew_start_unknown">Adja meg a tényleges kezdési időt az emlékeztető kiszámításához. Addig nincs becsült befejezési idő.</string>
+    <string name="msg_brew_timer_ended">Az időzítő befejeződött</string>
+    <string name="label_brew_extraction_ended">Az extrakció befejeződött</string>
+    <string name="msg_brew_notifications_disabled">Az emlékeztetők ki vannak kapcsolva. A kávékészítés folytatódik.</string>
+    <string name="action_allow_brew_notifications">Emlékeztetők engedélyezése</string>
+    <string name="msg_brew_reminders_may_be_late">Az Android késleltetheti az emlékeztetőket, amikor elhagyja az alkalmazást.</string>
+    <string name="action_allow_precise_brew_reminders">Pontos emlékeztetők engedélyezése</string>
+</resources>

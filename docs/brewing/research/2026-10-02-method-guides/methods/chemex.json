@@ -1,0 +1,500 @@
+{
+  "method_id": "chemex",
+  "title": "Chemex brewing guide",
+  "scope": "Manual six-cup Classic Chemex with compatible bonded paper; app-authored 30 g coffee and 480 g brew-water starting point. Three-cup and named roaster recipes are separate variants.",
+  "research_date": "2026-10-02",
+  "review_status": "editorially_reviewed",
+  "physical_brew_tested": false,
+  "sources": [
+    {
+      "id": "chemex_six",
+      "title": "Six Cup Classic CHEMEX: specification and How to Use",
+      "url": "https://chemexcoffeemaker.com/products/six-cup-classic-chemex",
+      "author_or_organization": "CHEMEX Corporation",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Six-cup compatible papers FP-1, FC-100, FS-100, FSU-100",
+        "Medium-coarse grind, three layers at spout, gentle pouring below rim",
+        "Manufacturer bloom is about 30 seconds; not our exact mass recipe"
+      ]
+    },
+    {
+      "id": "chemex_three",
+      "title": "Three Cup Classic CHEMEX: specification and How to Use",
+      "url": "https://chemexcoffeemaker.com/products/three-cup-classic-chemex",
+      "author_or_organization": "CHEMEX Corporation",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Three-cup uses FP-2/FP-2N half-moon paper",
+        "Product lists 15 Ounce / 1 Pint inconsistently; no exact conversion inferred"
+      ]
+    },
+    {
+      "id": "chemex_folding",
+      "title": "How to brew with CHEMEX: FP-1 folding video description",
+      "url": "https://chemexcoffeemaker.com/pages/how-to-brew-with-chemex",
+      "author_or_organization": "CHEMEX Corporation",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Fold full circle twice; open cone with three layers toward spout and one opposite",
+        "Keep spout available as an air channel",
+        "Links separate FP-2 folding demonstration"
+      ]
+    },
+    {
+      "id": "chemex_filter_support",
+      "title": "Filter Series Info and Support",
+      "url": "https://chemexcoffeemaker.com/pages/filter-series-support-page",
+      "author_or_organization": "CHEMEX Corporation",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Larger bonded papers differ from three-cup half-moon paper",
+        "Thick side at spout supports paper and helps prevent sealing",
+        "Medium-coarse starting grind and disposal of spent paper"
+      ]
+    },
+    {
+      "id": "chemex_faq",
+      "title": "CHEMEX FAQ",
+      "url": "https://chemexcoffeemaker.com/pages/faq",
+      "author_or_organization": "CHEMEX Corporation",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Rinsing is optional; discard rinse water",
+        "Slow flow can arise from fine grounds or a sealed spout",
+        "Rapid flow may require finer grind"
+      ]
+    },
+    {
+      "id": "chemex_care",
+      "title": "Classic Series Info and Support",
+      "url": "https://chemexcoffeemaker.com/pages/classic-series-product-support",
+      "author_or_organization": "CHEMEX Corporation",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Brand cup is five ounces; capacities depend on model",
+        "Bump is full mark for three-cup and halfway for five- to ten-cup",
+        "Remove collar and rawhide before washing, secure dishwasher glass, do not microwave"
+      ]
+    },
+    {
+      "id": "stumptown",
+      "title": "Brew Guide: Chemex",
+      "url": "https://www.stumptowncoffee.com/pages/brew-guide-chemex",
+      "author_or_organization": "Stumptown Coffee Roasters",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Published eight-cup 42 g / 700 g example",
+        "150 g bloom; 450 g cumulative at 45 seconds; 700 g at 105 seconds",
+        "About 205 F water and roughly four-minute/volume removal, not this app's six-cup sequence"
+      ]
+    },
+    {
+      "id": "blue_bottle",
+      "title": "How to Make Chemex Coffee",
+      "url": "https://bluebottlecoffee.com/us/eng/brew-guides/chemex",
+      "author_or_organization": "Blue Bottle Coffee",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Published 36-46 g / 600 g example, 200-210 F, medium-coarse grind",
+        "80 g bloom; 45-second first interval and 300/400/500/600 g cumulative main pours",
+        "Allow full drawdown; 270-330 seconds refers to its published batch"
+      ]
+    },
+    {
+      "id": "baratza_esp",
+      "title": "Encore ESP Operations Manual, January 2023 v1.0, page 5",
+      "url": "https://assets.breville.com/ZCG495/manual-encoreesp-v1-0-en-010923.pdf",
+      "author_or_organization": "Baratza",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Encore ESP manufacturer Chemex starting setting 30",
+        "Adjust for recipe and taste; setting is not a universal range",
+        "Unplug before grinder cleaning"
+      ]
+    },
+    {
+      "id": "george_howell_access",
+      "title": "Chemex Six-Cup For One (recipe content unavailable)",
+      "url": "https://georgehowellcoffee.com/pages/brew-guide-chemex-six-cup-for-one",
+      "author_or_organization": "George Howell Coffee",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "partial",
+      "supports": [
+        "Access observation only: the URL returned site navigation without recipe instructions; no recipe claim is supported."
+      ]
+    }
+  ],
+  "recipe": {
+    "name": "Everyday six-cup Chemex: 30 g / 480 g",
+    "provenance": "app_authored_synthesis",
+    "source_ids": [
+      "chemex_six",
+      "chemex_folding",
+      "chemex_faq",
+      "blue_bottle",
+      "stumptown"
+    ],
+    "equipment": [
+      "Six-cup Classic Chemex",
+      "Matching bonded paper: FP-1, FC-100, FS-100, or FSU-100",
+      "Gram scale and timer",
+      "Kettle with controllable pour",
+      "Grinder",
+      "Spoon and mugs"
+    ],
+    "coffee_dose_g": 30,
+    "brew_water_g": 480,
+    "brew_water_ml": null,
+    "ice_g": 0,
+    "target_beverage_g": null,
+    "ratio_basis": "brew_water_input",
+    "ratio_value": 16,
+    "water_temperature_c": {
+      "min": 93,
+      "max": 96,
+      "control": "user"
+    },
+    "grind_description": "Medium-coarse, visibly granular rather than powder; no universal grinder number.",
+    "expected_time_s": {
+      "min": null,
+      "max": null,
+      "clock_start": "First brewing water contacts coffee; preparation and rinse excluded",
+      "clock_end": "No standing water remains above the bed and continuous flow has become occasional drips"
+    },
+    "completion_signal": "Water above the grounds has drained; main flow has slowed to occasional drips. Remove the filter without waiting for every last drip.",
+    "scaling": "revalidate_batch_size",
+    "steps": [
+      {
+        "id": "prepare",
+        "instruction": "Open matching paper with three layers toward the spout and one opposite; leave the spout groove open.",
+        "why": "Air needs an escape route as brewed coffee enters the carafe.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Paper fits the six-cup funnel and the spout channel remains clear.",
+        "source_ids": [
+          "chemex_folding",
+          "chemex_filter_support"
+        ]
+      },
+      {
+        "id": "rinse",
+        "instruction": "Wet the paper with hot water, discard the rinse, and put the brewer on a stable scale.",
+        "why": "Our optional preparation warms the glass and wets the paper; rinse is separate from recipe water.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Paper is wet and no rinse water remains in the carafe.",
+        "source_ids": [
+          "chemex_faq"
+        ]
+      },
+      {
+        "id": "dose",
+        "instruction": "Add 30 g medium-coarse coffee, level the bed gently, and tare the scale with everything in place.",
+        "why": "A consistent weighed dose makes this chosen ratio repeatable.",
+        "water_add_g": 0,
+        "water_cumulative_g": 0,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Level coffee bed and scale reads zero before brewing.",
+        "source_ids": [
+          "chemex_six",
+          "blue_bottle"
+        ]
+      },
+      {
+        "id": "bloom",
+        "instruction": "At first water contact start the timer, pour 90 g evenly, gently stir only if needed to wet dry pockets, and wait until 45 seconds elapsed.",
+        "why": "Wet the whole bed before the main pours. The 90 g and 45 seconds are app-selected, not a Chemex manufacturer recipe.",
+        "water_add_g": 90,
+        "water_cumulative_g": 90,
+        "start_s": 0,
+        "duration_s": 45,
+        "completion": "All grounds wetted and timer reaches 45 seconds from first water contact, including the pour.",
+        "source_ids": [
+          "stumptown",
+          "blue_bottle"
+        ]
+      },
+      {
+        "id": "pour_1",
+        "instruction": "At 45 seconds pour 150 g gently over the coffee to reach 240 g total. Pause whenever liquid rises too quickly.",
+        "why": "This app-selected checkpoint divides the remaining water into manageable additions.",
+        "water_add_g": 150,
+        "water_cumulative_g": 240,
+        "start_s": 45,
+        "duration_s": null,
+        "completion": "Scale reads 240 g cumulative; liquid remains comfortably below both rims.",
+        "source_ids": [
+          "chemex_six"
+        ]
+      },
+      {
+        "id": "pour_2",
+        "instruction": "When the level has visibly fallen, add the final 240 g gradually to reach 480 g total; divide this addition further if needed for headroom.",
+        "why": "Flow and safe liquid level determine pace; no unsupported fixed pour-start time.",
+        "water_add_g": 240,
+        "water_cumulative_g": 480,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Scale reads 480 g cumulative, without overflow or sealing the spout.",
+        "source_ids": [
+          "chemex_six",
+          "chemex_filter_support"
+        ]
+      },
+      {
+        "id": "drain",
+        "instruction": "Observe drainage and record elapsed time when standing water disappears and the continuous flow becomes occasional drips.",
+        "why": "Completion follows drainage. This untested 30/480 batch has no independently verified finish window.",
+        "water_add_g": 0,
+        "water_cumulative_g": 480,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "No standing water above the bed; main flow has become occasional drips.",
+        "source_ids": [
+          "blue_bottle"
+        ]
+      },
+      {
+        "id": "serve",
+        "instruction": "Carefully remove the wet filter, gently swirl the collected coffee, and serve using the collar or handle.",
+        "why": "Mix the collected coffee and protect hands from hot glass.",
+        "water_add_g": 0,
+        "water_cumulative_g": 480,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Filter removed and coffee served safely.",
+        "source_ids": [
+          "stumptown",
+          "chemex_care"
+        ]
+      }
+    ]
+  },
+  "variants": [
+    {
+      "name": "Three-cup half-moon setup",
+      "how_it_differs": "Use FP-2 or FP-2N. App-selected smaller example: 20 g coffee, 320 g water, 60 g bloom, then 100 g to 160 g cumulative and 160 g to 320 g cumulative. Recheck safe fill and drainage; do not scale a timer.",
+      "source_ids": [
+        "chemex_three",
+        "chemex_care"
+      ]
+    },
+    {
+      "name": "Stumptown published 42/700",
+      "how_it_differs": "Eight-cup equipment, 150 g bloom, then 450/700 g cumulative at 45/105 seconds, approximately 96 C water, and roughly four-minute/volume removal. This is distinct from app chemex_42_700.",
+      "source_ids": [
+        "stumptown"
+      ]
+    },
+    {
+      "name": "Blue Bottle published 600 g",
+      "how_it_differs": "36-46 g dose, 80 g bloom, then 300/400/500/600 g cumulative and full drawdown. Its own finish guidance is 270-330 seconds; do not apply it automatically to smaller batches.",
+      "source_ids": [
+        "blue_bottle"
+      ]
+    },
+    {
+      "name": "Encore ESP grind anchor",
+      "how_it_differs": "Manufacturer suggests setting 30 as the starting point on the Encore ESP only; tune for taste and actual drainage.",
+      "source_ids": [
+        "baratza_esp"
+      ]
+    }
+  ],
+  "troubleshooting": [
+    {
+      "symptom": "Slow or stalled flow, liquid rising",
+      "check_first": "Stop adding water; inspect correct paper fit and a clear spout groove.",
+      "adjustment": "If airflow is clear, try a slightly coarser grind next brew.",
+      "source_ids": [
+        "chemex_filter_support",
+        "chemex_faq"
+      ]
+    },
+    {
+      "symptom": "Fast drainage with thin or sharply sour coffee",
+      "check_first": "Confirm even wetting, dose, cumulative water and filter fit.",
+      "adjustment": "Try slightly finer next brew; change one variable.",
+      "source_ids": [
+        "chemex_faq"
+      ]
+    },
+    {
+      "symptom": "Balanced flavor but weaker than desired",
+      "check_first": "Verify dose and total water; distinguish strength preference from stalled drainage.",
+      "adjustment": "App-authored adjustment informed by Chemex's suggestion to use more coffee for a stronger drink: increase coffee slightly while keeping water fixed.",
+      "source_ids": [
+        "chemex_six"
+      ]
+    },
+    {
+      "symptom": "Harsh taste after unusually slow drainage",
+      "check_first": "Check spout airflow and pouring before assuming grind is the cause.",
+      "adjustment": "With airflow clear, try slightly coarser next brew and compare taste; do not invent an early-removal time.",
+      "source_ids": [
+        "chemex_filter_support",
+        "chemex_faq"
+      ]
+    }
+  ],
+  "safety": [
+    "Keep the brewer stable and liquid below both the paper and glass rims; pause pouring if needed.",
+    "Handle hot coffee carefully and hold the brewer by collar or handle rather than hot glass.",
+    "Let the carafe cool before washing. Remove wood collar and rawhide; handwash with warm soapy water or secure bare glass in the dishwasher.",
+    "Do not reheat a Chemex in a microwave.",
+    "If cleaning an electric grinder, unplug it and follow its own manual."
+  ],
+  "app_audit": [
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt",
+      "finding": "CHEMEX at line 235: 1:16, medium-coarse, 93-96 C, 45-second default bloom, 3x bloom water, two main pours, 240-330-second reference, null capacity, no decaf time reduction.",
+      "severity": "info",
+      "change_recommendation": "Keep combined defaults clearly app-authored; treat time as reference and size as equipment-specific.",
+      "source_ids": [
+        "chemex_six",
+        "blue_bottle",
+        "stumptown"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/session/LegacyStagePlanFactory.kt",
+      "finding": "Chemex plan at line 116 uses manual pours, observed drainage confirmation and safe serving.",
+      "severity": "info",
+      "change_recommendation": "Preserve drainage confirmation; do not replace it with timer completion.",
+      "source_ids": [
+        "blue_bottle"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/LegacyBuiltInGuidanceCatalog.kt",
+      "finding": "Lines 245 and 448 already explain half-moon size, three-layer spout orientation, airflow checks, headroom and handling.",
+      "severity": "info",
+      "change_recommendation": "Preserve accurate content and add concrete amounts only for a selected labeled recipe.",
+      "source_ids": [
+        "chemex_three",
+        "chemex_folding",
+        "chemex_six"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BuiltInP1RecipeCatalog.kt",
+      "finding": "chemex_42_700 at line 340: six-cup, 42/700, 94-96 C, 300-390 seconds, SRC-CHEMEX-FAQ/SRC-SCHMIEDER-FLOW, unresolved beverage yield.",
+      "severity": "medium",
+      "change_recommendation": "State app-authored synthesis explicitly. Chemex FAQ does not publish these quantities; Stumptown's matching dose/water does not verify this differing sequence.",
+      "source_ids": [
+        "chemex_faq",
+        "stumptown"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/session/P1ManualGravityStagePlans.kt",
+      "finding": "Line 326: 100-125 g bloom for 45 seconds, then 400/700 g cumulative and observed finish; differs from Stumptown.",
+      "severity": "medium",
+      "change_recommendation": "Keep the sequence as labeled synthesis or create a separate faithfully attributed Stumptown recipe; do not silently relabel.",
+      "source_ids": [
+        "stumptown"
+      ]
+    },
+    {
+      "path": "app/src/main/res/raw/p1_exact_guidance.json",
+      "finding": "Current English exact guidance names a baseline, labels evidence Expert-established, and suggests avoiding an excessively long bitter tail at stage 06.",
+      "severity": "medium",
+      "change_recommendation": "Apply reviewed runtime provenance and observable drainage wording; a beginner cannot observe taste before collection.",
+      "source_ids": [
+        "blue_bottle"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1ExactGuidanceFactualErrata.kt",
+      "finding": "No Chemex factual override exists; loader applies this file to current exact recipe/stage guidance.",
+      "severity": "medium",
+      "change_recommendation": "Use reviewed errata for provenance and completion changes while preserving immutable historical source projections.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BuiltinBrewerProfileRecipeDefaults.kt",
+      "finding": "Chemex at line 170 inherits manualGravityDefaults including 2.0 g/g retention and estimated beverage output at line 197.",
+      "severity": "medium",
+      "change_recommendation": "Resolve with the fail-closed method estimator; no reviewed source establishes this coefficient. Keep output unknown or explicitly measured.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BrewingCatalog.kt",
+      "finding": "chemex_unspecified and manual_thick_paper_carafe at lines 241/249 use BrewWaterMinusRetention(2.0).",
+      "severity": "medium",
+      "change_recommendation": "Remove unsupported Chemex yield precision from profile quantity contracts; account for unknown output.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/BeverageOutputEstimator.kt",
+      "finding": "CHEMEX returns null because no verified method-specific coefficient exists.",
+      "severity": "info",
+      "change_recommendation": "Preserve this explicit evidence limit across calculator/profile paths.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/assets/grinders.json",
+      "finding": "Encore ESP Chemex entry at line 332 has only manufacturer setting 30, without an invented range.",
+      "severity": "info",
+      "change_recommendation": "Retain exact model and starting-point caveat; do not generalize to other grinders.",
+      "source_ids": [
+        "baratza_esp"
+      ]
+    },
+    {
+      "path": "docs/brewing/learning-guide-factual-audit-2026-08-19.md",
+      "finding": "Line 37 correctly describes 42/700 as synthesized; exact runtime evidence wording is less explicit.",
+      "severity": "low",
+      "change_recommendation": "Align runtime provenance with the documented synthesis boundary.",
+      "source_ids": [
+        "chemex_faq",
+        "stumptown"
+      ]
+    }
+  ],
+  "uncertainties": [
+    "The selected 30/480 recipe has not been physically brewed; no verified batch-specific time or beverage yield is supplied.",
+    "Dose/water masses may be changed proportionally, but paper fit, bed depth, pour pacing, airflow and drainage require revalidation.",
+    "Three-cup official listing says 15 Ounce / 1 Pint, an inconsistent unit equivalence; no exact converted capacity is used.",
+    "George Howell's older six-cup-for-one page returned navigation without recipe content; excluded from recipe evidence.",
+    "SRC-SCHMIEDER-FLOW did not resolve to a primary document in inspected guide records; its identity and Chemex applicability remain unverified.",
+    "Static catalog and copy review do not establish translation quality, UI execution or kitchen performance."
+  ],
+  "do_not_claim": [
+    "The app's six-cup chemex_42_700 sequence is Chemex's official or Stumptown's exact recipe.",
+    "The manufacturer requires filter rinsing or a 45-second bloom.",
+    "Three-cup Chemex accepts the same folded sheets as the six-cup.",
+    "All Chemex sizes have one input-water capacity or one finish time.",
+    "The glass bump always marks the same volume or always half capacity.",
+    "480 g input water is 480 g beverage or exactly 480 ml water.",
+    "Chemex retains a universal 2 g water per gram coffee.",
+    "A clock alert proves drawdown is complete.",
+    "A given flavor or grinder number works for every bean, roast, water and grinder.",
+    "Paper filtration removes all acidity or prevents bitter coffee."
+  ]
+}

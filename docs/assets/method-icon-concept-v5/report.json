@@ -1,0 +1,39 @@
+{
+  "status": "rejected by user; app retains its original icon",
+  "source": "root-authored simplification with Astra small-size review",
+  "svg_sha256": "7cb42858650473e3003b33d7dce4712d4e4ab0991ca17d8421893a06aed5ca8a",
+  "android_sha256": "d8f0fcd733b92b33a328e38773522a551c7a4c06dccec8de14ef8f7958324ded",
+  "alpha_bounds_px": {
+    "24": [
+      4,
+      1,
+      20,
+      23
+    ],
+    "28": [
+      4,
+      1,
+      23,
+      27
+    ],
+    "34": [
+      6,
+      2,
+      28,
+      32
+    ],
+    "88": [
+      16,
+      6,
+      71,
+      82
+    ],
+    "1024": [
+      190,
+      79,
+      820,
+      945
+    ]
+  },
+  "validation": "direct SVG rendering and lossless Android path export; no native app capture"
+}

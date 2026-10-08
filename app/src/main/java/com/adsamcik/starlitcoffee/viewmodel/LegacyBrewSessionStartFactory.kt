@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.viewmodel
 
+import com.adsamcik.starlitcoffee.data.model.GrinderSettingFormatter
 import com.adsamcik.starlitcoffee.data.brewing.LegacyBrewingAdapter
 import com.adsamcik.starlitcoffee.data.brewing.LegacyBrewingReference
 import com.adsamcik.starlitcoffee.data.brewing.session.BrewLogPresentationContextSnapshotV1
@@ -120,7 +121,14 @@ class LegacyBrewSessionStartFactory(
             )
 
         val compiledPlan = when (
-            val compiled = StagePlanCompiler.compile(LegacyStagePlanFactory.create(legacyMethod))
+            val compiled = StagePlanCompiler.compile(LegacyStagePlanFactory.create(
+                method = legacyMethod,
+                bloomDurationSeconds = if (legacyMethod.hasBloom) {
+                    input.state.effectiveBloomDurationSeconds
+                } else {
+                    legacyMethod.bloomDurationSeconds
+                },
+            ))
         ) {
             is StagePlanCompileResult.Compiled -> compiled.value
             is StagePlanCompileResult.Invalid -> {
@@ -138,6 +146,8 @@ class LegacyBrewSessionStartFactory(
         )
         val context = SessionExecutionContextSnapshotV1(
             coffeeBagId = input.selectedCoffeeBagId,
+            coffeeIdentityId = input.state.selectedCoffeeIdentityId,
+            grindMemory = input.preparedGrindSnapshot(),
             sourceRecipeId = input.sourceRecipeId,
             logPresentation = BrewLogPresentationContextSnapshotV1(
                 methodLabel = input.rawMethodId,
@@ -370,12 +380,10 @@ class LegacyBrewSessionStartFactory(
         )
     }
 
-    private fun BrewUiState.grindLabel(): String = when (val result = grindResult) {
+    private fun BrewUiState.grindLabel(): String = preparedGrind.displayValue.takeIf(String::isNotBlank) ?: when (val result = grindResult) {
         is GrindResult.Generic -> result.descriptor.displayName
         is GrindResult.Specific -> {
-            "%.1f".format(result.recommendation.rangeStart) +
-                "-" +
-                "%.1f".format(result.recommendation.rangeEnd)
+            GrinderSettingFormatter.range(result.grinder, result.recommendation)
         }
     }
 
@@ -402,4 +410,12 @@ class LegacyBrewSessionStartFactory(
         const val POUR_SINGLE = "SINGLE_POUR"
         const val POUR_PULSED = "PULSED"
     }
+}
+
+private fun LegacyBrewSessionStartInput.preparedGrindSnapshot() = state.preparedGrind.value?.let { value ->
+    com.adsamcik.starlitcoffee.data.brewing.session.GrindMemorySnapshotV1(
+        com.adsamcik.starlitcoffee.data.model.GrindContext(
+            state.selectedGrinderId.orEmpty(), rawMethodId, rawFilterId.orEmpty(),
+        ), value, state.preparedGrind.source.name,
+    )
 }

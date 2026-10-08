@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_title_short">准备</string>
+    <string name="prep_equipment_station">准备器具</string>
+    <string name="prep_beverage_yield">杯中咖啡</string>
+    <string name="prep_recipe_details">配方详情</string>
+    <string name="prep_grinder_range">建议范围</string>
+    <string name="prep_grinder_adjustment">根据口味调整 %1$s</string>
+    <string name="prep_grind_from_zero">从零位开始</string>
+    <string name="prep_grind_on_dial">刻度盘数值</string>
+    <string name="prep_grind_no_extra_clicks">%1$d · 无额外格数</string>
+    <string name="prep_grind_dial_breakdown">%1$d + %2$s</string>
+    <plurals name="prep_clicks">
+        <item quantity="other">%1$d 格</item>
+    </plurals>
+</resources>

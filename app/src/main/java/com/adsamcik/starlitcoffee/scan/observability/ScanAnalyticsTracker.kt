@@ -3,6 +3,7 @@ package com.adsamcik.starlitcoffee.scan.observability
 import dev.tracebox.Tracebox
 import dev.tracebox.api.LogTemplate
 import dev.tracebox.api.argument
+import com.adsamcik.starlitcoffee.domain.scandiagnostics.ScanLifecycleDiagnostic
 
 private object ScanAnalyticsTrackerTraceboxTemplates {
     val EVENT_SCAN_STARTED = LogTemplate.of("event=scan_started")
@@ -22,16 +23,28 @@ private object ScanAnalyticsTrackerTraceboxTemplates {
  */
 object ScanAnalyticsTracker {
 
+    fun trackLifecycle(diagnostic: ScanLifecycleDiagnostic) {
+        TraceboxScanDiagnosticsRecorder().record(diagnostic)
+    }
+
     fun trackScanStarted() {
         Tracebox.log.debug(ScanAnalyticsTrackerTraceboxTemplates.EVENT_SCAN_STARTED)
     }
 
     fun trackLlmFired(callNumber: Int, fieldsNeeded: Int) {
-        Tracebox.log.debug(ScanAnalyticsTrackerTraceboxTemplates.EVENT_LLM_FIRED_CALL_NUMBER_FIELDS_NEEDED, argument(callNumber), argument(fieldsNeeded))
+        Tracebox.log.debug(
+            ScanAnalyticsTrackerTraceboxTemplates.EVENT_LLM_FIRED_CALL_NUMBER_FIELDS_NEEDED,
+            argument(callNumber),
+            argument(fieldsNeeded),
+        )
     }
 
     fun trackDraftShown(latencyMs: Long, fieldsResolved: Int) {
-        Tracebox.log.debug(ScanAnalyticsTrackerTraceboxTemplates.EVENT_DRAFT_SHOWN_LATENCY_MS_FIELDS_RESOLVED, argument(latencyMs), argument(fieldsResolved))
+        Tracebox.log.debug(
+            ScanAnalyticsTrackerTraceboxTemplates.EVENT_DRAFT_SHOWN_LATENCY_MS_FIELDS_RESOLVED,
+            argument(latencyMs),
+            argument(fieldsResolved),
+        )
     }
 
     fun trackScanCompleted(

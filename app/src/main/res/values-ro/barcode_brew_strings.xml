@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_to_brew">Scanează pentru preparare</string>
+    <string name="msg_barcode_brew_no_match">Nicio cafea în stoc nu are acest cod de bare. Verifică codul în detaliile salvate ale pachetului.</string>
+    <string name="msg_barcode_brew_choose_bag">Mai multe pachete au acest cod de bare. Alege pachetul pe care îl folosești.</string>
+    <string name="msg_barcode_brew_enter_amount">%1$s selectat. Setează o cantitate, apoi apasă Prepară.</string>
+</resources>

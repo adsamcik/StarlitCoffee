@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_to_brew">Skeniraj za pripravo</string>
+    <string name="msg_barcode_brew_no_match">Nobena kava na zalogi nima te črtne kode. Preverite kodo v shranjenih podatkih vrečke.</string>
+    <string name="msg_barcode_brew_choose_bag">Več vrečk ima to črtno kodo. Izberite vrečko, ki jo uporabljate.</string>
+    <string name="msg_barcode_brew_enter_amount">Izbrano: %1$s. Nastavite količino in tapnite Pripravi.</string>
+</resources>

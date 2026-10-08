@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_to_brew">Scannen om te zetten</string>
+    <string name="msg_barcode_brew_no_match">Geen koffie op voorraad heeft deze barcode. Controleer de barcode in de opgeslagen zakgegevens.</string>
+    <string name="msg_barcode_brew_choose_bag">Meerdere zakken hebben deze barcode. Kies de zak die je gebruikt.</string>
+    <string name="msg_barcode_brew_enter_amount">%1$s geselecteerd. Stel een hoeveelheid in en tik op Zetten.</string>
+</resources>

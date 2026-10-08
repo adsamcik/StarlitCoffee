@@ -2,9 +2,11 @@ package com.adsamcik.starlitcoffee.data.brewing.session
 
 import com.adsamcik.starlitcoffee.data.repository.ActiveBrewSessionRepository
 import com.adsamcik.starlitcoffee.domain.brewing.session.ClockedSessionEngine
+import com.adsamcik.starlitcoffee.domain.brewing.session.BrewSessionStatus
 import com.adsamcik.starlitcoffee.domain.brewing.session.MonotonicClock
 import com.adsamcik.starlitcoffee.domain.brewing.session.PendingSessionEffect
 import com.adsamcik.starlitcoffee.domain.brewing.session.SessionId
+import com.adsamcik.starlitcoffee.domain.brewing.session.SessionEvent
 import com.adsamcik.starlitcoffee.domain.brewing.session.WallClock
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -14,6 +16,47 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class BrewSessionCoordinatorTest {
+
+    @Test
+    fun `waiting for physical start persists no extraction clock or effects`() = runTest {
+        val dao = FakeActiveBrewSessionDao()
+        val handler = RecordingEffectHandler(dao, SessionEffectDelivery.Delivered)
+        val coordinator = coordinator(dao, handler)
+        val request = startRequest(SessionId("awaiting-first-water"))
+        val created = coordinator.createOrResume(request, startImmediately = false)
+            as BrewSessionOperationResult.Active
+        assertEquals(BrewSessionStatus.READY, created.session.runtime.status)
+        assertEquals(null, created.session.runtime.startedAtWallClockMillis)
+        assertEquals(null, created.session.runtime.activeClockAnchor)
+        assertEquals(0L, created.session.runtime.totalActiveElapsedMillis)
+        assertTrue(handler.delivered.isEmpty())
+        assertEquals(listOf("insert:0"), dao.operations)
+        val resumed = coordinator.createOrResume(request, startImmediately = false)
+            as BrewSessionOperationResult.Active
+        assertEquals(created.session, resumed.session)
+        assertEquals(1, dao.operations.size)
+        val started = coordinator.dispatch(request.sessionId, SessionEvent.Start())
+            as BrewSessionOperationResult.Active
+        assertEquals(BrewSessionStatus.RUNNING, started.session.runtime.status)
+        assertEquals(1_000L, started.session.runtime.startedAtWallClockMillis)
+        assertEquals(1, handler.delivered.size)
+    }
+
+    @Test
+    fun `discarding a prepared session does not log coffee or start a clock`() = runTest {
+        val dao = FakeActiveBrewSessionDao()
+        val handler = RecordingEffectHandler(dao, SessionEffectDelivery.Delivered)
+        val coordinator = coordinator(dao, handler)
+        val request = startRequest(SessionId("discard-preparation"))
+        coordinator.createOrResume(request, startImmediately = false)
+        val cancelled = coordinator.dispatch(request.sessionId, SessionEvent.Cancel())
+            as BrewSessionOperationResult.Active
+        assertEquals(BrewSessionStatus.CANCELLED, cancelled.session.runtime.status)
+        assertEquals(null, cancelled.session.runtime.startedAtWallClockMillis)
+        assertEquals(0L, cancelled.session.runtime.totalActiveElapsedMillis)
+        assertTrue(handler.delivered.none { it is PendingSessionEffect.FinalizeBrewLog })
+        assertTrue(handler.delivered.none { it is PendingSessionEffect.ScheduleStageDeadline })
+    }
 
     @Test
     fun `start transition is durable before effect delivery and acknowledgement`() = runTest {

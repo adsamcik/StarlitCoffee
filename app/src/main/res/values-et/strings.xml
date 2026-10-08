@@ -100,11 +100,8 @@
     <string name="label_increase">Suurenda %1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Ettevalmistus</string>
 <string name="action_ready_to_brew_short">Valmis alustama</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Ettevalmistus</string>
-    <string name="label_recipe_heading">Retsept</string>
     <string name="label_temp_short">Temp</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Niisuta paberfilter alusel (ventiil avatud) ja lase nõrguda. Paigalda silinder, lisa kohvipuru, tasanda kiht, aseta hajutuskork. Nulli kaal.</string>
@@ -114,8 +111,6 @@
     <string name="prep_tip_french_press">Soojenda press ja vala tühjaks. Lisa kohvipuru, aseta kaalule ja nulli enne vee lisamist.</string>
     <string name="prep_tip_espresso">Pühi portafilter kuivaks. Doseeri, jaota ja tampi ühtlaselt enne lukustamist.</string>
     <string name="prep_tip_moka">Täida alumine kamber ventiilini. Täida korv kohvipuruga, tasanda — ära tampi. Pane hoolikalt kokku.</string>
-    <string name="format_prep_grind_specific">Jahvata %1$s — sea %2$s väärtusele %3$s</string>
-    <string name="format_prep_grind_generic">Jahvata %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Peata</string>
@@ -148,7 +143,6 @@
     <string name="label_cup_presets">Tassi eelseaded</string>
     <string name="action_add_preset">Lisa eelseade</string>
     <string name="action_reset_defaults">Taasta vaikeseaded</string>
-    <string name="msg_presets_hint">Eelseaded ilmuvad kalkulaatoris kiirnuppudena</string>
     <string name="label_brew_methods">Valmistusviisid</string>
     <string name="msg_methods_hint">Valitud viisid kuvatakse esimesena. Puuduta lülitamiseks.</string>
     <string name="label_default_method">Vaikeviis</string>
@@ -165,9 +159,9 @@
     <string name="label_bloom_sprite_coffee_starlit">Tähine kohv</string>
     <string name="desc_bloom_sprite_coffee_starlit">Kreemikuldsed auruõielehed pisikeste tähehelkidega.</string>
     <string name="label_bloom_sprite_coffee_latte">Latte bloom</string>
-    <string name="desc_bloom_sprite_coffee_latte">Pehme latte-art rosett soojades piimavahu toonides.</string>
+    <string name="desc_bloom_sprite_coffee_latte">Latte-art-süda avaneb soojades piimavahu toonides.</string>
     <string name="label_bloom_sprite_coffee_plant">Kohvitaim</string>
-    <string name="desc_bloom_sprite_coffee_plant">Värske roheline kohvitaime seemik paarislehtedega.</string>
+    <string name="desc_bloom_sprite_coffee_plant">Kohvitaim avab läikivad lehed ja selle punased marjad valmivad.</string>
     <string name="label_bloom_sprite_cherry_tomato">Kirsstomat</string>
     <string name="desc_bloom_sprite_cherry_tomato">Kohviuba tärkab tomativäädiks, kui punased viljad valmivad.</string>
     <string name="label_bloom_sprite_strawberry">Maasikas</string>
@@ -435,15 +429,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">Ava Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">Vajab Android 12 või uuemat.</string>
     <string name="label_ai_service">AI-teenus (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Hangi Mindlayer Google Playst</string>
-    <string name="msg_mindlayer_install_recommendation">Paigalda Mindlayer Google Playst, et lugeda kohvipakkide silte privaatse seadmesisese tehisintellektiga. Seda saab teha hiljem seadetes.</string>
     <string name="action_test_connection">Testi ühendust</string>
     <string name="action_run_test_prompt">Käivita testpäring</string>
     <string name="label_testing">Testimine…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">Luba AI</string>
     <string name="consent_requesting">AI juurdepääsu taotlemine…</string>
     <string name="consent_granted">AI lubatud</string>
     <string name="consent_already_approved">AI on juba lubatud</string>
@@ -532,7 +526,6 @@
     <string name="label_volume_ml">Maht (ml)</string>
     <string name="msg_dose_from_ratio">Kohvikogus arvutatakse sinu suhte põhjal</string>
     <string name="label_icon">Ikoon</string>
-    <string name="label_color">Värv</string>
     <string name="action_add">Lisa</string>
     <string name="screen_add_cup_preset_title">Lisa tassi eelseade</string>
     <string name="screen_edit_cup_preset_title">Muuda tassi eelseadet</string>
@@ -664,10 +657,10 @@
     <string name="msg_cup_preset_reset_failed">Tassiprofiile ei saanud lähtestada. Proovige uuesti.</string>
     <string name="msg_reset_cup_presets">Kas asendada kõik tassiprofiilid vaikeprofiilidega?</string>
     <string name="msg_diagnostic_clear_failed">Kõiki diagnostikaandmeid ei saanud kustutada. Proovige uuesti.</string>
-    <string name="msg_clear_diagnostics">Kas kustutada kõik salvestatud skannimisseansid ja LLM-i läbimised?</string>
+    <string name="msg_clear_diagnostics">Kas kustutada kõik salvestatud skannimisseansid?</string>
     <string name="label_log_scan_corrections">Skannimisparanduste logimine (seadmes)</string>
     <string name="msg_log_scan_corrections">Salvestab ainult selles seadmes, mida AI tuvastas ja mida te salvestasite. Midagi ei laadita üles.</string>
-    <string name="format_scan_debug_counts">Seansse: %1$d · LLM-i läbimisi: %2$d</string>
+    <string name="format_scan_debug_counts">Seansse: %1$d</string>
     <string name="format_scan_session_subject">Skannimisseanss: %1$s</string>
     <string name="action_share_scan_session">Jaga skannimisseanssi</string>
 
@@ -733,4 +726,23 @@
     <string name="msg_learning_subtitle">Visuaalsed samm-sammulised valmistamisjuhendid</string>
     <string name="action_show_details">Kuva üksikasjad</string>
     <string name="action_hide_details">Peida üksikasjad</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Uue skannimise tulemused</string>
+    <string name="title_rescan_no_changes">Muudatusi ei leitud</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">Muudetud %1$d väli:</item>
+        <item quantity="other">Muudetud %1$d välja:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Seni pole muudatusi leitud.</string>
+    <string name="msg_rescan_incomplete">Vaata leitud andmed üle või proovi tuvastamist uuesti.</string>
+    <string name="action_update_bag_so_far">Uuenda praeguste tulemustega</string>
+    <string name="action_new_bag_so_far">Uus pakk praeguste tulemustega</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Seadistamise avamine…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Seadistamist ei saanud avada. Proovige uuesti või sisestage üksikasjad käsitsi.</string>
+    <string name="announce_label_details_ready">Sildi üksikasjad on ülevaatamiseks valmis.</string>
+    <string name="announce_label_recognition_no_result">Sildilt ei leitud üksikasju. Sisestage need käsitsi.</string>
+    <string name="label_show_cup_presets">Näita kalkulaatoris</string>
+    <string name="cd_cup_preset_options">Tassi eelseadete valikud</string>
 </resources>

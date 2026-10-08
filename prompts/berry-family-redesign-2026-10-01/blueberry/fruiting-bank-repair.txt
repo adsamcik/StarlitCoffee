@@ -1,0 +1,13 @@
+Edit this exact transparent 4x4 blueberry bank. Preserve its beautiful painted identity, identical full-size bean and soil ring, leaf/branch skeleton, seven fixed berry nodes, and TWO PALE IVORY hanging bells throughout. Keep every full plant in its existing cell, transparent4x4 grid without lines/text.
+
+Only correct chronological growth/ripening:
+1) Row1 and first3 cells ofrow2 currently start with nearly full berries and repeat. Retain all seven berry nodes but reduce ONLY berry bodies (not stems/leaves/bean) to these sizes relative to the final B16 berries: B01 25%, B02 35%, B03 45%, B04 55%, B05 65%, B06 75%, B07 85%. Every one of the same seven spheres grows on its exact existing stem, all green. B08 near-full with only the left-lower berry softly rose; B09 adds faint blush to left-upper and central berries. Nothing disappears. Both ivory bells keep exactly the same size/color in all cells.
+2) B10 has a left-upper berry with pink blush. B11 MUST retain/deepen that berry to plum-purple, not green. B11 left-lower can be blue, central berries pink/purple, right berries pink/green. No previously blushed fruit may turn green.
+3) B12 lefttwo dustyblue, centraltwo violetblue, rightthree rosepurple.
+B13 lefttwo+centraltwo dustyblue; ALL THREE rightberries plum-purple.
+B14 sameleft/centerblue; ONLY upper-right berry becomes dustyblue, outer-right and lower-right remain purple.
+B15 left/center/upper-right/outer-right blue; ONLY lower-right remains deep violet.
+B16 all seven fully dustyblue, matching existing final plant.
+Thus B13→14→15→16 separately ripens upper-right, outer-right, lower-right, with purposeful visual changes.
+
+All16 poses always contain exactly7berries at SAME locations and TWO separate PALE IVORY hanging bell flowers upperleft. Bells never become fruit or close. Preserve every established leaf, woody branch, calyx star, fixed bean and soil. Do not resize or replace whole plants; no camera changes. Genuine alpha, ample gutters, no text, guides or borders.

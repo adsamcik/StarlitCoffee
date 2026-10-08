@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
@@ -16,9 +14,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
@@ -99,6 +98,8 @@ fun BrewSessionGuidancePanel(
     terminologyUiCopy: BrewingTerminologyUiCopy? = null,
     showEnglishTerminology: Boolean = false,
     onShowEnglishTerminology: (Boolean) -> Unit = {},
+    sourceExplanations: Map<StageContentId, String> = emptyMap(),
+    equipmentProfileId: String? = null,
 ) {
     val approvedVisual = resolution.visualStatus as? DurableBrewGuidanceVisualStatus.Approved
     val visibleContent = remember(
@@ -116,80 +117,49 @@ fun BrewSessionGuidancePanel(
         visibleContent.isNotEmpty() ||
         approvedVisual != null
     if (!shouldRender) return
-    val illustratedAltText = approvedVisual?.asset?.contentId?.let { contentId ->
-        visibleContent.firstOrNull { content -> content.id == contentId }?.altText
-    }
     val terminologyReferences = remember(visibleContent) {
         distinctTerminologyReferences(visibleContent)
     }
 
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-        ),
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.label_guidance),
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.semantics { heading() },
+    Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        if (resolution.availability !is DurableBrewGuidanceAvailability.Available && visibleContent.isEmpty()) {
+            Text(stringResource(R.string.msg_brew_guidance_unavailable), style = MaterialTheme.typography.bodyMedium)
+        }
+        visibleContent.forEach { content ->
+            var expanded by rememberSaveable(content.id.value) { mutableStateOf(false) }
+            GuideStepCanvas(
+                copy = GuideStepCopy(
+                    instruction = content.instruction,
+                    target = content.target,
+                    completionCue = content.completionCue,
+                    essentialOperations = listOfNotNull(content.nextAction) +
+                        content.controlRequirements.map { it.localizedLabel() } + content.utilities.map { it.localizedLabel() },
+                    warning = content.warning,
+                    safetyCritical = content.safetyCritical,
+                    explanation = listOfNotNull(content.explanation, content.tip,
+                        sourceExplanations[content.id].takeIf {
+                            resolution.policy?.level in setOf(GuidancePresentationLevel.FULL, GuidancePresentationLevel.CUSTOM)
+                        }).filterNot { it == "None" }.distinct(),
+                    altText = content.altText,
+                ),
+                visualAsset = approvedVisual?.asset?.takeIf { it.contentId == content.id },
+                expanded = expanded,
+                onExpandedChange = { expanded = it },
+                equipmentProfileId = equipmentProfileId,
             )
-            // An approved visual introduces the active stage before its concise
-            // instruction; unapproved art remains absent.
-            if (approvedVisual != null && !illustratedAltText.isNullOrBlank()) {
-                ApprovedInstructionAssetImage(
-                    asset = approvedVisual.asset,
-                    contentDescription = illustratedAltText,
-                )
-            }
-
-            if (approvedVisual == null) {
+        }
+        if (resolution.policy != null || terminologyReferences.isNotEmpty()) {
+            var controlsExpanded by rememberSaveable { mutableStateOf(false) }
+            ConnectedGuideDisclosure(stringResource(R.string.label_guidance), controlsExpanded,
+                onExpandedChange = { controlsExpanded = it }) {
                 resolution.policy?.let { policy ->
-                    GuidanceLevelControl(
-                        selectedLevel = policy.level,
-                        hasSessionOverride = sessionOverride != null,
-                        onSessionOverride = onSessionOverride,
-                        onRememberForBrewer = onRememberForBrewer,
-                    )
+                    GuidanceLevelControl(policy.level, sessionOverride != null, onSessionOverride, onRememberForBrewer)
+                }
+                if (terminologyUiCopy != null && terminologyReferences.isNotEmpty()) {
+                    TerminologyReferenceControl(terminologyReferences, terminologyUiCopy,
+                        showEnglishTerminology, onShowEnglishTerminology)
                 }
             }
-
-            if (resolution.availability !is DurableBrewGuidanceAvailability.Available &&
-                visibleContent.isEmpty()
-            ) {
-                Text(
-                    text = stringResource(R.string.msg_brew_guidance_unavailable),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-
-            // Production/review state is intentionally not user-facing. Missing or
-            // unapproved art fails closed while the localized instruction remains.
-            visibleContent.forEach { content -> GuidanceContent(content) }
-            if (terminologyUiCopy != null && terminologyReferences.isNotEmpty()) {
-                TerminologyReferenceControl(
-                    references = terminologyReferences,
-                    uiCopy = terminologyUiCopy,
-                    expanded = showEnglishTerminology,
-                    onExpandedChange = onShowEnglishTerminology,
-                )
-            }
-            if (approvedVisual != null) {
-                resolution.policy?.let { policy ->
-                    GuidanceLevelControl(
-                        selectedLevel = policy.level,
-                        hasSessionOverride = sessionOverride != null,
-                        onSessionOverride = onSessionOverride,
-                        onRememberForBrewer = onRememberForBrewer,
-                    )
-                }
-            }
-
         }
     }
 }
@@ -273,67 +243,6 @@ private fun GuidanceLevelControl(
             Text(stringResource(R.string.action_remember_guidance_for_brewer))
         }
     }
-}
-
-@Composable
-private fun GuidanceContent(content: ResolvedBrewGuidanceContent) {
-    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        content.instruction.takeIf(String::isNotBlank)?.let { instruction ->
-            Text(
-                text = instruction,
-                style = MaterialTheme.typography.bodyLarge,
-            )
-        }
-        content.target?.let { target ->
-            GuidanceDetail(target)
-        }
-        content.completionCue?.let { cue ->
-            GuidanceDetail(cue)
-        }
-        content.explanation?.let { explanation ->
-            Text(
-                text = explanation,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-        content.tip?.let { tip ->
-            Text(
-                text = tip,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-        content.nextAction?.let { nextAction ->
-            GuidanceDetail(nextAction)
-        }
-        content.controlRequirements.forEach { cue ->
-            GuidanceDetail(cue.localizedLabel())
-        }
-        content.warning?.let { warning ->
-            Text(
-                text = warning,
-                style = MaterialTheme.typography.bodyMedium,
-                color = if (content.safetyCritical) {
-                    MaterialTheme.colorScheme.error
-                } else {
-                    MaterialTheme.colorScheme.onSurfaceVariant
-                },
-            )
-        }
-        content.utilities.forEach { utility ->
-            GuidanceDetail(utility.localizedLabel())
-        }
-    }
-}
-
-@Composable
-private fun GuidanceDetail(value: String) {
-    Text(
-        text = value,
-        style = MaterialTheme.typography.bodyMedium,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-    )
 }
 
 @Composable

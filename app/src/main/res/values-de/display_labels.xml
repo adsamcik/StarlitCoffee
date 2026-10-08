@@ -3,6 +3,7 @@
     <string-array name="brew_method_names">
         <item>Pulsar</item><item>V60</item><item>French Press</item><item>AeroPress</item>
         <item>Espresso</item><item>Espressokocher</item><item>Cold Brew</item>
+        <item>Chemex</item>
     </string-array>
     <string-array name="filter_type_names">
         <item>Papier</item><item>19K</item><item>40K</item>
@@ -20,10 +21,5 @@
         <item>Bienenstock-Kännchen</item><item>Barista-Kännchen</item><item>Eckiges Kännchen</item>
         <item>Facettiertes Cortadoglas</item><item>Keramische Latte-Schale</item>
         <item>Thermokaraffe</item><item>Doppelwandige Pressstempelkanne</item>
-    </string-array>
-    <string-array name="preset_color_labels">
-        <item>Standard</item><item>Braun</item><item>Schokolade</item><item>Peru</item>
-        <item>Stahlblau</item><item>Seegrün</item><item>Violett</item><item>Karminrot</item>
-        <item>Orange</item><item>Schiefer</item>
     </string-array>
 </resources>

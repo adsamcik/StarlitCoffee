@@ -1,0 +1,30 @@
+Use case: precise-object-edit. Asset: Starlit Coffee coffee flower blooming animation. Edit target/reference is the existing 25-frame atlas: retain its glossy warm brown coffee bean, rich green paired leaves, tactile painted ivory five-petal flower and golden center. Reconstruct a more polished continuous animation rather than copying the bad late pose jump.
+Create ONE square transparent PNG atlas containing exactly FIVE equal-width columns and FIVE equal-height rows, 25 equal square frames. No outer margin, gutter, grid lines, borders, text, numbers, shadows, background color, checkerboard paint or extra panels. True alpha background. Row-major reading order left-to-right top-to-bottom. One COMPLETE connected bean-and-flower in each cell, comfortably inside that cell: leave 10 percent empty padding at every side. Fixed front orthographic view and stable warm directional light. Lock the bean's overall size and bottom-center base at x=50%, y=88% in EVERY cell. The same green stem, two leaf attachment points, five petals and center persist once introduced. No camera change, zoom, cropping, duplicate plant, sliced petals, transparent holes in flower surfaces or recoloring. Broad readable ivory petals with subtle warm edge shading on both cream and dark UI. Do not add effects.
+Every adjacent frame makes one readable anatomical advance while preserving prior structure. Early growth feels deliberate, middle frames visibly unfold the flower, and final frames finish and settle gracefully. White petal openings must be actual angle/silhouette changes, not bud texture repainting. Track the SAME five petal identities through all poses; keep front orientation throughout. F24 nearly complete, F25 resolves a final small visible lower-petal curl only.
+Exact individual frame plan, without drawing labels:
+1 closed upright bean.
+2 top seam visibly opens a little.
+3 seam widens; same bean halves begin separating slightly.
+4 a small green shoot appears in the open seam.
+5 shoot extends just above bean.
+6 stem rises smoothly from that point.
+7 left leaf begins unfurling on the existing stem.
+8 right leaf unfurls at its permanent attachment.
+9 both leaves broaden; tiny ivory bud appears at stem tip.
+10 attached ivory bud grows; bean base remains same size.
+11 bud grows taller and its five seams become clear.
+12 rear upper petal tip releases slightly; bud still closed in front.
+13 left upper petal starts angling outward from the same bud.
+14 right upper petal follows, making a visibly wider cup.
+15 upper petal lifts and reveals a thin glimpse of golden center.
+16 left front petal begins unrolling down and outward.
+17 right front petal follows; preserve center position and two leaves.
+18 five petals form a coherent half-open star, with curled outer ends.
+19 upper and side petals spread one step; golden center becomes clearer.
+20 both front petals unroll another step; same five-petal silhouette.
+21 side petals broaden, upper petal relaxes outward, two front tips remain curled.
+22 front left petal spreads; center expands only by uncovering.
+23 front right petal spreads; now the five-petal star is almost fully open.
+24 five broad petals balanced, only front-right outer edge remains slightly curled.
+25 ONLY that final curl relaxes to complete the same ivory five-petal coffee flower, unchanged bean/stem/leaves/center.
+Do not skip ahead, restart a row, reach the finished bloom in the middle, replace petals suddenly, change petal count or hold near-identical bud poses. Keep silhouettes clean and painted surfaces intact. This is a production animation atlas, not a montage or storyboard with unequal panels.

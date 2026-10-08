@@ -79,7 +79,10 @@ class BagAnalysisNotificationWorker(
                 runCatching {
                     decodeBagExtractionResult(json).fieldEvidence["name"]?.value
                 }.onFailure { error ->
-                    Tracebox.log.error(error, BagAnalysisNotificationWorkerTraceboxTemplates.FAILED_TO_DECODE_COMPLETED_BAG_ANALYSIS_FOR)
+                    Tracebox.log.error(
+                        error,
+                        BagAnalysisNotificationWorkerTraceboxTemplates.FAILED_TO_DECODE_COMPLETED_BAG_ANALYSIS_FOR,
+                    )
                 }.getOrNull()
             }
                 notifier.notifyComplete(workId, displayName, reviewContext)

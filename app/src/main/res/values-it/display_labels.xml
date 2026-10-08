@@ -3,6 +3,7 @@
     <string-array name="brew_method_names">
         <item>Pulsar</item><item>V60</item><item>French press</item><item>AeroPress</item>
         <item>Espresso</item><item>Moka</item><item>Estrazione a freddo</item>
+        <item>Chemex</item>
     </string-array>
     <string-array name="filter_type_names"><item>Carta</item><item>19K</item><item>40K</item></string-array>
     <string-array name="filter_cup_profiles">
@@ -18,10 +19,5 @@
         <item>Server ad alveare</item><item>Server barista</item><item>Server angolare</item>
         <item>Bicchiere cortado sfaccettato</item><item>Ciotola da latte in ceramica</item>
         <item>Caraffa termica</item><item>French press a doppia parete</item>
-    </string-array>
-    <string-array name="preset_color_labels">
-        <item>Predefinito</item><item>Marrone</item><item>Cioccolato</item><item>Perù</item>
-        <item>Blu acciaio</item><item>Verde mare</item><item>Viola</item><item>Cremisi</item>
-        <item>Arancione</item><item>Ardesia</item>
     </string-array>
 </resources>

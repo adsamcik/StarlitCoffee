@@ -69,7 +69,10 @@ class RatingActionReceiver : BroadcastReceiver() {
             flavorTagDao = database.flavorTagDao(),
         )
         val existing = repository.getLogById(brewLogId) ?: run {
-            Tracebox.log.warn(RatingActionReceiverTraceboxTemplates.BREW_LOG_NO_LONGER_EXISTS_SKIPPING_QUICK, argument(brewLogId))
+            Tracebox.log.warn(
+                RatingActionReceiverTraceboxTemplates.BREW_LOG_NO_LONGER_EXISTS_SKIPPING_QUICK,
+                argument(brewLogId),
+            )
             return false
         }
         // Preserve any freeform notes the user may have already written; only

@@ -268,14 +268,26 @@ def build_alpha(
     guide_tolerance: int,
     transparent_threshold: int,
     opaque_threshold: int,
+    grid: GridLayout | None = None,
 ) -> tuple[bytearray, bool]:
     source_alpha = has_source_alpha(pixels)
     alpha = bytearray(width * height)
+    # A guide color is also a valid petal color. Remove it only on recovered
+    # guide lines, never across the entire artwork (especially pink/purple).
+    guide_xs = {
+        x for cluster in (grid.x_axis.clusters if grid else [])
+        for x in range(cluster.start, cluster.end + 1)
+    }
+    guide_ys = {
+        y for cluster in (grid.y_axis.clusters if grid else [])
+        for y in range(cluster.start, cluster.end + 1)
+    }
 
     for index in range(width * height):
         offset = index * 4
         color = (pixels[offset], pixels[offset + 1], pixels[offset + 2])
-        if close_to_any_color(color, guide_colors, guide_tolerance):
+        on_guide = index % width in guide_xs or index // width in guide_ys
+        if on_guide and close_to_any_color(color, guide_colors, guide_tolerance):
             alpha[index] = 0
         elif source_alpha:
             alpha[index] = pixels[offset + 3]
@@ -837,6 +849,7 @@ def process(
         guide_tolerance=guide_tolerance,
         transparent_threshold=transparent_threshold,
         opaque_threshold=opaque_threshold,
+        grid=grid,
     )
 
     out_width = frame_size * output_columns

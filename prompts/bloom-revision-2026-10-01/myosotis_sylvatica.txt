@@ -1,0 +1,35 @@
+Use case: precise-object-edit.
+Asset type: production transparent botanical growth sprite atlas for a calm coffee-brewing app, viewed one cell at a time at about 148px.
+Primary request: create a fully rebuilt 25-frame growth animation for Myosotis Sylvatica, using the supplied artwork for its tactile painted style and final flower identity. This is one image atlas, not a contact-sheet presentation.
+Output layout: exactly FIVE columns and FIVE rows of equal SQUARE cells, 25 frames total, row-major from upper-left F1 to lower-right F25. Square canvas ideally 1280x1280. No row gaps or gutters. Grid is mathematical only: absolutely NO lines, borders, labels, numbers, typography, guides, checkerboard, background color or watermark. REAL transparent alpha everywhere outside the plant.
+Every cell contains EXACTLY ONE complete plant, NEVER two. No cut limbs, no spill into neighboring cells. Within each cell keep every pixel of the subject inside an approximately 10% inset safe rectangle. Plant rooted at the same central ground point around (50%,88%) in each cell. Same front three-quarter view, same lighting, same painted depth. Fixed bean base size and shape throughout: warm brown coffee bean, about 26% of cell width, underside at 88% cell height. Keep its crack, texture landmarks, and orientation stable. Mature plant fills approximately 72% of cell height and 72% of width; young sprout remains small above the SAME bean. No camera zoom, no drifting, no shadows extending outside the object.
+Render opaque colored interior surfaces, clean antialiased alpha edges, softly modeled botanical volume, restrained fine detail, crisp silhouettes and petal separation readable at small size. Preserve already-created plant nodes: stems, leaves, buds and petals remain attached, evolve continuously, never vanish or swap sides. Every frame advances a meaningful visible growth action; no repeated near-held repainting, no reversal from flower to bud. Broad changes must have in-between poses. Opening starts well BEFORE last five frames. Only F25 is fully finished; F21–24 each show a distinct final stage.
+SPECIFIC ART DIRECTION
+Preserve light blue five-petal flowers with tiny yellow centers, green simple leaves and airy branching spray. Use exactly SEVEN persistent flower endpoints arranged in a compact open fan, fewer and larger than old dense spray. Fixed two broad lower leaves and stable branch structure. Seven buds visible before opening; open center first then outward.
+EXACT FRAME PLAN (do not print numbers):
+F1: closed upright bean.
+F2: same seam parts.
+F3: small green sprout.
+F4: sprout lengthens.
+F5: two folded leaf tips.
+F6: two leaves unfurl.
+F7: two leaves spread, central stalk rises.
+F8: same two leaves, two side branches appear.
+F9: same leaves, branching fan develops.
+F10: same leaves, seven fixed twig endpoints form.
+F11: seven tiny buds attached to fixed endpoints.
+F12: all seven buds enlarge.
+F13: center bud turns blue, six others green.
+F14: center bud parts, adjacent two buds turn blue.
+F15: center flower half open, two adjacent buds split.
+F16: center fully open, adjacent pair half open, outer four blue.
+F17: three central flowers open, next pair splits.
+F18: three central flowers remain open, next pair half open.
+F19: five central flowers open, outermost two split.
+F20: five remain open, outer pair quarter open.
+F21: five remain open, outer pair halfway.
+F22: five remain open, outer pair three-quarters.
+F23: all seven flower faces visible, outer two centers still narrow.
+F24: seven blooms remain, final two yellow centers widen.
+F25: seven complete readable blue five-petal flowers on unchanged airy fan.
+Final check before delivery: count 5x5 and 25 separate single plants; all 25 complete inside their cells; no missing horizontal bands; no duplicate skinny plants; no holes in intended solid petals; no flattened silhouette texture; no artificial glow.

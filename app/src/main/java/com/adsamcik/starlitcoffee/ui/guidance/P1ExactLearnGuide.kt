@@ -3,6 +3,8 @@ package com.adsamcik.starlitcoffee.ui.guidance
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltInP1RecipeDefinition
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStagePlan
+import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStageAction
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageReferenceTargets
 import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanNode
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageTemperatureTarget
 
@@ -25,6 +27,10 @@ data class P1ExactLearnStageFacts(
     val beverageYield: String?,
     val temperatureTarget: StageTemperatureTarget?,
     val equipmentState: String,
+    val action: BrewStageAction? = null,
+    val referenceTargets: StageReferenceTargets = StageReferenceTargets(),
+    val title: String? = null,
+    val explanation: String? = null,
 )
 
 object P1ExactLearnGuideFactory {
@@ -49,8 +55,8 @@ object P1ExactLearnGuideFactory {
                     "—",
                 ),
                 timing = stage.targetDurationOrRange.meaningfulSourceValue("Condition-dependent", "—"),
-                addedWater = stage.addedWaterTarget.meaningfulSourceValue("None", "—"),
-                cumulativeWater = stage.cumulativeWaterTarget.meaningfulSourceValue("None", "—"),
+                addedWater = stage.addedWaterTarget.meaningfulSourceValue("None", "—", "not applicable or not specified"),
+                cumulativeWater = stage.cumulativeWaterTarget.meaningfulSourceValue("None", "—", "not applicable or not specified"),
                 beverageYield = stage.beverageYieldTarget.meaningfulSourceValue(
                     "None",
                     "not applicable or not specified",
@@ -58,6 +64,10 @@ object P1ExactLearnGuideFactory {
                 ),
                 temperatureTarget = definition.referenceTargets.temperatureTarget,
                 equipmentState = stage.equipmentState,
+                action = definition.action,
+                referenceTargets = definition.referenceTargets,
+                title = P1GuideTeachingCopy.forStage(stage)?.title,
+                explanation = P1GuideTeachingCopy.forStage(stage)?.explanation,
             )
         }
         return P1ExactLearnGuide(recipe, guidance, facts)

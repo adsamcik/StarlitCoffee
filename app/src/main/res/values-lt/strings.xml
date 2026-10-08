@@ -104,11 +104,8 @@
     <string name="label_increase">Padidinti %1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Paruoškite plikymą</string>
     <string name="action_ready_to_brew_short">Plikyti</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Paruošimas</string>
-    <string name="label_recipe_heading">Receptas</string>
     <string name="label_temp_short">Temp.</string>
     <string name="label_bloom_short">Bloomas</string>
     <string name="prep_tip_pulsar_paper">Sudrėkinkite popierinį filtrą pagrinde (vožtuvas atviras) ir nusausinkite. Uždėkite cilindrą, suberkite kavą, išlyginkite sluoksnį, uždėkite paskirstymo dangtelį. Nunulinkite svarstykles.</string>
@@ -118,8 +115,6 @@
     <string name="prep_tip_french_press">Pašildykite presą, tada išpilkite vandenį. Suberkite kavą, pastatykite ant svarstyklių ir nunulinkite prieš pildami vandenį.</string>
     <string name="prep_tip_espresso">Nusausinkite portafiltrą. Įdėkite dozę, paskirstykite ir tolygiai suspauskite prieš įtvirtindami.</string>
     <string name="prep_tip_moka">Pripilkite apatinę kamerą iki vožtuvo. Pripildykite krepšelį kava, išlyginkite — nespauskite. Atsargiai surinkite.</string>
-    <string name="format_prep_grind_specific">Malimas %1$s — nustatykite %2$s į %3$s</string>
-    <string name="format_prep_grind_generic">Malimas %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Pristabdyti</string>
@@ -152,7 +147,6 @@
     <string name="label_cup_presets">Puodelių šablonai</string>
     <string name="action_add_preset">Pridėti šabloną</string>
     <string name="action_reset_defaults">Atkurti numatytuosius</string>
-    <string name="msg_presets_hint">Šablonai rodomi kaip spartieji mygtukai skaičiuoklėje</string>
     <string name="label_brew_methods">Plikymo būdai</string>
     <string name="msg_methods_hint">Pasirinkti būdai rodomi pirmiausia. Bakstelėkite, kad perjungtumėte.</string>
     <string name="label_default_method">Numatytasis būdas</string>
@@ -169,9 +163,9 @@
     <string name="label_bloom_sprite_coffee_starlit">Žvaigždėta kava</string>
     <string name="desc_bloom_sprite_coffee_starlit">Kreminės auksinės garų lapelės su mažyčiais žvaigždžių blyksniais.</string>
     <string name="label_bloom_sprite_coffee_latte">Latte bloomas</string>
-    <string name="desc_bloom_sprite_coffee_latte">Švelni latte-art rozetė šiltais pieno putos tonais.</string>
+    <string name="desc_bloom_sprite_coffee_latte">Latte art širdelė, išsiskleidžianti šiltais pieno putų atspalviais.</string>
     <string name="label_bloom_sprite_coffee_plant">Kavamedis</string>
-    <string name="desc_bloom_sprite_coffee_plant">Šviežias žalias kavos daigas su poromis išsidėsčiusiais lapais.</string>
+    <string name="desc_bloom_sprite_coffee_plant">Kavamedis skleidžia blizgius lapus ir nokina raudonas uogas.</string>
     <string name="label_bloom_sprite_cherry_tomato">Vyšninis pomidoras</string>
     <string name="desc_bloom_sprite_cherry_tomato">Kavos pupelė sudygsta į pomidorų augalą, bręstant raudoniems vaisiams.</string>
     <string name="label_bloom_sprite_strawberry">Braškė</string>
@@ -439,15 +433,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">Atidaryti Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">Reikia Android 12 arba naujesnės versijos.</string>
     <string name="label_ai_service">DI paslauga (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Gaukite Mindlayer iš Google Play</string>
-    <string name="msg_mindlayer_install_recommendation">Įdiekite Mindlayer iš Google Play, kad galėtumėte skaityti kavos pakuočių etiketes naudodami privatų įrenginyje veikiantį DI. Tai galite padaryti vėliau nustatymuose.</string>
     <string name="action_test_connection">Tikrinti ryšį</string>
     <string name="action_run_test_prompt">Paleisti bandomąją užklausą</string>
     <string name="label_testing">Tikrinama…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">Įjungti DI</string>
     <string name="consent_requesting">Prašoma DI prieigos…</string>
     <string name="consent_granted">DI įjungtas</string>
     <string name="consent_already_approved">DI jau įjungtas</string>
@@ -536,7 +530,6 @@
     <string name="label_volume_ml">Tūris (ml)</string>
     <string name="msg_dose_from_ratio">Kavos dozė apskaičiuojama pagal jūsų santykį</string>
     <string name="label_icon">Piktograma</string>
-    <string name="label_color">Spalva</string>
     <string name="action_add">Pridėti</string>
     <string name="screen_add_cup_preset_title">Pridėti puodelio šabloną</string>
     <string name="screen_edit_cup_preset_title">Redaguoti puodelio šabloną</string>
@@ -668,10 +661,10 @@
     <string name="msg_cup_preset_reset_failed">Nepavyko atkurti puodelių profilių. Bandykite dar kartą.</string>
     <string name="msg_reset_cup_presets">Pakeisti visus puodelių profilius numatytaisiais?</string>
     <string name="msg_diagnostic_clear_failed">Nepavyko išvalyti visų diagnostikos duomenų. Bandykite dar kartą.</string>
-    <string name="msg_clear_diagnostics">Išvalyti visas išsaugotas nuskaitymo sesijas ir LLM bandymus?</string>
+    <string name="msg_clear_diagnostics">Išvalyti visas išsaugotas nuskaitymo sesijas?</string>
     <string name="label_log_scan_corrections">Registruoti nuskaitymo pataisas (įrenginyje)</string>
     <string name="msg_log_scan_corrections">Tik šiame įrenginyje įrašo, ką išgavo AI ir ką išsaugojote. Niekas neįkeliama.</string>
-    <string name="format_scan_debug_counts">Sesijos: %1$d · LLM bandymai: %2$d</string>
+    <string name="format_scan_debug_counts">Sesijos: %1$d</string>
     <string name="format_scan_session_subject">Nuskaitymo sesija: %1$s</string>
     <string name="action_share_scan_session">Bendrinti nuskaitymo sesiją</string>
 
@@ -737,4 +730,25 @@
     <string name="msg_learning_subtitle">Vaizdiniai nuoseklūs kavos ruošimo vadovai</string>
     <string name="action_show_details">Rodyti išsamią informaciją</string>
     <string name="action_hide_details">Slėpti išsamią informaciją</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Pakartotinio nuskaitymo rezultatai</string>
+    <string name="title_rescan_no_changes">Pakeitimų nerasta</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">Pakeistas %1$d laukas:</item>
+        <item quantity="few">Pakeisti %1$d laukai:</item>
+        <item quantity="many">Pakeista %1$d lauko:</item>
+        <item quantity="other">Pakeista %1$d laukų:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Kol kas pakeitimų nerasta.</string>
+    <string name="msg_rescan_incomplete">Peržiūrėkite jau rastus duomenis arba bandykite atpažinti dar kartą.</string>
+    <string name="action_update_bag_so_far">Atnaujinti dabartiniais rezultatais</string>
+    <string name="action_new_bag_so_far">Naujas pakelis su dabartiniais rezultatais</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Atidaroma sąranka…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Nepavyko atidaryti sąrankos. Bandykite dar kartą arba įveskite informaciją rankiniu būdu.</string>
+    <string name="announce_label_details_ready">Etiketės informacija paruošta peržiūrėti.</string>
+    <string name="announce_label_recognition_no_result">Etiketėje informacijos nerasta. Įveskite informaciją rankiniu būdu.</string>
+    <string name="label_show_cup_presets">Rodyti skaičiuotuve</string>
+    <string name="cd_cup_preset_options">Puodelių ruošinių parinktys</string>
 </resources>

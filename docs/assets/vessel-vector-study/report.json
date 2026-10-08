@@ -1,0 +1,67 @@
+[
+  {
+    "icon": "espresso",
+    "source_sha256": "82c633f24031a0653dda74c3f435fd416dbd0cbb1ec6c39c7febe8d7c968d20d",
+    "raster_bytes": 6102,
+    "svg_bytes": 1884,
+    "android_bytes": 2131,
+    "paths": 5,
+    "colors": 5,
+    "svg_sha256": "2276235c2b82fbb1c7885e76b07cebbc259288df55955c55ae24d68d84bb5952",
+    "android_sha256": "165ee2a12ec90deb8affc41e06d49e99fe60789235885a25459406a6ba558b8a",
+    "authored_detail_paths": 0,
+    "commands": 64
+  },
+  {
+    "icon": "cortado",
+    "source_sha256": "6f8ca3158ec067ccca87c0285ff3790447f6df365a7ea7bafe8fe262ce16af51",
+    "raster_bytes": 4883,
+    "svg_bytes": 7225,
+    "android_bytes": 8049,
+    "paths": 14,
+    "colors": 13,
+    "svg_sha256": "ab2adc82da5a044be4cb7d4410f48e6db9db2bac35a68e55ebaa7571bab5e800",
+    "android_sha256": "2be495011c6ffc7adc3e073a9d84566e751f92bbcda524ed9f6b75bc90f394f4",
+    "authored_detail_paths": 1,
+    "commands": 285
+  },
+  {
+    "icon": "cappuccino",
+    "source_sha256": "1a0276c8c0619832f8a4689fadac0b5d5dff3ee398c41157355fbf2410805644",
+    "raster_bytes": 4698,
+    "svg_bytes": 4011,
+    "android_bytes": 4515,
+    "paths": 9,
+    "colors": 9,
+    "svg_sha256": "c837bb10ec04a17908a1dd995de8b01f851d95c49dbc008e9f8ed1ac5570afb2",
+    "android_sha256": "939ab98f2555b60da14d2fea7d0f96c6ab83689ce6190467b87393b8579cd911",
+    "authored_detail_paths": 1,
+    "commands": 150
+  },
+  {
+    "icon": "mug",
+    "source_sha256": "419a927be413e8212080e5fd41890b0f655459ebbbd8711dd91918d13f2dd43d",
+    "raster_bytes": 5821,
+    "svg_bytes": 5485,
+    "android_bytes": 6052,
+    "paths": 10,
+    "colors": 10,
+    "svg_sha256": "4f2770fb2c92f707d0578f188f942b34d74ad4e8e2afad5a89abfbee7aedd0d6",
+    "android_sha256": "85972fd8fdd4cb66f30710ef338c70ca116ea773082171b28f69b33a43a6d81c",
+    "authored_detail_paths": 0,
+    "commands": 196
+  },
+  {
+    "icon": "travel",
+    "source_sha256": "5b83123667c5bcaf349b93ceb529a17a5431a6b1b6d7c46baca11d682c266c2b",
+    "raster_bytes": 4157,
+    "svg_bytes": 4341,
+    "android_bytes": 5293,
+    "paths": 16,
+    "colors": 14,
+    "svg_sha256": "06c379406fef449c1bc5c639e978e2c5557b5748d8f6df93a0c6398e5ddf978c",
+    "android_sha256": "7f1fb264e874c6bb2e6fcdfd97b7a1e03d9cdec892fb25b5f1c7c2dbd924ee06",
+    "authored_detail_paths": 6,
+    "commands": 168
+  }
+]

@@ -128,7 +128,11 @@ class HierarchicalOcrService(
         } else {
             (initial.fullText + "\n" + refinedText).trim()
         }
-        Tracebox.log.debug(HierarchicalOcrServiceTraceboxTemplates.REFINEMENT_ADDED_BLOCK_S_CHARS, argument(refinedBlocks.size), argument(refinedText.length))
+        Tracebox.log.debug(
+            HierarchicalOcrServiceTraceboxTemplates.REFINEMENT_ADDED_BLOCK_S_CHARS,
+            argument(refinedBlocks.size),
+            argument(refinedText.length),
+        )
         return RecognizedText(
             fullText = combinedFullText,
             blocks = initial.blocks + refinedBlocks,

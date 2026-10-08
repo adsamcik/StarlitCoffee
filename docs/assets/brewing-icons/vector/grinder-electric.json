@@ -1,0 +1,127 @@
+{
+  "algorithm": "subpixel-contours-schneider-constrained-dp",
+  "android_sha256": "1af7affd83e0bbd030e85ce20faafd400b2f2c68233efa1ac2b0fb7eafa87147",
+  "contours": [
+    {
+      "candidate_knots": 31,
+      "corners": 2,
+      "segments": 4,
+      "source_points": 964
+    },
+    {
+      "candidate_knots": 93,
+      "corners": 5,
+      "segments": 17,
+      "source_points": 3056
+    },
+    {
+      "candidate_knots": 69,
+      "corners": 8,
+      "segments": 14,
+      "source_points": 2092
+    },
+    {
+      "candidate_knots": 19,
+      "corners": 2,
+      "segments": 4,
+      "source_points": 546
+    }
+  ],
+  "dependencies": {
+    "Pillow": "12.3.0",
+    "numpy": "2.3.5",
+    "pypdfium2": "5.13.0",
+    "reportlab": "4.4.9"
+  },
+  "export": {
+    "contour_groups": [
+      [
+        0,
+        1,
+        2,
+        3
+      ]
+    ],
+    "coordinate_decimal_places": 6,
+    "max_path_data_length": 3000,
+    "path_count": 1,
+    "path_data_lengths": [
+      2364
+    ]
+  },
+  "normalization": {
+    "bbox": [
+      391,
+      150,
+      863,
+      1092
+    ],
+    "mode": "white-background",
+    "offset": [
+      -1.3121019108280247,
+      -1.1847133757961767
+    ],
+    "scale": 0.021231422505307854,
+    "source_size": [
+      1254,
+      1254
+    ]
+  },
+  "parameters": {
+    "error": 0.055,
+    "padding": 2,
+    "viewport": 24.0
+  },
+  "quality": {
+    "actual_sizes": {
+      "24": {
+        "mean_absolute_coverage_error": 0.005337690631808279
+      },
+      "36": {
+        "mean_absolute_coverage_error": 0.005249939481965626
+      },
+      "48": {
+        "mean_absolute_coverage_error": 0.00444750816993464
+      }
+    },
+    "boundary": {
+      "mean": 0.011092496929325476,
+      "p99": 0.044476084523707805,
+      "sample_spacing": 0.015,
+      "source_to_vector_max": 0.05127945891900514,
+      "units": "24-unit viewport; sampled distance, not analytic Hausdorff",
+      "vector_to_source_max": 0.05024021510481286
+    },
+    "failures": [],
+    "joins": {
+      "preserved_corner_joins": 17,
+      "smooth_joins": 22,
+      "smooth_max_tangent_mismatch_degrees": 0.00024454616954124844
+    },
+    "limits": {
+      "max_actual_size_coverage_mae": 0.015,
+      "max_boundary_p99_viewport_units": 0.09150000000000001,
+      "max_boundary_viewport_units": 0.11574999999999999,
+      "min_iou": 0.97
+    },
+    "passed": true,
+    "silhouette_iou": 0.9907530424616039,
+    "source_topology": {
+      "components": 3,
+      "holes": 1
+    },
+    "vector_topology": {
+      "components": 3,
+      "holes": 1
+    },
+    "winding_preserved": true
+  },
+  "schema": 1,
+  "source_file": "grinder-electric-v2.png",
+  "source_sha256": "0988153c363d92997722c459f8ecb5e591b97a5033e3627ed15584b48b3aeff8",
+  "svg_sha256": "c5ddbec9a5e88ef2577dcd0d57c96bbde31f787de2fe02da5756106f73e2d7e9",
+  "total_anchors": 39,
+  "total_control_points": 78,
+  "total_segments": 39,
+  "version": "1.1.0"
+}

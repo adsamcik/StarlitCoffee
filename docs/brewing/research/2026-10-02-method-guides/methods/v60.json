@@ -1,0 +1,491 @@
+{
+  "method_id": "v60",
+  "title": "Hario V60 brewing guide",
+  "scope": "One hot cup in a conventional plastic Hario V60 02 with classic matching 02 cone paper; app operationalization of Hario UK's September 2026 recipe, with distinct creator and iced variants.",
+  "research_date": "2026-10-02",
+  "review_status": "editorially_reviewed",
+  "physical_brew_tested": false,
+  "sources": [
+    {
+      "id": "hario_2026",
+      "title": "How to Brew Coffee with Hario V60 Coffee Dripper (September 16, 2026)",
+      "url": "https://www.hario.co.uk/blogs/news/how-to-brew-coffee-with-hario-v60-coffee-dripper",
+      "author_or_organization": "Hario UK",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "15 g coffee and 250 g brew-water input, medium grind, 92–94 °C",
+        "45 g bloom, 30–45-second wait, cumulative 150 g and 250 g",
+        "Overall 150–180 seconds including bloom; texture, preparation and taste adjustments"
+      ]
+    },
+    {
+      "id": "hario_intermediate",
+      "title": "Intermediate V60 Brew Guide",
+      "url": "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+      "author_or_organization": "Hario UK",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "V60 02 with matching 02 paper; rinse and discard rinse water, tare, dose 15 g, retare",
+        "92–96 °C, wet all grounds, wait about 30 seconds, slow circular pour to 250 g",
+        "2.5-minute wording appears in drain step without an explicit clock origin"
+      ]
+    },
+    {
+      "id": "hario_01",
+      "title": "V60 Plastic Coffee Dripper 01",
+      "url": "https://www.hario-usa.com/products/vd-01t",
+      "author_or_organization": "Hario USA",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Size 01 is labeled 1–2 cups; no universal cup volume inferred"
+      ]
+    },
+    {
+      "id": "hario_02",
+      "title": "V60 Plastic Coffee Dripper 02 - Classic Colors",
+      "url": "https://www.hario-usa.com/products/v60-plastic-coffee-dripper-02",
+      "author_or_organization": "Hario USA",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Size 02 is labeled 1–4 cups; conical shape and spiral ridges; clear plastic model material"
+      ]
+    },
+    {
+      "id": "hario_03",
+      "title": "V60 Plastic Coffee Dripper 03",
+      "url": "https://www.hario-usa.com/products/v60-plastic-dripper-03",
+      "author_or_organization": "Hario USA",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Size 03 is labeled 1–6 cups; no numeric liquid-fill capacity inferred"
+      ]
+    },
+    {
+      "id": "hario_filters",
+      "title": "V60 Meteor Filters 50ct Box",
+      "url": "https://www.hario-usa.com/products/v60-meteor-filters-02",
+      "author_or_organization": "Hario USA",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Match paper and dripper sizes; paper regulates flow and contact time",
+        "Meteor is described as faster-flow than classic paper; no independent permeability test claimed"
+      ]
+    },
+    {
+      "id": "rao_interview",
+      "title": "Hario V60 Recipe & Interview with Hario Ambassador Scott Rao",
+      "url": "https://www.hario.co.uk/blogs/hario-ambassadors/hario-v60-recipe-interview-with-hario-ambassador-scott-rao",
+      "author_or_organization": "Scott Rao, published by Hario UK",
+      "source_type": "original_creator",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Plastic V60, 20 g dose, 330 mL total water and 97 °C; source's 97 °F is an obvious conflicting typo",
+        "60 mL bloom with aggressive spin; wait 40 seconds; 200 mL cumulative then gentle spin",
+        "Wait until about 70 percent drained before final 330 mL target; typical 240–270 seconds"
+      ]
+    },
+    {
+      "id": "kasuya_interview",
+      "title": "Hario V60 Recipe & Interview with Hario Ambassador Tetsu Kasuya",
+      "url": "https://www.hario.co.uk/blogs/hario-ambassadors/hario-v60-recipe-interview-with-hario-ambassador-tetsu-kasuya",
+      "author_or_organization": "Tetsu Kasuya, published by Hario UK",
+      "source_type": "original_creator",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "20 g coarse coffee, 300 mL water at 92 °C",
+        "Added 50/70/60/60/60 mL at elapsed 0/45/90/130/160 seconds; remove at 210 seconds",
+        "Creator describes modified ceramic dripper's slower flow and 4:6 taste framework"
+      ]
+    },
+    {
+      "id": "kurasu_flash",
+      "title": "Japanese brew guide on iced pour-over coffee",
+      "url": "https://kurasu.kyoto/blogs/recipe/japanese-brew-guide-on-iced-pour-over-coffee",
+      "author_or_organization": "Kurasu, head roaster Kosuke",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "16 g medium-fine coffee, 150 g hot water at 91 °C, 70 g brew ice",
+        "Added 40/60/50 g at 0/40/70 seconds, each about ten seconds; approximately 130-second brew",
+        "Melt original ice before serving over additional ice; English page leaves V60 size unspecified"
+      ]
+    },
+    {
+      "id": "baratza_esp",
+      "title": "Encore ESP Operations Manual, January 2023 v1.0, page 5",
+      "url": "https://assets.breville.com/ZCG495/manual-encoreesp-v1-0-en-010923.pdf",
+      "author_or_organization": "Baratza",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Exact Encore ESP model's suggested Hario V60 starting setting is 25",
+        "Settings are starting points that can vary with recipe and taste"
+      ]
+    },
+    {
+      "id": "hario_starter_manual",
+      "title": "V60 Coffee Server and Dripper Starter Set manual",
+      "url": "https://global.hario.com/product/VCSD.pdf",
+      "author_or_organization": "Hario",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "blocked",
+      "supports": [
+        "Manual link verified on Hario USA starter-set product page, but PDF fetch returned HTTP 403; no manual safety or cleaning instructions verified"
+      ]
+    }
+  ],
+  "recipe": {
+    "name": "App operationalization of Hario UK's September 2026 one-cup recipe",
+    "provenance": "app_authored_synthesis",
+    "source_ids": [
+      "hario_2026",
+      "hario_intermediate",
+      "hario_02"
+    ],
+    "equipment": [
+      "Conventional plastic Hario V60 02",
+      "Classic 02 V60 cone paper",
+      "Burr grinder",
+      "Controllable kettle",
+      "Scale and timer",
+      "Stable heat-resistant mug or server"
+    ],
+    "coffee_dose_g": 15,
+    "brew_water_g": 250,
+    "brew_water_ml": null,
+    "ice_g": 0,
+    "target_beverage_g": null,
+    "ratio_basis": "brew_water_input",
+    "ratio_value": 16.6666666667,
+    "water_temperature_c": {
+      "min": 93,
+      "max": 93,
+      "control": "user; app-selected value within published 92–94 °C"
+    },
+    "grind_description": "Medium, resembling granulated sugar; tune for actual coffee and paper",
+    "expected_time_s": {
+      "min": 150,
+      "max": 180,
+      "clock_start": "First water touches coffee; explicit app convention for the source's overall time including bloom",
+      "clock_end": "Standing water drained and continuous outlet stream subsided; reference range, not automatic cutoff"
+    },
+    "completion_signal": "No standing water remains above the bed and continuous flow has become occasional drops; remove dripper safely",
+    "scaling": "revalidate_batch_size",
+    "steps": [
+      {
+        "id": "prepare",
+        "instruction": "Fold seam, fit paper, rinse, discard rinse water.",
+        "why": "Wet paper and warm vessel.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Seated wet paper; empty, stable vessel.",
+        "source_ids": [
+          "hario_intermediate",
+          "hario_2026"
+        ]
+      },
+      {
+        "id": "dose",
+        "instruction": "Add 15 g, level, zero assembly on scale.",
+        "why": "Read brew water cumulatively.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Level bed; scale zero.",
+        "source_ids": [
+          "hario_intermediate"
+        ]
+      },
+      {
+        "id": "bloom_pour",
+        "instruction": "Start clock at first water; wet bed with 45 g.",
+        "why": "Prepare grounds for main pours.",
+        "water_add_g": 45,
+        "water_cumulative_g": 45,
+        "start_s": 0,
+        "duration_s": null,
+        "completion": "45 g; entire visible bed wet.",
+        "source_ids": [
+          "hario_2026"
+        ]
+      },
+      {
+        "id": "bloom_wait",
+        "instruction": "Wait 30 seconds after reaching 45 g.",
+        "why": "App-selected lower end of published wait.",
+        "water_add_g": 0,
+        "water_cumulative_g": 45,
+        "start_s": null,
+        "duration_s": 30,
+        "completion": "Wait elapsed; no fixed overall timestamp.",
+        "source_ids": [
+          "hario_2026"
+        ]
+      },
+      {
+        "id": "main_pour",
+        "instruction": "Add 105 g in circles to 150 g total.",
+        "why": "Controlled wetting.",
+        "water_add_g": 105,
+        "water_cumulative_g": 150,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "150 g on scale.",
+        "source_ids": [
+          "hario_2026"
+        ]
+      },
+      {
+        "id": "pause",
+        "instruction": "Pause until liquid level falls.",
+        "why": "Let bed drain before final pour.",
+        "water_add_g": 0,
+        "water_cumulative_g": 150,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Level visibly lower; duration unspecified.",
+        "source_ids": [
+          "hario_2026"
+        ]
+      },
+      {
+        "id": "final_pour",
+        "instruction": "Add 100 g to 250 g total; avoid overflow.",
+        "why": "Meet water-input target.",
+        "water_add_g": 100,
+        "water_cumulative_g": 250,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "250 g; pouring stopped.",
+        "source_ids": [
+          "hario_2026"
+        ]
+      },
+      {
+        "id": "finish",
+        "instruction": "Allow drainage, remove by handle, mix coffee.",
+        "why": "Finish filtration before serving.",
+        "water_add_g": 0,
+        "water_cumulative_g": 250,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Bed drained; outlet flow intermittent.",
+        "source_ids": [
+          "hario_intermediate"
+        ]
+      }
+    ]
+  },
+  "variants": [
+    {
+      "name": "Hario older intermediate guide",
+      "how_it_differs": "15 g/250 g, 92–96 °C, about 30-second bloom of unspecified mass, then continuous circular pour; 2.5-minute wording lacks explicit clock origin.",
+      "source_ids": [
+        "hario_intermediate"
+      ]
+    },
+    {
+      "name": "Rao Hario interview recipe",
+      "how_it_differs": "20 g in plastic V60, 97 °C, source 60/200/330 mL cumulative targets; aggressive bloom spin and brief gentle settling spins. Final pour follows about 70 percent drainage; typical total 240–270 seconds.",
+      "source_ids": [
+        "rao_interview"
+      ]
+    },
+    {
+      "name": "Kasuya interview 4:6",
+      "how_it_differs": "20 g coarse coffee, 300 mL at 92 °C; five source additions 50/70/60/60/60 mL at 0/45/90/130/160 seconds; removal at 210. Identify conventional versus modified ceramic geometry before implementation.",
+      "source_ids": [
+        "kasuya_interview"
+      ]
+    },
+    {
+      "name": "Kurasu flash iced",
+      "how_it_differs": "16 g, 150 g hot water at 91 °C plus 70 g brew ice; hot additions 40/60/50 g at 0/40/70 seconds, about ten seconds each. Approximate drawdown 130 seconds; melt brew ice before serving. Hot input ratio 1:9.375, hot water plus ice 1:13.75; neither is beverage yield.",
+      "source_ids": [
+        "kurasu_flash"
+      ]
+    },
+    {
+      "name": "Other sizes, materials or paper",
+      "how_it_differs": "Use matching filter size and revalidate dose, pour behavior and drainage; cup labels are not universal volume capacities.",
+      "source_ids": [
+        "hario_01",
+        "hario_02",
+        "hario_03",
+        "hario_filters"
+      ]
+    }
+  ],
+  "troubleshooting": [
+    {
+      "symptom": "Unusually slow drainage",
+      "check_first": "Check matching seated paper, unobstructed outlet, receiver airflow and recent paper changes.",
+      "adjustment": "If still slow and harsh, grind slightly coarser; repeat consistent pouring.",
+      "source_ids": [
+        "hario_filters",
+        "hario_2026"
+      ]
+    },
+    {
+      "symptom": "Fast, thin or sour cup",
+      "check_first": "Confirm zero, dose, level bed and that water reaches grounds rather than paper edge.",
+      "adjustment": "Try slightly finer grind; change one variable before tasting again.",
+      "source_ids": [
+        "hario_2026"
+      ]
+    },
+    {
+      "symptom": "Harsh or drying cup",
+      "check_first": "Confirm recipe and equipment before diagnosing from elapsed time.",
+      "adjustment": "Try slightly coarser grind; maintain other inputs.",
+      "source_ids": [
+        "hario_2026"
+      ]
+    }
+  ],
+  "safety": [
+    "Keep brewer and receiving vessel stable; leave room below rim and pause before overflow.",
+    "Keep hands clear of hot water; lift by handle and place dripper on a heat-resistant surface.",
+    "Cool before discarding paper and grounds; wash gently, rinse and dry.",
+    "Follow exact model's manual for dishwasher, microwave or heating use; those compatibilities were not verified in this pass."
+  ],
+  "app_audit": [
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:104",
+      "finding": "V60 defaults are 1:16, 2.5x bloom, four post-bloom pulses, 93–96 °C, 150–210 seconds and medium-fine. This coherent app profile differs from both Hario publications.",
+      "severity": "medium",
+      "change_recommendation": "Label defaults app-authored; if adopting selected research baseline, update its ratio, 3x bloom, two main additions, temperature, grind and timing together without overwriting named creator recipes.",
+      "source_ids": [
+        "hario_2026",
+        "hario_intermediate"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:80",
+      "finding": "V60 inherits STANDARD decaf policy subtracting 30 seconds; domain/BrewCalculator.kt:63 applies it. No reviewed V60 source establishes this universal shortcut.",
+      "severity": "medium",
+      "change_recommendation": "Use NONE for V60; retain recipe and observational drainage, then tune for the actual beans.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/session/LegacyStagePlanFactory.kt:132",
+      "finding": "V60 legacy plan has bloom countdown and manual pour only. Current legacy guidance is recipe-neutral, but does not provide a distinct finish-drainage action.",
+      "severity": "medium",
+      "change_recommendation": "Add an observable drainage/serve step or explicit drained-before-finish cue without automatic finish deadlines.",
+      "source_ids": [
+        "hario_2026"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BuiltInP1RecipeCatalog.kt:222",
+      "finding": "Older official intermediate 15/250 continuous-pour recipe is already present with unspecified bloom mass and 92–96 °C. Its approximate 150-second total is clearer than the original source's drain-step wording.",
+      "severity": "low",
+      "change_recommendation": "Keep historical projection immutable; label total clock as app interpretation and create a distinct September 2026 baseline if adopted.",
+      "source_ids": [
+        "hario_intermediate",
+        "hario_2026"
+      ]
+    },
+    {
+      "path": "docs/brewing/learning-guide-factual-audit-2026-08-19.md:31",
+      "finding": "Audit claims older intermediate source matches about 2:30 total. That source places 2.5 minutes in drain step without clock origin. Rao and Kasuya rows also use grams for originally published millilitres.",
+      "severity": "medium",
+      "change_recommendation": "Revise current audit conclusions to disclose time interpretation and unit normalization; preserve source snapshots.",
+      "source_ids": [
+        "hario_intermediate",
+        "rao_interview",
+        "kasuya_interview"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BuiltInP1RecipeCatalog.kt:241",
+      "finding": "Rao's 330 mL and Kasuya's 300 mL source water are stored as exact gram inputs; typed plans likewise normalize additions and cumulative targets.",
+      "severity": "medium",
+      "change_recommendation": "Declare mass-based adaptations and retain original volumes, or obtain explicit mass evidence. Do not claim grams and millilitres are identical. Keep Rao's 97 °C; source's 97 °F is a conflicting typo.",
+      "source_ids": [
+        "rao_interview",
+        "kasuya_interview"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/session/P1ManualGravityStagePlans.kt:77",
+      "finding": "Rao final observation has RANGE 240–270 seconds. BuiltInP1ExactStagePlanCatalog.kt:191 uses RANGE as a minimum advance constraint, holding completion until at least 240 seconds.",
+      "severity": "medium",
+      "change_recommendation": "Separate advisory typical total-time range from minimum timing constraints; allow completion based on actual drainage.",
+      "source_ids": [
+        "rao_interview"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/session/P1ManualGravityStagePlans.kt:155",
+      "finding": "Flash first pour has ten-second duration, second and third typed pours do not; source specifies about ten seconds for each. Catalog correctly separates 150 g water/70 g ice, both ratios and ice-melt completion.",
+      "severity": "low",
+      "change_recommendation": "Add approximate ten-second duration cues to second and third flash pours; preserve drainage and original-ice-melt observations.",
+      "source_ids": [
+        "kurasu_flash"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1ExactRecipeReleaseGate.kt:84",
+      "finding": "Kasuya and flash retain BLOCK-V60-VARIANT; only canonical English has completed independent technical review. P1ExactGuidanceFactualErrata.kt contains no V60 correction branch.",
+      "severity": "info",
+      "change_recommendation": "Retain blockers until hardware variant evidence and review are resolved; catalog presence does not prove everyday-method, localization or release readiness.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/assets/grinders.json:286",
+      "finding": "Exact Encore ESP V60 starting setting 25 matches manufacturer manual page 5. Other V60 entries name models/burrs/calibration; generic decaf/process modifiers are still broad claims and were not independently verified here.",
+      "severity": "info",
+      "change_recommendation": "Retain verified Encore ESP point as model-specific; use descriptive baseline grind and avoid importing settings across grinders or named recipes. Review universal decaf/process modifiers separately.",
+      "source_ids": [
+        "baratza_esp"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BrewingCatalog.kt:185",
+      "finding": "All V60 profiles use BrewWaterMinusRetention(2.0); profile defaults similarly estimate output with a fixed 2 g/g apparent loss. Named Hario recipe explicitly leaves beverage output unresolved.",
+      "severity": "low",
+      "change_recommendation": "Keep output clearly estimated and optionally measured/calibrated; do not promise an exact cup mass or universal retention coefficient in the guide.",
+      "source_ids": []
+    }
+  ],
+  "uncertainties": [
+    "Hario starter-set manual https://global.hario.com/product/VCSD.pdf, product https://global.hario.com/product/coffee/dripper/VD.html and catalog https://global.hario.com/pdf2016/2016COFFEEcatalog.pdf returned HTTP 403; exact model cleaning/heating compatibility remains unverified.",
+    "Older Hario intermediate page leaves 2.5-minute clock origin ambiguous. Selected current recipe's clock at first water and 30-second wait after bloom pour are explicit app choices.",
+    "Rao and Kasuya interview quantities are millilitres, not independently verified gram targets; source clock placement around pouring/waiting is not fully explicit.",
+    "Kasuya discusses modified ceramic ribs but generic recipe header and shop link do not resolve every conventional versus Kasuya-model applicability claim.",
+    "Kurasu English source does not identify V60 size; brew-ice melt and drawdown are separate completion observations.",
+    "Only Encore ESP grinder setting was revalidated against its primary manual; remaining grinder settings and generic decaf/process adjustments need separate evidence review.",
+    "This is English research content, with no physical brewing, native device execution, localization review or release validation."
+  ],
+  "do_not_claim": [
+    "One universal best V60 recipe or fixed finish deadline.",
+    "250 g poured water equals 250 g beverage, or all grounds retain exactly 2 g/g water.",
+    "A 02 dripper holds four full mugs simultaneously, or cup labels define a universal volume.",
+    "Rao's or Kasuya's mL quantities are exactly interchangeable with grams.",
+    "V60 decaf always needs a 30-second shorter brew or a fixed number of coarser grinder clicks.",
+    "Rao spin, Kasuya 4:6 pulse logic and Hario current recipe can be hybridized under creator attribution.",
+    "Flash brew's 150 g hot water plus 70 g ice guarantees 220 g beverage.",
+    "Source review proves a physical brew, approved translation, release readiness or exact grinder calibration."
+  ]
+}

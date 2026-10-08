@@ -19,6 +19,7 @@ class BuiltinBrewerProfileRecipeDefaultsTest {
             "manual_wave_185",
             "manual_wedge_generic",
             "manual_thick_paper_carafe",
+            "chemex_unspecified",
             "clever_style",
             "hario_switch",
             "valve_release_generic",
@@ -51,7 +52,6 @@ class BuiltinBrewerProfileRecipeDefaultsTest {
             "manual_wave_155",
             "manual_wave_185",
             "manual_wedge_generic",
-            "manual_thick_paper_carafe",
         )
 
         manualProfileIds.forEach { rawId ->
@@ -86,6 +86,15 @@ class BuiltinBrewerProfileRecipeDefaultsTest {
             )
             assertEquals(320.0, requireNotNull(quantities.brewWaterInputG), 0.001)
             assertNull(quantities.reservoirInputG)
+        }
+    }
+
+    @Test
+    fun `Chemex recommendations allow longer drainage than generic cone drippers`() {
+        listOf("chemex_unspecified", "manual_thick_paper_carafe").forEach { rawId ->
+            val defaults = requireNotNull(BuiltinBrewerProfileRecipeDefaults.find(BrewerProfileId(rawId)))
+            assertEquals(BrewTimeRecommendation.SecondsRange(240, 330), defaults.brewTime)
+            assertEquals(CapacityRecommendation.RequiresEquipmentConfiguration, defaults.capacity)
         }
     }
 

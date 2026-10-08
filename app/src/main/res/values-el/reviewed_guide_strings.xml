@@ -1,0 +1,12 @@
+<resources>
+    <string name="action_brew_this_guide">Εκχύλιση με αυτή τη συνταγή</string>
+    <string name="label_freshly_boiled_water">Φρεσκοβρασμένο νερό</string>
+    <string name="label_machine_temperature">Η μηχανή ρυθμίζει τη θερμοκρασία</string>
+    <string name="action_prepare_this_guide">Προετοιμασία καφέ</string>
+    <string name="label_reviewed_guide_english">Συνταγή στα αγγλικά</string>
+    <string name="heading_reviewed_sources">Συνταγή και πηγές</string>
+    <string name="msg_reviewed_fill_quantities">Ακολουθήστε τις ενδείξεις πλήρωσης. Ζυγίστε τον καφέ που θα χρησιμοποιήσετε πραγματικά.</string>
+    <string name="label_measured_coffee_g">Καφές που προστέθηκε (g)</string>
+    <string name="label_optional_measured_water_g">Ζυγισμένο νερό (g, προαιρετικό)</string>
+    <string name="msg_reviewed_equipment_confirm">Ο εξοπλισμός μου ταιριάζει με αυτή τη συνταγή.</string>
+</resources>

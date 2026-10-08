@@ -1,0 +1,9 @@
+Edit the attached transparent 2x2 Jade Vine sheet. Return four complete plants, one per equal cell, same camera and bean/soil scale, clear transparent margins, no text or guides. Keep top-left F7 context and bottom-right F10 context. Repair the COMPLETE top-right F8 and bottom-left F9 plants.
+
+The destination F10 has exactly THREE leaves, ALL ON THE LEFT of the cane: large high-left leaf, large middle-left leaf, and smaller LOW-LEFT leaf immediately above the left bean half. F8 and F9 MUST both contain these same THREE attached leaf surfaces. NO leaf ever grows on the right. Right side contains only woody cane, curls and teal pendant.
+
+F8 top-right: two large left leaves retain their existing positions. Replace the erroneous right leaflet with a SMALL HALF-FOLDED LOW-LEFT leaf directly above the left bean half, attached to the lowest cane node. Include a slim brown winding cane, two small attached curls, short crowded pointed teal closed-bud raceme on the right. No open hooks.
+
+F9 bottom-left: exactly THREE LEFT leaves: retained high and middle leaves plus the same LOW-LEFT leaf now two-thirds F10's size. It is fully visible between the middle leaf and left bean half; do not omit it. Same lower cane now brown and visibly winding, tendril curls extend gradually toward F10. Dense closed-bud pendant nearly F10 length. No open hooks.
+
+Maintain bean proportions and planted baseline across all panels. F8→F9→F10 retains every leaf and attachment while wood thickens, low-left leaf enlarges and pendant lengthens. Opaque intact painterly botanical surfaces, transparent exterior. No missing leaf, relocated leaf, extra right leaf, bean shrink or sudden material reset.

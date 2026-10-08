@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_set_name_optional">Pavadinimas (neprivalomas)</string>
+    <string name="label_starting_recipe">Pradinis receptas</string>
+    <string name="label_starting_amount">Pradinis kiekis</string>
+    <string name="msg_brewing_set_recipe_invalid">Įveskite teigiamą santykį ir kiekį arba palikite kiekį tuščią.</string>
+    <string name="msg_brewing_sets_onboarding">Pasirinkite įrangą. Pridėkite rinkinių namams ar darbui ir pasirinkite, kuris atidaromas pirmas.</string>
+    <string name="action_create_brewing_set">Sukurti rinkinį</string>
+    <string name="cd_brewing_set_options">%1$s parinktys</string>
+    <string name="msg_saved_brewing_calculation">Išsaugotas skaičiavimas: %1$s. Įveskite kiekį, kad jį pakeistumėte.</string>
+</resources>

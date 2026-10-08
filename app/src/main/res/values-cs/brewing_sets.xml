@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_sets">Sestavy pro přípravu</string>
+    <string name="msg_brewing_sets_hint">Uložte si samostatné sestavy pro domov, práci nebo různé způsoby přípravy.</string>
+    <string name="action_add_brewing_set">Přidat sestavu</string>
+    <string name="action_save_brewing_set">Uložit jako sestavu</string>
+    <string name="label_new_brewing_set">Nová sestava</string>
+    <string name="label_edit_brewing_set">Upravit sestavu</string>
+    <string name="hint_brewing_set_name">např. Domácí filtr</string>
+    <string name="action_manage_brewing_sets">Spravovat sestavy</string>
+    <string name="label_brewing_set_method">Způsob přípravy</string>
+    <string name="msg_delete_brewing_set">Opravdu smazat tuto sestavu pro přípravu?</string>
+    <string name="screen_first_brewing_set_method">Vyberte první způsob přípravy</string>
+    <string name="msg_first_brewing_set">Začněte jedním způsobem přípravy. Další sestavy přidáte v dalším kroku.</string>
+    <string name="action_retry_brewing_set">Zkusit znovu</string>
+</resources>

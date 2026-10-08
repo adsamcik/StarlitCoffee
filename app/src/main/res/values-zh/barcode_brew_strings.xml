@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_to_brew">扫码开始冲煮</string>
+    <string name="msg_barcode_brew_no_match">库存中没有咖啡使用此条形码。请检查已保存的咖啡袋信息中的条形码。</string>
+    <string name="msg_barcode_brew_choose_bag">多个咖啡袋使用此条形码。请选择您正在使用的咖啡袋。</string>
+    <string name="msg_barcode_brew_enter_amount">已选择%1$s。设置用量，然后点击冲煮。</string>
+</resources>

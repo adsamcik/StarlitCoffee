@@ -3,6 +3,7 @@
     <string-array name="brew_method_names">
         <item>Pulsar</item><item>V60</item><item>法压壶</item><item>AeroPress</item>
         <item>意式浓缩</item><item>摩卡壶</item><item>冷萃</item>
+        <item>Chemex</item>
     </string-array>
     <string-array name="filter_type_names"><item>纸滤</item><item>19K</item><item>40K</item></string-array>
     <string-array name="filter_cup_profiles">
@@ -18,10 +19,5 @@
         <item>蜂巢分享壶</item><item>咖啡师分享壶</item><item>棱角分享壶</item>
         <item>切面科塔朵杯</item><item>陶瓷拿铁碗</item>
         <item>保温分享壶</item><item>双层法压壶</item>
-    </string-array>
-    <string-array name="preset_color_labels">
-        <item>默认</item><item>棕色</item><item>巧克力色</item><item>秘鲁色</item>
-        <item>钢蓝色</item><item>海绿色</item><item>紫色</item><item>深红色</item>
-        <item>橙色</item><item>石板色</item>
     </string-array>
 </resources>

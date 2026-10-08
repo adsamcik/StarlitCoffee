@@ -1,0 +1,23 @@
+Repair this Blackberry 25-pose animation atlas. First image is the editable atlas; second image is the richer original mature target. Preserve the attractive painted material, asymmetrical berry layout, pale upper-left flower, thin visible cane, serrated foliage and split bean/soil ring. Output a transparent square RGBA atlas of EXACTLY5x5 uniform cells, row-majorF1-F25, no labels, lines or guides. Same whole-plant camera, bean dimensions, baseline and empty margins in every cell. Never zoom the plant.
+
+Fix THREE continuity faults: F5-to-F6 top growth retracts; F10 has four RIGHT buds and no LEFT bud, then F11 has FIVE fruit, then one vanishes; F23-F25 finish too early. Use coherent retained anatomy, not new rearrangements.
+
+F1-F4 preserve existing simple bean-to-two-leaf development.
+F5: retain F4's same two lower leaves, gently extend trunk; add two small upper leaflets on unequal branches. Do not grow a tall bare spike that later disappears.
+F6: retain both lower leaves and both upper leaflets; extend those same branches, enlarge upper leaflets, begin rightward cane arch.
+F7: retain F6's entire structure; spread lower compound sprays and extend upper/right arch slightly.
+F8: retain all prior leaf blades/attachments; unfold the fuller asymmetrical canopy, no buds yet. Continue same plant architecture throughF25.
+F9: retain the full leafy cane. Introduce EXACTLY FOUR tiny green fruit tips at the eventual sites: ONE low-left A, THREE right-side B/C/D (B middle-right near cane, C high-right, D far-right on arch). A SEPARATE upper-left pale flower bud is the fifth floral structure; it will stay a flower.
+F10: same ONE left plus THREE right fruit buds slightly larger, same separate upper-left flower bud. No fifth fruit bud or extra rightmost stalk.
+F11: same FOUR fruit sites become tiny elongated green aggregate berries with visible drupelets; same flower bud loosens. Retain the same whole leafy cane.
+F12: same FOUR green berries grow a little; upper-left flower half opens. All four attachments persist throughF25.
+F13-F18 preserve the existing full open flower and gradual green-to-red stages, ALWAYS exactly four berries at A/B/C/D. Keep lower leaves intact behind fruit.
+F19: A black, B dark red, C green-yellow, D red. All FOUR elongated berries, intact canopy, open flower.
+F20: A black, B violet, C orange-red, D dark red. Same attachments.
+F21: A/B black, C red, D burgundy. Same attachments; four berries swell modestly, flower stays open.
+F22: A/B black, C burgundy, D violet. All same four elongated berries and flower.
+F23: A/B black, C dark reddish-violet, D black. Same anatomy, visible final ripening still underway.
+F24: A/B/D black, C violet. Keep all four separate; C still has purple ripening surface.
+F25: C joins the others in deep inky violet-black, all four plump and elongated with purple drupelet highlights. Same one pale pink-white flower, slender arching bramble and intact compound sprays. Match the rich original target without sudden scale increase.
+
+Do not redraw berries as smooth spheres or bright red raspberries. Four elongated textured blackberries in an irregular bramble is the specific identity. No anatomy loss, row resets, backwards color, clipped leaves or opaque background.

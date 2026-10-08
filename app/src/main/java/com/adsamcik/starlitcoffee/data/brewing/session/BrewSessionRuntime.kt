@@ -5,6 +5,7 @@ import android.os.SystemClock
 import androidx.work.WorkManager
 import com.adsamcik.starlitcoffee.notification.DurableBrewSessionStageNotifier
 import com.adsamcik.starlitcoffee.notification.DurableBrewSessionStatusNotifier
+import com.adsamcik.starlitcoffee.notification.BrewSessionNotificationBoundaryStore
 import com.adsamcik.starlitcoffee.data.db.AppDatabase
 import com.adsamcik.starlitcoffee.data.repository.ActiveBrewSessionRepository
 import com.adsamcik.starlitcoffee.data.repository.TransactionRunner
@@ -30,14 +31,25 @@ class BrewSessionRuntime private constructor(
     private val sessionRepository: ActiveBrewSessionRepository,
     private val scheduler: LongSessionScheduler,
     private val statusNotifier: BrewSessionStatusNotifier,
+    private val notificationBoundaryStore: BrewSessionNotificationBoundaryStore?,
 ) {
     /**
      * Reads only indexed scheduling metadata. The worker intentionally does
      * not decode a recipe or runtime document before deciding whether an old
      * WorkManager prompt is stale.
      */
-    suspend fun scheduledDeadline(sessionId: SessionId): ScheduledBrewSessionDeadline? =
+    suspend fun scheduledDeadline(sessionId: SessionId, scheduleToken: String? = null): ScheduledBrewSessionDeadline? =
         sessionRepository.getSession(sessionId.value)?.let { entity ->
+            if (scheduleToken != null && scheduleToken != entity.scheduledEventToken) {
+                val restored = ActiveBrewSessionEntityMapper.restore(entity)
+                    as? ActiveBrewSessionRestoreResult.Restored ?: return@let null
+                val timer = restored.value.runtime.userTimer ?: return@let null
+                if (timer.scheduleToken(sessionId) != scheduleToken || timer.reached) return@let null
+                return@let ScheduledBrewSessionDeadline(
+                    entity.sessionId, entity.status, timer.stageInstanceId.persistentKey,
+                    scheduleToken, timer.deadlineAtWallClockMillis,
+                )
+            }
             ScheduledBrewSessionDeadline(
                 sessionId = entity.sessionId,
                 status = entity.status,
@@ -57,14 +69,46 @@ class BrewSessionRuntime private constructor(
         statusNotifier.clear(sessionId)
     }
 
+    /** Makes only subsequent stage transitions eligible for system alerts. */
+    fun markScreenBackgrounded(
+        sessionId: SessionId,
+        wallClockMillis: Long = System.currentTimeMillis(),
+    ) {
+        notificationBoundaryStore?.markBackgrounded(sessionId.value, wallClockMillis)
+    }
+
     /** Replays durable work and restores the current deadline prompt after startup. */
-    suspend fun reconcileRecoverableSessions(): List<BrewSessionOperationResult> {
-        val results = coordinator.reconcileRecoverableSessions()
+    suspend fun reconcileRecoverableSessions(useMonotonicClock: Boolean = false): List<BrewSessionOperationResult> {
+        val results = coordinator.reconcileRecoverableSessions(useMonotonicClock)
         for (result in results) {
-            val active = result as? BrewSessionOperationResult.Active ?: continue
-            enqueuePersistedDeadline(active.session)
+            val session = when (result) {
+                is BrewSessionOperationResult.Active -> result.session
+                is BrewSessionOperationResult.PendingEffect -> result.session
+                else -> null
+            }
+            if (session != null) {
+                enqueuePersistedDeadline(session)
+                enqueuePersistedTimer(session)
+            }
+            val sessionId = when (result) {
+                is BrewSessionOperationResult.Active -> result.session.runtime.sessionId
+                is BrewSessionOperationResult.PendingEffect -> result.session.runtime.sessionId
+                is BrewSessionOperationResult.Unavailable -> result.sessionId
+                is BrewSessionOperationResult.NotFound -> result.sessionId
+                is BrewSessionOperationResult.ConcurrentUpdate -> result.sessionId
+            }
+            publishBackgroundStatus(sessionId)
         }
         return results
+    }
+
+    private fun enqueuePersistedTimer(session: ActiveBrewSession) {
+        val timer = session.runtime.userTimer ?: return
+        val dueAt = timer.deadlineAtWallClockMillis ?: return
+        if (session.runtime.status != BrewSessionStatus.RUNNING || timer.reached) return
+        scheduler.schedule(session.runtime.sessionId, timer.stageInstanceId,
+            timer.scheduleToken(session.runtime.sessionId), dueAt,
+            SessionEffectId("${session.runtime.sessionId.value}:startup_timer:${timer.revision}:$dueAt"))
     }
 
     private suspend fun enqueuePersistedDeadline(session: ActiveBrewSession) {
@@ -105,6 +149,8 @@ class BrewSessionRuntime private constructor(
                 wallClock = WallClock { System.currentTimeMillis() },
                 stageAlertNotifier = DurableBrewSessionStageNotifier(applicationContext),
                 statusNotifier = DurableBrewSessionStatusNotifier(applicationContext),
+                notificationBoundaryStore = BrewSessionNotificationBoundaryStore(applicationContext),
+                schedulerOverride = com.adsamcik.starlitcoffee.data.work.AlarmBrewSessionScheduler(applicationContext),
             )
         }
 
@@ -119,9 +165,11 @@ class BrewSessionRuntime private constructor(
             wallClock: WallClock,
             stageAlertNotifier: BrewSessionStageAlertNotifier = NoOpBrewSessionStageAlertNotifier,
             statusNotifier: BrewSessionStatusNotifier = NoOpBrewSessionStatusNotifier,
+            notificationBoundaryStore: BrewSessionNotificationBoundaryStore? = null,
+            schedulerOverride: com.adsamcik.starlitcoffee.data.work.AlarmBrewSessionScheduler? = null,
         ): BrewSessionRuntime {
             val repository = ActiveBrewSessionRepository(database.activeBrewSessionDao())
-            val scheduler = WorkManagerLongSessionScheduler(
+            val scheduler = schedulerOverride ?: WorkManagerLongSessionScheduler(
                 workManager = workManager,
                 workerClass = LongBrewCompletionWorker::class.java,
                 nowWallClockMillis = wallClock::nowMillis,
@@ -138,7 +186,7 @@ class BrewSessionRuntime private constructor(
                 finalizer = finalizer,
                 stageAlertNotifier = stageAlertNotifier,
                 statusNotifier = statusNotifier,
-                workCanceller = scheduler,
+                workCanceller = scheduler as com.adsamcik.starlitcoffee.domain.brewing.session.LongSessionWorkCanceller,
             )
             return BrewSessionRuntime(
                 coordinator = BrewSessionCoordinator(
@@ -149,6 +197,7 @@ class BrewSessionRuntime private constructor(
                 sessionRepository = repository,
                 scheduler = scheduler,
                 statusNotifier = statusNotifier,
+                notificationBoundaryStore = notificationBoundaryStore,
             )
         }
     }

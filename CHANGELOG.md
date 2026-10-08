@@ -9,6 +9,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Cup preset visibility** — hide the cup row from Settings → Cup presets for
+  a simpler calculator. The choice is remembered, with brewer, ratio and delete
+  controls still available above the keypad.
+- **Clearer cup shortcuts** — evenly spaced cups show their saved volumes;
+  narrow windows and larger text scroll without hiding custom presets.
+  Brewer controls stack on narrow screens with larger text to remain readable.
+- **Reviewed brewing guides** — More → Learn includes 17 source-backed procedures
+  with equipment details, quantities, clock origins, completion cues and optional
+  explanations. Read at your own pace or prepare a durable brew from the same
+  recipe. The 30 g / 480 g Chemex guide remains separate from the 42 g / 700 g recipe.
+- **App-wide brew timers** — running brews remain accessible across navigation
+  and continue outside the app. Custom reminders, quiet ongoing notifications
+  and due alerts use the persisted session. Cold-brew Start offers a guide or a
+  timer, with a refrigerated default and editable duration or start time.
+- **Coffee and grind memory** — preparation remembers compatible settings for a
+  coffee type, coffee or physical pack, with a temporary setting for one brew.
+  Existing stock and brew-history links survive the database upgrade.
+- **Illustrated equipment choices** — a consistent, theme-tinted family of
+  brewing-method, filter and grinder visuals across setup, set selection,
+  preparation and brew history. Onboarding can create multiple brewing sets,
+  customize their starting recipes and choose which opens first.
+- **Brewing sets** — switch between named Home, Work, espresso and filter
+  equipment combinations. Each set remembers its own ratio, amount, quantity,
+  filter and grinder. Settings manages the same set list; existing method
+  preferences and named calculator favorites migrate automatically.
+- **Chemex brewing** — select Chemex in the everyday Brew flow, with remembered
+  setups, medium-coarse grind guidance, bonded-filter preparation, and a guided
+  bloom, pour, drawdown, and serving session. Starting recommendations use a
+  1:16 ratio, 93–96 °C water, and a 4–5½ minute brew window; drainage is confirmed
+  before serving. The existing six-cup exact recipe is now named Chemex.
+- **Remembered brewing setups** — each method remembers its ratio, calculator
+  amount and selected quantity, filter, and grinder. Named favorites such as
+  Home and Work can be selected directly on the Brew screen and preserve the
+  complete calculator expression.
+- **Scan to brew** — the Brew screen can scan a saved coffee barcode and match it
+  to bags still in stock, then continue brewing with the selected amount. Shared
+  barcodes offer a bag choice; scans without an amount select the coffee first.
 - **Private, user-controlled diagnostics** — Tracebox now records bounded,
   privacy-aware app logs and JVM, ANR, OS-exit, handled-exception, and native
   failure context locally. A simple Settings screen lets users review the exact
@@ -31,12 +68,59 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   dose and water to pour with method-aware input-to-cup loss. The estimate is
   available only where a defensible generic model exists and is clearly marked
   as approximate.
+- **Optional brew calibration** — completed brew logs can record precise water-in
+  and in-cup measurements. Future estimates learn conservatively from matching
+  brewing processes and beans while retaining safe built-in defaults for new or
+  lightly sampled setups.
 - **Coffee-use tracking without guided brewing** — active bags now offer a quick
   gram-based usage entry that updates remaining weight, contributes to dose
   estimates, appears in the bag's history, and can be undone immediately.
 
 ### Changed
 
+- **Consistent cup and vessel icons** — all 28 choices are refined through image
+  generation, preserving their original vessel profiles with balanced rims,
+  rounded handles and restrained seams. The generated contours are traced for
+  crisp, theme-tinted rendering throughout the app.
+- **Simpler cup preset settings** — clear cup rows and a labeled Add preset action,
+  with calculator visibility in the same card and reset in its menu. Decorative
+  color dots and the unused color picker are removed; saved cup amounts stay intact.
+- Optional AI label recognition now uses Mindlayer `1.0.0-alpha.9` and resumes
+  after idle disconnect or automatic reconnection without repeating setup.
+- **More expressive bloom animations** — all 44 animations now grow and unfold
+  more clearly, with intact petals, steadier positioning, and polished finishes
+  in light and dark themes. Finished previews match the bloom shown while brewing.
+  Latte bloom now unfolds into a warm milk-foam heart with a progressive
+  pull-through finish.
+  Coffee plant now grows fuller glossy foliage and four cherries that ripen
+  through the final frames.
+  Cherry tomato now grows clustered fruit and yellow blossoms toward its richer
+  original finish.
+  Raspberry now develops fuller branching, textured berry clusters and white
+  blossoms toward its richer original finish.
+  Strawberry, Blueberry and Blackberry now grow toward fuller, distinct berry
+  plants with retained blossoms and progressive fruit ripening.
+  Twelve flower and coffee animations now retain richer final compositions,
+  with staged growth and purposeful development through their final frames.
+  Bloom growth now spends longer developing stems and buds, with the completed
+  pose reserved for the end of the countdown.
+- Grinder choices now require a source-backed recommendation for the selected
+  method and filter. Five precisely identified models use their actual setting
+  notation, including Ode's numbered subdivisions and Niche's stepless dial.
+  Encore ESP starts now follow its own manual. DF64 and uncited method/filter
+  predictions were removed; unsupported combinations use texture guidance.
+- The calculator shows only quantities supported by the selected brewing method,
+  with the remaining cards expanding to fill the available space.
+- Calculator ratios now start from the selected method's default and offer
+  method-specific choices, including half-step espresso ratios. On first use
+  after upgrading, the previous global ratio is replaced by each method's
+  default because its original brewing method was not recorded.
+
+- The calculator now presents coffee, water in, and in-cup output as three clear,
+  directly tappable quantity cards, with expressive selection styling and no
+  extra editing label or explanatory clutter.
+- Notifications now use a quiet monochrome cup-and-steam mark derived from the
+  app icon, keeping status-bar and notification surfaces clean and legible.
 - All 23 supported languages remain available for the app interface and the
   new Pulsar guide. Exact-recipe technical guidance now releases only for
   independently reviewed locales; canonical English is currently eligible,
@@ -75,6 +159,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Mindlayer connection and prompt tests now guide users through installation and
+  approval, enable enhanced label recognition, and continue the selected test.
+  The regular Settings control identifies Mindlayer, supports enabling and
+  disabling it, opens Mindlayer for model setup and integration options, and
+  links to Google Play for installation and updates.
+- AI label checks now start with a bounded context instead of oversized model
+  warmup. Requests that exceed the available context receive one smaller retry
+  that preserves the original label text and the scan deadline.
+- Label-recognition setup now shows opening and failure feedback, falls back to
+  the installed Mindlayer app when needed, and retries only after a destination
+  actually opens. Screen readers announce meaningful recognition and recovery
+  changes without repeating changing field counts.
+- Scan support diagnostics now include recognition progress and recovery events,
+  distinguish malformed AI responses from usable results, and retain safe failure
+  codes and scan correlation in reviewed exports. Capture and deletion remain
+  controlled by Diagnostics.
+
+- Rescans now show ongoing label recognition and contextual recovery actions.
+  Available changes remain reviewable while recognition runs, and saving partial
+  results is labeled clearly instead of presenting an unfinished scan as complete.
+- Coffee-label recognition now offers retry for connection and model failures
+  instead of asking already-authorized users to approve it again. Missing models
+  retain the setup action, and genuine authorization failures retain approval.
+- AI troubleshooting records now honor diagnostic capture and deletion controls,
+  retain only typed outcomes and numeric measurements, and remove old raw AI
+  output and error samples on upgrade.
+- Coffee-label scans now fall back to bundled text recognition when Mindlayer
+  recognition or its connection wait times out, while preserving cancellation
+  and the original scan deadline.
+- Espresso now supports planning by the amount in the cup at its dose-to-yield
+  ratio; its yield is no longer displayed as water input in the calculator.
+- GitHub Packages setup now verifies access to both dependency versions, reports
+  credential failures without exposing tokens, and lets build/CI credentials
+  override stale local tokens. Gradle also finds standard Windows GitHub CLI
+  installs and sends authentication on the first registry request.
+- Updated diagnostics and logging calls for the upgraded Tracebox API, preserving
+  private-value redaction and restoring compilation with the new dependencies.
+- Background brew alerts now begin at the moment the live brew screen is
+  backgrounded, without replaying bloom or pour transitions that were already
+  due while the app was in the foreground.
 - Exact Learn guides now merge authored teaching copy with the executable
   recipe contract, showing dose, every input, ratio semantics, temperature,
   grind scope, equipment, timing, cumulative and incremental water, completion

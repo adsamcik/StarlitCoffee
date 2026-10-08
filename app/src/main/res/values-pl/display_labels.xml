@@ -3,6 +3,7 @@
     <string-array name="brew_method_names">
         <item>Pulsar</item><item>V60</item><item>French press</item><item>AeroPress</item>
         <item>Espresso</item><item>Kawiarka</item><item>Parzenie na zimno</item>
+        <item>Chemex</item>
     </string-array>
     <string-array name="filter_type_names"><item>Papierowy</item><item>19K</item><item>40K</item></string-array>
     <string-array name="filter_cup_profiles">
@@ -18,10 +19,5 @@
         <item>Dzbanuszek ul</item><item>Dzbanuszek baristy</item><item>Kanciasty dzbanuszek</item>
         <item>Fasetowana szklanka do cortado</item><item>Ceramiczna miska do latte</item>
         <item>Karafka termiczna</item><item>Dwuścienny French press</item>
-    </string-array>
-    <string-array name="preset_color_labels">
-        <item>Domyślny</item><item>Brązowy</item><item>Czekoladowy</item><item>Peru</item>
-        <item>Stalowoniebieski</item><item>Morska zieleń</item><item>Fioletowy</item><item>Karmazynowy</item>
-        <item>Pomarańczowy</item><item>Łupkowy</item>
     </string-array>
 </resources>

@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.viewmodel
 
+import com.adsamcik.starlitcoffee.data.model.GrinderSettingFormatter
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
@@ -11,12 +12,21 @@ import androidx.work.WorkInfo
 import com.adsamcik.starlitcoffee.data.db.dao.UserBarcodeStemDao
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
+import com.adsamcik.starlitcoffee.data.db.entity.CoffeeIdentityEntity
+import com.adsamcik.starlitcoffee.data.model.GrindContext
+import com.adsamcik.starlitcoffee.data.model.GrindSaveScope
+import com.adsamcik.starlitcoffee.data.model.GrindSettingSource
+import com.adsamcik.starlitcoffee.data.model.GrindInputError
+import com.adsamcik.starlitcoffee.data.model.RememberedGrind
+import com.adsamcik.starlitcoffee.data.repository.GrindMemoryRepository
+import com.adsamcik.starlitcoffee.domain.GrindMemoryResolver
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeUsageEntryEntity
 import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.brewing.BrewLogMeasurementContextResolver
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
+import com.adsamcik.starlitcoffee.data.model.CalculatorSetup
 import com.adsamcik.starlitcoffee.data.model.CalibrationStyle
 import com.adsamcik.starlitcoffee.data.model.DefaultGrinders
 import com.adsamcik.starlitcoffee.data.model.FilterType
@@ -54,6 +64,9 @@ import com.adsamcik.starlitcoffee.data.work.BagExtractionResultStore
 import com.adsamcik.starlitcoffee.data.work.BagExtractionWorker
 import com.adsamcik.starlitcoffee.data.work.BagDraftPhase
 import com.adsamcik.starlitcoffee.data.work.BagDraftStore
+import com.adsamcik.starlitcoffee.data.work.BagScanRunTelemetry
+import com.adsamcik.starlitcoffee.data.work.bagScanDiagnosticContext
+import com.adsamcik.starlitcoffee.data.work.recordBagScanLifecycle
 import com.adsamcik.starlitcoffee.data.work.BagReviewContext
 import com.adsamcik.starlitcoffee.data.work.BagReviewQueue
 import com.adsamcik.starlitcoffee.data.work.decodeBagReviewContext
@@ -62,6 +75,10 @@ import com.adsamcik.starlitcoffee.data.work.encodeToJson
 import com.adsamcik.starlitcoffee.data.work.hasDeterministicScanData
 import com.adsamcik.starlitcoffee.domain.pickWeightedBloomSpritesheetId
 import com.adsamcik.starlitcoffee.domain.BeverageOutputCalibration
+import com.adsamcik.starlitcoffee.domain.scandiagnostics.ScanLifecycleDiagnostic
+import com.adsamcik.starlitcoffee.domain.scandiagnostics.ScanLifecycleEvent
+import com.adsamcik.starlitcoffee.domain.scandiagnostics.ScanDiagnosticFailure
+import com.adsamcik.starlitcoffee.domain.scandiagnostics.ScanDiagnosticOutcome
 import com.adsamcik.starlitcoffee.notification.BagAnalysisNotifier
 import com.adsamcik.starlitcoffee.notification.BrewSessionNotifier
 import com.adsamcik.starlitcoffee.notification.NoOpBagAnalysisNotifier
@@ -82,6 +99,9 @@ import com.adsamcik.starlitcoffee.util.ScanProgress
 import com.adsamcik.starlitcoffee.util.ScanPhotoStorage
 import com.adsamcik.starlitcoffee.util.ScanStage
 import com.adsamcik.starlitcoffee.util.RecognitionPreference
+import com.adsamcik.starlitcoffee.util.ModelSetupLaunchOutcome
+import com.adsamcik.starlitcoffee.util.openInstalledMindlayerApp
+import com.adsamcik.starlitcoffee.util.resolveMindlayerSetupLaunch
 import com.adsamcik.starlitcoffee.util.commitDeletionWithDeferredCleanup
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Deferred
@@ -176,6 +196,8 @@ data class BrewUiState(
     val timeTargetLowS: Int = 0,
     val timeTargetHighS: Int = 0,
     val grindResult: GrindResult = GrindResult.Generic(GrindDescriptor.MEDIUM),
+    val preparedGrind: PreparedGrind = PreparedGrind(),
+    val selectedCoffeeIdentityId: Long? = null,
     val refillCount: Int = 0,
     val ratioWarning: String? = null,
     val bloomWarning: String? = null,
@@ -260,6 +282,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     // Production shares the application-owned startup pass across every consumer. The fallback
     // keeps direct construction with a plain Application functional in tests and previews.
     private val bagExtractionStartupRecovery: (suspend () -> Set<String>)? = null,
+    private val grindMemoryRepository: GrindMemoryRepository? = null,
 ) : ViewModel(brewSessionNotifier) {
 
     private val llmCache = LlmResultCache()
@@ -287,6 +310,16 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     val flavorTags: StateFlow<List<FlavorTagEntity>> = _flavorTags.asStateFlow()
     private val _coffeeBags = MutableStateFlow(emptyList<CoffeeBagEntity>())
     val coffeeBags: StateFlow<List<CoffeeBagEntity>> = _coffeeBags.asStateFlow()
+    private val _coffeeIdentities = MutableStateFlow<List<CoffeeIdentityEntity>>(emptyList())
+    val coffeeIdentities = _coffeeIdentities.asStateFlow()
+    private val _newPackAddState = MutableStateFlow(PackAddState())
+    val newPackAddState = _newPackAddState.asStateFlow()
+    private var grindSettings = emptyList<RememberedGrind>()
+    private var temporaryGrind: RememberedGrind? = null
+    private val rememberedBagIds = mutableMapOf<Boolean, Long?>()
+    private var startedLegacyState: BrewUiState? = null
+    private var startedLegacyBagId: Long? = null
+    private var startedLegacySessionId: String? = null
     private val _coffeeUsageEntries = MutableStateFlow(emptyList<CoffeeUsageEntryEntity>())
     val coffeeUsageEntries: StateFlow<List<CoffeeUsageEntryEntity>> =
         _coffeeUsageEntries.asStateFlow()
@@ -444,6 +477,16 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 _isCoffeeBagInventoryLoaded.value = true
                 loadKnownFieldValues()
                 refreshInventoryAlerts()
+                recalculate()
+            }
+        }
+        viewModelScope.launch {
+            coffeeBagRepository?.coffeeIdentities()?.collect { _coffeeIdentities.value = it }
+        }
+        viewModelScope.launch {
+            grindMemoryRepository?.settings()?.collect {
+                grindSettings = it
+                recalculate()
             }
         }
         viewModelScope.launch {
@@ -528,6 +571,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     }
 
     fun setMethod(method: BrewMethod) {
+        if (method != _uiState.value.method) temporaryGrind = null
         val defaultPresets = method.defaultRatioPresets
         val defaultIndex = defaultPresets.indexOfFirst { it.isDefault }.coerceAtLeast(0)
         _uiState.update { state ->
@@ -631,6 +675,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     }
 
     fun setFilterType(type: FilterType?) {
+        if (type != _uiState.value.filterType) temporaryGrind = null
         _uiState.update { state ->
             state.copy(
                 filterType = type,
@@ -641,6 +686,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     }
 
     fun setGrinder(grinderId: String?) {
+        if (grinderId != _uiState.value.selectedGrinderId) temporaryGrind = null
         _uiState.update { it.copy(selectedGrinderId = grinderId) }
         recalculate()
     }
@@ -654,7 +700,31 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         _uiState.update { it.copy(showAdvanced = !it.showAdvanced) }
     }
 
-    fun startTimer() = timerController.start()
+    fun startTimer() {
+        beginLegacyBrew()
+        timerController.start()
+    }
+
+    fun beginLegacyBrew() {
+        if (startedLegacyState == null) {
+            startedLegacyState = _uiState.value
+            startedLegacyBagId = _selectedBagId.value
+            startedLegacySessionId = UUID.randomUUID().toString()
+            markSelectedPackUsed()
+        }
+    }
+
+    fun abandonLegacyBrew() {
+        stopTimer()
+        startedLegacyState = null
+        startedLegacyBagId = null
+        startedLegacySessionId = null
+    }
+
+    fun markSelectedPackUsed() {
+        val id = _selectedBagId.value ?: return
+        viewModelScope.launch { coffeeBagRepository?.markOpenedOnUse(id, System.currentTimeMillis()) }
+    }
 
     /**
      * Ensures the timer coroutine is running. Call on app resume to recover
@@ -711,7 +781,10 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
 
     fun markBloom() = timerController.markBloom()
 
-    fun startBloom() = timerController.startBloom()
+    fun startBloom() {
+        beginLegacyBrew()
+        timerController.startBloom()
+    }
 
     fun toggleMinuteAlert() {
         _uiState.update { it.copy(minuteAlertEnabled = !it.minuteAlertEnabled) }
@@ -746,29 +819,32 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         _uiState.update { it.copy(feedbackNotes = notes) }
     }
 
-    fun saveRecipe(name: String?) {
+    fun saveRecipe(name: String?, calculatorSetup: CalculatorSetup? = null) {
         val repository = recipeRepository ?: return
         val state = _uiState.value
         viewModelScope.launch {
-            repository.insertRecipe(
-                SavedRecipeEntity(
+            val entity = SavedRecipeEntity(
                     coffeeName = name,
                     method = state.method.name,
                     ratio = state.effectiveRatio,
                     doseG = state.coffeeG,
                     waterG = state.waterG,
                     grinderId = state.selectedGrinderId,
-                    grindSetting = when (val result = state.grindResult) {
-                        is GrindResult.Generic -> result.descriptor.displayName
-                        is GrindResult.Specific -> {
-                            "${"%.1f".format(result.recommendation.rangeStart)}-${"%.1f".format(result.recommendation.rangeEnd)}"
-                        }
-                    },
+                    grindSetting = state.effectiveGrindLabel(),
                     filterType = state.filterType?.name,
                     isDecaf = state.isDecafBrew,
                     notes = state.feedbackNotes.takeIf { it.isNotBlank() },
-                ),
-            )
+                )
+            if (calculatorSetup == null) {
+                repository.insertRecipe(entity)
+            } else {
+                val ready = LegacyBrewSessionStartFactory().create(state, null, null)
+                    as? LegacyBrewSessionStartResult.Ready ?: return@launch
+                repository.insertVersionedRecipe(
+                    entity,
+                    ready.request.recipe.copy(calculatorSetup = calculatorSetup),
+                )
+            }
         }
     }
 
@@ -815,37 +891,47 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
 
     fun logBrew() {
         val repository = brewLogRepository ?: return
-        val state = _uiState.value
+        val live = _uiState.value
+        val state = startedLegacyState?.copy(
+            elapsedSeconds = live.elapsedSeconds, tasteFeedback = live.tasteFeedback,
+            rating = live.rating, feedbackNotes = live.feedbackNotes,
+        ) ?: live
+        val bagId = if (startedLegacyState != null) startedLegacyBagId else _selectedBagId.value
+        val sourceId = startedLegacySessionId
         viewModelScope.launch {
-            val log = buildBrewLogEntity(state)
-            // Compute the inventory mutations (current bag + optional rotation)
-            // before opening the transaction, then persist the log and all bag
-            // updates atomically so a process death can't leave a logged brew
-            // without its inventory decrement (or vice versa).
-            val plan = planInventoryUpdatesForBrew(state)
-            transactionRunner {
-                val logId = repository.insertLog(log)
-                lastLoggedBrewId = logId
-                plan.bagUpdates.forEach { coffeeBagRepository?.updateBag(it) }
+            val baseLog = buildBrewLogEntity(state, bagId)
+            val ready = LegacyBrewSessionStartFactory().create(state, bagId, null) as? LegacyBrewSessionStartResult.Ready
+            val log = ready?.request?.let { request ->
+                com.adsamcik.starlitcoffee.data.brewing.snapshot.BrewingPersistenceMapper.withBrewRecordSnapshot(
+                    baseLog, com.adsamcik.starlitcoffee.data.brewing.snapshot.BrewRecordSnapshotV1(
+                        recipe = request.recipe, completedAtWallClockMillis = baseLog.createdAt,
+                        sourceSessionId = sourceId, coffeeIdentityId = state.selectedCoffeeIdentityId,
+                        grindMemory = request.executionContext.grindMemory,
+                    ), sourceSessionId = sourceId,
+                )
+            } ?: baseLog.copy(sourceSessionId = sourceId)
+            val plan = transactionRunner {
+                val write = if (sourceId == null) com.adsamcik.starlitcoffee.data.repository.SessionLogWriteResult(repository.insertLog(log), true)
+                    else repository.insertOnce(log)
+                lastLoggedBrewId = write.logId
+                if (!write.wasNew) return@transactionRunner BrewInventoryPlan(emptyList(), null)
+                val inventory = planInventoryUpdatesForBrew(state, bagId)
+                inventory.bagUpdates.forEach { coffeeBagRepository?.updateBag(it) }
+                inventory
             }
-            plan.rotatedToBagId?.let { _selectedBagId.value = it }
+            plan.rotatedToBagId?.let { selectBag(it) }
             refreshLastUnrated()
             scheduleRatingReminderIfEnabled(requireNotNull(lastLoggedBrewId), state.method)
         }
     }
 
-    private fun buildBrewLogEntity(state: BrewUiState): BrewLogEntity = BrewLogEntity(
-        coffeeBagId = _selectedBagId.value,
+    private fun buildBrewLogEntity(state: BrewUiState, bagId: Long? = _selectedBagId.value): BrewLogEntity = BrewLogEntity(
+        coffeeBagId = bagId,
         method = state.method.name,
         doseG = state.coffeeG,
         waterG = state.waterG,
         ratio = state.effectiveRatio,
-        grindSetting = when (val result = state.grindResult) {
-            is GrindResult.Generic -> result.descriptor.displayName
-            is GrindResult.Specific -> {
-                "${"%.1f".format(result.recommendation.rangeStart)}-${"%.1f".format(result.recommendation.rangeEnd)}"
-            }
-        },
+        grindSetting = state.effectiveGrindLabel(),
         filterType = state.filterType?.name,
         isDecaf = state.isDecafBrew,
         tasteFeedback = state.tasteFeedback?.name,
@@ -864,26 +950,18 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
 
     /**
      * Compute the inventory side-effects of logging a brew: SEALED→OPEN on first
-     * brew, save the dialed-in grind, decrement weight, OPEN→FINISHED when
-     * depleted, and auto-rotate to the next sealed bag of the same coffee. Pure
-     * apart from the [findNextSealed] read; returns the bag entities to persist
-     * plus the bag we rotated selection to.
+     * brew, decrement weight and select another pack of the same identity when
+     * depleted. Remembered grind settings are changed only by the explicit editor.
+     * The next pack remains sealed until it is actually used.
      */
-    private suspend fun planInventoryUpdatesForBrew(state: BrewUiState): BrewInventoryPlan {
-        val bagId = _selectedBagId.value ?: return BrewInventoryPlan(emptyList(), null)
-        val bag = _coffeeBags.value.find { it.id == bagId }
+    private suspend fun planInventoryUpdatesForBrew(state: BrewUiState, selectedId: Long?): BrewInventoryPlan {
+        val bagId = selectedId ?: return BrewInventoryPlan(emptyList(), null)
+        val bag = coffeeBagRepository?.getBagByIdOnce(bagId)
             ?: return BrewInventoryPlan(emptyList(), null)
 
         var updated = bag
         if (bag.status == "SEALED") {
             updated = updated.copy(status = "OPEN", openedDate = System.currentTimeMillis())
-        }
-        val grindStr = when (val result = state.grindResult) {
-            is GrindResult.Specific -> "%.1f".format(result.recommendation.suggestedStart)
-            is GrindResult.Generic -> null
-        }
-        if (grindStr != null && updated.grindSetting != grindStr) {
-            updated = updated.copy(grindSetting = grindStr)
         }
         if (updated.weightG != null) {
             val newWeight = (updated.weightG - state.coffeeG).coerceAtLeast(0f)
@@ -901,14 +979,9 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             // Exclude the just-depleted bag: writes are deferred to the transaction,
             // so the lookup still sees this bag's pre-update (possibly SEALED) row and
             // must not rotate selection back onto the bag we are finishing.
-            val nextBag = coffeeBagRepository?.findNextSealed(updated.name, updated.roaster)
+            val nextBag = updated.coffeeId?.let { coffeeBagRepository?.findNextPack(it, bag.id) }
                 ?.takeIf { it.id != bag.id }
             if (nextBag != null) {
-                bagUpdates += nextBag.copy(
-                    status = "OPEN",
-                    openedDate = System.currentTimeMillis(),
-                    grindSetting = updated.grindSetting,
-                )
                 rotatedToBagId = nextBag.id
             }
         }
@@ -968,43 +1041,171 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     }
 
     fun selectBag(bagId: Long?) {
+        val bag = _coffeeBags.value.find { it.id == bagId }
+        if (bagId != null && bag?.isBrewable() != true) return
+        rememberedBagIds[_uiState.value.isDecafBrew] = _selectedBagId.value
         _selectedBagId.value = bagId
-        // Decaf derivation now happens in recalculate() from manualDecafOverride + bag.isDecaf.
-        // We no longer silently clobber user intent here.
-
-        // Auto-switch brew method to the one most recently used with this bag, if any.
-        // Derives from in-memory brew logs (already collected into _brewLogs); no DB round-trip.
-        if (bagId != null) {
-            val lastMethod = _brewLogs.value
-                .asSequence()
-                .filter { it.coffeeBagId == bagId }
-                .mapNotNull { log ->
-                    runCatching { BrewMethod.valueOf(log.method) }.getOrNull()
-                }
-                .firstOrNull()
-            if (lastMethod != null && lastMethod != _uiState.value.method) {
-                // setMethod() also refreshes presets/ratios and calls recalculate().
-                setMethod(lastMethod)
-                return
-            }
-        }
+        temporaryGrind = null
+        if (bag != null) rememberedBagIds[bag.isDecaf] = bagId
+        _uiState.update { it.copy(manualDecafOverride = if (bag == null) it.isDecafBrew else null) }
         recalculate()
     }
 
     /**
-     * Select a bag for brewing, auto-transitioning SEALED → OPEN with today's opened date.
+     * Selection is reversible browsing. A sealed pack opens only on confirmed use.
      */
     fun selectBagForBrewing(bagId: Long) {
-        val repository = coffeeBagRepository ?: return
-        val bag = _coffeeBags.value.find { it.id == bagId }
-        if (bag != null && bag.status == "SEALED") {
-            viewModelScope.launch {
-                repository.updateBag(
-                    bag.copy(status = "OPEN", openedDate = System.currentTimeMillis()),
-                )
+        selectBag(bagId)
+    }
+
+    fun clearGrindError() {
+        _uiState.update { it.copy(preparedGrind = it.preparedGrind.copy(error = null)) }
+    }
+
+    fun saveGrindSetting(input: String, scope: GrindSaveScope) {
+        val state = _uiState.value
+        if (state.preparedGrind.isSaving) return
+        val result = state.grindResult as? GrindResult.Specific ?: return
+        val value = GrindMemoryResolver.parse(input, result.grinder, System.currentTimeMillis())
+        if (value == null || scope !in state.preparedGrind.availableScopes) {
+            _uiState.update { it.copy(preparedGrind = it.preparedGrind.copy(error = GrindInputError.INVALID_FORMAT)) }
+            return
+        }
+        val context = GrindContext(result.grinder.id, state.method.name, state.filterType?.name.orEmpty())
+        val bag = _coffeeBags.value.find { it.id == _selectedBagId.value }
+        val owner = when (scope) {
+            GrindSaveScope.BREW -> "brew"
+            GrindSaveScope.PACK -> bag?.id?.toString()
+            GrindSaveScope.COFFEE -> bag?.coffeeId?.toString()
+            GrindSaveScope.TYPE -> GrindMemoryResolver.typeOwner(state.isDecafBrew)
+        } ?: return
+        val setting = RememberedGrind(scope, owner, context, value)
+        if (scope == GrindSaveScope.BREW) {
+            temporaryGrind = setting
+            acknowledgeGrindSave()
+            return
+        }
+        _uiState.update { it.copy(preparedGrind = it.preparedGrind.copy(isSaving = true, error = null)) }
+        viewModelScope.launch {
+            try {
+                checkNotNull(grindMemoryRepository).save(setting)
+                grindSettings = grindSettings.filterNot { it.sameKey(setting) } + setting
+                val current = _uiState.value
+                if (current.sameGrindContext(state) && _selectedBagId.value == bag?.id) {
+                    val effective = GrindMemoryResolver.resolve(
+                        grindSettings, context, result.grinder, bag?.id, bag?.coffeeId, state.isDecafBrew,
+                    )
+                    temporaryGrind = setting.copy(scope = GrindSaveScope.BREW, owner = "brew")
+                        .takeIf { effective?.value != value }
+                }
+                acknowledgeGrindSave()
+            } catch (error: CancellationException) {
+                throw error
+            } catch (_: Exception) {
+                _uiState.update { it.copy(preparedGrind = it.preparedGrind.copy(isSaving = false, error = GrindInputError.SAVE_FAILED)) }
             }
         }
-        selectBag(bagId)
+    }
+
+    @Suppress("ReturnCount") // Contextual action guards leave incompatible or absent memories untouched.
+    fun removeEffectiveGrindSetting() {
+        val state = _uiState.value
+        if (!state.preparedGrind.canReset || state.preparedGrind.isSaving) return
+        if (state.preparedGrind.source == GrindSettingSource.BREW) {
+            temporaryGrind = null
+            acknowledgeGrindSave()
+            return
+        }
+        val result = state.grindResult as? GrindResult.Specific ?: return
+        val bag = _coffeeBags.value.find { it.id == _selectedBagId.value }
+        val context = GrindContext(result.grinder.id, state.method.name, state.filterType?.name.orEmpty())
+        val resolved = GrindMemoryResolver.resolve(grindSettings, context, result.grinder, bag?.id, bag?.coffeeId, state.isDecafBrew)
+            ?: return
+        val scope = when (resolved.source) {
+            GrindSettingSource.PACK -> GrindSaveScope.PACK
+            GrindSettingSource.COFFEE -> GrindSaveScope.COFFEE
+            GrindSettingSource.TYPE -> GrindSaveScope.TYPE
+            else -> return
+        }
+        val owner = when (scope) {
+            GrindSaveScope.PACK -> bag?.id?.toString()
+            GrindSaveScope.COFFEE -> bag?.coffeeId?.toString()
+            else -> GrindMemoryResolver.typeOwner(state.isDecafBrew)
+        }
+        val setting = grindSettings.firstOrNull { it.scope == scope && it.owner == owner && it.context == context } ?: return
+        _uiState.update { it.copy(preparedGrind = it.preparedGrind.copy(isSaving = true, error = null)) }
+        viewModelScope.launch {
+            try {
+                checkNotNull(grindMemoryRepository).remove(setting)
+                grindSettings = grindSettings.filterNot { it.sameKey(setting) }
+                acknowledgeGrindSave()
+            } catch (error: CancellationException) {
+                throw error
+            } catch (_: Exception) {
+                _uiState.update { it.copy(preparedGrind = it.preparedGrind.copy(isSaving = false, error = GrindInputError.SAVE_FAILED)) }
+            }
+        }
+    }
+
+    private fun RememberedGrind.sameKey(other: RememberedGrind): Boolean =
+        scope == other.scope && owner == other.owner && context == other.context
+
+    private fun acknowledgeGrindSave() {
+        _uiState.update {
+            it.copy(preparedGrind = it.preparedGrind.copy(
+                isSaving = false, error = null, saveRevision = it.preparedGrind.saveRevision + 1,
+            ))
+        }
+        recalculate()
+    }
+
+    fun clearPackAddState() {
+        if (!_newPackAddState.value.isSaving) _newPackAddState.value = PackAddState()
+    }
+
+    suspend fun findCoffeeIdentitiesByBarcode(barcode: String): List<CoffeeIdentityEntity> =
+        coffeeBagRepository?.findCoffeeIdentitiesByBarcode(barcode).orEmpty()
+
+    @Suppress("LongParameterList") // One reviewed physical-pack transaction, matching the editor's explicit fields.
+    fun addPackAndUse(
+        coffeeId: Long?, name: String, roaster: String?, isDecaf: Boolean, sizeG: Float,
+        roastDate: Long?, opened: Boolean, remainingG: Float?, operationId: String, barcode: String? = null,
+    ) {
+        if (_newPackAddState.value.isSaving) return
+        val validIdentity = name.isNotBlank() && operationId.isNotBlank()
+        val validSize = sizeG.isFinite() && sizeG > 0
+        val validRemaining = !opened || remainingG?.let { it.isFinite() && it > 0 && it <= sizeG } == true
+        if (!validIdentity || !validSize || !validRemaining) {
+            _newPackAddState.value = PackAddState(error = PackAddError.INVALID_DETAILS)
+            return
+        }
+        _newPackAddState.value = PackAddState(isSaving = true)
+        viewModelScope.launch {
+            try {
+                val repository = checkNotNull(coffeeBagRepository)
+                if (coffeeId != null && repository.getCoffee(coffeeId) == null) {
+                    _newPackAddState.value = PackAddState(error = PackAddError.UNKNOWN_COFFEE)
+                    return@launch
+                }
+                val added = repository.insertBag(CoffeeBagEntity(
+                    name = name.trim(), roaster = roaster?.trim()?.takeIf(String::isNotBlank),
+                    isDecaf = isDecaf, coffeeId = coffeeId, initialWeightG = sizeG,
+                    weightG = if (opened) remainingG else sizeG, roastDate = roastDate,
+                    status = if (opened) "OPEN" else "SEALED",
+                    openedDate = if (opened) System.currentTimeMillis() else null,
+                    scanSessionId = operationId, barcode = barcode,
+                ))
+                val id = if (added > 0) added else checkNotNull(repository.findByScanSessionId(operationId)).id
+                val pack = checkNotNull(repository.getBagByIdOnce(id))
+                _coffeeBags.update { bags -> bags.filterNot { it.id == id } + pack }
+                selectBag(id)
+                _newPackAddState.value = PackAddState(addedPackId = id)
+            } catch (error: CancellationException) {
+                throw error
+            } catch (_: Exception) {
+                _newPackAddState.value = PackAddState(error = PackAddError.SAVE_FAILED)
+            }
+        }
     }
 
     fun refreshLastUnrated() {
@@ -1040,7 +1241,13 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     }
 
     fun setDecafBrew(isDecaf: Boolean) {
-        // Writes into manualDecafOverride (user intent); recalculate() derives isDecafBrew.
+        rememberedBagIds[_uiState.value.isDecafBrew] = _selectedBagId.value
+        val remembered = rememberedBagIds[isDecaf]?.takeIf { id ->
+            _coffeeBags.value.any { it.id == id && it.isDecaf == isDecaf && it.status != "FINISHED" &&
+                (it.weightG == null || it.weightG > 0) }
+        }
+        _selectedBagId.value = remembered
+        temporaryGrind = null
         _uiState.update { it.copy(manualDecafOverride = isDecaf) }
         recalculate()
     }
@@ -1194,6 +1401,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         val traceabilityUrl: String? = null,
         val scanSessionId: String? = null,
         val status: String = "SEALED",
+        val coffeeId: Long? = null,
     )
 
     data class ScannedBagInsertResult(
@@ -1270,7 +1478,10 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                     val currentOwner = runCatching {
                         repository.findByScanSessionId(sessionId)
                     }.onFailure { error ->
-                        Tracebox.log.error(error, BrewViewModelTraceboxTemplates.COULD_NOT_VERIFY_PENDING_SCAN_PHOTO_OWNERSHIP)
+                        Tracebox.log.error(
+                            error,
+                            BrewViewModelTraceboxTemplates.COULD_NOT_VERIFY_PENDING_SCAN_PHOTO_OWNERSHIP,
+                        )
                     }.getOrElse {
                         return@forEach
                     }
@@ -1279,7 +1490,9 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                     ) {
                         ScanPhotoStorage.clearPendingSave(app, sessionId)
                     } else {
-                        Tracebox.log.warn(BrewViewModelTraceboxTemplates.COULD_NOT_DURABLY_REMOVE_UNOWNED_SCAN_PHOTOS)
+                        Tracebox.log.warn(
+                            BrewViewModelTraceboxTemplates.COULD_NOT_DURABLY_REMOVE_UNOWNED_SCAN_PHOTOS,
+                        )
                     }
                 } finally {
                     finishScannedBagSave(sessionId)
@@ -1327,6 +1540,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 traceabilityUrl = input.traceabilityUrl,
                 scanSessionId = input.scanSessionId,
                 status = input.status,
+                coffeeId = input.coffeeId,
             ),
             origin = input.origin,
             region = input.region,
@@ -1563,6 +1777,14 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         }
         if (photoUriList.isEmpty()) {
             bagPhotoLlmRetryContexts.remove(sessionId)
+            recordBagScanLifecycle(
+                ScanLifecycleDiagnostic(
+                    context = bagScanDiagnosticContext(sessionId, generationId, null, photosCsv, reviewContext),
+                    event = ScanLifecycleEvent.COMPLETED,
+                    outcome = ScanDiagnosticOutcome.NO_RESULT,
+                    failure = ScanDiagnosticFailure.NO_PHOTOS,
+                ),
+            )
             _bagPhotoResult.value = BagPhotoSessionResult(
                 sessionId = sessionId,
                 result = BagPhotoProcessingResult(capturedPhotoUris = photosCsv),
@@ -1666,6 +1888,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         }
         val generationId = UUID.randomUUID().toString()
         rememberLatestBagExtractionGeneration(sessionId, generationId)
+        app?.let { BagDraftStore.beginGeneration(it, sessionId, generationId) }
         return generationId
     }
 
@@ -1773,18 +1996,37 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         activeBagExtractionGenerationId = context.generationId
         activeBagExtractionReviewContext = context.reviewContext
         bagPhotoProcessJob = viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) {
-                runCancellableLlmEnrichment(
-                    photoUris = context.photoUriList,
-                    knownFieldValues = context.knownFieldValues,
-                    runLlm = runLlm,
-                    onProgress = ::updateBagPhotoProgress,
-                    onPartialResult = { partialResult ->
-                        updateBagAnalysisPreview(
-                            partialResult.copy(capturedPhotoUris = context.photosCsv),
-                        )
-                    },
-                )
+            val telemetry = BagScanRunTelemetry(context.diagnosticContext(), aiRequested = runLlm)
+            telemetry.start()
+            val result = try {
+                withContext(Dispatchers.IO + telemetry.identity) {
+                    runCancellableLlmEnrichment(
+                        photoUris = context.photoUriList,
+                        knownFieldValues = context.knownFieldValues,
+                        runLlm = runLlm,
+                        onProgress = { progress ->
+                            telemetry.progress(progress)
+                            updateBagPhotoProgress(progress)
+                        },
+                        onPartialResult = { partialResult ->
+                            telemetry.partial(partialResult)
+                            updateBagAnalysisPreview(
+                                partialResult.copy(capturedPhotoUris = context.photosCsv),
+                            )
+                        },
+                    )
+                }
+            } catch (error: CancellationException) {
+                telemetry.cancel()
+                throw error
+            } catch (error: Exception) {
+                telemetry.finish(BagPhotoProcessingResult(), successful = false)
+                throw error
+            }
+            if (isLatestBagExtractionGeneration(context.sessionId, context.generationId)) {
+                telemetry.finish(result, successful = true)
+            } else {
+                telemetry.cancel()
             }
             bagPhotoLlmRetryContexts[context.sessionId] = context
             deliverBagPhotoResult(
@@ -2033,6 +2275,9 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         val context = previousContext.copy(
             generationId = startNewBagExtractionGeneration(sessionId),
         )
+        recordBagScanLifecycle(
+            ScanLifecycleDiagnostic(context.diagnosticContext(), ScanLifecycleEvent.RETRY_REQUESTED, aiRequested = true),
+        )
         bagPhotoLlmRetryContexts[sessionId] = context
         bagPhotoSkipRequested = false
         bagPhotoRetrySessionId = sessionId
@@ -2098,6 +2343,10 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         val photoUriList: List<String>,
         val knownFieldValues: KnownFieldValues,
         val reviewContext: BagReviewContext?,
+    )
+
+    private fun BagPhotoLlmRetryContext.diagnosticContext() = bagScanDiagnosticContext(
+        sessionId, generationId, null, photosCsv, reviewContext,
     )
 
     fun consumeBagPhotoResult(sessionId: String) {
@@ -2279,6 +2528,8 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         cancelBagPhotoProcessJob()
         bagPhotoLlmDeferred = null
         if (checkpoint != null) {
+            BagScanRunTelemetry(context.diagnosticContext(), aiRequested = false)
+                .finish(checkpoint.copy(llmStatus = LlmEnrichmentStatus.NOT_RUN), successful = true)
             deliverBagPhotoResult(
                 result = checkpoint.copy(
                     capturedPhotoUris = context.photosCsv,
@@ -2297,20 +2548,24 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
 
     /** Open Mindlayer's own model screen for the pending scan. */
     fun openMindlayerModelSetup() {
-        val app = application as? com.adsamcik.starlitcoffee.StarlitCoffeeApp ?: return
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                app.getOrCreateMindlayerServices()
-                    ?.client
+        viewModelScope.launch { launchMindlayerModelSetup() }
+    }
+
+    /** Reports launch success separately from model readiness; returning from setup triggers rechecking. */
+    suspend fun launchMindlayerModelSetup(): ModelSetupLaunchOutcome = withContext(Dispatchers.IO) {
+        val app = application as? com.adsamcik.starlitcoffee.StarlitCoffeeApp
+            ?: return@withContext ModelSetupLaunchOutcome.UNAVAILABLE
+        resolveMindlayerSetupLaunch(
+            queryAction = {
+                app.getOrCreateMindlayerServices()?.client
                     ?.getModelSetupAction(com.adsamcik.mindlayer.ModelReadinessItem.FAMILY_CHAT)
-                    ?.setupIntent
-                    ?.send()
-            } catch (error: CancellationException) {
-                throw error
-            } catch (error: Exception) {
+                    ?.setupIntent?.let { intent -> { intent.send() } }
+            },
+            openApp = { withContext(Dispatchers.Main.immediate) { openInstalledMindlayerApp(app) } },
+            onFailure = { error ->
                 Tracebox.log.error(error, BrewViewModelTraceboxTemplates.COULD_NOT_OPEN_MINDLAYER_MODEL_SETUP)
-            }
-        }
+            },
+        )
     }
 
     private fun observeBagExtractionWork(
@@ -2864,6 +3119,10 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
 
     fun resetBrew() {
         stopTimer()
+        startedLegacyState = null
+        startedLegacyBagId = null
+        startedLegacySessionId = null
+        temporaryGrind = null
         _uiState.value = BrewUiState()
         collectRatioPresets(BrewMethod.PULSAR)
         recalculate()
@@ -2880,6 +3139,9 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
      */
     fun startNewBrewSession() {
         stopTimer()
+        startedLegacyState = null
+        startedLegacyBagId = null
+        startedLegacySessionId = null
         _uiState.update {
             it.copy(
                 tasteFeedback = null,
@@ -2924,7 +3186,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 grinderData = grinderData,
                 nowMs = System.currentTimeMillis(),
             )
-            calibratedState.copy(
+            val next = calibratedState.copy(
                 coffeeG = derived.coffeeG,
                 waterG = derived.waterG,
                 effectiveRatio = derived.effectiveRatio,
@@ -2944,6 +3206,8 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 retainedWaterG = derived.retainedWaterG,
                 predictedCupVolumeG = derived.predictedCupVolumeG,
             )
+            next.copy(preparedGrind = preparedGrind(next, selectedBag, grindSettings, temporaryGrind),
+                selectedCoffeeIdentityId = selectedBag?.coffeeId)
         }
     }
 

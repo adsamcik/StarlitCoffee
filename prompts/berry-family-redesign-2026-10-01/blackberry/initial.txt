@@ -1,0 +1,32 @@
+Create a polished 25-pose Blackberry growth animation atlas guided by the supplied ORIGINAL FINAL reference image. That reference is the mature target: preserve its distinctive asymmetric thin bramble, compound serrated leaves, four LARGE elongated drupelet berries, pale pink-white upper-left flower, split coffee bean and shallow soil ring. This is a blackberry bramble, not a generic symmetrical four-ball plant or a raspberry bush.
+
+OUTPUT: one square transparent RGBA atlas, EXACTLY 5x5 equal cells, row-major F1-F25. No text, numbers, guides, gridlines, extra plants or background. One complete plant per cell, generous clear margins. Same frontal camera, painted material, lighting, constant bean/ring size and centered base in every cell. Never zoom between cells or rows. Bean width about 42% of a cell, mature plant width about 82%, full mature height about 82%. True empty alpha outside whole plants; opaque colored leaves and berries inside.
+
+FIXED MATURE ANATOMY: a slender central cane with irregular arching side branches and distinct toothed compound leaf sprays; broad low-left spray and low-right spray persist. One large elongated berry A hangs low-left. Three unequal elongated berries climb the right side: B middle-right near the central cane, C high-right, D farther-right on an outward arched branch. A is largest, C slightly smaller. Preserve these FOUR exact attachment sites once introduced. One separate five-petal pale pink-white flower with a warm yellow center opens at upper-left and stays fully open through the finish. Four berries have plump many-lobed drupelets, not smooth balls. Ripe berries are deep inky violet-black with readable purple highlights, not bright raspberry red. Keep open gaps between cane, sprays, berries and flower. No fruit or leaf disappearance, attachment swaps, reclosure or backward ripening. Work backward from the supplied mature architecture; the young stages must plausibly lead to it.
+
+Each step changes meaningful structure or ripeness while keeping everything already established:
+F1: same split brown bean and shallow ring alone.
+F2: tiny green tip emerges from its seam.
+F3: tip extends into slender upright shoot.
+F4: first two toothed leaflets unfurl low on shoot.
+F5: those same lower leaflets spread; upper shoot rises.
+F6: retain lower leaves; grow unequal left and right cane forks and small leaflets on both.
+F7: retain forks and lower leaves; extend the right arch and unfold middle compound sprays.
+F8: retain all sprays; taller upper cane, fuller asymmetrical upper foliage; distinct space for upper-left flower.
+F9: retain whole leafy architecture; form four small fruit pedicels at A low-left/B middle-right/C high-right/D far-right, plus a separate upper-left flower bud.
+F10: retain leaves, branches and five pedicels; four tiny closed green fruit buds and separate closed flower bud become clear.
+F11: same four green buds enlarge and become pointed; flower bud loosens.
+F12: four tiny elongated green aggregate berries emerge at the same sites; flower petals begin separating.
+F13: all four green berries swell with distinct drupelets; separate flower half opens.
+F14: all four green berries become larger, elongated; upper-left five-petal flower opens fully and remains open afterward.
+F15: same four green berries reach about three-quarter mature size; all branch, leaf and flower surfaces retained.
+F16: all four green berries plump nearly to mature size, separated and unequal; flower stays fully open.
+F17: A turns warm red; B/C/D remain green, swell slightly; keep whole canopy and flower.
+F18: A deepens burgundy, B turns red, C/D remain green; keep all four attachments and flower.
+F19: A turns violet-black, B burgundy, D warm red, C green; retain full anatomy.
+F20: A remains black, B turns dark violet, D deep red, C yellow-red; retain full anatomy.
+F21: A/B black, D burgundy, C red; same four plump elongated berries and open flower.
+F22: A/B black, D violet, C burgundy; fine blackberry highlights develop without changing positions.
+F23: A/B/D black, C violet; all leaves and open upper-left flower persist.
+F24: all four berries black, C still completing deep-purple ripening; mature asymmetric silhouette settles.
+F25: reference-faithful full finish, all four elongated inky blackberries richly plump with purple drupelet highlights, open pale flower and lush retained serrated sprays. Finish gracefully, no late fruit addition or sudden growth jump.

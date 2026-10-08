@@ -12,6 +12,7 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.SessionEventId
 import com.adsamcik.starlitcoffee.domain.brewing.session.SessionId
 import com.adsamcik.starlitcoffee.domain.brewing.session.SessionReducer
 import com.adsamcik.starlitcoffee.domain.brewing.session.SessionRuntimeState
+import com.adsamcik.starlitcoffee.domain.brewing.session.PhysicalBrewClock
 import kotlinx.coroutines.CancellationException
 
 data class BrewSessionStartRequest(
@@ -19,6 +20,7 @@ data class BrewSessionStartRequest(
     val recipe: BrewRecipeSnapshotV1,
     val stagePlan: CompiledStagePlan,
     val executionContext: SessionExecutionContextSnapshotV1,
+    val physicalClock: PhysicalBrewClock? = null,
 )
 
 data class ActiveBrewSession(
@@ -33,6 +35,7 @@ data class ActiveBrewSession(
  * effect ID: a process can die after delivery but before acknowledgement.
  */
 interface BrewSessionEffectHandler {
+    fun synchronize(session: ActiveBrewSession) = Unit
     suspend fun deliver(
         effect: PendingSessionEffect,
         session: ActiveBrewSession,
@@ -95,18 +98,28 @@ class BrewSessionCoordinator(
     }
 
     /**
-     * Creates an inactive durable session, then starts it through the ordinary
-     * reducer path. If another owner created the same ID first, it restores
+     * Creates an inactive durable session, then optionally starts it through the ordinary
+     * reducer path. A bloom awaiting its physical first-water action stays READY.
+     * If another owner created the same ID first, it restores
      * that exact durable session rather than overwriting it.
      */
     suspend fun createOrResume(
         request: BrewSessionStartRequest,
         startEventId: SessionEventId? = null,
+        startImmediately: Boolean = true,
+    ): BrewSessionOperationResult = BrewSessionOperationLocks.withSession(request.sessionId) {
+        createOrResumeLocked(request, startEventId, startImmediately)
+    }
+
+    private suspend fun createOrResumeLocked(
+        request: BrewSessionStartRequest,
+        startEventId: SessionEventId?,
+        startImmediately: Boolean,
     ): BrewSessionOperationResult {
         val existing = sessionRepository.getSession(request.sessionId.value)
-        if (existing != null) return loadAndDrain(request.sessionId)
+        if (existing != null) return loadAndDrainLocked(request.sessionId)
 
-        val initial = SessionRuntimeState.create(request.sessionId, request.stagePlan)
+        val initial = SessionRuntimeState.create(request.sessionId, request.stagePlan).copy(physicalClock = request.physicalClock)
         val now = clockedEngine.now()
         val entity = ActiveBrewSessionEntityMapper.create(
             recipe = request.recipe,
@@ -116,7 +129,11 @@ class BrewSessionCoordinator(
         )
         return try {
             sessionRepository.create(entity)
-            dispatch(request.sessionId, SessionEvent.Start(startEventId))
+            if (startImmediately) {
+                dispatchLocked(request.sessionId, SessionEvent.Start(startEventId))
+            } else {
+                loadAndDrainLocked(request.sessionId)
+            }
         } catch (error: CancellationException) {
             throw error
         } catch (error: Exception) {
@@ -124,7 +141,7 @@ class BrewSessionCoordinator(
             // it is not, the second lookup leaves the original failure visible.
             val afterConflict = sessionRepository.getSession(request.sessionId.value)
             if (afterConflict != null) {
-                loadAndDrain(request.sessionId)
+                loadAndDrainLocked(request.sessionId)
             } else {
                 throw error
             }
@@ -132,6 +149,41 @@ class BrewSessionCoordinator(
     }
 
     suspend fun dispatch(
+        sessionId: SessionId,
+        event: SessionEvent,
+    ): BrewSessionOperationResult = BrewSessionOperationLocks.withSession(sessionId) {
+        dispatchLocked(sessionId, event)
+    }
+
+    /** Deadline identity is checked inside the same lock as persistence and notification delivery. */
+    suspend fun reconcileDeadline(
+        sessionId: SessionId,
+        stageInstanceKey: String,
+        scheduleToken: String,
+        dueAtWallClockMillis: Long,
+        eventId: SessionEventId,
+        useMonotonicClock: Boolean = false,
+    ): BrewSessionOperationResult = BrewSessionOperationLocks.withSession(sessionId) {
+        val entity = sessionRepository.getSession(sessionId.value)
+            ?: return@withSession BrewSessionOperationResult.NotFound(sessionId)
+        val loaded = load(sessionId)
+        if (loaded !is BrewSessionOperationResult.Active) return@withSession loaded
+        val runtime = loaded.session.runtime
+        val timer = runtime.userTimer
+        val matchesIndexed = entity.scheduledEventToken == scheduleToken &&
+            entity.deadlineAtWallClockMillis == dueAtWallClockMillis
+        val matchesTimer = timer?.scheduleToken(sessionId) == scheduleToken &&
+            timer.deadlineAtWallClockMillis == dueAtWallClockMillis && !timer.reached
+        val valid = listOf(runtime.status == BrewSessionStatus.RUNNING,
+            runtime.currentStage?.instanceId?.persistentKey == stageInstanceKey,
+            matchesIndexed || matchesTimer, clockedEngine.now().wallClockMillis >= dueAtWallClockMillis).all { it }
+        // A duplicate wake-up may follow a committed deadline whose effects were interrupted.
+        // It must not advance again, but can finish the durable outbox.
+        if (!valid) return@withSession drain(loaded.session)
+        dispatchLocked(sessionId, SessionEvent.Reconcile(eventId, useMonotonicClock))
+    }
+
+    private suspend fun dispatchLocked(
         sessionId: SessionId,
         event: SessionEvent,
     ): BrewSessionOperationResult {
@@ -178,14 +230,15 @@ class BrewSessionCoordinator(
      * a completed log effect after a crash. Unsupported documents are returned
      * to callers as inspectable unavailable sessions and are not deleted.
      */
-    suspend fun reconcileRecoverableSessions(): List<BrewSessionOperationResult> =
+    suspend fun reconcileRecoverableSessions(useMonotonicClock: Boolean = false): List<BrewSessionOperationResult> =
         sessionRepository.getRecoverableSessions().map { entity ->
             val sessionId = SessionId(entity.sessionId)
             when (val loaded = load(sessionId)) {
                 is BrewSessionOperationResult.Active -> {
                     when (loaded.session.runtime.status) {
-                        BrewSessionStatus.RUNNING -> dispatch(sessionId, SessionEvent.Reconcile())
-                        else -> drain(loaded.session)
+                        BrewSessionStatus.RUNNING -> dispatch(sessionId, SessionEvent.Reconcile(
+                            useMonotonicClock = useMonotonicClock, rescheduleDeadline = useMonotonicClock))
+                        else -> loadAndDrain(sessionId)
                     }
                 }
 
@@ -193,7 +246,12 @@ class BrewSessionCoordinator(
             }
         }
 
-    suspend fun loadAndDrain(sessionId: SessionId): BrewSessionOperationResult = when (val loaded = load(sessionId)) {
+    suspend fun loadAndDrain(sessionId: SessionId): BrewSessionOperationResult =
+        BrewSessionOperationLocks.withSession(sessionId) { loadAndDrainLocked(sessionId) }
+
+    private suspend fun loadAndDrainLocked(sessionId: SessionId): BrewSessionOperationResult = when (
+        val loaded = load(sessionId)
+    ) {
         is BrewSessionOperationResult.Active -> drain(loaded.session)
         else -> loaded
     }
@@ -217,7 +275,16 @@ class BrewSessionCoordinator(
     private suspend fun drain(initial: ActiveBrewSession): BrewSessionOperationResult {
         var current = initial
         while (true) {
-            val effect = current.runtime.pendingEffects.firstOrNull()
+            when (val latest = load(current.runtime.sessionId)) {
+                is BrewSessionOperationResult.Active -> current = latest.session
+                else -> return latest
+            }
+            effectHandler.synchronize(current)
+            // Cancelling a deadline can cancel the WorkManager coroutine draining this outbox.
+            // Deliver and acknowledge its user-visible effects before cancelling wake-up work.
+            val effect = current.runtime.pendingEffects.firstOrNull {
+                it !is PendingSessionEffect.CancelStageDeadline && it !is PendingSessionEffect.CancelSessionWork
+            } ?: current.runtime.pendingEffects.firstOrNull()
                 ?: return BrewSessionOperationResult.Active(current)
             when (val delivery = effectHandler.deliver(effect, current)) {
                 SessionEffectDelivery.Delivered -> {
@@ -265,7 +332,7 @@ class BrewSessionCoordinator(
             nowWallClockMillis = now.wallClockMillis,
         )
         val saved = sessionRepository.saveIfCurrent(entity, current.runtime.revision)
-            ?: return loadAndDrain(current.runtime.sessionId)
+            ?: return loadAndDrainLocked(current.runtime.sessionId)
         return BrewSessionOperationResult.Active(
             ActiveBrewSession(current.recipe, transition.state, current.executionContext),
         )

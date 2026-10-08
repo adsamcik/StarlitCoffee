@@ -1,0 +1,418 @@
+{
+  "method_id": "cold-brew",
+  "title": "Cold brew: refrigerated concentrate",
+  "scope": "Covered food-safe home vessel, refrigerated immersion and paper filtration; excludes room-temperature brewing, nitro, canning and commercial production.",
+  "research_date": "2026-10-02",
+  "review_status": "editorially_reviewed",
+  "physical_brew_tested": false,
+  "sources": [
+    {
+      "id": "counterculture",
+      "title": "Guide To Cold Brew",
+      "url": "https://counterculturecoffee.com/blogs/counter-culture-coffee/guide-to-cold-brew",
+      "author_or_organization": "Counter Culture Coffee",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Refrigerated 1:8 mass-ratio concentrate, medium-coarse grind and 14-hour starting steep",
+        "Even wetting, paper filtration and equal-parts dilution option"
+      ]
+    },
+    {
+      "id": "oxo-compact",
+      "title": "How to Use the OXO Compact Cold Brew Coffee Maker",
+      "url": "https://www.oxo.com/blog/coffee-and-beverages/how-to-make-cold-brew-coffee",
+      "author_or_organization": "OXO",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Model-specific coarse concentrate procedure, 20-24-hour refrigerated steep and automatic drainage",
+        "Manufacturer's own 14-day claim cannot establish this jar recipe's safe storage life"
+      ]
+    },
+    {
+      "id": "bccdc-household",
+      "title": "Food Safety: Clean, separate, cook, chill",
+      "url": "https://www.bccdc.ca/health-info/prevention-public-health/food-safety",
+      "author_or_organization": "BC Centre for Disease Control",
+      "source_type": "government",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Hand and utensil cleaning, prompt refrigeration, fridge at 4 degrees Celsius or below"
+      ]
+    },
+    {
+      "id": "minnesota-retail",
+      "title": "Unique Foods Processed at Retail: Cold Brew Coffee",
+      "url": "https://www.mda.state.mn.us/food-feed/unique-foods-processed-retail",
+      "author_or_organization": "Minnesota Department of Agriculture",
+      "source_type": "government",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Minnesota retail cold brew treated as time/temperature-controlled food",
+        "Retail guidance requires at most 41 F brewing/storage, 7-day date mark and assessment for room-temperature or longer storage; not universal household validation"
+      ]
+    },
+    {
+      "id": "bccdc-nitro",
+      "title": "Nitro cold brew coffee food safety risks (November 2017)",
+      "url": "https://www.bccdc.ca/resource-gallery/Documents/Educational%20Materials/EH/FPS/Food/Nitro_Cold_Brew_Coffee_Food_Safety_Risks.pdf",
+      "author_or_organization": "BC Centre for Disease Control, Environmental Health Services",
+      "source_type": "government",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Nitrogen/reduced-oxygen packaging has distinct risks and process-specific shelf-life requirements",
+        "Dated assessment explicitly not peer-reviewed or comprehensive; its nitro storage limits are not generic jar instructions"
+      ]
+    },
+    {
+      "id": "health-canada",
+      "title": "Food safety and you",
+      "url": "https://www.canada.ca/en/health-canada/services/general-food-safety-tips/food-safety-you.html",
+      "author_or_organization": "Health Canada",
+      "source_type": "government",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Smell or taste cannot establish food safety; household hygiene and refrigerator at 4 C or lower"
+      ]
+    },
+    {
+      "id": "hario-mcpn-blocked",
+      "title": "HARIO Mizudashi Coffee Pot MCPN manual (access not verified)",
+      "url": "https://global.hario.com/manual_pdf/MCPN_14_8.pdf",
+      "author_or_organization": "HARIO",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "blocked",
+      "supports": [
+        "No recipe claim relied upon: PDF could not be opened; corresponding www.hario.com URL also inaccessible"
+      ]
+    },
+    {
+      "id": "hario-fic-blocked",
+      "title": "HARIO Filter-in Coffee Bottle FIC manual (403)",
+      "url": "https://www.hario.com/manual_pdf/FIC.pdf",
+      "author_or_organization": "HARIO",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "blocked",
+      "supports": [
+        "No recipe claim relied upon: actual PDF request returned 403; search excerpt alone insufficient"
+      ]
+    }
+  ],
+  "recipe": {
+    "name": "Refrigerated jar concentrate: 100 g coffee / 800 g water",
+    "provenance": "app_authored_synthesis",
+    "source_ids": [
+      "counterculture",
+      "bccdc-household"
+    ],
+    "equipment": [
+      "Clean food-safe covered vessel approximately 1.5 L, actual fill limit checked",
+      "Gram scale and grinder",
+      "Clean spoon, sieve, paper filter and stable holder",
+      "Clean receiving container",
+      "Refrigerator and fridge thermometer",
+      "Timer"
+    ],
+    "coffee_dose_g": 100,
+    "brew_water_g": 800,
+    "brew_water_ml": null,
+    "ice_g": 0,
+    "target_beverage_g": null,
+    "ratio_basis": "brew_water_input",
+    "ratio_value": 8,
+    "water_temperature_c": {
+      "min": null,
+      "max": 4,
+      "control": "Use refrigerated liquid drinking water; hold covered vessel in a refrigerator at 4 C or colder throughout the steep. Upper bound, not an exact extraction setpoint."
+    },
+    "grind_description": "Medium-coarse; slightly coarser than ordinary pour-over grounds. No universal grinder setting.",
+    "expected_time_s": {
+      "min": 50400,
+      "max": 50400,
+      "clock_start": "Fully wetted, covered vessel enters the refrigerator after all extraction water is added",
+      "clock_end": "Selected 14-hour steep ends and filtration begins; preparation and filtering excluded"
+    },
+    "completion_signal": "Selected steep elapsed while refrigerated, then grounds separated and useful liquid drained through the filter; elapsed time/appearance do not establish safety.",
+    "scaling": "revalidate_batch_size",
+    "collected_concentrate_g": null,
+    "filtration_time_s": {
+      "min": null,
+      "max": null
+    },
+    "total_workflow_time_s": {
+      "min": null,
+      "max": null
+    },
+    "serving_dilution": {
+      "concentrate_g": 100,
+      "dilution_water_g": 100,
+      "ice_g": 0,
+      "prepared_serving_g": 200,
+      "ratio_basis": "concentrate_mass_to_added_water_mass",
+      "ratio": "1:1",
+      "provenance": "App-selected weighed implementation of Counter Culture's equal-parts dilution",
+      "source_ids": [
+        "counterculture"
+      ]
+    },
+    "steps": [
+      {
+        "id": "prepare",
+        "instruction": "Clean hands and equipment, rinse, check the vessel fill limit and refrigerator at 4 C or colder.",
+        "why": "Avoid contaminating a long steep without a hot brewing step.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Clean stable equipment and cold shelf ready.",
+        "source_ids": [
+          "bccdc-household"
+        ]
+      },
+      {
+        "id": "combine",
+        "instruction": "Add 100 g grounds and all 800 g refrigerated water; gently stir out dry clumps and cover.",
+        "why": "Wetting evenly makes the chosen mass ratio meaningful.",
+        "water_add_g": 800,
+        "water_cumulative_g": 800,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "All water measured, no dry clumps, vessel covered.",
+        "source_ids": [
+          "counterculture",
+          "bccdc-household"
+        ]
+      },
+      {
+        "id": "steep",
+        "instruction": "Place covered vessel in refrigerator, label preparation time and start the selected 14-hour steep.",
+        "why": "Recipe reference and continuous cold handling remain separate requirements.",
+        "water_add_g": null,
+        "water_cumulative_g": 800,
+        "start_s": 0,
+        "duration_s": 50400,
+        "completion": "14 hours elapsed while vessel remained refrigerated at 4 C or colder.",
+        "source_ids": [
+          "counterculture",
+          "bccdc-household"
+        ]
+      },
+      {
+        "id": "filter",
+        "instruction": "Strain into clean server, paper-filter in portions below the rim; serve or refrigerate promptly.",
+        "why": "Remove grounds and sediment without inventing a filtration deadline.",
+        "water_add_g": null,
+        "water_cumulative_g": 800,
+        "start_s": 50400,
+        "duration_s": null,
+        "completion": "Useful liquid collected, grounds separated, concentrate cold or served immediately.",
+        "source_ids": [
+          "counterculture",
+          "bccdc-household"
+        ]
+      },
+      {
+        "id": "dilute",
+        "instruction": "For one serving combine 100 g collected concentrate with 100 g cold water; record collected batch mass separately.",
+        "why": "Serving strength is distinct from extraction ratio and variable collected yield.",
+        "water_add_g": null,
+        "water_cumulative_g": 800,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "200 g prepared serving before optional additions; serving water excluded from extraction totals.",
+        "source_ids": [
+          "counterculture"
+        ]
+      },
+      {
+        "id": "clean",
+        "instruction": "Discard grounds and paper; wash and dry equipment following its instructions; cover and refrigerate leftovers promptly.",
+        "why": "Prepare a clean setup for the next batch and maintain cold handling.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Equipment clean and unused concentrate covered and cold.",
+        "source_ids": [
+          "bccdc-household"
+        ]
+      }
+    ]
+  },
+  "variants": [
+    {
+      "name": "Ready-to-drink extraction",
+      "how_it_differs": "Uses a separately selected extraction recipe; do not automatically dilute it as this concentrate. Counter Culture discusses undiluted 1:11 as equipment-dependent, not this baseline.",
+      "source_ids": [
+        "counterculture"
+      ]
+    },
+    {
+      "name": "OXO Compact manufacturer procedure",
+      "how_it_differs": "Coarse coffee and model-specific stronger concentrate; 20-24 hours refrigerated, automatic drainage and different dilution. Follow that equipment's fill and seal instructions.",
+      "source_ids": [
+        "oxo-compact"
+      ]
+    },
+    {
+      "name": "Commercial room-temperature or extended storage",
+      "how_it_differs": "Not covered by this home guide; Minnesota retail guidance calls for product assessment for these processes.",
+      "source_ids": [
+        "minnesota-retail"
+      ]
+    },
+    {
+      "name": "Nitro/reduced-oxygen packaging",
+      "how_it_differs": "Separate process validation and hazards; do not transfer 2017 BCCDC nitro shelf-life numbers to an ordinary covered home vessel.",
+      "source_ids": [
+        "bccdc-nitro"
+      ]
+    }
+  ],
+  "troubleshooting": [
+    {
+      "symptom": "Too intense",
+      "check_first": "Weighed serving dilution and coffee/water quantities",
+      "adjustment": "App suggestion: add measured serving water before changing the next extraction.",
+      "source_ids": [
+        "counterculture"
+      ]
+    },
+    {
+      "symptom": "Too thin or flat",
+      "check_first": "Excess serving dilution, dose, complete wetting and cold steep clock",
+      "adjustment": "App suggestion: reduce dilution first; then try another coffee or one small grind/time change in a later refrigerated batch.",
+      "source_ids": [
+        "counterculture"
+      ]
+    },
+    {
+      "symptom": "Slow filtering or sediment",
+      "check_first": "Stable filter holder, paper seating, overfill and accumulated grounds",
+      "adjustment": "App suggestion: sieve first, filter in portions or replace clogged paper; keep brew cold and avoid forcing an overloaded filter.",
+      "source_ids": [
+        "counterculture",
+        "bccdc-household"
+      ]
+    }
+  ],
+  "safety": [
+    "Use clean food-safe vessel, lid, utensils and filters; follow their cleaning instructions.",
+    "Use refrigerated drinking water and keep covered brew at 4 C or colder throughout the selected steep and storage.",
+    "Serve after filtration or cover and refrigerate promptly; keep unused concentrate cold while serving.",
+    "No safe home shelf-life duration established for this recipe; do not generalize a manufacturer's 14-day claim.",
+    "Smell alone cannot establish safety. Commercial, room-temperature, canned and nitro processes require separate consideration."
+  ],
+  "app_audit": [
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:211",
+      "finding": "COLD_BREW has tempRangeLow=20/high=25, defaultRatio=8, coarse grind and 43200-86400 s targets. Temperature contradicts existing refrigerated safety copy.",
+      "severity": "high",
+      "change_recommendation": "Align default handling temperature with <=4 C refrigerated guide; retain recipe-specific steep/texture and identify 1:8 as concentrate extraction.",
+      "source_ids": [
+        "counterculture",
+        "bccdc-household"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/session/LegacyStagePlanFactory.kt:90",
+      "finding": "Cold steep uses countdown at timeTargetLow (12 h); filter is correctly manual with separate refrigeration safety codes. The 12-24 h coarse generic profile is another starting point, not inherently factually wrong for differing from this selected recipe.",
+      "severity": "info",
+      "change_recommendation": "Preserve passive steep/manual filter split. If this selected recipe is integrated, use its 50400 s reference and explicit origin; do not impose it universally or invent a filtration deadline.",
+      "source_ids": [
+        "counterculture"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/BeverageOutputEstimator.kt:46",
+      "finding": "COLD_BREW estimates 2.0 g/g apparent loss with PROTOCOL_SENSITIVE caveat; documentation correctly distinguishes apparent loss from literal absorption.",
+      "severity": "medium",
+      "change_recommendation": "Preserve existing caveat and measure collected concentrate where possible; coefficient does not validate this batch yield or diluted serving mass.",
+      "source_ids": [
+        "counterculture",
+        "oxo-compact"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BrewingCatalog.kt:314",
+      "finding": "cold_immersion_generic already uses CollectedConcentrate(2.0), while method-level defaults and calculator retain water-minus-loss cup semantics.",
+      "severity": "medium",
+      "change_recommendation": "Keep concentrate distinct from prepared servings throughout quantity presentation; measure collected yield and store dilution separately.",
+      "source_ids": [
+        "counterculture"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/BrewCalculator.kt:64",
+      "finding": "Cold brew inherits STANDARD decaf policy and subtracts 30 seconds from both endpoints; no method-specific exception in COLD_BREW.",
+      "severity": "low",
+      "change_recommendation": "Do not assert universal decaf shortening; use same refrigerated baseline unless a selected recipe supplies evidence.",
+      "source_ids": [
+        "counterculture"
+      ]
+    },
+    {
+      "path": "app/src/main/res/values/strings.xml:123",
+      "finding": "prep_tip_cold_brew and cold brew start/steep/filter strings already instruct clean equipment and <=4 C full steep/prompt refrigeration.",
+      "severity": "info",
+      "change_recommendation": "Preserve correct current safety copy; this is not an unresolved room-temperature instruction in these strings.",
+      "source_ids": [
+        "bccdc-household"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/LegacyBuiltInGuidanceCatalog.kt:352",
+      "finding": "Current preparation, steep, filter and global safety copy already require clean equipment, covered cold storage and caution about smell alone.",
+      "severity": "info",
+      "change_recommendation": "Preserve current guidance; add concise concentrate/dilution distinction if this guide is later integrated.",
+      "source_ids": [
+        "bccdc-household",
+        "health-canada",
+        "counterculture"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BuiltInP1RecipeCatalog.kt",
+      "finding": "No exact cold brew recipe entry found; current P1ExactGuidanceFactualErrata applies other methods. Catalog generic profile does not establish everyday or localization completeness.",
+      "severity": "info",
+      "change_recommendation": "Do not report historical exact cold brew recipe errors or imply this research changes app support.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/assets/grinders.json:250",
+      "finding": "Existing COLD_BREW numeric band is specifically keyed to Fellow Ode Gen 2 Brew Burrs with manufacturer URL; not a universal grinder number.",
+      "severity": "info",
+      "change_recommendation": "Preserve equipment scope; use texture for this generic guide. This review did not revalidate that grinder chart.",
+      "source_ids": []
+    }
+  ],
+  "uncertainties": [
+    "App-selected batch size, weighed dilution, clock origin and sieve/paper workflow have not been physically tested.",
+    "No measured collected yield or universal retention coefficient; filtration and total workflow durations depend on setup.",
+    "No storage-safe maximum for the generic home recipe verified; regional retail and nitro limits are different applicability scopes.",
+    "No reviewed source establishes a universal decaf time reduction.",
+    "Hario MCPN PDF URLs could not be opened and FIC PDF returned 403; no snippet-only instructions adopted.",
+    "Counter Culture also publishes a different hot-bloom Toddy recipe; it is not combined with this fully refrigerated jar baseline.",
+    "English editorial research content only; app execution, translations, accessibility speech and physical brewing unverified."
+  ],
+  "do_not_claim": [
+    "Every cold brew should steep at room temperature or every room-temperature process is necessarily unsafe.",
+    "Toddy/OXO 14-day refrigerated claims establish safe storage for all cold brew, diluted drinks or milk additions.",
+    "Cold storage sterilizes coffee, smell proves safety or an elapsed recipe timer validates food safety.",
+    "100 g coffee plus 800 g water guarantees 600 g collected concentrate or 800 g ready-to-drink beverage.",
+    "Coffee universally retains exactly 2 g water per g dry coffee.",
+    "All decaf cold brew needs a shorter steep or a precise coarser grinder number.",
+    "Cold brew universally has lower acidity, higher caffeine or an established health advantage.",
+    "Nitro/canned commercial shelf-life rules automatically apply to the covered home vessel.",
+    "This guide has been brewed, device-tested, localized or approved for release."
+  ]
+}

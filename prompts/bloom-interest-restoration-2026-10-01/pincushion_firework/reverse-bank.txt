@@ -1,0 +1,22 @@
+Create a transparent square4x4 sprite bank of SIXTEEN complete Pincushion Firework plants. IMPORTANT: order is REVERSE MATURITY, starting with attached mature reference in cell1 and gradually curling its EXISTING filaments inward through cell16. This is a reverse-authored botanical animation bank. One whole plant per equal cell, row-major, no text/guides/background, generous transparent margins.
+
+Copy reference1's delicate anatomy and proportions throughout: dense nested orange cushion surrounded by MANY VERY THIN unequal curved orange pins with tiny gold knobs and airy gaps. Fine wire-like botanical filaments, NOT thick wax fingers, uniform spokes, tentacles or a sparse crown. Same upright split brown bean, stem, paired narrow leaves and green bracts in every cell; fixed scale/camera/base. Every filament remains attached to its original site and is progressively curled toward the cushion. No pin deletion, no leaf loss, no bean resize. Opaque intact painted surfaces, real transparent exterior.
+
+1 EXACT fully rich mature reference: dense fine irregular firework, broad lower curling pins, tall uneven upper pins.
+2 same complete plant; only lowest front pins curl slightly inward, narrowing lower fan a little.
+3 retain all upper/side pins; lower-right group curls inward another step.
+4 retain every pin; lower-left loops curl inward toward center; upper fan still full.
+5 lower groups now partly coiled against cushion, side arcs begin gently bending inward.
+6 side pins shorten their projected reach by curling upward/inward, retaining tiny terminal knobs and all fine inner florets.
+7 side fan narrower, lower loops nest against head; upper crown remains long and uneven.
+8 middle side pins coil closer to cushion, upper side pins start curving inward.
+9 outer upper side groups curl inward; top central pins still extended, dense central head remains full.
+10 top side pins bend down toward cushion, lower/side population visible as small tight curled loops.
+11 top central pins retract their projected height by coiling inward, no straight shortening/deletion.
+12 remaining long top pins bend toward dense head, many fine curled tips still visible.
+13 most filaments coiled around the cushion, just a few fine short top arcs lifted.
+14 same full dense head; last top arcs curl closer, no fully extended side pins.
+15 all pins compactly curled and packed, orange rounded cushion with many small pointed/curled tips.
+16 CLOSED dense orange cushion atop unchanged green bracts/stem/leaves/bean, same future filament population nested into tiny curled tips. No long open pins. Mature anatomy has folded inward, never vanished.
+
+Do not postpone intricate detail until one cell: all16 must preserve the reference's numerous fine filaments and dense core. Cells1-5 must differ visibly in distinct LOWER group curling while upper groups persist. Keep mature reference proportions, especially broad fine crown relative to bean. Every pose fully contained, with no cell or canvas clipping.

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_sets">Seturi de preparare</string>
+    <string name="msg_brewing_sets_hint">Salvați seturi separate pentru acasă, serviciu sau diferite metode de preparare.</string>
+    <string name="action_add_brewing_set">Adaugă set</string>
+    <string name="action_save_brewing_set">Salvează ca set</string>
+    <string name="label_new_brewing_set">Set nou</string>
+    <string name="label_edit_brewing_set">Editează setul</string>
+    <string name="hint_brewing_set_name">de ex. Filtru acasă</string>
+    <string name="action_manage_brewing_sets">Gestionează seturile</string>
+    <string name="label_brewing_set_method">Metodă de preparare</string>
+    <string name="msg_delete_brewing_set">Ștergeți acest set de preparare?</string>
+    <string name="screen_first_brewing_set_method">Alegeți prima metodă</string>
+    <string name="msg_first_brewing_set">Începeți cu o metodă. Adăugați mai multe seturi la pasul următor.</string>
+    <string name="action_retry_brewing_set">Încercați din nou</string>
+</resources>

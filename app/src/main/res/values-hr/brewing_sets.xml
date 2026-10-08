@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_sets">Postave za pripremu</string>
+    <string name="msg_brewing_sets_hint">Spremite zasebne postave za dom, posao ili različite metode pripreme.</string>
+    <string name="action_add_brewing_set">Dodaj postavu</string>
+    <string name="action_save_brewing_set">Spremi kao postavu</string>
+    <string name="label_new_brewing_set">Nova postava</string>
+    <string name="label_edit_brewing_set">Uredi postavu</string>
+    <string name="hint_brewing_set_name">npr. Filter kod kuće</string>
+    <string name="action_manage_brewing_sets">Upravljaj postavama</string>
+    <string name="label_brewing_set_method">Metoda pripreme</string>
+    <string name="msg_delete_brewing_set">Izbrisati ovu postavu za pripremu?</string>
+    <string name="screen_first_brewing_set_method">Odaberite prvu metodu</string>
+    <string name="msg_first_brewing_set">Počnite s jednom metodom. Dodajte nove postave u sljedećem koraku.</string>
+    <string name="action_retry_brewing_set">Pokušaj ponovno</string>
+</resources>

@@ -167,6 +167,11 @@ object BuiltinBrewerProfileRecipeDefaults {
             MANUAL_GRAVITY_PROFILE_IDS.forEach { profileId ->
                 put(profileId, manualGravityDefaults(profileId))
             }
+            CHEMEX_PROFILE_IDS.forEach { profileId ->
+                put(profileId, manualGravityDefaults(profileId).copy(
+                    brewTime = BrewTimeRecommendation.SecondsRange(240, 330),
+                ))
+            }
             STEEP_AND_RELEASE_PROFILE_IDS.forEach { profileId ->
                 put(profileId, steepAndReleaseDefaults(profileId))
             }
@@ -283,6 +288,10 @@ object BuiltinBrewerProfileRecipeDefaults {
         BrewerProfileId("manual_wave_155"),
         BrewerProfileId("manual_wave_185"),
         BrewerProfileId("manual_wedge_generic"),
+    )
+
+    private val CHEMEX_PROFILE_IDS = setOf(
+        BrewerProfileId("chemex_unspecified"),
         BrewerProfileId("manual_thick_paper_carafe"),
     )
     private val STEEP_AND_RELEASE_PROFILE_IDS = setOf(

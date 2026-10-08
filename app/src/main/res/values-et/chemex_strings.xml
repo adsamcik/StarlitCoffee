@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_tip_chemex">Kasuta oma kannule sobiva suurusega Chemexi paberfiltrit. Aseta kolm kihti tila poole, loputa kuuma veega ja vala loputusvesi ära. Lisa keskmiselt jämedalt jahvatatud kohv ja nulli kaal. Hoia õhukanal lahti.</string>
+    <string name="instruction_chemex_bloom">Niisuta kogu kohv eeltõmbamise veega ja oota eeltõmbamise lõppu.</string>
+    <string name="instruction_chemex_pour">Vala õrnalt kuni vee kogusihini. Lase tasemel valamiste vahel langeda ja hoia see servast allpool.</string>
+    <string name="instruction_chemex_drawdown">Oota, kuni vesi on kohvist läbi nõrgunud. Eemalda filter, keeruta õrnalt ja serveeri kraest või sangast hoides.</string>
+    <string name="label_filter_chemex_bonded">Chemexi paberfilter</string>
+</resources>

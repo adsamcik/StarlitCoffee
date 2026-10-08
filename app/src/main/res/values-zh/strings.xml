@@ -98,11 +98,8 @@
     <string name="label_increase">增加%1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">准备冲煮</string>
 <string name="action_ready_to_brew_short">准备好了</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">准备</string>
-    <string name="label_recipe_heading">配方</string>
     <string name="label_temp_short">温度</string>
     <string name="label_bloom_short">闷蒸</string>
     <string name="prep_tip_pulsar_paper">润湿底座中的纸滤纸（阀门打开）并沥干。装上筒身，加入咖啡粉，铺平粉层，放上分水盖。将秤归零。</string>
@@ -112,8 +109,6 @@
     <string name="prep_tip_french_press">预热法压壶后倒掉热水。加入咖啡粉，放到秤上，注水前归零。</string>
     <string name="prep_tip_espresso">擦干粉碗手柄。称量粉量、均匀布粉并水平压粉后再扣上。</string>
     <string name="prep_tip_moka">下壶加水到阀门处。粉杯装入咖啡粉并刮平—不要压粉。小心拧紧组装。</string>
-    <string name="format_prep_grind_specific">研磨 %1$s — 将 %2$s 设为 %3$s</string>
-    <string name="format_prep_grind_generic">研磨 %1$s — %2$s（%3$s）</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">暂停</string>
@@ -146,7 +141,6 @@
     <string name="label_cup_presets">杯量预设</string>
     <string name="action_add_preset">添加预设</string>
     <string name="action_reset_defaults">恢复默认</string>
-    <string name="msg_presets_hint">预设会在计算器上显示为快捷按钮</string>
     <string name="label_brew_methods">冲煮方式</string>
     <string name="msg_methods_hint">已选方式会优先显示。点按可切换。</string>
     <string name="label_default_method">默认方式</string>
@@ -163,9 +157,9 @@
     <string name="label_bloom_sprite_coffee_starlit">星光咖啡</string>
     <string name="desc_bloom_sprite_coffee_starlit">奶油金色蒸汽花瓣，带有细小星光高光。</string>
     <string name="label_bloom_sprite_coffee_latte">拿铁闷蒸</string>
-    <string name="desc_bloom_sprite_coffee_latte">温暖奶泡色调中的柔和拉花玫瑰图案。</string>
+    <string name="desc_bloom_sprite_coffee_latte">奶泡拉花爱心在温暖色调中徐徐展开。</string>
     <string name="label_bloom_sprite_coffee_plant">咖啡树苗</string>
-    <string name="desc_bloom_sprite_coffee_plant">清新的绿色咖啡幼苗，长着成对叶片。</string>
+    <string name="desc_bloom_sprite_coffee_plant">咖啡树舒展油亮的叶片，红色咖啡果逐渐成熟。</string>
     <string name="label_bloom_sprite_cherry_tomato">樱桃番茄</string>
     <string name="desc_bloom_sprite_cherry_tomato">咖啡豆发芽成番茄藤，红色果实逐渐成熟。</string>
     <string name="label_bloom_sprite_strawberry">草莓</string>
@@ -431,15 +425,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">打开 Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">需要 Android 12 或更高版本。</string>
     <string name="label_ai_service">AI服务（Mindlayer）</string>
     <string name="action_mindlayer_google_play">从 Google Play 获取 Mindlayer</string>
-    <string name="msg_mindlayer_install_recommendation">从 Google Play 安装 Mindlayer，即可使用设备端私密 AI 读取咖啡袋标签。您也可以稍后在“设置”中安装。</string>
     <string name="action_test_connection">测试连接</string>
     <string name="action_run_test_prompt">运行测试提示词</string>
     <string name="label_testing">测试中…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">启用 AI</string>
     <string name="consent_requesting">正在请求 AI 访问权限…</string>
     <string name="consent_granted">AI 已启用</string>
     <string name="consent_already_approved">AI 已经启用</string>
@@ -528,7 +522,6 @@
     <string name="label_volume_ml">容量（ml）</string>
     <string name="msg_dose_from_ratio">咖啡粉量会根据你的粉水比计算</string>
     <string name="label_icon">图标</string>
-    <string name="label_color">颜色</string>
     <string name="action_add">添加</string>
     <string name="screen_add_cup_preset_title">添加杯量预设</string>
     <string name="screen_edit_cup_preset_title">编辑杯量预设</string>
@@ -660,10 +653,10 @@
     <string name="msg_cup_preset_reset_failed">无法重置杯量预设，请重试。</string>
     <string name="msg_reset_cup_presets">用默认值替换所有杯量预设？</string>
     <string name="msg_diagnostic_clear_failed">无法清除全部诊断数据，请重试。</string>
-    <string name="msg_clear_diagnostics">清除所有已保存的扫描会话和 LLM 处理记录？</string>
+    <string name="msg_clear_diagnostics">清除所有已保存的扫描会话？</string>
     <string name="label_log_scan_corrections">记录扫描修正（仅限本机）</string>
     <string name="msg_log_scan_corrections">仅在此设备上记录 AI 提取结果与最终保存内容的差异，不会上传任何数据。</string>
-    <string name="format_scan_debug_counts">会话：%1$d · LLM 处理：%2$d</string>
+    <string name="format_scan_debug_counts">会话：%1$d</string>
     <string name="format_scan_session_subject">扫描会话：%1$s</string>
     <string name="action_share_scan_session">分享扫描会话</string>
 
@@ -729,4 +722,22 @@
     <string name="msg_learning_subtitle">图解分步冲煮指南</string>
     <string name="action_show_details">显示详细信息</string>
     <string name="action_hide_details">隐藏详细信息</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">重新扫描结果</string>
+    <string name="title_rescan_no_changes">未发现变化</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="other">更改了 %1$d 项信息：</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">暂未发现变化。</string>
+    <string name="msg_rescan_incomplete">请查看已找到的信息，或再次尝试识别。</string>
+    <string name="action_update_bag_so_far">用当前结果更新</string>
+    <string name="action_new_bag_so_far">用当前结果新建咖啡袋</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">正在打开设置…</string>
+    <string name="msg_could_not_open_label_recognition_setup">无法打开设置。请重试，或手动输入详细信息。</string>
+    <string name="announce_label_details_ready">标签详细信息已准备好供您检查。</string>
+    <string name="announce_label_recognition_no_result">未找到标签详细信息。请手动输入详细信息。</string>
+    <string name="label_show_cup_presets">在计算器中显示</string>
+    <string name="cd_cup_preset_options">杯量预设选项</string>
 </resources>

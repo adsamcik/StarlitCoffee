@@ -1,0 +1,330 @@
+{
+  "method_id": "turkish",
+  "title": "Turkish coffee in a cezve",
+  "scope": "Stovetop, unfiltered, one-serving cezve; app-authored conservative cold-start single-rise baseline with separate named variants",
+  "research_date": "2026-10-02",
+  "review_status": "editorially_reviewed",
+  "physical_brew_tested": false,
+  "sources": [
+    {
+      "id": "mehmet-efendi",
+      "title": "With cezve",
+      "url": "https://www.mehmetefendi.com/eng/brew-guide/turkish-coffee/with-cezve",
+      "author_or_organization": "Kurukahveci Mehmet Efendi",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "6 g per cup; cup-measured water has unspecified volume; slow stirring to foam, foam distribution and return to heat"
+      ]
+    },
+    {
+      "id": "stc-yildizli",
+      "title": "STC Preparation: contemporary brew guide",
+      "url": "https://www.specialtyturkishcoffee.com/how-to-make/stc-preparation/",
+      "author_or_organization": "Turgay Yildizli / Specialty Turkish Coffee",
+      "source_type": "original_creator",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Separate 7/70 mass recipe, preferred warm start, grind distinction, initial mixing, removal before boiling and settling"
+      ]
+    },
+    {
+      "id": "unesco-courier",
+      "title": "The UNESCO Courier April-June 2023: Turkish coffee, not just a drink but a culture, pp. 15-16",
+      "url": "https://www.unesco.at/fileadmin/user_upload/385026eng.pdf#page=16",
+      "author_or_organization": "UNESCO / Fulya Ozerkan",
+      "source_type": "government",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Cold start, fine grinding, slow heating for foam, unfiltered grounds and small-cup tradition; parsed PDF text verified"
+      ]
+    },
+    {
+      "id": "soy-c1",
+      "title": "C1 Cezve / Turkish Coffee Pot: description and use & care",
+      "url": "https://soy.com.tr/products/cezve-turkish-coffee-pots-soy-c1-serve-1",
+      "author_or_organization": "Soy Türkiye",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "C1 useful capacity 85 mL is model-specific; lining-safe utensils and washing; contact manufacturer about induction"
+      ]
+    },
+    {
+      "id": "unesco-record-attempt",
+      "title": "Turkish coffee culture and tradition, nomination 00645",
+      "url": "https://ich.unesco.org/en/RL/turkish-coffee-culture-and-tradition-00645",
+      "author_or_organization": "UNESCO",
+      "source_type": "government",
+      "accessed": "2026-10-02",
+      "access_status": "blocked",
+      "supports": [
+        "Access attempt recorded only; direct open returned JavaScript/human-verification challenge"
+      ]
+    }
+  ],
+  "recipe": {
+    "name": "App-authored conservative 6 g / 65 g cold-start single rise",
+    "provenance": "app_authored_synthesis",
+    "source_ids": [
+      "mehmet-efendi",
+      "unesco-courier",
+      "stc-yildizli",
+      "soy-c1"
+    ],
+    "equipment": [
+      "Food-safe stovetop cezve with stable support, secure handle, manufacturer-compatible heat source and visible foam headroom",
+      "Scale",
+      "Small serving cup",
+      "Wooden spoon or paddle"
+    ],
+    "coffee_dose_g": 6,
+    "brew_water_g": 65,
+    "brew_water_ml": null,
+    "ice_g": 0,
+    "target_beverage_g": null,
+    "ratio_basis": "brew_water_input",
+    "ratio_value": 10.8333333333,
+    "water_temperature_c": {
+      "min": null,
+      "max": null,
+      "control": "Cold drinking water at start; observed foam controls heated completion"
+    },
+    "grind_description": "Powder fine Turkish coffee; ordinary espresso-fine grounds are not automatically suitable",
+    "expected_time_s": {
+      "min": null,
+      "max": null,
+      "clock_start": "Pot placed on heat after off-heat mixing",
+      "clock_end": "First controlled foam rise: remove before rolling boil; pouring and settling are separate"
+    },
+    "completion_signal": "Foam expands upward; remove promptly before rim, rolling boil or overflow",
+    "scaling": "revalidate_batch_size",
+    "steps": [
+      {
+        "id": "prepare",
+        "instruction": "Check stable support, secure handle, compatibility and expansion space while cold.",
+        "why": "Headroom and heating behavior depend on the actual pot.",
+        "water_add_g": 0,
+        "water_cumulative_g": 0,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Suitable pot and burner selected; cup ready.",
+        "source_ids": [
+          "soy-c1"
+        ]
+      },
+      {
+        "id": "measure",
+        "instruction": "Add 65 g cold water, 6 g powder coffee and optional sugar off heat.",
+        "why": "Water mass is this adaptation's choice, not a source cup volume.",
+        "water_add_g": 65,
+        "water_cumulative_g": 65,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Measured mixture leaves foam space.",
+        "source_ids": [
+          "mehmet-efendi",
+          "unesco-courier"
+        ]
+      },
+      {
+        "id": "mix",
+        "instruction": "Mix off heat until no dry clumps remain; stop stirring afterward.",
+        "why": "Initial wetting and undisturbed heating are adaptation choices.",
+        "water_add_g": 0,
+        "water_cumulative_g": 65,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Uniform mixture.",
+        "source_ids": [
+          "stc-yildizli"
+        ]
+      },
+      {
+        "id": "heat",
+        "instruction": "Attend low heat; remove at first controlled foam rise before rolling boil or rim.",
+        "why": "Observable completion overrides elapsed time.",
+        "water_add_g": 0,
+        "water_cumulative_g": 65,
+        "start_s": 0,
+        "duration_s": null,
+        "completion": "Pot safely removed before overflow.",
+        "source_ids": [
+          "unesco-courier",
+          "stc-yildizli"
+        ]
+      },
+      {
+        "id": "pour",
+        "instruction": "Pour gently into the stable cup; do not return to heat or filter.",
+        "why": "Single-rise unfiltered service defines this adaptation.",
+        "water_add_g": 0,
+        "water_cumulative_g": 65,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Cup filled without splashing.",
+        "source_ids": [
+          "unesco-courier",
+          "mehmet-efendi"
+        ]
+      },
+      {
+        "id": "settle",
+        "instruction": "Rest undisturbed for about 120 seconds, then check; wait longer as needed.",
+        "why": "App-chosen check, not a guarantee of safe temperature or settlement.",
+        "water_add_g": 0,
+        "water_cumulative_g": 65,
+        "start_s": null,
+        "duration_s": 120,
+        "completion": "Comfortable small sip; leave sediment behind.",
+        "source_ids": [
+          "stc-yildizli",
+          "unesco-courier"
+        ]
+      }
+    ]
+  },
+  "variants": [
+    {
+      "name": "STC contemporary warm start",
+      "how_it_differs": "Published 7 g/70 g; preferred ~60 C start, finer than espresso but coarser than traditional powder; initial mixing, reduced heat midway, ~120-150 s heating, remove before boiling, settle 120-180 s. Heating and settling clocks are separate.",
+      "source_ids": [
+        "stc-yildizli"
+      ]
+    },
+    {
+      "name": "Mehmet Efendi producer procedure",
+      "how_it_differs": "6 g per unspecified cup volume; slow stirring to foam, distribute foam, return to heat before service. Not the single-rise adaptation.",
+      "source_ids": [
+        "mehmet-efendi"
+      ]
+    },
+    {
+      "name": "Electric Turkish coffee machine",
+      "how_it_differs": "Follow that appliance's dose, fill and cleaning instructions; stovetop heat management does not transfer automatically.",
+      "source_ids": [
+        "mehmet-efendi"
+      ]
+    }
+  ],
+  "troubleshooting": [
+    {
+      "symptom": "Foam races upward",
+      "check_first": "Fill level, support and heat control",
+      "adjustment": "Remove promptly; use lower heat next batch. Practical inference.",
+      "source_ids": [
+        "stc-yildizli",
+        "soy-c1"
+      ]
+    },
+    {
+      "symptom": "Little foam",
+      "check_first": "Suitable grind, coffee freshness, vigorous boiling and stirring",
+      "adjustment": "Try fresher suitable coffee; do not extend heating just for foam. Practical inference.",
+      "source_ids": [
+        "stc-yildizli"
+      ]
+    },
+    {
+      "symptom": "Gritty sip",
+      "check_first": "Settling and cup disturbance",
+      "adjustment": "Wait longer and leave bottom sediment. Practical inference.",
+      "source_ids": [
+        "unesco-courier"
+      ]
+    },
+    {
+      "symptom": "Harsh or bitter",
+      "check_first": "Rolling boil or excessive heat",
+      "adjustment": "Control heat, then change coffee or one measured quantity. Practical inference.",
+      "source_ids": [
+        "mehmet-efendi"
+      ]
+    }
+  ],
+  "safety": [
+    "Stay beside heated cezve; keep gas flame within base and handle clear. These are conservative open-pot precautions.",
+    "Remove before overflow; do not fill to rim or invent a universal headroom percentage.",
+    "Use stable serving cup; hot metal and liquid require careful handling.",
+    "Cool before cleaning and follow pot-specific care. Soy C1: wooden utensils, hand wash with mild soap, no abrasives, dishwasher or microwave; ask Soy about induction compatibility."
+  ],
+  "app_audit": [
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BuiltInP1RecipeCatalog.kt:473",
+      "finding": "6/65 and 12/130 recompute to 1:10.83; cold-start, observed completion and adaptation classes are explicit. No universal boiling duration is encoded.",
+      "severity": "info",
+      "change_recommendation": "Preserve measured-water and adaptation semantics.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1ExactGuidanceFactualErrata.kt:6",
+      "finding": "Runtime provenance already labels single-rise and bounded two-rise as app-authored. Catalog loader applies these corrections.",
+      "severity": "info",
+      "change_recommendation": "Attribution is resolved; preserve immutable historical projection.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/session/P1CezveAndAutomaticStagePlans.kt:29",
+      "finding": "Single-rise typed settling cue is approximately 60-120 s; heat stages use observation, not countdowns. Live final-stage settling text also gives 1-2 minutes.",
+      "severity": "low",
+      "change_recommendation": "Label interval an app convenience; retain observable settling and drinkable-temperature checks. It is not a UNESCO numerical instruction.",
+      "source_ids": [
+        "unesco-courier"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1BuiltInGuidanceCatalog.kt:509",
+      "finding": "Generic cezve guidance says finely ground coffee without a texture or espresso distinction.",
+      "severity": "medium",
+      "change_recommendation": "Clarify powder-like traditional grind and that ordinary espresso-fine grounds need not be suitable; keep named contemporary exceptions contextual.",
+      "source_ids": [
+        "unesco-courier",
+        "stc-yildizli"
+      ]
+    },
+    {
+      "path": "docs/brewing/learning-guide-factual-audit-2026-08-19.md:44",
+      "finding": "Earlier audit says settling is supported by Mehmet Efendi/UNESCO; accessed producer page and Courier tradition description contain no settling interval.",
+      "severity": "low",
+      "change_recommendation": "Separate unfiltered service from the app-chosen interval; cite an actual recipe if a numeric settling recommendation is retained.",
+      "source_ids": [
+        "mehmet-efendi",
+        "unesco-courier"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt",
+      "finding": "Turkish coffee is absent from everyday BrewMethod enum; inspected grinders.json has no Turkish-specific mappings.",
+      "severity": "info",
+      "change_recommendation": "Do not describe P1 catalog presence as complete everyday-method support or expose universal grinder numbers.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1ExactRecipeReleaseGate.kt:86",
+      "finding": "Both cezve recipes retain BLOCK-CEZVE-HARDWARE.",
+      "severity": "info",
+      "change_recommendation": "Retain actual pot/headroom/heat-source review boundary; research alone does not clear the blocker.",
+      "source_ids": []
+    }
+  ],
+  "uncertainties": [
+    "No specific kitchen pot/heat source, safe numerical headroom or physical brewing outcome validated.",
+    "65 g water and single-rise stop are app choices; not an exact published traditional recipe.",
+    "Cold-start heating duration and finish temperature remain equipment-dependent and unspecified.",
+    "UNESCO heritage page was blocked; Courier original PDF text independently verifies limited tradition claims. PDF screenshot fetch failed with cache miss.",
+    "Settling 120 s is a first check, not a safe-temperature guarantee or universal sediment deadline.",
+    "No measurable finished beverage mass, retention factor or general grinder setting established."
+  ],
+  "do_not_claim": [
+    "Single rise or two rises is universally authentic or optimal.",
+    "Arbitrary timed boiling is necessary; foam rise licenses prolonged rolling boil.",
+    "Mehmet Efendi specifies 65 mL or 65 g water per 6 g coffee.",
+    "Warm-start STC timing applies unchanged to cold water, all pot sizes or all heaters.",
+    "A universal grams-to-millilitres conversion, beverage yield, capacity or headroom percentage.",
+    "Physical brew, translated guide, native device flow or release readiness verified."
+  ]
+}

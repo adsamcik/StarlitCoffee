@@ -1,0 +1,31 @@
+Use case: illustration-story
+Create a 25-pose growth sprite atlas for Blue Himalayan Poppy, using the attached approved mature plant as the exact visual destination and material reference. True transparent RGBA background. One square atlas, exactly five equal columns and five equal rows, read left-to-right then top-to-bottom. No lines, guides, captions, numbers, text, drop shadows or background. Each cell contains ONE COMPLETE plant with transparent space on every side; no parts may cross cell boundaries. Fixed front camera and fixed split-bean base, identical small bean size and baseline in all25 cells. Do not enlarge early beans to fill empty space.
+Preserve the target's large concave drooping blue corolla, irregular folded papery petals with fine vein strokes, dense golden stamens, hairy left-curving stem, and two unequal olive basal leaves. The flower center stays almost over the bean center despite its natural rightward droop, so the finished plant fits its cell without excessive right overhang. The small bean remains below the mature bloom, about one quarter of total mature height. The end state must remain richly crinkled, never a smooth evenly spaced radial flower. No extra flower heads or leaves. Once a leaf, stem section or petal is exposed it persists and opens further, never disappears or resets. Plant remains same scale in every frame; only living anatomy grows/unfolds.
+Give every row a clear purpose and each adjacent pose a visible useful change. Do NOT finish early and fill the last row with identical flowers. Distribute the folded flower opening across frames13-25, with genuine front/side/rear petal release in the final five.
+Exact row-major choreography:
+F01 small intact split brown bean only, mature base size.
+F02 fine green tip emerges at the split.
+F03 tip branches into two small tightly folded basal leaves.
+F04 taller left basal leaf begins unrolling, right remains curled.
+F05 right leaf unrolls; left lengthens, central stem emerges between them.
+F06 both unequal leaves reach half mature length; stem rises visibly.
+F07 basal leaves reach mature shapes and remain thereafter; hairy stem reaches one quarter mature height.
+F08 stem elongates to half height with a small downward-pointing green tip.
+F09 stem rises farther and starts its graceful leftward arch; green bud enlarges.
+F10 arch approaches mature height and bends inward above the bean; distinct fuzzy green bud nods down.
+F11 mature arch established; bud swells into a rounded green teardrop.
+F12 bud seam parts and shows a narrow blue folded core; both basal leaves retained.
+F13 sepals open aside and compact crumpled blue petals emerge as a narrow drooping cup.
+F14 front blue fold loosens and drops, exposing a tiny glimpse of gold deep inside.
+F15 front petal rolls farther down, broadening the cup to about one third of final corolla width.
+F16 left-side petal fan unfolds toward half width; crinkled folds stay visible.
+F17 right-side petal fan opens farther; golden cluster starts reading within a still deep cup.
+F18 upper/rear blue fold lifts, making the flower approximately two thirds of final width, still concave.
+F19 lower/front edge unrolls into an irregular scalloped fold; golden center becomes more exposed.
+F20 side petals loosen to three quarters final width with visible curved ridges, not a finished face.
+F21 broad lower-front petal unfurls substantially downward/outward, exposing more interior gold.
+F22 left-rear fold lifts and turns outward; flower opens diagonally while retaining the same rim and center.
+F23 upper-right fold releases into an uneven ruffled edge; corolla approaches full breadth.
+F24 remaining lower-side fold opens farther; dense golden stamens fan naturally within the wide blue bowl.
+F25 fully mature approved target: broad tilted concave blue papery flower with varied crinkles, full golden center, graceful hairy arch, two persistent unequal olive leaves, unchanged small bean.
+Painterly tactile illustration like the attached reference. Rich mature silhouette and meaningful late unfolding are as important as smooth continuity. Avoid a long closed-bud hold, a row of the same completed flower, perfectly mirrored leaves or smooth uniform petals. Use the available cell area efficiently while keeping all anatomy intact and separated.

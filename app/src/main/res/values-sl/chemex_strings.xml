@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_tip_chemex">Uporabite papirnati filter Chemex ustrezne velikosti. Tri plasti obrnite proti izlivu, sperite z vročo vodo in vodo zavrzite. Dodajte srednje grobo mleto kavo in tarirajte tehtnico. Zračni kanal naj ostane odprt.</string>
+    <string name="instruction_chemex_bloom">Vso kavo zmočite z vodo za prednamakanje in počakajte do konca prednamakanja.</string>
+    <string name="instruction_chemex_pour">Nežno dolivajte do skupne količine vode. Med dolivanji pustite, da se gladina zniža, in jo ohranite pod robom.</string>
+    <string name="instruction_chemex_drawdown">Počakajte, da voda odteče skozi kavo. Odstranite filter, nežno zavrtite in postrezite, pri tem držite za ovratnik ali ročaj.</string>
+    <string name="label_filter_chemex_bonded">Papirnati filter Chemex</string>
+</resources>

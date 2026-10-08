@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_to_brew">Beolvasás a főzéshez</string>
+    <string name="msg_barcode_brew_no_match">Egyetlen készleten lévő kávénak sincs ilyen vonalkódja. Ellenőrizd a vonalkódot a csomag mentett adataiban.</string>
+    <string name="msg_barcode_brew_choose_bag">Több csomagnak is ez a vonalkódja. Válaszd ki a használt csomagot.</string>
+    <string name="msg_barcode_brew_enter_amount">%1$s kiválasztva. Add meg a mennyiséget, majd koppints a Főzés gombra.</string>
+</resources>

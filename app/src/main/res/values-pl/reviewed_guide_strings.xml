@@ -1,0 +1,12 @@
+<resources>
+    <string name="action_brew_this_guide">Zaparz według tego przepisu</string>
+    <string name="label_freshly_boiled_water">Świeżo zagotowana woda</string>
+    <string name="label_machine_temperature">Urządzenie reguluje temperaturę</string>
+    <string name="action_prepare_this_guide">Przygotuj kawę</string>
+    <string name="label_reviewed_guide_english">Przepis po angielsku</string>
+    <string name="heading_reviewed_sources">Przepis i źródła</string>
+    <string name="msg_reviewed_fill_quantities">Przestrzegaj podanych oznaczeń napełnienia. Zważ kawę, której faktycznie użyjesz.</string>
+    <string name="label_measured_coffee_g">Wsypana kawa (g)</string>
+    <string name="label_optional_measured_water_g">Zważona woda (g, opcjonalnie)</string>
+    <string name="msg_reviewed_equipment_confirm">Mój sprzęt odpowiada temu przepisowi.</string>
+</resources>

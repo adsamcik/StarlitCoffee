@@ -78,7 +78,11 @@ object CoffeeFilterVocabularyLoader {
             val raw = context.assets.open(ASSET_NAME).bufferedReader().use { it.readText() }
             json.decodeFromString<CoffeeFilterVocabulary>(raw)
         } catch (e: Exception) {
-            Tracebox.log.error(e, CoffeeFilterVocabularyTraceboxTemplates.FAILED_TO_LOAD_SCAN_WILL_RUN_WITHOUT, argument(ASSET_NAME))
+            Tracebox.log.error(
+                e,
+                CoffeeFilterVocabularyTraceboxTemplates.FAILED_TO_LOAD_SCAN_WILL_RUN_WITHOUT,
+                argument(ASSET_NAME),
+            )
             CoffeeFilterVocabulary.EMPTY
         }
 }

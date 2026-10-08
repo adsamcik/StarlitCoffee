@@ -13,6 +13,8 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.StageInstanceId
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageMarkerId
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageObservationId
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageRuntimeProgress
+import com.adsamcik.starlitcoffee.domain.brewing.session.UserBrewTimer
+import com.adsamcik.starlitcoffee.domain.brewing.session.PhysicalBrewClock
 
 /** Bidirectional mapping for runtime state stored independently from its plan. */
 internal object SessionRuntimeSnapshotMapperV1 {
@@ -21,6 +23,21 @@ internal object SessionRuntimeSnapshotMapperV1 {
         SessionRuntimeSnapshotV1(
             sessionId = value.sessionId.value,
             status = value.status.name,
+            isGuidancePaused = value.isGuidancePaused,
+            timerRevision = value.timerRevision,
+            physicalClock = value.physicalClock?.let { clock ->
+                PhysicalBrewClockSnapshotV1(StageInstanceSnapshotMapperV1.toSnapshot(clock.startStageId),
+                    clock.hasStarted, clock.originKnown, clock.configuredOriginWallClockMillis,
+                    clock.reminderDurationMillis, clock.timerOnly,
+                    clock.endStageId?.let(StageInstanceSnapshotMapperV1::toSnapshot), clock.endedElapsedMillis)
+            },
+            userTimer = value.userTimer?.let { timer ->
+                UserBrewTimerSnapshotV1(
+                    StageInstanceSnapshotMapperV1.toSnapshot(timer.stageInstanceId), timer.revision,
+                    timer.durationMillis, timer.originStageElapsedMillis, timer.originWallClockMillis,
+                    timer.deadlineAtWallClockMillis, timer.reached,
+                )
+            },
             currentStageIndex = value.currentStageIndex,
             stageProgress = value.stageProgress.map(::progressToSnapshot),
             totalActiveElapsedMillis = value.totalActiveElapsedMillis,
@@ -60,6 +77,7 @@ internal object SessionRuntimeSnapshotMapperV1 {
             "Total active elapsed time cannot be negative"
         }
         require(value.revision >= 0L) { "Session revision cannot be negative" }
+        require(value.timerRevision >= 0L) { "Timer revision cannot be negative" }
         value.currentStageIndex?.let { index ->
             require(index in stagePlan.stages.indices) {
                 "Current stage index is outside the compiled plan"
@@ -79,6 +97,32 @@ internal object SessionRuntimeSnapshotMapperV1 {
             sessionId = sessionId,
             stagePlan = stagePlan,
             status = SessionSnapshotValueDecoder.enumValue(value.status, "session status"),
+            isGuidancePaused = value.isGuidancePaused,
+            timerRevision = value.timerRevision,
+            physicalClock = value.physicalClock?.let { clock ->
+                val stage = StageInstanceSnapshotMapperV1.toDomain(clock.startStage)
+                require(stage in stagePlan.stageIds) { "Physical clock origin must belong to this plan" }
+                require(clock.originKnown || value.startedAtWallClockMillis == null) {
+                    "An unknown physical origin cannot have a fabricated start timestamp"
+                }
+                val endStage = clock.endStage?.let(StageInstanceSnapshotMapperV1::toDomain)
+                require(endStage == null || endStage in stagePlan.stageIds) { "Clock end must belong to this plan" }
+                require(clock.endedElapsedMillis == null || clock.endedElapsedMillis == value.totalActiveElapsedMillis) {
+                    "Ended extraction time must match the frozen brew clock"
+                }
+                PhysicalBrewClock(stage, clock.hasStarted, clock.originKnown,
+                    clock.configuredOriginWallClockMillis, clock.reminderDurationMillis, clock.timerOnly,
+                    endStage, clock.endedElapsedMillis)
+            },
+            userTimer = value.userTimer?.let { timer ->
+                val stage = StageInstanceSnapshotMapperV1.toDomain(timer.stageInstance)
+                require(stage == value.currentStageIndex?.let { stagePlan.stages[it].instanceId }) {
+                    "Timer must belong to the current physical stage"
+                }
+                require(timer.revision == value.timerRevision) { "Timer revision must match runtime" }
+                UserBrewTimer(stage, timer.revision, timer.durationMillis, timer.originStageElapsedMillis,
+                    timer.originWallClockMillis, timer.deadlineAtWallClockMillis, timer.reached)
+            },
             currentStageIndex = value.currentStageIndex,
             stageProgress = value.stageProgress.map(::progressToDomain),
             totalActiveElapsedMillis = value.totalActiveElapsedMillis,
@@ -113,6 +157,18 @@ internal object SessionRuntimeSnapshotMapperV1 {
 
     private fun effectToSnapshot(value: PendingSessionEffect): PendingSessionEffectSnapshotV1 =
         when (value) {
+            is PendingSessionEffect.TimerAlert -> PendingSessionEffectSnapshotV1(
+                kind = PendingSessionEffectSnapshotV1.TIMER_ALERT,
+                effectId = value.effectId.value, sessionId = value.sessionId.value,
+                stageInstance = StageInstanceSnapshotMapperV1.toSnapshot(value.stageInstanceId),
+                timerRevision = value.timerRevision,
+            )
+            is PendingSessionEffect.ScheduleTimerDeadline -> PendingSessionEffectSnapshotV1(
+                kind = PendingSessionEffectSnapshotV1.SCHEDULE_TIMER_DEADLINE,
+                effectId = value.effectId.value, sessionId = value.sessionId.value,
+                stageInstance = StageInstanceSnapshotMapperV1.toSnapshot(value.stageInstanceId),
+                scheduleToken = value.scheduleToken, dueAtWallClockMillis = value.dueAtWallClockMillis,
+            )
             is PendingSessionEffect.StageAlert -> PendingSessionEffectSnapshotV1(
                 kind = PendingSessionEffectSnapshotV1.STAGE_ALERT,
                 effectId = value.effectId.value,
@@ -229,6 +285,14 @@ internal object SessionRuntimeSnapshotMapperV1 {
         )
 
         return when (value.kind) {
+            PendingSessionEffectSnapshotV1.TIMER_ALERT -> PendingSessionEffect.TimerAlert(
+                resolvedEffectId, resolvedSessionId, requiredStage(),
+                requireNotNull(value.timerRevision).also { require(it > 0L) },
+            )
+            PendingSessionEffectSnapshotV1.SCHEDULE_TIMER_DEADLINE -> PendingSessionEffect.ScheduleTimerDeadline(
+                resolvedEffectId, resolvedSessionId, requiredStage(), requiredScheduleToken(),
+                requireNotNull(value.dueAtWallClockMillis).also { require(it >= 0L) },
+            )
             PendingSessionEffectSnapshotV1.STAGE_ALERT -> PendingSessionEffect.StageAlert(
                 effectId = resolvedEffectId,
                 sessionId = resolvedSessionId,

@@ -1,0 +1,29 @@
+Use case: precise-object-edit. Edit target: supplied 25-frame atlas. Revise its animation progression, retaining its distinctive mature subject, warm painterly tactile finish, coffee-bean base, palette and polished game-asset style. Output ONE SQUARE transparent RGBA spritesheet, exactly FIVE columns and FIVE rows of equal square cells, 25 frames row-major left-to-right then top-to-bottom. Prefer 1280x1280 (256px cells) if supported. Actual transparent background, no checkerboard pixels. ZERO text, numbers, labels, guides, borders, grid lines, color bars, watermarks, dots or stray pixels. Each cell contains ONE complete isolated subject with generous empty margin; all content stays inside its cell. Same front camera, light direction, bean size/orientation/texture and base anchor in every cell. Bean base at horizontal center and 88% down cell; highest final tip stays below 10% down cell, widest final artwork inside 12%-88% cell width. Preserve readable silhouettes at 148px. NO camera zoom, rotation, recentering, growth reversal, object swaps, disappearing mature leaves, random petal counts, or premature completed bloom. New frames must follow a SINGLE persistent anatomy, not alternate drawings. Smooth purposeful silhouette development across ALL 25 cells including every row boundary. Each frame makes the next small structural growth step; finished state arrives at frame25. No long repeated bud phase or last-row duplicate poses. Do not copy the original's timing defects. Do not draw frame labels from the following instructions.
+
+Exact 25-frame sequence:
+Frame 1: closed bean.
+Frame 2: seam loosens.
+Frame 3: green point.
+Frame 4: short sprout.
+Frame 5: stem rises.
+Frame 6: leaf buds appear.
+Frame 7: leaves part.
+Frame 8: leaves widen.
+Frame 9: red bud tip appears.
+Frame 10: small red bud forms.
+Frame 11: bud swells.
+Frame 12: bud lengthens.
+Frame 13: sepal tips turn out.
+Frame 14: outer red petal edge loosens.
+Frame 15: first outer petal curls.
+Frame 16: second outer petal curls.
+Frame 17: outer whorl opens.
+Frame 18: front petals roll outward.
+Frame 19: middle whorl separates.
+Frame 20: middle petals fan outward.
+Frame 21: center spiral loosens.
+Frame 22: outer petal rim broadens.
+Frame 23: last folded petal opens.
+Frame 24: rose almost full.
+Frame 25: complete broad layered red rose.
+Critical accumulation rule: each described change ADDS TO all previously grown anatomy. Every leaf, sepal and petal remains attached at its existing position and size once grown. A frame is not a standalone illustration. Never reset at row boundaries. Last row must progressively open the SAME previous-row flower, not show five alternate fully-open versions.

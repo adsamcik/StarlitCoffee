@@ -1,0 +1,5 @@
+# Reproducible development-only toolchain; none is bundled in the Android app.
+Pillow==12.3.0
+numpy==2.3.5
+reportlab==4.4.9
+pypdfium2==5.13.0

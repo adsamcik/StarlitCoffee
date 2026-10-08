@@ -102,11 +102,8 @@
     <string name="label_increase">Augmenter %1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Préparer votre extraction</string>
 <string name="action_ready_to_brew_short">Prêt à préparer</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Préparation</string>
-    <string name="label_recipe_heading">Recette</string>
     <string name="label_temp_short">Temp.</string>
     <string name="label_bloom_short">Pré-infusion</string>
     <string name="prep_tip_pulsar_paper">Mouillez le filtre papier dans la base (valve ouverte), puis laissez égoutter. Montez le cylindre, ajoutez la mouture, nivelez le lit et placez le couvercle de dispersion. Tarez la balance.</string>
@@ -116,8 +113,6 @@
     <string name="prep_tip_french_press">Préchauffez la French Press, puis videz-la. Ajoutez la mouture, placez-la sur la balance et tarez avant d\'ajouter l\'eau.</string>
     <string name="prep_tip_espresso">Essuyez le porte-filtre. Dosez, répartissez et tassez à niveau avant de verrouiller.</string>
     <string name="prep_tip_moka">Remplissez la chambre inférieure jusqu\'à la valve. Remplissez le panier de mouture, nivelez — ne tassez pas. Assemblez avec précaution.</string>
-    <string name="format_prep_grind_specific">Moulez %1$s — réglez %2$s sur %3$s</string>
-    <string name="format_prep_grind_generic">Moulez %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Mettre en pause</string>
@@ -150,7 +145,6 @@
     <string name="label_cup_presets">Préréglages de tasse</string>
     <string name="action_add_preset">Ajouter un préréglage</string>
     <string name="action_reset_defaults">Réinitialiser par défaut</string>
-    <string name="msg_presets_hint">Les préréglages apparaissent comme boutons rapides dans le calculateur</string>
     <string name="label_brew_methods">Méthodes de préparation</string>
     <string name="msg_methods_hint">Les méthodes sélectionnées apparaissent en premier. Touchez pour activer ou désactiver.</string>
     <string name="label_default_method">Méthode par défaut</string>
@@ -167,9 +161,9 @@
     <string name="label_bloom_sprite_coffee_starlit">Café étoilé</string>
     <string name="desc_bloom_sprite_coffee_starlit">Pétales de vapeur crème et dorés avec de petites lueurs étoilées.</string>
     <string name="label_bloom_sprite_coffee_latte">Latte bloom</string>
-    <string name="desc_bloom_sprite_coffee_latte">Rosette de latte art douce dans des tons chauds de mousse de lait.</string>
+    <string name="desc_bloom_sprite_coffee_latte">Un cœur de latte art qui se déploie dans les tons chauds de la mousse de lait.</string>
     <string name="label_bloom_sprite_coffee_plant">Caféier</string>
-    <string name="desc_bloom_sprite_coffee_plant">Jeune plant de caféier vert et frais avec des feuilles par paires.</string>
+    <string name="desc_bloom_sprite_coffee_plant">Un caféier déploie ses feuilles brillantes tandis que ses cerises rouges mûrissent.</string>
     <string name="label_bloom_sprite_cherry_tomato">Tomate cerise</string>
     <string name="desc_bloom_sprite_cherry_tomato">Un grain de café donne naissance à une tige de tomate dont les fruits rouges mûrissent.</string>
     <string name="label_bloom_sprite_strawberry">Fraise</string>
@@ -437,15 +431,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">Ouvrir Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">Nécessite Android 12 ou une version ultérieure.</string>
     <string name="label_ai_service">Service IA (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Télécharger Mindlayer sur Google Play</string>
-    <string name="msg_mindlayer_install_recommendation">Installez Mindlayer depuis Google Play pour lire les étiquettes des paquets de café avec une IA privée sur l’appareil. Vous pourrez le faire plus tard dans Paramètres.</string>
     <string name="action_test_connection">Tester la connexion</string>
     <string name="action_run_test_prompt">Lancer le prompt de test</string>
     <string name="label_testing">Test…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">Activer l’IA</string>
     <string name="consent_requesting">Demande d’accès à l’IA…</string>
     <string name="consent_granted">IA activée</string>
     <string name="consent_already_approved">L’IA est déjà activée</string>
@@ -534,7 +528,6 @@
     <string name="label_volume_ml">Volume (ml)</string>
     <string name="msg_dose_from_ratio">La dose de café est calculée à partir de votre ratio</string>
     <string name="label_icon">Icône</string>
-    <string name="label_color">Couleur</string>
     <string name="action_add">Ajouter</string>
     <string name="screen_add_cup_preset_title">Ajouter un préréglage de tasse</string>
     <string name="screen_edit_cup_preset_title">Modifier le préréglage de tasse</string>
@@ -666,10 +659,10 @@
     <string name="msg_cup_preset_reset_failed">Impossible de réinitialiser les profils de tasse. Réessayez.</string>
     <string name="msg_reset_cup_presets">Remplacer tous les profils de tasse par ceux par défaut ?</string>
     <string name="msg_diagnostic_clear_failed">Impossible d’effacer tous les diagnostics. Réessayez.</string>
-    <string name="msg_clear_diagnostics">Effacer toutes les sessions d’analyse et tous les passages LLM enregistrés ?</string>
+    <string name="msg_clear_diagnostics">Effacer toutes les sessions d’analyse enregistrées ?</string>
     <string name="label_log_scan_corrections">Journaliser les corrections d’analyse (sur l’appareil)</string>
     <string name="msg_log_scan_corrections">Enregistre uniquement sur cet appareil ce que l’IA a extrait et ce que vous avez sauvegardé. Rien n’est envoyé.</string>
-    <string name="format_scan_debug_counts">Sessions : %1$d · Passages LLM : %2$d</string>
+    <string name="format_scan_debug_counts">Sessions : %1$d</string>
     <string name="format_scan_session_subject">Session d’analyse : %1$s</string>
     <string name="action_share_scan_session">Partager la session d’analyse</string>
 
@@ -735,4 +728,24 @@
     <string name="msg_learning_subtitle">Guides visuels de préparation étape par étape</string>
     <string name="action_show_details">Afficher les détails</string>
     <string name="action_hide_details">Masquer les détails</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Résultats du nouveau scan</string>
+    <string name="title_rescan_no_changes">Aucun changement trouvé</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">%1$d champ modifié:</item>
+        <item quantity="many">%1$d champs modifiés:</item>
+        <item quantity="other">%1$d champs modifiés:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Aucun changement trouvé pour le moment.</string>
+    <string name="msg_rescan_incomplete">Vérifiez les détails déjà trouvés ou relancez la reconnaissance.</string>
+    <string name="action_update_bag_so_far">Mettre à jour avec les résultats actuels</string>
+    <string name="action_new_bag_so_far">Nouveau sachet avec les résultats actuels</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Ouverture de la configuration…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Impossible d\'ouvrir la configuration. Réessayez ou saisissez les détails manuellement.</string>
+    <string name="announce_label_details_ready">Les détails de l\'étiquette sont prêts à être vérifiés.</string>
+    <string name="announce_label_recognition_no_result">Aucun détail n\'a été trouvé sur l\'étiquette. Saisissez les détails manuellement.</string>
+    <string name="label_show_cup_presets">Afficher dans la calculatrice</string>
+    <string name="cd_cup_preset_options">Options des préréglages de tasse</string>
 </resources>

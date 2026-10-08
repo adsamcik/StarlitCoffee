@@ -49,6 +49,67 @@ import org.junit.Test
 class SessionStorageMapperTest {
 
     @Test
+    fun `unknown mass ratio is explicit while historical contexts retain positive ratio validation`() {
+        val known = sampleContext()
+        val documents = SessionStorageMapper.encode(sampleState(), known)
+        val historical = documents.executionContextJson.replace(",\"hasMassRatio\":true", "")
+        val restored = SessionStorageMapper.decodeAndRestore(documents.compiledPlanJson, documents.runtimeJson,
+            historical) as SessionStorageRestoreResult.Restored
+        assertTrue(restored.value.executionContext.logPresentation.hasMassRatio)
+        val unknown = known.copy(logPresentation = known.logPresentation.copy(ratio = 0.0, hasMassRatio = false))
+        assertEquals(unknown, SessionExecutionContextSnapshotValidatorV1.validate(unknown))
+        assertThrows(IllegalArgumentException::class.java) {
+            SessionExecutionContextSnapshotValidatorV1.validate(unknown.copy(
+                logPresentation = unknown.logPresentation.copy(hasMassRatio = true)))
+        }
+        assertThrows(IllegalArgumentException::class.java) {
+            SessionExecutionContextSnapshotValidatorV1.validate(unknown.copy(
+                logPresentation = unknown.logPresentation.copy(ratio = 12.0)))
+        }
+    }
+
+    @Test
+    fun `user reminder origin revision deadline and due outbox survive V1 storage`() {
+        val initial = sampleState()
+        val stage = requireNotNull(initial.currentStage).instanceId
+        val timer = com.adsamcik.starlitcoffee.domain.brewing.session.UserBrewTimer(
+            stage, 3L, 60_000L, 0L, 1_000L, 61_000L)
+        val state = initial.copy(userTimer = timer, timerRevision = 3L, pendingEffects = listOf(
+            PendingSessionEffect.ScheduleTimerDeadline(SessionEffectId("schedule-timer"), initial.sessionId,
+                stage, timer.scheduleToken(initial.sessionId), 61_000L),
+            PendingSessionEffect.TimerAlert(SessionEffectId("timer-alert"), initial.sessionId, stage, 3L),
+        ))
+        val documents = SessionStorageMapper.encode(state, sampleContext())
+        val restored = SessionStorageMapper.decodeAndRestore(documents.compiledPlanJson, documents.runtimeJson,
+            documents.executionContextJson) as SessionStorageRestoreResult.Restored
+        assertEquals(state, restored.value.state)
+        val damaged = documents.runtimeJson.replace("\"timerRevision\":3", "\"timerRevision\":2")
+        assertTrue(SessionStorageMapper.decodeAndRestore(documents.compiledPlanJson, damaged,
+            documents.executionContextJson) is SessionStorageRestoreResult.InvalidDocument)
+    }
+
+    @Test
+    fun `guide pause round trips separately from physical status and anchor`() {
+        val state = sampleState().copy(isGuidancePaused = true)
+        val documents = SessionStorageMapper.encode(state, sampleContext())
+        val restored = SessionStorageMapper.decodeAndRestore(documents.compiledPlanJson, documents.runtimeJson,
+            documents.executionContextJson) as SessionStorageRestoreResult.Restored
+        assertEquals(state, restored.value.state)
+        assertEquals(1, documents.runtimeSchemaVersion)
+    }
+
+    @Test
+    fun `older V1 snapshots default guide pause without changing clock or outbox`() {
+        val state = sampleState()
+        val documents = SessionStorageMapper.encode(state, sampleContext())
+        val historicalRuntime = documents.runtimeJson.replace(",\"isGuidancePaused\":false", "")
+        assertTrue(!historicalRuntime.contains("isGuidancePaused"))
+        val restored = SessionStorageMapper.decodeAndRestore(documents.compiledPlanJson, historicalRuntime,
+            documents.executionContextJson) as SessionStorageRestoreResult.Restored
+        assertEquals(state, restored.value.state)
+    }
+
+    @Test
     fun `separate storage documents round trip compiled plan runtime effects and context`() {
         val state = sampleState()
         val context = sampleContext()

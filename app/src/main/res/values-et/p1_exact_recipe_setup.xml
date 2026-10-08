@@ -54,7 +54,7 @@
     <string name="label_brewer_profile_v60">V60</string>
     <string name="label_brewer_profile_wave_185">Lameda põhjaga Wave 185</string>
     <string name="label_brewer_profile_wedge">Kiilukujuline filterlehter</string>
-    <string name="label_brewer_profile_thick_paper_carafe">Paksu paberfiltriga kannukohvivalmistaja</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Chemex</string>
     <string name="label_brewer_profile_conical">Üldine kooniline filterlehter</string>
     <string name="label_brewer_profile_family_manual_gravity">Käsitsi gravitatsiooniga valmistamine</string>
     <string name="label_brewer_profile_pulsar">Pulsar</string>

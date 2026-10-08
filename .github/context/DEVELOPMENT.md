@@ -13,7 +13,7 @@
 | Android SDK | compileSdk 37, targetSdk 37, minSdk 26 | Install with Android Studio SDK Manager. |
 | Gradle | Wrapper 9.5.1 | Use `.\gradlew.bat`, not a system Gradle. |
 | Kotlin | 2.3.21 | Managed through `gradle/libs.versions.toml`. |
-| GitHub CLI | optional | `settings.gradle.kts` can call `gh auth token` for Mindlayer GitHub Packages. |
+| GitHub CLI | optional | `settings.gradle.kts` can use its stored login for Mindlayer and Tracebox GitHub Packages. |
 
 ## Environment
 
@@ -21,10 +21,11 @@
 |------|----------|---------|
 | `JAVA_HOME` | Usually | Points Gradle to JDK 17. |
 | `ANDROID_HOME` | Usually | Android SDK location if Android Studio has not configured it. |
-| `GITHUB_TOKEN` | Optional | Token for the Mindlayer GitHub Packages registry. The repo is public, but GitHub Packages Maven reads still need a token — any GitHub account works. |
-| `GITHUB_OWNER` | Optional | Owner for Mindlayer package repo; defaults to `adsamcik`. |
+| `GH_TOKEN` / `GITHUB_TOKEN` | Optional | Classic token with `read:packages` for both Maven registries. Within a source, `GH_TOKEN` takes precedence. |
+| `GITHUB_USERNAME` | Optional | Token owner's username; also selects a stored CLI account without switching the active account. |
+| `GITHUB_OWNER` | Optional | Owner for both package repos; defaults to `adsamcik`. |
 
-Credential lookup for Mindlayer is defined in `settings.gradle.kts`: `local.properties` -> Gradle property -> environment variable -> `gh auth token`.
+Credential lookup is defined in `settings.gradle.kts`: Gradle property -> environment variable -> `local.properties` -> `gh auth token --hostname github.com`. Build/CI overrides therefore replace stale local tokens.
 
 ## Setup
 
@@ -35,7 +36,7 @@ Set-Location StarlitCoffee
 .\gradlew.bat assembleDebug
 ```
 
-The Mindlayer repo is public, but GitHub Packages Maven reads still require a token (a GitHub limitation, not a private-repo gate). The setup helper authenticates GitHub CLI and requests `read:packages` without writing the token into the repository. You can instead provide `GITHUB_TOKEN` directly.
+Both dependency repos are public, but GitHub Packages Maven reads still require authentication. Setup verifies the exact configured versions using Gradle's selected credentials before reporting success. Use `-CheckOnly` or `.\gradlew.bat checkGitHubPackagesAuth` to diagnose access without interactive sign-in. Explicit stale token overrides must be replaced or removed; refreshing CLI authentication cannot repair them. See the README for precedence and account selection.
 
 ## Common Commands
 

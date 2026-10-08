@@ -104,11 +104,8 @@
     <string name="label_increase">Zvýšiť %1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Pripravte si všetko</string>
 <string name="action_ready_to_brew_short">Pripravené na prípravu</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Príprava</string>
-    <string name="label_recipe_heading">Recept</string>
     <string name="label_temp_short">Teplota</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Navlhčite papierový filter v základni (ventil otvorený) a nechajte odtiecť. Nasaďte valec, pridajte kávu, zarovnajte lôžko a položte disperzný kryt. Vytárujte váhu.</string>
@@ -118,8 +115,6 @@
     <string name="prep_tip_french_press">Predhrejte French Press a potom ho vyprázdnite. Pridajte kávu, položte na váhu a pred pridaním vody vytárujte.</string>
     <string name="prep_tip_espresso">Utrite páku dosucha. Nadávkujte, rovnomerne rozprestrite a utlačte do roviny pred nasadením.</string>
     <string name="prep_tip_moka">Naplňte spodnú komoru po ventil. Naplňte košík kávou, zarovnajte — neutláčajte. Opatrne zložte.</string>
-    <string name="format_prep_grind_specific">Pomeľte %1$s — nastavte %2$s na %3$s</string>
-    <string name="format_prep_grind_generic">Pomeľte %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Pozastaviť</string>
@@ -152,7 +147,6 @@
     <string name="label_cup_presets">Predvoľby šálok</string>
     <string name="action_add_preset">Pridať predvoľbu</string>
     <string name="action_reset_defaults">Obnoviť predvolené</string>
-    <string name="msg_presets_hint">Predvoľby sa zobrazia ako rýchle tlačidlá v kalkulačke</string>
     <string name="label_brew_methods">Metódy prípravy</string>
     <string name="msg_methods_hint">Vybrané metódy sa zobrazia ako prvé. Klepnutím prepnete.</string>
     <string name="label_default_method">Predvolená metóda</string>
@@ -169,9 +163,9 @@
     <string name="label_bloom_sprite_coffee_starlit">Hviezdna káva</string>
     <string name="desc_bloom_sprite_coffee_starlit">Krémovo-zlaté parné lupienky s drobnými hviezdnymi odleskami.</string>
     <string name="label_bloom_sprite_coffee_latte">Latte bloom</string>
-    <string name="desc_bloom_sprite_coffee_latte">Jemná latte-art rozeta v teplých tónoch mliečnej peny.</string>
+    <string name="desc_bloom_sprite_coffee_latte">Srdiečko z latte art sa rozvíja v teplých tónoch mliečnej peny.</string>
     <string name="label_bloom_sprite_coffee_plant">Kávovník</string>
-    <string name="desc_bloom_sprite_coffee_plant">Svieža zelená sadenica kávovníka s párovými listami.</string>
+    <string name="desc_bloom_sprite_coffee_plant">Kávovník rozvíja lesklé listy a dozrievajú na ňom červené kávové čerešne.</string>
     <string name="label_bloom_sprite_cherry_tomato">Čerešňová paradajka</string>
     <string name="desc_bloom_sprite_cherry_tomato">Z kávového zrna vyrastie paradajková liana a dozrejú na nej červené plody.</string>
     <string name="label_bloom_sprite_strawberry">Jahoda</string>
@@ -438,15 +432,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">Otvoriť Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">Vyžaduje Android 12 alebo novší.</string>
     <string name="label_ai_service">Služba AI (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Získať Mindlayer z Google Play</string>
-    <string name="msg_mindlayer_install_recommendation">Nainštalujte Mindlayer z Google Play na čítanie etikiet balení kávy so súkromnou AI priamo v zariadení. Môžete to urobiť neskôr v Nastaveniach.</string>
     <string name="action_test_connection">Otestovať pripojenie</string>
     <string name="action_run_test_prompt">Spustiť testovací prompt</string>
     <string name="label_testing">Testuje sa…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">Povoliť AI</string>
     <string name="consent_requesting">Žiadosť o prístup k AI…</string>
     <string name="consent_granted">AI povolená</string>
     <string name="consent_already_approved">AI je už povolená</string>
@@ -535,7 +529,6 @@
     <string name="label_volume_ml">Objem (ml)</string>
     <string name="msg_dose_from_ratio">Dávka kávy sa vypočíta z vášho pomeru</string>
     <string name="label_icon">Ikona</string>
-    <string name="label_color">Farba</string>
     <string name="action_add">Pridať</string>
     <string name="screen_add_cup_preset_title">Pridať predvoľbu šálky</string>
     <string name="screen_edit_cup_preset_title">Upraviť predvoľbu šálky</string>
@@ -667,10 +660,10 @@
     <string name="msg_cup_preset_reset_failed">Profily šálok sa nepodarilo obnoviť. Skúste to znova.</string>
     <string name="msg_reset_cup_presets">Nahradiť všetky profily šálok predvolenými?</string>
     <string name="msg_diagnostic_clear_failed">Nepodarilo sa vymazať všetky diagnostické údaje. Skúste to znova.</string>
-    <string name="msg_clear_diagnostics">Vymazať všetky uložené relácie skenovania a priechody LLM?</string>
+    <string name="msg_clear_diagnostics">Vymazať všetky uložené relácie skenovania?</string>
     <string name="label_log_scan_corrections">Zaznamenávať opravy skenovania (v zariadení)</string>
     <string name="msg_log_scan_corrections">Iba v tomto zariadení zaznamená, čo AI rozpoznala a čo ste uložili. Nič sa neodosiela.</string>
-    <string name="format_scan_debug_counts">Relácie: %1$d · Priechody LLM: %2$d</string>
+    <string name="format_scan_debug_counts">Relácie: %1$d</string>
     <string name="format_scan_session_subject">Relácia skenovania: %1$s</string>
     <string name="action_share_scan_session">Zdieľať reláciu skenovania</string>
 
@@ -736,4 +729,25 @@
     <string name="msg_learning_subtitle">Názorné návody na prípravu krok za krokom</string>
     <string name="action_show_details">Zobraziť podrobnosti</string>
     <string name="action_hide_details">Skryť podrobnosti</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Výsledky opätovného skenovania</string>
+    <string name="title_rescan_no_changes">Nenašli sa žiadne zmeny</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">%1$d údaj zmenený:</item>
+        <item quantity="few">%1$d údaje zmenené:</item>
+        <item quantity="many">%1$d údaja zmeneného:</item>
+        <item quantity="other">%1$d údajov zmenených:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Zatiaľ sa nenašli žiadne zmeny.</string>
+    <string name="msg_rescan_incomplete">Skontrolujte už nájdené údaje alebo skúste rozpoznávanie znova.</string>
+    <string name="action_update_bag_so_far">Aktualizovať s aktuálnymi výsledkami</string>
+    <string name="action_new_bag_so_far">Nové balenie s aktuálnymi výsledkami</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Otvára sa nastavenie…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Nastavenie sa nepodarilo otvoriť. Skúste to znova alebo zadajte podrobnosti manuálne.</string>
+    <string name="announce_label_details_ready">Podrobnosti zo štítku sú pripravené na kontrolu.</string>
+    <string name="announce_label_recognition_no_result">Na štítku sa nenašli žiadne podrobnosti. Zadajte ich manuálne.</string>
+    <string name="label_show_cup_presets">Zobraziť v kalkulačke</string>
+    <string name="cd_cup_preset_options">Možnosti predvolieb šálok</string>
 </resources>

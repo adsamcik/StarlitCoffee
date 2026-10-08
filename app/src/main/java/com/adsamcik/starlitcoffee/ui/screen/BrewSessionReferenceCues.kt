@@ -116,7 +116,7 @@ internal fun BrewSessionReferenceCues(
 }
 
 @Composable
-private fun ReferenceCueRow(cue: BrewStageReferenceCuePresentation) {
+internal fun ReferenceCueRow(cue: BrewStageReferenceCuePresentation, prominent: Boolean = false) {
     val content = cue.content()
     Row(
         modifier = Modifier
@@ -148,7 +148,7 @@ private fun ReferenceCueRow(cue: BrewStageReferenceCuePresentation) {
             )
             Text(
                 text = content.value,
-                style = MaterialTheme.typography.titleMedium,
+                style = if (prominent) MaterialTheme.typography.headlineLarge else MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
         }

@@ -10,6 +10,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.adsamcik.starlitcoffee.data.db.dao.ActiveBrewSessionDao
 import com.adsamcik.starlitcoffee.data.db.dao.BrewLogDao
 import com.adsamcik.starlitcoffee.data.db.dao.CoffeeBagDao
+import com.adsamcik.starlitcoffee.data.db.dao.CoffeeIdentityDao
+import com.adsamcik.starlitcoffee.data.db.dao.GrindMemoryDao
 import com.adsamcik.starlitcoffee.data.db.dao.CoffeeUsageDao
 import com.adsamcik.starlitcoffee.data.db.dao.CustomBrewerProfileDao
 import com.adsamcik.starlitcoffee.data.db.dao.FlavorTagDao
@@ -21,6 +23,11 @@ import com.adsamcik.starlitcoffee.data.db.dao.UserBarcodeStemDao
 import com.adsamcik.starlitcoffee.data.db.entity.ActiveBrewSessionEntity
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
+import com.adsamcik.starlitcoffee.data.db.entity.CoffeeIdentityEntity
+import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBarcodeEntity
+import com.adsamcik.starlitcoffee.data.db.entity.TypeGrindSettingEntity
+import com.adsamcik.starlitcoffee.data.db.entity.CoffeeGrindSettingEntity
+import com.adsamcik.starlitcoffee.data.db.entity.PackGrindSettingEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeUsageEntryEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CupPresetEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CustomBrewerProfileEntity
@@ -35,6 +42,11 @@ import com.adsamcik.starlitcoffee.data.db.entity.UserBarcodeStemEntity
         ActiveBrewSessionEntity::class,
         SavedRecipeEntity::class,
         CoffeeBagEntity::class,
+        CoffeeIdentityEntity::class,
+        CoffeeBarcodeEntity::class,
+        TypeGrindSettingEntity::class,
+        CoffeeGrindSettingEntity::class,
+        PackGrindSettingEntity::class,
         CoffeeUsageEntryEntity::class,
         BrewLogEntity::class,
         CustomBrewerProfileEntity::class,
@@ -44,13 +56,15 @@ import com.adsamcik.starlitcoffee.data.db.entity.UserBarcodeStemEntity
         UserBarcodeStemEntity::class,
         CupPresetEntity::class,
     ],
-    version = 20,
+    version = 21,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun recipeDao(): RecipeDao
     abstract fun coffeeBagDao(): CoffeeBagDao
+    abstract fun coffeeIdentityDao(): CoffeeIdentityDao
+    abstract fun grindMemoryDao(): GrindMemoryDao
     abstract fun coffeeUsageDao(): CoffeeUsageDao
     abstract fun brewLogDao(): BrewLogDao
     abstract fun activeBrewSessionDao(): ActiveBrewSessionDao
@@ -404,6 +418,7 @@ abstract class AppDatabase : RoomDatabase() {
             MIGRATION_17_18,
             MIGRATION_18_19,
             MIGRATION_19_20,
+            CoffeeMemoryMigration,
         )
 
         /**

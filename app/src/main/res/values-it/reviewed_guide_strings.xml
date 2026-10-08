@@ -1,0 +1,12 @@
+<resources>
+    <string name="action_brew_this_guide">Prepara questa ricetta</string>
+    <string name="label_freshly_boiled_water">Acqua appena bollita</string>
+    <string name="label_machine_temperature">La macchina regola la temperatura</string>
+    <string name="action_prepare_this_guide">Prepara il caffè</string>
+    <string name="label_reviewed_guide_english">Ricetta in inglese</string>
+    <string name="heading_reviewed_sources">Ricetta e fonti</string>
+    <string name="msg_reviewed_fill_quantities">Rispetta i livelli di riempimento indicati. Pesa il caffè che utilizzi effettivamente.</string>
+    <string name="label_measured_coffee_g">Caffè inserito (g)</string>
+    <string name="label_optional_measured_water_g">Acqua pesata (g, facoltativo)</string>
+    <string name="msg_reviewed_equipment_confirm">La mia attrezzatura corrisponde a questa ricetta.</string>
+</resources>

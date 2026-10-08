@@ -1,0 +1,22 @@
+Create exactly SIXTEEN complete Crema Chrysanthemum poses on a transparent square 4 by 4 sprite bank. Use the supplied mature flower as the sole material and anatomy reference. The bank reads BACKWARDS from fully open at top-left to a partly open tightly nested bowl at bottom-right. This will be played in reverse. Every pose has the SAME upright split coffee bean, same lighting, scale, bottom baseline and position. The flower consists of MANY fine, narrow, unequal curled ivory and gold petals with dark gaps and a recessed center. Preserve the dense fine petal anatomy throughout; do not replace it with a few broad lotus petals.
+
+Backward choreography, left-to-right top-to-bottom:
+1 Fully mature supplied reference: tall unequal upper hooks, layered curled sides, lowered outer skirt, dense small inner petals.
+2 Lowest right tips curl upward slightly.
+3 Lowest left tips curl upward slightly.
+4 Both bottom corners lift, reducing the lowest skirt while retaining its individual fine tips.
+5 Outer right middle curls turn upward, revealing layered overlap.
+6 Outer left middle curls turn upward, at a different angle from the right.
+7 Tall upper right hooks curve inward a little.
+8 Tall upper left hooks curve inward a little.
+9 The outer lower tier cups upward, creating a deeper bowl with the SAME fine nested inner petals.
+10 Right rim curls stand more vertically, side reach gently narrows.
+11 Left rim curls stand more vertically.
+12 Rear fine curls gather slightly closer to the dark center.
+13 Front fine petals stand up into a deeper curved rim, center remains visible.
+14 Tightly packed upper curls lean inward, the many small layers remain distinct.
+15 Compact partly open bowl, narrow rim and dense nested curls inside, around 62 percent of mature flower width.
+16 Tightest PARTLY OPEN bowl, around 58 percent of mature width, small dark center visible, dense thin petals packed inside; not a closed bud. The upper tips are visibly folded inward ready to uncurl.
+
+The mature width should be about three times the unchanged bean width; the tightest bowl about 1.7 times bean width. Camera and bean never scale with the flower. The opening should change identifiable regional petal orientation and depth, not uniformly inflate a finished emblem. Never remove the inner fine curls at the tighter stages. Gentle asymmetry, tactile painted warm ivory/gold, dark warm recesses, no smooth plastic, no perfectly regular geometry.
+One whole uncut flower and bean per equal square cell. Ample padding, fully empty gutters, no overlap. True transparent alpha background. No leaves, soil, decorative extras, text, numbers, captions, borders, checkerboard, guides or grid lines.

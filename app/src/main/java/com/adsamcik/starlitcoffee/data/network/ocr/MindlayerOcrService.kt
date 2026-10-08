@@ -11,8 +11,11 @@ import com.adsamcik.mindlayer.sdk.OcrProfile
 import com.adsamcik.mindlayer.sdk.OcrResult
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
-import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.withTimeoutOrNull
 import java.io.ByteArrayOutputStream
 import kotlin.time.Duration.Companion.seconds
 import dev.tracebox.Tracebox
@@ -62,9 +65,9 @@ class MindlayerModelSetupRequiredException(
  * If the connected Mindlayer service does not advertise
  * [ServiceCapabilities.FEATURE_OCR_IMAGE_ONESHOT] (older service, OCR feature
  * flag off, asset pack still extracting), [recognize] logs a warning and
- * returns `null`. Callers degrade gracefully — for the bag-photo path this
- * means the photo proceeds with no OCR text, and the LLM enrichment still
- * runs against the raw image.
+ * returns `null`. The bag-photo path then tries the bundled recognizer before
+ * continuing to LLM enrichment. OCR's own time limit also returns `null`,
+ * while caller cancellation and the overall scan deadline still propagate.
  */
 class MindlayerOcrService(
     private val mindlayer: Mindlayer,
@@ -106,8 +109,8 @@ class MindlayerOcrService(
 
     /**
      * Recognise text in [bitmap]. Returns `null` if OCR is unavailable or the
-     * call failed before producing a result. Logs detail; never throws unless
-     * cancellation propagates.
+     * call failed or timed out before producing a result. Logs detail; model
+     * setup requirements and caller cancellation still propagate.
      */
     override suspend fun recognize(bitmap: Bitmap): RecognizedText? {
         if (!ensureCapability(throwOnSetupRequired = true)) {
@@ -120,24 +123,31 @@ class MindlayerOcrService(
             return null
         }
 
-        return runCatching {
-            withTimeout(SESSION_TIMEOUT_MS) {
-                // Boundary catch is implicit via runCatching: the one-shot can
-                // throw a typed MindlayerException (e.g. CONCURRENT_LIMIT,
-                // RESOURCE_EXHAUSTED, NOT_SUPPORTED). Returning null lets
-                // callers degrade gracefully.
-                val result = mindlayer.ocr {
-                    image(pngBytes, "image/png")
-                    profile(OcrProfile.GeneralDocument)
-                    emitBoundingBoxes()
-                }.awaitResult()
-                buildRecognizedText(result)
-            }
-        }.onFailure { error ->
-            if (error is CancellationException) throw error
-            Tracebox.log.error(error, MindlayerOcrServiceTraceboxTemplates.OCR_CALL_FAILED, argument(error.message))
-        }.getOrNull()
+        return recognizePng(pngBytes)
     }
+
+    /** The one-shot call boundary, separate from Android bitmap encoding. */
+    internal suspend fun recognizePng(pngBytes: ByteArray): RecognizedText? = runCatching {
+        // Only this scope's timeout becomes null. Caller cancellation and
+        // independently nested timeouts must continue through the fallback chain.
+        val recognized = withTimeoutOrNull(SESSION_TIMEOUT_MS) {
+            val result = mindlayer.ocr {
+                image(pngBytes, "image/png")
+                profile(OcrProfile.GeneralDocument)
+                emitBoundingBoxes()
+            }.awaitResult()
+            buildRecognizedText(result)
+        }
+        if (recognized == null) {
+            currentCoroutineContext().ensureActive()
+            Tracebox.log.warn(LogTemplate.of("Mindlayer OCR call reached its time limit"))
+        }
+        recognized
+    }.onFailure { error ->
+        if (error is CancellationException) throw error
+        currentCoroutineContext().ensureActive()
+        Tracebox.log.error(error, MindlayerOcrServiceTraceboxTemplates.OCR_CALL_FAILED, argument(error.message))
+    }.getOrNull()
 
     private suspend fun ensureCapability(throwOnSetupRequired: Boolean): Boolean {
         if (capabilityAvailable) return true
@@ -149,11 +159,19 @@ class MindlayerOcrService(
                 throwIfOcrModelSetupRequired()
             }
             supported
+        } catch (_: TimeoutCancellationException) {
+            // awaitConnected owns its bounded SDK wait. An inactive caller
+            // still throws here, preserving user cancellation and ScanDeadline.
+            currentCoroutineContext().ensureActive()
+            Tracebox.log.warn(LogTemplate.of("Mindlayer OCR connection check reached its time limit"))
+            false
         } catch (e: CancellationException) {
             throw e
         } catch (e: MindlayerModelSetupRequiredException) {
             throw e
         } catch (e: Exception) {
+            // The SDK can translate a caller timeout into CONNECT_TIMEOUT.
+            currentCoroutineContext().ensureActive()
             Tracebox.log.error(e, MindlayerOcrServiceTraceboxTemplates.CAPABILITY_CHECK_FAILED, argument(e.message))
             false
         }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_sets">Ruošimo rinkiniai</string>
+    <string name="msg_brewing_sets_hint">Išsaugokite atskirus rinkinius namams, darbui ar skirtingiems ruošimo būdams.</string>
+    <string name="action_add_brewing_set">Pridėti rinkinį</string>
+    <string name="action_save_brewing_set">Išsaugoti kaip rinkinį</string>
+    <string name="label_new_brewing_set">Naujas rinkinys</string>
+    <string name="label_edit_brewing_set">Redaguoti rinkinį</string>
+    <string name="hint_brewing_set_name">pvz., Filtras namuose</string>
+    <string name="action_manage_brewing_sets">Tvarkyti rinkinius</string>
+    <string name="label_brewing_set_method">Ruošimo būdas</string>
+    <string name="msg_delete_brewing_set">Ištrinti šį ruošimo rinkinį?</string>
+    <string name="screen_first_brewing_set_method">Pasirinkite pirmą ruošimo būdą</string>
+    <string name="msg_first_brewing_set">Pradėkite nuo vieno būdo. Kitame žingsnyje pridėkite daugiau rinkinių.</string>
+    <string name="action_retry_brewing_set">Bandyti dar kartą</string>
+</resources>

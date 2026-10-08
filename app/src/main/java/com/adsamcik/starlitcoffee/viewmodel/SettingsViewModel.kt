@@ -5,10 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
+import com.adsamcik.starlitcoffee.data.model.BrewingSet
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.repository.CupPresetResetter
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesStore
-import com.adsamcik.starlitcoffee.scan.observability.ScanLlmDiagnosticsStore
+import com.adsamcik.starlitcoffee.scan.observability.LegacyLlmDiagnosticsStore
 import com.adsamcik.starlitcoffee.scan.observability.ScanSessionRingBuffer
 import com.adsamcik.starlitcoffee.util.RecognitionPreference
 import kotlinx.coroutines.CancellationException
@@ -40,6 +41,7 @@ enum class SettingsFailure {
 }
 
 enum class SettingsCompletion {
+    BREWING_SET_SAVED,
     CUP_PRESETS_RESET,
     DIAGNOSTICS_CLEARED,
 }
@@ -59,11 +61,13 @@ class AndroidDiagnosticHistoryClearer(context: Context) : DiagnosticHistoryClear
 
     override suspend fun clear(): Boolean = withContext(Dispatchers.IO) {
         val sessionsCleared = ScanSessionRingBuffer.clear(appContext)
-        val llmPassesCleared = ScanLlmDiagnosticsStore.clear(appContext)
-        sessionsCleared && llmPassesCleared
+        val legacyLlmDataCleared = LegacyLlmDiagnosticsStore.clear(appContext)
+        sessionsCleared && legacyLlmDataCleared
     }
 }
 
+// Every settings write uses the same operation gate and failure state, including set edits.
+@Suppress("TooManyFunctions")
 class SettingsViewModel(
     private val preferences: UserPreferencesStore,
     private val cupPresetResetter: CupPresetResetter? = null,
@@ -76,6 +80,26 @@ class SettingsViewModel(
 
     fun updateMethodSelection(enabledMethods: Set<BrewMethod>, defaultMethod: BrewMethod) {
         persist { preferences.updateMethodSelection(enabledMethods, defaultMethod) }
+    }
+
+    fun saveBrewingSet(set: BrewingSet) {
+        launchOperation(SettingsOperation.SAVING, SettingsFailure.SAVE, SettingsCompletion.BREWING_SET_SAVED) {
+            preferences.saveBrewingSet(set)
+        }
+    }
+
+    fun selectBrewingSet(id: String) {
+        persist { preferences.selectBrewingSet(id) }
+    }
+
+    fun saveBrewingSetRecipe(set: BrewingSet) {
+        launchOperation(SettingsOperation.SAVING, SettingsFailure.SAVE, SettingsCompletion.BREWING_SET_SAVED) {
+            preferences.saveBrewingSetRecipe(set)
+        }
+    }
+
+    fun deleteBrewingSet(id: String) {
+        persist { preferences.deleteBrewingSet(id) }
     }
 
     fun updateDefaultMethod(enabledMethods: Set<BrewMethod>, method: BrewMethod) {
@@ -92,6 +116,10 @@ class SettingsViewModel(
 
     fun updateSkipMethodSelection(enabled: Boolean) {
         persist { preferences.updateSkipMethodSelection(enabled) }
+    }
+
+    fun updateShowCupPresets(enabled: Boolean) {
+        persist { preferences.updateShowCupPresets(enabled) }
     }
 
     fun updateShowBrewingInstructions(enabled: Boolean) {
@@ -115,7 +143,25 @@ class SettingsViewModel(
     }
 
     fun updateLabelRecognitionPreference(preference: RecognitionPreference) {
-        persist { preferences.updateLabelRecognitionPreference(preference) }
+        viewModelScope.launch { saveLabelRecognitionPreference(preference) }
+    }
+
+    /** Setup must await a successful opt-in before reconnecting or running the requested test. */
+    suspend fun saveLabelRecognitionPreference(preference: RecognitionPreference): Boolean {
+        if (_uiState.value.operation != SettingsOperation.IDLE) return false
+        _uiState.update { it.copy(operation = SettingsOperation.SAVING, failure = null, completion = null) }
+        return try {
+            preferences.updateLabelRecognitionPreference(preference)
+            true
+        } catch (error: CancellationException) {
+            throw error
+        } catch (error: Exception) {
+            Tracebox.log.error(error, LogTemplate.of("Label recognition preference save failed"))
+            _uiState.update { it.copy(failure = SettingsFailure.SAVE) }
+            false
+        } finally {
+            _uiState.update { it.copy(operation = SettingsOperation.IDLE) }
+        }
     }
 
     fun updateDimModeEnabled(enabled: Boolean) {

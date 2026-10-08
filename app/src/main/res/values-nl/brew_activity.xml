@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_active_brews">Lopende bereidingen</string>
+    <string name="label_brew_activity_ready">Klaar om te starten</string>
+    <string name="label_brew_activity_paused">Timer gepauzeerd</string>
+    <string name="label_brew_activity_save">Bereiding opslaan</string>
+    <string name="label_brew_activity_timing_reached">Tijdsdoel bereikt</string>
+    <string name="format_brew_activity_elapsed">%1$s verstreken</string>
+    <string name="format_brew_activity_time_left">Nog %1$s</string>
+    <string name="format_brew_activity_hours">%1$d u %2$d min</string>
+    <string name="format_brew_activity_minutes">%1$d:%2$02d</string>
+    <string name="cd_open_active_brew">%1$s openen. %2$s</string>
+    <string name="cd_choose_active_brews">Bereiding kiezen. Lopend: %3$d. %1$s. %2$s</string>
+</resources>

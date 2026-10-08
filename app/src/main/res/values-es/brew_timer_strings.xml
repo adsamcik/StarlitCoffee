@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_set_brew_reminder">Programar recordatorio</string>
+    <string name="action_edit_brew_reminder">Editar recordatorio</string>
+    <string name="action_remove_brew_reminder">Eliminar recordatorio</string>
+    <string name="label_brew_reminder">Recordatorio</string>
+    <string name="label_timer_duration">Duración</string>
+    <string name="label_timer_seconds">Segundos</string>
+    <string name="label_timer_minutes">Minutos</string>
+    <string name="label_timer_hours">Horas</string>
+    <string name="msg_brew_reminder_origin">Desde el inicio de este paso. Cambiar la duración conserva el tiempo transcurrido. Tú sigues confirmando cuándo termina el paso.</string>
+    <string name="msg_brew_reminder_reached">Llegó la hora del recordatorio. Comprueba el café antes de continuar.</string>
+    <string name="title_cold_brew">Cold brew</string>
+    <string name="title_cold_brew_timer">Temporizador de cold brew</string>
+    <string name="action_follow_brew_guide">Seguir la guía</string>
+    <string name="action_just_set_brew_timer">Solo programar temporizador</string>
+    <string name="action_start_timer">Iniciar temporizador</string>
+    <string name="action_start_steeping">Empezar la infusión</string>
+    <string name="action_end_brew_timer">Finalizar temporizador</string>
+    <string name="action_add_brew_start_time">Añadir hora de inicio</string>
+    <string name="label_brew_start_now">Empieza ahora</string>
+    <string name="label_brew_start_earlier">Empezó antes</string>
+    <string name="label_brew_start_unknown">Hora de inicio desconocida</string>
+    <string name="label_brew_hours_ago">Hace cuántas horas</string>
+    <string name="label_brew_minutes_ago">Hace cuántos minutos</string>
+    <string name="msg_cold_brew_refrigerated">Mantén el recipiente tapado y refrigerado a 4 °C o menos. La infusión predeterminada dura 14 horas.</string>
+    <string name="msg_cold_brew_start_origin">Inicia cuando el café esté completamente mojado y el recipiente tapado entre en el frigorífico.</string>
+    <string name="msg_brew_start_unknown">Añade la hora de inicio real para calcular un recordatorio. Hasta entonces no se estima una hora de finalización.</string>
+    <string name="msg_brew_timer_ended">Temporizador finalizado</string>
+    <string name="label_brew_extraction_ended">Extracción terminada</string>
+    <string name="msg_brew_notifications_disabled">Los recordatorios están desactivados. La preparación sigue en marcha.</string>
+    <string name="action_allow_brew_notifications">Permitir recordatorios</string>
+    <string name="msg_brew_reminders_may_be_late">Android puede retrasar los recordatorios cuando salgas de la aplicación.</string>
+    <string name="action_allow_precise_brew_reminders">Permitir recordatorios precisos</string>
+</resources>

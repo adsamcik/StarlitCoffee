@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="heading_guide_why">Why this step?</string>
+    <string name="action_guide_steps">Steps</string>
+    <string name="action_guide_overview">Overview</string>
+    <string name="label_guide_untimed">Read at your own pace</string>
+    <string name="action_continue_reading">Continue reading</string>
+    <string name="action_read_guide">Read the guide</string>
+    <string name="action_read_ahead">Read ahead</string>
+    <string name="action_return_to_live_brew">Return to brew</string>
+    <string name="label_guide_done_when">Done when</string>
+</resources>

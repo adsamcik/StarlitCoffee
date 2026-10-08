@@ -39,7 +39,12 @@
     <string name="format_brew_stage_recorded_grams">Reģistrēts %1$.0f g</string>
     <string name="format_brew_stage_remaining_grams">Atlicis %1$.0f g</string>
     <string name="label_brew_reference_cues">Atskaites vērtības</string>
-    <string name="msg_brew_reference_cues_not_completion">Tikai norādei. Pabeidziet soli ar galveno darbību augstāk.</string>
+    <string name="action_pause_brew_guide">Pauzēt pamācību</string>
+    <string name="action_resume_brew_guide">Turpināt pamācību</string>
+    <string name="action_pause_brew_clock">Pauzēt taimeri</string>
+    <string name="msg_brew_clock_keeps_running">Taimeris turpina darboties.</string>
+    <string name="msg_brew_guide_paused">Pamācība ir pauzēta. Taimeris turpina darboties.</string>
+    <string name="msg_brew_reference_cues_not_completion">Tikai norādei. Laika norāde nepabeidz fizisku darbību.</string>
     <string name="action_show_more_brew_reference_cues">Rādīt vairāk atskaites vērtību</string>
     <string name="action_hide_brew_reference_cues">Paslēpt papildu atskaites vērtības</string>
     <string name="label_brew_reference_stage_duration">Posma ilgums</string>

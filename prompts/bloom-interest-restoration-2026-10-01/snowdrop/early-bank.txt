@@ -1,0 +1,13 @@
+Create a transparent square3x3 atlas of NINE complete early snowdrop plants, consecutive row-major stages leading into the closed-three-bud plant in reference2. Reference1 locks the rich mature design. Keep exactly the SAME broad cracked bean and stone ring size/orientation/baseline across all nine cells; earlier plants have more empty space above, never zoom them up. Native opaque painted anatomy on transparent exterior. No text, labels, guides, borders, shadows or backdrop. Complete intact plant per equal cell, ample clear gutters. Persistent leaves grow from the same base nodes and remain; no regrowing/replacing them. Narrow pointed strap leaves only, not round broad leaves. Eventual dense fan and three unequal curved flower stalks/bracts exactly as references. No fourth flower site.
+
+Cell1: same full-sized brown bean/stone ring, tiny green slit emerges from seam.
+Cell2: same bean, slit becomes two short narrow leaf tips.
+Cell3: same bean, two retained leaf blades extend, third upright leaf tip emerges centrally.
+Cell4: same bean, retained three blades lengthen; two side-swept blades begin opening from lower nodes, totalfive visible leaves.
+Cell5: same bean, retained five blades spread; two more narrow central blades rise, denser fan with seven blades.
+Cell6: same bean and all retained fan blades, left/right side blades elongate; first slender flower stalk rises above the fan and curves gently left.
+Cell7: same bean and dense retained fan, first curved left stalk lengthens with a small green bud; second center stalk and third right stalk emerge separately, no flower opening.
+Cell8: same bean and leaf fan, all THREE stalks/bracts now extend and arch to staggered left/center/right positions; three small closed ivory buds under green ovaries. The left one higher, center lower, right smaller. No node loss.
+Cell9: same bean and persistent dense fan, THREE closed ivory buds gently lengthen; all three stalks reach nearly reference2 height and position, bract tips extend, leaves reach near-mature reference2 lengths. No flower opens. This progresses smoothly into reference2 without whole-plant shrinking.
+
+Fixed bean fills roughly lowerthird of mature full height, same original relative size in every cell. All leaves and stalks once present persist at their same nodes and grow forward. Do not add a leaf then erase it. Final early pose must preserve the rich narrow-leaf fan and THREE unequal bud sites, not two mirrored buds. Petals remain closed until after this bank.

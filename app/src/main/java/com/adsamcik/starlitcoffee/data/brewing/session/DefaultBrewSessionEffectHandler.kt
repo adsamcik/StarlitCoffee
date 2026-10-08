@@ -11,6 +11,14 @@ fun interface BrewSessionStageAlertNotifier {
         effect: PendingSessionEffect.StageAlert,
         session: ActiveBrewSession,
     ): SessionEffectDelivery
+
+    suspend fun deliverTimer(
+        effect: PendingSessionEffect.TimerAlert,
+        session: ActiveBrewSession,
+    ): SessionEffectDelivery = SessionEffectDelivery.Delivered
+
+    /** Withdraw posted cues whose stage/revision is no longer relevant. */
+    fun synchronize(session: ActiveBrewSession) = Unit
 }
 
 object NoOpBrewSessionStageAlertNotifier : BrewSessionStageAlertNotifier {
@@ -33,15 +41,30 @@ class DefaultBrewSessionEffectHandler(
     private val workCanceller: LongSessionWorkCanceller? = null,
 ) : BrewSessionEffectHandler {
 
+    override fun synchronize(session: ActiveBrewSession) {
+        stageAlertNotifier.synchronize(session)
+    }
+
     override suspend fun deliver(
         effect: PendingSessionEffect,
         session: ActiveBrewSession,
     ): SessionEffectDelivery {
+        stageAlertNotifier.synchronize(session)
         if (session.runtime.status != BrewSessionStatus.RUNNING) {
             statusNotifier.clear(session.runtime.sessionId)
         }
         return when (effect) {
-            is PendingSessionEffect.StageAlert -> stageAlertNotifier.deliver(effect, session)
+            is PendingSessionEffect.TimerAlert -> stageAlertNotifier.deliverTimer(effect, session)
+            is PendingSessionEffect.ScheduleTimerDeadline -> {
+                scheduler.schedule(effect.sessionId, effect.stageInstanceId, effect.scheduleToken,
+                    effect.dueAtWallClockMillis, effect.effectId)
+                SessionEffectDelivery.Delivered
+            }
+            is PendingSessionEffect.StageAlert -> if (session.runtime.isGuidancePaused) {
+                SessionEffectDelivery.Delivered
+            } else {
+                stageAlertNotifier.deliver(effect, session)
+            }
             is PendingSessionEffect.ScheduleStageDeadline -> {
                 scheduler.schedule(
                     sessionId = effect.sessionId,

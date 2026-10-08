@@ -28,6 +28,10 @@ import java.util.concurrent.TimeUnit
 import dev.tracebox.Tracebox
 import dev.tracebox.api.LogTemplate
 import dev.tracebox.api.argument
+import com.adsamcik.starlitcoffee.domain.scandiagnostics.ScanLifecycleDiagnostic
+import com.adsamcik.starlitcoffee.domain.scandiagnostics.ScanLifecycleEvent
+import com.adsamcik.starlitcoffee.domain.scandiagnostics.ScanDiagnosticFailure
+import com.adsamcik.starlitcoffee.domain.scandiagnostics.ScanDiagnosticOutcome
 
 private object BagExtractionSchedulerTraceboxTemplates {
     val DURABLE_ENQUEUE_SUCCEEDED_BUT_ACTIVE_STATE_PROMOTION = LogTemplate.of("Durable enqueue succeeded but active state promotion did not commit")
@@ -192,24 +196,39 @@ object BagExtractionScheduler {
         val workId = workUuid.toString()
         val manifestPath = BagExtractionInputStore.allocatePath(context, workId)
         val request = buildRequest(manifestPath, input, workUuid)
-        withContext(NonCancellable) {
-            performFailureAtomicEnqueue(
-                persistPending = {
-                    persistPendingEnqueue(context, workId, manifestPath, input)
-                },
-                writeManifest = {
-                    BagExtractionInputStore.write(context, manifestPath, input)
-                },
-                enqueueDurably = {
-                    enqueueDurably(context, request)
-                },
-                activate = {
-                    activateDurablyEnqueuedWork(context, workId, manifestPath, input)
-                },
-                rollbackFailedEnqueue = {
-                    rollbackFailedEnqueue(context, workId, manifestPath, input)
-                },
+        try {
+            withContext(NonCancellable) {
+                performFailureAtomicEnqueue(
+                    persistPending = {
+                        persistPendingEnqueue(context, workId, manifestPath, input)
+                    },
+                    writeManifest = {
+                        BagExtractionInputStore.write(context, manifestPath, input)
+                    },
+                    enqueueDurably = {
+                        enqueueDurably(context, request)
+                    },
+                    activate = {
+                        activateDurablyEnqueuedWork(context, workId, manifestPath, input)
+                    },
+                    rollbackFailedEnqueue = {
+                        rollbackFailedEnqueue(context, workId, manifestPath, input)
+                    },
+                )
+            }
+        } catch (error: CancellationException) {
+            throw error
+        } catch (error: Exception) {
+            recordBagScanLifecycle(
+                ScanLifecycleDiagnostic(
+                    context = bagScanDiagnosticContext(sessionId, generationId, workId, photoUrisCsv, reviewContext),
+                    event = ScanLifecycleEvent.ENQUEUE_FAILED,
+                    aiRequested = runLlm,
+                    outcome = ScanDiagnosticOutcome.ERROR,
+                    failure = ScanDiagnosticFailure.ENQUEUE_FAILED,
+                ),
             )
+            throw error
         }
         workId
     }
@@ -485,6 +504,15 @@ object BagExtractionScheduler {
         ) {
             Tracebox.log.warn(BagExtractionSchedulerTraceboxTemplates.DURABLE_ENQUEUE_SUCCEEDED_BUT_ACTIVE_STATE_PROMOTION)
         }
+        recordBagScanLifecycle(
+            ScanLifecycleDiagnostic(
+                context = bagScanDiagnosticContext(
+                    input.sessionId, input.generationId, workId, input.photoUrisCsv, input.reviewContext,
+                ),
+                event = ScanLifecycleEvent.QUEUED,
+                aiRequested = input.runLlm,
+            ),
+        )
     }
 
     private suspend fun rollbackFailedEnqueue(
@@ -505,7 +533,10 @@ object BagExtractionScheduler {
             Tracebox.log.error(error, BagExtractionSchedulerTraceboxTemplates.COULD_NOT_CANCEL_FAILED_EXTRACTION_ENQUEUE)
         }
         runCatching { BagExtractionInputStore.delete(context, manifestPath) }
-            .onFailure { error -> Tracebox.log.error(error, BagExtractionSchedulerTraceboxTemplates.COULD_NOT_ROLL_BACK_FAILED_EXTRACTION_MANIFEST) }
+            .onFailure { error -> Tracebox.log.error(
+                error,
+                BagExtractionSchedulerTraceboxTemplates.COULD_NOT_ROLL_BACK_FAILED_EXTRACTION_MANIFEST,
+            ) }
         clearWorkState(context, workId, preserveLatestGeneration = false)
         if (failedGenerationWasLatest) {
             rememberLatestGeneration(context, input.sessionId, input.generationId)
@@ -778,7 +809,11 @@ object BagExtractionScheduler {
                 cancelNotification = { AndroidBagAnalysisNotifier.cancel(context, workId) },
             ),
             onFailure = { error ->
-                Tracebox.log.error(error, BagExtractionSchedulerTraceboxTemplates.COULD_NOT_FULLY_DISCARD_CANCELLED_BAG_EXTRACTION, argument(workId))
+                Tracebox.log.error(
+                    error,
+                    BagExtractionSchedulerTraceboxTemplates.COULD_NOT_FULLY_DISCARD_CANCELLED_BAG_EXTRACTION,
+                    argument(workId),
+                )
             },
         )
     }

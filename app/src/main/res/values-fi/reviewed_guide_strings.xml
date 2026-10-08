@@ -1,0 +1,12 @@
+<resources>
+    <string name="action_brew_this_guide">Valmista tällä reseptillä</string>
+    <string name="label_freshly_boiled_water">Juuri keitetty vesi</string>
+    <string name="label_machine_temperature">Laite säätää lämpötilan</string>
+    <string name="action_prepare_this_guide">Valmistele kahvi</string>
+    <string name="label_reviewed_guide_english">Resepti englanniksi</string>
+    <string name="heading_reviewed_sources">Resepti ja lähteet</string>
+    <string name="msg_reviewed_fill_quantities">Noudata ilmoitettuja täyttömerkintöjä. Punnitse kahvi, jonka todella käytät.</string>
+    <string name="label_measured_coffee_g">Lisätty kahvi (g)</string>
+    <string name="label_optional_measured_water_g">Punnittu vesi (g, valinnainen)</string>
+    <string name="msg_reviewed_equipment_confirm">Välineeni sopivat tähän reseptiin.</string>
+</resources>

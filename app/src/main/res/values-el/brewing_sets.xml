@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_sets">Σετ παρασκευής</string>
+    <string name="msg_brewing_sets_hint">Αποθηκεύστε ξεχωριστά σετ για το σπίτι, τη δουλειά ή διαφορετικές μεθόδους παρασκευής.</string>
+    <string name="action_add_brewing_set">Προσθήκη σετ</string>
+    <string name="action_save_brewing_set">Αποθήκευση ως σετ</string>
+    <string name="label_new_brewing_set">Νέο σετ</string>
+    <string name="label_edit_brewing_set">Επεξεργασία σετ</string>
+    <string name="hint_brewing_set_name">π.χ. Φίλτρου στο σπίτι</string>
+    <string name="action_manage_brewing_sets">Διαχείριση σετ</string>
+    <string name="label_brewing_set_method">Μέθοδος παρασκευής</string>
+    <string name="msg_delete_brewing_set">Να διαγραφεί αυτό το σετ παρασκευής;</string>
+    <string name="screen_first_brewing_set_method">Επιλέξτε την πρώτη σας μέθοδο</string>
+    <string name="msg_first_brewing_set">Ξεκινήστε με μία μέθοδο. Προσθέστε περισσότερα σετ στο επόμενο βήμα.</string>
+    <string name="action_retry_brewing_set">Δοκιμάστε ξανά</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_active_brews">Préparations en cours</string>
+    <string name="label_brew_activity_ready">Prêt à démarrer</string>
+    <string name="label_brew_activity_paused">Minuteur en pause</string>
+    <string name="label_brew_activity_save">Enregistrement de la préparation</string>
+    <string name="label_brew_activity_timing_reached">Temps cible atteint</string>
+    <string name="format_brew_activity_elapsed">%1$s écoulé</string>
+    <string name="format_brew_activity_time_left">Il reste %1$s</string>
+    <string name="format_brew_activity_hours">%1$d h %2$d min</string>
+    <string name="format_brew_activity_minutes">%1$d:%2$02d</string>
+    <string name="cd_open_active_brew">Ouvrir %1$s. %2$s</string>
+    <string name="cd_choose_active_brews">Choisir une préparation. En cours : %3$d. %1$s. %2$s</string>
+</resources>

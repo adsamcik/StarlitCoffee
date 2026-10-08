@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_tip_chemex">Use Chemex bonded paper sized for your brewer. Place three layers over the spout, rinse with hot water and discard the rinse water. Add medium-coarse coffee and tare the scale. Keep the air channel open.</string>
+    <string name="instruction_chemex_bloom">Wet all grounds with the bloom water and let the bloom finish.</string>
+    <string name="instruction_chemex_pour">Pour gently to the total water target. Let the level fall between pours and keep it below the rim.</string>
+    <string name="instruction_chemex_drawdown">Wait for the coffee bed to drain. Remove the filter, swirl gently and serve using the collar or handle.</string>
+    <string name="label_filter_chemex_bonded">Chemex bonded paper</string>
+</resources>

@@ -1,10 +1,9 @@
 package com.adsamcik.starlitcoffee.ui.util
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.Image
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import com.adsamcik.starlitcoffee.R
 
@@ -54,11 +53,10 @@ fun PresetIcon(
     contentDescription: String?,
     modifier: Modifier = Modifier,
 ) {
-    Image(
+    Icon(
         painter = painterResource(id = presetIconRes(iconName)),
         contentDescription = contentDescription,
         modifier = modifier,
-        contentScale = ContentScale.Fit,
     )
 }
 
@@ -91,17 +89,4 @@ val availablePresetIcons = listOf(
     "ceramic_latte_bowl",
     "thermal_carafe",
     "double_wall_press",
-)
-
-val presetColorPalette: List<String?> = listOf(
-    null,
-    "#8B4513",
-    "#D2691E",
-    "#CD853F",
-    "#4682B4",
-    "#2E8B57",
-    "#9370DB",
-    "#DC143C",
-    "#FF8C00",
-    "#708090",
 )

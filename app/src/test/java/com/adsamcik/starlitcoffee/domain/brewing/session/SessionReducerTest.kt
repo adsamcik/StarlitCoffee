@@ -11,6 +11,71 @@ import org.junit.Test
 class SessionReducerTest {
 
     @Test
+    fun `guide pause preserves extraction origin deadline and actuals while dropping discretionary cues`() {
+        val started = reduce(session(stage("bloom", StageCompletionMode.Countdown(30_000L), alertOnStart = true),
+            stage("pour", StageCompletionMode.Manual)), SessionEvent.Start(), monotonic = 0L, wall = 1_000L).state
+        val paused = reduce(started, SessionEvent.SetGuidancePaused(true), monotonic = 15_000L, wall = 16_000L)
+
+        assertTrue(paused.state.isGuidancePaused)
+        assertEquals(BrewSessionStatus.RUNNING, paused.state.status)
+        assertEquals(started.activeClockAnchor, paused.state.activeClockAnchor)
+        assertEquals(started.startedAtWallClockMillis, paused.state.startedAtWallClockMillis)
+        assertEquals(started.stageProgress, paused.state.stageProgress)
+        assertEquals(started.pendingEffects.filterIsInstance<PendingSessionEffect.ScheduleStageDeadline>(),
+            paused.state.pendingEffects.filterIsInstance<PendingSessionEffect.ScheduleStageDeadline>())
+        assertFalse(paused.state.pendingEffects.any { it is PendingSessionEffect.StageAlert })
+        assertFalse(paused.state.pendingEffects.any { it is PendingSessionEffect.CancelStageDeadline })
+        assertTrue(paused.effects.first() is SessionEffect.PersistRuntime)
+
+        val due = reduce(paused.state, SessionEvent.Tick(), monotonic = 30_000L, wall = 31_000L).state
+        assertEquals(30_000L, due.totalActiveElapsedMillis)
+        assertEquals(1, due.currentStageIndex)
+        assertTrue(due.isGuidancePaused)
+        assertFalse(due.pendingEffects.any { it is PendingSessionEffect.StageAlert })
+        val finished = reduce(due, SessionEvent.Finish(), monotonic = 32_000L, wall = 33_000L).state
+        assertEquals(BrewSessionStatus.COMPLETED, finished.status)
+        assertTrue(finished.pendingEffects.any { it is PendingSessionEffect.FinalizeBrewLog })
+    }
+
+    @Test
+    fun `restore keeps guide paused while a physical manual stage continues counting`() {
+        val started = reduce(session(stage("steep", StageCompletionMode.Manual)), SessionEvent.Start(), 0L, 1_000L).state
+        val paused = reduce(started, SessionEvent.SetGuidancePaused(true), 5_000L, 6_000L).state
+        val restored = reduce(paused, SessionEvent.Restore(), 3L, 61_000L).state
+        assertTrue(restored.isGuidancePaused)
+        assertEquals(BrewSessionStatus.RUNNING, restored.status)
+        assertEquals(60_000L, restored.totalActiveElapsedMillis)
+        assertEquals(0, restored.currentStageIndex)
+        assertEquals(StageRunStatus.ACTIVE, restored.stageProgress.single().status)
+    }
+
+    @Test
+    fun `resuming guide is idempotent and neither replays alerts nor resets clock`() {
+        val started = reduce(session(stage("steep", StageCompletionMode.Manual)), SessionEvent.Start(), 0L, 1_000L).state
+        val paused = reduce(started, SessionEvent.SetGuidancePaused(true), 5_000L, 6_000L).state
+        val event = SessionEvent.SetGuidancePaused(false, SessionEventId("resume-guide"))
+        val resumed = reduce(paused, event, 20_000L, 21_000L).state
+        assertFalse(resumed.isGuidancePaused)
+        assertEquals(started.activeClockAnchor, resumed.activeClockAnchor)
+        assertTrue(resumed.pendingEffects.isEmpty())
+        assertTrue(reduce(resumed, event, 21_000L, 22_000L).wasIgnored)
+        assertEquals(21_000L, reduce(resumed, SessionEvent.Tick(), 21_000L, 22_000L).state.totalActiveElapsedMillis)
+    }
+
+    @Test
+    fun `guide resume cannot resume an explicitly paused physical clock or an ended brew`() {
+        val started = reduce(session(stage("steep", StageCompletionMode.Manual)), SessionEvent.Start(), 0L, 1_000L).state
+        val guidePaused = reduce(started, SessionEvent.SetGuidancePaused(true), 1_000L, 2_000L).state
+        val physicallyPaused = reduce(guidePaused, SessionEvent.Pause(), 2_000L, 3_000L).state
+        val guideResumed = reduce(physicallyPaused, SessionEvent.SetGuidancePaused(false), 20_000L, 21_000L).state
+        assertEquals(BrewSessionStatus.PAUSED, guideResumed.status)
+        assertEquals(null, guideResumed.activeClockAnchor)
+        assertEquals(2_000L, guideResumed.totalActiveElapsedMillis)
+        val cancelled = reduce(guideResumed, SessionEvent.Cancel(), 21_000L, 22_000L).state
+        assertTrue(reduce(cancelled, SessionEvent.SetGuidancePaused(true), 22_000L, 23_000L).wasIgnored)
+    }
+
+    @Test
     fun `countdown completes into next stage and persists an ordered outbox`() {
         val state = session(
             stage("bloom", StageCompletionMode.Countdown(30_000L), alertOnStart = true),

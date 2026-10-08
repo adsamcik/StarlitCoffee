@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_active_brews">Folyamatban lévő főzések</string>
+    <string name="label_brew_activity_ready">Indításra kész</string>
+    <string name="label_brew_activity_paused">Időzítő szüneteltetve</string>
+    <string name="label_brew_activity_save">Főzés mentése</string>
+    <string name="label_brew_activity_timing_reached">Időcél elérve</string>
+    <string name="format_brew_activity_elapsed">%1$s eltelt</string>
+    <string name="format_brew_activity_time_left">%1$s van hátra</string>
+    <string name="format_brew_activity_hours">%1$d ó %2$d perc</string>
+    <string name="format_brew_activity_minutes">%1$d:%2$02d</string>
+    <string name="cd_open_active_brew">%1$s megnyitása. %2$s</string>
+    <string name="cd_choose_active_brews">Főzés kiválasztása. Folyamatban: %3$d. %1$s. %2$s</string>
+</resources>

@@ -1,0 +1,12 @@
+<resources>
+    <string name="action_brew_this_guide">Nach diesem Rezept brühen</string>
+    <string name="label_freshly_boiled_water">Frisch aufgekochtes Wasser</string>
+    <string name="label_machine_temperature">Die Maschine regelt die Temperatur</string>
+    <string name="action_prepare_this_guide">Kaffee vorbereiten</string>
+    <string name="label_reviewed_guide_english">Rezept auf Englisch</string>
+    <string name="heading_reviewed_sources">Rezept und Quellen</string>
+    <string name="msg_reviewed_fill_quantities">Beachte die angegebenen Füllmarken. Wiege den Kaffee, den du tatsächlich verwendest.</string>
+    <string name="label_measured_coffee_g">Eingefüllter Kaffee (g)</string>
+    <string name="label_optional_measured_water_g">Gewogenes Wasser (g, optional)</string>
+    <string name="msg_reviewed_equipment_confirm">Meine Ausrüstung entspricht diesem Rezept.</string>
+</resources>

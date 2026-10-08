@@ -1,0 +1,29 @@
+Use case: stylized-concept. Supporting visual reference: supplied SINGLE finished sprite, used ONLY for the mature subject identity, warm painterly tactile finish, coffee-bean base and palette. Generate a NEW 25-frame growth atlas from an unsprouted coffee bean to this final mature subject. The reference is the final destination, NOT the subject to repeat throughout the atlas. Output ONE SQUARE transparent RGBA spritesheet, exactly FIVE columns and FIVE rows of equal square cells, 25 frames row-major left-to-right then top-to-bottom. Prefer 1280x1280 (256px cells) if supported. Actual transparent background, no checkerboard pixels. ZERO text, numbers, labels, guides, borders, grid lines, color bars, watermarks, dots or stray pixels. Each cell contains ONE complete isolated subject with generous empty margin; all content stays inside its cell. Same front camera, light direction, bean size/orientation/texture and base anchor in every cell. Bean base at horizontal center and 88% down cell; highest final tip stays below 10% down cell, widest final artwork inside 12%-88% cell width. Preserve readable silhouettes at 148px. NO camera zoom, rotation, recentering, growth reversal, object swaps, disappearing mature leaves, random petal counts, or premature completed bloom. New frames must follow a SINGLE persistent anatomy, not alternate drawings. Smooth purposeful silhouette development across ALL 25 cells including every row boundary. Each frame makes the next small structural growth step; finished state arrives at frame25. No long repeated bud phase or last-row duplicate poses. Do not copy the original's timing defects. Do not draw frame labels from the following instructions.
+
+Exact 25-frame sequence:
+Frame 1: closed bean.
+Frame 2: seam loosens.
+Frame 3: green tip.
+Frame 4: sprout emerges.
+Frame 5: stem rises.
+Frame 6: two leaf buds.
+Frame 7: leaves separate.
+Frame 8: leaves broaden.
+Frame 9: small orchid bud appears.
+Frame 10: bud grows.
+Frame 11: folded orchid bud swells.
+Frame 12: side petal seams separate.
+Frame 13: left broad petal starts opening.
+Frame 14: right broad petal starts opening.
+Frame 15: both petals half open.
+Frame 16: upper sepal unfolds.
+Frame 17: lower sepals separate.
+Frame 18: side petals widen.
+Frame 19: colored lip begins unfurling downward.
+Frame 20: lip extends.
+Frame 21: lip opens its curl.
+Frame 22: side petals broaden.
+Frame 23: lower sepals reach position.
+Frame 24: orchid nearly full.
+Frame 25: complete ivory orchid with colored lip.
+Cumulative anatomy is essential: every leaf, branch, petal and fruit already grown REMAINS attached in the same location and at least the same size in every later frame. Do not reset at a row boundary. The whole figure develops gradually; the final five frames must continue visible completion, not repeat mature alternatives.

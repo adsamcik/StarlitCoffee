@@ -1,0 +1,33 @@
+Use case: stylized-concept. Make a completely redesigned Latte bloom animation for an Android coffee-brewing app. The attached single coffee bean is ONLY a material, palette and bean-identity reference, not an animation target. Retain that rich espresso-brown painterly bean texture and ivory/caramel color family. The old cream plant/flame design is replaced by a recognizably LIQUID LATTE-ART HEART unfolding above the bean.
+
+Output ONE SQUARE native-transparent RGBA spritesheet, exactly FIVE columns and FIVE rows of equal square cells. Exactly 25 complete isolated whole-subject poses in row-major order. Prefer 1280x1280 with256px cells. Actual transparent background; no drawn checkerboard, backdrop, shadows, grid, borders, labels, numbers, writing, watermarks or guide marks. Allow generous fully transparent gaps between every row and column. Keep every whole subject fully inside its own cell. Fixed front camera, fixed light, fixed coffee-bean identity and scale, fixed horizontal center and bean bottom at88% of the cell height. Final artwork stays within12%-88% cell width and below10% of cell height. No crop, zoom, camera motion, independently enlarged bean, clipped edges or duplicated subjects. Begin opening the bean only slightly duringF2-4; afterF4 its two attached halves and base stay identical throughout. A single warm milk ribbon remains continuously connected to the bean seam.
+
+Design: soft flowing ivory milk with a thin warm caramel contour and shallow liquid highlights, readable against both cream and very dark brown. Broad clean silhouette, rounded edges and organic flow. Treat the milk as latte art, not a biological plant, flower, flame, smoke plume, wing or puffy balloon. NO pointy leaves, petals, leaf veins, stems, fire tips, extra hearts, detached steam or glitter. The final subject is ONE balanced ivory latte-art heart with two generously rounded lobes, a clearly readable top cleft and a tapered lower point connected to the bean by a short smooth pull-through tail. Final heart is slightly broader than the bean. It must feel like one pour forming one liquid shape. Warm premium hand-painted game-asset polish; simple substantial forms rather than many tiny decorations.
+
+Every adjacent pose must visibly advance the actual liquid shape. Keep formed left/right lobes present, never erase a part or restart a new drawing. The middle sequence is an unfinished broad fan of milk, not an already-finished heart. Last row must make visible geometric changes in lobe fullness, cleft depth and pull-through point, not glow or texture-only differences. Whole bean base stays anchored; overall size increases by unfolding milk, never camera zoom. Use this exact purposeful choreography; frame numbers below are instructions and must NEVER appear in the image.
+
+F01: closed espresso-brown bean, subtle central seam, no milk yet.
+F02: seam begins to part; a small ivory milk bead appears within it.
+F03: bead stretches into a short smooth round-tipped ribbon, same bean.
+F04: milk ribbon lifts just clear of the now slightly split bean; bean opening stops here.
+F05: ribbon tip bends left into a rounded hook, not a flame.
+F06: rounded hook broadens into a low shallow left pool of milk.
+F07: same ribbon sweeps right across the bottom of that pool; retain the entire left pool.
+F08: matching right pool begins, attached to the same milk ribbon and left pool.
+F09: the two pools join into one broad shallow fan, with a soft rounded upper edge.
+F10: fan visibly widens; central join smooths into one continuous ivory surface.
+F11: left upper edge rolls outward as a broad rounded fold; right side persists.
+F12: matching right edge rolls outward; both rounded folds persist.
+F13: fan grows upward under one soft continuous rounded crown; no deep heart cleft yet.
+F14: lower milk edges curve inward toward a future tapered point; crown remains broad.
+F15: left shoulder rounds higher and fuller; keep right side and lower continuity.
+F16: right shoulder catches up; broad paired shoulders remain an unfinished fan, no deep cleft.
+F17: left lobe visibly fills outward; right shoulder and milk tail remain.
+F18: right lobe visibly fills outward; retain the expanded left lobe.
+F19: shallow central notch begins between the two full rounded lobes.
+F20: notch starts deepening; lower end remains broad and unfinished.
+F21: latte-art pull-through begins: the notch separates more clearly and the lower milk body starts narrowing centrally, while both rounded lobes persist.
+F22: pull-through extends; top cleft becomes clearly readable and both lobe shoulders unfold a little fuller. No leaves, no flame curl.
+F23: lower sides draw inward into a recognizable tapered heart point; smooth flowing milk remains continuous to the bean seam.
+F24: pull-through completes the lower point and slim connecting tail; cleft deepens, lobe shoulders spread, nearly full broad heart.
+F25: last short pull-through resolves the clean pointed bottom; both rounded shoulders relax outward into a full balanced latte-art heart, with a clear generous cleft and elegant shallow milk highlights. No new objects or extra decoration.

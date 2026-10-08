@@ -196,7 +196,10 @@ object ScanPhotoStorage {
                 runCatching { directorySync.sync(storageDir) }
                     .onFailure { cleanupError ->
                         failure?.addSuppressed(cleanupError)
-                            ?: Tracebox.log.error(cleanupError, ScanPhotoStorageTraceboxTemplates.COULD_NOT_DURABLY_REMOVE_CAPTURE_TEMPORARY_FILE)
+                            ?: Tracebox.log.error(
+                                cleanupError,
+                                ScanPhotoStorageTraceboxTemplates.COULD_NOT_DURABLY_REMOVE_CAPTURE_TEMPORARY_FILE,
+                            )
                     }
             }
         }
@@ -528,7 +531,10 @@ object ScanPhotoStorage {
                     remove("$KEY_PENDING_DELETE_PREFIX$deletionId")
                 }
             if (!cleared) {
-                Tracebox.log.warn(ScanPhotoStorageTraceboxTemplates.COULD_NOT_CLEAR_DELETED_BAG_PHOTO_CLEANUP, argument(deletionId))
+                Tracebox.log.warn(
+                    ScanPhotoStorageTraceboxTemplates.COULD_NOT_CLEAR_DELETED_BAG_PHOTO_CLEANUP,
+                    argument(deletionId),
+                )
             }
             cleared
         }
@@ -555,7 +561,10 @@ object ScanPhotoStorage {
             }
             val currentOwnership = runCatching { findCurrentOwnership(bagId) }
                 .onFailure { error ->
-                    Tracebox.log.error(error, ScanPhotoStorageTraceboxTemplates.COULD_NOT_VERIFY_CURRENT_BAG_PHOTO_OWNERSHIP)
+                    Tracebox.log.error(
+                        error,
+                        ScanPhotoStorageTraceboxTemplates.COULD_NOT_VERIFY_CURRENT_BAG_PHOTO_OWNERSHIP,
+                    )
                 }
                 .getOrElse { return@forEach }
             if (deleteUnreferencedPermanentBagPhotos(context, deletion, currentOwnership)) {
@@ -747,12 +756,18 @@ object ScanPhotoStorage {
     private fun permanentFiles(permanentDir: File): List<File>? {
         if (!permanentDir.exists()) return emptyList()
         if (!permanentDir.isDirectory) {
-            Tracebox.log.warn(ScanPhotoStorageTraceboxTemplates.PERMANENT_PHOTO_PATH_IS_NOT_A_DIRECTORY, argument(permanentDir.path))
+            Tracebox.log.warn(
+                ScanPhotoStorageTraceboxTemplates.PERMANENT_PHOTO_PATH_IS_NOT_A_DIRECTORY,
+                argument(permanentDir.path),
+            )
             return null
         }
         return permanentDir.listFiles()?.toList().also { files ->
             if (files == null) {
-                Tracebox.log.warn(ScanPhotoStorageTraceboxTemplates.COULD_NOT_ENUMERATE_PERMANENT_PHOTO_DIRECTORY, argument(permanentDir.path))
+                Tracebox.log.warn(
+                    ScanPhotoStorageTraceboxTemplates.COULD_NOT_ENUMERATE_PERMANENT_PHOTO_DIRECTORY,
+                    argument(permanentDir.path),
+                )
             }
         }
     }
@@ -917,7 +932,10 @@ object ScanPhotoStorage {
 
         if (backup.exists()) {
             if (!backup.delete()) {
-                Tracebox.log.warn(ScanPhotoStorageTraceboxTemplates.COULD_NOT_REMOVE_REPLACED_PHOTO_ROLLBACK_LINK, argument(backup.path))
+                Tracebox.log.warn(
+                    ScanPhotoStorageTraceboxTemplates.COULD_NOT_REMOVE_REPLACED_PHOTO_ROLLBACK_LINK,
+                    argument(backup.path),
+                )
             } else {
                 runCatching { directorySync.sync(parentDirectory) }
                     .onFailure { error ->

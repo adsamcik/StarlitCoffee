@@ -6,12 +6,13 @@ import android.content.ContextWrapper
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
@@ -29,6 +30,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -45,6 +47,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -72,8 +76,10 @@ import com.adsamcik.starlitcoffee.data.brewing.session.BrewSessionOperationResul
 import com.adsamcik.starlitcoffee.data.db.entity.ActiveBrewSessionEntity
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltInP1RecipeCatalog
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltInRecipeId
+import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.domain.brewing.session.BrewSessionStatus
 import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStageAction
+import com.adsamcik.starlitcoffee.ui.util.labelResource
 import com.adsamcik.starlitcoffee.domain.brewing.session.SessionEvent
 import com.adsamcik.starlitcoffee.domain.brewing.session.SessionEventId
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageInstanceId
@@ -81,10 +87,8 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.StageActualValue
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetyMessage
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetySeverity
 import com.adsamcik.starlitcoffee.ui.component.ExitBrewConfirmationDialog
-import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import com.adsamcik.starlitcoffee.ui.session.ActiveBrewSessionPresentation
 import com.adsamcik.starlitcoffee.ui.session.ActiveBrewSessionPresentationMapper
-import com.adsamcik.starlitcoffee.ui.session.BrewSessionActionAvailability
 import com.adsamcik.starlitcoffee.ui.session.BrewSessionLiveRegion
 import com.adsamcik.starlitcoffee.ui.session.BrewStageCompletionPresentation
 import com.adsamcik.starlitcoffee.ui.session.CurrentBrewStagePresentation
@@ -99,7 +103,14 @@ import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidanceResolver
 import com.adsamcik.starlitcoffee.ui.guidance.GuidancePresentationLevel
 import com.adsamcik.starlitcoffee.ui.guidance.P1BuiltInGuidanceCatalog
 import com.adsamcik.starlitcoffee.ui.guidance.P1ExactRecipeReleaseGate
+import com.adsamcik.starlitcoffee.ui.guidance.P1ExactLearnStageFacts
 import com.adsamcik.starlitcoffee.ui.guidance.LegacyBuiltInGuidanceCatalog
+import com.adsamcik.starlitcoffee.ui.guidance.ColdBrewGuidanceCatalog
+import com.adsamcik.starlitcoffee.ui.guidance.resolveBrewReadAheadGuide
+import com.adsamcik.starlitcoffee.ui.guidance.shouldGateSession
+import com.adsamcik.starlitcoffee.ui.guidance.guidanceCatalog
+import com.adsamcik.starlitcoffee.ui.guidance.learnFacts
+import com.adsamcik.starlitcoffee.ui.guidance.LearnGuidanceCatalogAvailability
 import com.adsamcik.starlitcoffee.ui.util.DimModeScaffold
 import com.adsamcik.starlitcoffee.ui.util.KeepScreenOn
 import com.adsamcik.starlitcoffee.ui.util.keepScreenOnTimeoutMillis
@@ -152,6 +163,8 @@ fun BrewSessionScreen(
         mutableStateOf(lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED))
     }
     val scope = rememberCoroutineScope()
+    var showReadAhead by rememberSaveable(sessionId) { mutableStateOf(false) }
+    val readerState = rememberSaveableStateHolder()
     val currentOnScreenForegrounded by rememberUpdatedState(onScreenForegrounded)
     val currentOnScreenBackgrounded by rememberUpdatedState(onScreenBackgrounded)
     val dimController = rememberDimModeController(featureEnabled = dimModeEnabled)
@@ -170,12 +183,19 @@ fun BrewSessionScreen(
         }
     }
     val terminologyUiCopy = exactRecipeId?.let(exactRecipeReleaseGate::terminologyUiCopyFor)
+    val reader = remember(restoredSession?.recipe, restoredSession?.runtime?.stagePlan,
+        exactRecipeReleaseGate, guidancePreferences) {
+        restoredSession?.let {
+            resolveBrewReadAheadGuide(it.recipe, it.runtime.stagePlan.stages.map { stage -> stage.definition },
+                exactRecipeReleaseGate, guidancePreferences)
+        }
+    }
+    val readerGuide = reader?.exactGuide
+    val readerResolution = reader?.resolution
     val showEnglishTerminology = sessionTerminologyOverride ?: showEnglishBrewingTerms
     val isReleaseGatedExactSession = persistedRecipe?.let { recipe ->
-        exactRecipeReleaseGate.shouldGatePersistedSession(
-            rawRecipeId = recipe.builtInRecipeId,
-            rawBrewerProfileId = recipe.brewerProfileId,
-        )
+        exactRecipeReleaseGate.shouldGateSession(recipe,
+            restoredSession.runtime.stagePlan.stages.map { it.definition })
     } ?: false
     if (isReleaseGatedExactSession) {
         BackHandler(onBack = onBack)
@@ -186,12 +206,12 @@ fun BrewSessionScreen(
         )
         return
     }
-    val guidanceResolver = remember(exactRecipeId, exactRecipeReleaseGate) {
-        val guidanceCatalogs = exactRecipeId
+    val guidanceResolver = remember(persistedRecipe?.reviewedGuide, exactRecipeId, exactRecipeReleaseGate) {
+        val guidanceCatalogs = persistedRecipe?.reviewedGuide?.guidanceCatalog()?.let(::listOf) ?: exactRecipeId
             ?.let(exactRecipeReleaseGate::catalogFor)
             ?.let(::listOf)
             ?: if (Locale.getDefault().language == Locale.ENGLISH.language) {
-                listOf(LegacyBuiltInGuidanceCatalog.catalog, P1BuiltInGuidanceCatalog.catalog)
+                listOf(LegacyBuiltInGuidanceCatalog.catalog, P1BuiltInGuidanceCatalog.catalog, ColdBrewGuidanceCatalog.catalog)
             } else {
                 // Legacy/generic technical brewing copy has not received locale-specific review.
                 emptyList()
@@ -235,9 +255,9 @@ fun BrewSessionScreen(
                 currentOnScreenForegrounded()
             }
             fun markBackground() {
-                foregroundHandle.onPaused()
                 isLifecycleResumed = false
                 currentOnScreenBackgrounded()
+                foregroundHandle.onPaused()
             }
             val observer = LifecycleEventObserver { _, event ->
                 when (event) {
@@ -258,8 +278,8 @@ fun BrewSessionScreen(
             onDispose {
                 lifecycleOwner.lifecycle.removeObserver(observer)
                 val wasResumed = isLifecycleResumed
-                foregroundHandle.dispose()
                 if (wasResumed) currentOnScreenBackgrounded()
+                foregroundHandle.dispose()
             }
         }
     }
@@ -268,7 +288,9 @@ fun BrewSessionScreen(
         ?.let(::shouldOfferPictureInPicture)
         ?: false
     val availablePresentation = presentation as? ActiveBrewSessionPresentation.Available
-    val stickyPrimaryAction = availablePresentation?.actions?.let(::primaryBrewSessionAction)
+    val stickyPrimaryAction = availablePresentation?.let {
+        primaryBrewSessionAction(it.actions, it.isGuidancePaused)
+    }
     if (shouldOfferPictureInPicture && !isPictureInPicture) {
         KeepScreenOn(
             timeoutMillis = keepScreenOnTimeoutMillis((MAX_PICTURE_IN_PICTURE_STAGE_MILLIS / MILLIS_PER_SECOND).toInt()),
@@ -376,6 +398,8 @@ fun BrewSessionScreen(
             if (availablePresentation != null && stickyPrimaryAction != null) {
                 BrewSessionPrimaryActionBar(
                     action = stickyPrimaryAction,
+                    presentation = availablePresentation,
+                    startsBloom = availablePresentation.currentStage?.action == BrewStageAction.BLOOM,
                     isDispatching = dispatching,
                     onDispatch = dispatch,
                 )
@@ -385,7 +409,9 @@ fun BrewSessionScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = stringResource(R.string.screen_brew_session_title),
+                        text = restoredSession?.executionContext?.logPresentation?.methodLabel
+                            ?.let { com.adsamcik.starlitcoffee.ui.util.localizedBrewMethodLabel(it) }
+                            ?: stringResource(R.string.screen_brew_session_title),
                         modifier = Modifier.semantics { heading() },
                     )
                 },
@@ -395,6 +421,13 @@ fun BrewSessionScreen(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.action_back),
                         )
+                    }
+                },
+                actions = {
+                    if (readerResolution?.availability is LearnGuidanceCatalogAvailability.Available) {
+                        TextButton(onClick = { showReadAhead = true }) {
+                            Text(stringResource(R.string.action_read_ahead))
+                        }
                     }
                 },
             )
@@ -446,6 +479,9 @@ fun BrewSessionScreen(
                     sessionTerminologyOverride = enabled
                     scope.launch { onShowEnglishBrewingTerms(enabled) }
                 },
+                guideFacts = readerGuide?.stageFactsByContentId ?: reader?.reviewedGuide?.learnFacts().orEmpty(),
+                equipmentProfileId = persistedRecipe?.reviewedGuide?.profileId,
+                vibrationTheme = vibrationTheme,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding),
@@ -453,6 +489,39 @@ fun BrewSessionScreen(
         }
     }
 
+    }
+    if (showReadAhead && readerResolution != null) {
+        ModalBottomSheet(onDismissRequest = { showReadAhead = false }) {
+            Column(Modifier.fillMaxWidth().fillMaxHeight(0.95f)) {
+                TextButton(onClick = { showReadAhead = false }, modifier = Modifier.fillMaxWidth()) {
+                    Column {
+                        Text(stringResource(R.string.action_return_to_live_brew))
+                        availablePresentation?.let {
+                            val elapsed = stringResource(
+                                R.string.format_brew_activity_elapsed, formatDuration(it.totalActiveElapsedMillis),
+                            )
+                            Text("${it.currentStage?.action?.label().orEmpty()} · $elapsed",
+                                style = MaterialTheme.typography.labelMedium)
+                        }
+                    }
+                }
+                readerState.SaveableStateProvider("reader_$sessionId") {
+                    LearnBrewerScreen(
+                        title = stringResource(R.string.action_read_ahead),
+                        resolution = readerResolution,
+                        onBack = { showReadAhead = false },
+                        instructionAssets = BuiltInInstructionAssetCatalog.catalog,
+                        exactGuide = readerGuide,
+                        reviewedGuide = reader?.reviewedGuide,
+                        initiallyReading = true,
+                        initialStepIndex = readerResolution.content.indexOfFirst {
+                            it.id == availablePresentation?.currentStage?.contentId
+                        }.coerceAtLeast(0),
+                        modifier = Modifier.fillMaxSize(),
+                    )
+                }
+            }
+        }
     }
     if (showCancelDialog) {
         ExitBrewConfirmationDialog(
@@ -574,11 +643,14 @@ private fun BrewSessionContent(
     terminologyUiCopy: BrewingTerminologyUiCopy?,
     showEnglishTerminology: Boolean,
     onShowEnglishTerminology: (Boolean) -> Unit,
+    guideFacts: Map<StageContentId, P1ExactLearnStageFacts>,
+    vibrationTheme: BrewVibrationTheme,
     modifier: Modifier = Modifier,
+    equipmentProfileId: String? = null,
 ) {
     val stage = presentation.currentStage
     val stageProgress = presentation.stageProgress
-    val actionLabel = stage?.action?.label().orEmpty()
+    val actionLabel = stage?.let { guideFacts[it.contentId]?.title ?: it.action.label() }.orEmpty()
     val progressLabel = stageProgress.currentStageNumber?.let { number ->
         stringResource(R.string.format_brew_stage_progress, number, stageProgress.totalStageCount)
     }.orEmpty()
@@ -601,6 +673,7 @@ private fun BrewSessionContent(
             CompletedBrewSession(
                 completedLogId = completedLogId,
                 onBack = onBack,
+                timerOnly = presentation.isTimerOnly,
             )
             return@Column
         }
@@ -633,21 +706,23 @@ private fun BrewSessionContent(
             },
         )
         BrewSessionTiming(presentation, stage)
-        stage?.let { current ->
-            BrewSessionStageCard(
-                stage = current,
-                isDispatching = isDispatching,
-                canManualAdvance = presentation.actions.canManualAdvance,
-                canFinish = presentation.actions.canFinish,
-                onDispatch = onDispatch,
+        BrewSessionTimerControl(presentation, enabled = !isDispatching, onDispatch = onDispatch)
+        if (presentation.hasPhysicalClockStarted && presentation.isPhysicalOriginKnown) {
+            BrewReminderAccess(vibrationTheme)
+        }
+        if (presentation.isGuidancePaused && presentation.status == BrewSessionStatus.RUNNING) {
+            Text(
+                text = stringResource(R.string.msg_brew_guide_paused),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
             )
         }
-        BrewSessionSafety(presentation.safetyMessages)
         stage?.let { current ->
-            BrewSessionReferenceCues(
-                sessionKey = presentation.sessionId,
-                cues = current.referenceCues,
-            )
+            BrewSessionReferenceCues(sessionKey = presentation.sessionId, cues = current.referenceCues)
+            guideFacts[current.contentId]?.cumulativeWater?.let { volume ->
+                GuideQuantity(stringResource(R.string.label_exact_learn_cumulative_water), volume)
+            }
         }
         guidanceResolution?.let { guidance ->
             BrewSessionGuidancePanel(
@@ -658,6 +733,16 @@ private fun BrewSessionContent(
                 terminologyUiCopy = terminologyUiCopy,
                 showEnglishTerminology = showEnglishTerminology,
                 onShowEnglishTerminology = onShowEnglishTerminology,
+                sourceExplanations = guideFacts.mapNotNull { (id, facts) -> facts.explanation?.let { id to it } }.toMap(),
+                equipmentProfileId = equipmentProfileId,
+            )
+        }
+        BrewSessionSafety(presentation.safetyMessages)
+        stage?.let { current ->
+            BrewSessionStageCard(
+                stage = current,
+                isDispatching = isDispatching,
+                onDispatch = onDispatch,
             )
         }
         BrewSessionSecondaryControls(
@@ -678,20 +763,26 @@ private fun BrewSessionTiming(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         modifier = Modifier.fillMaxWidth(),
     ) {
-        Row(
+        FlowRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.spacedBy(24.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             TimingValue(
                 label = stringResource(R.string.label_elapsed),
-                value = formatDuration(presentation.totalActiveElapsedMillis),
+                value = when {
+                    !presentation.hasPhysicalClockStarted -> stringResource(R.string.label_brew_activity_ready)
+                    !presentation.isPhysicalOriginKnown -> stringResource(R.string.label_brew_start_unknown)
+                    else -> formatDuration(presentation.totalActiveElapsedMillis)
+                },
             )
-            val remaining = stage?.completion?.remainingMillis()
+            val remaining = presentation.userTimerRemainingMillis ?: stage?.completion?.remainingMillis()
             if (remaining != null) {
                 TimingValue(
-                    label = stringResource(R.string.label_remaining),
+                    label = stringResource(if (presentation.userTimer != null) R.string.label_brew_reminder
+                        else R.string.label_remaining),
                     value = formatDuration(remaining),
                     alignEnd = true,
                 )
@@ -708,7 +799,7 @@ private fun TimingValue(
 ) {
     Column(horizontalAlignment = if (alignEnd) Alignment.End else Alignment.Start) {
         Text(label, style = MaterialTheme.typography.labelMedium)
-        Text(value, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
+        Text(value, style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.SemiBold)
     }
 }
 
@@ -716,8 +807,6 @@ private fun TimingValue(
 private fun BrewSessionStageCard(
     stage: CurrentBrewStagePresentation,
     isDispatching: Boolean,
-    canManualAdvance: Boolean,
-    canFinish: Boolean,
     onDispatch: (SessionEvent) -> Unit,
 ) {
     Card(modifier = Modifier.fillMaxWidth()) {
@@ -762,11 +851,6 @@ private fun BrewSessionStageCard(
             when (val completion = stage.completion) {
                 BrewStageCompletionPresentation.Manual -> {
                     Text(stringResource(R.string.msg_brew_stage_manual))
-                    CompletionButton(
-                        enabled = canManualAdvance && !isDispatching,
-                        isFinal = canFinish,
-                        onDispatch = onDispatch,
-                    )
                 }
 
                 BrewStageCompletionPresentation.Immediate -> {
@@ -786,11 +870,6 @@ private fun BrewSessionStageCard(
                     Text(
                         text = stringResource(R.string.label_remaining) + ": " +
                             formatDuration(completion.maximumRemainingMillis),
-                    )
-                    CompletionButton(
-                        enabled = canManualAdvance && !isDispatching,
-                        isFinal = canFinish,
-                        onDispatch = onDispatch,
                     )
                 }
 
@@ -835,28 +914,6 @@ private fun BrewSessionStageCard(
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun CompletionButton(
-    enabled: Boolean,
-    isFinal: Boolean,
-    onDispatch: (SessionEvent) -> Unit,
-) {
-    Button(
-        enabled = enabled,
-        onClick = {
-            onDispatch(
-                if (isFinal) SessionEvent.Finish(newEventId()) else SessionEvent.ManualAdvance(newEventId()),
-            )
-        },
-    ) {
-        Text(
-            stringResource(
-                if (isFinal) R.string.action_finish else R.string.action_complete_step,
-            ),
-        )
     }
 }
 
@@ -959,82 +1016,6 @@ private fun StageSafetySeverity.icon() = when (this) {
     StageSafetySeverity.ADVICE -> Icons.Outlined.Info
 }
 
-internal enum class BrewSessionPrimaryAction {
-    START,
-    PAUSE,
-    RESUME,
-}
-
-internal fun primaryBrewSessionAction(
-    actions: BrewSessionActionAvailability,
-): BrewSessionPrimaryAction? = when {
-    actions.canStart -> BrewSessionPrimaryAction.START
-    actions.canPause -> BrewSessionPrimaryAction.PAUSE
-    actions.canResume -> BrewSessionPrimaryAction.RESUME
-    else -> null
-}
-
-@Composable
-private fun BrewSessionPrimaryActionBar(
-    action: BrewSessionPrimaryAction,
-    isDispatching: Boolean,
-    onDispatch: (SessionEvent) -> Unit,
-) {
-    val labelRes = when (action) {
-        BrewSessionPrimaryAction.START -> R.string.action_start_brewing
-        BrewSessionPrimaryAction.PAUSE -> R.string.action_pause
-        BrewSessionPrimaryAction.RESUME -> R.string.action_resume
-    }
-    val onClick = {
-        onDispatch(
-            when (action) {
-                BrewSessionPrimaryAction.START -> SessionEvent.Start(newEventId())
-                BrewSessionPrimaryAction.PAUSE -> SessionEvent.Pause(newEventId())
-                BrewSessionPrimaryAction.RESUME -> SessionEvent.Resume(newEventId())
-            },
-        )
-    }
-    val buttonModifier = Modifier
-        .fillMaxWidth()
-        .navigationBarsPadding()
-        .padding(horizontal = 20.dp, vertical = 12.dp)
-        .height(56.dp)
-
-    Surface(
-        color = MaterialTheme.colorScheme.surface,
-        tonalElevation = 3.dp,
-    ) {
-        if (action == BrewSessionPrimaryAction.PAUSE) {
-            OutlinedButton(
-                enabled = !isDispatching,
-                onClick = onClick,
-                modifier = buttonModifier,
-                shape = MaterialTheme.shapes.extraLarge,
-            ) {
-                Text(
-                    text = stringResource(labelRes),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold,
-                )
-            }
-        } else {
-            Button(
-                enabled = !isDispatching,
-                onClick = onClick,
-                modifier = buttonModifier,
-                shape = MaterialTheme.shapes.extraLarge,
-                colors = primaryActionButtonColors(),
-            ) {
-                Text(
-                    text = stringResource(labelRes),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold,
-                )
-            }
-        }
-    }
-}
-
 @Composable
 private fun BrewSessionSecondaryControls(
     presentation: ActiveBrewSessionPresentation.Available,
@@ -1042,12 +1023,20 @@ private fun BrewSessionSecondaryControls(
     onDispatch: (SessionEvent) -> Unit,
     onCancelRequest: () -> Unit,
 ) {
-    if (!presentation.actions.canSkip && !presentation.actions.canCancel) return
+    if (!presentation.actions.canPause && !presentation.actions.canSkip && !presentation.actions.canCancel) return
 
-    Row(
+    FlowRow(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
+        if (presentation.actions.canPause) {
+            TextButton(
+                enabled = !isDispatching,
+                onClick = { onDispatch(SessionEvent.Pause(newEventId())) },
+            ) {
+                Text(stringResource(R.string.action_pause_brew_clock))
+            }
+        }
         if (presentation.actions.canSkip) {
             TextButton(
                 enabled = !isDispatching,
@@ -1071,15 +1060,17 @@ private fun BrewSessionSecondaryControls(
 private fun CompletedBrewSession(
     completedLogId: Long?,
     onBack: () -> Unit,
+    timerOnly: Boolean = false,
 ) {
     Text(
         text = stringResource(
-            if (completedLogId == null) R.string.msg_brew_session_finishing else R.string.msg_brew_session_finished,
+            if (timerOnly) R.string.msg_brew_timer_ended
+            else if (completedLogId == null) R.string.msg_brew_session_finishing else R.string.msg_brew_session_finished,
         ),
         style = MaterialTheme.typography.headlineSmall,
         modifier = Modifier.semantics { heading() },
     )
-    if (completedLogId != null) {
+    if (completedLogId != null || timerOnly) {
         Button(onClick = onBack) {
             Text(stringResource(R.string.action_finish))
         }
@@ -1087,26 +1078,7 @@ private fun CompletedBrewSession(
 }
 
 @Composable
-private fun BrewStageAction.label(): String = stringResource(
-    when (this) {
-        BrewStageAction.PREPARE -> R.string.action_brew_prepare
-        BrewStageAction.RINSE -> R.string.action_brew_rinse
-        BrewStageAction.ADD_COFFEE -> R.string.action_brew_add_coffee
-        BrewStageAction.ADD_WATER -> R.string.action_brew_add_water
-        BrewStageAction.BLOOM -> R.string.action_brew_bloom
-        BrewStageAction.POUR -> R.string.action_brew_pour
-        BrewStageAction.AGITATE -> R.string.action_brew_agitate
-        BrewStageAction.STEEP -> R.string.action_brew_steep
-        BrewStageAction.RELEASE -> R.string.action_brew_release
-        BrewStageAction.PRESS -> R.string.action_brew_press
-        BrewStageAction.HEAT -> R.string.action_brew_heat
-        BrewStageAction.OBSERVE -> R.string.action_brew_observe
-        BrewStageAction.FILTER -> R.string.action_brew_filter
-        BrewStageAction.SERVE -> R.string.action_brew_serve
-        BrewStageAction.CLEAN_UP -> R.string.action_brew_clean_up
-        BrewStageAction.CUSTOM -> R.string.action_brew_custom
-    },
-)
+internal fun BrewStageAction.label(): String = stringResource(labelResource())
 
 private fun BrewStageCompletionPresentation.isAutomaticDeadlineReached(): Boolean = when (this) {
     is BrewStageCompletionPresentation.Countdown -> remainingMillis <= 0L
@@ -1127,19 +1099,22 @@ private fun StageActualInputKind.event(grams: Double): StageActualValue = when (
 }
 
 private fun StageSafetyMessage.messageRes(): Int = when {
-    code.contains("power_off") || code.contains("unplug") -> R.string.warning_brew_safety_power_off_unplug
+    code == "food_refrigerate_4c_during_steep" -> R.string.msg_cold_brew_refrigerated
+    code.containsAny("power_off", "unplug") -> R.string.warning_brew_safety_power_off_unplug
     code.contains("hot_outlet") -> R.string.warning_brew_safety_hot_outlet
     code.contains("gravity_brewer_no_pressure") -> R.string.warning_brew_safety_gravity_no_pressure
     code.contains("aeropress_standard_orientation") -> R.string.warning_brew_safety_aeropress_upright
     code.contains("aeropress_sturdy_vessel") -> R.string.warning_brew_safety_aeropress_press
-    code.contains("open_flame") || code.contains("unattended") -> R.string.warning_brew_safety_open_flame
-    code.contains("hot_metal") || code.contains("hot_glass") -> R.string.warning_brew_safety_hot_metal
-    code.contains("overflow") || code.contains("boil_over") -> R.string.warning_brew_safety_overflow
-    code.contains("stable") || code.contains("stability") -> R.string.warning_brew_safety_stability
-    code.contains("food") || code.contains("refriger") -> R.string.warning_brew_safety_food_storage
-    code.contains("hot_liquid") || code.contains("burn") -> R.string.warning_brew_safety_hot_liquid
+    code.containsAny("open_flame", "unattended") -> R.string.warning_brew_safety_open_flame
+    code.containsAny("hot_metal", "hot_glass") -> R.string.warning_brew_safety_hot_metal
+    code.containsAny("overflow", "boil_over") -> R.string.warning_brew_safety_overflow
+    code.containsAny("stable", "stability") -> R.string.warning_brew_safety_stability
+    code.containsAny("food", "refriger") -> R.string.warning_brew_safety_food_storage
+    code.containsAny("hot_liquid", "burn") -> R.string.warning_brew_safety_hot_liquid
     else -> R.string.warning_brew_safety_generic
 }
+
+private fun String.containsAny(vararg fragments: String): Boolean = fragments.any(::contains)
 
 internal fun shouldOfferPictureInPicture(
     presentation: ActiveBrewSessionPresentation.Available,
@@ -1166,7 +1141,9 @@ private tailrec fun Context.findActivity(): Activity? = when (this) {
 
 private fun formatDuration(millis: Long): String {
     val seconds = (millis.coerceAtLeast(0L) / MILLIS_PER_SECOND).coerceAtMost(Int.MAX_VALUE.toLong())
-    return String.format(Locale.getDefault(), "%d:%02d", seconds / SECONDS_PER_MINUTE, seconds % SECONDS_PER_MINUTE)
+    return if (seconds >= 3_600L) String.format(Locale.getDefault(), "%d:%02d:%02d", seconds / 3_600L,
+        seconds % 3_600L / SECONDS_PER_MINUTE, seconds % SECONDS_PER_MINUTE)
+    else String.format(Locale.getDefault(), "%d:%02d", seconds / SECONDS_PER_MINUTE, seconds % SECONDS_PER_MINUTE)
 }
 
 private fun newEventId(): SessionEventId = SessionEventId("ui:${UUID.randomUUID()}")

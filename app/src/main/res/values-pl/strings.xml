@@ -104,11 +104,8 @@
     <string name="label_increase">Zwiększ %1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Przygotuj parzenie</string>
 <string name="action_ready_to_brew_short">Gotowe do parzenia</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Przygotowanie</string>
-    <string name="label_recipe_heading">Przepis</string>
     <string name="label_temp_short">Temp.</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Zwilż papierowy filtr w podstawie (zawór otwarty) i pozwól wodzie spłynąć. Zamontuj cylinder, wsyp kawę, wyrównaj złoże, załóż pokrywkę dyspersyjną. Wytaruj wagę.</string>
@@ -118,8 +115,6 @@
     <string name="prep_tip_french_press">Rozgrzej French Press, potem wylej wodę. Wsyp kawę, postaw na wadze i wytaruj przed dodaniem wody.</string>
     <string name="prep_tip_espresso">Wytrzyj kolbę do sucha. Odmierz dawkę, rozprowadź ją równo i ubij poziomo przed zapięciem.</string>
     <string name="prep_tip_moka">Napełnij dolną komorę do zaworu. Wsyp kawę do sitka, wyrównaj — nie ubijaj. Ostrożnie skręć kawiarkę.</string>
-    <string name="format_prep_grind_specific">Zmiel %1$s — ustaw %2$s na %3$s</string>
-    <string name="format_prep_grind_generic">Zmiel %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Wstrzymaj</string>
@@ -152,7 +147,6 @@
     <string name="label_cup_presets">Presety filiżanek</string>
     <string name="action_add_preset">Dodaj preset</string>
     <string name="action_reset_defaults">Przywróć domyślne</string>
-    <string name="msg_presets_hint">Presety pojawiają się jako szybkie przyciski w kalkulatorze</string>
     <string name="label_brew_methods">Metody parzenia</string>
     <string name="msg_methods_hint">Wybrane metody pojawiają się jako pierwsze. Dotknij, aby przełączyć.</string>
     <string name="label_default_method">Metoda domyślna</string>
@@ -169,9 +163,9 @@
     <string name="label_bloom_sprite_coffee_starlit">Starlit coffee</string>
     <string name="desc_bloom_sprite_coffee_starlit">Kremowo-złote płatki pary z drobnymi świetlistymi akcentami.</string>
     <string name="label_bloom_sprite_coffee_latte">Latte bloom</string>
-    <string name="desc_bloom_sprite_coffee_latte">Delikatna rozeta latte art w ciepłych tonach mlecznej pianki.</string>
+    <string name="desc_bloom_sprite_coffee_latte">Serce latte art rozwijające się w ciepłych odcieniach mlecznej pianki.</string>
     <string name="label_bloom_sprite_coffee_plant">Kawowiec</string>
-    <string name="desc_bloom_sprite_coffee_plant">Świeża zielona sadzonka kawowca z parzystymi liśćmi.</string>
+    <string name="desc_bloom_sprite_coffee_plant">Kawowiec rozwija błyszczące liście, a jego czerwone owoce dojrzewają.</string>
     <string name="label_bloom_sprite_cherry_tomato">Pomidor koktajlowy</string>
     <string name="desc_bloom_sprite_cherry_tomato">Ziarno kawy kiełkuje w pęd pomidora, na którym dojrzewają czerwone owoce.</string>
     <string name="label_bloom_sprite_strawberry">Truskawka</string>
@@ -438,15 +432,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">Otwórz Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">Wymaga Androida 12 lub nowszego.</string>
     <string name="label_ai_service">Usługa AI (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Pobierz Mindlayer z Google Play</string>
-    <string name="msg_mindlayer_install_recommendation">Zainstaluj Mindlayer z Google Play, aby odczytywać etykiety opakowań kawy przy użyciu prywatnej AI na urządzeniu. Możesz to zrobić później w Ustawieniach.</string>
     <string name="action_test_connection">Przetestuj połączenie</string>
     <string name="action_run_test_prompt">Uruchom prompt testowy</string>
     <string name="label_testing">Testowanie…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">Włącz AI</string>
     <string name="consent_requesting">Prośba o dostęp do AI…</string>
     <string name="consent_granted">AI włączona</string>
     <string name="consent_already_approved">AI jest już włączona</string>
@@ -535,7 +529,6 @@
     <string name="label_volume_ml">Objętość (ml)</string>
     <string name="msg_dose_from_ratio">Dawka kawy jest obliczana z proporcji</string>
     <string name="label_icon">Ikona</string>
-    <string name="label_color">Kolor</string>
     <string name="action_add">Dodaj</string>
     <string name="screen_add_cup_preset_title">Dodaj preset filiżanki</string>
     <string name="screen_edit_cup_preset_title">Edytuj preset filiżanki</string>
@@ -667,10 +660,10 @@
     <string name="msg_cup_preset_reset_failed">Nie udało się zresetować profili filiżanek. Spróbuj ponownie.</string>
     <string name="msg_reset_cup_presets">Zastąpić wszystkie profile filiżanek domyślnymi?</string>
     <string name="msg_diagnostic_clear_failed">Nie udało się wyczyścić wszystkich danych diagnostycznych. Spróbuj ponownie.</string>
-    <string name="msg_clear_diagnostics">Wyczyścić wszystkie zapisane sesje skanowania i przebiegi LLM?</string>
+    <string name="msg_clear_diagnostics">Wyczyścić wszystkie zapisane sesje skanowania?</string>
     <string name="label_log_scan_corrections">Rejestruj poprawki skanowania (na urządzeniu)</string>
     <string name="msg_log_scan_corrections">Tylko na tym urządzeniu zapisuje to, co wyodrębniła AI i co zapisano. Nic nie jest przesyłane.</string>
-    <string name="format_scan_debug_counts">Sesje: %1$d · Przebiegi LLM: %2$d</string>
+    <string name="format_scan_debug_counts">Sesje: %1$d</string>
     <string name="format_scan_session_subject">Sesja skanowania: %1$s</string>
     <string name="action_share_scan_session">Udostępnij sesję skanowania</string>
 
@@ -736,4 +729,25 @@
     <string name="msg_learning_subtitle">Ilustrowane instrukcje parzenia krok po kroku</string>
     <string name="action_show_details">Pokaż szczegóły</string>
     <string name="action_hide_details">Ukryj szczegóły</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Wyniki ponownego skanowania</string>
+    <string name="title_rescan_no_changes">Nie znaleziono zmian</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">Zmieniono %1$d pole:</item>
+        <item quantity="few">Zmieniono %1$d pola:</item>
+        <item quantity="many">Zmieniono %1$d pól:</item>
+        <item quantity="other">Zmieniono %1$d pola:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Nie znaleziono jeszcze zmian.</string>
+    <string name="msg_rescan_incomplete">Sprawdź znalezione dane lub spróbuj rozpoznawania ponownie.</string>
+    <string name="action_update_bag_so_far">Aktualizuj bieżącymi wynikami</string>
+    <string name="action_new_bag_so_far">Nowa paczka z bieżącymi wynikami</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Otwieranie konfiguracji…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Nie udało się otworzyć konfiguracji. Spróbuj ponownie lub wprowadź szczegóły ręcznie.</string>
+    <string name="announce_label_details_ready">Szczegóły z etykiety są gotowe do sprawdzenia.</string>
+    <string name="announce_label_recognition_no_result">Nie znaleziono szczegółów na etykiecie. Wprowadź je ręcznie.</string>
+    <string name="label_show_cup_presets">Pokaż w kalkulatorze</string>
+    <string name="cd_cup_preset_options">Opcje ustawień filiżanek</string>
 </resources>

@@ -48,19 +48,24 @@ class LongBrewCompletionWorker(
 
         return try {
             val runtime = BrewSessionRuntime.create(applicationContext)
-            val durableDeadline = runtime.scheduledDeadline(request.sessionId)
+            val durableDeadline = runtime.scheduledDeadline(request.sessionId, request.scheduleToken)
             if (deadlineWorkDisposition(request, durableDeadline) == DeadlineWorkDisposition.STALE) {
                 return Result.success()
             }
+            if (System.currentTimeMillis() < request.dueAtWallClockMillis) return Result.retry()
 
             // The event ID derives from the durable scheduling effect, so a
             // process death after persistence cannot advance this deadline twice.
-            runtime.coordinator.dispatch(
+            runtime.coordinator.reconcileDeadline(
                 sessionId = request.sessionId,
-                event = SessionEvent.Reconcile(
-                    eventId = SessionEventId("work:${request.effectId.value}"),
-                ),
+                stageInstanceKey = request.stageInstanceId.persistentKey,
+                scheduleToken = request.scheduleToken,
+                dueAtWallClockMillis = request.dueAtWallClockMillis,
+                eventId = SessionEventId("deadline:${request.effectId.value}"),
             )
+            // Stage progression changes the ongoing action/deadline too. Restore once more so
+            // a concurrent completion or cancellation withdraws a stale status instead.
+            runtime.publishBackgroundStatus(request.sessionId)
             // A current session can become unavailable or concurrently move
             // between the indexed check and dispatch. Both are stale work, not
             // a reason to retry an otherwise valid prompt.

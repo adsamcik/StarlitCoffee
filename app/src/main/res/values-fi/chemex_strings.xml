@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_tip_chemex">Käytä keittimeesi sopivaa Chemex-paperisuodatinta. Aseta kolme kerrosta kaatonokan puolelle, huuhtele kuumalla vedellä ja kaada huuhteluvesi pois. Lisää keskikarkeaksi jauhettu kahvi ja taaraa vaaka. Pidä ilmakanava avoinna.</string>
+    <string name="instruction_chemex_bloom">Kastele kaikki kahvi esiuuton vedellä ja odota esiuuton loppuun.</string>
+    <string name="instruction_chemex_pour">Kaada rauhallisesti veden kokonaismäärään asti. Anna pinnan laskea kaatojen välillä ja pidä se reunan alapuolella.</string>
+    <string name="instruction_chemex_drawdown">Odota, että vesi valuu kahvipedistä. Poista suodatin, pyöräytä varovasti ja tarjoile kauluksesta tai kahvasta pitäen.</string>
+    <string name="label_filter_chemex_bonded">Chemex-paperisuodatin</string>
+</resources>

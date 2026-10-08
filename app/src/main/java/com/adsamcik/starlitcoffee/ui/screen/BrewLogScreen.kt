@@ -69,7 +69,8 @@ import com.adsamcik.starlitcoffee.ui.component.BrewRatingBadge
 import com.adsamcik.starlitcoffee.ui.component.SwipeToDismissCard
 import com.adsamcik.starlitcoffee.ui.component.normalizedForCounts
 import com.adsamcik.starlitcoffee.ui.adaptive.LocalWindowWidthClass
-import com.adsamcik.starlitcoffee.ui.component.iconForMethod
+import com.adsamcik.starlitcoffee.ui.component.EquipmentIcon
+import com.adsamcik.starlitcoffee.ui.component.EquipmentVisual
 import com.adsamcik.starlitcoffee.ui.util.emoji
 import com.adsamcik.starlitcoffee.ui.util.displayNameRes
 import com.adsamcik.starlitcoffee.ui.util.localizedDisplayName
@@ -550,7 +551,7 @@ private fun BrewLogStatsRow(log: BrewLogEntity) {
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         InsightChip(
-            label = stringResource(
+            label = log.reviewedRecipe()?.let { reviewedBrewLogQuantityLabel(it) } ?: stringResource(
                 R.string.format_dose_water_ratio,
                 log.doseG,
                 log.waterG,
@@ -582,11 +583,8 @@ private fun MethodAvatar(method: BrewMethod?, accent: RatingAccent) {
         modifier = Modifier.size(48.dp),
     ) {
         Box(contentAlignment = Alignment.Center) {
-            Icon(
-                imageVector = method?.let { iconForMethod(it) } ?: Icons.Filled.History,
-                contentDescription = null,
-                modifier = Modifier.size(24.dp),
-            )
+            if (method != null) EquipmentIcon(EquipmentVisual.method(method), Modifier.size(24.dp))
+            else Icon(Icons.Filled.History, null, Modifier.size(24.dp))
         }
     }
 }

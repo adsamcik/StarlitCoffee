@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_active_brews">Käynnissä olevat valmistukset</string>
+    <string name="label_brew_activity_ready">Valmis aloittamaan</string>
+    <string name="label_brew_activity_paused">Ajastin tauolla</string>
+    <string name="label_brew_activity_save">Tallennetaan valmistusta</string>
+    <string name="label_brew_activity_timing_reached">Aikatavoite saavutettu</string>
+    <string name="format_brew_activity_elapsed">Kulunut %1$s</string>
+    <string name="format_brew_activity_time_left">Jäljellä %1$s</string>
+    <string name="format_brew_activity_hours">%1$d h %2$d min</string>
+    <string name="format_brew_activity_minutes">%1$d:%2$02d</string>
+    <string name="cd_open_active_brew">Avaa %1$s. %2$s</string>
+    <string name="cd_choose_active_brews">Valitse valmistus. Käynnissä: %3$d. %1$s. %2$s</string>
+</resources>

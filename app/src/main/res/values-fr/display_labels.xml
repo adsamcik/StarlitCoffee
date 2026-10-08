@@ -3,6 +3,7 @@
     <string-array name="brew_method_names">
         <item>Pulsar</item><item>V60</item><item>Cafetière à piston</item><item>AeroPress</item>
         <item>Espresso</item><item>Cafetière moka</item><item>Infusion à froid</item>
+        <item>Chemex</item>
     </string-array>
     <string-array name="filter_type_names"><item>Papier</item><item>19K</item><item>40K</item></string-array>
     <string-array name="filter_cup_profiles">
@@ -18,10 +19,5 @@
         <item>Verseuse ruche</item><item>Verseuse barista</item><item>Verseuse angulaire</item>
         <item>Verre à cortado facetté</item><item>Bol à latte en céramique</item>
         <item>Carafe isotherme</item><item>Cafetière à piston double paroi</item>
-    </string-array>
-    <string-array name="preset_color_labels">
-        <item>Par défaut</item><item>Marron</item><item>Chocolat</item><item>Pérou</item>
-        <item>Bleu acier</item><item>Vert marin</item><item>Violet</item><item>Cramoisi</item>
-        <item>Orange</item><item>Ardoise</item>
     </string-array>
 </resources>

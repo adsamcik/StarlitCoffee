@@ -104,11 +104,8 @@
     <string name="label_increase">Povečajte %1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Pripravite se na kuhanje</string>
     <string name="action_ready_to_brew_short">Začnite kuhanje</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Priprava</string>
-    <string name="label_recipe_heading">Recept</string>
     <string name="label_temp_short">Temp.</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Zmočite papirnati filter v osnovi (ventil odprt) in odcedite. Namestite valj, dodajte mleto kavo, poravnajte plast, namestite razpršilni pokrovček. Tarirajte tehtnico.</string>
@@ -118,8 +115,6 @@
     <string name="prep_tip_french_press">Ogrejte posodo in jo nato izpraznite. Dodajte mleto kavo, postavite na tehtnico in tarirajte, preden dolijete vodo.</string>
     <string name="prep_tip_espresso">Obrišite ročko do suhega. Odmerite, porazdelite in enakomerno potlačite, preden jo vpnete.</string>
     <string name="prep_tip_moka">Napolnite spodnji del do ventila. Košarico napolnite z mleto kavo, poravnajte — ne tlačite. Previdno sestavite.</string>
-    <string name="format_prep_grind_specific">Mletje %1$s — nastavite %2$s na %3$s</string>
-    <string name="format_prep_grind_generic">Mletje %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Premor</string>
@@ -152,7 +147,6 @@
     <string name="label_cup_presets">Prednastavitve skodelic</string>
     <string name="action_add_preset">Dodajte prednastavitev</string>
     <string name="action_reset_defaults">Ponastavite na privzeto</string>
-    <string name="msg_presets_hint">Prednastavitve se prikažejo kot hitri gumbi v kalkulatorju</string>
     <string name="label_brew_methods">Metode priprave</string>
     <string name="msg_methods_hint">Izbrane metode so prikazane najprej. Tapnite za preklop.</string>
     <string name="label_default_method">Privzeta metoda</string>
@@ -169,9 +163,9 @@
     <string name="label_bloom_sprite_coffee_starlit">Zvezdnata kava</string>
     <string name="desc_bloom_sprite_coffee_starlit">Kremno-zlati listi pare z drobnimi zvezdnatimi odsevi.</string>
     <string name="label_bloom_sprite_coffee_latte">Latte bloom</string>
-    <string name="desc_bloom_sprite_coffee_latte">Mehka rozeta latte arta v toplih tonih mlečne pene.</string>
+    <string name="desc_bloom_sprite_coffee_latte">Srce latte arta, ki se odpira v toplih tonih mlečne pene.</string>
     <string name="label_bloom_sprite_coffee_plant">Kavovec</string>
-    <string name="desc_bloom_sprite_coffee_plant">Sveža zelena sadika kavovca s parnimi listi.</string>
+    <string name="desc_bloom_sprite_coffee_plant">Kavovec razpira sijoče liste, medtem ko njegovi rdeči plodovi zorijo.</string>
     <string name="label_bloom_sprite_cherry_tomato">Češnjev paradižnik</string>
     <string name="desc_bloom_sprite_cherry_tomato">Kavno zrno vzklije v paradižnikovo steblo, medtem ko dozorevajo rdeči plodovi.</string>
     <string name="label_bloom_sprite_strawberry">Jagoda</string>
@@ -439,15 +433,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">Odpri Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">Zahteva Android 12 ali novejši.</string>
     <string name="label_ai_service">Storitev AI (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Prenesite Mindlayer iz Google Play</string>
-    <string name="msg_mindlayer_install_recommendation">Namestite Mindlayer iz Google Play za branje etiket kavnih pakiranj z zasebno umetno inteligenco v napravi. To lahko storite pozneje v Nastavitvah.</string>
     <string name="action_test_connection">Preizkusite povezavo</string>
     <string name="action_run_test_prompt">Zaženite preizkusni poziv</string>
     <string name="label_testing">Preizkušanje…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">Omogočite AI</string>
     <string name="consent_requesting">Zahtevanje dostopa do AI…</string>
     <string name="consent_granted">AI omogočen</string>
     <string name="consent_already_approved">AI je že omogočen</string>
@@ -536,7 +530,6 @@
     <string name="label_volume_ml">Prostornina (ml)</string>
     <string name="msg_dose_from_ratio">Odmerek kave se izračuna iz vašega razmerja</string>
     <string name="label_icon">Ikona</string>
-    <string name="label_color">Barva</string>
     <string name="action_add">Dodajte</string>
     <string name="screen_add_cup_preset_title">Dodajanje prednastavitve skodelice</string>
     <string name="screen_edit_cup_preset_title">Urejanje prednastavitve skodelice</string>
@@ -668,10 +661,10 @@
     <string name="msg_cup_preset_reset_failed">Profilov skodelic ni bilo mogoče ponastaviti. Poskusite znova.</string>
     <string name="msg_reset_cup_presets">Zamenjam vse profile skodelic s privzetimi?</string>
     <string name="msg_diagnostic_clear_failed">Vseh diagnostičnih podatkov ni bilo mogoče izbrisati. Poskusite znova.</string>
-    <string name="msg_clear_diagnostics">Izbrišem vse shranjene seje skeniranja in prehode LLM?</string>
+    <string name="msg_clear_diagnostics">Izbrišem vse shranjene seje skeniranja?</string>
     <string name="label_log_scan_corrections">Beleži popravke skeniranja (v napravi)</string>
     <string name="msg_log_scan_corrections">Samo v tej napravi zabeleži, kaj je izluščila AI in kaj ste shranili. Nič se ne naloži.</string>
-    <string name="format_scan_debug_counts">Seje: %1$d · Prehodi LLM: %2$d</string>
+    <string name="format_scan_debug_counts">Seje: %1$d</string>
     <string name="format_scan_session_subject">Seja skeniranja: %1$s</string>
     <string name="action_share_scan_session">Deli sejo skeniranja</string>
 
@@ -737,4 +730,25 @@
     <string name="msg_learning_subtitle">Slikovni vodniki za pripravo po korakih</string>
     <string name="action_show_details">Pokaži podrobnosti</string>
     <string name="action_hide_details">Skrij podrobnosti</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Rezultati ponovnega skeniranja</string>
+    <string name="title_rescan_no_changes">Ni najdenih sprememb</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">Spremenjeno %1$d polje:</item>
+        <item quantity="two">Spremenjeni %1$d polji:</item>
+        <item quantity="few">Spremenjena %1$d polja:</item>
+        <item quantity="other">Spremenjenih %1$d polj:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Za zdaj ni najdenih sprememb.</string>
+    <string name="msg_rescan_incomplete">Preglejte že najdene podatke ali poskusite prepoznavanje znova.</string>
+    <string name="action_update_bag_so_far">Posodobi s trenutnimi rezultati</string>
+    <string name="action_new_bag_so_far">Nova vrečka s trenutnimi rezultati</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Odpiranje nastavitve …</string>
+    <string name="msg_could_not_open_label_recognition_setup">Nastavitve ni bilo mogoče odpreti. Poskusite znova ali vnesite podrobnosti ročno.</string>
+    <string name="announce_label_details_ready">Podrobnosti z oznake so pripravljene za pregled.</string>
+    <string name="announce_label_recognition_no_result">Na oznaki ni bilo najdenih podrobnosti. Vnesite jih ročno.</string>
+    <string name="label_show_cup_presets">Prikaži v kalkulatorju</string>
+    <string name="cd_cup_preset_options">Možnosti prednastavitev skodelic</string>
 </resources>

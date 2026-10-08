@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_set_name_optional">Ime (neobvezno)</string>
+    <string name="label_starting_recipe">Začetni recept</string>
+    <string name="label_starting_amount">Začetna količina</string>
+    <string name="msg_brewing_set_recipe_invalid">Vnesite pozitivno razmerje in količino ali pustite količino prazno.</string>
+    <string name="msg_brewing_sets_onboarding">Izberite opremo. Dodajte komplete za dom ali službo in izberite, kateri se odpre prvi.</string>
+    <string name="action_create_brewing_set">Ustvari komplet</string>
+    <string name="cd_brewing_set_options">Možnosti za %1$s</string>
+    <string name="msg_saved_brewing_calculation">Shranjeni izračun: %1$s. Vnesite količino, da ga zamenjate.</string>
+</resources>

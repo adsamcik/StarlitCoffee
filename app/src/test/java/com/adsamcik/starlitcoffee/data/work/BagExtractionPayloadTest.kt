@@ -19,6 +19,37 @@ import org.junit.Test
 
 class BagExtractionPayloadTest {
     @Test
+    fun `legacy unavailable payload remains temporary rather than becoming authorization`() {
+        val decoded = decodeBagExtractionResult("""{"llmStatus":"UNAVAILABLE"}""")
+
+        assertEquals(LlmEnrichmentStatus.UNAVAILABLE, decoded.llmStatus)
+    }
+
+    @Test
+    fun `recovery statuses survive stored progress and bounded work payloads`() {
+        val largeValue = "á".repeat(1_000)
+        LlmEnrichmentStatus.entries.forEach { status ->
+            val result = BagPhotoProcessingResult(
+                fieldEvidence = (1..14).associate { index ->
+                    "field$index" to BagFieldEvidence(
+                        fieldName = "field$index",
+                        value = largeValue,
+                        rawValue = largeValue,
+                        canonicalKey = largeValue,
+                        sourceType = BagFieldSourceType.OCR,
+                        confidence = BagFieldConfidence.MEDIUM,
+                    )
+                },
+                llmStatus = status,
+            )
+
+            assertEquals(status, decodeBagExtractionResult(result.encodeToStoredJson()).llmStatus)
+            assertEquals(status, decodeBagExtractionResult(result.encodeToJson()).llmStatus)
+            assertEquals(status, decodeBagExtractionResult(requireNotNull(result.encodeForProgressJson())).llmStatus)
+        }
+    }
+
+    @Test
     fun `rescan review context round trips target and mode`() {
         val context = BagReviewContext.rescan(targetBagId = 42L)
 

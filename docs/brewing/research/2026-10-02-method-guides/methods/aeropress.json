@@ -1,0 +1,578 @@
+{
+  "method_id": "aeropress",
+  "title": "AeroPress upright brewing guide",
+  "scope": "Tim Wendelboe light-roast recipe on AeroPress Original or Clear, upright with standard perforated cap and Standard paper filter; Go, XL, cap, filter and concentrate differences are separate variants.",
+  "research_date": "2026-10-02",
+  "review_status": "editorially_reviewed",
+  "physical_brew_tested": false,
+  "sources": [
+    {
+      "id": "wendelboe",
+      "title": "How to brew with an Aeropress",
+      "url": "https://timwendelboe.no/pages/how-to-brew-with-an-aeropress",
+      "author_or_organization": "Tim Wendelboe",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "14 g light-roast coffee, fine filter grind, 200 g boiling water",
+        "Three initial stirs, sealed 60-second steep, three further back-to-front stirs, then press without overpressing",
+        "No fixed press duration or exact final drink mass is stated"
+      ]
+    },
+    {
+      "id": "maker_howto",
+      "title": "How To Use AeroPress",
+      "url": "https://aeropress.com/pages/how-to-use",
+      "author_or_organization": "AeroPress",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Shallow plunger insertion and slight lift to stop passive draining",
+        "Current model-specific marked-fill recipes with 85 C water and 30-second medium-fine or 60-second pre-ground waits",
+        "Gentle pressing and hot-cap cleanup"
+      ]
+    },
+    {
+      "id": "maker_faq",
+      "title": "FAQs For The AeroPress Coffee Maker",
+      "url": "https://aeropress.com/pages/faq",
+      "author_or_organization": "AeroPress",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Standard versus XL metal-filter compatibility and paper-versus-metal oil filtration",
+        "Original/Clear may use sturdy glass; Original XL and Clear XL must not press into any glass vessel",
+        "Go drinking mug volume differs from brewing capacity",
+        "80 C dark-roast and 85 C medium/light-roast recommendations are maker taste preferences, not universal requirements",
+        "A little drip-through is normal; excessive drip-through warrants checking bed leveling and grind"
+      ]
+    },
+    {
+      "id": "maker_go",
+      "title": "AeroPress Coffee Maker - Go",
+      "url": "https://aeropress.com/products/aeropress-go-travel-coffee-press",
+      "author_or_organization": "AeroPress",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Go advertised brewing capacity 8 oz, Standard filters, smaller model than Original/Clear",
+        "Product comparison lists Original/Clear at 10 oz",
+        "Sturdy vessel, cleaning, seal-uncompressed storage"
+      ]
+    },
+    {
+      "id": "maker_xl",
+      "title": "AeroPress Coffee Maker - Original XL",
+      "url": "https://aeropress.com/products/aeropress-coffee-maker-xl",
+      "author_or_organization": "AeroPress",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "20 oz advertised capacity and supplied Tritan carafe",
+        "XL filters and equipment-specific size"
+      ]
+    },
+    {
+      "id": "standard_cap",
+      "title": "AeroPress Flow Control Filter Cap - Standard",
+      "url": "https://aeropress.com/products/aeropress-flow-control-filter-cap",
+      "author_or_organization": "AeroPress",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Pressure-actuated valve prevents passive drip-through",
+        "Fits Original, Clear, Go and other Standard brewers, not XL",
+        "Requires Standard paper, metal or both filters",
+        "Espresso-style concentrate is not real espresso"
+      ]
+    },
+    {
+      "id": "xl_cap",
+      "title": "AeroPress Variable Flow Control Cap - XL",
+      "url": "https://aeropress.com/products/aeropress-flow-control-filter-cap-xl",
+      "author_or_organization": "AeroPress",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Fits Original XL and Clear XL, not Standard brewers",
+        "Requires XL paper, metal or both filters",
+        "Adjustable restriction disk differs from pressure-actuated Standard valve",
+        "Always move tab to Open before pressing"
+      ]
+    },
+    {
+      "id": "inversion_caution",
+      "title": "I have heard of people using an inverted method. Why do they use it?",
+      "url": "https://help.aeropress.com/en-US/i-have-heard-of-people-using-an-%22inverted-method%22-why-do-they-use-it-123217",
+      "author_or_organization": "AeroPress",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Maker strongly discourages inversion because unstable setup can spill hot liquid and burn the user",
+        "Upright shallow plunger sealing is a recommended alternative"
+      ]
+    },
+    {
+      "id": "press_help",
+      "title": "Am I doing something wrong if it is hard to press?",
+      "url": "https://help.aeropress.com/en-US/am-i-doing-something-wrong-if-it-is-hard-to-press-123207",
+      "author_or_organization": "AeroPress",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Fines obstruct the coffee bed; hard pressing compacts it",
+        "Gentle pressing, pauses and coarser grind troubleshooting",
+        "20-40 seconds is a gentle-press reference, not a Wendelboe recipe deadline"
+      ]
+    },
+    {
+      "id": "hiss_help",
+      "title": "What is that hissing sound when I press?",
+      "url": "https://help.aeropress.com/en-US/what-is-that-hissing-sound-when-i-press-141582",
+      "author_or_organization": "AeroPress",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Hiss is air passing through after liquid; its audibility depends on trapped air and chamber fill"
+      ]
+    },
+    {
+      "id": "wac_2019",
+      "title": "World AeroPress Champion Coffee Recipes - 2019 Wendelien van Bunnik",
+      "url": "https://aeropress.com/pages/wac-recipes",
+      "author_or_organization": "Wendelien van Bunnik, published by AeroPress",
+      "source_type": "original_creator",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Historical advanced inverted recipe: 30 g coffee, 100 g extraction water at 92 C, roughly 60 g concentrate",
+        "Water added to taste after extraction; creator reports 120 g dilution",
+        "Concentrate plus dilution differs from extraction water plus dilution"
+      ]
+    },
+    {
+      "id": "ode_gen2",
+      "title": "What are the recommended grind settings for Ode Gen 2 Brew Burrs?",
+      "url": "https://help.fellowproducts.com/hc/en-us/articles/9962302561819-What-are-the-recommended-grind-settings-for-Ode-Gen-2-Brew-Burrs",
+      "author_or_organization": "Fellow",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Linked Gen 2 Brew Burr dial chart visually inspected in browser: AeroPress band 3-6",
+        "Chart is burr-specific; does not publish app-selected setting 4 as universally optimal"
+      ]
+    },
+    {
+      "id": "encore_esp",
+      "title": "Encore ESP Operations Manual, January 2023 v1.0, printed page 5",
+      "url": "https://assets.breville.com/ZCG495/manual-encoreesp-v1-0-en-010923.pdf",
+      "author_or_organization": "Baratza",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Encore ESP AeroPress suggested starting setting 22; recipe and taste may require adjustment",
+        "Encore ESP setting is not interchangeable with ordinary Encore settings"
+      ]
+    }
+  ],
+  "recipe": {
+    "name": "Tim Wendelboe upright light-roast 14 g / 200 g",
+    "provenance": "published_recipe",
+    "source_ids": [
+      "wendelboe",
+      "maker_howto",
+      "press_help",
+      "hiss_help"
+    ],
+    "equipment": [
+      "AeroPress Original or Clear",
+      "Standard perforated cap",
+      "Standard paper disc",
+      "Sturdy stable mug or server",
+      "Burr grinder",
+      "Gram scale",
+      "Kettle",
+      "Timer",
+      "Stirrer"
+    ],
+    "coffee_dose_g": 14,
+    "brew_water_g": 200,
+    "brew_water_ml": null,
+    "ice_g": 0,
+    "dilution_water_g": 0,
+    "target_beverage_g": null,
+    "ratio_basis": "brew_water_input",
+    "ratio_value": 14.2857142857,
+    "water_temperature_c": {
+      "min": null,
+      "max": null,
+      "control": "freshly_boiling_at_local_boiling_point"
+    },
+    "grind_description": "Fine filter grind for light roast; no universal grinder number",
+    "expected_time_s": {
+      "min": null,
+      "max": null,
+      "clock_start": "Plunger seated after initial pour and three stirs; steep timer zero",
+      "clock_end": "Gentle pressing complete after 60-second sealed steep and second three stirs; press time unspecified"
+    },
+    "sealed_steep_duration_s": 60,
+    "press_duration_s": null,
+    "completion_signal": "Liquid finishes passing through and air hisses; finish gently without forcing the puck. A nearly full chamber can produce little audible hiss.",
+    "scaling": "revalidate_batch_size",
+    "steps": [
+      {
+        "id": "prepare",
+        "instruction": "Rinse a Standard paper filter; fit and lock cap. Stand upright on sturdy mug and add 14 g coffee.",
+        "why": "Secure support and correct filtration",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Flat filter, locked cap and stable setup; rinse discarded",
+        "source_ids": [
+          "wendelboe",
+          "maker_howto",
+          "maker_faq"
+        ]
+      },
+      {
+        "id": "pour",
+        "instruction": "Tare and pour 200 g freshly boiling water onto coffee.",
+        "why": "Measured extraction input",
+        "water_add_g": 200,
+        "water_cumulative_g": 200,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Scale shows 200 g added; small initial drip-through allowed",
+        "source_ids": [
+          "wendelboe",
+          "maker_faq"
+        ]
+      },
+      {
+        "id": "stir",
+        "instruction": "Stir three times.",
+        "why": "Wet and mix grounds",
+        "water_add_g": null,
+        "water_cumulative_g": 200,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Three stirs complete",
+        "source_ids": [
+          "wendelboe"
+        ]
+      },
+      {
+        "id": "seal_steep",
+        "instruction": "Seat the plunger shallowly, about half an inch; lift slightly if needed without unseating. Start the timer and steep 60 seconds.",
+        "why": "Limit draining while steeping",
+        "water_add_g": null,
+        "water_cumulative_g": 200,
+        "start_s": 0,
+        "duration_s": 60,
+        "completion": "60 seconds after sealing",
+        "source_ids": [
+          "wendelboe",
+          "maker_howto",
+          "inversion_caution"
+        ]
+      },
+      {
+        "id": "restir",
+        "instruction": "Carefully remove plunger, stir three times back to front and reinsert.",
+        "why": "Complete creator's agitation sequence",
+        "water_add_g": null,
+        "water_cumulative_g": 200,
+        "start_s": 60,
+        "duration_s": null,
+        "completion": "Three further stirs complete and plunger seated",
+        "source_ids": [
+          "wendelboe"
+        ]
+      },
+      {
+        "id": "press",
+        "instruction": "Press gently and steadily on stable support; keep hands clear and do not force the puck.",
+        "why": "Controlled separation through filter",
+        "water_add_g": null,
+        "water_cumulative_g": 200,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Liquid ends and trapped air passes through; hiss can be faint",
+        "source_ids": [
+          "wendelboe",
+          "maker_howto",
+          "press_help",
+          "hiss_help"
+        ]
+      },
+      {
+        "id": "cleanup",
+        "instruction": "Safely remove hot cap, eject grounds and filter over a bin, rinse and store seal uncompressed.",
+        "why": "Remove residue and avoid prolonged seal compression",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Clean parts stored without compressing seal",
+        "source_ids": [
+          "maker_howto",
+          "maker_go"
+        ]
+      }
+    ]
+  },
+  "variants": [
+    {
+      "name": "Current maker Original/Clear signature",
+      "how_it_differs": "16-18 g medium-fine coffee, 85 C, fill to mark 4, stir about 3 s and wait 30 s after sealing. Medium pre-ground waits 60 s. Fill mark has no verified gram quantity here.",
+      "source_ids": [
+        "maker_howto"
+      ]
+    },
+    {
+      "name": "Go",
+      "how_it_differs": "Smaller brewer uses Standard filters; advertised brewing serving is 8 US fl oz while carrying mug holds 15 oz. Use Go instructions and headroom, not the Original 250 g app limit. Current medium-fine maker recipe is 12-14 g and mark 3.",
+      "source_ids": [
+        "maker_go",
+        "maker_howto",
+        "maker_faq"
+      ]
+    },
+    {
+      "name": "Original XL or Clear XL",
+      "how_it_differs": "XL filter family and different cap required. Original XL advertised volume is 20 oz; do not infer 20 oz of chamber brew water with grounds present. Use non-glass receiving vessel. Revalidate recipe and batch size.",
+      "source_ids": [
+        "maker_xl",
+        "maker_faq"
+      ]
+    },
+    {
+      "name": "Standard Flow Control cap",
+      "how_it_differs": "Standard brewer accessory with pressure-actuated valve; still needs Standard paper, metal or both filters and does not fit XL.",
+      "source_ids": [
+        "standard_cap"
+      ]
+    },
+    {
+      "name": "XL Variable Flow Control cap",
+      "how_it_differs": "XL-only manually adjustable flow restriction disk; still needs XL filter. Move tab to Open before pressing.",
+      "source_ids": [
+        "xl_cap"
+      ]
+    },
+    {
+      "name": "Correctly sized metal filter",
+      "how_it_differs": "More oils pass through than with paper, changing body and clarity. Standard and XL filter sizes are not interchangeable.",
+      "source_ids": [
+        "maker_faq"
+      ]
+    },
+    {
+      "name": "2019 Wendelien van Bunnik inverted concentrate - advanced historical variant",
+      "how_it_differs": "30 g coffee, 100 g extraction water at 92 C; roughly 60 g concentrate and reported 120 g dilution yield roughly 180 g beverage. Maker strongly discourages inversion because of burn risk; excluded from beginner sequence.",
+      "source_ids": [
+        "wac_2019",
+        "inversion_caution"
+      ]
+    }
+  ],
+  "troubleshooting": [
+    {
+      "symptom": "Excessive draining during steep",
+      "check_first": "Flat correct-size filter, locked cap, level bed and prompt shallow plunger seal",
+      "adjustment": "If setup is sound, slightly finer grind next time; Standard Flow Control is a distinct optional accessory",
+      "source_ids": [
+        "maker_faq",
+        "maker_howto",
+        "standard_cap"
+      ]
+    },
+    {
+      "symptom": "Very hard press",
+      "check_first": "Stop increasing force; stable support, clean chamber/seal, correctly fitted filter and accessory flow state",
+      "adjustment": "Allow gentle pressure to work; coarsen slightly next brew if needed. Open XL Variable cap before pressing",
+      "source_ids": [
+        "press_help",
+        "xl_cap"
+      ]
+    },
+    {
+      "symptom": "Thin or sharply sour",
+      "check_first": "App-authored check: dose, extraction water, temperature and complete sealed steep",
+      "adjustment": "App-authored trial: slightly finer grind with other inputs held constant",
+      "source_ids": [
+        "wendelboe",
+        "maker_faq"
+      ]
+    },
+    {
+      "symptom": "Harsh or drying",
+      "check_first": "App-authored check: gentle pressing and suitability of light-roast recipe for chosen beans",
+      "adjustment": "App-authored trial: slightly coarser grind; consider maker's cooler dark-roast procedure separately",
+      "source_ids": [
+        "press_help",
+        "maker_faq"
+      ]
+    }
+  ],
+  "safety": [
+    "Keep brewer upright on sturdy stable support; never thin glass",
+    "For Original XL and Clear XL, do not press into any glass vessel",
+    "Lock correct cap, leave headroom and keep hands clear of hot outlet",
+    "Use gentle pressure; stop forcing if setup shifts or resistance feels unsafe",
+    "Move XL Variable Flow Control tab to Open before pressing",
+    "Maker strongly discourages inverted brewing because unstable hot-liquid setup can spill and burn",
+    "Remove hot cap safely and eject grounds over a bin; clean according to the specific model"
+  ],
+  "app_audit": [
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:143",
+      "finding": "AEROPRESS uses 1:15, 80-90 C, 90-150 s and capacityMaxG 250. These are generic choices, not the verified Wendelboe protocol; temperature excludes his boiling-water light-roast recipe and capacity cannot represent all models.",
+      "severity": "medium",
+      "change_recommendation": "Use explicit named recipes and hardware-specific capacity; separate steep from total and press time",
+      "source_ids": [
+        "wendelboe",
+        "maker_howto",
+        "maker_go",
+        "maker_xl"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BrewingCatalog.kt:263",
+      "finding": "Standard and XL profiles accept the same generic paper/metal filter IDs and the same pressure-actuated flow-control accessory. Filter IDs lack size constraints rather than prove physical part interchangeability. EquipmentCompatibilityValidator checks ID memberships only. The shared accessory's pressure-actuated behavior is wrong for the maker's manually adjustable XL cap.",
+      "severity": "medium",
+      "change_recommendation": "Specify Standard/XL filter sizes and cap models; model XL tab opening before pressing and add Go hardware configuration",
+      "source_ids": [
+        "maker_faq",
+        "standard_cap",
+        "xl_cap"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/BrewCalculator.kt:77",
+      "finding": "Calculator derives refills from generic 250 g AeroPress capacity. Repeated fills alter an immersion protocol and do not establish safe capacity for Go, Original/Clear or XL.",
+      "severity": "medium",
+      "change_recommendation": "Require actual equipment and validated batch protocol instead of silently repeating fills",
+      "source_ids": [
+        "maker_go",
+        "maker_xl",
+        "wendelboe"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:18",
+      "finding": "AEROPRESS inherits STANDARD decaf timing: subtraction 30 s with minimum 120/150 s changes 90-150 s to 120-150 s, increasing the low target.",
+      "severity": "medium",
+      "change_recommendation": "Disable unsupported generic decaf time transformation for AeroPress; tune a selected protocol by taste",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/BeverageOutputEstimator.kt:42",
+      "finding": "Estimator uses 1.8 g/g apparent loss with protocol caveat; typed Standard/XL profiles instead use 2.0 g/g. Neither reviewed recipe establishes a universal exact yield.",
+      "severity": "medium",
+      "change_recommendation": "Reconcile approximate models, validate per protocol, and record concentrate output plus separate dilution rather than promise a fixed beverage mass",
+      "source_ids": [
+        "wendelboe",
+        "wac_2019"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/session/LegacyStagePlanFactory.kt:41",
+      "finding": "Existing legacy plan has separate manual steep and press stages with critical upright/sturdy-vessel safety messages. No exact AeroPress P1 recipe or P1 factual erratum was found in inspected catalogs.",
+      "severity": "info",
+      "change_recommendation": "Preserve existing safety and manual completion; add a complete evidence-backed recipe if everyday guidance is implemented",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/LegacyBuiltInGuidanceCatalog.kt:308",
+      "finding": "Legacy copy already requires upright stable sturdy vessel, forbids inversion/thin glass and says never force. It does not describe plunger seal, initial stir, filter locking, precise clock origin or cap-specific flow actions.",
+      "severity": "medium",
+      "change_recommendation": "Add those preparation and steep actions and equipment-specific XL glass prohibition without replacing good safety wording",
+      "source_ids": [
+        "maker_howto",
+        "maker_faq",
+        "xl_cap"
+      ]
+    },
+    {
+      "path": "app/src/main/res/values/strings.xml:420",
+      "finding": "Shared start instruction adds water and stirs without mentioning shallow seal or exact steep clock origin; press instruction stops at hiss while maker says air passes through at end and can be faint.",
+      "severity": "medium",
+      "change_recommendation": "Tie timer origin and completion to chosen recipe; describe flow ending and gentle completion without relying on loud hiss",
+      "source_ids": [
+        "wendelboe",
+        "maker_howto",
+        "hiss_help"
+      ]
+    },
+    {
+      "path": "app/src/main/assets/grinders.json:226",
+      "finding": "Ode Gen 2 Brew Burrs AeroPress 3-6 with app-selected 4 and Encore ESP 22 match manufacturer band/point. Numbers do not establish Wendelboe-specific optimum; ordinary Encore 11-13 in maker instructions is another model.",
+      "severity": "info",
+      "change_recommendation": "Keep model and burr scope, label app-selected start, preserve texture fallback and avoid model conversion",
+      "source_ids": [
+        "ode_gen2",
+        "encore_esp",
+        "maker_howto"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/viewmodel/BrewDerivation.kt:280",
+      "finding": "AeroPress baseline decaf offset is zero, with dark-roast +1 and water/CO2 process -1 modifiers. Comment says immersion lacks a pressurized bed, despite AeroPress pressing liquid through a bed. Sources reviewed here do not validate exact decaf step/process offsets.",
+      "severity": "medium",
+      "change_recommendation": "Correct physical explanation and require method/model evidence for precise automatic offsets; prefer observed press resistance and taste",
+      "source_ids": [
+        "press_help"
+      ]
+    },
+    {
+      "path": "docs/brewing/learning-guide-factual-audit-2026-08-19.md",
+      "finding": "Audit covers 20 other exact P1 guides plus Pulsar; it does not validate AeroPress recipes.",
+      "severity": "info",
+      "change_recommendation": "Use this new AeroPress evidence rather than infer verification from unrelated audit coverage",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/BrewTimerScreen.kt:136",
+      "finding": "This no-bloom method inherits ACTIVE_TIMER. The timer auto-starts on screen entry when elapsedSeconds is zero, which can include preparation delay and does not establish the selected recipe clock origin (after stirring and sealing in this Wendelboe baseline). Manual typed completion remains separate.",
+      "severity": "medium",
+      "change_recommendation": "Start elapsed timing at the selected physical brew event; keep recipe clock origin visible and persist it consistently without an automatic finish deadline.",
+      "source_ids": [
+        "wendelboe"
+      ]
+    }
+  ],
+  "uncertainties": [
+    "No physical brewing test, localization review, or device execution",
+    "Creator specifies local boiling water; exact measured temperature is not given and varies with elevation",
+    "Creator does not specify total brew time, press duration, exact final beverage yield or universal chamber capacity",
+    "Source linked maker PDFs had no extractable text; Original/Clear PDF did not render in browser, so no recipe claims rely on those PDFs",
+    "Maker current how-to page and FAQ quick-start have differing stir/wait details; keep their protocols separate",
+    "Third-party cap/filter fit and exact decaf timing or grinder process offsets remain unverified",
+    "XL batch scaling and safe working capacity with grounds need specific equipment and protocol validation"
+  ],
+  "do_not_claim": [
+    "200 g extraction water guarantees 200 g beverage",
+    "AeroPress always uses 1:15, 80-90 C or a 90-150 s total time",
+    "250 g is a safe universal chamber limit for Original, Clear, Go and XL",
+    "Standard filters or Standard Flow Control cap fit XL",
+    "The XL flow-control cap is pressure-actuated or can be pressed closed",
+    "Inverted brewing is the maker-recommended beginner method",
+    "AeroPress concentrate is equivalent to true espresso",
+    "Every decaf needs a fixed shorter steep or exact process-based grind offset",
+    "One grinder number transfers between ordinary Encore, Encore ESP, Ode burr variants or recipes"
+  ]
+}

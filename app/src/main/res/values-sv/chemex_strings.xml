@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_tip_chemex">Använd Chemex-filterpapper i rätt storlek. Placera tre lager mot pipen, skölj med varmt vatten och häll bort sköljvattnet. Tillsätt medelgrovt malet kaffe och nollställ vågen. Håll luftkanalen öppen.</string>
+    <string name="instruction_chemex_bloom">Blöt allt kaffe med bloom-vattnet och låt bloom avslutas.</string>
+    <string name="instruction_chemex_pour">Häll försiktigt upp till den totala vattenmängden. Låt nivån sjunka mellan hällningarna och håll den under kanten.</string>
+    <string name="instruction_chemex_drawdown">Vänta tills vattnet har runnit genom kaffebädden. Ta bort filtret, snurra försiktigt och servera med grepp om kragen eller handtaget.</string>
+    <string name="label_filter_chemex_bonded">Chemex-filterpapper</string>
+</resources>

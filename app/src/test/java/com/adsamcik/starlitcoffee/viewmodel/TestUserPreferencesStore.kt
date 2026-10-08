@@ -4,12 +4,13 @@ import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.repository.UserPreferences
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesStore
+import com.adsamcik.starlitcoffee.data.repository.BrewingSetWriter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
 internal open class TestUserPreferencesStore(
     initial: UserPreferences = UserPreferences(),
-) : UserPreferencesStore {
+) : UserPreferencesStore, BrewingSetWriter by NoBrewingSetWriter {
     protected val state = MutableStateFlow(initial)
     override val userPreferences: Flow<UserPreferences> = state
 
@@ -28,6 +29,9 @@ internal open class TestUserPreferencesStore(
     override suspend fun updateDefaultFilterType(filterType: FilterType?) = Unit
     override suspend fun updateSelectedGrinder(grinderId: String?) = Unit
     override suspend fun updateSkipMethodSelection(enabled: Boolean) = Unit
+    override suspend fun updateShowCupPresets(enabled: Boolean) {
+        state.value = state.value.copy(showCupPresets = enabled)
+    }
     override suspend fun updateShowBrewingInstructions(enabled: Boolean) = Unit
     override suspend fun updateShowEnglishBrewingTerms(enabled: Boolean) = Unit
     override suspend fun updateBloomSpritesheetWeights(weights: Map<String, Int>) = Unit

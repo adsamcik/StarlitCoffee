@@ -1,0 +1,53 @@
+{
+  "status": "preview only; production resource differs from this export",
+  "source": "Root-authored pass 1 of 5 after Astra front-photo review",
+  "svg_sha256": "a99ee2d9489959d6e221c496d1ce32cb98efeabf42ee89e88bd5ebbf7a0e38b4",
+  "android_sha256": "27ab1a34c21193a9a3f38d3e69798f452fda58cfab1e605d41b02b5f4d1ba1bb",
+  "production_resource_matches": false,
+  "alpha_bounds_px": {
+    "24": [
+      4,
+      1,
+      19,
+      23
+    ],
+    "28": [
+      5,
+      1,
+      22,
+      27
+    ],
+    "34": [
+      6,
+      2,
+      27,
+      32
+    ],
+    "44": [
+      8,
+      3,
+      35,
+      41
+    ],
+    "88": [
+      17,
+      6,
+      69,
+      82
+    ],
+    "1024": [
+      204,
+      79,
+      788,
+      942
+    ]
+  },
+  "validation": "direct SVG rendering and lossless Android path export; no native app capture",
+  "revision": {
+    "iteration": 1,
+    "parent_version": 9,
+    "subtitle": "Shallower collar underside and matching seam",
+    "source": "Root-authored pass 1 of 5 after Astra front-photo review",
+    "changes": "Flatten the collar underside to y7.05-7.25 and follow it with the barrel upper edge, retaining approximately 0.8 units of separation. Chamber and base retain v9 geometry."
+  }
+}

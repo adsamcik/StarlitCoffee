@@ -55,7 +55,7 @@
     <string name="label_brewer_profile_v60">V60</string>
     <string name="label_brewer_profile_wave_185">Wave 185 cu bază plată</string>
     <string name="label_brewer_profile_wedge">Dripper în formă de pană</string>
-    <string name="label_brewer_profile_thick_paper_carafe">Dispozitiv cu carafă și filtru de hârtie gros</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Chemex</string>
     <string name="label_brewer_profile_conical">Dripper conic generic</string>
     <string name="label_brewer_profile_family_manual_gravity">Preparare gravitațională manuală</string>
     <string name="label_brewer_profile_pulsar">Pulsar</string>

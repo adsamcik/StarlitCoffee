@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="heading_guide_why">Prečo tento krok?</string>
+    <string name="action_guide_steps">Kroky</string>
+    <string name="action_guide_overview">Prehľad</string>
+    <string name="label_guide_untimed">Čítajte vlastným tempom</string>
+    <string name="action_continue_reading">Pokračovať v čítaní</string>
+    <string name="action_read_guide">Čítať sprievodcu</string>
+    <string name="action_read_ahead">Pozrieť ďalšie kroky</string>
+    <string name="action_return_to_live_brew">Späť k príprave</string>
+    <string name="label_guide_done_when">Hotovo, keď</string>
+</resources>

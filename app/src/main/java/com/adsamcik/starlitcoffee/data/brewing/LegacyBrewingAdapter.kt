@@ -47,6 +47,15 @@ object LegacyBrewingAdapter {
         rawMethodId: String,
         rawFilterId: String?,
     ): LegacyEquipmentMapping {
+        if (rawMethodId == BrewMethod.CHEMEX.name) {
+            return LegacyEquipmentMapping(
+                filterSelection = FilterSelection.Stack(
+                    listOf(FilterStackEntry(FilterProfileId("chemex_bonded_paper"), position = 0)),
+                ),
+                rawLegacyFilterId = rawFilterId,
+                wasInvalidForMethod = rawFilterId != null,
+            )
+        }
         if (rawFilterId == null) return LegacyEquipmentMapping(FilterSelection.Unspecified)
         if (rawMethodId != BrewMethod.PULSAR.name) {
             return LegacyEquipmentMapping(

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_set_brew_reminder">Definir lembrete</string>
+    <string name="action_edit_brew_reminder">Editar lembrete</string>
+    <string name="action_remove_brew_reminder">Remover lembrete</string>
+    <string name="label_brew_reminder">Lembrete</string>
+    <string name="label_timer_duration">Duração</string>
+    <string name="label_timer_seconds">Segundos</string>
+    <string name="label_timer_minutes">Minutos</string>
+    <string name="label_timer_hours">Horas</string>
+    <string name="msg_brew_reminder_origin">Desde o início deste passo. Alterar a duração mantém o tempo já decorrido. Continua a confirmar quando o passo termina.</string>
+    <string name="msg_brew_reminder_reached">Chegou a hora do lembrete. Verifique o café antes de continuar.</string>
+    <string name="title_cold_brew">Cold brew</string>
+    <string name="title_cold_brew_timer">Temporizador de cold brew</string>
+    <string name="action_follow_brew_guide">Seguir o guia</string>
+    <string name="action_just_set_brew_timer">Só definir temporizador</string>
+    <string name="action_start_timer">Iniciar temporizador</string>
+    <string name="action_start_steeping">Começar a infusão</string>
+    <string name="action_end_brew_timer">Terminar temporizador</string>
+    <string name="action_add_brew_start_time">Adicionar hora de início</string>
+    <string name="label_brew_start_now">A começar agora</string>
+    <string name="label_brew_start_earlier">Começou antes</string>
+    <string name="label_brew_start_unknown">Hora de início desconhecida</string>
+    <string name="label_brew_hours_ago">Há quantas horas</string>
+    <string name="label_brew_minutes_ago">Há quantos minutos</string>
+    <string name="msg_cold_brew_refrigerated">Mantenha tapado no frigorífico a 4 °C ou menos. A infusão predefinida dura 14 horas.</string>
+    <string name="msg_cold_brew_start_origin">Inicie quando o café estiver totalmente molhado e o recipiente tapado entrar no frigorífico.</string>
+    <string name="msg_brew_start_unknown">Adicione a hora de início real para calcular um lembrete. Até lá, não é estimada uma hora de conclusão.</string>
+    <string name="msg_brew_timer_ended">Temporizador terminado</string>
+    <string name="label_brew_extraction_ended">Extração concluída</string>
+    <string name="msg_brew_notifications_disabled">Os lembretes estão desligados. A preparação do café continua.</string>
+    <string name="action_allow_brew_notifications">Permitir lembretes</string>
+    <string name="msg_brew_reminders_may_be_late">O Android pode atrasar os lembretes quando sair da aplicação.</string>
+    <string name="action_allow_precise_brew_reminders">Permitir lembretes precisos</string>
+</resources>

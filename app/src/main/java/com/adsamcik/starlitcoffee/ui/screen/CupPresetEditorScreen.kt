@@ -17,15 +17,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.Icon
 import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -42,8 +38,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -54,7 +48,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.toColorInt
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.model.CupPreset
@@ -62,7 +55,6 @@ import com.adsamcik.starlitcoffee.ui.component.DestructiveActionDialog
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
 import com.adsamcik.starlitcoffee.ui.util.PresetIcon
 import com.adsamcik.starlitcoffee.ui.util.availablePresetIcons
-import com.adsamcik.starlitcoffee.ui.util.presetColorPalette
 import com.adsamcik.starlitcoffee.viewmodel.CupPresetEditorOperation
 import com.adsamcik.starlitcoffee.viewmodel.CupPresetEditorFailure
 import com.adsamcik.starlitcoffee.viewmodel.CupPresetEditorViewModel
@@ -74,17 +66,10 @@ private val SectionGap = 20.dp
 private val CardPadding = 16.dp
 private val FieldGap = 12.dp
 private val PreviewIconSize = 56.dp
-private val PreviewBadgeSize = 16.dp
-private val PreviewBorderWidth = 2.dp
 private val IconTileSize = 64.dp
 private val IconGlyphSize = 44.dp
 private val IconTileGap = 8.dp
-private val ColorTileSize = 48.dp
-private val ColorTileGap = 8.dp
-private val ColorCheckSize = 22.dp
-private val ColorBorderWidth = 3.dp
 private val IconTileBorderWidth = 2.dp
-private const val LightLuminanceThreshold = 0.5f
 private const val DefaultIconName = "mug"
 private val TileCornerRadius = 16.dp
 
@@ -106,12 +91,10 @@ fun CupPresetEditorScreen(
     var name by rememberSaveable(presetId) { mutableStateOf("") }
     var waterMl by rememberSaveable(presetId) { mutableStateOf("") }
     var selectedIcon by rememberSaveable(presetId) { mutableStateOf(DefaultIconName) }
-    var selectedColor by rememberSaveable(presetId) { mutableStateOf<String?>(null) }
     var hydrated by rememberSaveable(presetId) { mutableStateOf(false) }
     var initialName by rememberSaveable(presetId) { mutableStateOf("") }
     var initialWaterMl by rememberSaveable(presetId) { mutableStateOf("") }
     var initialIcon by rememberSaveable(presetId) { mutableStateOf(DefaultIconName) }
-    var initialColor by rememberSaveable(presetId) { mutableStateOf<String?>(null) }
     var showValidation by rememberSaveable(presetId) { mutableStateOf(false) }
     var showDeleteDialog by rememberSaveable(presetId) { mutableStateOf(false) }
     var showDiscardDialog by rememberSaveable(presetId) { mutableStateOf(false) }
@@ -132,13 +115,11 @@ fun CupPresetEditorScreen(
         val preset = existingPreset
         if (preset != null && !hydrated) {
             name = preset.name
-            waterMl = preset.waterMl.toInt().toString()
+            waterMl = preset.waterMl.toString().removeSuffix(".0")
             selectedIcon = preset.iconName
-            selectedColor = preset.colorHex
             initialName = preset.name
-            initialWaterMl = preset.waterMl.toInt().toString()
+            initialWaterMl = preset.waterMl.toString().removeSuffix(".0")
             initialIcon = preset.iconName
-            initialColor = preset.colorHex
             hydrated = true
         }
     }
@@ -166,15 +147,13 @@ fun CupPresetEditorScreen(
     val hasUnsavedChanges = if (isEditMode && hydrated) {
         name != initialName ||
             waterMl != initialWaterMl ||
-            selectedIcon != initialIcon ||
-            selectedColor != initialColor
+            selectedIcon != initialIcon
     } else if (isEditMode) {
         false
     } else {
         name.isNotEmpty() ||
             waterMl.isNotEmpty() ||
-            selectedIcon != DefaultIconName ||
-            selectedColor != null
+            selectedIcon != DefaultIconName
     }
     val requestBack = {
         if (!isBusy) {
@@ -259,14 +238,12 @@ fun CupPresetEditorScreen(
                             name = name.trim(),
                             waterMl = water,
                             iconName = selectedIcon,
-                            colorHex = selectedColor,
                         ) ?: CupPreset(
                             name = name.trim(),
                             iconName = selectedIcon,
                             doseG = 0f,
                             waterMl = water,
                             sortOrder = presets.size,
-                            colorHex = selectedColor,
                         )
                         viewModel.savePreset(preset, isNew = existingPreset == null)
                     },
@@ -288,7 +265,6 @@ fun CupPresetEditorScreen(
             PreviewCard(
                 name = name.ifBlank { stringResource(R.string.label_name) },
                 iconName = selectedIcon,
-                colorHex = selectedColor,
             )
 
             DetailsCard(
@@ -310,12 +286,6 @@ fun CupPresetEditorScreen(
             IconPickerCard(
                 selectedIcon = selectedIcon,
                 onSelect = { selectedIcon = it },
-                enabled = interactionsEnabled,
-            )
-
-            ColorPickerCard(
-                selectedColor = selectedColor,
-                onSelect = { selectedColor = it },
                 enabled = interactionsEnabled,
             )
 
@@ -375,11 +345,7 @@ private fun CupPresetLoadingScreen(onBack: () -> Unit) {
 private fun PreviewCard(
     name: String,
     iconName: String,
-    colorHex: String?,
 ) {
-    val dotColor = colorHex?.let {
-        runCatching { Color(it.toColorInt()) }.getOrNull()
-    } ?: MaterialTheme.colorScheme.secondaryContainer
     val previewDescription = stringResource(R.string.cd_cup_preset_preview, name)
 
     ElevatedCard(
@@ -394,21 +360,11 @@ private fun PreviewCard(
             horizontalArrangement = Arrangement.spacedBy(CardPadding),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Box(contentAlignment = Alignment.Center) {
-                PresetIcon(
-                    iconName = iconName,
-                    contentDescription = null,
-                    modifier = Modifier.size(PreviewIconSize),
-                )
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .size(PreviewBadgeSize)
-                        .clip(CircleShape)
-                        .background(dotColor)
-                        .border(PreviewBorderWidth, MaterialTheme.colorScheme.surface, CircleShape),
-                )
-            }
+            PresetIcon(
+                iconName = iconName,
+                contentDescription = null,
+                modifier = Modifier.size(PreviewIconSize),
+            )
             Text(
                 text = name,
                 style = MaterialTheme.typography.titleLarge,
@@ -447,7 +403,7 @@ private fun DetailsCard(
                 } else {
                     null
                 },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().testTag("cup_preset_name"),
             )
             OutlinedTextField(
                 value = waterMl,
@@ -463,8 +419,8 @@ private fun DetailsCard(
                         Text(stringResource(R.string.msg_dose_from_ratio))
                     }
                 },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                modifier = Modifier.fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                modifier = Modifier.fillMaxWidth().testTag("cup_preset_volume"),
             )
         }
     }
@@ -543,90 +499,5 @@ private fun IconTile(
             contentDescription = null,
             modifier = Modifier.size(IconGlyphSize),
         )
-    }
-}
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun ColorPickerCard(
-    selectedColor: String?,
-    onSelect: (String?) -> Unit,
-    enabled: Boolean,
-) {
-    val colorLabels = stringArrayResource(R.array.preset_color_labels)
-    ElevatedCard(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(CardPadding)) {
-            Text(
-                text = stringResource(R.string.label_color),
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.semantics { heading() },
-            )
-            Spacer(modifier = Modifier.height(FieldGap))
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(ColorTileGap),
-                verticalArrangement = Arrangement.spacedBy(ColorTileGap),
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                presetColorPalette.forEachIndexed { index, hex ->
-                    ColorTile(
-                        hex = hex,
-                        label = colorLabels[index],
-                        isSelected = hex == selectedColor,
-                        onSelect = { onSelect(hex) },
-                        enabled = enabled,
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun ColorTile(
-    hex: String?,
-    label: String,
-    isSelected: Boolean,
-    onSelect: () -> Unit,
-    enabled: Boolean,
-) {
-    val fallback = MaterialTheme.colorScheme.secondaryContainer
-    val circleColor = if (hex != null) {
-        runCatching { Color(hex.toColorInt()) }.getOrDefault(fallback)
-    } else {
-        fallback
-    }
-    val borderColor = if (isSelected) {
-        MaterialTheme.colorScheme.primary
-    } else {
-        Color.Transparent
-    }
-    Box(
-        modifier = Modifier
-            .size(ColorTileSize)
-            .clip(CircleShape)
-            .background(circleColor)
-            .border(ColorBorderWidth, borderColor, CircleShape)
-            .selectable(
-                selected = isSelected,
-                enabled = enabled,
-                role = Role.RadioButton,
-                onClick = onSelect,
-            )
-            .semantics { contentDescription = label },
-        contentAlignment = Alignment.Center,
-    ) {
-        if (isSelected) {
-            val checkColor = if (circleColor.luminance() > LightLuminanceThreshold) {
-                Color.Black
-            } else {
-                Color.White
-            }
-            Icon(
-                imageVector = Icons.Filled.Check,
-                contentDescription = null,
-                tint = checkColor,
-                modifier = Modifier.size(ColorCheckSize),
-            )
-        }
     }
 }

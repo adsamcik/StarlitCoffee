@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_to_brew">Scannen und brühen</string>
+    <string name="msg_barcode_brew_no_match">Kein vorrätiger Kaffee hat diesen Barcode. Prüfe den Barcode in den gespeicherten Angaben zur Packung.</string>
+    <string name="msg_barcode_brew_choose_bag">Mehrere Packungen haben diesen Barcode. Wähle die Packung, die du verwendest.</string>
+    <string name="msg_barcode_brew_enter_amount">%1$s ausgewählt. Gib eine Menge ein und tippe auf Brühen.</string>
+</resources>

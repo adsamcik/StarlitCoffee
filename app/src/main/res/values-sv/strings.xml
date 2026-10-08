@@ -100,11 +100,8 @@
     <string name="label_increase">Öka %1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Förbered bryggningen</string>
 <string name="action_ready_to_brew_short">Redo att brygga</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Förberedelse</string>
-    <string name="label_recipe_heading">Recept</string>
     <string name="label_temp_short">Temp</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Blöt pappersfiltret i basen (ventilen öppen) och låt rinna av. Montera cylindern, tillsätt kaffet, jämna till bädden och lägg på spridningslocket. Nollställ vågen.</string>
@@ -114,8 +111,6 @@
     <string name="prep_tip_french_press">Förvärm presskannan och töm den. Tillsätt kaffet, ställ på vågen och nollställ innan du häller i vatten.</string>
     <string name="prep_tip_espresso">Torka portafiltret torrt. Dosera, fördela och tampa jämnt innan du låser fast det.</string>
     <string name="prep_tip_moka">Fyll underdelen upp till ventilen. Fyll korgen med kaffe och jämna till — tampa inte. Skruva ihop försiktigt.</string>
-    <string name="format_prep_grind_specific">Mal %1$s — ställ %2$s på %3$s</string>
-    <string name="format_prep_grind_generic">Mal %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Pausa</string>
@@ -148,7 +143,6 @@
     <string name="label_cup_presets">Koppförval</string>
     <string name="action_add_preset">Lägg till förval</string>
     <string name="action_reset_defaults">Återställ standard</string>
-    <string name="msg_presets_hint">Förval visas som snabbknappar i kalkylatorn</string>
     <string name="label_brew_methods">Bryggmetoder</string>
     <string name="msg_methods_hint">Valda metoder visas först. Tryck för att växla.</string>
     <string name="label_default_method">Standardmetod</string>
@@ -165,9 +159,9 @@
     <string name="label_bloom_sprite_coffee_starlit">Stjärnklart kaffe</string>
     <string name="desc_bloom_sprite_coffee_starlit">Krämgyllene ångblad med små stjärnljusa glimtar.</string>
     <string name="label_bloom_sprite_coffee_latte">Latte-bloom</string>
-    <string name="desc_bloom_sprite_coffee_latte">Mjuk latte-art-rosetta i varma mjölkskumstoner.</string>
+    <string name="desc_bloom_sprite_coffee_latte">Ett latte-art-hjärta som vecklar ut sig i varma mjölkskumstoner.</string>
     <string name="label_bloom_sprite_coffee_plant">Kaffeplanta</string>
-    <string name="desc_bloom_sprite_coffee_plant">Frisk grön kaffeplanta med parvisa blad.</string>
+    <string name="desc_bloom_sprite_coffee_plant">En kaffeplanta vecklar ut blanka blad medan de röda kaffebären mognar.</string>
     <string name="label_bloom_sprite_cherry_tomato">Körsbärstomat</string>
     <string name="desc_bloom_sprite_cherry_tomato">En kaffeböna gror till en tomatranka medan röda frukter mognar.</string>
     <string name="label_bloom_sprite_strawberry">Jordgubbe</string>
@@ -435,15 +429,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">Öppna Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">Kräver Android 12 eller senare.</string>
     <string name="label_ai_service">AI-tjänst (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Hämta Mindlayer på Google Play</string>
-    <string name="msg_mindlayer_install_recommendation">Installera Mindlayer från Google Play för att läsa kaffepåseetiketter med privat AI på enheten. Du kan göra det senare i Inställningar.</string>
     <string name="action_test_connection">Testa anslutning</string>
     <string name="action_run_test_prompt">Kör testprompt</string>
     <string name="label_testing">Testar…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">Aktivera AI</string>
     <string name="consent_requesting">Begär AI-åtkomst…</string>
     <string name="consent_granted">AI aktiverad</string>
     <string name="consent_already_approved">AI är redan aktiverad</string>
@@ -532,7 +526,6 @@
     <string name="label_volume_ml">Volym (ml)</string>
     <string name="msg_dose_from_ratio">Kaffedosen beräknas från ditt förhållande</string>
     <string name="label_icon">Ikon</string>
-    <string name="label_color">Färg</string>
     <string name="action_add">Lägg till</string>
     <string name="screen_add_cup_preset_title">Lägg till koppförval</string>
     <string name="screen_edit_cup_preset_title">Redigera koppförval</string>
@@ -664,10 +657,10 @@
     <string name="msg_cup_preset_reset_failed">Kopprofilerna kunde inte återställas. Försök igen.</string>
     <string name="msg_reset_cup_presets">Ersätta alla kopprofiler med standardprofilerna?</string>
     <string name="msg_diagnostic_clear_failed">Alla diagnostikdata kunde inte rensas. Försök igen.</string>
-    <string name="msg_clear_diagnostics">Rensa alla sparade skanningssessioner och LLM-körningar?</string>
+    <string name="msg_clear_diagnostics">Rensa alla sparade skanningssessioner?</string>
     <string name="label_log_scan_corrections">Logga skanningskorrigeringar (på enheten)</string>
     <string name="msg_log_scan_corrections">Registrerar endast på den här enheten vad AI extraherade och vad du sparade. Inget laddas upp.</string>
-    <string name="format_scan_debug_counts">Sessioner: %1$d · LLM-körningar: %2$d</string>
+    <string name="format_scan_debug_counts">Sessioner: %1$d</string>
     <string name="format_scan_session_subject">Skanningssession: %1$s</string>
     <string name="action_share_scan_session">Dela skanningssession</string>
 
@@ -733,4 +726,23 @@
     <string name="msg_learning_subtitle">Visuella brygguider steg för steg</string>
     <string name="action_show_details">Visa detaljer</string>
     <string name="action_hide_details">Dölj detaljer</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Resultat av ny skanning</string>
+    <string name="title_rescan_no_changes">Inga ändringar hittades</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">%1$d fält ändrat:</item>
+        <item quantity="other">%1$d fält ändrade:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Inga ändringar har hittats ännu.</string>
+    <string name="msg_rescan_incomplete">Granska uppgifterna som hittats eller försök läsa etiketten igen.</string>
+    <string name="action_update_bag_so_far">Uppdatera med aktuella resultat</string>
+    <string name="action_new_bag_so_far">Ny påse med aktuella resultat</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Öppnar installationen…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Det gick inte att öppna installationen. Försök igen eller ange detaljerna manuellt.</string>
+    <string name="announce_label_details_ready">Detaljerna från etiketten är klara att granskas.</string>
+    <string name="announce_label_recognition_no_result">Inga detaljer hittades på etiketten. Ange detaljerna manuellt.</string>
+    <string name="label_show_cup_presets">Visa i kalkylatorn</string>
+    <string name="cd_cup_preset_options">Alternativ för koppförval</string>
 </resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="heading_guide_why">Miksi tämä vaihe?</string>
+    <string name="action_guide_steps">Vaiheet</string>
+    <string name="action_guide_overview">Yleiskatsaus</string>
+    <string name="label_guide_untimed">Lue omaan tahtiin</string>
+    <string name="action_continue_reading">Jatka lukemista</string>
+    <string name="action_read_guide">Lue ohje</string>
+    <string name="action_read_ahead">Katso tulevat vaiheet</string>
+    <string name="action_return_to_live_brew">Takaisin valmistukseen</string>
+    <string name="label_guide_done_when">Valmis, kun</string>
+</resources>

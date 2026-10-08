@@ -55,7 +55,7 @@
     <string name="label_brewer_profile_v60">V60</string>
     <string name="label_brewer_profile_wave_185">Wave 185 с плоско дъно</string>
     <string name="label_brewer_profile_wedge">Клиновиден дрипър</string>
-    <string name="label_brewer_profile_thick_paper_carafe">Уред с кана и дебел хартиен филтър</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Chemex</string>
     <string name="label_brewer_profile_conical">Обикновен конусен дрипър</string>
     <string name="label_brewer_profile_family_manual_gravity">Ръчно гравитационно приготвяне</string>
     <string name="label_brewer_profile_pulsar">Pulsar</string>

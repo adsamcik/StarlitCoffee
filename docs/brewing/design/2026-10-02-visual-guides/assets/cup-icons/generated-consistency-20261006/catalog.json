@@ -1,0 +1,174 @@
+{
+  "date": "2026-10-06",
+  "scope": "All 28 native vessel choices; separate built-in image-generator edits of the preserved original generated family.",
+  "entries": [
+    {
+      "key": "espresso",
+      "label": "Espresso",
+      "anatomy_reference": "../rebuild-20261004/generated/espresso.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_espresso.xml"
+    },
+    {
+      "key": "cortado",
+      "label": "Cortado",
+      "anatomy_reference": "../rebuild-20261004/generated/cortado.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_cortado.xml"
+    },
+    {
+      "key": "cappuccino",
+      "label": "Cappuccino",
+      "anatomy_reference": "../rebuild-20261004/generated/cappuccino.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_cappuccino.xml"
+    },
+    {
+      "key": "mug",
+      "label": "Mug",
+      "anatomy_reference": "../rebuild-20261004/generated/mug.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_mug.xml"
+    },
+    {
+      "key": "travel",
+      "label": "Travel cup",
+      "anatomy_reference": "../rebuild-20261004/generated/travel.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_travel.xml"
+    },
+    {
+      "key": "takeaway",
+      "label": "Takeaway cup",
+      "anatomy_reference": "../rebuild-20261004/generated/takeaway.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_takeaway.xml"
+    },
+    {
+      "key": "latte_glass",
+      "label": "Latte glass",
+      "anatomy_reference": "../rebuild-20261004/generated/latte_glass.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_latte_glass.xml"
+    },
+    {
+      "key": "carafe",
+      "label": "Carafe",
+      "anatomy_reference": "../rebuild-20261004/generated/carafe.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_carafe.xml"
+    },
+    {
+      "key": "french_press",
+      "label": "French press",
+      "anatomy_reference": "../rebuild-20261004/generated/french_press.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_french_press.xml"
+    },
+    {
+      "key": "kettle",
+      "label": "Kettle",
+      "anatomy_reference": "../rebuild-20261004/generated/kettle.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_kettle.xml"
+    },
+    {
+      "key": "mason_jar",
+      "label": "Mason jar",
+      "anatomy_reference": "../rebuild-20261004/generated/mason_jar.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_mason_jar.xml"
+    },
+    {
+      "key": "bowl",
+      "label": "Bowl",
+      "anatomy_reference": "../rebuild-20261004/generated/bowl.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_bowl.xml"
+    },
+    {
+      "key": "double_wall_espresso",
+      "label": "Double-wall espresso cup",
+      "anatomy_reference": "../rebuild-20261004/generated/double_wall_espresso.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_double_wall_espresso.xml"
+    },
+    {
+      "key": "double_wall_tumbler",
+      "label": "Double-wall tumbler",
+      "anatomy_reference": "../rebuild-20261004/generated/double_wall_tumbler.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_double_wall_tumbler.xml"
+    },
+    {
+      "key": "double_wall_mug",
+      "label": "Double-wall mug",
+      "anatomy_reference": "../rebuild-20261004/generated/double_wall_mug.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_double_wall_mug.xml"
+    },
+    {
+      "key": "tall_latte_glass",
+      "label": "Tall latte glass",
+      "anatomy_reference": "../rebuild-20261004/generated/tall_latte_glass.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_tall_latte_glass.xml"
+    },
+    {
+      "key": "aroma_taster",
+      "label": "Aroma taster",
+      "anatomy_reference": "../rebuild-20261004/generated/aroma_taster.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_aroma_taster.xml"
+    },
+    {
+      "key": "spherical_latte",
+      "label": "Spherical latte cup",
+      "anatomy_reference": "../rebuild-20261004/generated/spherical_latte.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_spherical_latte.xml"
+    },
+    {
+      "key": "spouted_espresso_server",
+      "label": "Spouted espresso server",
+      "anatomy_reference": "../rebuild-20261004/generated/spouted_espresso_server.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_spouted_espresso_server.xml"
+    },
+    {
+      "key": "dot_carafe",
+      "label": "Dot carafe",
+      "anatomy_reference": "../rebuild-20261004/generated/dot_carafe.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_dot_carafe.xml"
+    },
+    {
+      "key": "lid_server",
+      "label": "Lid server",
+      "anatomy_reference": "../rebuild-20261004/generated/lid_server.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_lid_server.xml"
+    },
+    {
+      "key": "beehive_server",
+      "label": "Beehive server",
+      "anatomy_reference": "../rebuild-20261004/generated/beehive_server.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_beehive_server.xml"
+    },
+    {
+      "key": "barista_server",
+      "label": "Barista server",
+      "anatomy_reference": "../rebuild-20261004/generated/barista_server.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_barista_server.xml"
+    },
+    {
+      "key": "angular_server",
+      "label": "Angular server",
+      "anatomy_reference": "../rebuild-20261004/generated/angular_server.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_angular_server.xml"
+    },
+    {
+      "key": "faceted_cortado",
+      "label": "Faceted cortado glass",
+      "anatomy_reference": "../rebuild-20261004/generated/faceted_cortado.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_faceted_cortado.xml"
+    },
+    {
+      "key": "ceramic_latte_bowl",
+      "label": "Ceramic latte bowl",
+      "anatomy_reference": "../rebuild-20261004/generated/ceramic_latte_bowl.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_ceramic_latte_bowl.xml"
+    },
+    {
+      "key": "thermal_carafe",
+      "label": "Thermal carafe",
+      "anatomy_reference": "../rebuild-20261004/generated/thermal_carafe.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_thermal_carafe.xml"
+    },
+    {
+      "key": "double_wall_press",
+      "label": "Double-wall press",
+      "anatomy_reference": "../rebuild-20261004/generated/double_wall_press.png",
+      "native_resource": "app/src/main/res/drawable/vessel_icon_double_wall_press.xml"
+    }
+  ]
+}

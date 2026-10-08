@@ -10,10 +10,12 @@ package com.adsamcik.starlitcoffee.ui.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -25,12 +27,14 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.util.BagPhotoReviewUris
 import com.adsamcik.starlitcoffee.util.CoffeeMetadataNormalizer
 import com.adsamcik.starlitcoffee.util.DateParser
+import com.adsamcik.starlitcoffee.util.RecognitionPresentation
 import com.adsamcik.starlitcoffee.util.WeightParser
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -219,77 +223,65 @@ fun RescanDeltaDialog(
     resolvedFields: Map<String, String>,
     reviewedPhotoUris: String? = null,
     isUpdating: Boolean = false,
+    recognition: RecognitionPresentation = RecognitionPresentation(),
+    isProcessing: Boolean = false,
+    isComplete: Boolean = true,
+    recognitionActions: RecognitionActions = RecognitionActions(),
     onUpdateBag: (CoffeeBagEntity) -> Unit,
     onNewBag: (Map<String, String>) -> Unit,
     onDismiss: () -> Unit,
 ) {
     val deltas = buildFieldDeltas(bag, resolvedFields, reviewedPhotoUris)
+    val hasCurrentResults = resolvedFields.values.any(String::isNotBlank)
+    val hasFinalResults = isComplete && !isProcessing
 
     AlertDialog(
         onDismissRequest = { if (!isUpdating) onDismiss() },
         title = {
             Text(
-                text = if (deltas.isEmpty()) "No changes found" else "Rescan results",
+                text = stringResource(
+                    if (hasFinalResults && deltas.isEmpty() && hasCurrentResults) {
+                        R.string.title_rescan_no_changes
+                    } else {
+                        R.string.title_rescan_results
+                    },
+                ),
                 style = MaterialTheme.typography.headlineSmall,
             )
         },
         text = {
-            if (deltas.isEmpty()) {
-                Text(
-                    text = stringResource(R.string.msg_rescan_no_changes),
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-            } else {
-                Column {
-                    Text(
-                        text = "${deltas.size} field${if (deltas.size != 1) "s" else ""} changed:",
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(bottom = 12.dp),
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth().heightIn(max = 400.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                item {
+                    RecognitionStatusCard(
+                        presentation = recognition,
+                        actions = recognitionActions,
+                        enabled = !isUpdating,
                     )
-                    LazyColumn(
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                    ) {
-                        items(deltas) { delta ->
-                            ElevatedCard(
-                                modifier = Modifier.fillMaxWidth(),
-                                shape = MaterialTheme.shapes.medium,
-                            ) {
-                                Column(
-                                    modifier = Modifier.padding(12.dp),
-                                ) {
-                                    Text(
-                                        text = delta.label,
-                                        style = MaterialTheme.typography.labelLarge,
-                                        color = MaterialTheme.colorScheme.primary,
-                                    )
-                                    Spacer(modifier = Modifier.height(4.dp))
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.SpaceBetween,
-                                    ) {
-                                        Text(
-                                            text = delta.oldValue,
-                                            style = MaterialTheme.typography.bodyMedium,
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                            modifier = Modifier.weight(1f),
-                                        )
-                                        Text(
-                                            text = "→",
-                                            style = MaterialTheme.typography.bodyMedium,
-                                            modifier = Modifier.padding(horizontal = 8.dp),
-                                        )
-                                        Text(
-                                            text = delta.newValue,
-                                            style = MaterialTheme.typography.bodyMedium,
-                                            color = MaterialTheme.colorScheme.primary,
-                                            modifier = Modifier.weight(1f),
-                                        )
-                                    }
-                                }
-                            }
-                        }
+                }
+                item {
+                    if (deltas.isEmpty()) {
+                        Text(
+                            text = stringResource(
+                                when {
+                                    isProcessing -> R.string.msg_rescan_no_changes_yet
+                                    hasFinalResults && hasCurrentResults -> R.string.msg_rescan_no_changes
+                                    else -> R.string.msg_rescan_incomplete
+                                },
+                            ),
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    } else {
+                        Text(
+                            text = pluralStringResource(R.plurals.format_rescan_changed_fields, deltas.size, deltas.size),
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.padding(bottom = 12.dp),
+                        )
                     }
                 }
+                items(deltas) { delta -> RescanFieldDeltaCard(delta) }
             }
         },
         confirmButton = {
@@ -298,19 +290,21 @@ fun RescanDeltaDialog(
                     onClick = { onUpdateBag(applyDeltaToBag(bag, resolvedFields)) },
                     enabled = !isUpdating,
                 ) {
-                    Text(stringResource(R.string.action_update_bag))
+                    Text(stringResource(if (hasFinalResults) R.string.action_update_bag else R.string.action_update_bag_so_far))
                 }
             } else {
                 TextButton(onClick = onDismiss, enabled = !isUpdating) {
-                    Text("OK")
+                    Text(stringResource(R.string.action_ok))
                 }
             }
         },
         dismissButton = {
             if (deltas.isNotEmpty()) {
-                Row {
-                    TextButton(onClick = { onNewBag(resolvedFields) }, enabled = !isUpdating) {
-                        Text(stringResource(R.string.action_new_bag))
+                FlowRow(horizontalArrangement = Arrangement.End) {
+                    if (hasCurrentResults) {
+                        TextButton(onClick = { onNewBag(resolvedFields) }, enabled = !isUpdating) {
+                            Text(stringResource(if (hasFinalResults) R.string.action_new_bag else R.string.action_new_bag_so_far))
+                        }
                     }
                     TextButton(onClick = onDismiss, enabled = !isUpdating) {
                         Text(stringResource(R.string.action_cancel))
@@ -319,4 +313,43 @@ fun RescanDeltaDialog(
             }
         },
     )
+}
+
+@Composable
+private fun RescanFieldDeltaCard(delta: FieldDelta) {
+    ElevatedCard(
+        modifier = Modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.medium,
+    ) {
+        Column(modifier = Modifier.padding(12.dp)) {
+            Text(
+                text = delta.label,
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.primary,
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(
+                    text = delta.oldValue,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.weight(1f),
+                )
+                Text(
+                    text = "→",
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                )
+                Text(
+                    text = delta.newValue,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.weight(1f),
+                )
+            }
+        }
+    }
 }

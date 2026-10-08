@@ -1,0 +1,1749 @@
+{
+  "date": "2026-10-01",
+  "animation_id": "coffee_latte",
+  "label": "Latte bloom",
+  "user_direction": "Latte-art heart",
+  "generation_tool": "built-in image_gen",
+  "asset": "app/src/main/res/drawable-nodpi/bloom_coffee_latte_spritesheet.png",
+  "before_sha256": "6635ce343704c8fae1abc6d7f8fa947f6afd98037fb105e7edfec064e8dd53e5",
+  "after_sha256": "d96bb7acbb786c458a352fbd7f37b335d86d6f2b0ec776794db6801c60e06907",
+  "selected_source": "docs/assets/bloom-latte-heart-native-source.png",
+  "selected_source_sha256": "2dd4cab15682ddc6c4af04f3b6590eedce998bbbfea565a8583b4cd007ba4438",
+  "preparation_tool": "tools/prepare_bloom_alpha_atlas.py",
+  "normalization": {
+    "source": ".qa-screens\\latte-heart-redesign-2026-10-01\\regenerate-02-source.png",
+    "output": ".qa-screens\\latte-heart-redesign-2026-10-01\\regenerate-02-prepared.png",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "frame_count": 25,
+    "common_scale": 0.9720930232558139,
+    "baseline": 232,
+    "padding": 24,
+    "alpha_threshold": 24,
+    "source_column_edges": [
+      0,
+      251,
+      502,
+      752,
+      1003,
+      1254
+    ],
+    "source_row_edges": [
+      0,
+      251,
+      502,
+      752,
+      996,
+      1254
+    ],
+    "frames": [
+      {
+        "frame": 1,
+        "bounds": [
+          75,
+          126,
+          182,
+          233
+        ],
+        "source_anchor": 123.561
+      },
+      {
+        "frame": 2,
+        "bounds": [
+          74,
+          119,
+          183,
+          233
+        ],
+        "source_anchor": 127.26
+      },
+      {
+        "frame": 3,
+        "bounds": [
+          73,
+          91,
+          184,
+          233
+        ],
+        "source_anchor": 125.448
+      },
+      {
+        "frame": 4,
+        "bounds": [
+          73,
+          55,
+          185,
+          233
+        ],
+        "source_anchor": 123.532
+      },
+      {
+        "frame": 5,
+        "bounds": [
+          75,
+          70,
+          184,
+          233
+        ],
+        "source_anchor": 126.827
+      },
+      {
+        "frame": 6,
+        "bounds": [
+          62,
+          75,
+          185,
+          233
+        ],
+        "source_anchor": 124.145
+      },
+      {
+        "frame": 7,
+        "bounds": [
+          53,
+          75,
+          207,
+          233
+        ],
+        "source_anchor": 126.803
+      },
+      {
+        "frame": 8,
+        "bounds": [
+          53,
+          87,
+          199,
+          233
+        ],
+        "source_anchor": 124.923
+      },
+      {
+        "frame": 9,
+        "bounds": [
+          62,
+          86,
+          197,
+          233
+        ],
+        "source_anchor": 124.393
+      },
+      {
+        "frame": 10,
+        "bounds": [
+          57,
+          83,
+          202,
+          233
+        ],
+        "source_anchor": 128.068
+      },
+      {
+        "frame": 11,
+        "bounds": [
+          43,
+          65,
+          209,
+          233
+        ],
+        "source_anchor": 124.025
+      },
+      {
+        "frame": 12,
+        "bounds": [
+          39,
+          59,
+          215,
+          233
+        ],
+        "source_anchor": 126.628
+      },
+      {
+        "frame": 13,
+        "bounds": [
+          37,
+          54,
+          220,
+          233
+        ],
+        "source_anchor": 125.911
+      },
+      {
+        "frame": 14,
+        "bounds": [
+          36,
+          50,
+          223,
+          233
+        ],
+        "source_anchor": 125.702
+      },
+      {
+        "frame": 15,
+        "bounds": [
+          34,
+          45,
+          220,
+          233
+        ],
+        "source_anchor": 128.066
+      },
+      {
+        "frame": 16,
+        "bounds": [
+          35,
+          56,
+          223,
+          233
+        ],
+        "source_anchor": 124.568
+      },
+      {
+        "frame": 17,
+        "bounds": [
+          30,
+          52,
+          228,
+          233
+        ],
+        "source_anchor": 126.9
+      },
+      {
+        "frame": 18,
+        "bounds": [
+          29,
+          47,
+          229,
+          233
+        ],
+        "source_anchor": 124.534
+      },
+      {
+        "frame": 19,
+        "bounds": [
+          29,
+          41,
+          230,
+          233
+        ],
+        "source_anchor": 125.293
+      },
+      {
+        "frame": 20,
+        "bounds": [
+          31,
+          35,
+          229,
+          233
+        ],
+        "source_anchor": 128.25
+      },
+      {
+        "frame": 21,
+        "bounds": [
+          37,
+          51,
+          222,
+          233
+        ],
+        "source_anchor": 124.654
+      },
+      {
+        "frame": 22,
+        "bounds": [
+          38,
+          49,
+          222,
+          233
+        ],
+        "source_anchor": 124.636
+      },
+      {
+        "frame": 23,
+        "bounds": [
+          35,
+          40,
+          222,
+          233
+        ],
+        "source_anchor": 124.688
+      },
+      {
+        "frame": 24,
+        "bounds": [
+          35,
+          31,
+          225,
+          233
+        ],
+        "source_anchor": 124.605
+      },
+      {
+        "frame": 25,
+        "bounds": [
+          35,
+          24,
+          224,
+          233
+        ],
+        "source_anchor": 128.087
+      }
+    ]
+  },
+  "attempts": [
+    {
+      "attempt": "initial",
+      "status": "rejected-finished-heart-plateau",
+      "source_sha256": "d869faf5fdc062a3d6c8c01429226b318ab4cf92b1977754c4a2f4b8b8dd7858",
+      "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-a827c2cc-9c32-46e0-8f73-6c5f4f4f9699.png",
+      "prompt": "prompts/bloom-latte-heart-2026-10-01/initial.txt",
+      "prompt_file_sha256": "f26edaeb94350ab8b5f5969b232d139e2e84658779ec7e4777e7307be04618cd",
+      "prompt_sent_utf8_sha256": "cd2ec7a57c8bc5eb6c74f9c6665049da3a6f4056bb43759bc8cb3409dbab02f5"
+    },
+    {
+      "attempt": "repair-01",
+      "status": "rejected-late-holds",
+      "source_sha256": "806ebacf0da904ff6b3f40cb03d770cfbaeda3273d67a91b570d9e50d3f69fee",
+      "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-70ff6ce7-9d65-4f8f-854a-c9474084666b.png",
+      "prompt": "prompts/bloom-latte-heart-2026-10-01/repair-01.txt",
+      "prompt_file_sha256": "e70d485eb28a6c49876acddb5b9cd2f852b9eab3f3ee80ec14c892d0f72ee5e9",
+      "prompt_sent_utf8_sha256": "dbcc6232d9818c77cba1fbcbb55f2414d554419db2acb55f2c8f6eacdacc69a6"
+    },
+    {
+      "attempt": "regenerate-02",
+      "status": "accepted-native-heart-redesign",
+      "source_sha256": "2dd4cab15682ddc6c4af04f3b6590eedce998bbbfea565a8583b4cd007ba4438",
+      "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-563d0c63-337c-43cc-aa48-2922603c18b8.png",
+      "prompt": "prompts/bloom-latte-heart-2026-10-01/regenerate-02.txt",
+      "prompt_file_sha256": "72deadb4aa5a95e9394e1317da2df1fc56b2e97ab2b1cc07f2e864bccf15a9e9",
+      "prompt_sent_utf8_sha256": "23ed804887c311050e5488e5b3b9bc89d35d029c7ff3855240a614d9ff44b4d3"
+    }
+  ],
+  "whole_pose_curation": false,
+  "frames": [
+    {
+      "frame": 1,
+      "sha256_rgba_pixels": "2299e4b6186085d7d9ad88ea467b81ecb489ba60bd67fd61872ef2f8a6b938cf",
+      "bounds_alpha24": [
+        75,
+        126,
+        182,
+        233
+      ]
+    },
+    {
+      "frame": 2,
+      "sha256_rgba_pixels": "7f7eaf1f4119a952f6eb535333c9650e1d6203904195a1c7c4ca80b0cccee2ef",
+      "bounds_alpha24": [
+        74,
+        119,
+        183,
+        233
+      ]
+    },
+    {
+      "frame": 3,
+      "sha256_rgba_pixels": "f2068b56676ce1882610d25c82b1632eb7865f8042a9cd1db4db56e9cb6804e2",
+      "bounds_alpha24": [
+        73,
+        91,
+        184,
+        233
+      ]
+    },
+    {
+      "frame": 4,
+      "sha256_rgba_pixels": "eb44050ef4ffc387578fc5c6a1c125e4a40885b9e7e2980ee8648462c97f6549",
+      "bounds_alpha24": [
+        73,
+        55,
+        185,
+        233
+      ]
+    },
+    {
+      "frame": 5,
+      "sha256_rgba_pixels": "4f8640f15c2f464a47741564b7128f6313e3d79e1640fbaf21856cb21e5b6995",
+      "bounds_alpha24": [
+        75,
+        70,
+        184,
+        233
+      ]
+    },
+    {
+      "frame": 6,
+      "sha256_rgba_pixels": "ad1c630e5c69ecc9b1e804255e67431e1302ba2fcf001b18eb266009d377fd8e",
+      "bounds_alpha24": [
+        62,
+        75,
+        185,
+        233
+      ]
+    },
+    {
+      "frame": 7,
+      "sha256_rgba_pixels": "6944e1662f632841f86d34ea64a561fdbe8ab995d8f91bae075d015ddd27b4c9",
+      "bounds_alpha24": [
+        53,
+        75,
+        207,
+        233
+      ]
+    },
+    {
+      "frame": 8,
+      "sha256_rgba_pixels": "e0e8eea6a5e0fb88babe5fbca0e50999bbc9ec5848e34275a6f3a0b671c6926f",
+      "bounds_alpha24": [
+        53,
+        87,
+        199,
+        233
+      ]
+    },
+    {
+      "frame": 9,
+      "sha256_rgba_pixels": "fc74fef7edf7cdb30f2131914afebce5734234888988d3fa3930a2ad57e4b718",
+      "bounds_alpha24": [
+        62,
+        86,
+        197,
+        233
+      ]
+    },
+    {
+      "frame": 10,
+      "sha256_rgba_pixels": "5f96128f420d2a7d38b0389176146245d627337a03ad0120dca0ace55d453caf",
+      "bounds_alpha24": [
+        57,
+        83,
+        202,
+        233
+      ]
+    },
+    {
+      "frame": 11,
+      "sha256_rgba_pixels": "eccd4c6ae1ed0772a590fb30da5924325cbfd8d7ecf49bc03549d16b05ab7bc1",
+      "bounds_alpha24": [
+        43,
+        65,
+        209,
+        233
+      ]
+    },
+    {
+      "frame": 12,
+      "sha256_rgba_pixels": "e869d96e0e5d47870998a2f2c83d85f149e7ba1488b7eb59c29a21e217e7b4a2",
+      "bounds_alpha24": [
+        39,
+        59,
+        215,
+        233
+      ]
+    },
+    {
+      "frame": 13,
+      "sha256_rgba_pixels": "b9bf6cdf328ba4c0301ee7f5451c4436693522491d6aa062bca632a3278c6469",
+      "bounds_alpha24": [
+        37,
+        54,
+        220,
+        233
+      ]
+    },
+    {
+      "frame": 14,
+      "sha256_rgba_pixels": "56bc86bb4a880a76786abc7d095393b19b34c7e87909eec2ef9812f68ab09258",
+      "bounds_alpha24": [
+        36,
+        50,
+        223,
+        233
+      ]
+    },
+    {
+      "frame": 15,
+      "sha256_rgba_pixels": "f675a976583dca69bef9bde361e6a5942e7615d3879983972208eb7d1db7ec45",
+      "bounds_alpha24": [
+        34,
+        45,
+        220,
+        233
+      ]
+    },
+    {
+      "frame": 16,
+      "sha256_rgba_pixels": "507ddd9526415a7b08df2a54afa3089f6a8a8469bdb5394c65c8a352e6b6ecca",
+      "bounds_alpha24": [
+        35,
+        56,
+        223,
+        233
+      ]
+    },
+    {
+      "frame": 17,
+      "sha256_rgba_pixels": "afde8f27baebac11481210ee1598a2d14fa813b201c5f40c5765898928a71475",
+      "bounds_alpha24": [
+        30,
+        52,
+        228,
+        233
+      ]
+    },
+    {
+      "frame": 18,
+      "sha256_rgba_pixels": "2489c4f8a1f73825b89a1be43ce093e94d8a9ffc1231acdee60b903767f2b4cc",
+      "bounds_alpha24": [
+        29,
+        47,
+        229,
+        233
+      ]
+    },
+    {
+      "frame": 19,
+      "sha256_rgba_pixels": "f86b25eda2230a4510588875cd0b3e58fe0280e72514c774c765b1b166567d65",
+      "bounds_alpha24": [
+        29,
+        41,
+        230,
+        233
+      ]
+    },
+    {
+      "frame": 20,
+      "sha256_rgba_pixels": "017840a46f8e7393e3bcfbff782c64d0d5220ffd903bffed84a0979444da4b2e",
+      "bounds_alpha24": [
+        31,
+        35,
+        229,
+        233
+      ]
+    },
+    {
+      "frame": 21,
+      "sha256_rgba_pixels": "4eb4c5b0d45bf0d68dce42f13c8abeb340cd8dd3d610c06577bbd171cbdfe24c",
+      "bounds_alpha24": [
+        37,
+        51,
+        222,
+        233
+      ]
+    },
+    {
+      "frame": 22,
+      "sha256_rgba_pixels": "512820481d1c128dc91b6ca45e228e8e40a2fb4938c68d52a1b8b5153f82485d",
+      "bounds_alpha24": [
+        38,
+        49,
+        222,
+        233
+      ]
+    },
+    {
+      "frame": 23,
+      "sha256_rgba_pixels": "d91cb717d1b52105ace2fc514439abf5bb4ecb9f9bbd7678c089e4e4d739b9c6",
+      "bounds_alpha24": [
+        35,
+        40,
+        222,
+        233
+      ]
+    },
+    {
+      "frame": 24,
+      "sha256_rgba_pixels": "7cb8d43d9f30c3d6644f62c765ffa8446caa7cd627f7acfa2b70423c9f5c82a1",
+      "bounds_alpha24": [
+        35,
+        31,
+        225,
+        233
+      ]
+    },
+    {
+      "frame": 25,
+      "sha256_rgba_pixels": "f0e3b7afc66af834aaab730721e11a57d586fc0dc0ad368ccb4d22d8dd229a37",
+      "bounds_alpha24": [
+        35,
+        24,
+        224,
+        233
+      ]
+    }
+  ],
+  "astra_review": {
+    "reviewer_model": "gpt-6-astra",
+    "verdict": "accept",
+    "asset_id": "coffee_latte",
+    "prepared_path": "G:/Github/StarlitCoffee/.qa-screens/latte-heart-redesign-2026-10-01/regenerate-02-prepared.png",
+    "prepared_sha256": "d96bb7acbb786c458a352fbd7f37b335d86d6f2b0ec776794db6801c60e06907",
+    "evidence": [
+      "regenerate-02_light.png",
+      "regenerate-02_dark.png",
+      "regenerate-02-prepared.png",
+      "previews/regenerate-02-prepared.json"
+    ],
+    "review_boundary": "Independent visual review of all25 prepared poses and all24 adjacent transitions, including5→6,10→11,15→16,20→21, on actual148px light/dark contact sheets. Static contact evidence, not timed Compose playback. File SHA256 verified directly.",
+    "main_finding": "The sequence now reserves real shape development for the end. A connected milk ribbon becomes an oval pool, then a shallow two-lobe fan, then a taller heart with a deeper cleft and progressively drawn lower point. Both earlier rejected atlases completed the heart too soon; this one has a visible progressive final-row finish.",
+    "phase_readout": [
+      {
+        "frames": "F1-8",
+        "finding": "Recognizable continuous milk bead/ribbon/pool motion; no cream-plant or flame identity."
+      },
+      {
+        "frames": "F9-14",
+        "finding": "Unbroken oval pool expands without prematurely becoming the final heart."
+      },
+      {
+        "frames": "F15-20",
+        "finding": "Shoulders and a shallow cleft gradually form; the broad lower mass leaves further shaping to do."
+      },
+      {
+        "frames": "F21-25",
+        "finding": "Cleft, upward-rounded lobes and lower taper visibly develop. F21 is a wider/shallower heart than the taller finalF25."
+      }
+    ],
+    "adjacent_transition_review": [
+      {
+        "frames": "F1→F2",
+        "finding": "Ivory bead appears at the seam; distinct start."
+      },
+      {
+        "frames": "F2→F3",
+        "finding": "Bead extends into a short upright ribbon."
+      },
+      {
+        "frames": "F3→F4",
+        "finding": "Ribbon rises visibly higher while remaining attached."
+      },
+      {
+        "frames": "F4→F5",
+        "finding": "Tip bends left into a rounded hook; a fluid turn rather than generic vertical growth."
+      },
+      {
+        "frames": "F5→F6",
+        "finding": "Hook settles downward into a broader leftward milk pool."
+      },
+      {
+        "frames": "F6→F7",
+        "finding": "Rightward arm extends from the same connected milk body."
+      },
+      {
+        "frames": "F7→F8",
+        "finding": "Right arm rounds and left hook subsides; footprint contracts slightly while the fluid form consolidates."
+      },
+      {
+        "frames": "F8→F9",
+        "finding": "Open curled silhouette resolves into an unbroken oval milk pool."
+      },
+      {
+        "frames": "F9→F10",
+        "finding": "Oval pool widens and fills."
+      },
+      {
+        "frames": "F10→F11",
+        "finding": "Pool broadens and gains depth across the row boundary; no reset to an earlier form."
+      },
+      {
+        "frames": "F11→F12",
+        "finding": "Milk fan gains a little width and thickness."
+      },
+      {
+        "frames": "F12→F13",
+        "finding": "Oval fan grows wider/taller; lower-amplitude but cumulative development."
+      },
+      {
+        "frames": "F13→F14",
+        "finding": "Crown becomes fuller; a quiet expansion step, with unbroken oval identity retained."
+      },
+      {
+        "frames": "F14→F15",
+        "finding": "First shallow center notch appears, introducing paired shoulders."
+      },
+      {
+        "frames": "F15→F16",
+        "finding": "Notch and paired shoulders become clearer while the bottom remains broad."
+      },
+      {
+        "frames": "F16→F17",
+        "finding": "Small additional shoulder fullness and cleft shaping; one of the quieter middle steps."
+      },
+      {
+        "frames": "F17→F18",
+        "finding": "Center indentation becomes more deliberate while both lobes persist."
+      },
+      {
+        "frames": "F18→F19",
+        "finding": "Cleft deepens and the milk-body shading starts converging toward the lower attachment."
+      },
+      {
+        "frames": "F19→F20",
+        "finding": "Lobe crown gains height and the central V becomes stronger; lower body remains relatively broad."
+      },
+      {
+        "frames": "F20→F21",
+        "finding": "Noticeable narrowing accompanies inward-drawing lower sides and a more defined point. Abrupt compared with surrounding steps, but coherent liquid shaping rather than loss of a lobe."
+      },
+      {
+        "frames": "F21→F22",
+        "finding": "Small cleft/inner-curve refinement and point definition; quietest finishing step, not a new major milestone."
+      },
+      {
+        "frames": "F22→F23",
+        "finding": "Lobes rise and round more fully; cleft and lower taper become more pronounced."
+      },
+      {
+        "frames": "F23→F24",
+        "finding": "Heart becomes visibly taller, with fuller shoulders and an extended pointed lower body."
+      },
+      {
+        "frames": "F24→F25",
+        "finding": "Further crown fullness and final taper complete the heart; final silhouette differs visibly fromF21."
+      }
+    ],
+    "residuals": [
+      {
+        "severity": "minor",
+        "frames": "F20→F21",
+        "finding": "Width contracts noticeably at the row boundary. The point/lower-side transformation gives it a coherent liquid-shaping explanation, but this remains the sharpest finishing transition."
+      },
+      {
+        "severity": "minor",
+        "frames": "F11-14, F16-17, F21-22",
+        "finding": "Some increments are subtler than others. They support cumulative fan/cleft shaping and do not produce the long completed-heart plateau that blocked the first two versions."
+      },
+      {
+        "severity": "minor",
+        "frames": "F20-25",
+        "finding": "The pull-through is communicated mainly by converging milk lines, increasing cleft and drawn lower contour, rather than a separately visible traveling stroke tip. The completion action is nevertheless readable at148px."
+      }
+    ],
+    "theme_clarity": {
+      "light": "Ivory shape remains legible through the caramel outline; cleft and lower point stay identifiable at148px.",
+      "dark": "Milk body and contour are clear; final inner convergence reads strongly without extra particles or glow beats."
+    },
+    "continuity": "Both lobes persist after formation; no lobe disappearance, bean relocation or return from a finished heart to an oval pool observed. The earlier curled ribbon consolidates as fluid rather than preserving plant-like anatomy.",
+    "acceptance_reason": "Accepted for a visible progressive heart finish and coherent Latte identity. This is not acceptance of byte-distinct repainting: the final row changes the outer heart geometry at display size. Minor unequal pacing remains, but no blocking plateau or anatomical reversal was observed.",
+    "production_edits": false
+  },
+  "independent_astra_review": {
+    "reviewer_model": "gpt-6-astra",
+    "date": "2026-10-01",
+    "candidate": "regenerate-02",
+    "prepared_path": "G:/Github/StarlitCoffee/.qa-screens/latte-heart-redesign-2026-10-01/regenerate-02-prepared.png",
+    "sha256": "d96bb7acbb786c458a352fbd7f37b335d86d6f2b0ec776794db6801c60e06907",
+    "verdict": "accept-with-minor-polish-residuals",
+    "blockers": [],
+    "method": "Independent visual review of all 25 row-major poses in regenerate-02_light.png and regenerate-02_dark.png at 148px, followed by the exact prepared 1280px atlas. No reliance on acceptance of the obsolete cream-plant design. Static contact-sheet review, not live Compose playback or a temporal smoothness measurement.",
+    "observed_flow": [
+      {
+        "frames": "F1-5",
+        "finding": "A small milk bead emerges from the bean seam, lengthens and curls. The bean remains recognizably the same centered base."
+      },
+      {
+        "frames": "F6-10",
+        "finding": "The curl spreads laterally into a connected milk fan/pool. Height decreases as width grows; this reads as fluid spreading rather than plant shrinkage or a reset."
+      },
+      {
+        "frames": "F11-14",
+        "finding": "The shallow fan expands and gains cream/coffee rings. This is legible preparation for the heart, although the neighboring silhouettes are similar."
+      },
+      {
+        "frames": "F15-20",
+        "finding": "A central cleft appears and deepens while both rounded lobes rise. The milk surface stays continuous and no lobe disappears."
+      },
+      {
+        "frames": "F21-25",
+        "finding": "The shape becomes narrower and taller, the cleft deepens, and the pale central pull-through converges into a longer point over the bean seam. F23-25 develops the upward lobes and pointed lower section further instead of reserving all heart formation for F25."
+      }
+    ],
+    "strengths": [
+      "The final silhouette is unambiguously a latte-art heart in both themes, with rounded lobes, a readable cleft and a pointed lower pull-through.",
+      "The milk-to-fan-to-heart transition is connected and conceptually coherent. F20-21 trades width for cleft/point definition rather than visibly deleting an established component.",
+      "The bean remains in a stable position and supports the milk shape throughout. Minor painted contour variation does not look like a base replacement.",
+      "Cream surfaces remain opaque; the coffee-colored contour preserves separation on the light background. No visible alpha holes, clipped edges or detached remnants were found."
+    ],
+    "residuals": [
+      {
+        "frames": "F5-6",
+        "severity": "minor",
+        "finding": "The upright curl flattens and spreads substantially in one step. It is a coherent fluid turn, but the lateral spreading begins more abruptly than the initial milk rise."
+      },
+      {
+        "frames": "F11-14",
+        "severity": "minor",
+        "finding": "Several oval-fan poses differ mainly by size and internal rings; their contribution is subtler than the heart-forming poses."
+      },
+      {
+        "frames": "F20-21",
+        "severity": "minor",
+        "finding": "The visible width contracts as the central pull-through sharpens and the brown rim strengthens. The overall flow remains coherent, though this transition has a stronger material/shape change than its neighbors."
+      },
+      {
+        "frames": "F21-22",
+        "severity": "minor",
+        "finding": "This pair is near-held at 148px; the later F23-25 poses provide clearer lobe-height and point development. It is not a damaging stalled final row."
+      }
+    ],
+    "recommendation": "Accept this candidate for the selected heart redesign. No further regeneration is required for anatomy, transparency or final-heart clarity. If polishing further, distribute the F5-6 lateral spread and F20-21 pull-through over neighboring poses while retaining the current final heart."
+  },
+  "description_resource": "desc_bloom_sprite_coffee_latte",
+  "explicit_locales_updated": 23,
+  "validation_boundary": "All 25 poses in light/dark 148px approximation reviewed by two Astra agents. Recorded native Android checks prove paused Compose poses and exact preview/finish agreement, not physical-device playback, live tween timing or dynamic palettes.",
+  "validation": {
+    "asset_id": "coffee_latte",
+    "created_utc": "2026-10-01T14:32:40.039042+00:00",
+    "status": "passed_bounded_validation",
+    "build_snapshot": {
+      "baseline_commit": "b44d8a5f6ee9c383060b2dd4bffb767121da1447",
+      "method": "git archive plus only Latte-owned code/resource overlays",
+      "overlay_files": {
+        "app/src/main/res/drawable-nodpi/bloom_coffee_latte_spritesheet.png": "d96bb7acbb786c458a352fbd7f37b335d86d6f2b0ec776794db6801c60e06907",
+        "app/src/androidTest/java/com/adsamcik/starlitcoffee/ui/component/BloomSpritesheetRenderingTest.kt": "953112db5f61ed31344123f3ee45f2da3b18ac866a7829cf3ecd48d9ff9f5c4d",
+        "app/src/main/res/values/strings.xml": "427e58db66c4421378ea3e468dabdf246eb2ad40994af9c4457801e342ca5c77",
+        "app/src/main/res/values-bg/strings.xml": "bd0dab2038ba90b33c50e8887d5183741e79309124a6a0a083bdd63b5d55ea4d",
+        "app/src/main/res/values-cs/strings.xml": "162a1cf3a785f622330401137dbdc05942336fdded47f951d06842809862dcbc",
+        "app/src/main/res/values-da/strings.xml": "9216b964b48f0f8e6f08b63b2f80cdd023bc80aef7788cef40ccfe59b58ad039",
+        "app/src/main/res/values-de/strings.xml": "290a3036a16c043e7ea8788a11c2ba306a464587fc513a7cc540b9539672058d",
+        "app/src/main/res/values-el/strings.xml": "54766aaf9a2fbacd26af0804a87eb4b4689d227329b8c0e2a1ff1ae1496b4b67",
+        "app/src/main/res/values-es/strings.xml": "b87467becaecf4f4197cdb6198974a3fbec3bfc60c7310f2843b38c633e9c286",
+        "app/src/main/res/values-et/strings.xml": "ddccf14f09ad22e08cc5894b0c61a7b92cf7d4fd4fb9613b464ccfb533b3ec66",
+        "app/src/main/res/values-fi/strings.xml": "ee601bbea22fa6254c3c83c444ada173f2e0f240c4c478351ceef9fad0d547be",
+        "app/src/main/res/values-fr/strings.xml": "d1738bc2c7396fb8ecba125611eb9071acb32dba05a8d52c1b9652d0dac54c74",
+        "app/src/main/res/values-hr/strings.xml": "dab4fa425f0b1c8233b05855f1795aa1c9e285f99138ee5b30c600610f2f633c",
+        "app/src/main/res/values-hu/strings.xml": "c4bffeb03e7988b5c04feb36f9916e6f54822db58b687bd6dc451cb7f81a6e95",
+        "app/src/main/res/values-it/strings.xml": "a7abf33ad0417560a7b5fae1ae21e20743ccea12493a97b657ccc5e71121c79c",
+        "app/src/main/res/values-lt/strings.xml": "5f1922063fd6fbfbe4a9b7dad52519c8b7d414359c35e6361b289be33a440b56",
+        "app/src/main/res/values-lv/strings.xml": "7d8d343e6057be98638d24f86bfe35f38b77e441328747020c589b4756c1f7fb",
+        "app/src/main/res/values-nl/strings.xml": "953dd7f782837fc072225f04329ed925d4392605a6ad7615aaffad6c56c37c53",
+        "app/src/main/res/values-pl/strings.xml": "e3155bea7a979a3b5404c03c8f5c0a705f86de927d465bec95061bab95d58efc",
+        "app/src/main/res/values-pt/strings.xml": "594ac14edfc490646229873aa6a97ae6537fa19337b6a4ad6184a92529b5c5c4",
+        "app/src/main/res/values-ro/strings.xml": "26963265b6b4c4a4e06796abc0df3737ca1927193bb5b0d10026eb72179fb46d",
+        "app/src/main/res/values-sk/strings.xml": "1290c0b77d22f122d49014ee4a3ed354725976c37bd3324c29dd84f41b708c70",
+        "app/src/main/res/values-sl/strings.xml": "75ad942ccfeeb0e4979668722a22d4bf549813e08b7af783787350d7740f8e1a",
+        "app/src/main/res/values-sv/strings.xml": "4fa0334af2c349397f508834068400bdb85746ac16b74d2a2e4c4a0b318bb081",
+        "app/src/main/res/values-zh/strings.xml": "532ab637b28c2d662e80c9f4ce1ebe6bf2556133137bc48b92f99adb26d207f8"
+      }
+    },
+    "isolated_build": {
+      "status": "passed",
+      "tasks": [
+        "assembleDebug",
+        "assembleDebugAndroidTest",
+        "detekt"
+      ],
+      "log": "isolated-build.log",
+      "detekt_report": "isolated-detekt.xml",
+      "detekt_findings": 0,
+      "copied_apks": {
+        "latte-heart-review.apk": {
+          "sha256": "0d586a71b60e3562d1457e2a01d7a0c86c6c6bb513e167f24feb91faa5560d21",
+          "bytes": 349861352
+        },
+        "latte-heart-review-test.apk": {
+          "sha256": "ce4f5c16e3910c43fc20db35cc7154aebbdc128f86d95bcb3bdbb107d0c6797a",
+          "bytes": 1536509
+        }
+      }
+    },
+    "native_validation": {
+      "instrumentation_log": "instrumentation.log",
+      "passed_tests": 2,
+      "arguments": {
+        "bloomOnly": "coffee_latte",
+        "bloomAllFrames": "true",
+        "bloomCapture": "true"
+      },
+      "capture_count": 50,
+      "poses_per_theme": 25,
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "native_capture_shape_hwc": [
+        389,
+        389,
+        4
+      ],
+      "duration_seconds": 48,
+      "countdowns": [
+        48,
+        46,
+        44,
+        42,
+        40,
+        38,
+        36,
+        34,
+        32,
+        30,
+        28,
+        26,
+        24,
+        22,
+        20,
+        18,
+        16,
+        14,
+        12,
+        10,
+        8,
+        6,
+        4,
+        2,
+        0
+      ],
+      "adjacent_comparisons": [
+        {
+          "theme": "light",
+          "from_frame": 1,
+          "to_frame": 2,
+          "from_countdown_seconds": 48,
+          "to_countdown_seconds": 46,
+          "changed_pixels": 23604
+        },
+        {
+          "theme": "light",
+          "from_frame": 2,
+          "to_frame": 3,
+          "from_countdown_seconds": 46,
+          "to_countdown_seconds": 44,
+          "changed_pixels": 25820
+        },
+        {
+          "theme": "light",
+          "from_frame": 3,
+          "to_frame": 4,
+          "from_countdown_seconds": 44,
+          "to_countdown_seconds": 42,
+          "changed_pixels": 29083
+        },
+        {
+          "theme": "light",
+          "from_frame": 4,
+          "to_frame": 5,
+          "from_countdown_seconds": 42,
+          "to_countdown_seconds": 40,
+          "changed_pixels": 31699
+        },
+        {
+          "theme": "light",
+          "from_frame": 5,
+          "to_frame": 6,
+          "from_countdown_seconds": 40,
+          "to_countdown_seconds": 38,
+          "changed_pixels": 34220
+        },
+        {
+          "theme": "light",
+          "from_frame": 6,
+          "to_frame": 7,
+          "from_countdown_seconds": 38,
+          "to_countdown_seconds": 36,
+          "changed_pixels": 37099
+        },
+        {
+          "theme": "light",
+          "from_frame": 7,
+          "to_frame": 8,
+          "from_countdown_seconds": 36,
+          "to_countdown_seconds": 34,
+          "changed_pixels": 38069
+        },
+        {
+          "theme": "light",
+          "from_frame": 8,
+          "to_frame": 9,
+          "from_countdown_seconds": 34,
+          "to_countdown_seconds": 32,
+          "changed_pixels": 38612
+        },
+        {
+          "theme": "light",
+          "from_frame": 9,
+          "to_frame": 10,
+          "from_countdown_seconds": 32,
+          "to_countdown_seconds": 30,
+          "changed_pixels": 38991
+        },
+        {
+          "theme": "light",
+          "from_frame": 10,
+          "to_frame": 11,
+          "from_countdown_seconds": 30,
+          "to_countdown_seconds": 28,
+          "changed_pixels": 47724
+        },
+        {
+          "theme": "light",
+          "from_frame": 11,
+          "to_frame": 12,
+          "from_countdown_seconds": 28,
+          "to_countdown_seconds": 26,
+          "changed_pixels": 51799
+        },
+        {
+          "theme": "light",
+          "from_frame": 12,
+          "to_frame": 13,
+          "from_countdown_seconds": 26,
+          "to_countdown_seconds": 24,
+          "changed_pixels": 55072
+        },
+        {
+          "theme": "light",
+          "from_frame": 13,
+          "to_frame": 14,
+          "from_countdown_seconds": 24,
+          "to_countdown_seconds": 22,
+          "changed_pixels": 57573
+        },
+        {
+          "theme": "light",
+          "from_frame": 14,
+          "to_frame": 15,
+          "from_countdown_seconds": 22,
+          "to_countdown_seconds": 20,
+          "changed_pixels": 60024
+        },
+        {
+          "theme": "light",
+          "from_frame": 15,
+          "to_frame": 16,
+          "from_countdown_seconds": 20,
+          "to_countdown_seconds": 18,
+          "changed_pixels": 60654
+        },
+        {
+          "theme": "light",
+          "from_frame": 16,
+          "to_frame": 17,
+          "from_countdown_seconds": 18,
+          "to_countdown_seconds": 16,
+          "changed_pixels": 57815
+        },
+        {
+          "theme": "light",
+          "from_frame": 17,
+          "to_frame": 18,
+          "from_countdown_seconds": 16,
+          "to_countdown_seconds": 14,
+          "changed_pixels": 60960
+        },
+        {
+          "theme": "light",
+          "from_frame": 18,
+          "to_frame": 19,
+          "from_countdown_seconds": 14,
+          "to_countdown_seconds": 12,
+          "changed_pixels": 63736
+        },
+        {
+          "theme": "light",
+          "from_frame": 19,
+          "to_frame": 20,
+          "from_countdown_seconds": 12,
+          "to_countdown_seconds": 10,
+          "changed_pixels": 65916
+        },
+        {
+          "theme": "light",
+          "from_frame": 20,
+          "to_frame": 21,
+          "from_countdown_seconds": 10,
+          "to_countdown_seconds": 8,
+          "changed_pixels": 65180
+        },
+        {
+          "theme": "light",
+          "from_frame": 21,
+          "to_frame": 22,
+          "from_countdown_seconds": 8,
+          "to_countdown_seconds": 6,
+          "changed_pixels": 56976
+        },
+        {
+          "theme": "light",
+          "from_frame": 22,
+          "to_frame": 23,
+          "from_countdown_seconds": 6,
+          "to_countdown_seconds": 4,
+          "changed_pixels": 61704
+        },
+        {
+          "theme": "light",
+          "from_frame": 23,
+          "to_frame": 24,
+          "from_countdown_seconds": 4,
+          "to_countdown_seconds": 2,
+          "changed_pixels": 65319
+        },
+        {
+          "theme": "light",
+          "from_frame": 24,
+          "to_frame": 25,
+          "from_countdown_seconds": 2,
+          "to_countdown_seconds": 0,
+          "changed_pixels": 69930
+        },
+        {
+          "theme": "dark",
+          "from_frame": 1,
+          "to_frame": 2,
+          "from_countdown_seconds": 48,
+          "to_countdown_seconds": 46,
+          "changed_pixels": 23582
+        },
+        {
+          "theme": "dark",
+          "from_frame": 2,
+          "to_frame": 3,
+          "from_countdown_seconds": 46,
+          "to_countdown_seconds": 44,
+          "changed_pixels": 25819
+        },
+        {
+          "theme": "dark",
+          "from_frame": 3,
+          "to_frame": 4,
+          "from_countdown_seconds": 44,
+          "to_countdown_seconds": 42,
+          "changed_pixels": 29074
+        },
+        {
+          "theme": "dark",
+          "from_frame": 4,
+          "to_frame": 5,
+          "from_countdown_seconds": 42,
+          "to_countdown_seconds": 40,
+          "changed_pixels": 31695
+        },
+        {
+          "theme": "dark",
+          "from_frame": 5,
+          "to_frame": 6,
+          "from_countdown_seconds": 40,
+          "to_countdown_seconds": 38,
+          "changed_pixels": 34214
+        },
+        {
+          "theme": "dark",
+          "from_frame": 6,
+          "to_frame": 7,
+          "from_countdown_seconds": 38,
+          "to_countdown_seconds": 36,
+          "changed_pixels": 37098
+        },
+        {
+          "theme": "dark",
+          "from_frame": 7,
+          "to_frame": 8,
+          "from_countdown_seconds": 36,
+          "to_countdown_seconds": 34,
+          "changed_pixels": 38089
+        },
+        {
+          "theme": "dark",
+          "from_frame": 8,
+          "to_frame": 9,
+          "from_countdown_seconds": 34,
+          "to_countdown_seconds": 32,
+          "changed_pixels": 38617
+        },
+        {
+          "theme": "dark",
+          "from_frame": 9,
+          "to_frame": 10,
+          "from_countdown_seconds": 32,
+          "to_countdown_seconds": 30,
+          "changed_pixels": 39026
+        },
+        {
+          "theme": "dark",
+          "from_frame": 10,
+          "to_frame": 11,
+          "from_countdown_seconds": 30,
+          "to_countdown_seconds": 28,
+          "changed_pixels": 47702
+        },
+        {
+          "theme": "dark",
+          "from_frame": 11,
+          "to_frame": 12,
+          "from_countdown_seconds": 28,
+          "to_countdown_seconds": 26,
+          "changed_pixels": 51824
+        },
+        {
+          "theme": "dark",
+          "from_frame": 12,
+          "to_frame": 13,
+          "from_countdown_seconds": 26,
+          "to_countdown_seconds": 24,
+          "changed_pixels": 55093
+        },
+        {
+          "theme": "dark",
+          "from_frame": 13,
+          "to_frame": 14,
+          "from_countdown_seconds": 24,
+          "to_countdown_seconds": 22,
+          "changed_pixels": 57581
+        },
+        {
+          "theme": "dark",
+          "from_frame": 14,
+          "to_frame": 15,
+          "from_countdown_seconds": 22,
+          "to_countdown_seconds": 20,
+          "changed_pixels": 60078
+        },
+        {
+          "theme": "dark",
+          "from_frame": 15,
+          "to_frame": 16,
+          "from_countdown_seconds": 20,
+          "to_countdown_seconds": 18,
+          "changed_pixels": 60699
+        },
+        {
+          "theme": "dark",
+          "from_frame": 16,
+          "to_frame": 17,
+          "from_countdown_seconds": 18,
+          "to_countdown_seconds": 16,
+          "changed_pixels": 57852
+        },
+        {
+          "theme": "dark",
+          "from_frame": 17,
+          "to_frame": 18,
+          "from_countdown_seconds": 16,
+          "to_countdown_seconds": 14,
+          "changed_pixels": 60951
+        },
+        {
+          "theme": "dark",
+          "from_frame": 18,
+          "to_frame": 19,
+          "from_countdown_seconds": 14,
+          "to_countdown_seconds": 12,
+          "changed_pixels": 63769
+        },
+        {
+          "theme": "dark",
+          "from_frame": 19,
+          "to_frame": 20,
+          "from_countdown_seconds": 12,
+          "to_countdown_seconds": 10,
+          "changed_pixels": 65990
+        },
+        {
+          "theme": "dark",
+          "from_frame": 20,
+          "to_frame": 21,
+          "from_countdown_seconds": 10,
+          "to_countdown_seconds": 8,
+          "changed_pixels": 65183
+        },
+        {
+          "theme": "dark",
+          "from_frame": 21,
+          "to_frame": 22,
+          "from_countdown_seconds": 8,
+          "to_countdown_seconds": 6,
+          "changed_pixels": 56979
+        },
+        {
+          "theme": "dark",
+          "from_frame": 22,
+          "to_frame": 23,
+          "from_countdown_seconds": 6,
+          "to_countdown_seconds": 4,
+          "changed_pixels": 61681
+        },
+        {
+          "theme": "dark",
+          "from_frame": 23,
+          "to_frame": 24,
+          "from_countdown_seconds": 4,
+          "to_countdown_seconds": 2,
+          "changed_pixels": 65361
+        },
+        {
+          "theme": "dark",
+          "from_frame": 24,
+          "to_frame": 25,
+          "from_countdown_seconds": 2,
+          "to_countdown_seconds": 0,
+          "changed_pixels": 69949
+        }
+      ],
+      "minimum_changed_pixels": 23582,
+      "threshold": ">64 changed pixels on each of 48 adjacent pairs",
+      "preview_finish_comparisons": 2,
+      "preview_finish_evidence": "The passing everyFinalPreviewMatchesPlayedFinishInBothThemes method compares played F25 to chooser preview in light and dark themes; no separate preview PNGs are inferred.",
+      "captures": [
+        {
+          "file": "native/coffee_latte_light_48.png",
+          "theme": "light",
+          "frame": 1,
+          "countdown_seconds": 48,
+          "sha256": "179b62b1aaf764cafcc4a764bc103ad929aaa3eff4790777aa33e6ca2ad3f5c9"
+        },
+        {
+          "file": "native/coffee_latte_light_46.png",
+          "theme": "light",
+          "frame": 2,
+          "countdown_seconds": 46,
+          "sha256": "6150642ff6f1bd3f8085362c1e2426d952ecc9b80f092ffe9a8953e2bc58b3e8"
+        },
+        {
+          "file": "native/coffee_latte_light_44.png",
+          "theme": "light",
+          "frame": 3,
+          "countdown_seconds": 44,
+          "sha256": "b2e76f037aa58c35cb98ce56a567a81d57a1b4e1908e5db6c5d73f3cf4f7c9fc"
+        },
+        {
+          "file": "native/coffee_latte_light_42.png",
+          "theme": "light",
+          "frame": 4,
+          "countdown_seconds": 42,
+          "sha256": "115f697e6adc6c69b1353732e89958c0d4332faa612a6ec4ac585c088172f553"
+        },
+        {
+          "file": "native/coffee_latte_light_40.png",
+          "theme": "light",
+          "frame": 5,
+          "countdown_seconds": 40,
+          "sha256": "f389fca42702cee44611161884fdf11f84a73b895fc0f5401e7017be93259679"
+        },
+        {
+          "file": "native/coffee_latte_light_38.png",
+          "theme": "light",
+          "frame": 6,
+          "countdown_seconds": 38,
+          "sha256": "4851dbb2bb49fb6429333b7642b2d172a522ae1f4e430056aa3e56ca2fed314f"
+        },
+        {
+          "file": "native/coffee_latte_light_36.png",
+          "theme": "light",
+          "frame": 7,
+          "countdown_seconds": 36,
+          "sha256": "bd2ed1b8c420abb9a8d2920262335007b7af6d4ec2d52de3f007917c17b0d7bc"
+        },
+        {
+          "file": "native/coffee_latte_light_34.png",
+          "theme": "light",
+          "frame": 8,
+          "countdown_seconds": 34,
+          "sha256": "31fef98abed388796b8bbf1abd806638e8f941498e5ae018fa5ddb247ebf2d77"
+        },
+        {
+          "file": "native/coffee_latte_light_32.png",
+          "theme": "light",
+          "frame": 9,
+          "countdown_seconds": 32,
+          "sha256": "29824fe9aa3ed378dcfc48464bcc6fe04b8d033bd9e5ec7231d6abf6ba5ede46"
+        },
+        {
+          "file": "native/coffee_latte_light_30.png",
+          "theme": "light",
+          "frame": 10,
+          "countdown_seconds": 30,
+          "sha256": "59a16cdb23486591e10df758ef6978979570951fb44b82cbb4938eeade5f3fb6"
+        },
+        {
+          "file": "native/coffee_latte_light_28.png",
+          "theme": "light",
+          "frame": 11,
+          "countdown_seconds": 28,
+          "sha256": "4e27ecc9904e3199c7339dde8e09bb4b36a3eac0eda148a94557b8e8e7b91703"
+        },
+        {
+          "file": "native/coffee_latte_light_26.png",
+          "theme": "light",
+          "frame": 12,
+          "countdown_seconds": 26,
+          "sha256": "7961098afc7048efb6ceb09eef61802801e3f52dacb7b34b101be753c2f48ecb"
+        },
+        {
+          "file": "native/coffee_latte_light_24.png",
+          "theme": "light",
+          "frame": 13,
+          "countdown_seconds": 24,
+          "sha256": "82396d424ca533f3bf903a41ed7da6aaf97c9090495c485723846ae86c81fe7c"
+        },
+        {
+          "file": "native/coffee_latte_light_22.png",
+          "theme": "light",
+          "frame": 14,
+          "countdown_seconds": 22,
+          "sha256": "4d79ca3ca31e90cfc3e388e9ac24cd26f0e5bd97b7e4eef09f467f50af956b5c"
+        },
+        {
+          "file": "native/coffee_latte_light_20.png",
+          "theme": "light",
+          "frame": 15,
+          "countdown_seconds": 20,
+          "sha256": "46fd1b2b4ea4995c218c85835cb63d33cbd576b939edee5e40d5c4139b1dfad0"
+        },
+        {
+          "file": "native/coffee_latte_light_18.png",
+          "theme": "light",
+          "frame": 16,
+          "countdown_seconds": 18,
+          "sha256": "171517026d0d2bc1fa7fc58e9287681ebfe8eee0de7e5a09c0588d6dd6125ba5"
+        },
+        {
+          "file": "native/coffee_latte_light_16.png",
+          "theme": "light",
+          "frame": 17,
+          "countdown_seconds": 16,
+          "sha256": "03bf53630996e97e46fd6ee0e24e7bbc83bec5bef0b941a28b3eb287486bdd77"
+        },
+        {
+          "file": "native/coffee_latte_light_14.png",
+          "theme": "light",
+          "frame": 18,
+          "countdown_seconds": 14,
+          "sha256": "e5c3d1fb485de9c9d38276c395a60e50938fb37fd23558fbe26077e55c1728b6"
+        },
+        {
+          "file": "native/coffee_latte_light_12.png",
+          "theme": "light",
+          "frame": 19,
+          "countdown_seconds": 12,
+          "sha256": "ea61588797a305a3907575e9c70524f4dee81fe33e120ab8da31eff82e9217ca"
+        },
+        {
+          "file": "native/coffee_latte_light_10.png",
+          "theme": "light",
+          "frame": 20,
+          "countdown_seconds": 10,
+          "sha256": "fdd567e4b695c1b243aa7c39715fe5365633fc944a98fa0105f3197e360689b3"
+        },
+        {
+          "file": "native/coffee_latte_light_8.png",
+          "theme": "light",
+          "frame": 21,
+          "countdown_seconds": 8,
+          "sha256": "d91ab45ee945c7e7adc7f959dc4b08af78cbbef0780aa0d71517739161515137"
+        },
+        {
+          "file": "native/coffee_latte_light_6.png",
+          "theme": "light",
+          "frame": 22,
+          "countdown_seconds": 6,
+          "sha256": "d26a96a19e33291cbb9d59aca10099cf1ddaf3dee4a9e97d5e8eb6f647c0973d"
+        },
+        {
+          "file": "native/coffee_latte_light_4.png",
+          "theme": "light",
+          "frame": 23,
+          "countdown_seconds": 4,
+          "sha256": "62bfca884d0f8cd04158fd503e65e34abfbf491fb5b06a0a0261afe041b3f399"
+        },
+        {
+          "file": "native/coffee_latte_light_2.png",
+          "theme": "light",
+          "frame": 24,
+          "countdown_seconds": 2,
+          "sha256": "62b0dc12c04f4d05d903d60a2e498694d7995d934717c58b87eac607e3d0d3c6"
+        },
+        {
+          "file": "native/coffee_latte_light_0.png",
+          "theme": "light",
+          "frame": 25,
+          "countdown_seconds": 0,
+          "sha256": "d7d60a11bd43c130f94314919992773427b02c168dd083e191e64d002ae0d7c4"
+        },
+        {
+          "file": "native/coffee_latte_dark_48.png",
+          "theme": "dark",
+          "frame": 1,
+          "countdown_seconds": 48,
+          "sha256": "99dbe4f1fac1f8ecb482838541fff7bec03ae18bdfc050d49fe24b48d5c09c8a"
+        },
+        {
+          "file": "native/coffee_latte_dark_46.png",
+          "theme": "dark",
+          "frame": 2,
+          "countdown_seconds": 46,
+          "sha256": "e91b596c973d59428b0c93782a8dcbaed720e016c079fdf2b5db7e1e09ab9c1a"
+        },
+        {
+          "file": "native/coffee_latte_dark_44.png",
+          "theme": "dark",
+          "frame": 3,
+          "countdown_seconds": 44,
+          "sha256": "01d3d86feec61279e899fa385a9f710f09311a468f32c8aef72393a968a31501"
+        },
+        {
+          "file": "native/coffee_latte_dark_42.png",
+          "theme": "dark",
+          "frame": 4,
+          "countdown_seconds": 42,
+          "sha256": "1bc5a911fdc128026cd40726fe0c77567ab0b47026cde4bea9417d8521d10bd3"
+        },
+        {
+          "file": "native/coffee_latte_dark_40.png",
+          "theme": "dark",
+          "frame": 5,
+          "countdown_seconds": 40,
+          "sha256": "625b0c10c9138bdb4e9f53630eeafe44102d022be68e7881f927e62c0b77c412"
+        },
+        {
+          "file": "native/coffee_latte_dark_38.png",
+          "theme": "dark",
+          "frame": 6,
+          "countdown_seconds": 38,
+          "sha256": "dd28df9642aef863002a70bcdf5738ff1967d05b1428d0b8711c43cf71e2a572"
+        },
+        {
+          "file": "native/coffee_latte_dark_36.png",
+          "theme": "dark",
+          "frame": 7,
+          "countdown_seconds": 36,
+          "sha256": "98a9187c9126992ec79cb002a7f7da373d041b79ca4715591a0d0f321056b6c2"
+        },
+        {
+          "file": "native/coffee_latte_dark_34.png",
+          "theme": "dark",
+          "frame": 8,
+          "countdown_seconds": 34,
+          "sha256": "00b587e27642397040c55a7f69ef2a02c319ce05bbb76986243471b063addf93"
+        },
+        {
+          "file": "native/coffee_latte_dark_32.png",
+          "theme": "dark",
+          "frame": 9,
+          "countdown_seconds": 32,
+          "sha256": "17c01f463f99665fe4e94a7654d5ec6d4977baf50df5847f2b2c71aeb4ce1e76"
+        },
+        {
+          "file": "native/coffee_latte_dark_30.png",
+          "theme": "dark",
+          "frame": 10,
+          "countdown_seconds": 30,
+          "sha256": "ade5c75185c0886b94e332691ee9dcdd6265648b7f34ffb9ebb6bbe4d36b2584"
+        },
+        {
+          "file": "native/coffee_latte_dark_28.png",
+          "theme": "dark",
+          "frame": 11,
+          "countdown_seconds": 28,
+          "sha256": "b569b3ca4286b47794904743390f08b0d1464975a9e246b042f209b4160ff2f2"
+        },
+        {
+          "file": "native/coffee_latte_dark_26.png",
+          "theme": "dark",
+          "frame": 12,
+          "countdown_seconds": 26,
+          "sha256": "48e886d3b90245dd6cd1f30ef4f0bf4b5bb23eb29883111df7cf05ada0873811"
+        },
+        {
+          "file": "native/coffee_latte_dark_24.png",
+          "theme": "dark",
+          "frame": 13,
+          "countdown_seconds": 24,
+          "sha256": "2e4275c6e5d68e69b924bbe8ebcdfcebceb608cae30b999adc589d095abc0e22"
+        },
+        {
+          "file": "native/coffee_latte_dark_22.png",
+          "theme": "dark",
+          "frame": 14,
+          "countdown_seconds": 22,
+          "sha256": "4ca9de8a0d167b3323b779db8807b8fce2c70e261f65bcd1f01f333033184278"
+        },
+        {
+          "file": "native/coffee_latte_dark_20.png",
+          "theme": "dark",
+          "frame": 15,
+          "countdown_seconds": 20,
+          "sha256": "d6383fe843f70ffa089cb369ddfd4ecd2f87d7b68604a437754f6f3528c6306b"
+        },
+        {
+          "file": "native/coffee_latte_dark_18.png",
+          "theme": "dark",
+          "frame": 16,
+          "countdown_seconds": 18,
+          "sha256": "5ea4629e50a146cf162930d20c8398489bc9257cfaa8270612cbba86ed7ce2d2"
+        },
+        {
+          "file": "native/coffee_latte_dark_16.png",
+          "theme": "dark",
+          "frame": 17,
+          "countdown_seconds": 16,
+          "sha256": "b527b2b20f16ebd26ea9b253c2f67691e34695c2068bfc42758cba1523140d5b"
+        },
+        {
+          "file": "native/coffee_latte_dark_14.png",
+          "theme": "dark",
+          "frame": 18,
+          "countdown_seconds": 14,
+          "sha256": "c72911aec85eb7a1179bc528e3d83d61a5d2e99d5c2febb23cdba47e8c635098"
+        },
+        {
+          "file": "native/coffee_latte_dark_12.png",
+          "theme": "dark",
+          "frame": 19,
+          "countdown_seconds": 12,
+          "sha256": "e0a52e28f26a6ef0603f7132732492ae6d605ab4c2175a4b79b38c7a119105bb"
+        },
+        {
+          "file": "native/coffee_latte_dark_10.png",
+          "theme": "dark",
+          "frame": 20,
+          "countdown_seconds": 10,
+          "sha256": "b3b4499b0878f81504e3cdb48105da90613f395c8649e9a00217a827cf023451"
+        },
+        {
+          "file": "native/coffee_latte_dark_8.png",
+          "theme": "dark",
+          "frame": 21,
+          "countdown_seconds": 8,
+          "sha256": "f7b84cf4ecc2a88eb37b8be70692b6e869e8a858cbe95c4d633bced09acbe668"
+        },
+        {
+          "file": "native/coffee_latte_dark_6.png",
+          "theme": "dark",
+          "frame": 22,
+          "countdown_seconds": 6,
+          "sha256": "29b70b3f279d9c5dd172f2421ecacf965b53ca221f861f704f50dda2b4271e7d"
+        },
+        {
+          "file": "native/coffee_latte_dark_4.png",
+          "theme": "dark",
+          "frame": 23,
+          "countdown_seconds": 4,
+          "sha256": "7bfcd256c67491a1919b830f687ba7a6f88094921be4ee74aa6246f67244b219"
+        },
+        {
+          "file": "native/coffee_latte_dark_2.png",
+          "theme": "dark",
+          "frame": 24,
+          "countdown_seconds": 2,
+          "sha256": "f4ef9e94bb53a858047cfd029cbb23be95f51638c5514e4b704813717006d379"
+        },
+        {
+          "file": "native/coffee_latte_dark_0.png",
+          "theme": "dark",
+          "frame": 25,
+          "countdown_seconds": 0,
+          "sha256": "f1fc9dff2c088c202b67fe1484dbe296c6748356e41d3c8a7ccf927a1b74376a"
+        }
+      ]
+    },
+    "device": {
+      "android_version": "16",
+      "density_dpi": "420",
+      "supplied_evidence": {
+        "density_output": "Physical density: 420",
+        "size_output": "Physical size: 1080x2400",
+        "android_version": "16",
+        "api": 36,
+        "avd": "PhotoHarbor_API36",
+        "device": "emulator-5584",
+        "density_dpi": "420"
+      }
+    },
+    "shared_checkout": {
+      "status": "failed_outside_latte_scope",
+      "detekt_finding_count": 4,
+      "detekt_findings": [
+        "G:\\Github\\StarlitCoffee\\app\\src\\main\\java\\com\\adsamcik\\starlitcoffee\\data\\network\\llm\\LlmContextBudget.kt:18:9: Function referenceLists is nested too deeply. [NestedBlockDepth]",
+        "G:\\Github\\StarlitCoffee\\app\\src\\main\\java\\com\\adsamcik\\starlitcoffee\\data\\network\\llm\\LlmContextBudget.kt:38:17: This condition is too complex (4). Defined complexity threshold for conditions is set to '4' [ComplexCondition]",
+        "G:\\Github\\StarlitCoffee\\app\\src\\main\\java\\com\\adsamcik\\starlitcoffee\\util\\MindlayerModelSetup.kt:11:12: The file name 'MindlayerModelSetup' does not match the name of the single top-level declaration 'ModelSetupLaunchOutcome'. [MatchingDeclarationName]",
+        "G:\\Github\\StarlitCoffee\\app\\src\\main\\java\\com\\adsamcik\\starlitcoffee\\util\\MindlayerModelSetup.kt:14:22: Too many throw statements in the function resolveMindlayerSetupLaunch. The maximum number of allowed throw statements is 2. [ThrowsCount]"
+      ],
+      "backend_compile_error_count": 3,
+      "backend_compile_errors": [
+        "e: file:///G:/Github/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/network/llm/MindlayerLlmInferenceProvider.kt:254:17 Unresolved reference 'backend'.",
+        "e: file:///G:/Github/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/data/network/llm/MindlayerLlmInferenceProvider.kt:552:29 Unresolved reference 'backend'.",
+        "e: file:///G:/Github/StarlitCoffee/app/src/main/java/com/adsamcik/starlitcoffee/scan/observability/MindlayerConnectionTester.kt:175:21 Unresolved reference 'backend'."
+      ],
+      "logs": [
+        "build.log",
+        "build-core.log"
+      ]
+    },
+    "full_unit_suite": {
+      "rerun": false
+    },
+    "boundaries": [
+      "Native evidence is emulator Compose rendering at the supplied Android version/density, not physical-device coverage.",
+      "Tests render exact paused countdown poses with isRunning=false and dynamicColor=false; running tween timing and dynamic colors are not validated.",
+      "The GIF is an offline review playback assembled from native still captures at 480ms per pose, not a live recording of the app animation.",
+      "All native pixels participate in the change check; >64 changed pixels is a distinctness check, not proof of perceptual polish.",
+      "The isolated snapshot passed build/Detekt; the shared checkout did not pass its corresponding checks. Full unit suite was not rerun."
+    ],
+    "artifact_generation": {
+      "display_capture_size_px": 148,
+      "operation": "whole-capture resize and labeled layout only",
+      "gif_frames": 25,
+      "gif_duration_ms_per_frame": 480,
+      "preview_frames": [
+        1,
+        10,
+        18,
+        25
+      ]
+    },
+    "artifacts": {
+      "native_light.png": {
+        "sha256": "2dd861d120904cc4a5830f7ee142caa6818c2e34654b49f913ac7efa61e17d16"
+      },
+      "native_dark.png": {
+        "sha256": "34aaa47d64dadf606d600cabd76c9a4e50ff1813024e17c3bccdc9bc002cb669"
+      },
+      "native-heart-playback.gif": {
+        "sha256": "3d223c4a72dabc07f0bf6114af041a18d564a6ef0cde649c87151205dec0c1bc"
+      },
+      "native-heart-preview.png": {
+        "sha256": "63d73ec6a4b954e8cf16b1707ec63b965bd846bbde4724293990e1d0313279ae"
+      }
+    },
+    "evidence_hashes": {
+      "instrumentation.log": "7108d0280a4cef63359561602b7b2225ea57eab93a064a904498530675f2870d",
+      "build-snapshot.json": "b6bf0883cb9d16d1c5467dff783233445b7ad211e06ad519815b97c472f768aa",
+      "isolated-build.log": "76d9f18041f5e59a08ef438b5d799ecf881679600aa0b76f59096e96cbc5e14b",
+      "isolated-detekt.xml": "f491e274f0d208f81c3edbc7c1097c30db590a3822fcf579468ac814d9ccc62b",
+      "build.log": "bc3d096ed41222feb8f0baf3fb022cb5f3d292831b7e6f54fbb9521bdd24d853",
+      "build-core.log": "1d429050e04aee6ac75df638cfd4a8b17890232da614f168f437b5fe9263881d",
+      "device-info.json": "790f4f9d111c33d81da37ad0e9f6769032a3a56d92647cb6b93a1f36f15cacd0"
+    },
+    "emulator_recovery": {
+      "first_device": "emulator-5554 / Medium_Phone",
+      "failure": "Pre-existing Android system-service crash during package removal; package installs stalled and restart timed out.",
+      "native_validation_device": "emulator-5584 / PhotoHarbor_API36",
+      "native_validation_device_released": true
+    }
+  },
+  "native_visual_review": {
+    "reviewer_model": "gpt-6-astra",
+    "date": "2026-10-01",
+    "verdict": "accepted-native-poses-confirm-prior-conclusion",
+    "asset_sha256": "d96bb7acbb786c458a352fbd7f37b335d86d6f2b0ec776794db6801c60e06907",
+    "asset_path": "G:/Github/StarlitCoffee/app/src/main/res/drawable-nodpi/bloom_coffee_latte_spritesheet.png",
+    "prepared_path": "G:/Github/StarlitCoffee/.qa-screens/latte-heart-redesign-2026-10-01/regenerate-02-prepared.png",
+    "prepared_and_imported_hashes_match": true,
+    "reviewed_paths": [
+      "G:/Github/StarlitCoffee/.qa-screens/latte-heart-redesign-2026-10-01/native_light.png",
+      "G:/Github/StarlitCoffee/.qa-screens/latte-heart-redesign-2026-10-01/native_dark.png"
+    ],
+    "method": "Visually inspected all F1-25 actual Compose paused-pose captures in both native contact sheets, resized to 148px. Rechecked prepared and imported asset hashes. Did not inspect live animation playback or claim that the GIF proves live tween behavior.",
+    "blockers": [],
+    "findings": [
+      "No visible clipping, missing cream surfaces, detached fragments or damaging halo artifacts in either native theme.",
+      "The bean remains registered at a stable base throughout all 25 poses; native rendering introduces no visible positional jump.",
+      "The milk curl spreads into a fan and then a two-lobed heart. Native light rendering retains the coffee-colored outline; native dark rendering preserves the cream body and lower point.",
+      "The final row has a clear cleft and an increasingly extended central pull-through point. F23-25 remains legible as continued heart formation at 148px.",
+      "Native rendering does not change the prior acceptance. F5-6 lateral spreading, subtle F11-14 differences, F20-21 width-to-height trade and near-held F21-22 remain minor artistic pacing residuals, with no new rendering blocker."
+    ],
+    "boundary": "Native paused-pose visual review only. Live timing, physical-device behavior and animated playback were not independently tested in this review."
+  }
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_sets">Zestawy do parzenia</string>
+    <string name="msg_brewing_sets_hint">Zapisz osobne zestawy do domu, pracy lub różnych metod parzenia.</string>
+    <string name="action_add_brewing_set">Dodaj zestaw</string>
+    <string name="action_save_brewing_set">Zapisz jako zestaw</string>
+    <string name="label_new_brewing_set">Nowy zestaw</string>
+    <string name="label_edit_brewing_set">Edytuj zestaw</string>
+    <string name="hint_brewing_set_name">np. Filtr w domu</string>
+    <string name="action_manage_brewing_sets">Zarządzaj zestawami</string>
+    <string name="label_brewing_set_method">Metoda parzenia</string>
+    <string name="msg_delete_brewing_set">Usunąć ten zestaw do parzenia?</string>
+    <string name="screen_first_brewing_set_method">Wybierz pierwszą metodę</string>
+    <string name="msg_first_brewing_set">Zacznij od jednej metody. Dodaj więcej zestawów w następnym kroku.</string>
+    <string name="action_retry_brewing_set">Spróbuj ponownie</string>
+</resources>

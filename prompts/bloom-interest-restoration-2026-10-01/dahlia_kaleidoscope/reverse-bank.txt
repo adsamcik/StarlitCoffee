@@ -1,0 +1,22 @@
+Create a square transparent4x4 sprite bank with EXACTLY16 COMPLETE Dahlia Kaleidoscope plants. Reverse chronological maturity: first cell is attached fully open mature reference, then its EXISTING numerous petals gradually fold inward through cell16 closed bud. One whole plant in each equal cell, row-major. No labels/guides/background, all plants safely inside clear margins. Fixed upright split brown bean, slim green stem, TWO unequal serrated leaves at same attachment sites, camera and baseline throughout. Opaque fine painterly botanical material, true transparent exterior.
+
+Preserve the reference's MANY SMALL NESTED coral petal tiers spiralling into a SMALL RECESSED golden center. Dense inner folded petals, richer than a few broad daisy tiers. Veined coral/salmon outer petals with creamy edges and cupped depth. Do not enlarge or expose the yellow disk. No missing tiers or suddenly changed petal count: all petals persist while folding inward and overlapping. Leaves, stem and bean NEVER shrink, disappear or relocate. The head alone closes, it does not zoom.
+
+Cell1 fully rich reference bloom, all nested tiers open, tiny gold disk deep within center.
+2 innermost small coral petal tips begin bending toward tiny gold center; outer tiers unchanged.
+3 next small inner ring curls inward, partly veiling the gold; many fine tier edges remain.
+4 further inner petals tilt upward to deepen central cup; outer broad petals still fully spread.
+5 inner cup narrows, gold mostly veiled; middle tier begins curling upward.
+6 retained middle tier lifts, petals overlap toward center; outer tier remains open.
+7 additional middle petals rise into a layered cup, all small folds persist, no flat yellow face.
+8 middle/inner cup deep and compact; broad outer tips begin turning upward.
+9 broad outer lower petals curl upward, bloom diameter moderately smaller, fine inner inventory remains nested.
+10 more outer side petals lift toward cupped center; no gold visible.
+11 upper outer petals close inward; dense coral head now rounded cup.
+12 retained petals overlap into a round closed coral bud, green sepals show beneath.
+13 outer petal tips tuck inward further; dense closed head slightly narrower, still on unchanged support.
+14 round coral bud becomes tapered oval as petals fold more tightly, green sepals cup its base.
+15 tight oval bud with a small coral tip, mostly green overlapping sepals around it; same stem/leaves/bean.
+16 closed green dahlia bud with coral point peeking from apex, same persistent two leaves/slim stem/upright bean. Future coral petal population hidden by folding, not removed.
+
+Cells1-5 must have visible separate inner-ring curling with stable rich outer silhouette, so reversed playback reveals purposeful inner tiers in its last five frames. Preserve mature flower-to-bean dominance and the original fine concentric depth; do not simplify the final into broad petals around a big yellow coin. Every complete pose distinct, with gradual cumulative closure, no repeated finished holds.

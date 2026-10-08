@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="heading_guide_why">Waarom deze stap?</string>
+    <string name="action_guide_steps">Stappen</string>
+    <string name="action_guide_overview">Overzicht</string>
+    <string name="label_guide_untimed">Lees in je eigen tempo</string>
+    <string name="action_continue_reading">Verder lezen</string>
+    <string name="action_read_guide">Lees de handleiding</string>
+    <string name="action_read_ahead">Vooruit lezen</string>
+    <string name="action_return_to_live_brew">Terug naar het zetten</string>
+    <string name="label_guide_done_when">Klaar wanneer</string>
+</resources>

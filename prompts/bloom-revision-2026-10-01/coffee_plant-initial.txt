@@ -1,0 +1,28 @@
+Use case: precise-object-edit. Edit target: supplied 25-frame atlas. Revise its animation progression, retaining its distinctive mature subject, warm painterly tactile finish, coffee-bean base, palette and polished game-asset style. Output ONE SQUARE transparent RGBA spritesheet, exactly FIVE columns and FIVE rows of equal square cells, 25 frames row-major left-to-right then top-to-bottom. Prefer 1280x1280 (256px cells) if supported. Actual transparent background, no checkerboard pixels. ZERO text, numbers, labels, guides, borders, grid lines, color bars, watermarks, dots or stray pixels. Each cell contains ONE complete isolated subject with generous empty margin; all content stays inside its cell. Same front camera, light direction, bean size/orientation/texture and base anchor in every cell. Bean base at horizontal center and 88% down cell; highest final tip stays below 10% down cell, widest final artwork inside 12%-88% cell width. Preserve readable silhouettes at 148px. NO camera zoom, rotation, recentering, growth reversal, object swaps, disappearing mature leaves, random petal counts, or premature completed bloom. New frames must follow a SINGLE persistent anatomy, not alternate drawings. Smooth purposeful silhouette development across ALL 25 cells including every row boundary. Each frame makes the next small structural growth step; finished state arrives at frame25. No long repeated bud phase or last-row duplicate poses. Do not copy the original's timing defects. Do not draw frame labels from the following instructions.
+
+Exact 25-frame sequence:
+Frame 1: closed bean.
+Frame 2: seam opens.
+Frame 3: green point appears.
+Frame 4: sprout emerges.
+Frame 5: sprout lengthens.
+Frame 6: stem rises.
+Frame 7: first two leaf buds.
+Frame 8: first leaves part.
+Frame 9: first leaves unfold.
+Frame 10: first pair broadens.
+Frame 11: stem extends above pair.
+Frame 12: second leaf buds appear.
+Frame 13: second buds separate.
+Frame 14: second pair unfolds.
+Frame 15: second pair broadens.
+Frame 16: upper stem lengthens.
+Frame 17: third buds emerge.
+Frame 18: third buds part.
+Frame 19: third leaves half open.
+Frame 20: third leaves open further.
+Frame 21: three tiers broaden modestly.
+Frame 22: top tip elongates naturally.
+Frame 23: upper pair reaches mature size.
+Frame 24: canopy nearly full.
+Frame 25: complete balanced three-tier coffee plant.

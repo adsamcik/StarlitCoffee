@@ -1,0 +1,12 @@
+<resources>
+    <string name="action_brew_this_guide">Pagatavot pēc šīs receptes</string>
+    <string name="label_freshly_boiled_water">Tikko uzvārīts ūdens</string>
+    <string name="label_machine_temperature">Temperatūru regulē ierīce</string>
+    <string name="action_prepare_this_guide">Sagatavot kafiju</string>
+    <string name="label_reviewed_guide_english">Recepte angļu valodā</string>
+    <string name="heading_reviewed_sources">Recepte un avoti</string>
+    <string name="msg_reviewed_fill_quantities">Ievērojiet norādītās uzpildes atzīmes. Nosveriet kafiju, ko patiešām izmantosiet.</string>
+    <string name="label_measured_coffee_g">Pievienotā kafija (g)</string>
+    <string name="label_optional_measured_water_g">Nosvērtais ūdens (g, pēc izvēles)</string>
+    <string name="msg_reviewed_equipment_confirm">Mans aprīkojums atbilst šai receptei.</string>
+</resources>

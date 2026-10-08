@@ -30,27 +30,31 @@ class LearningLibrarySelectorPolicyTest {
     }
 
     @Test
-    fun `every packaged brewer receives a dedicated generated asset`() {
+    fun `packaged brewers use the accepted recognition family`() {
         val expected = mapOf(
-            "v60_02" to R.drawable.learn_brewer_icon_v60_02,
-            "v60_unspecified" to R.drawable.learn_brewer_icon_v60,
-            "manual_wave_185" to R.drawable.learn_brewer_icon_wave_185,
-            "manual_wedge_generic" to R.drawable.learn_brewer_icon_wedge,
-            "manual_thick_paper_carafe" to R.drawable.learn_brewer_icon_carafe,
-            "manual_conical_generic" to R.drawable.learn_brewer_icon_conical,
-            "clever_style" to R.drawable.learn_brewer_icon_clever,
-            "hario_switch" to R.drawable.learn_brewer_icon_switch,
-            "cezve_generic" to R.drawable.learn_brewer_icon_cezve,
-            "automatic_batch_generic" to R.drawable.learn_brewer_icon_batch,
-            "automatic_single_cup_generic" to R.drawable.learn_brewer_icon_single_cup,
-            "vietnamese_phin" to R.drawable.learn_brewer_icon_phin,
-            "pulsar_standard" to R.drawable.learn_brewer_icon_pulsar,
+            "v60_02" to R.drawable.equipment_v60,
+            "v60_unspecified" to R.drawable.equipment_v60,
+            "manual_wave_185" to R.drawable.equipment_kalita_wave,
+            "manual_wedge_generic" to R.drawable.equipment_wedge,
+            "manual_thick_paper_carafe" to R.drawable.equipment_chemex,
+            "manual_conical_generic" to R.drawable.equipment_v60,
+            "clever_style" to R.drawable.equipment_clever,
+            "hario_switch" to R.drawable.equipment_hario_switch,
+            "cezve_generic" to R.drawable.equipment_turkish,
+            "automatic_batch_generic" to R.drawable.equipment_automatic_drip,
+            "automatic_single_cup_generic" to R.drawable.vessel_icon_mug,
+            "vietnamese_phin" to R.drawable.equipment_phin,
+            "pulsar_standard" to R.drawable.equipment_pulsar,
         )
 
         expected.forEach { (profileId, drawable) ->
             assertEquals(drawable, brewerProfileIconDrawable(BrewerProfileId(profileId)))
         }
-        assertEquals(expected.size, expected.values.toSet().size)
+        assertEquals(R.drawable.vessel_icon_mug, brewerProfileIconDrawable(BrewerProfileId("unknown_brewer")))
+        org.junit.Assert.assertNotEquals(
+            brewerProfileIconDrawable(BrewerProfileId("clever_style")),
+            brewerProfileIconDrawable(BrewerProfileId("hario_switch")),
+        )
     }
 
     @Test

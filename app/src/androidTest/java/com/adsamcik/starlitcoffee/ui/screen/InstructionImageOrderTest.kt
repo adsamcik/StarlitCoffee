@@ -74,6 +74,7 @@ class InstructionImageOrderTest {
                     ),
                     onBack = {},
                     instructionAssets = InstructionAssetCatalog(listOf(asset)),
+                    initiallyReading = true,
                 )
             }
         }
@@ -87,7 +88,7 @@ class InstructionImageOrderTest {
         val primaryInstruction = "Live image-first instruction"
         val criticalWarning = "Live critical warning after illustrated instruction"
         val supportingInstruction = "Live supporting instruction after warning"
-        val guidanceLevel = guidanceLevelLabel()
+        val guidanceLevel = InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.label_guidance)
 
         composeRule.setContent {
             StarlitCoffeeTheme(dynamicColor = false) {
@@ -192,14 +193,6 @@ class InstructionImageOrderTest {
         val TEST_STAGE = StageId("test_live_stage")
         val TEST_CONTENT = StageContentId("test_live_stage_content")
         const val TEST_ALT_TEXT = "Approved instructional illustration"
-    }
-
-    private fun guidanceLevelLabel(): String {
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
-        return context.getString(
-            R.string.format_brew_guidance_level,
-            context.getString(R.string.guidance_level_concise),
-        )
     }
 
     private fun assertTopToBottom(contentDescription: String, vararg labels: String) {

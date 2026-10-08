@@ -3,6 +3,7 @@
     <string-array name="brew_method_names">
         <item>Pulsar</item><item>V60</item><item>Presskann</item><item>AeroPress</item>
         <item>Espresso</item><item>Mokakann</item><item>Külmpruul</item>
+        <item>Chemex</item>
     </string-array>
     <string-array name="filter_type_names"><item>Paber</item><item>19K</item><item>40K</item></string-array>
     <string-array name="filter_cup_profiles">
@@ -18,10 +19,5 @@
         <item>Mesitarukann</item><item>Baristakann</item><item>Nurgeline kann</item>
         <item>Tahuline cortado-klaas</item><item>Keraamiline lattekauss</item>
         <item>Termokarahvin</item><item>Topeltseinaga presskann</item>
-    </string-array>
-    <string-array name="preset_color_labels">
-        <item>Vaikimisi</item><item>Pruun</item><item>Šokolaad</item><item>Peruu</item>
-        <item>Terasinine</item><item>Mereroheline</item><item>Lilla</item><item>Karmiinpunane</item>
-        <item>Oranž</item><item>Kiltkivi</item>
     </string-array>
 </resources>

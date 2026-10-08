@@ -22,10 +22,15 @@ object LegacyStagePlanFactory {
     const val PLAN_VERSION: Int = 1
 
     /** Returns the stable source plan for one supported legacy method. */
-    fun create(method: BrewMethod): BrewStagePlan = when (method) {
+    fun create(
+        method: BrewMethod,
+        bloomDurationSeconds: Int = method.bloomDurationSeconds,
+    ): BrewStagePlan = when (method) {
         BrewMethod.PULSAR,
         BrewMethod.V60,
-        -> bloomPlan(method)
+        -> bloomPlan(method, bloomDurationSeconds)
+
+        BrewMethod.CHEMEX -> chemexPlan(bloomDurationSeconds)
 
         BrewMethod.FRENCH_PRESS -> plan(
             method = method,
@@ -108,12 +113,28 @@ object LegacyStagePlanFactory {
         )
     }
 
-    private fun bloomPlan(method: BrewMethod): BrewStagePlan = plan(
+    private fun chemexPlan(bloomDurationSeconds: Int): BrewStagePlan {
+        require(bloomDurationSeconds > 0) { "Chemex bloom duration must be positive" }
+        return plan(
+            BrewMethod.CHEMEX,
+            countdownStage("chemex_bloom", BrewStageAction.BLOOM, secondsToMillis(bloomDurationSeconds)),
+            manualStage("chemex_pour", BrewStageAction.POUR, listOf(
+                StageSafetyMessage("chemex_overflow", StageSafetySeverity.WARNING),
+            )),
+            // Time is a reference: the user confirms actual drainage before serving.
+            manualStage("chemex_drawdown", BrewStageAction.OBSERVE),
+            manualStage("chemex_serve", BrewStageAction.SERVE, listOf(
+                StageSafetyMessage("chemex_hot_glass", StageSafetySeverity.WARNING),
+            )),
+        )
+    }
+
+    private fun bloomPlan(method: BrewMethod, bloomDurationSeconds: Int): BrewStagePlan = plan(
         method = method,
         countdownStage(
             id = "${method.name.lowercase()}_bloom",
             action = BrewStageAction.BLOOM,
-            durationMillis = secondsToMillis(method.bloomDurationSeconds),
+            durationMillis = secondsToMillis(bloomDurationSeconds),
         ),
         manualStage("${method.name.lowercase()}_manual_brew", BrewStageAction.POUR),
     )

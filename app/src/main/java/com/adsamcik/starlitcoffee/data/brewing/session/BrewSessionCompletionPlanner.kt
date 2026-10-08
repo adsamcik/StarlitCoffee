@@ -52,6 +52,8 @@ object BrewSessionCompletionPlanner {
             stageActuals = stageActuals(session),
             completedAtWallClockMillis = completedAtWallClockMillis,
             sourceSessionId = session.runtime.sessionId.value,
+            coffeeIdentityId = session.executionContext.coffeeIdentityId,
+            grindMemory = session.executionContext.grindMemory,
         )
         val presentation = session.executionContext.logPresentation
         val legacyLog = BrewLogEntity(
@@ -67,7 +69,9 @@ object BrewSessionCompletionPlanner {
             filterType = presentation.filterLabel,
             isDecaf = presentation.isDecaf,
             freeformNotes = presentation.notes,
-            brewTimeSeconds = legacyBrewTimeSeconds(session.runtime.totalActiveElapsedMillis),
+            brewTimeSeconds = if (session.runtime.isPhysicalOriginKnown) {
+                legacyBrewTimeSeconds(session.runtime.totalActiveElapsedMillis)
+            } else null,
             expectedBeverageOutputG = expectedBeverageOutputG(session.recipe),
             createdAt = completedAtWallClockMillis,
         )
@@ -81,7 +85,6 @@ object BrewSessionCompletionPlanner {
             currentCoffeeBag = currentCoffeeBag,
             nextSealedCoffeeBag = nextSealedCoffeeBag,
             doseG = presentation.doseG.toFloat(),
-            grindSetting = presentation.grindLabel?.takeIf(String::isNotBlank),
             completedAtWallClockMillis = completedAtWallClockMillis,
         )
         return BrewSessionCompletionPlan(
@@ -96,6 +99,7 @@ object BrewSessionCompletionPlanner {
         require(session.runtime.status == BrewSessionStatus.COMPLETED) {
             "Only a completed brew session can create a brew log"
         }
+        require(session.runtime.physicalClock?.timerOnly != true) { "A reminder cannot create a brew log" }
         require(session.entity.completedLogId == null) {
             "A brew log has already been recorded for session ${session.runtime.sessionId.value}"
         }
@@ -224,7 +228,6 @@ object BrewSessionCompletionPlanner {
         currentCoffeeBag: CoffeeBagEntity?,
         nextSealedCoffeeBag: CoffeeBagEntity?,
         doseG: Float,
-        grindSetting: String?,
         completedAtWallClockMillis: Long,
     ): InventoryPlan {
         val bag = currentCoffeeBag
@@ -237,9 +240,6 @@ object BrewSessionCompletionPlanner {
                 status = STATUS_OPEN,
                 openedDate = completedAtWallClockMillis,
             )
-        }
-        if (grindSetting != null && updated.grindSetting != grindSetting) {
-            updated = updated.copy(grindSetting = grindSetting)
         }
         if (updated.weightG != null) {
             val newWeight = (updated.weightG - doseG).coerceAtLeast(0f)
@@ -257,16 +257,12 @@ object BrewSessionCompletionPlanner {
                 bag.status != STATUS_FINISHED &&
                 candidate.id != bag.id &&
                 candidate.status == STATUS_SEALED &&
-                candidate.name == updated.name &&
-                candidate.roaster == updated.roaster
+                updated.coffeeId != null && candidate.coffeeId == updated.coffeeId &&
+                (candidate.weightG == null || candidate.weightG > 0)
         } ?: return InventoryPlan(updates, null)
 
         return InventoryPlan(
-            updates = updates + rotated.copy(
-                status = STATUS_OPEN,
-                openedDate = completedAtWallClockMillis,
-                grindSetting = updated.grindSetting,
-            ),
+            updates = updates,
             rotatedToCoffeeBagId = rotated.id,
         )
     }

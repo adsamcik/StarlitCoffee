@@ -1,0 +1,21 @@
+Create a COMPLETE-POSE FRUITING BANK for a raspberry growth animation, working BACKWARDS from image1's mature plant. Image2 is the original mature character reference. This is not a whole germination sequence: EVERY one of these16 poses already has the same complete branching cane, serrated leaf sprays, bean and soil-ring base and SEVEN persistent fruiting sites.
+Output ONE SQUARE native RGBA transparent sheet, FOUR columns by FOUR rows, exactly16 complete separate plant poses in row-major order. No labels, text, grid, framing, background paint or decorative objects. Full plant/bean/soil ring entirelyopaque with native transparent empty background. Fixed camera, generous clear gutters, same source-pixel scale, same bean/ring orientation and width in every cell. No per-cell zoom. The same final canopy and fixed branch attachments from inputimage1 in ALL16 cells. Leaves may gently enlarge at first but never disappear/reorganize. White upper-left flower and green crownbuds stay; separate from fruit-setting nodes.
+SEVEN BERRIES IN EVERY CELL, no exceptions: THREE LEFT and FOUR RIGHT at image1's exact persistent positions. L1far-left-upper; L2middle-left; L3lower-left. R1top-right; R2inner-upper-right; R3far-outer-right; R4lower-right. Seven individually distinct green buds/ovaries at first, seven small conical bumpy aggregates next, seven large red aggregates atfinish. Never four/five before late addition! Do not merge berries or hide missingberries behindleaves. Each has the same short pedicel, hanging direction, characteristic conical/heart/ovalcontour and relative overlap. Fine individually rounded drupelets in every fruit beyond tinyovaries, coarse and readable at148px. Rich raspberryred; NOT spherical tomatoes, strawberries, smooth red dots. Match image1's berry/canopy proportions and material; finalsubject approx210pxhigh,200pxwide per256pxcell, unchanged soilring105pxwide/bean90pxwide. Latercanopy must notforcebeanshrink. No transparentholes or detachedleaf fragments.
+The sixteen cells represent full poses numbered here only as instructions; do not render numbers:
+1: Same full leafy architecture and base; SEVEN tiny green fruitingbuds at their seven finalnodes; one separate upper-left whiteflowerbud; green crownbuds.
+2: Same plant and SEVEN green buds slightlyswollen; separate whiteflowerpartially opens.
+3: Same plant, SEVEN tinygreen aggregateovaries; whiteflowerfullyopen,green crownbuds.
+4: Same plant, SEVEN smallbumpyconical GREENraspberries; whiteflower/crownbuds retained.
+5: Same plant, SEVENdistinctGREENraspberries enlarge, keepingindividualdirections.
+6: Same plant, SEVENGREENraspberries plumper, larger drupelets and broadcone/heartcontours.
+7: Same plant, SEVEN fruit: L1/L2paleGREEN, L3andR1/R2/R3/R4GREEN; samewhiteflower/crownbuds.
+8: Same plant, SEVEN fruit: L1/L2cream-GREEN, L3paleGREEN, R1/R2/R3/R4GREEN.
+9: Same plant, SEVEN fruit: L1/L2/L3palePINK, R1/R2paleGREEN, R3/R4GREEN.
+10: Same plant, SEVEN fruit: L1/L2/L3rosePINK, R1/R2palePINK, R3/R4cream-GREEN.
+11: Same plant, SEVEN fruit: L1/L2/L3ripeRED, R1/R2rosePINK, R3/R4palePINK.
+12: Same plant, SEVEN fruit: L1/L2/L3andR1/R2ripeRED, R3coralPINK, R4rosePINK.
+13: Same plant, SEVEN fruit: L1/L2/L3andR1/R2/R3ripeRED, R4coralPINK.
+14: Same plant, SEVEN fruit: sixstayripeRED, R4reddishPINK, allnearfinalsize.
+15: Same plant, SEVEN fruit: sixstayripeRED, R4almostRED with itslastpinkdrupelets.
+16: SAME finalplant, allSEVENrichraspberryRED matchinginputimage1'srich maturecharacter: 3left/4right distinctlarge bumpyaggregateberries, same branchmap/canopy, whiteflower, greenbuds, unchangedbeanandsoilring. NO newfruit and NO branchreorganizationatfinish.
+Render all16 completeposes now. Treat the input final as a retained skeleton: vary only development of its seven existing fruit. Colors only advance GREEN→cream→PINK→rose→RED, never reverse; NO tomatoorange. Sevenfruit throughout, fixedbase and canopy throughout. True native alpha.

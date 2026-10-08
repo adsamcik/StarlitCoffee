@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_tip_chemex">Upotrijebite Chemex papirnati filtar odgovarajuće veličine. Postavite tri sloja prema izljevu, isperite vrućom vodom i izlijte tu vodu. Dodajte srednje grubo mljevenu kavu i tarirajte vagu. Ostavite zračni kanal otvoren.</string>
+    <string name="instruction_chemex_bloom">Namočite svu kavu vodom za predinfuziju i pričekajte njezin završetak.</string>
+    <string name="instruction_chemex_pour">Lagano ulijevajte do ukupne količine vode. Pustite da razina padne između ulijevanja i držite je ispod ruba.</string>
+    <string name="instruction_chemex_drawdown">Pričekajte da voda prođe kroz kavu. Uklonite filtar, lagano zavrtite i poslužite držeći za ovratnik ili ručku.</string>
+    <string name="label_filter_chemex_bonded">Chemex papirnati filtar</string>
+</resources>

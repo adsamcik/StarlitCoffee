@@ -100,11 +100,8 @@
     <string name="label_increase">%1$s erhöhen</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Zubereitung vorbereiten</string>
 <string name="action_ready_to_brew_short">Bereit zum Brühen</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Vorbereitung</string>
-    <string name="label_recipe_heading">Rezept</string>
     <string name="label_temp_short">Temp.</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Papierfilter in der Basis benetzen (Ventil offen) und ablaufen lassen. Zylinder aufsetzen, Mahlgut einfüllen, Bett ebnen, Dispersionskappe aufsetzen. Waage tarieren.</string>
@@ -114,8 +111,6 @@
     <string name="prep_tip_french_press">French Press vorwärmen, dann leeren. Mahlgut einfüllen, auf die Waage stellen und vor dem Wasserzugießen tarieren.</string>
     <string name="prep_tip_espresso">Siebträger trocken auswischen. Dosieren, verteilen und eben tampen, bevor er eingespannt wird.</string>
     <string name="prep_tip_moka">Untere Kammer bis zum Ventil füllen. Sieb mit Mahlgut füllen, glattstreichen — nicht tampen. Vorsichtig zusammenschrauben.</string>
-    <string name="format_prep_grind_specific">%1$s mahlen — %2$s auf %3$s einstellen</string>
-    <string name="format_prep_grind_generic">%1$s mahlen — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Pausieren</string>
@@ -148,7 +143,6 @@
     <string name="label_cup_presets">Tassen-Voreinstellungen</string>
     <string name="action_add_preset">Voreinstellung hinzufügen</string>
     <string name="action_reset_defaults">Auf Standard zurücksetzen</string>
-    <string name="msg_presets_hint">Voreinstellungen erscheinen als Schnelltasten im Rechner</string>
     <string name="label_brew_methods">Brühmethoden</string>
     <string name="msg_methods_hint">Ausgewählte Methoden erscheinen zuerst. Zum Umschalten tippen.</string>
     <string name="label_default_method">Standardmethode</string>
@@ -165,9 +159,9 @@
     <string name="label_bloom_sprite_coffee_starlit">Starlit Coffee</string>
     <string name="desc_bloom_sprite_coffee_starlit">Creme-goldene Dampfbütenblätter mit kleinen sternhellen Akzenten.</string>
     <string name="label_bloom_sprite_coffee_latte">Latte-Bloom</string>
-    <string name="desc_bloom_sprite_coffee_latte">Weiche Latte-Art-Rosetta in warmen Milchschaumtönen.</string>
+    <string name="desc_bloom_sprite_coffee_latte">Ein Latte-Art-Herz entfaltet sich in warmen Milchschaumtönen.</string>
     <string name="label_bloom_sprite_coffee_plant">Kaffeepflanze</string>
-    <string name="desc_bloom_sprite_coffee_plant">Frischer grüner Kaffeekeimling mit paarigen Blättern.</string>
+    <string name="desc_bloom_sprite_coffee_plant">Eine Kaffeepflanze entfaltet glänzende Blätter und lässt rote Kaffeekirschen reifen.</string>
     <string name="label_bloom_sprite_cherry_tomato">Kirschtomate</string>
     <string name="desc_bloom_sprite_cherry_tomato">Aus einer Kaffeebohne sprießt eine Tomatenranke, während rote Früchte reifen.</string>
     <string name="label_bloom_sprite_strawberry">Erdbeere</string>
@@ -435,15 +429,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">Mindlayer öffnen</string>
+    <string name="msg_mindlayer_requires_android">Erfordert Android 12 oder neuer.</string>
     <string name="label_ai_service">KI-Dienst (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Mindlayer bei Google Play holen</string>
-    <string name="msg_mindlayer_install_recommendation">Installiere Mindlayer über Google Play, um Kaffeebeutel-Etiketten mit privater KI auf dem Gerät zu lesen. Das kannst du später in den Einstellungen tun.</string>
     <string name="action_test_connection">Verbindung testen</string>
     <string name="action_run_test_prompt">Test-Prompt ausführen</string>
     <string name="label_testing">Wird getestet…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">KI aktivieren</string>
     <string name="consent_requesting">KI-Zugriff wird angefordert…</string>
     <string name="consent_granted">KI aktiviert</string>
     <string name="consent_already_approved">KI ist bereits aktiviert</string>
@@ -532,7 +526,6 @@
     <string name="label_volume_ml">Volumen (ml)</string>
     <string name="msg_dose_from_ratio">Die Kaffeemenge wird aus Ihrem Verhältnis berechnet</string>
     <string name="label_icon">Symbol</string>
-    <string name="label_color">Farbe</string>
     <string name="action_add">Hinzufügen</string>
     <string name="screen_add_cup_preset_title">Tassen-Voreinstellung hinzufügen</string>
     <string name="screen_edit_cup_preset_title">Tassen-Voreinstellung bearbeiten</string>
@@ -664,10 +657,10 @@
     <string name="msg_cup_preset_reset_failed">Die Tassenprofile konnten nicht zurückgesetzt werden. Bitte erneut versuchen.</string>
     <string name="msg_reset_cup_presets">Alle Tassenprofile durch die Standardwerte ersetzen?</string>
     <string name="msg_diagnostic_clear_failed">Nicht alle Diagnosedaten konnten gelöscht werden. Bitte erneut versuchen.</string>
-    <string name="msg_clear_diagnostics">Alle gespeicherten Scan-Sitzungen und LLM-Durchläufe löschen?</string>
+    <string name="msg_clear_diagnostics">Alle gespeicherten Scan-Sitzungen löschen?</string>
     <string name="label_log_scan_corrections">Scan-Korrekturen protokollieren (auf dem Gerät)</string>
     <string name="msg_log_scan_corrections">Zeichnet nur auf diesem Gerät auf, was die KI erkannt und was du gespeichert hast. Es wird nichts hochgeladen.</string>
-    <string name="format_scan_debug_counts">Sitzungen: %1$d · LLM-Durchläufe: %2$d</string>
+    <string name="format_scan_debug_counts">Sitzungen: %1$d</string>
     <string name="format_scan_session_subject">Scan-Sitzung: %1$s</string>
     <string name="action_share_scan_session">Scan-Sitzung teilen</string>
 
@@ -733,4 +726,23 @@
     <string name="msg_learning_subtitle">Anschauliche Schritt-für-Schritt-Brühanleitungen</string>
     <string name="action_show_details">Details anzeigen</string>
     <string name="action_hide_details">Details ausblenden</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Ergebnisse des erneuten Scans</string>
+    <string name="title_rescan_no_changes">Keine Änderungen gefunden</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">%1$d Feld geändert:</item>
+        <item quantity="other">%1$d Felder geändert:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Noch keine Änderungen gefunden.</string>
+    <string name="msg_rescan_incomplete">Prüfe die bereits gefundenen Angaben oder versuche die Erkennung erneut.</string>
+    <string name="action_update_bag_so_far">Mit aktuellen Ergebnissen aktualisieren</string>
+    <string name="action_new_bag_so_far">Neuer Beutel mit aktuellen Ergebnissen</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Einrichtung wird geöffnet…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Die Einrichtung konnte nicht geöffnet werden. Versuchen Sie es erneut oder geben Sie die Details manuell ein.</string>
+    <string name="announce_label_details_ready">Die Details vom Etikett sind zur Überprüfung bereit.</string>
+    <string name="announce_label_recognition_no_result">Es wurden keine Details auf dem Etikett gefunden. Geben Sie die Details manuell ein.</string>
+    <string name="label_show_cup_presets">Im Rechner anzeigen</string>
+    <string name="cd_cup_preset_options">Optionen für Tassenvorlagen</string>
 </resources>

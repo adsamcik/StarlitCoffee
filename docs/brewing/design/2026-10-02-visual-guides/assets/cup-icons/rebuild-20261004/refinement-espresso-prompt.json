@@ -1,0 +1,19 @@
+{
+  "mode": "built-in imagegen edit",
+  "key": "espresso",
+  "prompt": "Edit image 1, the current Espresso app icon, so it is immediately distinct from the current Cappuccino in image 2 at 24 pixels. Change ONLY Espresso. Keep the accepted rounded, filled monochrome app style in image 4 and the natural small ceramic demitasse anatomy in image 3. Make a compact demitasse with gently tapered, more upright sides and softly rounded lower corners, an open oval rim and a small clear rounded D handle on the right. Add a clearly recognizable low rounded elliptical SAUCER underneath, detached from the cup by a generous clear gap (about 70px on a 1024px canvas). Saucer has a solid substantial body (about 45-55px thick at 1024px), shallow curved upper/lower edges and softly rounded ends; it must not look like a random thin underline. The cup stays naturally proportioned, approximately as wide as tall before its handle; no tall skinny mug, no stretched narrow rectangle, no flattened bowl. Keep the whole cup-plus-saucer centered with generous margins, only one cup. Uniform flat opaque medium gray #626773, transparent background, clean smooth vector-ready curves, robust rim and handle cutouts. No shading, gradients, texture, shadows, highlights, steam, words, logo, liquid art or floating debris. Leave Cappuccino's shape unchanged; output only the revised Espresso icon.",
+  "referenced_image_paths": [
+    "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/generated/espresso.png",
+    "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/generated/cappuccino.png",
+    "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/references/espresso.png",
+    "C:/Users/adam-/.codex/worktrees/7454/StarlitCoffee/docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/rebuild-20261004/references/calculator-style.png"
+  ],
+  "transparent_background": true,
+  "reason": "User found Espresso and Cappuccino too similar; change only Espresso with a detached saucer and natural demitasse proportions.",
+  "preserved_input_image_paths": [
+    "discarded/espresso-v1.png",
+    "generated/cappuccino.png",
+    "references/espresso.png",
+    "references/calculator-style.png"
+  ]
+}

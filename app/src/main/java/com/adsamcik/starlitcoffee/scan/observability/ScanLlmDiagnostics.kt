@@ -1,78 +1,54 @@
 package com.adsamcik.starlitcoffee.scan.observability
 
 import android.content.Context
-import androidx.core.content.edit
-import com.adsamcik.starlitcoffee.util.commitSynchronously
 import com.adsamcik.starlitcoffee.domain.scandiagnostics.LlmDiagnosticsRecorder
 import com.adsamcik.starlitcoffee.domain.scandiagnostics.LlmPassDiagnostic
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import dev.tracebox.Tracebox
+import dev.tracebox.api.LogLevel
+import dev.tracebox.api.LogTemplate
+import dev.tracebox.api.TraceboxLogger
+import dev.tracebox.api.argument
 
-/**
- * Persistent ring buffer of recent [LlmPassDiagnostic] records, backed by
- * SharedPreferences. Mirrors [ScanSessionRingBuffer] so the Scan Debug card and
- * [ScanBugReporter] can read/share/clear it with the same lifecycle.
- */
-object ScanLlmDiagnosticsStore {
+/** Retired raw-sample storage. Never read or write it; retry deletion on each startup. */
+object LegacyLlmDiagnosticsStore {
+    internal const val PREFS_NAME = "scan_llm_diagnostics"
 
-    private const val PREFS_NAME = "scan_llm_diagnostics"
-    private const val KEY_PASSES = "passes"
-    private const val MAX_RECORDS = 60
-
-    private val json = Json {
-        ignoreUnknownKeys = true
-        prettyPrint = false
-    }
-
-    private val prettyJson = Json {
-        ignoreUnknownKeys = true
-        prettyPrint = true
-    }
-
-    fun record(context: Context, diagnostic: LlmPassDiagnostic) {
-        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val existing = getAll(context).toMutableList()
-        existing.add(0, diagnostic)
-        val trimmed = existing.take(MAX_RECORDS)
-        prefs.edit {
-            putString(KEY_PASSES, json.encodeToString(trimmed))
-        }
-    }
-
-    fun getAll(context: Context): List<LlmPassDiagnostic> {
-        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val raw = prefs.getString(KEY_PASSES, null) ?: return emptyList()
-        return try {
-            json.decodeFromString<List<LlmPassDiagnostic>>(raw)
-        } catch (_: Exception) {
-            emptyList()
-        }
-    }
-
-    fun clear(context: Context): Boolean =
-        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            .commitSynchronously {
-                remove(KEY_PASSES)
-            }
-
-    fun getForReport(context: Context, count: Int = 15): String {
-        val passes = getAll(context).take(count)
-        return if (passes.isEmpty()) {
-            "No recent LLM extraction passes."
-        } else {
-            prettyJson.encodeToString(passes)
-        }
+    fun clear(context: Context): Boolean = try {
+        // Deletes the whole preferences file and its backup, including unknown legacy keys.
+        context.deleteSharedPreferences(PREFS_NAME)
+    } catch (_: Exception) {
+        false
     }
 }
 
-/**
- * [LlmDiagnosticsRecorder] that persists into [ScanLlmDiagnosticsStore].
- * Holds the application context only — safe to retain for the process lifetime.
- */
-class PersistentLlmDiagnosticsRecorder(
-    private val appContext: Context,
+/** One policy-controlled sink for AI diagnostics, containing no raw text or throwable. */
+class TraceboxLlmDiagnosticsRecorder(
+    private val logger: TraceboxLogger = Tracebox.log,
 ) : LlmDiagnosticsRecorder {
     override fun record(diagnostic: LlmPassDiagnostic) {
-        ScanLlmDiagnosticsStore.record(appContext, diagnostic)
+        val level = when (diagnostic.status) {
+            LlmPassDiagnostic.Status.SUCCESS, LlmPassDiagnostic.Status.NO_RESULT -> LogLevel.INFO
+            else -> LogLevel.WARN
+        }
+        logger.log(
+            level,
+            LogTemplate.of(
+                "AI pass={} status={} ms={} tokens={} prompt={} out={} error_code={} reason={} session={} generation={} work={} photos={} mode={} ready={}",
+            ),
+            argument(diagnostic.pass),
+            argument(diagnostic.status),
+            argument(diagnostic.elapsedMs),
+            argument(diagnostic.maxTokens),
+            argument(diagnostic.promptCharLen),
+            argument(diagnostic.outputCharLen),
+            argument(diagnostic.errorCode),
+            argument(diagnostic.failureReason),
+            argument(diagnostic.sessionKey),
+            argument(diagnostic.generationKey),
+            argument(diagnostic.workKey),
+            argument(diagnostic.photoCount),
+            argument(diagnostic.mode),
+            argument(diagnostic.readinessCode),
+        )
     }
 }

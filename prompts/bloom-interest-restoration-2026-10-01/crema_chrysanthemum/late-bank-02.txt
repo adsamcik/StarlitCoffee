@@ -1,0 +1,14 @@
+Use the reference complete mature Crema Chrysanthemum to paint NINE complete poses on a transparent square 3 by 3 sprite sheet. Read row-major. This bank runs BACKWARDS from fully open to partly open: every image must retain the reference's many fine narrow nested curled petals, dark center, irregular unequal tips, same upright coffee bean, same material and camera scale. Do not simplify any pose into a few broad lotus petals. These are the SAME many curled petals gradually folding upward, not petals disappearing.
+
+Pose1: The exact fully mature reference composition, fullest spread, fine layers and tall unequal tips.
+Pose2: Same dense flower, only lowest outer curled tips slightly raised/inward.
+Pose3: Lower-left and lower-right outer tiers a little more raised, all fine petal layers still present.
+Pose4: Outer sides curve upward, middle fine curls remain separated; flower about 94 percent of mature width.
+Pose5: Right outer tier cups upward and shortens its reach, left outer tier still visible; about 90 percent width.
+Pose6: Left outer tier also cups upward, creating a deeper bowl while the dense inner petal rows remain; about 86 percent width.
+Pose7: Upper rear fine curls bend slightly inward, outer bottom tier rises; about 82 percent width.
+Pose8: Deep bowl, many thin nested petals clearly packed inside and around its rim; about 78 percent width.
+Pose9: The tightest partly open bowl, about 74 percent mature width, densely filled with the same slender curled petals. Dark center still visible. This is NOT a closed bud and NOT a five-petal cup.
+
+All nine contain exactly one WHOLE flower plus upright split bean. Bean has identical width, height, position, texture, baseline and lighting across every cell. Flower-to-bean mature proportion matches reference; flower changes by curling its actual petals rather than uniform zoom. Fine curls must be legible at 148px. Irregular painterly warm ivory/gold edges and dark spaces, no plastic smoothness or perfect symmetry.
+Uniform equal cells, ample transparent padding and EMPTY gutters, complete uncut art; no row overlap. Native alpha transparency. No text, labels, borders, guides, grid, decoration, leaves, pot, soil or stars.

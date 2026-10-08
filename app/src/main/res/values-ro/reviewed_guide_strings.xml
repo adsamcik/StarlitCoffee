@@ -1,0 +1,12 @@
+<resources>
+    <string name="action_brew_this_guide">Prepară această rețetă</string>
+    <string name="label_freshly_boiled_water">Apă proaspăt fiartă</string>
+    <string name="label_machine_temperature">Aparatul controlează temperatura</string>
+    <string name="action_prepare_this_guide">Pregătește cafeaua</string>
+    <string name="label_reviewed_guide_english">Rețetă în engleză</string>
+    <string name="heading_reviewed_sources">Rețetă și surse</string>
+    <string name="msg_reviewed_fill_quantities">Respectă marcajele de umplere indicate. Cântărește cafeaua pe care o folosești efectiv.</string>
+    <string name="label_measured_coffee_g">Cafea adăugată (g)</string>
+    <string name="label_optional_measured_water_g">Apă cântărită (g, opțional)</string>
+    <string name="msg_reviewed_equipment_confirm">Echipamentul meu corespunde acestei rețete.</string>
+</resources>

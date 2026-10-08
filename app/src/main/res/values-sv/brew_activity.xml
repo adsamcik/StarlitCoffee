@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_active_brews">Pågående bryggningar</string>
+    <string name="label_brew_activity_ready">Redo att starta</string>
+    <string name="label_brew_activity_paused">Timer pausad</string>
+    <string name="label_brew_activity_save">Sparar bryggningen</string>
+    <string name="label_brew_activity_timing_reached">Tidsmålet uppnått</string>
+    <string name="format_brew_activity_elapsed">%1$s har gått</string>
+    <string name="format_brew_activity_time_left">%1$s kvar</string>
+    <string name="format_brew_activity_hours">%1$d tim %2$d min</string>
+    <string name="format_brew_activity_minutes">%1$d:%2$02d</string>
+    <string name="cd_open_active_brew">Öppna %1$s. %2$s</string>
+    <string name="cd_choose_active_brews">Välj en bryggning. Pågående: %3$d. %1$s. %2$s</string>
+</resources>

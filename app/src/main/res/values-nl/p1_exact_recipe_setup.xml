@@ -55,7 +55,7 @@
     <string name="label_brewer_profile_v60">V60</string>
     <string name="label_brewer_profile_wave_185">Wave 185 met vlakke bodem</string>
     <string name="label_brewer_profile_wedge">Wigvormige dripper</string>
-    <string name="label_brewer_profile_thick_paper_carafe">Karafzetter met dik papierfilter</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Chemex</string>
     <string name="label_brewer_profile_conical">Generieke conische dripper</string>
     <string name="label_brewer_profile_family_manual_gravity">Handmatig zetten op zwaartekracht</string>
     <string name="label_brewer_profile_pulsar">Pulsar</string>

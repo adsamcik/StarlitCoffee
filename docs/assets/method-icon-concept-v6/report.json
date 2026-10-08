@@ -1,0 +1,41 @@
+{
+  "status": "accepted artwork; production resource matches this export",
+  "source": "root-authored photo-based redraw after Astra reviewed the rejected simplification",
+  "svg_sha256": "a08513bf519cfe724e8eb3df32cecde7f0adb6979b262cf3d6f85ab0556c23be",
+  "android_sha256": "6372be9639835c017a0846e769669ca767a18bdf740a2278c7847a9fdb5c2638",
+  "production_resource_matches": true,
+  "alpha_bounds_px": {
+    "24": [
+      4,
+      1,
+      19,
+      23
+    ],
+    "28": [
+      5,
+      1,
+      23,
+      27
+    ],
+    "34": [
+      6,
+      1,
+      27,
+      33
+    ],
+    "88": [
+      16,
+      5,
+      69,
+      84
+    ],
+    "1024": [
+      200,
+      63,
+      793,
+      964
+    ]
+  },
+  "validation": "direct SVG rendering and lossless Android path export; matching native Compose fixture captures in light and dark themes",
+  "native_validation": "native/validation.json"
+}

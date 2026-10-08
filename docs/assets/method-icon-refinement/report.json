@@ -1,0 +1,136 @@
+{
+  "status": "rejected by user; study only; original production icons restored",
+  "source": "authored monochrome SVG paths; manufacturer references in README.md",
+  "viewport": "32 \u00d7 32; 24dp intrinsic size; about 81% maximum glyph dimension",
+  "validation": "deterministic SVG-to-Android path export and direct SVG raster previews",
+  "icons": {
+    "pulsar": {
+      "source": "docs/assets/method-icon-refinement/svg/equipment_pulsar.svg",
+      "svg_sha256": "cc0a05e6dcfa9c7df894cac1d6de6d3952fb2d203004a296b33b8059b0bee2ad",
+      "android_sha256": "6781898c291f379e5526e8fd91982e49fdacdfc0f98ce19dd5fc4af8ca70cd96",
+      "before_sha256": "9ae83acdf5fc2602bcc53618aae7701edca457c4959e1b91c9a4451b27f003c6",
+      "alpha_bounds_at_target_pixels": {
+        "24": [
+          3,
+          1,
+          19,
+          23
+        ],
+        "28": [
+          4,
+          2,
+          22,
+          26
+        ],
+        "34": [
+          5,
+          2,
+          27,
+          32
+        ],
+        "44": [
+          7,
+          3,
+          34,
+          41
+        ]
+      }
+    },
+    "aeropress": {
+      "source": "docs/assets/method-icon-refinement/svg/equipment_aeropress.svg",
+      "svg_sha256": "fc2e8c2982eab3dc31181185d584dcf636adeb24229bfb4f1cf9f0a732bf0cca",
+      "android_sha256": "862d1b47bfe57afbc0f4b0590258be7ce50fc73ecb1715a7588369e2c7a200b4",
+      "before_sha256": "a332ac2c4a527bd3e8cf72eb59ae928987c643611e6256dd7a25be565a358ca5",
+      "alpha_bounds_at_target_pixels": {
+        "24": [
+          4,
+          1,
+          20,
+          23
+        ],
+        "28": [
+          5,
+          2,
+          23,
+          26
+        ],
+        "34": [
+          6,
+          2,
+          28,
+          32
+        ],
+        "44": [
+          8,
+          3,
+          36,
+          41
+        ]
+      }
+    },
+    "espresso": {
+      "source": "docs/assets/method-icon-refinement/svg/equipment_espresso.svg",
+      "svg_sha256": "2d8a467585da4c6c0bd1fb72a97776f78f480391dcb7e00ff1e395e9c74c0671",
+      "android_sha256": "8e96d11ac4da15a31488d67d9c76bd2691f3590ff6174e65d0939b40c4cce1c5",
+      "before_sha256": "62e505f80e1a0e393e8272a04ab615487fff4301c1f909fb1c34c34262a0f7f1",
+      "alpha_bounds_at_target_pixels": {
+        "24": [
+          2,
+          2,
+          22,
+          23
+        ],
+        "28": [
+          2,
+          2,
+          26,
+          26
+        ],
+        "34": [
+          3,
+          3,
+          31,
+          32
+        ],
+        "44": [
+          4,
+          4,
+          40,
+          41
+        ]
+      }
+    },
+    "chemex": {
+      "source": "docs/assets/method-icon-refinement/svg/equipment_chemex.svg",
+      "svg_sha256": "88714544346790227ad1bc79a2b9d4e58fd5a4a05ccd469a5f11fed68b85a98f",
+      "android_sha256": "79c38cea1f6ac6bd5b6752e3a4790fc0d9ad82d72f75ea3d93de794135539967",
+      "before_sha256": "867ba54da305465990ecec2545a04037892822991573a3bd3fc2275cbe40baab",
+      "alpha_bounds_at_target_pixels": {
+        "24": [
+          4,
+          1,
+          20,
+          23
+        ],
+        "28": [
+          4,
+          2,
+          23,
+          26
+        ],
+        "34": [
+          6,
+          2,
+          28,
+          32
+        ],
+        "44": [
+          7,
+          3,
+          36,
+          41
+        ]
+      }
+    }
+  }
+}

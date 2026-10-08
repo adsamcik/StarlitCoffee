@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.data.brewing.snapshot
 
+import com.adsamcik.starlitcoffee.data.model.CalculatorSetup
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
@@ -38,6 +39,10 @@ data class BrewRecipeSnapshotV1(
     val isDecaf: Boolean = false,
     val notes: String? = null,
     val outputModel: OutputModelSnapshotV1,
+    /** Optional editor intent for named calculator setups; older favorites omit it. */
+    val calculatorSetup: CalculatorSetup? = null,
+    /** Complete immutable procedure, including source-specific units and clock origins. */
+    val reviewedGuide: com.adsamcik.starlitcoffee.data.brewing.guides.ReviewedMethodGuide? = null,
 ) {
     companion object {
         const val SCHEMA_VERSION = 1
@@ -80,6 +85,8 @@ data class BrewQuantitiesSnapshotV1(
     val bypassWaterG: Double = 0.0,
     val dilutionWaterG: Double = 0.0,
     val measuredOutputG: Double? = null,
+    /** Source volume is never silently treated as weighed water. */
+    val brewWaterInputMl: Double? = null,
 )
 
 @Serializable
@@ -166,6 +173,8 @@ data class BrewRecordSnapshotV1(
     val stageActuals: List<StageActualSnapshotV1> = emptyList(),
     val completedAtWallClockMillis: Long? = null,
     val sourceSessionId: String? = null,
+    val coffeeIdentityId: Long? = null,
+    val grindMemory: com.adsamcik.starlitcoffee.data.brewing.session.GrindMemorySnapshotV1? = null,
 ) {
     companion object {
         const val SCHEMA_VERSION = 1

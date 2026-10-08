@@ -1,0 +1,6 @@
+{
+  "mode": "built-in imagegen edit",
+  "key": "takeaway",
+  "prompt": "Simplify image1's takeaway coffee cup icon for crisp 24px rendering. Keep the same natural tapered cup contour and closed fitted sipping lid; image2 shows anatomy only. Image3 is the established rounded filled monochrome app symbol style. REPLACE ALL FOUR HAIRLINE HORIZONTAL SEAMS: lid must be ONE SOLID FILLED CAP with a small sip lip, not two floating cap pieces. Body must be ONE CONTIGUOUS SOLID FILLED CUP, not three floating stacked pieces. Use one clean broad curved gap (atleast65px at1024canvas) between cap and body. Indicate cardboard sleeve with only one SHORT BROAD INSET CURVED CUT across the front middle of body (does not cut through side walls), no other body stripes. Total two main filled shapes, lid and connected body; one purposeful sleeve cut. Perfectly uniform opaque mediumgray#626773 fill, truly transparent background. No shading, gradients, texture, random holes, shadows, text or logo. Smooth organic curves and real vessel proportions; no stretching or flattening.",
+  "reason": "Collapsed fine seams failed the contour boundary gate at small sizes"
+}

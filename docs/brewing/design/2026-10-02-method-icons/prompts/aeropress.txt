@@ -1,0 +1,9 @@
+Create a new square brewing-method icon using the two attached images.
+Image 1 is equipment geometry reference only. Preserve that brewer's recognizable construction and proportions; remove the photo's background, packaging, text and unrelated objects.
+Image 2 is the existing StarlitCoffee icon style reference only. Match its premium tactile enamel/clay treatment, deep ink-navy edges, periwinkle-blue planes, warm ivory highlights and restrained coffee-brown/copper accents. Do not copy its V60 geometry into this method.
+One isolated complete brewer, front three-quarter view, slight view into open tops where relevant, soft upper-left light, rounded deliberate forms and strong readable silhouette at 48 pixels. Stylize surface materials into the shared palette without losing the distinctive hardware. Center the entire object with roughly 8 percent clear margin on every side; full handles, spouts, feet and lids inside the canvas. Genuine transparent background, alpha outside the object, no cast shadow platform, badge, border, scene, letters, numbers, logo, watermark or checkerboard. No hands or brewing action. This is an equipment recognition icon, not an operating instruction.
+
+Method: AeroPress. Representative model: Original, standard filter cap, upright.
+Equipment anatomy: One assembled upright AeroPress Original: dark translucent straight brewing chamber, piston emerging at the top with a broad flat top flange, broad lower support flange and standard filter cap at the bottom. Show a modest extension of the piston so the two overlapping cylinders are clear. Isolate only the brewer from the product photograph.
+Exclude: No mug, scoop, stirrer, printed numbers, logos, side handle, long French-press rod, flow-control valve, or inverted position.
+Deliver exactly one transparent square icon.

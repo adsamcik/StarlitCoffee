@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_title_short">Priprema</string>
+    <string name="prep_equipment_station">Pripremite opremu</string>
+    <string name="prep_beverage_yield">U šalici</string>
+    <string name="prep_recipe_details">Detalji recepta</string>
+    <string name="prep_grinder_range">Preporučeni raspon</string>
+    <string name="prep_grinder_adjustment">Prilagodite za %1$s prema ukusu</string>
+    <string name="prep_grind_from_zero">Od nule</string>
+    <string name="prep_grind_on_dial">Na brojčaniku</string>
+    <string name="prep_grind_no_extra_clicks">%1$d · bez dodatnih klikova</string>
+    <string name="prep_grind_dial_breakdown">%1$d + %2$s</string>
+    <plurals name="prep_clicks">
+        <item quantity="one">%1$d klik</item>
+        <item quantity="few">%1$d klika</item>
+        <item quantity="other">%1$d klikova</item>
+    </plurals>
+</resources>

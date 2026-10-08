@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_set_name_optional">Име (по избор)</string>
+    <string name="label_starting_recipe">Начална рецепта</string>
+    <string name="label_starting_amount">Начално количество</string>
+    <string name="msg_brewing_set_recipe_invalid">Въведете положително съотношение и количество или оставете количеството празно.</string>
+    <string name="msg_brewing_sets_onboarding">Изберете оборудването си. Добавете комплекти за дома или работата и изберете кой се отваря първи.</string>
+    <string name="action_create_brewing_set">Създаване на комплект</string>
+    <string name="cd_brewing_set_options">Опции за %1$s</string>
+    <string name="msg_saved_brewing_calculation">Запазено изчисление: %1$s. Въведете количество, за да го замените.</string>
+</resources>

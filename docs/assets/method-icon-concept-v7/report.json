@@ -1,0 +1,40 @@
+{
+  "status": "production resource matches this export",
+  "source": "root-authored solid pictogram in the original family style after Astra construction review",
+  "svg_sha256": "da0220cbc61ffdba61d831102f704e179f76a3e8c32e59726e7fa3365af9f509",
+  "android_sha256": "8652cf83dbbf97e5675f1dfb3a2e2f6c4b6090ded4c11b34c2ed8fe2ffd28a52",
+  "production_resource_matches": true,
+  "alpha_bounds_px": {
+    "24": [
+      4,
+      1,
+      19,
+      23
+    ],
+    "28": [
+      5,
+      1,
+      22,
+      27
+    ],
+    "34": [
+      6,
+      2,
+      27,
+      32
+    ],
+    "88": [
+      17,
+      6,
+      68,
+      82
+    ],
+    "1024": [
+      209,
+      79,
+      783,
+      945
+    ]
+  },
+  "validation": "direct SVG rendering and lossless Android path export; no native app capture"
+}

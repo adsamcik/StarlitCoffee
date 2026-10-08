@@ -1,0 +1,343 @@
+{
+  "method_id": "clever",
+  "title": "Clever Dripper brewing guide",
+  "scope": "Crema Coffee Roasters' 25 g / 400 g water-first recipe in a large Clever with #4 wedge paper; Ozone small-brewer coffee-first recipe is a separate variant.",
+  "research_date": "2026-10-02",
+  "review_status": "editorially_reviewed",
+  "physical_brew_tested": false,
+  "sources": [
+    {
+      "id": "ek-mechanism",
+      "title": "HandyBrew: Clever and HandyBrew shutoff systems",
+      "url": "https://www.handybrew.com/",
+      "author_or_organization": "E.K. Int'l Co., Ltd.",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Bottom shutoff system",
+        "Clever uses an additional paper filter; HandyBrew uses built-in filters"
+      ]
+    },
+    {
+      "id": "crema-water-first",
+      "title": "Clever Dripper Brewing Guide",
+      "url": "https://crema-coffee.com/pages/clever-dripper-brewing-guide",
+      "author_or_organization": "Crema Coffee Roasters",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "25 g coffee and 400 g water, 1:16 by mass",
+        "#4 paper and grind finer than ordinary drip",
+        "Water immediately after boiling; coffee addition starts timer",
+        "Gentle initial mixing, 120-second crust stir, 30-second settlement, release at 150 seconds",
+        "45-75-second drainage, 195-225-second total reference"
+      ]
+    },
+    {
+      "id": "ozone-coffee-first",
+      "title": "Clever Dripper Brew Guide",
+      "url": "https://ozonecoffee.co.uk/pages/brew-guide-clever-dripper",
+      "author_or_organization": "Ozone Coffee UK",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Bottom valve opens on contact with mug or carafe",
+        "300 ml brewer uses size 2 papers; 500 ml uses size 4",
+        "15 g / 250 g coffee-first recipe at 95 C, medium filter grind",
+        "Start clock at water pour, stir 15 seconds, lid, release at 135 seconds, 180-210-second finish reference"
+      ]
+    },
+    {
+      "id": "subtext-adjustments",
+      "title": "Clever Dripper Brew Guide",
+      "url": "https://www.subtext.coffee/pages/clever-dripper-brew-guide",
+      "author_or_organization": "Subtext Coffee Roasters",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Separate 16 g / 240 g water-first recipe, not the selected baseline",
+        "Finer grind for sour or flavourless results; coarser for bitter results",
+        "Larger batches can require coarser grind and careful saturation"
+      ]
+    },
+    {
+      "id": "hoffmann-original",
+      "title": "The Ultimate Clever Dripper Technique",
+      "url": "https://www.youtube.com/watch?v=RpOdennxP24",
+      "author_or_organization": "James Hoffmann",
+      "source_type": "original_creator",
+      "accessed": "2026-10-02",
+      "access_status": "blocked",
+      "supports": [
+        "Named original source of the existing 15 g / 250 g app recipe; video fetching failed, so no new direct content verification is claimed"
+      ]
+    }
+  ],
+  "recipe": {
+    "name": "Crema large-Clever water-first starting recipe",
+    "provenance": "published_recipe",
+    "source_ids": [
+      "crema-water-first"
+    ],
+    "equipment": [
+      "Large Clever Dripper",
+      "Matching #4 wedge/Melitta-style paper",
+      "Grinder",
+      "Gram scale and timer",
+      "Kettle",
+      "Spoon",
+      "Stable heat-safe server with capacity for the batch",
+      "Coaster or stable non-actuating surface"
+    ],
+    "coffee_dose_g": 25,
+    "brew_water_g": 400,
+    "brew_water_ml": null,
+    "ice_g": 0,
+    "target_beverage_g": null,
+    "ratio_basis": "brew_water_input",
+    "ratio_value": 16,
+    "water_temperature_c": {
+      "min": null,
+      "max": null,
+      "control": "user: freshly boiled water poured promptly; boiling temperature depends on local conditions"
+    },
+    "grind_description": "Finer than ordinary drip coffee, with particle texture described by Crema as wet sand; do not wet dry grounds before brewing.",
+    "expected_time_s": {
+      "min": 195,
+      "max": 225,
+      "clock_start": "Coffee enters the already-filled brewer; initial stirring is included",
+      "clock_end": "No standing water remains above the bed and drainage has diminished to occasional drips; time is a reference, not a forced stop"
+    },
+    "completion_signal": "No standing water above the coffee bed and flow diminished to occasional drips.",
+    "scaling": "revalidate_batch_size",
+    "steps": [
+      {
+        "id": "prepare",
+        "instruction": "Fold and fit #4 paper, rinse with hot water and discard rinse water. Move Clever off the server onto a level non-actuating surface; tare scale.",
+        "why": "Seats the filter, warms equipment and closes the bottom valve for immersion.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Paper sits neatly and rinse water has been discarded; brewer is off the server.",
+        "source_ids": [
+          "crema-water-first",
+          "ozone-coffee-first"
+        ]
+      },
+      {
+        "id": "fill_water",
+        "instruction": "Add all 400 g freshly boiled water before the coffee, leaving space below the rim.",
+        "why": "Preserves the selected water-first procedure and measured input.",
+        "water_add_g": 400,
+        "water_cumulative_g": 400,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Scale reads 400 g and water is retained.",
+        "source_ids": [
+          "crema-water-first"
+        ]
+      },
+      {
+        "id": "add_coffee_start_clock",
+        "instruction": "Add 25 g coffee, start timer at first coffee-water contact and stir gently until dry pockets disappear.",
+        "why": "Makes extraction time reproducible and wets the grounds.",
+        "water_add_g": 0,
+        "water_cumulative_g": 400,
+        "start_s": 0,
+        "duration_s": null,
+        "completion": "All coffee is wet, with no dry pockets.",
+        "source_ids": [
+          "crema-water-first"
+        ]
+      },
+      {
+        "id": "steep",
+        "instruction": "Leave the mixture until the timer reaches 120 seconds, counting initial mixing within this interval.",
+        "why": "Allows the selected immersion period before disturbing the surface crust.",
+        "water_add_g": 0,
+        "water_cumulative_g": 400,
+        "start_s": 0,
+        "duration_s": 120,
+        "completion": "Timer reaches 120 seconds.",
+        "source_ids": [
+          "crema-water-first"
+        ]
+      },
+      {
+        "id": "break_crust_settle",
+        "instruction": "At 120 seconds gently stir the surface crust back in, then leave it to settle for 30 seconds.",
+        "why": "Keeps the published crust-breaking and settling sequence intact.",
+        "water_add_g": 0,
+        "water_cumulative_g": 400,
+        "start_s": 120,
+        "duration_s": 30,
+        "completion": "Timer reaches 150 seconds after gentle stirring and settlement.",
+        "source_ids": [
+          "crema-water-first"
+        ]
+      },
+      {
+        "id": "release_and_drain",
+        "instruction": "At 150 seconds place Clever securely on a compatible server. Expect 45-75 seconds drainage, but observe completion rather than forcibly stopping at the reference time.",
+        "why": "The server opens the valve and paper separates the grounds from the drink.",
+        "water_add_g": 0,
+        "water_cumulative_g": 400,
+        "start_s": 150,
+        "duration_s": null,
+        "completion": "No standing water above bed and flow has diminished to occasional drips.",
+        "source_ids": [
+          "crema-water-first",
+          "ozone-coffee-first"
+        ]
+      },
+      {
+        "id": "remove_serve",
+        "instruction": "Lift by the handle onto the coaster after drainage, allow the beverage to cool and taste.",
+        "why": "Stops the valve being actuated and allows a safer, clearer taste assessment.",
+        "water_add_g": 0,
+        "water_cumulative_g": 400,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Brewer is stable off the server and the drink is comfortable to taste.",
+        "source_ids": [
+          "crema-water-first",
+          "ozone-coffee-first"
+        ]
+      }
+    ]
+  },
+  "variants": [
+    {
+      "name": "Ozone smaller coffee-first recipe",
+      "how_it_differs": "15 g coffee, 250 g water at 95 C, medium filter grind; add coffee before water, start timer with water pour, stir 15 seconds, cover, release at 135 seconds and expect completion around 180-210 seconds. Ozone identifies the nominal 300 ml version with #2 papers as suitable. Its instruction to remove at 210 seconds is a timed reference; the guide emphasizes observing drainage.",
+      "source_ids": [
+        "ozone-coffee-first"
+      ]
+    },
+    {
+      "name": "Model and filter sizes",
+      "how_it_differs": "Ozone describes nominal 300 ml/#2 and 500 ml/#4 hardware. Volume labels are not beverage yields or a universal water-mass safety limit. Match papers to the actual model and leave coffee headroom; do not use 400 g in a small brewer.",
+      "source_ids": [
+        "ozone-coffee-first"
+      ]
+    }
+  ],
+  "troubleshooting": [
+    {
+      "symptom": "No flow after placing on server",
+      "check_first": "App-authored mechanical check: ensure server rim depresses the bottom actuator, brewer is stable and paper fits.",
+      "adjustment": "Use a compatible server and correctly seated matching filter; test fit with cold water before the next hot brew.",
+      "source_ids": [
+        "ek-mechanism",
+        "ozone-coffee-first"
+      ]
+    },
+    {
+      "symptom": "Drainage unusually slow",
+      "check_first": "App-authored checks: correct filter, compatible server, clean valve and gentle mixing; distinguish a mechanical problem from coffee resistance.",
+      "adjustment": "After equipment checks, try slightly coarser grounds next time. Keep other recipe quantities and timing unchanged.",
+      "source_ids": [
+        "crema-water-first",
+        "ek-mechanism",
+        "ozone-coffee-first"
+      ]
+    },
+    {
+      "symptom": "Sour or lacking flavour",
+      "check_first": "Confirm dose, water, freshly boiled start and complete ground saturation; taste after cooling.",
+      "adjustment": "Try a slightly finer grind while keeping other variables fixed.",
+      "source_ids": [
+        "subtext-adjustments",
+        "crema-water-first"
+      ]
+    },
+    {
+      "symptom": "Bitter",
+      "check_first": "Confirm the selected recipe was followed and consider the bean's roast character.",
+      "adjustment": "Try slightly coarser grounds; compare after cooling. Drain speed alone is not an extraction measurement.",
+      "source_ids": [
+        "subtext-adjustments"
+      ]
+    }
+  ],
+  "safety": [
+    "Use a stable heat-safe server that supports the brewer and has room for the entire batch; test actuator fit with cold water first.",
+    "Keep below the rim with room for coffee; the 400 g recipe requires a large brewer.",
+    "Lift by the handle; avoid hot liquid and do not manually depress the outlet from beneath a filled brewer.",
+    "Let brewer cool, discard grounds and paper, then clean according to the model's instructions and check valve residue before reuse.",
+    "Dishwasher compatibility and seal disassembly were not verified; no universal instructions for either are asserted."
+  ],
+  "app_audit": [
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/session/P1ImmersionStagePlans.kt",
+      "finding": "Water-first typed stages already carry 120-second crust/150-second release/approximately 60-second drain and 210-second total cues; the release defect is fixed.",
+      "severity": "info",
+      "change_recommendation": "Preserve the current correction. Do not infer a live defect from stale historical source records.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1ExactGuidanceFactualErrata.kt",
+      "finding": "Water-first stage_04 and stage_05 digit substitutions correct historical timing. P1ExactGuidanceCatalog loads localized raw guidance and applies these errata during domain conversion.",
+      "severity": "info",
+      "change_recommendation": "Keep the reviewed overlay and verify it remains applied to every supported locale when integrating future copy.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/session/P1ImmersionStagePlans.kt",
+      "finding": "Water-first ADD_WATER has a brew-elapsed start cue of zero, while the authored coffee-addition stage does not explicitly establish extraction clock origin. Correct later timestamps do not define what zero means.",
+      "severity": "medium",
+      "change_recommendation": "State the selected recipe's clock origin explicitly and verify session start/advance event alignment; for Crema it is coffee addition, with water filling outside the extraction interval. Do not claim original Hoffmann clock verification from the blocked video.",
+      "source_ids": [
+        "crema-water-first"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BuiltInP1RecipeCatalog.kt",
+      "finding": "The coffee-first 15/250 recipe cites SRC-CLEVER-COFFEECHRONICLER and SRC-HARIO-V60-OFFICIAL, whereas its 95 C, 15-second stir, 135-second release and 180-210-second finish correspond to the directly verified Ozone guide.",
+      "severity": "medium",
+      "change_recommendation": "Add reviewed Ozone provenance for this published procedure without rewriting immutable historical source projections.",
+      "source_ids": [
+        "ozone-coffee-first"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BrewingCatalog.kt",
+      "finding": "One clever_style profile specifies wedge_paper and BrewWaterMinusRetention(2.0). Exact recipes intentionally leave beverage output unresolved. Setup separately accepts an equipment-capacity override; paper size and headroom still depend on model.",
+      "severity": "medium",
+      "change_recommendation": "Explain size-specific paper and headroom in reviewed guidance. Label any retention-based beverage result as an estimate; no universal retention coefficient or measured output is verified.",
+      "source_ids": [
+        "ozone-coffee-first"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt",
+      "finding": "Clever is present in exact recipe/profile infrastructure but absent from the everyday BrewMethod enum. No Clever-specific entries were found in grinders.json; localized exact-recipe titles and guidance resources do exist.",
+      "severity": "info",
+      "change_recommendation": "Describe support as catalog/recipe guidance. Before any future everyday integration, validate selection, preparation, timers, persistence, grinder fallback and locales together; do not infer complete support from catalog presence.",
+      "source_ids": []
+    }
+  ],
+  "uncertainties": [
+    "Original Hoffmann video requests failed with fetch/cache errors. The existing code correction was inspected and Crema independently publishes the same 120/150-second sequence; this is not a new direct verification of every Hoffmann detail.",
+    "Manufacturer E.K. pages expose mechanism and paper-filter facts but no numerical capacity specification in the retrieved text. Nominal 300/500 ml and #2/#4 statements come from Ozone's own guide; check model packaging and actual headroom.",
+    "The E.K.-named Mare Terra PDF was read but not treated as a manufacturer manual because its authorship could not be independently established.",
+    "Ozone's fixed removal at 210 seconds is expressed as a reference in this guide; observable drainage completion takes priority. This editorial clarification is not an additional Ozone numeric claim.",
+    "Taste, drain time and collected yield depend on coffee, grind, filter, batch size, temperature and equipment; the guide has not been physically brewed.",
+    "Local boiling temperature is equipment/location dependent; no exact 100 C slurry measurement is asserted.",
+    "No device execution, translation-quality review, dishwasher approval or seal-disassembly verification was performed."
+  ],
+  "do_not_claim": [
+    "The existing water-first app still releases at 120 seconds; it is already corrected to 150 seconds.",
+    "400 g brewing water equals 400 ml at all temperatures or yields 400 g beverage.",
+    "A nominal 500 ml brewer always safely accepts 500 g water plus grounds.",
+    "Every Clever model uses #4 paper, or Clever and Hario Switch have interchangeable filters or controls.",
+    "A single grind number, drain deadline, 2 g/g retention coefficient or decaf timing subtraction applies universally.",
+    "Coffee-first and water-first timings can be interchanged, or the Crema recipe is Hoffmann's exact 15/250 recipe.",
+    "Catalog presence proves everyday calculator, grinder or localization support, release readiness or physical brew validation."
+  ]
+}

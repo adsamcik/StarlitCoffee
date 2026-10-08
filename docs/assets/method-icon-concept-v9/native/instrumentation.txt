@@ -1,0 +1,6 @@
+
+com.adsamcik.starlitcoffee.ui.component.MethodIconCaptureTest:..
+
+Time: 10.284
+
+OK (2 tests)

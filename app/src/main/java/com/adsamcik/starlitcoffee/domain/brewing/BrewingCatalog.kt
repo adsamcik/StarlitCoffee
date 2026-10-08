@@ -67,6 +67,8 @@ object BuiltinBrewingCatalog {
             MethodFamilyDefinition(MethodFamilyId("steep_and_release"), "Steep and release"),
             MethodFamilyDefinition(MethodFamilyId("heated_unfiltered"), "Heated unfiltered"),
             MethodFamilyDefinition(MethodFamilyId("automatic_batch"), "Automatic batch"),
+            MethodFamilyDefinition(MethodFamilyId("vacuum_siphon"), "Siphon"),
+            MethodFamilyDefinition(MethodFamilyId("electric_percolation"), "Electric percolator"),
             MethodFamilyDefinition(
                 MethodFamilyId("restricted_flow_gravity_concentrate"),
                 "Restricted-flow gravity concentrate",
@@ -95,6 +97,14 @@ object BuiltinBrewingCatalog {
                 evidenceConfidence = EvidenceConfidence.HIGH,
             ),
             FilterProfile(FilterProfileId("cone_paper"), FilterMedium.PAPER, FilterGeometry.CONE),
+            // Size is chosen to fit the user's Chemex; three-cup brewers use half-moon paper.
+            FilterProfile(
+                id = FilterProfileId("chemex_bonded_paper"),
+                medium = FilterMedium.PAPER,
+                geometry = FilterGeometry.BREWER_SPECIFIC,
+                disposable = true,
+                evidenceConfidence = EvidenceConfidence.HIGH,
+            ),
             FilterProfile(
                 id = FilterProfileId("moccamaster_number_four_cone_paper"),
                 medium = FilterMedium.PAPER,
@@ -165,6 +175,12 @@ object BuiltinBrewingCatalog {
             ),
         ),
         brewerProfiles = listOf(
+            profile("hario_technica_tcar3", "vacuum_siphon", "Hario Technica TCAR-3",
+                OutputModel.UserMeasuredOutput,
+                safety = setOf(SafetyTag.HOT_LIQUID, SafetyTag.HOT_GLASS, SafetyTag.OPEN_FLAME)),
+            profile("presto_02822", "electric_percolation", "Presto 02822",
+                OutputModel.UserMeasuredOutput,
+                safety = setOf(SafetyTag.HOT_LIQUID, SafetyTag.HOT_METAL)),
             profile(
                 "pulsar_standard",
                 "valve_controlled_no_bypass",
@@ -230,11 +246,20 @@ object BuiltinBrewingCatalog {
                 setOf("wedge_paper"),
             ),
             profile(
+                "chemex_unspecified",
+                "manual_gravity",
+                "Chemex",
+                OutputModel.BrewWaterMinusRetention(2.0),
+                setOf("chemex_bonded_paper"),
+                safety = setOf(SafetyTag.HOT_LIQUID, SafetyTag.HOT_GLASS, SafetyTag.OVERFLOW),
+            ),
+            profile(
                 "manual_thick_paper_carafe",
                 "manual_gravity",
-                "Thick-paper carafe brewer",
+                "Chemex (6-cup)",
                 OutputModel.BrewWaterMinusRetention(2.0),
                 setOf("chemex_six_cup_bonded_paper"),
+                safety = setOf(SafetyTag.HOT_LIQUID, SafetyTag.HOT_GLASS, SafetyTag.OVERFLOW),
             ),
             profile(
                 "french_press_generic",
@@ -378,6 +403,7 @@ object BuiltinBrewingCatalog {
         methodAliases = mapOf(
             "PULSAR" to BrewerProfileId("pulsar_standard"),
             "V60" to BrewerProfileId("v60_unspecified"),
+            "CHEMEX" to BrewerProfileId("chemex_unspecified"),
             "FRENCH_PRESS" to BrewerProfileId("french_press_generic"),
             "AEROPRESS" to BrewerProfileId("aeropress_standard"),
             "ESPRESSO" to BrewerProfileId("espresso_pump_generic"),

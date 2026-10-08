@@ -50,7 +50,11 @@ class RatingReminderScheduler(private val context: Context) : RatingReminders {
         val triggerAt = System.currentTimeMillis() + delay.inWholeMilliseconds
         val pendingIntent = buildPendingIntent(brewLogId, methodLabel)
         alarmManager.set(AlarmManager.RTC_WAKEUP, triggerAt, pendingIntent)
-        Tracebox.log.debug(RatingReminderSchedulerTraceboxTemplates.SCHEDULED_RATING_REMINDER_FOR_BREW_IN, argument(brewLogId), argument(delay))
+        Tracebox.log.debug(
+            RatingReminderSchedulerTraceboxTemplates.SCHEDULED_RATING_REMINDER_FOR_BREW_IN,
+            argument(brewLogId),
+            argument(delay),
+        )
     }
 
     override fun cancelReminder(brewLogId: Long) {

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_set_brew_reminder">Määra meeldetuletus</string>
+    <string name="action_edit_brew_reminder">Muuda meeldetuletust</string>
+    <string name="action_remove_brew_reminder">Eemalda meeldetuletus</string>
+    <string name="label_brew_reminder">Meeldetuletus</string>
+    <string name="label_timer_duration">Kestus</string>
+    <string name="label_timer_seconds">Sekundid</string>
+    <string name="label_timer_minutes">Minutid</string>
+    <string name="label_timer_hours">Tunnid</string>
+    <string name="msg_brew_reminder_origin">Selle sammu algusest. Kestuse muutmine säilitab juba möödunud aja. Kinnitad endiselt ise, millal samm on valmis.</string>
+    <string name="msg_brew_reminder_reached">Meeldetuletuse aeg on käes. Kontrolli kohvi enne jätkamist.</string>
+    <string name="title_cold_brew">Cold brew</string>
+    <string name="title_cold_brew_timer">Cold brew taimer</string>
+    <string name="action_follow_brew_guide">Järgi juhendit</string>
+    <string name="action_just_set_brew_timer">Määra ainult taimer</string>
+    <string name="action_start_timer">Käivita taimer</string>
+    <string name="action_start_steeping">Alusta leotamist</string>
+    <string name="action_end_brew_timer">Lõpeta taimer</string>
+    <string name="action_add_brew_start_time">Lisa algusaeg</string>
+    <string name="label_brew_start_now">Algab nüüd</string>
+    <string name="label_brew_start_earlier">Alustatud varem</string>
+    <string name="label_brew_start_unknown">Algusaeg teadmata</string>
+    <string name="label_brew_hours_ago">Mitu tundi tagasi</string>
+    <string name="label_brew_minutes_ago">Mitu minutit tagasi</string>
+    <string name="msg_cold_brew_refrigerated">Hoia kaetult külmikus temperatuuril 4 °C või madalam. Vaikimisi leotusaeg on 14 tundi.</string>
+    <string name="msg_cold_brew_start_origin">Käivita, kui kohv on täielikult märg ja kaetud anum on külmikusse pandud.</string>
+    <string name="msg_brew_start_unknown">Lisa tegelik algusaeg, et arvutada meeldetuletus. Seni lõpuaega ei hinnata.</string>
+    <string name="msg_brew_timer_ended">Taimer lõppenud</string>
+    <string name="label_brew_extraction_ended">Ekstraktsioon lõppenud</string>
+    <string name="msg_brew_notifications_disabled">Meeldetuletused on välja lülitatud. Kohvi valmistamine jätkub.</string>
+    <string name="action_allow_brew_notifications">Luba meeldetuletused</string>
+    <string name="msg_brew_reminders_may_be_late">Android võib meeldetuletusi edasi lükata, kui rakendusest lahkud.</string>
+    <string name="action_allow_precise_brew_reminders">Luba täpsed meeldetuletused</string>
+</resources>

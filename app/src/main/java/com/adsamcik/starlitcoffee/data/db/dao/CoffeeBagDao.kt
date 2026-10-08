@@ -51,6 +51,16 @@ interface CoffeeBagDao {
     )
     suspend fun findNextSealed(name: String, roaster: String?): CoffeeBagEntity?
 
+    @Query("SELECT * FROM coffee_bags WHERE coffeeId = :coffeeId AND id != :excludedId " +
+        "AND status = 'SEALED' AND (weightG IS NULL OR weightG > 0) ORDER BY packNumber, id LIMIT 1")
+    suspend fun findNextPack(coffeeId: Long, excludedId: Long): CoffeeBagEntity?
+
+    @Query("SELECT COALESCE(MAX(packNumber),0) + 1 FROM coffee_bags WHERE coffeeId = :coffeeId")
+    suspend fun nextPackNumber(coffeeId: Long): Int
+
+    @Query("UPDATE coffee_bags SET status = 'OPEN', openedDate = :openedAt WHERE id = :id AND status = 'SEALED'")
+    suspend fun markOpenedOnUse(id: Long, openedAt: Long)
+
     @Query("SELECT DISTINCT origin FROM coffee_bags WHERE origin IS NOT NULL")
     suspend fun getDistinctOrigins(): List<String>
 

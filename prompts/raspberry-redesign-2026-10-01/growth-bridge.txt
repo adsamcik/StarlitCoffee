@@ -1,0 +1,8 @@
+Edit this transparent 2x2 four-pose panel into a coherent growth bridge. Row-major positions are F7, F8, F9, F10. Replace only the first THREE COMPLETE plant poses. Keep bottom-right F10 unchanged as the destination. Second input is preceding F6: retain its lower leaves, split bean and shallow soil ring. Output one square transparent RGBA 2x2 panel, uniform cells, one whole plant per cell, empty margins, no text, guides, lines or extra objects.
+
+Match the existing richly painted green raspberry plant. Identical camera, scale, bean proportions, soil ring, lighting and base position in all four cells. Grow anatomy; never zoom the plant. Preserve every established leaf and branch as new ones unfold. F10's asymmetric branching and seven tiny green bud sites are the target, not a generic symmetrical sapling.
+
+F7 top-left: keep F6's two broad lower leaves and small upper leaves; extend the same trunk and open two short unequal side branches with small serrated leaves. No buds or fruit.
+F8 top-right: retain all F7 leaves and branches, spread those side branches outward, add the upper fork and unfolding upper leaves; a fuller asymmetric canopy approaching F10. No buds or fruit.
+F9 bottom-left: retain that entire structure, expand the same serrated foliage toward F10's width and height; establish its left-three/right-four hanging sites as seven very small green buds. No berries, flowers or red color.
+F10 bottom-right: preserve supplied complete pose, including all seven buds and foliage. No shrink, missing lower leaves, reset or sudden canopy jump from F9.

@@ -371,9 +371,10 @@ fun BloomSpritesheetAnimation(
         countdownSeconds = bloomCountdownSeconds,
         durationSeconds = bloomDurationSeconds,
     )
+    val shouldAnimateProgress = isRunning && bloomCountdownSeconds != null && targetProgress < 1f
     val animatedProgress by animateFloatAsState(
         targetValue = targetProgress,
-        animationSpec = if (isRunning && bloomCountdownSeconds != null && targetProgress < 1f) {
+        animationSpec = if (shouldAnimateProgress) {
             tween(durationMillis = BloomProgressTweenMillis, easing = LinearEasing)
         } else {
             snap()
@@ -397,7 +398,11 @@ fun BloomSpritesheetAnimation(
     val frameCorrections = remember(image, grid) {
         resolveBloomFrameCorrections(image = image, grid = grid)
     }
-    val frameIndex = resolveBloomFrameIndex(animatedProgress, grid.frameCount)
+    // Reset, pause and completion are authoritative countdown states. Reading
+    // them directly avoids showing a stale pose while the animation coroutine
+    // processes its snap on a subsequent Compose frame.
+    val displayedProgress = if (shouldAnimateProgress) animatedProgress else targetProgress
+    val frameIndex = resolveBloomFrameIndex(displayedProgress, grid.frameCount)
 
     BloomSpritesheetFrame(
         image = image,
@@ -432,7 +437,9 @@ fun BloomSpritesheetFinalFramePreview(
         image = image,
         grid = grid,
         frameIndex = grid.frameCount - 1,
-        frameCorrection = IntOffset.Zero,
+        frameCorrection = remember(image, grid) {
+            resolveBloomFrameCorrections(image = image, grid = grid)
+        }.getOrElse(grid.frameCount - 1) { IntOffset.Zero },
         contentDescription = contentDescription,
         modifier = modifier,
     )
@@ -538,19 +545,6 @@ private fun androidx.compose.ui.graphics.drawscope.DrawScope.drawHaloPass(
         colorFilter = ColorFilter.tint(tint),
         filterQuality = FilterQuality.Medium,
     )
-}
-
-private fun resolveBloomProgress(
-    countdownSeconds: Int?,
-    durationSeconds: Int,
-): Float {
-    if (countdownSeconds == null || durationSeconds <= 0) return 0f
-    val elapsedSeconds = (durationSeconds - countdownSeconds).coerceIn(0, durationSeconds)
-    return elapsedSeconds / durationSeconds.toFloat()
-}
-
-private fun resolveBloomFrameIndex(progress: Float, frameCount: Int): Int {
-    return (progress * (frameCount - 1)).roundToInt().coerceIn(0, frameCount - 1)
 }
 
 private data class BloomFrameAnchor(

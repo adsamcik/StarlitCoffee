@@ -55,6 +55,7 @@ import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
 import com.adsamcik.starlitcoffee.util.NormalizedCoffeeField
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
 import com.adsamcik.starlitcoffee.util.PhotoStoragePolicy
+import com.adsamcik.starlitcoffee.util.RecognitionCapability
 import com.adsamcik.starlitcoffee.util.ScanProgress
 import com.adsamcik.starlitcoffee.util.ScanStage
 import com.adsamcik.starlitcoffee.viewmodel.BagVisionPlanner
@@ -327,7 +328,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                 matchedBagByBarcode = matchedBagByBarcode,
                 allCandidates = allCandidates,
                 llmStatus = if (runLlm && !llmProvider.isAvailable()) {
-                    LlmEnrichmentStatus.UNAVAILABLE
+                    unavailableEnrichmentStatus(llmProvider.unavailableCapability())
                 } else {
                     LlmEnrichmentStatus.NOT_RUN
                 },
@@ -431,7 +432,9 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                 matchedBag = matchedBagByBarcode,
                 observedStemMatch = BarcodeInsights.findObservedStemMatch(detectedBarcode),
             ) + qrEnrichment.reviewHints,
-            scanServiceUnavailable = llmStatus == LlmEnrichmentStatus.UNAVAILABLE,
+            scanServiceUnavailable = llmStatus == LlmEnrichmentStatus.UNAVAILABLE ||
+                llmStatus == LlmEnrichmentStatus.AUTHORIZATION_REQUIRED ||
+                llmStatus == LlmEnrichmentStatus.SETUP_REQUIRED,
         )
         val ocrPrefill = fieldEvidence.takeIf { it.isNotEmpty() }?.let(BagPhotoScanSupport::buildPrefill)
 
@@ -1065,7 +1068,10 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             if (read < 0) break
             total += read
             if (total > maxBytes) {
-                Tracebox.log.warn(BagPhotoExtractorTraceboxTemplates.SKIPPING_LLM_ENRICHMENT_PHOTO_EXCEEDS_MB, argument(maxBytes / (1024 * 1024)))
+                Tracebox.log.warn(
+                    BagPhotoExtractorTraceboxTemplates.SKIPPING_LLM_ENRICHMENT_PHOTO_EXCEEDS_MB,
+                    argument(maxBytes / (1024 * 1024)),
+                )
                 return null
             }
             output.write(buffer, 0, read)
@@ -1128,7 +1134,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         knownFieldValues: KnownFieldValues,
     ): LlmEnrichmentOutcome {
         if (!llmProvider.isAvailable()) {
-            return LlmEnrichmentOutcome(status = LlmEnrichmentStatus.UNAVAILABLE)
+            return unavailableEnrichmentOutcome(llmProvider.unavailableCapability())
         }
 
         val fieldsNeeded = BAG_PHOTO_FIELD_NAMES.toSet()
@@ -1155,7 +1161,8 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         )
     }
 
-    private suspend fun tryLlmEnrichment(
+    @VisibleForTesting
+    internal suspend fun tryLlmEnrichment(
         photoBytes: ByteArray,
         existingFields: Map<String, FieldContext>,
         fieldsNeeded: Set<String>,
@@ -1163,7 +1170,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         knownFieldValues: KnownFieldValues?,
     ): LlmEnrichmentOutcome {
         if (!llmProvider.isAvailable()) {
-            return LlmEnrichmentOutcome(status = LlmEnrichmentStatus.UNAVAILABLE)
+            return unavailableEnrichmentOutcome(llmProvider.unavailableCapability())
         }
 
         val imageHash = LlmCacheKey.compute(
@@ -1198,13 +1205,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             }
             is LlmExtractionResult.Unavailable -> {
                 Tracebox.log.warn(BagPhotoExtractorTraceboxTemplates.LLM_ENRICHMENT_UNAVAILABLE, argument(result.reason))
-                LlmEnrichmentOutcome(
-                    status = if (result.setupRequired) {
-                        LlmEnrichmentStatus.SETUP_REQUIRED
-                    } else {
-                        LlmEnrichmentStatus.UNAVAILABLE
-                    },
-                )
+                unavailableEnrichmentOutcome(result.capability)
             }
             is LlmExtractionResult.Failed -> {
                 Tracebox.log.warn(BagPhotoExtractorTraceboxTemplates.LLM_ENRICHMENT_FAILED, argument(result.error))
@@ -1295,48 +1296,58 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         val textCandidates = attenuateLlmConfidenceForQuality(llmOutcome.candidates, goldenQuality)
         allCandidates += textCandidates
         onStageResult(llmOutcome.status)
-        if (llmOutcome.status == LlmEnrichmentStatus.SETUP_REQUIRED) return llmOutcome
+        if (llmOutcome.requiresUserAction) return llmOutcome
 
         reporter.report(ScanStage.VISION)
+        val visionOutcome = runVisionEnrichmentIfNeeded(
+            photoUriList = photoUriList,
+            processedPhotos = processedPhotos,
+            existingCandidates = allCandidates.toList(),
+        )
         val visionCandidates = attenuateLlmConfidenceForQuality(
-            runVisionEnrichmentIfNeeded(
-                photoUriList = photoUriList,
-                processedPhotos = processedPhotos,
-                existingCandidates = allCandidates.toList(),
-            ),
+            visionOutcome.candidates,
             goldenQuality,
         )
         allCandidates += visionCandidates
+        if (publishBlockingOutcome(visionOutcome, onStageResult)) return visionOutcome
         onStageResult(llmOutcome.status)
 
         reporter.report(ScanStage.COMBINING)
-        allCandidates += runCombineEnrichmentIfNeeded(
+        val combineOutcome = runCombineEnrichmentOutcomeIfNeeded(
             textPassCandidates = textCandidates,
             visionPassCandidates = visionCandidates,
             allCandidates = allCandidates.toList(),
             knownFieldValues = currentKnownValues,
             combinedOcrText = combinedOcrText,
         )
+        allCandidates += combineOutcome.candidates
+        if (publishBlockingOutcome(combineOutcome, onStageResult)) return combineOutcome
         onStageResult(llmOutcome.status)
         // Post-translation refinement: offer the LLM close vocabulary candidates
         // for the now-English concept fields and let it keep or canonicalize.
-        allCandidates += runRefineEnrichmentIfNeeded(
+        val refineOutcome = runRefineEnrichmentOutcomeIfNeeded(
             allCandidates = allCandidates.toList(),
             combinedOcrText = combinedOcrText,
         )
-        onStageResult(llmOutcome.status)
-        return llmOutcome
+        allCandidates += refineOutcome.candidates
+        return if (publishBlockingOutcome(refineOutcome, onStageResult)) {
+            refineOutcome
+        } else {
+            onStageResult(llmOutcome.status)
+            llmOutcome
+        }
     }
 
     private suspend fun runVisionEnrichmentIfNeeded(
         photoUriList: List<String>,
         processedPhotos: List<ProcessedBagPhoto>,
         existingCandidates: List<BagFieldCandidate>,
-    ): List<BagFieldCandidate> {
-        if (!llmProvider.supportsVision() || !llmProvider.isAvailable()) return emptyList()
+    ): LlmEnrichmentOutcome {
+        if (!llmProvider.supportsVision()) return LlmEnrichmentOutcome()
+        if (!llmProvider.isAvailable()) return unavailableEnrichmentOutcome(llmProvider.unavailableCapability())
         val preVisionEvidence = resolveBagPhotoFieldEvidence(existingCandidates)
         val visionFields = BagVisionPlanner.selectVisionFields(preVisionEvidence)
-        if (visionFields.isEmpty()) return emptyList()
+        if (visionFields.isEmpty()) return LlmEnrichmentOutcome()
 
         val visionOutcome = tryVisionLlmEnrichment(
             photoUriList = photoUriList,
@@ -1345,7 +1356,9 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             fieldsNeeded = visionFields,
             knownFieldValues = currentKnownValues,
         )
-        return BagVisionPlanner.filterVisionCandidates(visionOutcome.candidates, preVisionEvidence)
+        return visionOutcome.copy(
+            candidates = BagVisionPlanner.filterVisionCandidates(visionOutcome.candidates, preVisionEvidence),
+        )
     }
 
     /**
@@ -1367,18 +1380,34 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         allCandidates: List<BagFieldCandidate>,
         knownFieldValues: KnownFieldValues,
         combinedOcrText: String? = null,
-    ): List<BagFieldCandidate> {
-        if (!llmProvider.supportsCombine() || !llmProvider.isAvailable()) return emptyList()
+    ): List<BagFieldCandidate> = runCombineEnrichmentOutcomeIfNeeded(
+        textPassCandidates,
+        visionPassCandidates,
+        allCandidates,
+        knownFieldValues,
+        combinedOcrText,
+    ).candidates
+
+    @VisibleForTesting
+    internal suspend fun runCombineEnrichmentOutcomeIfNeeded(
+        textPassCandidates: List<BagFieldCandidate>,
+        visionPassCandidates: List<BagFieldCandidate>,
+        allCandidates: List<BagFieldCandidate>,
+        knownFieldValues: KnownFieldValues,
+        combinedOcrText: String? = null,
+    ): LlmEnrichmentOutcome {
+        if (!llmProvider.supportsCombine()) return LlmEnrichmentOutcome()
+        if (!llmProvider.isAvailable()) return unavailableEnrichmentOutcome(llmProvider.unavailableCapability())
 
         val textPassFields = bestValuesByField(textPassCandidates)
         val visionPassFields = bestValuesByField(visionPassCandidates)
-        if (textPassFields.isEmpty() || visionPassFields.isEmpty()) return emptyList()
+        if (textPassFields.isEmpty() || visionPassFields.isEmpty()) return LlmEnrichmentOutcome()
 
         val settled = resolveBagPhotoFieldEvidence(allCandidates)
         val fieldsNeeded = (textPassFields.keys + visionPassFields.keys)
             .filterNot { BagVisionPlanner.isAuthoritativelySettled(settled[it]) }
             .toSet()
-        if (fieldsNeeded.isEmpty()) return emptyList()
+        if (fieldsNeeded.isEmpty()) return LlmEnrichmentOutcome()
 
         val request = LlmCombineRequest(
             fieldsNeeded = fieldsNeeded,
@@ -1387,10 +1416,11 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             knownFieldValues = knownFieldValues,
             rawOcrText = combinedOcrText,
         )
-        return tryCombineEnrichment(request).map { it.copy(sourceCount = 2) }
+        val outcome = tryCombineEnrichment(request)
+        return outcome.copy(candidates = outcome.candidates.map { it.copy(sourceCount = 2) })
     }
 
-    private suspend fun tryCombineEnrichment(request: LlmCombineRequest): List<BagFieldCandidate> {
+    private suspend fun tryCombineEnrichment(request: LlmCombineRequest): LlmEnrichmentOutcome {
         val cacheKey = LlmCacheKey.compute(
             imageBytes = ByteArray(0),
             fieldsNeeded = request.fieldsNeeded,
@@ -1398,7 +1428,9 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             existingFields = emptyMap(),
             mode = "combine",
         )
-        llmCache.get(cacheKey)?.let { return it.fieldCandidates }
+        llmCache.get(cacheKey)?.let {
+            return LlmEnrichmentOutcome(it.fieldCandidates, LlmEnrichmentStatus.SUCCEEDED)
+        }
 
         val result = try {
             MindlayerLlmCallGate.withPermit {
@@ -1418,15 +1450,15 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         return when (result) {
             is LlmExtractionResult.Success -> {
                 llmCache.put(cacheKey, result)
-                result.fieldCandidates
+                LlmEnrichmentOutcome(result.fieldCandidates, LlmEnrichmentStatus.SUCCEEDED)
             }
             is LlmExtractionResult.Unavailable -> {
                 Tracebox.log.warn(BagPhotoExtractorTraceboxTemplates.COMBINE_ENRICHMENT_UNAVAILABLE, argument(result.reason))
-                emptyList()
+                unavailableEnrichmentOutcome(result.capability)
             }
             is LlmExtractionResult.Failed -> {
                 Tracebox.log.warn(BagPhotoExtractorTraceboxTemplates.COMBINE_ENRICHMENT_FAILED, argument(result.error))
-                emptyList()
+                LlmEnrichmentOutcome(status = LlmEnrichmentStatus.FAILED)
             }
         }
     }
@@ -1472,10 +1504,16 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
     internal suspend fun runRefineEnrichmentIfNeeded(
         allCandidates: List<BagFieldCandidate>,
         combinedOcrText: String? = null,
-    ): List<BagFieldCandidate> {
-        if (!llmProvider.supportsRefine() || !llmProvider.isAvailable()) return emptyList()
-        val vocabulary = vocabularyProvider() ?: return emptyList()
-        if (vocabulary.isEmpty) return emptyList()
+    ): List<BagFieldCandidate> = runRefineEnrichmentOutcomeIfNeeded(allCandidates, combinedOcrText).candidates
+
+    @VisibleForTesting
+    internal suspend fun runRefineEnrichmentOutcomeIfNeeded(
+        allCandidates: List<BagFieldCandidate>,
+        combinedOcrText: String? = null,
+    ): LlmEnrichmentOutcome {
+        if (!llmProvider.supportsRefine()) return LlmEnrichmentOutcome()
+        if (!llmProvider.isAvailable()) return unavailableEnrichmentOutcome(llmProvider.unavailableCapability())
+        val vocabulary = vocabularyProvider() ?: return LlmEnrichmentOutcome()
 
         val bestValues = bestValuesByField(allCandidates)
         val settled = resolveBagPhotoFieldEvidence(allCandidates)
@@ -1488,7 +1526,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                     suggestionsByField[field] = suggestions
                 }
         }
-        if (suggestionsByField.isEmpty()) return emptyList()
+        if (suggestionsByField.isEmpty()) return LlmEnrichmentOutcome()
 
         return tryRefineEnrichment(
             LlmRefineRequest(
@@ -1524,7 +1562,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         return if (suggestions.isNotEmpty()) value to suggestions else null
     }
 
-    private suspend fun tryRefineEnrichment(request: LlmRefineRequest): List<BagFieldCandidate> {
+    private suspend fun tryRefineEnrichment(request: LlmRefineRequest): LlmEnrichmentOutcome {
         val cacheKey = LlmCacheKey.compute(
             imageBytes = ByteArray(0),
             fieldsNeeded = request.fieldsNeeded,
@@ -1532,7 +1570,9 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             existingFields = emptyMap(),
             mode = "refine",
         )
-        llmCache.get(cacheKey)?.let { return it.fieldCandidates }
+        llmCache.get(cacheKey)?.let {
+            return LlmEnrichmentOutcome(it.fieldCandidates, LlmEnrichmentStatus.SUCCEEDED)
+        }
 
         val result = try {
             MindlayerLlmCallGate.withPermit {
@@ -1552,15 +1592,15 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         return when (result) {
             is LlmExtractionResult.Success -> {
                 llmCache.put(cacheKey, result)
-                result.fieldCandidates
+                LlmEnrichmentOutcome(result.fieldCandidates, LlmEnrichmentStatus.SUCCEEDED)
             }
             is LlmExtractionResult.Unavailable -> {
                 Tracebox.log.warn(BagPhotoExtractorTraceboxTemplates.REFINE_ENRICHMENT_UNAVAILABLE, argument(result.reason))
-                emptyList()
+                unavailableEnrichmentOutcome(result.capability)
             }
             is LlmExtractionResult.Failed -> {
                 Tracebox.log.warn(BagPhotoExtractorTraceboxTemplates.REFINE_ENRICHMENT_FAILED, argument(result.error))
-                emptyList()
+                LlmEnrichmentOutcome(status = LlmEnrichmentStatus.FAILED)
             }
         }
     }
@@ -1609,6 +1649,16 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             null
         } ?: return LlmEnrichmentOutcome(status = LlmEnrichmentStatus.FAILED)
 
+        return tryVisionLlmEnrichment(photoBytes, existingFields, fieldsNeeded, knownFieldValues)
+    }
+
+    @VisibleForTesting
+    internal suspend fun tryVisionLlmEnrichment(
+        photoBytes: ByteArray,
+        existingFields: Map<String, FieldContext>,
+        fieldsNeeded: Set<String>,
+        knownFieldValues: KnownFieldValues,
+    ): LlmEnrichmentOutcome {
         val cacheKey = LlmCacheKey.compute(
             imageBytes = photoBytes,
             fieldsNeeded = fieldsNeeded,
@@ -1655,7 +1705,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
             }
             is LlmExtractionResult.Unavailable -> {
                 Tracebox.log.warn(BagPhotoExtractorTraceboxTemplates.VISION_ENRICHMENT_UNAVAILABLE, argument(result.reason))
-                LlmEnrichmentOutcome(status = LlmEnrichmentStatus.UNAVAILABLE)
+                unavailableEnrichmentOutcome(result.capability)
             }
             is LlmExtractionResult.Failed -> {
                 Tracebox.log.warn(BagPhotoExtractorTraceboxTemplates.VISION_ENRICHMENT_FAILED, argument(result.error))
@@ -1740,10 +1790,33 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         val reviewHints: List<BagPhotoReviewHint> = emptyList(),
     )
 
-    private data class LlmEnrichmentOutcome(
+    private fun publishBlockingOutcome(
+        outcome: LlmEnrichmentOutcome,
+        onStageResult: (LlmEnrichmentStatus) -> Unit,
+    ): Boolean {
+        if (!outcome.requiresUserAction) return false
+        onStageResult(outcome.status)
+        return true
+    }
+
+    private fun unavailableEnrichmentOutcome(capability: RecognitionCapability): LlmEnrichmentOutcome =
+        LlmEnrichmentOutcome(status = unavailableEnrichmentStatus(capability))
+
+    private fun unavailableEnrichmentStatus(capability: RecognitionCapability): LlmEnrichmentStatus =
+        when (capability) {
+            RecognitionCapability.AUTHORIZATION_REQUIRED -> LlmEnrichmentStatus.AUTHORIZATION_REQUIRED
+            RecognitionCapability.ASSET_SETUP_REQUIRED -> LlmEnrichmentStatus.SETUP_REQUIRED
+            else -> LlmEnrichmentStatus.UNAVAILABLE
+        }
+
+    internal data class LlmEnrichmentOutcome(
         val candidates: List<BagFieldCandidate> = emptyList(),
         val status: LlmEnrichmentStatus = LlmEnrichmentStatus.NOT_RUN,
-    )
+    ) {
+        val requiresUserAction: Boolean
+            get() = status == LlmEnrichmentStatus.AUTHORIZATION_REQUIRED ||
+                status == LlmEnrichmentStatus.SETUP_REQUIRED
+    }
 
     private data class ScanPass(
         val label: String,

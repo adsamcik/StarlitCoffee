@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_set_name_optional">Név (nem kötelező)</string>
+    <string name="label_starting_recipe">Kezdő recept</string>
+    <string name="label_starting_amount">Kezdő mennyiség</string>
+    <string name="msg_brewing_set_recipe_invalid">Adjon meg pozitív arányt és mennyiséget, vagy hagyja üresen a mennyiséget.</string>
+    <string name="msg_brewing_sets_onboarding">Válassza ki az eszközeit. Adjon hozzá otthoni vagy munkahelyi készleteket, és válassza ki, melyik nyíljon meg először.</string>
+    <string name="action_create_brewing_set">Készlet létrehozása</string>
+    <string name="cd_brewing_set_options">%1$s beállításai</string>
+    <string name="msg_saved_brewing_calculation">Mentett számítás: %1$s. A cseréjéhez adjon meg egy mennyiséget.</string>
+</resources>

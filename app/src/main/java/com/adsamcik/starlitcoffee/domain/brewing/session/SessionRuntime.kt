@@ -125,7 +125,15 @@ data class SessionRuntimeState(
     /** Delivery acknowledgements make restoration/retry safe. */
     val acknowledgedEffectIds: List<SessionEffectId> = emptyList(),
     val lastClockReconciliation: ClockReconciliation? = null,
+    /** Silences discretionary guidance cues without stopping physical extraction or its deadlines. */
+    val isGuidancePaused: Boolean = false,
+    val userTimer: UserBrewTimer? = null,
+    /** Retained after removal so an old reminder identity can never become current again. */
+    val timerRevision: Long = 0L,
+    val physicalClock: PhysicalBrewClock? = null,
 ) {
+    val hasPhysicalClockStarted: Boolean get() = physicalClock?.hasStarted != false
+    val isPhysicalOriginKnown: Boolean get() = physicalClock?.originKnown != false
     val currentStage: CompiledBrewStage?
         get() = currentStageIndex?.let(stagePlan.stages::getOrNull)
 
@@ -170,6 +178,21 @@ sealed interface SessionEffect {
 }
 
 sealed interface PendingSessionEffect : SessionEffect {
+    data class TimerAlert(
+        override val effectId: SessionEffectId,
+        val sessionId: SessionId,
+        val stageInstanceId: StageInstanceId,
+        val timerRevision: Long,
+    ) : PendingSessionEffect
+
+    data class ScheduleTimerDeadline(
+        override val effectId: SessionEffectId,
+        val sessionId: SessionId,
+        val stageInstanceId: StageInstanceId,
+        val scheduleToken: String,
+        val dueAtWallClockMillis: Long,
+    ) : PendingSessionEffect
+
     data class StageAlert(
         override val effectId: SessionEffectId,
         val sessionId: SessionId,
@@ -240,10 +263,33 @@ sealed interface SessionEvent {
 
     data class Resume(override val eventId: SessionEventId? = null) : SessionEvent
 
+    /** Null removes a reminder. Editing an existing reminder always retains its origin. */
+    data class SetTimerTarget(
+        val stageInstanceId: StageInstanceId,
+        val durationMillis: Long?,
+        val origin: BrewTimerOrigin = BrewTimerOrigin.STAGE_START,
+        override val eventId: SessionEventId? = null,
+    ) : SessionEvent
+
+    data class EstablishClockOrigin(
+        val stageInstanceId: StageInstanceId,
+        val originWallClockMillis: Long,
+        override val eventId: SessionEventId? = null,
+    ) : SessionEvent
+
+    data class SetGuidancePaused(
+        val paused: Boolean,
+        override val eventId: SessionEventId? = null,
+    ) : SessionEvent
+
     data class Tick(override val eventId: SessionEventId? = null) : SessionEvent
 
     /** Explicitly reconcile persisted wall time after recovery or a clock change. */
-    data class Reconcile(override val eventId: SessionEventId? = null) : SessionEvent
+    data class Reconcile(
+        override val eventId: SessionEventId? = null,
+        val useMonotonicClock: Boolean = false,
+        val rescheduleDeadline: Boolean = false,
+    ) : SessionEvent
 
     /** Rebuilds the in-process monotonic anchor from a persisted runtime snapshot. */
     data class Restore(override val eventId: SessionEventId? = null) : SessionEvent

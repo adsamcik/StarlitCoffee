@@ -76,7 +76,7 @@ class BrewSessionFinalizer(
         val selectedBag = current.executionContext.coffeeBagId
             ?.let { coffeeBagId -> coffeeBagDao.getByIdOnce(coffeeBagId) }
         val nextSealedBag = selectedBag?.let { bag ->
-            coffeeBagDao.findNextSealed(bag.name, bag.roaster)
+            bag.coffeeId?.let { coffeeBagDao.findNextPack(it, bag.id) }
         }
         val completion = try {
             BrewSessionCompletionPlanner.plan(

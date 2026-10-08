@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
+import com.adsamcik.starlitcoffee.data.model.GrinderSettingFormatter
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -65,7 +66,8 @@ import com.adsamcik.starlitcoffee.ui.component.HomeContextCardView
 import com.adsamcik.starlitcoffee.ui.component.FavoritesRow
 import com.adsamcik.starlitcoffee.ui.component.SaveFavoriteDialog
 import com.adsamcik.starlitcoffee.ui.component.RatioPresetRow
-import com.adsamcik.starlitcoffee.ui.component.iconForMethod
+import com.adsamcik.starlitcoffee.ui.component.EquipmentIcon
+import com.adsamcik.starlitcoffee.ui.component.EquipmentVisual
 import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import com.adsamcik.starlitcoffee.data.model.BrewRating
 import com.adsamcik.starlitcoffee.viewmodel.GrindResult
@@ -162,10 +164,12 @@ fun MethodPickerScreen(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 val noFilterLabel = stringResource(R.string.label_no_filter)
+                val chemexFilterLabel = stringResource(R.string.label_filter_chemex_bonded)
                 val decafSuffix = stringResource(R.string.label_decaf_suffix)
                 Text(
                     text = buildString {
-                        append(state.filterType?.displayName ?: noFilterLabel)
+                        append(if (state.method == BrewMethod.CHEMEX) chemexFilterLabel
+                            else state.filterType?.displayName ?: noFilterLabel)
                         if (state.isDecafBrew) append(decafSuffix)
                     },
                     style = MaterialTheme.typography.bodySmall,
@@ -219,11 +223,7 @@ fun MethodPickerScreen(
                         modifier = Modifier.testTag("method_chip_${method.name}"),
                         label = { Text(method.displayName) },
                         leadingIcon = {
-                            Icon(
-                                imageVector = iconForMethod(method),
-                                contentDescription = null,
-                                modifier = Modifier.size(18.dp),
-                            )
+                            EquipmentIcon(EquipmentVisual.method(method), modifier = Modifier.size(24.dp))
                         },
                     )
                 }
@@ -541,7 +541,7 @@ fun MethodPickerScreen(
             is GrindResult.Generic ->
                 stringResource(R.string.format_grind_generic, gr.descriptor.displayName, gr.descriptor.visualCue)
             is GrindResult.Specific ->
-                stringResource(R.string.format_grind_specific_range, "%.1f".format(gr.recommendation.rangeStart), "%.1f".format(gr.recommendation.rangeEnd))
+                "${stringResource(R.string.label_grind)}: ${GrinderSettingFormatter.range(gr.grinder, gr.recommendation)}"
         }
         val bagGrindHint = selectedRankedBag?.grindInsight?.bestGrindSetting ?: selectedBag?.grindSetting
         ElevatedCard(

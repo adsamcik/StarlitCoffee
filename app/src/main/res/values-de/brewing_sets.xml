@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_sets">Brühkombinationen</string>
+    <string name="msg_brewing_sets_hint">Speichere getrennte Kombinationen für zu Hause, die Arbeit oder verschiedene Brühmethoden.</string>
+    <string name="action_add_brewing_set">Kombination hinzufügen</string>
+    <string name="action_save_brewing_set">Als Kombination speichern</string>
+    <string name="label_new_brewing_set">Neue Kombination</string>
+    <string name="label_edit_brewing_set">Kombination bearbeiten</string>
+    <string name="hint_brewing_set_name">z. B. Filter zu Hause</string>
+    <string name="action_manage_brewing_sets">Kombinationen verwalten</string>
+    <string name="label_brewing_set_method">Brühmethode</string>
+    <string name="msg_delete_brewing_set">Diese Brühkombination löschen?</string>
+    <string name="screen_first_brewing_set_method">Wähle deine erste Methode</string>
+    <string name="msg_first_brewing_set">Beginne mit einer Methode. Füge im nächsten Schritt weitere Brühkombinationen hinzu.</string>
+    <string name="action_retry_brewing_set">Erneut versuchen</string>
+</resources>

@@ -55,7 +55,7 @@
     <string name="label_brewer_profile_v60">V60</string>
     <string name="label_brewer_profile_wave_185">Wave 185 à fond plat</string>
     <string name="label_brewer_profile_wedge">Porte-filtre en coin</string>
-    <string name="label_brewer_profile_thick_paper_carafe">Cafetière à carafe avec filtre papier épais</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Chemex</string>
     <string name="label_brewer_profile_conical">Porte-filtre conique générique</string>
     <string name="label_brewer_profile_family_manual_gravity">Gravité manuelle</string>
     <string name="label_brewer_profile_pulsar">Pulsar</string>

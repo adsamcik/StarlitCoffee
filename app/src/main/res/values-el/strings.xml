@@ -100,11 +100,8 @@
     <string name="label_increase">Αυξήστε %1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Προετοιμάστε την παρασκευή σας</string>
     <string name="action_ready_to_brew_short">Έτοιμο για παρασκευή</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Προετοιμασία</string>
-    <string name="label_recipe_heading">Συνταγή</string>
     <string name="label_temp_short">Θερμ.</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Βρέξτε το χάρτινο φίλτρο στη βάση (με ανοιχτή βαλβίδα) και αφήστε το να στραγγίξει. Τοποθετήστε τον κύλινδρο, προσθέστε τον αλεσμένο καφέ, ισιώστε το στρώμα και βάλτε το καπάκι διασποράς. Μηδενίστε τη ζυγαριά.</string>
@@ -114,8 +111,6 @@
     <string name="prep_tip_french_press">Προθερμάνετε την πρέσα και μετά αδειάστε την. Προσθέστε τον αλεσμένο καφέ, βάλτε τη στη ζυγαριά και μηδενίστε πριν προσθέσετε νερό.</string>
     <string name="prep_tip_espresso">Σκουπίστε το portafilter ώστε να είναι στεγνό. Δοσομετρήστε, κατανείμετε και πατήστε επίπεδα πριν το κλειδώσετε.</string>
     <string name="prep_tip_moka">Γεμίστε τον κάτω θάλαμο μέχρι τη βαλβίδα. Γεμίστε το καλαθάκι με αλεσμένο καφέ, ισιώστε — μην τον πατήσετε. Συναρμολογήστε προσεκτικά.</string>
-    <string name="format_prep_grind_specific">Αλέστε %1$s — ρυθμίστε %2$s στο %3$s</string>
-    <string name="format_prep_grind_generic">Αλέστε %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Παύση</string>
@@ -148,7 +143,6 @@
     <string name="label_cup_presets">Προεπιλογές φλιτζανιού</string>
     <string name="action_add_preset">Προσθήκη προεπιλογής</string>
     <string name="action_reset_defaults">Επαναφορά προεπιλογών</string>
-    <string name="msg_presets_hint">Οι προεπιλογές εμφανίζονται ως γρήγορα κουμπιά στην αριθμομηχανή</string>
     <string name="label_brew_methods">Μέθοδοι παρασκευής</string>
     <string name="msg_methods_hint">Οι επιλεγμένες μέθοδοι εμφανίζονται πρώτες. Πατήστε για εναλλαγή.</string>
     <string name="label_default_method">Προεπιλεγμένη μέθοδος</string>
@@ -165,9 +159,9 @@
     <string name="label_bloom_sprite_coffee_starlit">Starlit coffee</string>
     <string name="desc_bloom_sprite_coffee_starlit">Πέταλα ατμού σε κρεμ-χρυσούς τόνους με μικρές λαμπερές ανταύγειες.</string>
     <string name="label_bloom_sprite_coffee_latte">Latte bloom</string>
-    <string name="desc_bloom_sprite_coffee_latte">Απαλή ροζέτα latte art σε ζεστούς τόνους αφρού γάλακτος.</string>
+    <string name="desc_bloom_sprite_coffee_latte">Μια καρδιά latte art ξεδιπλώνεται σε ζεστούς τόνους αφρού γάλακτος.</string>
     <string name="label_bloom_sprite_coffee_plant">Φυτό καφέ</string>
-    <string name="desc_bloom_sprite_coffee_plant">Φρέσκο πράσινο φυτάριο καφέ με ζευγαρωτά φύλλα.</string>
+    <string name="desc_bloom_sprite_coffee_plant">Ένα φυτό καφέ ξεδιπλώνει γυαλιστερά φύλλα, ενώ οι κόκκινοι καρποί του ωριμάζουν.</string>
     <string name="label_bloom_sprite_cherry_tomato">Ντοματίνι</string>
     <string name="desc_bloom_sprite_cherry_tomato">Ένας κόκκος καφέ βλασταίνει σε κληματίδα ντοματιάς καθώς ωριμάζουν κόκκινοι καρποί.</string>
     <string name="label_bloom_sprite_strawberry">Φράουλα</string>
@@ -435,15 +429,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">Άνοιγμα Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">Απαιτεί Android 12 ή νεότερη έκδοση.</string>
     <string name="label_ai_service">Υπηρεσία AI (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Λήψη του Mindlayer από το Google Play</string>
-    <string name="msg_mindlayer_install_recommendation">Εγκαταστήστε το Mindlayer από το Google Play για να διαβάζετε ετικέτες συσκευασιών καφέ με ιδιωτική AI στη συσκευή. Μπορείτε να το κάνετε αργότερα στις Ρυθμίσεις.</string>
     <string name="action_test_connection">Δοκιμή σύνδεσης</string>
     <string name="action_run_test_prompt">Εκτέλεση δοκιμαστικού prompt</string>
     <string name="label_testing">Δοκιμή…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">Ενεργοποίηση AI</string>
     <string name="consent_requesting">Αίτημα πρόσβασης AI…</string>
     <string name="consent_granted">Η AI ενεργοποιήθηκε</string>
     <string name="consent_already_approved">Η AI είναι ήδη ενεργοποιημένη</string>
@@ -532,7 +526,6 @@
     <string name="label_volume_ml">Όγκος (ml)</string>
     <string name="msg_dose_from_ratio">Η δόση καφέ υπολογίζεται από την αναλογία σας</string>
     <string name="label_icon">Εικονίδιο</string>
-    <string name="label_color">Χρώμα</string>
     <string name="action_add">Προσθήκη</string>
     <string name="screen_add_cup_preset_title">Προσθήκη προεπιλογής φλιτζανιού</string>
     <string name="screen_edit_cup_preset_title">Επεξεργασία προεπιλογής φλιτζανιού</string>
@@ -664,10 +657,10 @@
     <string name="msg_cup_preset_reset_failed">Δεν ήταν δυνατή η επαναφορά των προεπιλογών φλιτζανιού. Δοκιμάστε ξανά.</string>
     <string name="msg_reset_cup_presets">Αντικατάσταση όλων των προεπιλογών φλιτζανιού με τις προεπιλεγμένες;</string>
     <string name="msg_diagnostic_clear_failed">Δεν ήταν δυνατή η εκκαθάριση όλων των διαγνωστικών. Δοκιμάστε ξανά.</string>
-    <string name="msg_clear_diagnostics">Εκκαθάριση όλων των αποθηκευμένων συνεδριών σάρωσης και περασμάτων LLM;</string>
+    <string name="msg_clear_diagnostics">Εκκαθάριση όλων των αποθηκευμένων συνεδριών σάρωσης;</string>
     <string name="label_log_scan_corrections">Καταγραφή διορθώσεων σάρωσης (στη συσκευή)</string>
     <string name="msg_log_scan_corrections">Καταγράφει μόνο σε αυτή τη συσκευή τι εξήγαγε η AI και τι αποθηκεύσατε. Δεν μεταφορτώνεται τίποτα.</string>
-    <string name="format_scan_debug_counts">Συνεδρίες: %1$d · Περάσματα LLM: %2$d</string>
+    <string name="format_scan_debug_counts">Συνεδρίες: %1$d</string>
     <string name="format_scan_session_subject">Συνεδρία σάρωσης: %1$s</string>
     <string name="action_share_scan_session">Κοινοποίηση συνεδρίας σάρωσης</string>
 
@@ -733,4 +726,23 @@
     <string name="msg_learning_subtitle">Οπτικοί οδηγοί παρασκευής βήμα προς βήμα</string>
     <string name="action_show_details">Εμφάνιση λεπτομερειών</string>
     <string name="action_hide_details">Απόκρυψη λεπτομερειών</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Αποτελέσματα νέας σάρωσης</string>
+    <string name="title_rescan_no_changes">Δεν βρέθηκαν αλλαγές</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">Άλλαξε %1$d πεδίο:</item>
+        <item quantity="other">Άλλαξαν %1$d πεδία:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Δεν βρέθηκαν αλλαγές ακόμη.</string>
+    <string name="msg_rescan_incomplete">Ελέγξτε τα στοιχεία που βρέθηκαν ή δοκιμάστε ξανά την αναγνώριση.</string>
+    <string name="action_update_bag_so_far">Ενημέρωση με τα τρέχοντα αποτελέσματα</string>
+    <string name="action_new_bag_so_far">Νέα συσκευασία με τα τρέχοντα αποτελέσματα</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Άνοιγμα ρύθμισης…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Δεν ήταν δυνατό το άνοιγμα της ρύθμισης. Προσπαθήστε ξανά ή εισαγάγετε τις λεπτομέρειες χειροκίνητα.</string>
+    <string name="announce_label_details_ready">Οι λεπτομέρειες της ετικέτας είναι έτοιμες για έλεγχο.</string>
+    <string name="announce_label_recognition_no_result">Δεν βρέθηκαν λεπτομέρειες στην ετικέτα. Εισαγάγετε τις λεπτομέρειες χειροκίνητα.</string>
+    <string name="label_show_cup_presets">Εμφάνιση στην αριθμομηχανή</string>
+    <string name="cd_cup_preset_options">Επιλογές προεπιλογών φλιτζανιών</string>
 </resources>

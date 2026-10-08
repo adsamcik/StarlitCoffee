@@ -1,0 +1,25 @@
+Create a transparent square4 by4 sprite bank of SIXTEEN sequential COMPLETE Starlit Coffee poses. Use only the approved mature reference for artwork style, bean, gold light, fine loop strands and star placement. Every single one of the16 cells MUST contain the SAME EXACT FIVE stars in the SAME fixed positions as the mature reference, plus the same coffee bean and same small round central light. Stars do not move, vanish, appear, grow or multiply in this bank. The round center is not a star. This bank animates ONLY the tracing of the three luminous loops.
+
+Critical persistent elements in ALL16: split warm brown bean, gold seam, central round light, five fixed stars (top, upper-left, upper-right, lower-left, lower-right). The loops are thin ivory-gold parallel strands with TRANSPARENT inner voids. No solid cream petals, no thick tubes, no glitter dots.
+
+Loop path continuity: each strand grows continuously from the central light. Retain every already traced part when extending its free tip. Never flip an incomplete arc to the opposite attachment side between poses. The LEFT loop is traced first, RIGHT loop second, TOP loop last. The top loop starts at the LEFT side of the central light, travels up its LEFT side, across the crest, then down the RIGHT side back to the center. Its starting left attachment must remain throughout. The large gap always remains on its lower RIGHT until closure.
+
+Sixteen row-major poses:
+1 Five stars and central light fixed. A short LEFT-directed strand curves outward and upward, beginning the left loop. No right or top loop.
+2 Left free tip turns inward across its outer curve, leaving a large gap near the central light.
+3 Left tip approaches the center, gap nearly closed.
+4 Left loop closes and gains its fine nested inner strand, transparent void inside.
+5 Keep full left loop. A short RIGHT-directed strand extends from center.
+6 Right strand curls upward around its far outer curve, open gap near center.
+7 Right tip returns toward the center, gap nearly closed.
+8 Right loop closes and layered inner strands become distinct. Both side loops stay unchanged thereafter.
+9 Keep both side loops. TOP strand begins at LEFT side of center and extends upward along future upper loop's left edge, only a short segment.
+10 Top strand extends farther UP the left edge, its free tip points upward.
+11 Top strand reaches the upper-left shoulder and starts curving RIGHT, upper-right half still absent.
+12 Top strand curves RIGHT across the crest. Left attachment and entire left side remain; right descending side still absent.
+13 Top free tip descends along the upper-RIGHT curve, leaving a wide lower-right gap.
+14 Top free tip descends farther toward the center, leaving a small lower-right gap. Keep the full already traced left and upper arc.
+15 Top loop closes at the central light, giving three transparent inner voids.
+16 Approved mature composition: a second fine parallel upper strand finishes, all three loops have layered fine strands, five stars remain in identical sites, round center and gold seam resolve warmly.
+
+Same camera scale, identical bean size/position/lighting, fixed base, fixed star positions, uniform equal cells with ample padding and empty gutters. Every cell contains one whole uncut complete bean-and-stars pose; no overlap. Maintain mature reference's size and presence. Native transparent RGBA background. No labels, numbers, captions, borders, grid, guides, extra symbols, steam flame, plant leaves or petals.

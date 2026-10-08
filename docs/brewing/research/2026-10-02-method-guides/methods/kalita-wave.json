@@ -1,0 +1,357 @@
+{
+  "method_id": "kalita-wave",
+  "title": "Kalita Wave brewing guide",
+  "scope": "Current Ozone Wave 155 single-cup recipe using matching Wave 155 paper; separate current Wave 185 variant and model-specific care.",
+  "research_date": "2026-10-02",
+  "review_status": "editorially_reviewed",
+  "physical_brew_tested": false,
+  "sources": [
+    {
+      "id": "ozone-current",
+      "title": "Kalita Wave Brew Guide",
+      "url": "https://ozonecoffee.co.uk/pages/kalita-wave-brew-guide",
+      "author_or_organization": "Ozone Coffee UK",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Current Wave 155 15 g/250 g and Wave 185 30 g/500 g recipes at 93 C; masses, start times, finish cues; matching paper sizes and taste adjustments."
+      ]
+    },
+    {
+      "id": "kalita-stainless185",
+      "title": "Kalita Wave 185 Stainless Steel Coffee Dripper",
+      "url": "https://kalitausa.com/products/kalita-wave-185-stainless-steel-coffee-dripper",
+      "author_or_organization": "Kalita USA",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Flat bottom and three outlets; requires Wave 185 filters; stainless construction, preheating, dishwasher-safe care."
+      ]
+    },
+    {
+      "id": "kalita-glass185",
+      "title": "Kalita Wave 185 Glass Dripper",
+      "url": "https://kalitausa.com/products/kalita-wave-185-glass-dripper",
+      "author_or_organization": "Kalita USA",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Heat-resistant glass and polypropylene collar; manufacturer response requires collar for stability; Wave 185 paper, preheating, dishwasher-safe care."
+      ]
+    },
+    {
+      "id": "kalita-mino185",
+      "title": "Kalita MINO Ceramic Dripper 185 - Sand Beige",
+      "url": "https://kalitausa.com/products/kalita-mino-ceramic-dripper-185-sand-beige",
+      "author_or_organization": "Kalita USA",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Specific ceramic Wave 185 construction, three-hole base, matching185 filters, preheating and dishwasher-safe care."
+      ]
+    }
+  ],
+  "recipe": {
+    "name": "Ozone current Wave 155 single cup: 15 g / 250 g",
+    "provenance": "published_recipe",
+    "source_ids": [
+      "ozone-current"
+    ],
+    "equipment": [
+      "Kalita Wave 155",
+      "Wave 155 pleated paper",
+      "Stable heat-safe mug or server with serving headroom",
+      "Scale",
+      "Timer",
+      "Grinder",
+      "Controlled-pour kettle"
+    ],
+    "coffee_dose_g": 15,
+    "brew_water_g": 250,
+    "brew_water_ml": null,
+    "ice_g": 0,
+    "target_beverage_g": null,
+    "ratio_basis": "brew_water_input",
+    "ratio_value": 16.666666666666668,
+    "water_temperature_c": {
+      "min": 93,
+      "max": 93,
+      "control": "user"
+    },
+    "grind_description": "Medium filter grind. Visible small grains rather than flour is an app-authored texture cue; no exact grinder setting is established.",
+    "expected_time_s": {
+      "min": 150,
+      "max": 180,
+      "clock_start": "First water contact with coffee; start timer simultaneously.",
+      "clock_end": "Bed drained and dripping essentially stopped; finish range is guidance."
+    },
+    "completion_signal": "Bed drained and dripping essentially stopped, then remove brewer.",
+    "scaling": "revalidate_batch_size",
+    "steps": [
+      {
+        "id": "prepare",
+        "instruction": "Seat Wave 155 paper centrally; preserve pleats. Check clean outlets, stable vessel and headroom.",
+        "why": "App-authored checks keep the intended paper and exit path available.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Correct paper installed, outlets clear, brewer stable.",
+        "source_ids": [
+          "ozone-current",
+          "kalita-stainless185"
+        ]
+      },
+      {
+        "id": "rinse_load",
+        "instruction": "Rinse paper with extra hot water, discard rinse, add 15 g coffee, level gently, tare assembled setup.",
+        "why": "Rinse wets paper and warms equipment; tare makes subsequent scale readings cumulative brew-water input.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Wet paper, level grounds; scale zero with all brew equipment loaded.",
+        "source_ids": [
+          "ozone-current"
+        ]
+      },
+      {
+        "id": "bloom",
+        "instruction": "At first wetting start timer; add 50 g gently across all grounds. Wait until elapsed 30 s.",
+        "why": "The initial wetting allows degassing before the main additions.",
+        "water_add_g": 50,
+        "water_cumulative_g": 50,
+        "start_s": 0,
+        "duration_s": 30,
+        "completion": "All grounds wetted; timer reaches 30 s from first contact, not 30 s after pouring.",
+        "source_ids": [
+          "ozone-current"
+        ]
+      },
+      {
+        "id": "pour_one",
+        "instruction": "At 30 s add 100 g: about50 g in gentle circles, then50 g centrally. Do not tare.",
+        "why": "Maintain the recipe's planned distribution and cumulative input.",
+        "water_add_g": 100,
+        "water_cumulative_g": 150,
+        "start_s": 30,
+        "duration_s": null,
+        "completion": "Scale reads 150 g; pause earlier if water threatens the rim.",
+        "source_ids": [
+          "ozone-current"
+        ]
+      },
+      {
+        "id": "pour_two",
+        "instruction": "At 70 s add 100 g using the same circular then central pattern.",
+        "why": "Completes the planned input while keeping the pouring pattern repeatable.",
+        "water_add_g": 100,
+        "water_cumulative_g": 250,
+        "start_s": 70,
+        "duration_s": null,
+        "completion": "Scale reads 250 g; keep water safely below paper rim.",
+        "source_ids": [
+          "ozone-current"
+        ]
+      },
+      {
+        "id": "drain_serve",
+        "instruction": "Let drain, then remove brewer onto a suitable surface and serve.",
+        "why": "Collect the brew before removing the hot equipment; time is a diagnostic cue.",
+        "water_add_g": null,
+        "water_cumulative_g": 250,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Bed drained and dripping essentially stopped; typical source range 150–180 s total.",
+        "source_ids": [
+          "ozone-current"
+        ]
+      }
+    ]
+  },
+  "editorial_adaptations": [
+    "Setup-first outlet and filter checks, headroom guard, handling reminders, texture cue, and cleaning sequence are app-authored practical explanations. They do not change the published recipe quantities or timing.",
+    "If liquid threatens overflow, pause pouring rather than follow the clock blindly; observe the changed timing."
+  ],
+  "variants": [
+    {
+      "name": "Current Ozone Wave 185 recipe",
+      "how_it_differs": "30 g coffee,500 g input,93 C: add100/200/200 g at0/30/90 s to cumulative100/300/500 g; finish guidance 210–240 s. Requires Wave 185 paper and larger vessel; not an automatic155 scaling.",
+      "source_ids": [
+        "ozone-current"
+      ]
+    },
+    {
+      "name": "Stainless185",
+      "how_it_differs": "Stainless construction; preheat consistently. Reviewed product is dishwasher safe.",
+      "source_ids": [
+        "kalita-stainless185"
+      ]
+    },
+    {
+      "name": "Glass185",
+      "how_it_differs": "Heat-resistant glass with polypropylene collar; retain collar for stability. Reviewed product is dishwasher safe.",
+      "source_ids": [
+        "kalita-glass185"
+      ]
+    },
+    {
+      "name": "MINO ceramic185",
+      "how_it_differs": "Separate ceramic model with Wave 185 paper; preheat. Reviewed MINO model is dishwasher safe; do not infer identical drainage for all materials.",
+      "source_ids": [
+        "kalita-mino185"
+      ]
+    }
+  ],
+  "troubleshooting": [
+    {
+      "symptom": "Unexpected slow drainage or water rising toward rim",
+      "check_first": "App-authored inference from hardware: matching paper size, centered base, open pleats, clear three outlets and unblocked exit; pause if headroom is running out.",
+      "adjustment": "Inspect after cooling; if setup is sound and slowness repeats, try slightly coarser grind next brew while keeping recipe and pouring consistent.",
+      "source_ids": [
+        "kalita-stainless185",
+        "ozone-current"
+      ]
+    },
+    {
+      "symptom": "Sour, thin cup",
+      "check_first": "Correct masses, water temperature, even wetting and completed drawdown.",
+      "adjustment": "Try a little finer on the next brew; change one variable and compare taste.",
+      "source_ids": [
+        "ozone-current"
+      ]
+    },
+    {
+      "symptom": "Dry or bitter cup",
+      "check_first": "Check the starting procedure and drainage setup before interpreting time.",
+      "adjustment": "Try a little coarser next time and assess taste; no mandatory finish deadline.",
+      "source_ids": [
+        "ozone-current"
+      ]
+    },
+    {
+      "symptom": "Glass brewer unstable on mug",
+      "check_first": "Collar installed correctly and vessel rim supports the brewer securely before any hot water is added.",
+      "adjustment": "Use a suitably fitting stable vessel; do not hold an unstable dripper while brewing.",
+      "source_ids": [
+        "kalita-glass185"
+      ]
+    }
+  ],
+  "safety": [
+    "Use a stable heat-safe vessel with headroom and keep the kettle controlled.",
+    "Pause pouring when water approaches the paper rim; do not press hot paper down or poke outlets during brewing.",
+    "The brewer, rinse water and coffee are hot; set the removed dripper onto a heat-safe surface.",
+    "Keep the glass185 polypropylene collar installed for stability.",
+    "After cooling discard grounds and paper, wash, rinse and dry; reviewed stainless185, glass185 and MINO ceramic185 are dishwasher safe. Follow care guidance for your own model.",
+    "Treat glass and ceramic gently; avoid knocks and abrupt temperature changes. This is app-authored conservative handling guidance."
+  ],
+  "app_audit": [
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BuiltInP1RecipeCatalog.kt:303",
+      "finding": "wave185_ozone_25_400 is25 g/400 g,1:16,93 C,approx180 s,DRAWDOWN,high confidence,source SRC-KALITA-OZONE. Current Ozone page instead publishes15/250 and30/500; no longer independently verifies this historical example.",
+      "severity": "medium",
+      "change_recommendation": "Preserve immutable historical projection and stable recipe ID. Recover an archived primary source or label historical provenance; add/version the current recipe separately rather than silently replacing quantities under 25_400.",
+      "source_ids": [
+        "ozone-current"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/session/P1ManualGravityStagePlans.kt:197",
+      "finding": "Typed historical stages use50/110/60/60/60/60 g additions at0/30/45/60/75/105 s to50/160/220/280/340/400 g; approximate180 s finish with observed completion. Arithmetic is coherent, but does not match current linked Ozone recipe.",
+      "severity": "info",
+      "change_recommendation": "Retain distinction between stage-added and cumulative water; identify this as historical 25/400, and give any current recipe a separate plan.",
+      "source_ids": [
+        "ozone-current"
+      ]
+    },
+    {
+      "path": "app/src/main/res/raw/p1_exact_guidance.json:1194",
+      "finding": "Current live English raw copy retains historical 25/400 schedule, expert-established/high provenance, pleat-preserving rinse and bed-drained cue. Most explanations repeat numeric targets and warnings/tips are None.",
+      "severity": "medium",
+      "change_recommendation": "In an approved app change add clear first-contact clock, setup-first outlet checks, safe headroom, and useful completion/taste explanation; keep historical provenance truthful.",
+      "source_ids": [
+        "ozone-current",
+        "kalita-stainless185"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1ExactGuidanceCatalog.kt:321",
+      "finding": "Loader reads R.raw.p1_exact_guidance and maps typed catalog stages; dated asset alone is not the complete live-copy path.",
+      "severity": "info",
+      "change_recommendation": "Apply future corrections through maintained live raw resources and approved mapping/errata without rewriting immutable source assets.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1ExactGuidanceFactualErrata.kt",
+      "finding": "Recipe and stage errata contain no Wave case; current historical Wave copy has no runtime correction.",
+      "severity": "info",
+      "change_recommendation": "Do not report the Ozone drift as already fixed. Review provenance and versioning before adding an erratum.",
+      "source_ids": []
+    },
+    {
+      "path": "docs/brewing/learning-guide-factual-audit-2026-08-19.md:35",
+      "finding": "August audit says93 C and50/110/60/60/60/60 g schedule match Ozone. The currently accessed URL no longer contains that schedule.",
+      "severity": "medium",
+      "change_recommendation": "Keep the dated audit historical and add a current audit note recording source drift; avoid presenting its verification as current.",
+      "source_ids": [
+        "ozone-current"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BuiltinBrewerProfileRecipeDefaults.kt:186",
+      "finding": "Bothmanual_wave_155  and manual_wave_185 share app defaults 1:16,93–96 C,150–210 s, with capacity requiring configuration. Current Ozone published examples have ratio 16.67 and respective 150–180/210–240 s guidance.",
+      "severity": "medium",
+      "change_recommendation": "Label generic defaults as app-authored starts; select size-specific exact recipes separately and retain equipment-specific capacity rather than claiming universal limits.",
+      "source_ids": [
+        "ozone-current"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BrewingCatalog.kt:220",
+      "finding": "155 and185 profiles share wave_paper filter identity and BrewWaterMinusRetention(2.0). Generic filter geometry does not establish size compatibility or exact finished yield.",
+      "severity": "medium",
+      "change_recommendation": "Keep matching155/185 paper explicit in guides/configuration. Label predicted output as an estimate; do not treat2.0 as a verified universal retention factor.",
+      "source_ids": [
+        "ozone-current",
+        "kalita-stainless185"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt",
+      "finding": "No Kalita Wave enum entry; domain155/185 profiles and one exact185 recipe already exist.",
+      "severity": "info",
+      "change_recommendation": "Do not claim exact catalog presence establishes full everyday-method support; scope any future integration across the existing method surfaces.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/assets/grinders.json",
+      "finding": "No Wave-specific recommendation; listed method-level V60 settings must not be renamed as verified Kalita settings.",
+      "severity": "info",
+      "change_recommendation": "Use descriptive medium guidance until exact grinder/model/burr-specific Kalita evidence is reviewed.",
+      "source_ids": []
+    }
+  ],
+  "uncertainties": [
+    "The historical Ozone 25/400 schedule was not recovered from an archived primary page; current-source drift does not establish that the older recipe was wrong.",
+    "No controlled comparative drainage measurement was found for stainless, glass and ceramic; no ranking or universal grind conversion is justified.",
+    "No universal numeric dripper fill capacity, exact beverage yield, retention coefficient or grinder setting was verified.",
+    "Ozone does not identify brewer material for the selected 155 recipe, so finish guidance remains model/coffee dependent.",
+    "The retailer-hosted 2016 Wave instruction PDF was readable but original authorship was not established; it is excluded from baseline evidence.",
+    "A Kalita USA brewing-article URL attempted during research returned an access error; product pages supplied the verified hardware/care evidence.",
+    "No physical brew, app execution, kitchen validation or localization review was performed."
+  ],
+  "do_not_claim": [
+    "All Wave sizes use interchangeable paper.",
+    "The25/400 historical recipe matches the current Ozone page.",
+    "Every material drains at the same rate, or stainless invariably stalls.",
+    "Total brew-water input is the dripper's single-fill capacity or finished beverage weight.",
+    "A universal2 g/g retention factor or exact grinder number.",
+    "A fixed decaf time reduction or mandatory finish deadline.",
+    "Catalog presence proves full everyday-method/localization support or physical validation."
+  ]
+}

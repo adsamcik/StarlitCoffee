@@ -1,0 +1,23 @@
+// Opt-in rejected study capture. Debug overlays exist only in the disposable app.
+allprojects { project ->
+    project.plugins.withId('com.android.application') {
+        def studyDirectory = project.rootProject.file('docs/assets/method-icon-refinement/android')
+        def candidates = ['pulsar', 'aeropress', 'espresso', 'chemex'].collect { "equipment_${it}.xml" }
+        def missing = candidates.findAll { !new File(studyDirectory, it).isFile() }
+        if (!missing.isEmpty()) {
+            throw new GradleException('Render the rejected study first with tools/render_method_icons.py; missing: ' + missing.join(', '))
+        }
+        def resourceRoot = project.rootProject.file('build/method-icon-refinement/native-res')
+        project.copy {
+            from studyDirectory
+            into new File(resourceRoot, 'drawable')
+            include candidates
+        }
+        project.extensions.getByName('androidComponents').finalizeDsl { android ->
+            android.buildTypes.getByName('debug').applicationIdSuffix = '.methodiconcheck'
+            android.sourceSets.getByName('debug').res.directories.add(resourceRoot.absolutePath)
+            android.sourceSets.getByName('androidTest').kotlin.directories.add(
+                project.rootProject.file('tools/method_icon_refinement/native-src').absolutePath)
+        }
+    }
+}

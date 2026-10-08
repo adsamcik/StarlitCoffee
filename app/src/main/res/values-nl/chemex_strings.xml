@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_tip_chemex">Gebruik Chemex-filterpapier dat past bij je koffiezetter. Plaats drie lagen tegen de schenktuit, spoel met heet water en gooi het spoelwater weg. Voeg middelgrof gemalen koffie toe en tareer de weegschaal. Houd het luchtkanaal vrij.</string>
+    <string name="instruction_chemex_bloom">Maak alle koffie nat met het water voor de bloom en laat de bloom aflopen.</string>
+    <string name="instruction_chemex_pour">Schenk rustig tot de totale hoeveelheid water. Laat het peil tussen het schenken dalen en houd het onder de rand.</string>
+    <string name="instruction_chemex_drawdown">Wacht tot het water door het koffiebed is gelopen. Verwijder het filter, draai voorzichtig rond en serveer via de kraag of het handvat.</string>
+    <string name="label_filter_chemex_bonded">Chemex-filterpapier</string>
+</resources>

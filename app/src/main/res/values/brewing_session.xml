@@ -28,6 +28,11 @@
     <string name="action_mark_signal_received">Mark signal received</string>
     <string name="action_save_measurement">Save measurement</string>
     <string name="action_cancel_brew">Cancel brew</string>
+    <string name="action_pause_brew_guide">Pause guide</string>
+    <string name="action_resume_brew_guide">Resume guide</string>
+    <string name="action_pause_brew_clock">Pause timer</string>
+    <string name="msg_brew_clock_keeps_running">Timer keeps running.</string>
+    <string name="msg_brew_guide_paused">Guide paused. Timer keeps running.</string>
     <string name="msg_brew_session_not_found">This active brew is no longer available.</string>
     <string name="msg_brew_session_unavailable">This saved brew cannot be opened safely. It has been left unchanged.</string>
     <string name="msg_brew_session_finished">Brew saved.</string>
@@ -41,7 +46,7 @@
     <string name="format_brew_stage_recorded_grams">Recorded %1$.0f g</string>
     <string name="format_brew_stage_remaining_grams">%1$.0f g remaining</string>
     <string name="label_brew_reference_cues">Reference cues</string>
-    <string name="msg_brew_reference_cues_not_completion">For guidance only. Complete the step with the main action above.</string>
+    <string name="msg_brew_reference_cues_not_completion">For guidance only. A timing cue does not complete a physical step.</string>
     <string name="action_show_more_brew_reference_cues">Show more cues</string>
     <string name="action_hide_brew_reference_cues">Hide extra cues</string>
     <string name="label_brew_reference_stage_duration">Stage duration</string>

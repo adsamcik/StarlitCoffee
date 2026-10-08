@@ -1,0 +1,1951 @@
+{
+  "date": "2026-10-01",
+  "animation_id": "cherry_tomato",
+  "label": "Cherry tomato",
+  "user_direction": "Work backward from the richer original tomato finish and ensure consistency.",
+  "generation_tool": "built-in image_gen",
+  "asset": "app/src/main/res/drawable-nodpi/bloom_cherry_tomato_spritesheet.png",
+  "before_sha256": "812a1ecbc8de8afda6f9ffee83ad81e7e98b7fa77340b654d434a129df4ecac1",
+  "after_sha256": "903f7b4c89de9385ff4933b0210fb1c58bc1b6cf9d42778047902ab361261d8f",
+  "selected_source": "docs/assets/bloom-cherry-tomato-native-source.png",
+  "selected_source_sha256": "c7042d3d25e6f85163db7b4af17ba504ef6bb8a1e204d07f36cf9a1d2e5276db",
+  "original_final_reference": {
+    "source_commit": "b7914c30cd7e89829fc9d57cee9f0b07389eb776",
+    "source_asset": "app/src/main/res/drawable-nodpi/bloom_cherry_tomato_spritesheet.png",
+    "frame_index": 24,
+    "frame_sha256": "ba2b9820eefa1691519a33a8f939e0f95a48b0ec6a120f1543b2f1319ff85cec",
+    "frame_hash_encoding": "raw RGBA pixels; not PNG file bytes",
+    "png_sha256": "5b179a5122a2cf8f3b19ca770d822eb8d7696f342930693564926fcf872ceef1",
+    "source_atlas_sha256": "75cb71d5b553a194c190783682ee5d0b6f36fbf5a00044b39a9de2790e7294ff"
+  },
+  "final_preservation": {
+    "method": "Reference-faithful native reconstruction of the richer original finish.",
+    "pixel_exact_original_final": false,
+    "direct_original_pose_swap": "Rejected for material and branch-geometry mismatch.",
+    "retained_character": "Asymmetric compound foliage, three unequal trusses with left3/right4/upper2 fruit, two upper-right yellow blossoms."
+  },
+  "preparation_tool": "tools/prepare_bloom_alpha_atlas.py",
+  "normalization": {
+    "source": ".qa-screens\\tomato-redesign-2026-10-01\\selected-source.png",
+    "output": ".qa-screens\\tomato-redesign-2026-10-01\\selected-prepared.png",
+    "source_size": [
+      1280,
+      1280
+    ],
+    "frame_count": 25,
+    "common_scale": 0.9992559142403749,
+    "baseline": 232,
+    "padding": 24,
+    "alpha_threshold": 24,
+    "source_column_edges": [
+      0,
+      256,
+      512,
+      768,
+      1024,
+      1280
+    ],
+    "source_row_edges": [
+      0,
+      256,
+      512,
+      768,
+      1024,
+      1280
+    ],
+    "frames": [
+      {
+        "frame": 1,
+        "bounds": [
+          69,
+          162,
+          189,
+          233
+        ],
+        "source_anchor": 128.052
+      },
+      {
+        "frame": 2,
+        "bounds": [
+          69,
+          153,
+          190,
+          233
+        ],
+        "source_anchor": 127.423
+      },
+      {
+        "frame": 3,
+        "bounds": [
+          68,
+          125,
+          190,
+          233
+        ],
+        "source_anchor": 127.158
+      },
+      {
+        "frame": 4,
+        "bounds": [
+          69,
+          106,
+          190,
+          233
+        ],
+        "source_anchor": 127.915
+      },
+      {
+        "frame": 5,
+        "bounds": [
+          62,
+          94,
+          208,
+          233
+        ],
+        "source_anchor": 128.03
+      },
+      {
+        "frame": 6,
+        "bounds": [
+          59,
+          75,
+          202,
+          233
+        ],
+        "source_anchor": 127.864
+      },
+      {
+        "frame": 7,
+        "bounds": [
+          53,
+          67,
+          217,
+          233
+        ],
+        "source_anchor": 128.267
+      },
+      {
+        "frame": 8,
+        "bounds": [
+          41,
+          51,
+          221,
+          233
+        ],
+        "source_anchor": 127.763
+      },
+      {
+        "frame": 9,
+        "bounds": [
+          42,
+          41,
+          226,
+          232
+        ],
+        "source_anchor": 127.532
+      },
+      {
+        "frame": 10,
+        "bounds": [
+          40,
+          34,
+          223,
+          233
+        ],
+        "source_anchor": 127.842
+      },
+      {
+        "frame": 11,
+        "bounds": [
+          40,
+          42,
+          223,
+          233
+        ],
+        "source_anchor": 127.906
+      },
+      {
+        "frame": 12,
+        "bounds": [
+          40,
+          39,
+          223,
+          233
+        ],
+        "source_anchor": 127.858
+      },
+      {
+        "frame": 13,
+        "bounds": [
+          39,
+          37,
+          226,
+          233
+        ],
+        "source_anchor": 127.667
+      },
+      {
+        "frame": 14,
+        "bounds": [
+          41,
+          37,
+          229,
+          233
+        ],
+        "source_anchor": 127.673
+      },
+      {
+        "frame": 15,
+        "bounds": [
+          42,
+          37,
+          224,
+          233
+        ],
+        "source_anchor": 127.554
+      },
+      {
+        "frame": 16,
+        "bounds": [
+          42,
+          35,
+          223,
+          233
+        ],
+        "source_anchor": 127.487
+      },
+      {
+        "frame": 17,
+        "bounds": [
+          40,
+          34,
+          223,
+          233
+        ],
+        "source_anchor": 127.734
+      },
+      {
+        "frame": 18,
+        "bounds": [
+          40,
+          34,
+          224,
+          233
+        ],
+        "source_anchor": 128.044
+      },
+      {
+        "frame": 19,
+        "bounds": [
+          40,
+          34,
+          226,
+          233
+        ],
+        "source_anchor": 127.488
+      },
+      {
+        "frame": 20,
+        "bounds": [
+          42,
+          34,
+          224,
+          233
+        ],
+        "source_anchor": 127.333
+      },
+      {
+        "frame": 21,
+        "bounds": [
+          45,
+          35,
+          228,
+          233
+        ],
+        "source_anchor": 127.928
+      },
+      {
+        "frame": 22,
+        "bounds": [
+          41,
+          34,
+          227,
+          233
+        ],
+        "source_anchor": 126.863
+      },
+      {
+        "frame": 23,
+        "bounds": [
+          45,
+          34,
+          229,
+          233
+        ],
+        "source_anchor": 127.472
+      },
+      {
+        "frame": 24,
+        "bounds": [
+          43,
+          34,
+          231,
+          233
+        ],
+        "source_anchor": 126.923
+      },
+      {
+        "frame": 25,
+        "bounds": [
+          43,
+          34,
+          228,
+          233
+        ],
+        "source_anchor": 127.286
+      }
+    ]
+  },
+  "attempts": [
+    {
+      "attempt": "initial",
+      "status": "rejected-missing-lower-leaf-and-late-ripening-holds",
+      "source_sha256": "1ec6791ddf93f36d135d4d6cc774d76fe343480f46cdbd48105f839644f24aa3",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-2ba064d8-7af3-4c00-95eb-1f4efd411a51.png",
+      "prompt": "prompts/tomato-redesign-2026-10-01/initial.txt",
+      "prompt_file_sha256": "1069a8cf1116262b1ec38fa7db605882f17b0c0cf2f83f29b81479d5f5b8b5a3",
+      "prompt_sent_utf8_sha256": "dd629f012d9b26c51698eb3867d76e7b3c9db6a2392877d8e7d05c6804e0fc94"
+    },
+    {
+      "attempt": "repair-01",
+      "status": "selected-base-bank-except-missing-leaf-in-frames13-14",
+      "source_sha256": "50ff41fbb32863649364035468ded4b9f613874f306312150a93e7c6d1e70db1",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-97948771-c5c6-4ff4-8c0e-1c99af9bab99.png",
+      "prompt": "prompts/tomato-redesign-2026-10-01/repair-01.txt",
+      "prompt_file_sha256": "6f58060cac08047b977d0831d958a4b39f5f67d718e048ca8e61cd8ad462f320",
+      "prompt_sent_utf8_sha256": "efb0d58d91bc4e36ecf87ae116d31b3379bd23a52b8ab62ee4ed2b736d09e9eb"
+    },
+    {
+      "attempt": "leaf-repair",
+      "status": "selected-complete-native-poses13-14",
+      "source_sha256": "d374f3e0fcf2792a38f2fb02b2835d20c6964a79c7e5e1c3c69a4aee4cadf31a",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-b5554286-94e2-4f21-8942-b4c91affb311.png",
+      "prompt": "prompts/tomato-redesign-2026-10-01/leaf-repair.txt",
+      "prompt_file_sha256": "0f47a79a303120660860da9c218903e05cfbcd243791840ca8b3dc59a18445e6",
+      "prompt_sent_utf8_sha256": "fa782e4e09abd357493e1080af817219f26fdbe6e26f84a0f4d09741bb73752a"
+    }
+  ],
+  "whole_pose_curation": {
+    "method": "Complete native whole-pose curation; no code-drawn or component-mixed anatomy",
+    "base_atlas": "repair-01-prepared.png",
+    "base_atlas_sha256": "cf2f9fe0bf663812db7878008411aeec0f83bc8426d468bd214e839273df1786",
+    "native_panel": "leaf-repair-source.png",
+    "native_panel_sha256": "d374f3e0fcf2792a38f2fb02b2835d20c6964a79c7e5e1c3c69a4aee4cadf31a",
+    "native_panel_size": [
+      1254,
+      1254
+    ],
+    "coordinate_conversion_scale": 0.4082934609250399,
+    "unchanged_whole_poses": 23,
+    "replacements": [
+      {
+        "frame": 13,
+        "panel_index": 1,
+        "native_crop_box": [
+          627,
+          0,
+          1254,
+          627
+        ],
+        "translation_px": [
+          0,
+          0
+        ],
+        "bounds_alpha24": [
+          39,
+          36,
+          227,
+          233
+        ],
+        "rgba_pixels_sha256": "947559455a19f6fa79ddd0b594a0a2877e1dcbf252a5c79225e6a3ec7a0694f6"
+      },
+      {
+        "frame": 14,
+        "panel_index": 2,
+        "native_crop_box": [
+          0,
+          627,
+          627,
+          1254
+        ],
+        "translation_px": [
+          1,
+          -1
+        ],
+        "bounds_alpha24": [
+          41,
+          36,
+          230,
+          233
+        ],
+        "rgba_pixels_sha256": "7e1c551f80d84e99f7a6af7d2ab088aba9399eb1c46d0823ae9c7fdd9d4f4e32"
+      }
+    ],
+    "selected_source_sha256": "c7042d3d25e6f85163db7b4af17ba504ef6bb8a1e204d07f36cf9a1d2e5276db"
+  },
+  "frames": [
+    {
+      "frame": 1,
+      "sha256_rgba_pixels": "126ff28afd0dd1fae0bd808b38afac6d0aa349fa1e013155c23dce650c23ed14",
+      "bounds_alpha24": [
+        69,
+        162,
+        189,
+        233
+      ]
+    },
+    {
+      "frame": 2,
+      "sha256_rgba_pixels": "a16e9bc4a3dca45aea6aa797dd2c1c3565706349786d002d7d0f21183bf70a90",
+      "bounds_alpha24": [
+        69,
+        153,
+        190,
+        233
+      ]
+    },
+    {
+      "frame": 3,
+      "sha256_rgba_pixels": "46b31c19017f32c2edecc423928388ea8f0d3ddb1cca7bcf629bbbfc332a5f1e",
+      "bounds_alpha24": [
+        68,
+        125,
+        190,
+        233
+      ]
+    },
+    {
+      "frame": 4,
+      "sha256_rgba_pixels": "44bdf5acdbf6263c778e30ae6f5d09c96cb3eb171c96a53a651e7bedc11bc5d2",
+      "bounds_alpha24": [
+        69,
+        106,
+        190,
+        233
+      ]
+    },
+    {
+      "frame": 5,
+      "sha256_rgba_pixels": "c4b1e82ab189295325c5bd876b2a9454aa1de230a0301dffd851f37fb93a81fd",
+      "bounds_alpha24": [
+        62,
+        94,
+        208,
+        233
+      ]
+    },
+    {
+      "frame": 6,
+      "sha256_rgba_pixels": "be1835341b89f0a2f40ce104574d606616a4e2a9c0513ce862b44f89d31b6e18",
+      "bounds_alpha24": [
+        59,
+        75,
+        202,
+        233
+      ]
+    },
+    {
+      "frame": 7,
+      "sha256_rgba_pixels": "de5f90f9ffd8eca0974da2369b4402d90e9d5f24853638d3841c9137edf6933d",
+      "bounds_alpha24": [
+        53,
+        67,
+        217,
+        233
+      ]
+    },
+    {
+      "frame": 8,
+      "sha256_rgba_pixels": "d8ad25b76f56d4dffc784888f5122b3a16f8e02e3689ac7ce815b626df2ad12d",
+      "bounds_alpha24": [
+        41,
+        51,
+        221,
+        233
+      ]
+    },
+    {
+      "frame": 9,
+      "sha256_rgba_pixels": "8c6102e9de374478c361b93fb5c6f8c4e609e619e73a2099835a872b3c6ce2ab",
+      "bounds_alpha24": [
+        42,
+        41,
+        226,
+        232
+      ]
+    },
+    {
+      "frame": 10,
+      "sha256_rgba_pixels": "9cf083a60a24fb8c2962ee7afd02809a9a98270ec74b4633da6c4dddbfd9321b",
+      "bounds_alpha24": [
+        40,
+        34,
+        223,
+        233
+      ]
+    },
+    {
+      "frame": 11,
+      "sha256_rgba_pixels": "49a7885e280d61b826e244d11a089c8fda2c0fefb907400119cce83fe9f2ab24",
+      "bounds_alpha24": [
+        40,
+        42,
+        223,
+        233
+      ]
+    },
+    {
+      "frame": 12,
+      "sha256_rgba_pixels": "055f491bebef4f35e28a2a5ef21e3ab6f44edba139c6fa3d0b5ca10c2aab96b4",
+      "bounds_alpha24": [
+        40,
+        39,
+        223,
+        233
+      ]
+    },
+    {
+      "frame": 13,
+      "sha256_rgba_pixels": "796f1d56c51ca79a3e51c93bd384ffcdb2c1b5ba2d4b4c0bdfd369de5061ea6d",
+      "bounds_alpha24": [
+        39,
+        37,
+        226,
+        233
+      ]
+    },
+    {
+      "frame": 14,
+      "sha256_rgba_pixels": "7d92650ca378c6448cb62de358c1d10a4cf23bba24fbb0a999f7a37b08992bf3",
+      "bounds_alpha24": [
+        41,
+        37,
+        229,
+        233
+      ]
+    },
+    {
+      "frame": 15,
+      "sha256_rgba_pixels": "2e56276f9ea7158454ab5d0a54bf7718b20904abf0b1e75c47569d6ddcd57fa5",
+      "bounds_alpha24": [
+        42,
+        37,
+        224,
+        233
+      ]
+    },
+    {
+      "frame": 16,
+      "sha256_rgba_pixels": "8f9c93a2e98133856e43517eb39e1622b44e08f91e77f2a6961a408715e74f5f",
+      "bounds_alpha24": [
+        42,
+        35,
+        223,
+        233
+      ]
+    },
+    {
+      "frame": 17,
+      "sha256_rgba_pixels": "72ea5701a26cb76f5d840edcc9a46bdd970b9245b0d0dd93a2a8190b9595f36a",
+      "bounds_alpha24": [
+        40,
+        34,
+        223,
+        233
+      ]
+    },
+    {
+      "frame": 18,
+      "sha256_rgba_pixels": "d7ec88c48c720aeccfbccdc2d37187e7d88c603f2959e05d5750532fc2699a53",
+      "bounds_alpha24": [
+        40,
+        34,
+        224,
+        233
+      ]
+    },
+    {
+      "frame": 19,
+      "sha256_rgba_pixels": "7415e4c45e9916c05a5644dd82be0e2f81d551049275705b836000da0a81382b",
+      "bounds_alpha24": [
+        40,
+        34,
+        226,
+        233
+      ]
+    },
+    {
+      "frame": 20,
+      "sha256_rgba_pixels": "83a323442c4bc2442a632e344ff1fefbc0460c116646d0a8c0ce9c4b6ad2a579",
+      "bounds_alpha24": [
+        42,
+        34,
+        224,
+        233
+      ]
+    },
+    {
+      "frame": 21,
+      "sha256_rgba_pixels": "f7651f532ca8a568ca85ae7ead0bfdc3b1b43488fdf9438cf9537cb6f1676a82",
+      "bounds_alpha24": [
+        45,
+        35,
+        228,
+        233
+      ]
+    },
+    {
+      "frame": 22,
+      "sha256_rgba_pixels": "375d95aea6059ad195f0fe41afdfdce893d6d9618fae6e901a4a39c3eca217eb",
+      "bounds_alpha24": [
+        41,
+        34,
+        227,
+        233
+      ]
+    },
+    {
+      "frame": 23,
+      "sha256_rgba_pixels": "02689422ccec638e115209ba873788b907646454e860ca9db3ac7f832d3fc45a",
+      "bounds_alpha24": [
+        45,
+        34,
+        229,
+        233
+      ]
+    },
+    {
+      "frame": 24,
+      "sha256_rgba_pixels": "de24ef94f42a2623fce42b20e54ec5edafacac974e375fd8e5921ad01e497a90",
+      "bounds_alpha24": [
+        43,
+        34,
+        231,
+        233
+      ]
+    },
+    {
+      "frame": 25,
+      "sha256_rgba_pixels": "a8e03194d4cc92c9e0924096006d569b6c39d54a4e6eb0ceb133d549dcefa400",
+      "bounds_alpha24": [
+        43,
+        34,
+        228,
+        233
+      ]
+    }
+  ],
+  "astra_review": {
+    "reviewer": "Astra",
+    "model": "gpt-6-astra",
+    "id": "cherry_tomato",
+    "attempt": "selected",
+    "verdict": "accept_with_minor_polish_residuals",
+    "accepted": true,
+    "prepared_sha256": "903f7b4c89de9385ff4933b0210fb1c58bc1b6cf9d42778047902ab361261d8f",
+    "evidence": {
+      "source": "selected-source.png",
+      "prepared": "selected-prepared.png",
+      "contacts": [
+        "selected_light.png",
+        "selected_dark.png"
+      ],
+      "final_reference": "original-final.png",
+      "frames_viewed": 25,
+      "transitions_viewed": 24,
+      "display_px": 148,
+      "boundary": "Static prepared1280px sheet plus both148px approximate-runtime contacts. No native Compose or live playback claim."
+    },
+    "blockers": [],
+    "resolved": [
+      "Lower-left spray now persistsF11/F12.",
+      "Staggered late ripening now extends throughF24 rather than being complete byF22.",
+      "No material whole-bean/whole-canopy shrink or late fruit deletion found.",
+      "Lower-left compound leaf restored inF13/F14 and visibly persists throughF12-F15."
+    ],
+    "anatomy_counts": {
+      "main_leaf_sprays": "Serrated compound foliage retained after establishment. The repaired lower-left spray stays visible beneath/behind left fruit inF13/F14 and joinsF15 without disappearance.",
+      "fruit": "F13 has five clearly visible fruit: left3 plus upper2. F14 establishes the full left3/right4/upper2 nine-fruit arrangement, retained throughF25. No fruit deletion or replacement during ripening.",
+      "flowers": "Two yellow upper-right blossoms are clear fromF13 and retained throughF25.",
+      "branching": "Asymmetric trunk and unequal curved trusses persist; no mirrored four-fruit simplification."
+    },
+    "late_value": {
+      "F18→19": "Left yellow/green to orange.",
+      "F19→20": "Left redder, upper begins warm color, right yellowing.",
+      "F20→21": "Left red, upper orange, right yellow.",
+      "F21→22": "Upper red and right orange.",
+      "F22→23": "Quiet intermediate warmth/fullness; acceptable residual.",
+      "F23→24": "Right becomes red.",
+      "F24→25": "Quiet final settle; acceptable completion."
+    },
+    "original_target_fidelity": {
+      "verdict": "reference_faithful_reconstruction",
+      "assessment": "The final restores the user's richer original identity: irregular serrated foliage, bent branching vine, three unequal tomato clusters totaling nine apparent fruit and two yellow blossoms. It has a broader/more abundant canopy and is decisively distinct from the rejected symmetric four-tomato design.",
+      "differences": "Bean lobes, exact leaflet silhouettes, truss angles and overlapping fruit positions differ from the original pixels. These are acceptable reconstruction differences under the current direction, provided animation continuity is preserved.",
+      "instruction": "Do not force the original completeF25 into this sequence; known bean/foliage registration mismatch would replace an otherwise consistent final plant. Evaluate the final reconstructed plant as the approved visual reference's faithful interpretation."
+    },
+    "residuals": [
+      "F6→7 andF11→12 have restrained expansion rather than large new anatomy.",
+      "F22→23 is a quiet warm-orange stage andF24→25 is a final settling stage. Their placement among stronger ripening beats is acceptable.",
+      "Some young sprays arrive relatively broad; lower priority than correcting actual persistence loss.",
+      "F13/F14 native replacement poses have small paint/leaf-position differences but no meaningful material or base-scale mismatch at148px; all recognizable nodes continue."
+    ],
+    "recommendation": "Accept this exact selected atlas. No meaningful remaining blocker. Keep the faithful reconstructed richer finish rather than inserting the old original pixels, which would break geometric/material continuity.",
+    "transitions": [
+      {
+        "transition": "F01→F02",
+        "status": "pass",
+        "note": "Green tip appears at the same broad split bean; visible germination."
+      },
+      {
+        "transition": "F02→F03",
+        "status": "pass",
+        "note": "Hooked sprout extends from the same attachment; bean orientation retained."
+      },
+      {
+        "transition": "F03→F04",
+        "status": "pass",
+        "note": "Young serrated foliage unfolds around the growing stem; meaningful first plant structure."
+      },
+      {
+        "transition": "F04→F05",
+        "status": "pass",
+        "note": "Early foliage and crown widen; no whole-subject shrink."
+      },
+      {
+        "transition": "F05→F06",
+        "status": "pass",
+        "note": "Stem elongation separates crown from lower sprays; established lower foliage remains."
+      },
+      {
+        "transition": "F06→F07",
+        "status": "minor_residual",
+        "note": "Crown and leaf fullness change modestly; coherent, quiet vegetative expansion."
+      },
+      {
+        "transition": "F07→F08",
+        "status": "pass",
+        "note": "Lower-left spray appears and canopy becomes more branched; identifiable compound foliage."
+      },
+      {
+        "transition": "F08→F09",
+        "status": "pass",
+        "note": "Lower-right foliage develops while lower-left remains."
+      },
+      {
+        "transition": "F09→F10",
+        "status": "pass",
+        "note": "All main foliage landmarks expand slightly; fixed bean and visible branching trunk."
+      },
+      {
+        "transition": "F10→F11",
+        "status": "pass",
+        "note": "Upper-right bud-bearing branch develops; lower-left leaf now correctly retained."
+      },
+      {
+        "transition": "F11→F12",
+        "status": "minor_residual",
+        "note": "Bud/leaf expansion is restrained; lower-left spray remains present."
+      },
+      {
+        "transition": "F12→F13",
+        "status": "pass",
+        "note": "Left3 and upper2 fruit plus yellow blossoms become clear while the lower-left compound leaf remains visible. Repaired whole pose fits the prior bean/material/registration; no meaningful jump."
+      },
+      {
+        "transition": "F13→F14",
+        "status": "pass",
+        "note": "Right cluster develops into four visible tomatoes, completing nine; left3/upper2 and the lower-left spray persist. Normal growth/occlusion is coherent."
+      },
+      {
+        "transition": "F14→F15",
+        "status": "pass",
+        "note": "All nine green fruits enlarge slightly; repaired lower-left leaf stays continuously visible intoF15. No returned-from-missing leaf event remains."
+      },
+      {
+        "transition": "F15→F16",
+        "status": "pass",
+        "note": "Fruit and retained lower leaf settle into established clustered architecture; no scale reset."
+      },
+      {
+        "transition": "F16→F17",
+        "status": "pass",
+        "note": "Fruit rounds and left cluster begins a lighter green blush; nine nodes retained."
+      },
+      {
+        "transition": "F17→F18",
+        "status": "pass",
+        "note": "Left cluster turns yellow-green/yellow while upper/right remain greener; visible stagger starts."
+      },
+      {
+        "transition": "F18→F19",
+        "status": "pass",
+        "note": "Left three become orange; other clusters stay greenish. Strong ordered ripening cue."
+      },
+      {
+        "transition": "F19→F20",
+        "status": "pass",
+        "note": "Left warms toward red, upper starts orange/yellow and right becomes yellow-green; ripening no longer completes all lower fruit together."
+      },
+      {
+        "transition": "F20→F21",
+        "status": "pass",
+        "note": "Left is clearly red, upper orange, right yellow; three cluster identities and two flowers persist."
+      },
+      {
+        "transition": "F21→F22",
+        "status": "pass",
+        "note": "Upper becomes red and right turns orange; clear late development."
+      },
+      {
+        "transition": "F22→F23",
+        "status": "minor_residual",
+        "note": "Right cluster has only a small warmth/fullness change; quiet intermediate stage, not a completed red plant. Acceptable between the strongerF21→22 andF23→24 steps."
+      },
+      {
+        "transition": "F23→F24",
+        "status": "pass",
+        "note": "Right cluster visibly becomes warm red; all nine fruits reach mature color."
+      },
+      {
+        "transition": "F24→F25",
+        "status": "minor_residual",
+        "note": "Final leaf/fruit settling is quiet; acceptable one completion beat after late ripening, rather than the former four-frame plateau."
+      }
+    ],
+    "production_edits": false,
+    "curation_verification": {
+      "record": "curation.json",
+      "replaced_complete_native_poses": [
+        13,
+        14
+      ],
+      "other23_selected_source_poses_byte_identical": true,
+      "comparison_verified_by_reviewer": true,
+      "native_art_source": "leaf-repair-source.png",
+      "coordinate_conversion_scale": 0.4082934609250399,
+      "native_pose_translations": {
+        "F13": [
+          0,
+          0
+        ],
+        "F14": [
+          1,
+          -1
+        ]
+      },
+      "normalization_boundary": "Existing importer applied one common scale of approximately0.9993 to the whole selected atlas; selected prepared pixels are not claimed to be identical to the prior prepared atlas.",
+      "no_code_drawn_anatomy": true
+    },
+    "final_assessment": "All25 poses and24 neighbors reviewed in both148px themes plus1280px prepared sheet. Fixed seed bean, branching serrated foliage, gradual cluster establishment, nine retained fruits, two yellow blossoms and staggered ripening give coherent growth. Final is a faithful richer-original reconstruction, not the original pixel copy."
+  },
+  "independent_astra_review": {
+    "reviewer_model": "gpt-6-astra",
+    "date": "2026-10-01",
+    "candidate": "selected",
+    "prepared_sha256": "903f7b4c89de9385ff4933b0210fb1c58bc1b6cf9d42778047902ab361261d8f",
+    "verdict": "accept-with-minor-polish-residuals",
+    "blockers": [],
+    "reviewed_paths": [
+      "G:/Github/StarlitCoffee/.qa-screens/tomato-redesign-2026-10-01/selected_light.png",
+      "G:/Github/StarlitCoffee/.qa-screens/tomato-redesign-2026-10-01/selected_dark.png",
+      "G:/Github/StarlitCoffee/.qa-screens/tomato-redesign-2026-10-01/selected-prepared.png",
+      "G:/Github/StarlitCoffee/.qa-screens/tomato-redesign-2026-10-01/original-final.png"
+    ],
+    "method": "Independently inspected all 25 row-major poses and all 24 adjacent transitions in both 148px theme contacts, then the full prepared atlas and original final reference. Read curation provenance. Static visual review only; native playback and device rendering are not established here.",
+    "findings": [
+      "The former blocker is resolved: the lower-left leaf spray now remains visible behind and beneath the left fruit cluster in F13 and F14. The F12-15 handoff keeps a continuous leafy lower outline instead of deleting and restoring the spray.",
+      "Repaired F13/F14 retain the same broad split bean, stem arrangement, leaf material and palette as their neighbors. No damaging base displacement or whole-subject scale reset is visible.",
+      "F13 contains the upper fruit pair and three-fruit left cluster; F14 adds the four-fruit right cluster. The resulting nine-fruit composition persists through F25, including the partially overlapped rear upper fruit.",
+      "Left, upper and right fruit groups ripen progressively without an established red fruit turning green again. Yellow blossoms remain beside the upper pair through the finish.",
+      "The mature result retains the richer original target's defining arrangement: three left fruit, four right fruit, two upper fruit, yellow blossoms, serrated layered foliage and a broad bean base. It is a regenerated interpretation of that composition, not an assertion of identical final-frame pixels.",
+      "All row boundaries retain coherent growth and registration. No blocking transparency holes, edge clipping, detached fragments or theme contrast problem was found."
+    ],
+    "residuals": [
+      {
+        "frames": "F11-12",
+        "finding": "Leaf and bud differences are restrained before the stronger fruiting step."
+      },
+      {
+        "frames": "F13-14",
+        "finding": "The right four-fruit cluster still arrives in a comparatively large step, but this is forward development with retained established anatomy."
+      },
+      {
+        "frames": "F21-24",
+        "finding": "The last-row yellow-to-orange-to-red change in the right cluster gives these poses clear value while the already ripe left fruit stays red."
+      },
+      {
+        "frames": "F24-25",
+        "finding": "The final pair is near-held with modest fullness/contour settling. It is a quiet finish, without a damaging reset or isolated object addition."
+      }
+    ],
+    "recommendation": "Accept the selected atlas for native rendering validation. The two complete-pose repairs address the actual missing-leaf blocker while retaining the richer nine-fruit finish; further art regeneration is not required for anatomy or continuity."
+  },
+  "scope": {
+    "app_resources_replaced": 1,
+    "description_changes": false,
+    "renderer_changes": false,
+    "animation_id_changed": false,
+    "other_bloom_atlases_changed": false
+  },
+  "validation_boundary": "Prepared contacts approximate filtering and halo at 148px; paused native Compose captures verify rendering and adjacent poses, not live tween timing or physical-device playback.",
+  "validation": {
+    "asset_id": "cherry_tomato",
+    "created_utc": "2026-10-01T16:14:44.645150+00:00",
+    "status": "passed_bounded_validation",
+    "build_snapshot": {
+      "baseline_commit": "e25e8b050f68a86f678fe0828710ee8963b560ab",
+      "method": "git archive of verified build-needed paths plus only the reviewed Cherry tomato atlas",
+      "build_workspace": "G:\\Github\\StarlitCoffee\\.qa-screens\\tomato-redesign-2026-10-01\\build-workspace-e25e8b05-903f7b4c",
+      "archive": "G:\\Github\\StarlitCoffee\\.qa-screens\\tomato-redesign-2026-10-01\\committed-build-source-e25e8b05.zip",
+      "archive_sha256": "4650f1c1e45dc1e5e6d4778d0ca4a4a8983e1986765f2d6adef177b59e12a536",
+      "archive_bytes": 59417487,
+      "archive_member_count": 1458,
+      "archive_uncompressed_bytes": 74256587,
+      "included_paths": [
+        "app",
+        "gradle",
+        "config",
+        "build.gradle.kts",
+        "settings.gradle.kts",
+        "gradle.properties",
+        "gradlew",
+        "gradlew.bat"
+      ],
+      "gradle_includes": [
+        ":app"
+      ],
+      "omitted_paths_reason": "Docs/prompts/tools/scripts and testdata are not dependencies of assembleDebug, assembleDebugAndroidTest or Detekt; testdata is accessed only by separate benchmark tasks.",
+      "overlay_files": {
+        "app/src/main/res/drawable-nodpi/bloom_cherry_tomato_spritesheet.png": "903f7b4c89de9385ff4933b0210fb1c58bc1b6cf9d42778047902ab361261d8f"
+      },
+      "overlay_source": "G:\\Github\\StarlitCoffee\\.qa-screens\\tomato-redesign-2026-10-01\\selected-prepared.png",
+      "description_overlays": {},
+      "reviewed_resource_sha256": "903f7b4c89de9385ff4933b0210fb1c58bc1b6cf9d42778047902ab361261d8f",
+      "baseline_resource_sha256": "812a1ecbc8de8afda6f9ffee83ad81e7e98b7fa77340b654d434a129df4ecac1",
+      "instrumentation_source": {
+        "path": "app/src/androidTest/java/com/adsamcik/starlitcoffee/ui/component/BloomSpritesheetRenderingTest.kt",
+        "origin": "committed baseline",
+        "sha256": "953112db5f61ed31344123f3ee45f2da3b18ac866a7829cf3ecd48d9ff9f5c4d"
+      },
+      "review_init_script": {
+        "path": "G:\\Github\\StarlitCoffee\\.qa-screens\\tomato-redesign-2026-10-01\\review-build.init.gradle",
+        "sha256": "c201a8eec45fa860a610f57cb38cc604fcc541339f93c1fb41e792f1ea76fb4b",
+        "application_id_suffix": ".tomatoreview",
+        "application_id": "com.adsamcik.starlitcoffee.tomatoreview",
+        "app_label": "Cherry tomato review"
+      },
+      "local_configuration": "SDK path only; authentication remains with normal Gradle/gh resolution",
+      "build_command": [
+        "G:\\Github\\StarlitCoffee\\.qa-screens\\tomato-redesign-2026-10-01\\build-workspace-e25e8b05-903f7b4c\\gradlew.bat",
+        "--init-script",
+        "G:\\Github\\StarlitCoffee\\.qa-screens\\tomato-redesign-2026-10-01\\review-build.init.gradle",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        ":app:detekt",
+        "--console=plain",
+        "--no-daemon"
+      ],
+      "build_executed": true,
+      "device_used": false,
+      "acceptance_guards": [
+        {
+          "path": "G:\\Github\\StarlitCoffee\\.qa-screens\\tomato-redesign-2026-10-01\\selected-review.json",
+          "sha256": "d858d5c923952fd8a9f20950bee2675388865c965dbe5ccbc6b1e09109b3d4df",
+          "verdict": "accept_with_minor_polish_residuals",
+          "prepared_sha256": "903f7b4c89de9385ff4933b0210fb1c58bc1b6cf9d42778047902ab361261d8f"
+        },
+        {
+          "path": "G:\\Github\\StarlitCoffee\\.qa-screens\\tomato-redesign-2026-10-01\\selected-cross-review.json",
+          "sha256": "e994ec5e649524423fd275b92b430d0bdbace0e89419f538e9b398ba44a2ae33",
+          "verdict": "accept-with-minor-polish-residuals",
+          "prepared_sha256": "903f7b4c89de9385ff4933b0210fb1c58bc1b6cf9d42778047902ab361261d8f"
+        }
+      ],
+      "build_status": "passed",
+      "build_elapsed_seconds": 221.546,
+      "build_exit_code": 0,
+      "build_log_sha256": "dd5d3cd78d9d630fe4c7b7c780a26916f0290c2daccd7e6a891ed855e506686c",
+      "copied_apks": {
+        "tomato-review.apk": {
+          "sha256": "3ef0c5cdffce2279132af418228914815c8fd2ccd85201b831c8df14f610c18d",
+          "bytes": 350076840,
+          "package_id": "com.adsamcik.starlitcoffee.tomatoreview",
+          "label": "Cherry tomato review"
+        },
+        "tomato-review-test.apk": {
+          "sha256": "540e4a3785d9b50a901987c3e94651e0ad9cb3691665c26039461cf94fe16031",
+          "bytes": 1552517,
+          "package_id": "com.adsamcik.starlitcoffee.tomatoreview.test",
+          "label": null
+        }
+      },
+      "detekt_findings": 0
+    },
+    "reviewed_asset_sha256": "903f7b4c89de9385ff4933b0210fb1c58bc1b6cf9d42778047902ab361261d8f",
+    "isolated_build": {
+      "status": "passed",
+      "tasks": [
+        "assembleDebug",
+        "assembleDebugAndroidTest",
+        "detekt"
+      ],
+      "log": "isolated-build.log",
+      "detekt_report": "isolated-detekt.xml",
+      "detekt_findings": 0,
+      "copied_apks": {
+        "tomato-review.apk": {
+          "sha256": "3ef0c5cdffce2279132af418228914815c8fd2ccd85201b831c8df14f610c18d",
+          "bytes": 350076840
+        },
+        "tomato-review-test.apk": {
+          "sha256": "540e4a3785d9b50a901987c3e94651e0ad9cb3691665c26039461cf94fe16031",
+          "bytes": 1552517
+        }
+      }
+    },
+    "native_validation": {
+      "instrumentation_log": "instrumentation.log",
+      "passed_tests": 2,
+      "arguments": {
+        "bloomOnly": "cherry_tomato",
+        "bloomAllFrames": "true",
+        "bloomCapture": "true"
+      },
+      "capture_count": 50,
+      "poses_per_theme": 25,
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "native_capture_shape_hwc": [
+        389,
+        389,
+        4
+      ],
+      "duration_seconds": 48,
+      "countdowns": [
+        48,
+        46,
+        44,
+        42,
+        40,
+        38,
+        36,
+        34,
+        32,
+        30,
+        28,
+        26,
+        24,
+        22,
+        20,
+        18,
+        16,
+        14,
+        12,
+        10,
+        8,
+        6,
+        4,
+        2,
+        0
+      ],
+      "adjacent_comparisons": [
+        {
+          "theme": "light",
+          "from_frame": 1,
+          "to_frame": 2,
+          "from_countdown_seconds": 48,
+          "to_countdown_seconds": 46,
+          "changed_pixels": 18403
+        },
+        {
+          "theme": "light",
+          "from_frame": 2,
+          "to_frame": 3,
+          "from_countdown_seconds": 46,
+          "to_countdown_seconds": 44,
+          "changed_pixels": 19566
+        },
+        {
+          "theme": "light",
+          "from_frame": 3,
+          "to_frame": 4,
+          "from_countdown_seconds": 44,
+          "to_countdown_seconds": 42,
+          "changed_pixels": 26258
+        },
+        {
+          "theme": "light",
+          "from_frame": 4,
+          "to_frame": 5,
+          "from_countdown_seconds": 42,
+          "to_countdown_seconds": 40,
+          "changed_pixels": 31474
+        },
+        {
+          "theme": "light",
+          "from_frame": 5,
+          "to_frame": 6,
+          "from_countdown_seconds": 40,
+          "to_countdown_seconds": 38,
+          "changed_pixels": 36609
+        },
+        {
+          "theme": "light",
+          "from_frame": 6,
+          "to_frame": 7,
+          "from_countdown_seconds": 38,
+          "to_countdown_seconds": 36,
+          "changed_pixels": 39204
+        },
+        {
+          "theme": "light",
+          "from_frame": 7,
+          "to_frame": 8,
+          "from_countdown_seconds": 36,
+          "to_countdown_seconds": 34,
+          "changed_pixels": 50253
+        },
+        {
+          "theme": "light",
+          "from_frame": 8,
+          "to_frame": 9,
+          "from_countdown_seconds": 34,
+          "to_countdown_seconds": 32,
+          "changed_pixels": 54460
+        },
+        {
+          "theme": "light",
+          "from_frame": 9,
+          "to_frame": 10,
+          "from_countdown_seconds": 32,
+          "to_countdown_seconds": 30,
+          "changed_pixels": 55982
+        },
+        {
+          "theme": "light",
+          "from_frame": 10,
+          "to_frame": 11,
+          "from_countdown_seconds": 30,
+          "to_countdown_seconds": 28,
+          "changed_pixels": 56472
+        },
+        {
+          "theme": "light",
+          "from_frame": 11,
+          "to_frame": 12,
+          "from_countdown_seconds": 28,
+          "to_countdown_seconds": 26,
+          "changed_pixels": 53573
+        },
+        {
+          "theme": "light",
+          "from_frame": 12,
+          "to_frame": 13,
+          "from_countdown_seconds": 26,
+          "to_countdown_seconds": 24,
+          "changed_pixels": 58875
+        },
+        {
+          "theme": "light",
+          "from_frame": 13,
+          "to_frame": 14,
+          "from_countdown_seconds": 24,
+          "to_countdown_seconds": 22,
+          "changed_pixels": 61408
+        },
+        {
+          "theme": "light",
+          "from_frame": 14,
+          "to_frame": 15,
+          "from_countdown_seconds": 22,
+          "to_countdown_seconds": 20,
+          "changed_pixels": 61658
+        },
+        {
+          "theme": "light",
+          "from_frame": 15,
+          "to_frame": 16,
+          "from_countdown_seconds": 20,
+          "to_countdown_seconds": 18,
+          "changed_pixels": 59384
+        },
+        {
+          "theme": "light",
+          "from_frame": 16,
+          "to_frame": 17,
+          "from_countdown_seconds": 18,
+          "to_countdown_seconds": 16,
+          "changed_pixels": 58753
+        },
+        {
+          "theme": "light",
+          "from_frame": 17,
+          "to_frame": 18,
+          "from_countdown_seconds": 16,
+          "to_countdown_seconds": 14,
+          "changed_pixels": 58433
+        },
+        {
+          "theme": "light",
+          "from_frame": 18,
+          "to_frame": 19,
+          "from_countdown_seconds": 14,
+          "to_countdown_seconds": 12,
+          "changed_pixels": 60114
+        },
+        {
+          "theme": "light",
+          "from_frame": 19,
+          "to_frame": 20,
+          "from_countdown_seconds": 12,
+          "to_countdown_seconds": 10,
+          "changed_pixels": 59987
+        },
+        {
+          "theme": "light",
+          "from_frame": 20,
+          "to_frame": 21,
+          "from_countdown_seconds": 10,
+          "to_countdown_seconds": 8,
+          "changed_pixels": 62051
+        },
+        {
+          "theme": "light",
+          "from_frame": 21,
+          "to_frame": 22,
+          "from_countdown_seconds": 8,
+          "to_countdown_seconds": 6,
+          "changed_pixels": 61222
+        },
+        {
+          "theme": "light",
+          "from_frame": 22,
+          "to_frame": 23,
+          "from_countdown_seconds": 6,
+          "to_countdown_seconds": 4,
+          "changed_pixels": 61963
+        },
+        {
+          "theme": "light",
+          "from_frame": 23,
+          "to_frame": 24,
+          "from_countdown_seconds": 4,
+          "to_countdown_seconds": 2,
+          "changed_pixels": 62095
+        },
+        {
+          "theme": "light",
+          "from_frame": 24,
+          "to_frame": 25,
+          "from_countdown_seconds": 2,
+          "to_countdown_seconds": 0,
+          "changed_pixels": 61712
+        },
+        {
+          "theme": "dark",
+          "from_frame": 1,
+          "to_frame": 2,
+          "from_countdown_seconds": 48,
+          "to_countdown_seconds": 46,
+          "changed_pixels": 18372
+        },
+        {
+          "theme": "dark",
+          "from_frame": 2,
+          "to_frame": 3,
+          "from_countdown_seconds": 46,
+          "to_countdown_seconds": 44,
+          "changed_pixels": 19560
+        },
+        {
+          "theme": "dark",
+          "from_frame": 3,
+          "to_frame": 4,
+          "from_countdown_seconds": 44,
+          "to_countdown_seconds": 42,
+          "changed_pixels": 26237
+        },
+        {
+          "theme": "dark",
+          "from_frame": 4,
+          "to_frame": 5,
+          "from_countdown_seconds": 42,
+          "to_countdown_seconds": 40,
+          "changed_pixels": 31438
+        },
+        {
+          "theme": "dark",
+          "from_frame": 5,
+          "to_frame": 6,
+          "from_countdown_seconds": 40,
+          "to_countdown_seconds": 38,
+          "changed_pixels": 36551
+        },
+        {
+          "theme": "dark",
+          "from_frame": 6,
+          "to_frame": 7,
+          "from_countdown_seconds": 38,
+          "to_countdown_seconds": 36,
+          "changed_pixels": 39162
+        },
+        {
+          "theme": "dark",
+          "from_frame": 7,
+          "to_frame": 8,
+          "from_countdown_seconds": 36,
+          "to_countdown_seconds": 34,
+          "changed_pixels": 50220
+        },
+        {
+          "theme": "dark",
+          "from_frame": 8,
+          "to_frame": 9,
+          "from_countdown_seconds": 34,
+          "to_countdown_seconds": 32,
+          "changed_pixels": 54425
+        },
+        {
+          "theme": "dark",
+          "from_frame": 9,
+          "to_frame": 10,
+          "from_countdown_seconds": 32,
+          "to_countdown_seconds": 30,
+          "changed_pixels": 55936
+        },
+        {
+          "theme": "dark",
+          "from_frame": 10,
+          "to_frame": 11,
+          "from_countdown_seconds": 30,
+          "to_countdown_seconds": 28,
+          "changed_pixels": 56458
+        },
+        {
+          "theme": "dark",
+          "from_frame": 11,
+          "to_frame": 12,
+          "from_countdown_seconds": 28,
+          "to_countdown_seconds": 26,
+          "changed_pixels": 53559
+        },
+        {
+          "theme": "dark",
+          "from_frame": 12,
+          "to_frame": 13,
+          "from_countdown_seconds": 26,
+          "to_countdown_seconds": 24,
+          "changed_pixels": 58834
+        },
+        {
+          "theme": "dark",
+          "from_frame": 13,
+          "to_frame": 14,
+          "from_countdown_seconds": 24,
+          "to_countdown_seconds": 22,
+          "changed_pixels": 61375
+        },
+        {
+          "theme": "dark",
+          "from_frame": 14,
+          "to_frame": 15,
+          "from_countdown_seconds": 22,
+          "to_countdown_seconds": 20,
+          "changed_pixels": 61643
+        },
+        {
+          "theme": "dark",
+          "from_frame": 15,
+          "to_frame": 16,
+          "from_countdown_seconds": 20,
+          "to_countdown_seconds": 18,
+          "changed_pixels": 59386
+        },
+        {
+          "theme": "dark",
+          "from_frame": 16,
+          "to_frame": 17,
+          "from_countdown_seconds": 18,
+          "to_countdown_seconds": 16,
+          "changed_pixels": 58733
+        },
+        {
+          "theme": "dark",
+          "from_frame": 17,
+          "to_frame": 18,
+          "from_countdown_seconds": 16,
+          "to_countdown_seconds": 14,
+          "changed_pixels": 58515
+        },
+        {
+          "theme": "dark",
+          "from_frame": 18,
+          "to_frame": 19,
+          "from_countdown_seconds": 14,
+          "to_countdown_seconds": 12,
+          "changed_pixels": 60116
+        },
+        {
+          "theme": "dark",
+          "from_frame": 19,
+          "to_frame": 20,
+          "from_countdown_seconds": 12,
+          "to_countdown_seconds": 10,
+          "changed_pixels": 59966
+        },
+        {
+          "theme": "dark",
+          "from_frame": 20,
+          "to_frame": 21,
+          "from_countdown_seconds": 10,
+          "to_countdown_seconds": 8,
+          "changed_pixels": 62049
+        },
+        {
+          "theme": "dark",
+          "from_frame": 21,
+          "to_frame": 22,
+          "from_countdown_seconds": 8,
+          "to_countdown_seconds": 6,
+          "changed_pixels": 61218
+        },
+        {
+          "theme": "dark",
+          "from_frame": 22,
+          "to_frame": 23,
+          "from_countdown_seconds": 6,
+          "to_countdown_seconds": 4,
+          "changed_pixels": 62005
+        },
+        {
+          "theme": "dark",
+          "from_frame": 23,
+          "to_frame": 24,
+          "from_countdown_seconds": 4,
+          "to_countdown_seconds": 2,
+          "changed_pixels": 62113
+        },
+        {
+          "theme": "dark",
+          "from_frame": 24,
+          "to_frame": 25,
+          "from_countdown_seconds": 2,
+          "to_countdown_seconds": 0,
+          "changed_pixels": 61734
+        }
+      ],
+      "minimum_changed_pixels": 18372,
+      "threshold": ">64 changed pixels on each of 48 adjacent pairs",
+      "preview_finish_comparisons": 2,
+      "preview_finish_evidence": "The passing everyFinalPreviewMatchesPlayedFinishInBothThemes method compares played F25 to chooser preview in light and dark themes; no separate preview PNGs are inferred.",
+      "captures": [
+        {
+          "file": "native/cherry_tomato_light_48.png",
+          "theme": "light",
+          "frame": 1,
+          "countdown_seconds": 48,
+          "sha256": "fdc5bb638dedb55f1154cb2caf07cf5ef5806c8413dfb2bdec456c600d4ef8a6"
+        },
+        {
+          "file": "native/cherry_tomato_light_46.png",
+          "theme": "light",
+          "frame": 2,
+          "countdown_seconds": 46,
+          "sha256": "9dbfc54f7ee5f55d5e97f6b8e86befdeb2107bab81ba248cbf0dffb20ade1009"
+        },
+        {
+          "file": "native/cherry_tomato_light_44.png",
+          "theme": "light",
+          "frame": 3,
+          "countdown_seconds": 44,
+          "sha256": "7b541b2de404560893255b454fba2386d0f29219104b239cef1c86f181aab5e8"
+        },
+        {
+          "file": "native/cherry_tomato_light_42.png",
+          "theme": "light",
+          "frame": 4,
+          "countdown_seconds": 42,
+          "sha256": "6012d7ccf8d5f8b7726faa4e443f00ff570acba8b5fe0f63ca2b57d5b775bb9e"
+        },
+        {
+          "file": "native/cherry_tomato_light_40.png",
+          "theme": "light",
+          "frame": 5,
+          "countdown_seconds": 40,
+          "sha256": "5c9f6aede2a20917ea6ef98d256c5f2941a316f8cdb669871411993f90793f15"
+        },
+        {
+          "file": "native/cherry_tomato_light_38.png",
+          "theme": "light",
+          "frame": 6,
+          "countdown_seconds": 38,
+          "sha256": "22d525ac153071745b7fd94005f7918e63683553ac67a4e3ce4c450666213ef4"
+        },
+        {
+          "file": "native/cherry_tomato_light_36.png",
+          "theme": "light",
+          "frame": 7,
+          "countdown_seconds": 36,
+          "sha256": "27fb43ccc1167aab4f01e668a5e4fcda06d82a4e1696bbba86999ccc7f1ccbbc"
+        },
+        {
+          "file": "native/cherry_tomato_light_34.png",
+          "theme": "light",
+          "frame": 8,
+          "countdown_seconds": 34,
+          "sha256": "e0c0b77e3cf6c7a6e4f7f8598027bc5c1102e8d75ae7d66a6876093f00cd095a"
+        },
+        {
+          "file": "native/cherry_tomato_light_32.png",
+          "theme": "light",
+          "frame": 9,
+          "countdown_seconds": 32,
+          "sha256": "de998ea112c42660401c48c30c745b0a2ccb5324008cc5e375c2cada6f2794c2"
+        },
+        {
+          "file": "native/cherry_tomato_light_30.png",
+          "theme": "light",
+          "frame": 10,
+          "countdown_seconds": 30,
+          "sha256": "a58c8fc41e6b963a0d2f5b5fb95ae04694968c99a952bf13cbddd7049a1a6e2e"
+        },
+        {
+          "file": "native/cherry_tomato_light_28.png",
+          "theme": "light",
+          "frame": 11,
+          "countdown_seconds": 28,
+          "sha256": "6a028d194459bf045b3b0a284ebea1a1b3a4ce84875aa2ebebcb421a28b366f6"
+        },
+        {
+          "file": "native/cherry_tomato_light_26.png",
+          "theme": "light",
+          "frame": 12,
+          "countdown_seconds": 26,
+          "sha256": "7e528258bed0390c25d7339d73dcf718f18df43f6f418ce87738c529dfebc136"
+        },
+        {
+          "file": "native/cherry_tomato_light_24.png",
+          "theme": "light",
+          "frame": 13,
+          "countdown_seconds": 24,
+          "sha256": "8610a79ccfc600f5fdbbbd257983bf58515f50c8e68c3ff415457a8c29e1fd23"
+        },
+        {
+          "file": "native/cherry_tomato_light_22.png",
+          "theme": "light",
+          "frame": 14,
+          "countdown_seconds": 22,
+          "sha256": "aca7db234bd693df9aae54986785d6e5d3b16f626366b99354322c89bfcaba09"
+        },
+        {
+          "file": "native/cherry_tomato_light_20.png",
+          "theme": "light",
+          "frame": 15,
+          "countdown_seconds": 20,
+          "sha256": "f10575b385d03600c2a7a9631c83543bbaae788e8d724381aa15d7eb730ac316"
+        },
+        {
+          "file": "native/cherry_tomato_light_18.png",
+          "theme": "light",
+          "frame": 16,
+          "countdown_seconds": 18,
+          "sha256": "fc0c208529070883301031bc00e786ca9512861f05a0b5d973dd38f76ec1171c"
+        },
+        {
+          "file": "native/cherry_tomato_light_16.png",
+          "theme": "light",
+          "frame": 17,
+          "countdown_seconds": 16,
+          "sha256": "bac0fb6cad999a273209855d58567df179fb51b47ced5b255111c43998cbdbc3"
+        },
+        {
+          "file": "native/cherry_tomato_light_14.png",
+          "theme": "light",
+          "frame": 18,
+          "countdown_seconds": 14,
+          "sha256": "cabde3473d1d29be9f2a19f8163727d755c526cff326274c5f6b6c14b7602b36"
+        },
+        {
+          "file": "native/cherry_tomato_light_12.png",
+          "theme": "light",
+          "frame": 19,
+          "countdown_seconds": 12,
+          "sha256": "a841a738d95787aa004c45abf7e05d6cb53a20706cca230bb8a510c3d1e7beed"
+        },
+        {
+          "file": "native/cherry_tomato_light_10.png",
+          "theme": "light",
+          "frame": 20,
+          "countdown_seconds": 10,
+          "sha256": "cb1c9843d5d8cb3615342198b718add6ca9e28f1f4c89716a6be87b3c4e3db5d"
+        },
+        {
+          "file": "native/cherry_tomato_light_8.png",
+          "theme": "light",
+          "frame": 21,
+          "countdown_seconds": 8,
+          "sha256": "2af72271091b88ae0417b6a7e9f7414fc539fd3bdd3417d7222b97218ce09390"
+        },
+        {
+          "file": "native/cherry_tomato_light_6.png",
+          "theme": "light",
+          "frame": 22,
+          "countdown_seconds": 6,
+          "sha256": "c387d47ef4327b847fb2d0fee34e3dcf3d59f913d91f62319ece3b49eb76b4bc"
+        },
+        {
+          "file": "native/cherry_tomato_light_4.png",
+          "theme": "light",
+          "frame": 23,
+          "countdown_seconds": 4,
+          "sha256": "3adc00f5b3b73e072ff20cbc803da36b4e51df36de617eb75f0b20a48fd6dcb0"
+        },
+        {
+          "file": "native/cherry_tomato_light_2.png",
+          "theme": "light",
+          "frame": 24,
+          "countdown_seconds": 2,
+          "sha256": "8a83e3abf952163e234221c8ae2c57b6139b29a8f57c0f7254a42e5537f2c8dd"
+        },
+        {
+          "file": "native/cherry_tomato_light_0.png",
+          "theme": "light",
+          "frame": 25,
+          "countdown_seconds": 0,
+          "sha256": "5cfa9b4acae8030e0333fb44899caf60b30b5a0c5bfd2358d1bc32606a61697d"
+        },
+        {
+          "file": "native/cherry_tomato_dark_48.png",
+          "theme": "dark",
+          "frame": 1,
+          "countdown_seconds": 48,
+          "sha256": "f1648353c11fcfbbcaa4e3cb2ce19573ef7eeef5f18a8cb90ac7cdec115ebde6"
+        },
+        {
+          "file": "native/cherry_tomato_dark_46.png",
+          "theme": "dark",
+          "frame": 2,
+          "countdown_seconds": 46,
+          "sha256": "e8dafe0c59d374d43f1f44d920db01688f2a80609ba05d7c718e38beb9cf2d43"
+        },
+        {
+          "file": "native/cherry_tomato_dark_44.png",
+          "theme": "dark",
+          "frame": 3,
+          "countdown_seconds": 44,
+          "sha256": "c9e237fef16f49d826ab344b95b1458ee18db7ae9f1d33a11decfe730951d4d0"
+        },
+        {
+          "file": "native/cherry_tomato_dark_42.png",
+          "theme": "dark",
+          "frame": 4,
+          "countdown_seconds": 42,
+          "sha256": "003c7556af39cc742efc53cb12f9482b950d2201fba7fe5d51c868cbabe512eb"
+        },
+        {
+          "file": "native/cherry_tomato_dark_40.png",
+          "theme": "dark",
+          "frame": 5,
+          "countdown_seconds": 40,
+          "sha256": "c40917dc8c02d2f91c5b363dc910d24482fd87021c89f49fe0b17aab2648c749"
+        },
+        {
+          "file": "native/cherry_tomato_dark_38.png",
+          "theme": "dark",
+          "frame": 6,
+          "countdown_seconds": 38,
+          "sha256": "1c2706dccc7ae55c2d66ca8efb68cf30db8e77dda369491ebfcc0bac8c8b0990"
+        },
+        {
+          "file": "native/cherry_tomato_dark_36.png",
+          "theme": "dark",
+          "frame": 7,
+          "countdown_seconds": 36,
+          "sha256": "9555d86e225894cf5fdfff4030553b795492f568252a75d07b5b77660e1219d5"
+        },
+        {
+          "file": "native/cherry_tomato_dark_34.png",
+          "theme": "dark",
+          "frame": 8,
+          "countdown_seconds": 34,
+          "sha256": "c625df4351e357496654b61500078fe0bbdbeaf4b23b3b39db3796c18fe0f0d0"
+        },
+        {
+          "file": "native/cherry_tomato_dark_32.png",
+          "theme": "dark",
+          "frame": 9,
+          "countdown_seconds": 32,
+          "sha256": "a150a48268be1c514e48b0a6dcb76968a6a5eb4706b87fc1d72ab1742c4733bc"
+        },
+        {
+          "file": "native/cherry_tomato_dark_30.png",
+          "theme": "dark",
+          "frame": 10,
+          "countdown_seconds": 30,
+          "sha256": "ff1e30845aa863a477451da786b80b7461a68c8c81961f91cb700b1b5d736130"
+        },
+        {
+          "file": "native/cherry_tomato_dark_28.png",
+          "theme": "dark",
+          "frame": 11,
+          "countdown_seconds": 28,
+          "sha256": "295a5e229fbc043c7e08478748e8749a6e6705b1df8f47b3d3612739a794c350"
+        },
+        {
+          "file": "native/cherry_tomato_dark_26.png",
+          "theme": "dark",
+          "frame": 12,
+          "countdown_seconds": 26,
+          "sha256": "b6b6ff103a36a44812d9d8e14552295b71060b83f90adff89e6fa697658fef95"
+        },
+        {
+          "file": "native/cherry_tomato_dark_24.png",
+          "theme": "dark",
+          "frame": 13,
+          "countdown_seconds": 24,
+          "sha256": "12f8e83f70c4ee1d05f62b1beaee649ebefb6ed2d423bf85e4aa94e7f5838467"
+        },
+        {
+          "file": "native/cherry_tomato_dark_22.png",
+          "theme": "dark",
+          "frame": 14,
+          "countdown_seconds": 22,
+          "sha256": "36c0165749e928743924a0488778a377ad1a75c41bb6117009f580a45be96bbd"
+        },
+        {
+          "file": "native/cherry_tomato_dark_20.png",
+          "theme": "dark",
+          "frame": 15,
+          "countdown_seconds": 20,
+          "sha256": "8ebe9616641f691e845aa74a5ac64c0f99f0d24101eb36f0fe76bd0b337c0b02"
+        },
+        {
+          "file": "native/cherry_tomato_dark_18.png",
+          "theme": "dark",
+          "frame": 16,
+          "countdown_seconds": 18,
+          "sha256": "824d7deda6663f86d4c3342155bace1c69bc47dc89e523018f2dcd8292ff2d1f"
+        },
+        {
+          "file": "native/cherry_tomato_dark_16.png",
+          "theme": "dark",
+          "frame": 17,
+          "countdown_seconds": 16,
+          "sha256": "fd8bb21cb2d541efd4e9ee77e3a6ffecff6e6ad9813d908412f2e8e73b373236"
+        },
+        {
+          "file": "native/cherry_tomato_dark_14.png",
+          "theme": "dark",
+          "frame": 18,
+          "countdown_seconds": 14,
+          "sha256": "004c7e4665fb4354e6f2cd037800061ba3ae32bcaf99488619d7906973be051d"
+        },
+        {
+          "file": "native/cherry_tomato_dark_12.png",
+          "theme": "dark",
+          "frame": 19,
+          "countdown_seconds": 12,
+          "sha256": "cf1975dd362ce23ed7776fbf9e7897d3d6a8649fba39abf7f1442d55275e36f9"
+        },
+        {
+          "file": "native/cherry_tomato_dark_10.png",
+          "theme": "dark",
+          "frame": 20,
+          "countdown_seconds": 10,
+          "sha256": "6c641947bd29dcc03ac958ead8e0110c7b616056c39ea8cf7e024c1d1b712547"
+        },
+        {
+          "file": "native/cherry_tomato_dark_8.png",
+          "theme": "dark",
+          "frame": 21,
+          "countdown_seconds": 8,
+          "sha256": "0993775584da6bbc52c5abcd1854d10c1ac110cc73865e3c2469eb97b1e55166"
+        },
+        {
+          "file": "native/cherry_tomato_dark_6.png",
+          "theme": "dark",
+          "frame": 22,
+          "countdown_seconds": 6,
+          "sha256": "8378514270ccc667a82b147b0bdb8f4570f9fb109635c6979a7f6bfbdbe751fc"
+        },
+        {
+          "file": "native/cherry_tomato_dark_4.png",
+          "theme": "dark",
+          "frame": 23,
+          "countdown_seconds": 4,
+          "sha256": "2091627c2d74c46013097de3aa480477401793abd33474a9d7d345cf98cdad89"
+        },
+        {
+          "file": "native/cherry_tomato_dark_2.png",
+          "theme": "dark",
+          "frame": 24,
+          "countdown_seconds": 2,
+          "sha256": "39cfdf86c01dde9e807ef8076b7fd174a6554061d3621ae0effd583a84ffa543"
+        },
+        {
+          "file": "native/cherry_tomato_dark_0.png",
+          "theme": "dark",
+          "frame": 25,
+          "countdown_seconds": 0,
+          "sha256": "24422332ef4a587c16bd10980246400e57782333e61d392461af67e9fccd3049"
+        }
+      ],
+      "instrumentation_attempts": [
+        {
+          "log": "instrumentation.log",
+          "log_sha256": "b77f1aab7fa597b9dd7ac3b9fd106822a2bb7cae2f1160d4244e5907fdcb8c8d",
+          "status": "passed",
+          "selected_validation_run": true
+        }
+      ],
+      "instrumentation_elapsed_seconds": 13.121
+    },
+    "device": {
+      "android_version": "16",
+      "density_dpi": "Physical density: 420",
+      "supplied_evidence": {
+        "device": "emulator-5554",
+        "avd": "Medium_Phone",
+        "android_release": "16",
+        "api_level": "36",
+        "density": "Physical density: 420",
+        "display_size": "Physical size: 1080x2400",
+        "claim_agent": "tomatobloom-review",
+        "launched_headless_for_this_review": true
+      }
+    },
+    "shared_checkout": {
+      "status": "not_run_or_not_supplied",
+      "logs": {},
+      "detekt_finding_count": 0,
+      "detekt_findings": [],
+      "compile_error_count": 0,
+      "compile_errors": [],
+      "cherry_tomato_or_shared_renderer_findings": [],
+      "scope_note": "Counts describe only this QA directory's supplied logs; no clean shared-checkout claim is inferred from the isolated build."
+    },
+    "full_unit_suite": {
+      "rerun": false
+    },
+    "boundaries": [
+      "Native evidence is emulator Compose rendering at the supplied Android version/density, not physical-device coverage.",
+      "Tests render exact paused countdown poses with isRunning=false and dynamicColor=false; running tween timing and dynamic colors are not validated.",
+      "The GIF is an offline review playback assembled from native still captures at 480ms per pose, not a live recording of the app animation.",
+      "All native pixels participate in the change check; >64 changed pixels is a distinctness check, not proof of perceptual polish.",
+      "The isolated snapshot passed build/Detekt; shared-checkout results are recorded only when current logs are supplied. Full unit suite was not rerun."
+    ],
+    "artifact_generation": {
+      "display_capture_size_px": 148,
+      "operation": "whole-capture resize and labeled layout only",
+      "gif_frames": 25,
+      "gif_duration_ms_per_frame": 480,
+      "preview_frames": [
+        1,
+        10,
+        18,
+        25
+      ]
+    },
+    "artifacts": {
+      "native_light.png": {
+        "sha256": "3aa15961d0eb93de1bbff8b6feb481483e4920bbe4dcd275ca0e96aa52d785de"
+      },
+      "native_dark.png": {
+        "sha256": "ae0a2f77bc76026c3ce425914f982e87d2f37ac7ae418347ea7e2fd87efc199b"
+      },
+      "native-tomato-playback.gif": {
+        "sha256": "0c5cba9d5fbc63205a7258ba0ffbb1ab69dae39e8e2226693f28933f8d6875f6"
+      },
+      "native-tomato-preview.png": {
+        "sha256": "8063976d0aee41cc633f22cdb409da77867b1b41e3f23a3f1d7639814dc7ec58"
+      }
+    },
+    "evidence_hashes": {
+      "instrumentation.log": "b77f1aab7fa597b9dd7ac3b9fd106822a2bb7cae2f1160d4244e5907fdcb8c8d",
+      "build-snapshot.json": "aef73d6bd31b8e5314d97136b7893f04a9b962dfd2009d818c9c9eacc5886f4f",
+      "isolated-build.log": "dd5d3cd78d9d630fe4c7b7c780a26916f0290c2daccd7e6a891ed855e506686c",
+      "isolated-detekt.xml": "f491e274f0d208f81c3edbc7c1097c30db590a3822fcf579468ac814d9ccc62b",
+      "device-info.json": "c6c7b409646e132130c15595fca3ff386f1501b0874a41ffb501490d23dfa787"
+    }
+  },
+  "native_visual_review": {
+    "reviewer": "Astra",
+    "model": "gpt-6-astra",
+    "id": "cherry_tomato",
+    "verdict": "accept_with_minor_polish_residuals",
+    "accepted": true,
+    "blockers": [],
+    "asset": "app/src/main/res/drawable-nodpi/bloom_cherry_tomato_spritesheet.png",
+    "asset_sha256": "903f7b4c89de9385ff4933b0210fb1c58bc1b6cf9d42778047902ab361261d8f",
+    "asset_hash_verified_from_worktree": true,
+    "evidence_reviewed": [
+      "native_light.png: all25 native-rendered poses at148px",
+      "native_dark.png: all25 native-rendered poses at148px",
+      "native-tomato-preview.png: F1/F10/F18/F25 in both themes"
+    ],
+    "frames_reviewed_per_theme": 25,
+    "adjacent_transitions_reviewed_per_theme": 24,
+    "native_findings": [
+      "F12→13→14→15 now retains the lower-left compound leaf continuously. Fruit partially overlaps the spray, but it remains visible beneath the cluster; no disappearance/reappearance.",
+      "RepairedF13/F14 fit neighboring bean size, baseline, material and canopy registration. Small native paint variation is not a meaningful jump.",
+      "F13 has five clearly visible fruit (left3/upper2). F14 establishes nine (left3/right4/upper2), all retained throughF25.",
+      "Two upper-right yellow flowers remain present through maturity and remain readable against both native backgrounds.",
+      "Leaf and branch architecture remains asymmetrical, serrated and richly clustered; the central trunk stays visible and no whole-subject row reset is apparent.",
+      "Staggered green/yellow/orange/red ripening continues across the last rows, preserving fruit positions. The finish has nine ripe red tomatoes rather than the former simplified four-fruit layout.",
+      "No clipped foliage, missing alpha anatomy, detached fragments or visible green-edge speckles were found in the native opaque contacts.",
+      "The preview communicates a coherent bean-to-leafy-vine-to-ripe-clusters story."
+    ],
+    "residuals": [
+      {
+        "frames": "F6→7, F11→12",
+        "note": "Restrained vegetative/bud expansion, acceptable between stronger structural stages."
+      },
+      {
+        "frames": "F13/F14",
+        "note": "Minor paint and leaf-position variation from isolated native pose repairs; anatomy, perceived material and base registration remain coherent."
+      },
+      {
+        "frames": "F22→23",
+        "note": "Quiet warm-orange intermediate fruit stage, acceptable between distinct ripening beats."
+      },
+      {
+        "frames": "F24→25",
+        "note": "Quiet final settling after ripe color; one completion beat rather than the former extended late plateau."
+      }
+    ],
+    "reference_fidelity": "Faithful reconstruction of the richer original plant: asymmetric branching, compound foliage, three unequal fruit clusters and yellow blossoms. It is not a pixel copy of the originalF25, and no original-frame substitution is claimed.",
+    "verification_boundary": "Actual Compose-rendered paused progress poses, captured at389x389 and assembled into148px contact sheets. This verifies native static appearance and visual neighboring-pose continuity, not uninterrupted live temporal playback or all physical devices. No device control, production edit or Git mutation performed by this reviewer.",
+    "instrumentation_context": {
+      "source": "Root-reported test/capture results; resulting native images directly inspected by this reviewer.",
+      "tests": "Both native tests passed on the first invocation in13.121 seconds.",
+      "captures": "50 actual captures;48 adjacent comparisons all distinct; preview/finish exact in both themes, as reported by root.",
+      "separation": "Passing test results are execution evidence; this review independently judges the resulting artwork."
+    }
+  },
+  "source_reproduction_sha256": "903f7b4c89de9385ff4933b0210fb1c58bc1b6cf9d42778047902ab361261d8f"
+}

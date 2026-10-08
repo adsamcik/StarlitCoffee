@@ -1,0 +1,33 @@
+{
+  "status": "preview only; app retains its original icon",
+  "source": "authored paths by Astra from primary photos; root refined joins and valve clearance",
+  "svg_sha256": "c9a34727928e84bd22eeb70730ceebc014f5d42528dd5faf07bd6f0c25f6d6de",
+  "android_sha256": "3de43fa6ee92f6c5a741baea254caea9263871fa205b2c53b1f716171e31e910",
+  "alpha_bounds_px": {
+    "24": [
+      4,
+      1,
+      19,
+      23
+    ],
+    "34": [
+      6,
+      1,
+      27,
+      33
+    ],
+    "88": [
+      18,
+      5,
+      67,
+      83
+    ],
+    "1024": [
+      217,
+      63,
+      775,
+      963
+    ]
+  },
+  "validation": "direct SVG rendering and lossless Android path export; no native app capture"
+}

@@ -105,11 +105,8 @@
     <string name="label_increase">Increase %1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Prepare Your Brew</string>
 <string name="action_ready_to_brew_short">Ready to Brew</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Prep</string>
-    <string name="label_recipe_heading">Recipe</string>
     <string name="label_temp_short">Temp</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Wet the paper filter in the base (valve open) and drain. Mount barrel, add grounds, level the bed, place dispersion cap. Tare scale.</string>
@@ -121,8 +118,6 @@
     <string name="prep_tip_espresso">Wipe the portafilter dry. Dose, distribute, and tamp level before locking in.</string>
     <string name="prep_tip_moka">Fill the bottom chamber to the valve. Fill the basket with grounds, level — don\'t tamp. Assemble carefully.</string>
     <string name="prep_tip_cold_brew" translatable="false">Use a clean food-safe vessel. Add coffee and cold water, cover, and refrigerate at 4 °C or colder for the full steep.</string>
-    <string name="format_prep_grind_specific">Grind %1$s — set %2$s to %3$s</string>
-    <string name="format_prep_grind_generic">Grind %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Pause</string>
@@ -149,8 +144,8 @@
     <string name="label_settings_section_appearance">Appearance</string>
     <string name="label_settings_section_notifications">Notifications</string>
     <string name="label_settings_section_scanning">Scanning</string>
-    <string name="label_enhanced_label_recognition">Enhanced label recognition</string>
-    <string name="msg_enhanced_label_recognition">Look for more bag details on this device when available. Basic on-device text reading from the label remains available.</string>
+    <string name="label_enhanced_label_recognition">Enhanced label recognition (Mindlayer)</string>
+    <string name="msg_enhanced_label_recognition">Use Mindlayer’s private, on-device AI to read more bag details. Basic label reading remains available when this is off.</string>
     <string name="label_label_recognition_privacy">Label recognition and privacy</string>
     <string name="msg_label_recognition_privacy">Learn what stays on your device and when network lookups are used.</string>
     <string name="msg_could_not_open_privacy_policy">Could not open the privacy policy.</string>
@@ -171,7 +166,6 @@
     <string name="label_cup_presets">Cup presets</string>
     <string name="action_add_preset">Add preset</string>
     <string name="action_reset_defaults">Reset to defaults</string>
-    <string name="msg_presets_hint">Presets appear as quick buttons on the calculator</string>
     <string name="label_brew_methods">Brew methods</string>
     <string name="msg_methods_hint">Selected methods appear first. Tap to toggle.</string>
     <string name="label_default_method">Default method</string>
@@ -188,9 +182,9 @@
     <string name="label_bloom_sprite_coffee_starlit">Starlit coffee</string>
     <string name="desc_bloom_sprite_coffee_starlit">Cream-gold steam petals with tiny starlit highlights.</string>
     <string name="label_bloom_sprite_coffee_latte">Latte bloom</string>
-    <string name="desc_bloom_sprite_coffee_latte">Soft latte-art rosetta in warm milk-foam tones.</string>
+    <string name="desc_bloom_sprite_coffee_latte">A latte-art heart unfolding in warm milk-foam tones.</string>
     <string name="label_bloom_sprite_coffee_plant">Coffee plant</string>
-    <string name="desc_bloom_sprite_coffee_plant">Fresh green coffee seedling with paired leaves.</string>
+    <string name="desc_bloom_sprite_coffee_plant">A coffee plant unfolding glossy leaves and ripening red cherries.</string>
     <string name="label_bloom_sprite_cherry_tomato">Cherry tomato</string>
     <string name="desc_bloom_sprite_cherry_tomato">A coffee bean sprouts into a tomato vine as red fruit ripens.</string>
     <string name="label_bloom_sprite_strawberry">Strawberry</string>
@@ -538,9 +532,11 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_google_play" translatable="false">Google Play</string>
+    <string name="action_open_mindlayer">Open Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">Requires Android 12 or later.</string>
     <string name="label_ai_service">AI Service (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Get Mindlayer on Google Play</string>
-    <string name="msg_mindlayer_install_recommendation">Install Mindlayer from Google Play to read bag labels with private, on-device AI. You can do this later in Settings.</string>
     <string name="action_test_connection">Test Connection</string>
     <string name="action_run_test_prompt">Run Test Prompt</string>
     <string name="label_testing">Testing…</string>
@@ -567,7 +563,6 @@
     <string name="cd_open_coffee_draft">Open %1$s. %2$s</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">Enable label recognition</string>
     <string name="consent_requesting">Requesting label-recognition access…</string>
     <string name="consent_granted">Label recognition enabled</string>
     <string name="consent_already_approved">Label recognition is already enabled</string>
@@ -667,7 +662,6 @@
     <string name="label_volume_ml">Volume (ml)</string>
     <string name="msg_dose_from_ratio">Coffee dose is calculated from your ratio</string>
     <string name="label_icon">Icon</string>
-    <string name="label_color">Color</string>
     <string name="action_add">Add</string>
     <string name="screen_add_cup_preset_title">Add cup preset</string>
     <string name="screen_edit_cup_preset_title">Edit cup preset</string>
@@ -806,10 +800,10 @@
     <string name="msg_cup_preset_reset_failed">Could not reset cup presets. Please try again.</string>
     <string name="msg_reset_cup_presets">Replace all cup presets with the defaults?</string>
     <string name="msg_diagnostic_clear_failed">Could not clear all diagnostics. Please try again.</string>
-    <string name="msg_clear_diagnostics">Clear all stored scan sessions and LLM passes?</string>
+    <string name="msg_clear_diagnostics">Clear all stored scan sessions?</string>
     <string name="label_log_scan_corrections">Log scan corrections (on-device)</string>
     <string name="msg_log_scan_corrections">Record what the AI extracted versus what you saved on this device only. Nothing is uploaded.</string>
-    <string name="format_scan_debug_counts">Sessions: %1$d · LLM passes: %2$d</string>
+    <string name="format_scan_debug_counts">Sessions: %1$d</string>
     <string name="format_scan_session_subject">Scan session: %1$s</string>
     <string name="action_share_scan_session">Share scan session</string>
 
@@ -821,6 +815,7 @@
         <item>Espresso</item>
         <item>Moka pot</item>
         <item>Cold brew</item>
+        <item>Chemex</item>
     </string-array>
     <string-array name="filter_type_names">
         <item>Paper</item>
@@ -861,18 +856,6 @@
         <item>Ceramic latte bowl</item>
         <item>Thermal carafe</item>
         <item>Double-wall press</item>
-    </string-array>
-    <string-array name="preset_color_labels">
-        <item>Default</item>
-        <item>Brown</item>
-        <item>Chocolate</item>
-        <item>Peru</item>
-        <item>Steel blue</item>
-        <item>Sea green</item>
-        <item>Purple</item>
-        <item>Crimson</item>
-        <item>Orange</item>
-        <item>Slate</item>
     </string-array>
 
 
@@ -940,4 +923,55 @@
     <string name="msg_learning_subtitle">Visual, step-by-step brewing guides</string>
     <string name="action_show_details">Show details</string>
     <string name="action_hide_details">Hide details</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Rescan results</string>
+    <string name="title_rescan_no_changes">No changes found</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">%1$d field changed:</item>
+        <item quantity="other">%1$d fields changed:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">No changes found yet.</string>
+    <string name="msg_rescan_incomplete">Review the details already found, or try recognition again.</string>
+    <string name="action_update_bag_so_far">Update with current results</string>
+    <string name="action_new_bag_so_far">New bag with current results</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Opening setup…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Couldn\'t open setup. Try again, or enter the details manually.</string>
+    <string name="announce_label_details_ready">Label details are ready to review.</string>
+    <string name="announce_label_recognition_no_result">No label details were found. Enter the details manually.</string>
+    <string name="action_set_brew_reminder">Set a reminder</string>
+    <string name="action_edit_brew_reminder">Edit reminder</string>
+    <string name="action_remove_brew_reminder">Remove reminder</string>
+    <string name="label_brew_reminder">Reminder</string>
+    <string name="label_timer_duration">Duration</string>
+    <string name="label_timer_seconds">Seconds</string>
+    <string name="label_timer_minutes">Minutes</string>
+    <string name="label_timer_hours">Hours</string>
+    <string name="msg_brew_reminder_origin">From the start of this step. Changing the duration keeps time already elapsed. You still confirm when the step is done.</string>
+    <string name="msg_brew_reminder_reached">Reminder reached. Check the brew before continuing.</string>
+    <string name="title_cold_brew">Cold brew</string>
+    <string name="title_cold_brew_timer">Cold brew timer</string>
+    <string name="action_follow_brew_guide">Follow guide</string>
+    <string name="action_just_set_brew_timer">Just set timer</string>
+    <string name="action_start_timer">Start timer</string>
+    <string name="action_start_steeping">Start steeping</string>
+    <string name="action_end_brew_timer">End timer</string>
+    <string name="action_add_brew_start_time">Add start time</string>
+    <string name="label_brew_start_now">Starting now</string>
+    <string name="label_brew_start_earlier">Started earlier</string>
+    <string name="label_brew_start_unknown">Start time unknown</string>
+    <string name="label_brew_hours_ago">Hours ago</string>
+    <string name="label_brew_minutes_ago">Minutes ago</string>
+    <string name="msg_cold_brew_refrigerated">Keep covered and refrigerated at 4 °C or colder. The default steep is 14 hours.</string>
+    <string name="msg_cold_brew_start_origin">Start when the coffee is fully wet and the covered vessel enters the refrigerator.</string>
+    <string name="msg_brew_start_unknown">Add the actual start time to calculate a reminder. Until then, no deadline is estimated.</string>
+    <string name="msg_brew_timer_ended">Timer ended</string>
+    <string name="label_brew_extraction_ended">Extraction finished</string>
+    <string name="msg_brew_notifications_disabled">Reminders are off. Your brew keeps running.</string>
+    <string name="action_allow_brew_notifications">Allow reminders</string>
+    <string name="msg_brew_reminders_may_be_late">Android may delay reminders while you’re away.</string>
+    <string name="action_allow_precise_brew_reminders">Allow precise reminders</string>
+    <string name="label_show_cup_presets">Show on calculator</string>
+    <string name="cd_cup_preset_options">Cup preset options</string>
 </resources>

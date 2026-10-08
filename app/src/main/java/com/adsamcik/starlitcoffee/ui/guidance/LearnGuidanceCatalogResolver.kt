@@ -99,6 +99,7 @@ class LearnGuidanceCatalogResolver(
     guidanceCatalogs: List<BuiltInGuidanceCatalog> = listOf(
         LegacyBuiltInGuidanceCatalog.catalog,
         P1BuiltInGuidanceCatalog.catalog,
+        ColdBrewGuidanceCatalog.catalog,
     ),
 ) {
     private val allContent = guidanceCatalogs
@@ -126,6 +127,10 @@ class LearnGuidanceCatalogResolver(
         val scopedContent = allContent.filter { content ->
             content.familyId == methodFamilyId &&
                 (content.profileId == null || content.profileId == brewerProfileId)
+        }.let { content ->
+            if (brewerProfileId.value == "cold_immersion_generic" && request.exactStageOrder == null) {
+                content.filter { it.id.value.startsWith("cold_refrigerated_") }
+            } else content
         }
         if (scopedContent.isEmpty()) {
             return LearnGuidanceCatalogResolution(
@@ -196,7 +201,7 @@ class LearnGuidanceCatalogResolver(
             stageId to index
         }
         val liveContent = scopedContent.filter { content ->
-            content.placement == BuiltInGuidancePlacement.LIVE_STAGE
+            content.placement == BuiltInGuidancePlacement.LIVE_STAGE && content.stageId in orderByStage
         }
         val hasExactStageSet = listOf(
             exactStageOrder.isNotEmpty(),
@@ -207,7 +212,8 @@ class LearnGuidanceCatalogResolver(
         if (!hasExactStageSet) return null
 
         return P1LearnContentSelection(
-            content = scopedContent.sortedBy { content ->
+            content = (scopedContent.filter { it.placement != BuiltInGuidancePlacement.LIVE_STAGE } +
+                liveContent).sortedBy { content ->
                 content.stageId?.let(orderByStage::get)
             },
             requiresHarioSwitchWorkflow = false,

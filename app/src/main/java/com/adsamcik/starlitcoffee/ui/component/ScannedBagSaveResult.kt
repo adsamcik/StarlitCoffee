@@ -331,7 +331,10 @@ private suspend fun recoverPendingSave(
 ): PendingSaveRecovery {
     val ownership = runCatching { findOwnedBagId() }
     ownership.exceptionOrNull()?.let { error ->
-        Tracebox.log.error(error, ScannedBagSaveResultTraceboxTemplates.COULD_NOT_VERIFY_ROOM_OWNERSHIP_FOR_PENDING)
+        Tracebox.log.error(
+            error,
+            ScannedBagSaveResultTraceboxTemplates.COULD_NOT_VERIFY_ROOM_OWNERSHIP_FOR_PENDING,
+        )
         return PendingSaveRecovery.Deferred(error as? Exception ?: IllegalStateException(error))
     }
     ownership.getOrNull()?.let { bagId ->
@@ -353,7 +356,9 @@ private suspend fun recoverPendingSave(
             ScannedBagSaveResultTraceboxTemplates.COULD_NOT_DURABLY_REMOVE_UNOWNED_SCAN_PHOTOS,
         )
     } else {
-        Tracebox.log.warn(ScannedBagSaveResultTraceboxTemplates.COULD_NOT_DURABLY_REMOVE_UNOWNED_SCAN_PHOTOS)
+        Tracebox.log.warn(
+            ScannedBagSaveResultTraceboxTemplates.COULD_NOT_DURABLY_REMOVE_UNOWNED_SCAN_PHOTOS,
+        )
     }
     return PendingSaveRecovery.Deferred(error as? Exception)
 }

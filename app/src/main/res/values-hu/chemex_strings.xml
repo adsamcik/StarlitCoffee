@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_tip_chemex">Használj a készülékhez illő Chemex papírszűrőt. A három réteg legyen a kiöntő felől. Öblítsd át forró vízzel, majd öntsd ki az öblítővizet. Adj hozzá közepesen durvára őrölt kávét és tárázd a mérleget. Hagyd szabadon a légcsatornát.</string>
+    <string name="instruction_chemex_bloom">Nedvesítsd be az összes kávét az előáztatás vizével, és várd meg az előáztatás végét.</string>
+    <string name="instruction_chemex_pour">Óvatosan önts a teljes vízmennyiségig. Az öntések között hagyd csökkenni a szintet, és tartsd a perem alatt.</string>
+    <string name="instruction_chemex_drawdown">Várd meg, amíg a víz átfolyik a kávén. Vedd ki a szűrőt, finoman forgasd meg, és a gallérnál vagy a fogantyúnál fogva töltsd ki.</string>
+    <string name="label_filter_chemex_bonded">Chemex papírszűrő</string>
+</resources>

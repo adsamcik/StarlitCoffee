@@ -1,0 +1,90 @@
+{
+  "date": "2026-10-06",
+  "generator": {
+    "tool": "built-in image_gen.imagegen",
+    "calls": 28,
+    "exact_prompts_match_tool_inputs": true,
+    "selected_pngs_preserved_unchanged": true,
+    "references": "Original generated anatomy for each vessel; generated Cappuccino style anchor, originally refined against generated Mug"
+  },
+  "conversion": {
+    "contours": "Mechanical alpha spline tracing only; no manually authored path coordinates",
+    "passed_traces": 28,
+    "target_pixels": [
+      24,
+      28,
+      34,
+      48
+    ],
+    "matching_native_exports": 29
+  },
+  "build": {
+    "debug_apk": "passed",
+    "android_test_apk": "passed",
+    "detekt": "passed"
+  },
+  "native": {
+    "android_api": 34,
+    "abi": "x86_64",
+    "dpi": 420,
+    "test_count": 5,
+    "individual_icon_renders": 112,
+    "icon_dp": [
+      24,
+      32
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "surfaces": [
+      "complete vessel family",
+      "calculator toolbar",
+      "cup Settings card"
+    ],
+    "captures_visually_reviewed": 8,
+    "result": "OK (5 tests)"
+  },
+  "boundary": "Emulator rendering, geometry and scoped native UI checks; no physical-device or measured human-recognition validation",
+  "hashes": {
+    "docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/generated-consistency-20261006/generation-records.json": "6fc3a9fec702ef1234e859a78503ea0ec5393bf4dde6b095426e9b7a9957cfd8",
+    "docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/generated-consistency-20261006/trace-report.json": "515465e5dd6355e974f3c428c7e8c8d9aacd56e4702a27cf2d015557e60ddef6",
+    "app/src/main/res/drawable/vessel_icon_cappuccino.xml": "dfdcc63d85815be5d56e1b0c20000b1d077e23d68b09f7f7527e2c489f2eb046",
+    "app/src/main/res/drawable/vessel_icon_espresso.xml": "37b3ad00132acddff4e8a1fe2cf3c66e01fb2143af4d84bdf2c1dcafb6a082cf",
+    "app/src/main/res/drawable/vessel_icon_cortado.xml": "4667cd4dba6350f0e42b340881c90b2ea19d0d0889bc78ecc89c5dfbd43df1ca",
+    "app/src/main/res/drawable/vessel_icon_mug.xml": "93420ae741df5843d9d6879b58007efe07e9c8ef22f16ac26072e2c68388121b",
+    "app/src/main/res/drawable/vessel_icon_travel.xml": "344ecb91955065a0539c347a920fb071d7a87e157e2802e9c97588f405c65340",
+    "app/src/main/res/drawable/vessel_icon_takeaway.xml": "06ad161f5af9d52d278a8997b1963e55ef07fedaf4112eed92bf80f3c4ac1ba1",
+    "app/src/main/res/drawable/vessel_icon_latte_glass.xml": "a09ee1cd480760cc3dc2c5cb322672fda7fa8e13834cb8b7f827e54e5a626a97",
+    "app/src/main/res/drawable/vessel_icon_carafe.xml": "617ddae061b4b0c1051285a5b11db33729e9115d7eb8e7d5f4f0a75650e4870b",
+    "app/src/main/res/drawable/vessel_icon_french_press.xml": "755239337dd205795e0d47e74dd0447ea0f9bc7c196554dde9222c4c1d1f358e",
+    "app/src/main/res/drawable/vessel_icon_kettle.xml": "0496f2c8521c72fa877d41431cc4040501843bdfa9977b0ec337fe58f44c37db",
+    "app/src/main/res/drawable/vessel_icon_mason_jar.xml": "a1835102ae2df71a78662e5be9dd9df306aaae684d6bd0cd3d6e0a5f7feffbc2",
+    "app/src/main/res/drawable/vessel_icon_bowl.xml": "8191ab8523eb3d034a23e6217e9d02195d23efe5a0f85d39c1ce5624d78c3b25",
+    "app/src/main/res/drawable/vessel_icon_double_wall_espresso.xml": "8c3eacb96e5bb52e62b4e151e2883afcc6ad5fa30325f7fad264d0f568c53615",
+    "app/src/main/res/drawable/vessel_icon_double_wall_tumbler.xml": "c206fb7a9dfcaa58604c17333b34693ae4996c94c0b46bcc2a20c619152b7562",
+    "app/src/main/res/drawable/vessel_icon_double_wall_mug.xml": "3a730148e0994539f34095e449a270adef4a8abf34d8e89960266807c307d354",
+    "app/src/main/res/drawable/vessel_icon_tall_latte_glass.xml": "259d5dbc17057b3990a59a1dab7e185754ef4ae31420385eb8ac493dd95a7c4d",
+    "app/src/main/res/drawable/vessel_icon_aroma_taster.xml": "36011c566bf409d9b199b17783ec0ff66d00fe00e2a4a821de2586b2d33e6fd6",
+    "app/src/main/res/drawable/vessel_icon_spherical_latte.xml": "85366b4571cb7e6993d691583bf7cf7974c5dcc33b664539d481264dbe1e19b1",
+    "app/src/main/res/drawable/vessel_icon_spouted_espresso_server.xml": "1645f559579107f9dcc84ab15876a73727cabf41d02590b8c67becf57b0c5ff5",
+    "app/src/main/res/drawable/vessel_icon_dot_carafe.xml": "9a784a8f9fe498d74ac3123467bc38614f232acba64807130e40071ec6aacc0e",
+    "app/src/main/res/drawable/vessel_icon_lid_server.xml": "1349378ef40339789b6854a38db636548513728ab9a523e6cec4c8166fbb72fa",
+    "app/src/main/res/drawable/vessel_icon_beehive_server.xml": "10579be8d098232e41659a11123a383d289af338c925da4f7912f1efa53136da",
+    "app/src/main/res/drawable/vessel_icon_barista_server.xml": "4b4c4b169add06c9943f88baf416763b79453834806222f5eeafee6facd19c0b",
+    "app/src/main/res/drawable/vessel_icon_angular_server.xml": "cb7229f570ce38ca24439576fb773784f4475145b261eb8aef606848e8b2223d",
+    "app/src/main/res/drawable/vessel_icon_faceted_cortado.xml": "92f642b0f5ed5492e931bf3f714cf6c7d85efa0953dec1446c84afc7955d2bde",
+    "app/src/main/res/drawable/vessel_icon_ceramic_latte_bowl.xml": "b6d59ec0d254ffbfe42182c5f8d322563940763ecb68e19ae6ac99ba7ed20f28",
+    "app/src/main/res/drawable/vessel_icon_thermal_carafe.xml": "6b6e4ad6ad1ecd1b0f37a695b234883ae46dffb53a00688dc2342a6616db7f3f",
+    "app/src/main/res/drawable/vessel_icon_double_wall_press.xml": "7d51b8bbcf42f4fefba5b3cadf544db3057ac58ea9b3f49b13e030b5f3343a96",
+    "app/src/main/res/drawable/calculation_icon_cup_output.xml": "dfdcc63d85815be5d56e1b0c20000b1d077e23d68b09f7f7527e2c489f2eb046",
+    "docs/assets/vessel-family-native-light.png": "dd778ee4fdc246f9aedfaaba64cc2b1bcc43535e73f484cb686071111ed26c89",
+    "docs/assets/vessel-family-native-dark.png": "9de78322cb91f468f332afc9f4a402927ae8418959da9aee36b6cb8fb08fc478",
+    "docs/assets/calculator-vessel-toolbar-light.png": "b61bf1ad2e2c4899bfdedef95e6464baa4ca9bb199ea5da9e92a6c8b14ed47f4",
+    "docs/assets/calculator-vessel-toolbar-dark.png": "abb8f725c1d3548d654c0ef600faf8e4d57b555b93a4abc1c376326983dda612",
+    "docs/assets/cup-presets-settings-light.png": "a1af40620849dde144ff03b1bcd2c25468ad7dc59147cff4cabe5d60055dcfb4",
+    "docs/assets/cup-presets-settings-dark.png": "30944b2c509ed5b1ab3b50d0a44e5c357ff0aae8b960f6d44a785581c0b02cb6",
+    "docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/generated-consistency-20261006/native/vessel_family_light_24.png": "d094241bd2de0c34475ee44978ede11843ea1182986238b6c90f0162d6595d5a",
+    "docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/generated-consistency-20261006/native/vessel_family_dark_24.png": "a95661cc891cd2ae3c1c47f8dbe7ca5b915897e4800380e9eb7282a385ff0dbd"
+  }
+}

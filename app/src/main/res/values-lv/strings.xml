@@ -102,11 +102,8 @@
     <string name="label_increase">Palielināt %1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Sagatavojiet kafiju</string>
 <string name="action_ready_to_brew_short">Gatavs gatavošanai</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Sagatavošana</string>
-    <string name="label_recipe_heading">Recepte</string>
     <string name="label_temp_short">Temp.</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Samitriniet papīra filtru pamatnē (vārsts atvērts) un noteciniet. Uzlieciet cilindru, pievienojiet malto kafiju, izlīdziniet slāni, uzlieciet dispersijas vāciņu. Nulējiet svarus.</string>
@@ -116,8 +113,6 @@
     <string name="prep_tip_french_press">Uzsildiet preskannu, tad izlejiet ūdeni. Pievienojiet malto kafiju, novietojiet uz svariem un nulējiet pirms ūdens pievienošanas.</string>
     <string name="prep_tip_espresso">Nosusiniet portafiltru. Ievietojiet devu, vienmērīgi sadaliet un līdzeni tampējiet pirms nostiprināšanas grupā.</string>
     <string name="prep_tip_moka">Piepildiet apakšējo kameru līdz vārstam. Piepildiet groziņu ar maltu kafiju, izlīdziniet — netampējiet. Salieciet uzmanīgi.</string>
-    <string name="format_prep_grind_specific">Samaļiet %1$s — iestatiet %2$s uz %3$s</string>
-    <string name="format_prep_grind_generic">Samaļiet %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Pauzēt</string>
@@ -150,7 +145,6 @@
     <string name="label_cup_presets">Tases priekšiestatījumi</string>
     <string name="action_add_preset">Pievienot priekšiestatījumu</string>
     <string name="action_reset_defaults">Atjaunot noklusējumus</string>
-    <string name="msg_presets_hint">Priekšiestatījumi kalkulatorā parādās kā ātrās pogas</string>
     <string name="label_brew_methods">Pagatavošanas metodes</string>
     <string name="msg_methods_hint">Atlasītās metodes parādās pirmās. Pieskarieties, lai pārslēgtu.</string>
     <string name="label_default_method">Noklusējuma metode</string>
@@ -167,9 +161,9 @@
     <string name="label_bloom_sprite_coffee_starlit">Zvaigžņota kafija</string>
     <string name="desc_bloom_sprite_coffee_starlit">Krēmīgi zelta tvaika ziedlapas ar sīkiem zvaigžņotiem akcentiem.</string>
     <string name="label_bloom_sprite_coffee_latte">Latte bloom</string>
-    <string name="desc_bloom_sprite_coffee_latte">Maiga latte art rozete siltos piena putu toņos.</string>
+    <string name="desc_bloom_sprite_coffee_latte">Latte art sirds, kas atplaukst siltos piena putu toņos.</string>
     <string name="label_bloom_sprite_coffee_plant">Kafijas augs</string>
-    <string name="desc_bloom_sprite_coffee_plant">Svaigs zaļš kafijas stāds ar pāru lapām.</string>
+    <string name="desc_bloom_sprite_coffee_plant">Kafijas koks izplaukst ar spīdīgām lapām, un tā sarkanās ogas nogatavojas.</string>
     <string name="label_bloom_sprite_cherry_tomato">Ķiršu tomāts</string>
     <string name="desc_bloom_sprite_cherry_tomato">Kafijas pupiņa izdzen tomāta vīteņaugu, kam nogatavojas sarkani augļi.</string>
     <string name="label_bloom_sprite_strawberry">Zemene</string>
@@ -437,15 +431,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">Atvērt Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">Nepieciešama Android 12 vai jaunāka versija.</string>
     <string name="label_ai_service">AI pakalpojums (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Iegūstiet Mindlayer no Google Play</string>
-    <string name="msg_mindlayer_install_recommendation">Instalējiet Mindlayer no Google Play, lai lasītu kafijas iepakojumu etiķetes ar privātu ierīcē darbojošos MI. To varat izdarīt vēlāk iestatījumos.</string>
     <string name="action_test_connection">Pārbaudīt savienojumu</string>
     <string name="action_run_test_prompt">Palaist testa vaicājumu</string>
     <string name="label_testing">Notiek testēšana…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">Ieslēgt AI</string>
     <string name="consent_requesting">Pieprasām AI piekļuvi…</string>
     <string name="consent_granted">AI ieslēgts</string>
     <string name="consent_already_approved">AI jau ir ieslēgts</string>
@@ -534,7 +528,6 @@
     <string name="label_volume_ml">Tilpums (ml)</string>
     <string name="msg_dose_from_ratio">Kafijas deva tiek aprēķināta pēc Jūsu attiecības</string>
     <string name="label_icon">Ikona</string>
-    <string name="label_color">Krāsa</string>
     <string name="action_add">Pievienot</string>
     <string name="screen_add_cup_preset_title">Pievienot tases priekšiestatījumu</string>
     <string name="screen_edit_cup_preset_title">Rediģēt tases priekšiestatījumu</string>
@@ -666,10 +659,10 @@
     <string name="msg_cup_preset_reset_failed">Neizdevās atiestatīt tašu profilus. Mēģiniet vēlreiz.</string>
     <string name="msg_reset_cup_presets">Vai aizstāt visus tašu profilus ar noklusējuma profiliem?</string>
     <string name="msg_diagnostic_clear_failed">Neizdevās notīrīt visus diagnostikas datus. Mēģiniet vēlreiz.</string>
-    <string name="msg_clear_diagnostics">Vai notīrīt visas saglabātās skenēšanas sesijas un LLM gājienus?</string>
+    <string name="msg_clear_diagnostics">Vai notīrīt visas saglabātās skenēšanas sesijas?</string>
     <string name="label_log_scan_corrections">Reģistrēt skenēšanas labojumus (ierīcē)</string>
     <string name="msg_log_scan_corrections">Tikai šajā ierīcē reģistrē AI iegūto un jūsu saglabāto. Nekas netiek augšupielādēts.</string>
-    <string name="format_scan_debug_counts">Sesijas: %1$d · LLM gājieni: %2$d</string>
+    <string name="format_scan_debug_counts">Sesijas: %1$d</string>
     <string name="format_scan_session_subject">Skenēšanas sesija: %1$s</string>
     <string name="action_share_scan_session">Kopīgot skenēšanas sesiju</string>
 
@@ -735,4 +728,24 @@
     <string name="msg_learning_subtitle">Vizuālas pakāpeniskas kafijas pagatavošanas pamācības</string>
     <string name="action_show_details">Rādīt informāciju</string>
     <string name="action_hide_details">Paslēpt informāciju</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Atkārtotās skenēšanas rezultāti</string>
+    <string name="title_rescan_no_changes">Izmaiņas nav atrastas</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="zero">Mainīti %1$d lauki:</item>
+        <item quantity="one">Mainīts %1$d lauks:</item>
+        <item quantity="other">Mainīti %1$d lauki:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Vēl nav atrastas izmaiņas.</string>
+    <string name="msg_rescan_incomplete">Pārskatiet jau atrastos datus vai mēģiniet atpazīšanu vēlreiz.</string>
+    <string name="action_update_bag_so_far">Atjaunināt ar pašreizējiem rezultātiem</string>
+    <string name="action_new_bag_so_far">Jauns iepakojums ar pašreizējiem rezultātiem</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Notiek iestatīšanas atvēršana…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Neizdevās atvērt iestatīšanu. Mēģiniet vēlreiz vai ievadiet informāciju manuāli.</string>
+    <string name="announce_label_details_ready">Etiķetes informācija ir gatava pārskatīšanai.</string>
+    <string name="announce_label_recognition_no_result">Etiķetē informācija netika atrasta. Ievadiet informāciju manuāli.</string>
+    <string name="label_show_cup_presets">Rādīt kalkulatorā</string>
+    <string name="cd_cup_preset_options">Krūžu sagatavju opcijas</string>
 </resources>

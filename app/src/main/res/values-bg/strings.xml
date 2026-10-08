@@ -100,11 +100,8 @@
     <string name="label_increase">Увеличете %1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Подгответе приготвянето</string>
 <string name="action_ready_to_brew_short">Готово за приготвяне</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Подготовка</string>
-    <string name="label_recipe_heading">Рецепта</string>
     <string name="label_temp_short">Темп.</string>
     <string name="label_bloom_short">Блум</string>
     <string name="prep_tip_pulsar_paper">Намокрете хартиения филтър в основата (с отворен клапан) и оставете да се отцеди. Монтирайте цилиндъра, добавете смляното кафе, изравнете леглото и поставете дисперсионната капачка. Тарирайте везната.</string>
@@ -114,8 +111,6 @@
     <string name="prep_tip_french_press">Подгрейте френската преса и я изпразнете. Добавете смляното кафе, поставете върху везната и тарирайте преди да добавите вода.</string>
     <string name="prep_tip_espresso">Подсушете портафилтъра. Дозирайте, разпределете и тампирайте равномерно преди да го заключите.</string>
     <string name="prep_tip_moka">Напълнете долната камера до клапана. Напълнете кошничката със смляно кафе, изравнете — не тампирайте. Сглобете внимателно.</string>
-    <string name="format_prep_grind_specific">Смелете %1$s — настройте %2$s на %3$s</string>
-    <string name="format_prep_grind_generic">Смелете %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Пауза</string>
@@ -148,7 +143,6 @@
     <string name="label_cup_presets">Предварителни чаши</string>
     <string name="action_add_preset">Добавете предварителна настройка</string>
     <string name="action_reset_defaults">Върнете настройките по подразбиране</string>
-    <string name="msg_presets_hint">Предварителните настройки се показват като бързи бутони в калкулатора</string>
     <string name="label_brew_methods">Методи за приготвяне</string>
     <string name="msg_methods_hint">Избраните методи се показват първи. Докоснете, за да включите или изключите.</string>
     <string name="label_default_method">Метод по подразбиране</string>
@@ -165,9 +159,9 @@
     <string name="label_bloom_sprite_coffee_starlit">Starlit Coffee</string>
     <string name="desc_bloom_sprite_coffee_starlit">Кремаво-златни парни венчелистчета с малки звездни отблясъци.</string>
     <string name="label_bloom_sprite_coffee_latte">Лате блум</string>
-    <string name="desc_bloom_sprite_coffee_latte">Нежна лате-арт розета в топли тонове на млечна пяна.</string>
+    <string name="desc_bloom_sprite_coffee_latte">Сърце от лате арт, разгръщащо се в топли тонове на млечна пяна.</string>
     <string name="label_bloom_sprite_coffee_plant">Кафено растение</string>
-    <string name="desc_bloom_sprite_coffee_plant">Свеж зелен кафен разсад с двойки листа.</string>
+    <string name="desc_bloom_sprite_coffee_plant">Кафено растение разгръща лъскави листа, а червените му плодове узряват.</string>
     <string name="label_bloom_sprite_cherry_tomato">Чери домат</string>
     <string name="desc_bloom_sprite_cherry_tomato">Кафено зърно покарва в доматена лоза, докато червени плодове узряват.</string>
     <string name="label_bloom_sprite_strawberry">Ягода</string>
@@ -435,15 +429,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">Отваряне на Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">Изисква Android 12 или по-нова версия.</string>
     <string name="label_ai_service">ИИ услуга (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Вземете Mindlayer от Google Play</string>
-    <string name="msg_mindlayer_install_recommendation">Инсталирайте Mindlayer от Google Play, за да четете етикети на кафени пакети с личен ИИ на устройството. Можете да го направите по-късно в Настройки.</string>
     <string name="action_test_connection">Тествайте връзката</string>
     <string name="action_run_test_prompt">Пуснете тестова подкана</string>
     <string name="label_testing">Тестване…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">Активирайте ИИ</string>
     <string name="consent_requesting">Заявяване на ИИ достъп…</string>
     <string name="consent_granted">ИИ е активиран</string>
     <string name="consent_already_approved">ИИ вече е активиран</string>
@@ -532,7 +526,6 @@
     <string name="label_volume_ml">Обем (ml)</string>
     <string name="msg_dose_from_ratio">Дозата кафе се изчислява от Вашето съотношение</string>
     <string name="label_icon">Икона</string>
-    <string name="label_color">Цвят</string>
     <string name="action_add">Добавете</string>
     <string name="screen_add_cup_preset_title">Добавете предварителна чаша</string>
     <string name="screen_edit_cup_preset_title">Редактирайте предварителна чаша</string>
@@ -664,10 +657,10 @@
     <string name="msg_cup_preset_reset_failed">Профилите за чаши не можаха да бъдат нулирани. Опитайте отново.</string>
     <string name="msg_reset_cup_presets">Да се заменят ли всички профили за чаши със стандартните?</string>
     <string name="msg_diagnostic_clear_failed">Не всички диагностични данни можаха да бъдат изчистени. Опитайте отново.</string>
-    <string name="msg_clear_diagnostics">Да се изчистят ли всички запазени сканирания и LLM преминавания?</string>
+    <string name="msg_clear_diagnostics">Да се изчистят ли всички запазени сканирания?</string>
     <string name="label_log_scan_corrections">Запис на корекциите при сканиране (на устройството)</string>
     <string name="msg_log_scan_corrections">Записва само на това устройство разликите между извлеченото от AI и запазеното от вас. Нищо не се качва.</string>
-    <string name="format_scan_debug_counts">Сесии: %1$d · LLM преминавания: %2$d</string>
+    <string name="format_scan_debug_counts">Сесии: %1$d</string>
     <string name="format_scan_session_subject">Сесия на сканиране: %1$s</string>
     <string name="action_share_scan_session">Споделяне на сесията</string>
 
@@ -733,4 +726,23 @@
     <string name="msg_learning_subtitle">Нагледни ръководства стъпка по стъпка</string>
     <string name="action_show_details">Покажи подробности</string>
     <string name="action_hide_details">Скрий подробностите</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Резултати от повторното сканиране</string>
+    <string name="title_rescan_no_changes">Не са открити промени</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">Променено е %1$d поле:</item>
+        <item quantity="other">Променени са %1$d полета:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Все още не са открити промени.</string>
+    <string name="msg_rescan_incomplete">Прегледайте вече намерените данни или опитайте разпознаването отново.</string>
+    <string name="action_update_bag_so_far">Обнови с текущите резултати</string>
+    <string name="action_new_bag_so_far">Нова опаковка с текущите резултати</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Отваряне на настройката…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Настройката не можа да бъде отворена. Опитайте отново или въведете подробностите ръчно.</string>
+    <string name="announce_label_details_ready">Подробностите от етикета са готови за преглед.</string>
+    <string name="announce_label_recognition_no_result">Не са намерени подробности на етикета. Въведете подробностите ръчно.</string>
+    <string name="label_show_cup_presets">Показване в калкулатора</string>
+    <string name="cd_cup_preset_options">Опции за чашите</string>
 </resources>

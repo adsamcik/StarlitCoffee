@@ -1,0 +1,92 @@
+{
+  "reviewDate": "2026-10-03",
+  "device": "emulator-5554",
+  "avd": "Medium_Phone",
+  "devicePixels": [
+    1080,
+    2400
+  ],
+  "package": "com.adsamcik.starlitcoffee.debug",
+  "versionName": "1.5.0",
+  "versionCode": 6,
+  "installedLastUpdate": "2026-10-02 11:59:22 (device-reported)",
+  "sourceAuditCommit": "990bcd96",
+  "installedSourceCommit": null,
+  "captureMethod": "adb exec-out screencap -p under an exclusive device claim; no app installation or data edits",
+  "screenshots": [
+    {
+      "route": "brew",
+      "file": "brew.png",
+      "sha256": "47edc0e0800e3f9cc6c5ef53d8f84c92ad3835473843d06fdae992f19740cb2d"
+    },
+    {
+      "route": "log",
+      "file": "log.png",
+      "sha256": "cd0586618d99086a65d89596d6e973233f84986116d6f7309c516df35e1d2d93"
+    },
+    {
+      "route": "more",
+      "file": "more.png",
+      "sha256": "4c45707380a03a994baf38ecd58703b43e62bc1e750105190a7f683817239d20"
+    },
+    {
+      "route": "learn",
+      "file": "learn.png",
+      "sha256": "5b0f95c63e5d0622e13950b3690cc8f88f9bab707896578dbe644906d843a9c4"
+    },
+    {
+      "route": "settings",
+      "file": "settings.png",
+      "sha256": "d251c432bebc04d6c29119aa7d62ac2adc206c085b8d3a14b5aadf07be09b7da"
+    },
+    {
+      "route": "favorites",
+      "file": "favorites.png",
+      "sha256": "c76951bfb394dc1d513bd0f40624e2788a1b26b808a57a617e2d72ce6c8b9491"
+    },
+    {
+      "route": "beans",
+      "file": "beans.png",
+      "sha256": "b882bc8e22793765fd79811955fd2a66da23ae1ff45779fe82d8bb39873ad5ba"
+    }
+  ],
+  "reusedResources": [
+    {
+      "file": "vessel-cappuccino.png",
+      "source": "app/src/main/res/drawable-nodpi/vessel_icon_cappuccino.png"
+    },
+    {
+      "file": "vessel-cortado.png",
+      "source": "app/src/main/res/drawable-nodpi/vessel_icon_cortado.png"
+    },
+    {
+      "file": "vessel-espresso.png",
+      "source": "app/src/main/res/drawable-nodpi/vessel_icon_espresso.png"
+    },
+    {
+      "file": "vessel-mug.png",
+      "source": "app/src/main/res/drawable-nodpi/vessel_icon_mug.png"
+    },
+    {
+      "file": "vessel-travel.png",
+      "source": "app/src/main/res/drawable-nodpi/vessel_icon_travel.png"
+    },
+    {
+      "file": "brewer-pulsar.webp",
+      "source": "app/src/main/res/drawable-nodpi/learn_brewer_icon_pulsar.webp"
+    },
+    {
+      "file": "brewer-v60_02.webp",
+      "source": "app/src/main/res/drawable-nodpi/learn_brewer_icon_v60_02.webp"
+    },
+    {
+      "file": "brewer-wave_185.webp",
+      "source": "app/src/main/res/drawable-nodpi/learn_brewer_icon_wave_185.webp"
+    },
+    {
+      "file": "brewer-wedge.webp",
+      "source": "app/src/main/res/drawable-nodpi/learn_brewer_icon_wedge.webp"
+    }
+  ],
+  "limitations": "Original PNGs are unmodified native captures. The HTML reconstruction uses fixed sample data and is not pixel-perfect, a complete catalog, a calculator port or a settings editor. Screenshot origin commit is unknown."
+}

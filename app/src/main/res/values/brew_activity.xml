@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_active_brews">Active brews</string>
+    <string name="label_brew_activity_ready">Ready to start</string>
+    <string name="label_brew_activity_paused">Timer paused</string>
+    <string name="label_brew_activity_save">Saving brew</string>
+    <string name="label_brew_activity_timing_reached">Timing target reached</string>
+    <string name="format_brew_activity_elapsed">%1$s elapsed</string>
+    <string name="format_brew_activity_time_left">%1$s left</string>
+    <string name="format_brew_activity_hours">%1$d h %2$d min</string>
+    <string name="format_brew_activity_minutes">%1$d:%2$02d</string>
+    <string name="cd_open_active_brew">Open %1$s. %2$s</string>
+    <string name="cd_choose_active_brews">Choose a brew. Active: %3$d. %1$s. %2$s</string>
+</resources>

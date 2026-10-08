@@ -10,9 +10,9 @@ import kotlinx.serialization.Serializable
  * generic "AI couldn't finish reading this label" banner, and the real reason
  * (e.g. `input_exceeds_context (...)`, a timeout, a parse error) lived only in a
  * transient logcat line that had usually rotated away by the time anyone looked.
- * This record persists the per-pass outcome — including the real error message
- * and a sample of what the model actually emitted — so a failure is attributable
- * after the fact, on any device, without a USB cable.
+ * This record contains only typed outcomes, a numeric SDK failure code, and
+ * timings/counts. Prompts, model output, and exception messages are never
+ * diagnostic fields. Tracebox owns capture, retention, deletion, and export.
  *
  * Lives in a neutral, dependency-free `domain.*` package so both the scan
  * pipeline (`scan.*`) and the on-device LLM layer (`data.network.llm`) can
@@ -22,9 +22,9 @@ import kotlinx.serialization.Serializable
 data class LlmPassDiagnostic(
     val timestampMs: Long,
     /** TRANSLATE, TEXT, VISION, COMBINE, or REFINE. */
-    val pass: String,
-    /** SUCCESS, TIMEOUT, ERROR, or UNAVAILABLE. */
-    val status: String,
+    val pass: Pass,
+    /** Final validated outcome, including a valid response with no usable fields. */
+    val status: Status,
     val elapsedMs: Long,
     /** Total KV-cache budget requested for the session (input + output). */
     val maxTokens: Int,
@@ -32,23 +32,44 @@ data class LlmPassDiagnostic(
     val promptCharLen: Int,
     /** Characters the model emitted (0 when it failed before generating). */
     val outputCharLen: Int,
-    /** A leading slice of the model output — "what the LLM said" — or null. */
-    val outputSample: String?,
-    /** The real failure reason for non-SUCCESS passes (e.g. the wire message). */
-    val errorMessage: String?,
+    /** Known Mindlayer wire error code; no exception text or arbitrary code name. */
+    val errorCode: Int? = null,
+    /** Closed app diagnosis for failures that have no Mindlayer wire code. */
+    val failureReason: FailureReason? = null,
+    /** Scan correlation contains validated numeric keys, never a label or image path. */
+    val sessionKey: Long? = null,
+    val generationKey: Long? = null,
+    val workKey: Long? = null,
+    val photoCount: Int? = null,
+    val mode: ScanDiagnosticMode? = null,
+    /** Known coarse SDK readiness cause; arbitrary service reason strings are excluded. */
+    val readinessCode: ReadinessCode? = null,
 ) {
-    enum class Status { SUCCESS, TIMEOUT, ERROR, UNAVAILABLE }
+    enum class Status { SUCCESS, NO_RESULT, TIMEOUT, ERROR, UNAVAILABLE }
     enum class Pass { TRANSLATE, TEXT, VISION, COMBINE, REFINE }
-
-    companion object {
-        /** Max characters of model output retained in [outputSample]. */
-        const val OUTPUT_SAMPLE_LIMIT = 600
+    enum class FailureReason {
+        INVALID_RESPONSE,
+        CONNECTION_UNAVAILABLE,
+        AUTHORIZATION_REQUIRED,
+        MODEL_SETUP_REQUIRED,
+        MODEL_IN_PROGRESS,
+        MODEL_FAILED,
+        TIMEOUT,
+        INFERENCE_FAILED,
+    }
+    enum class ReadinessCode {
+        MODEL_MISSING,
+        LOW_MEMORY,
+        INTEGRITY_MISMATCH,
+        BACKEND_UNAVAILABLE,
+        NATIVE_ERROR,
+        OLD_SERVICE,
     }
 }
 
 /**
  * Sink the LLM provider records each pass into. Kept Context-free so the
- * provider stays unit-testable; the app wires a persistent implementation.
+ * provider stays unit-testable; the app wires the policy-controlled Tracebox sink.
  */
 fun interface LlmDiagnosticsRecorder {
     fun record(diagnostic: LlmPassDiagnostic)

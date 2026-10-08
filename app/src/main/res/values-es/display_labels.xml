@@ -3,6 +3,7 @@
     <string-array name="brew_method_names">
         <item>Pulsar</item><item>V60</item><item>Prensa francesa</item><item>AeroPress</item>
         <item>Espresso</item><item>Cafetera moka</item><item>Café en frío</item>
+        <item>Chemex</item>
     </string-array>
     <string-array name="filter_type_names"><item>Papel</item><item>19K</item><item>40K</item></string-array>
     <string-array name="filter_cup_profiles">
@@ -19,10 +20,5 @@
         <item>Jarra de colmena</item><item>Jarra barista</item><item>Jarra angular</item>
         <item>Vaso facetado de cortado</item><item>Cuenco cerámico de latte</item>
         <item>Jarra térmica</item><item>Prensa de doble pared</item>
-    </string-array>
-    <string-array name="preset_color_labels">
-        <item>Predeterminado</item><item>Marrón</item><item>Chocolate</item><item>Perú</item>
-        <item>Azul acero</item><item>Verde mar</item><item>Morado</item><item>Carmesí</item>
-        <item>Naranja</item><item>Pizarra</item>
     </string-array>
 </resources>

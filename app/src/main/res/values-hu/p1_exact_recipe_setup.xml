@@ -55,7 +55,7 @@
     <string name="label_brewer_profile_v60">V60</string>
     <string name="label_brewer_profile_wave_185">Lapos aljú Wave 185</string>
     <string name="label_brewer_profile_wedge">Ék alakú csepegtető</string>
-    <string name="label_brewer_profile_thick_paper_carafe">Vastag papírszűrős kancsós kávéfőző</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Chemex</string>
     <string name="label_brewer_profile_conical">Általános kúpos csepegtető</string>
     <string name="label_brewer_profile_family_manual_gravity">Kézi gravitációs főzés</string>
     <string name="label_brewer_profile_pulsar">Pulsar</string>

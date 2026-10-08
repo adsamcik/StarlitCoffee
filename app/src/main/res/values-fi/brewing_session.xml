@@ -39,7 +39,12 @@
     <string name="format_brew_stage_recorded_grams">Tallennettu %1$.0f g</string>
     <string name="format_brew_stage_remaining_grams">%1$.0f g jäljellä</string>
     <string name="label_brew_reference_cues">Viitearvot</string>
-    <string name="msg_brew_reference_cues_not_completion">Vain ohjeeksi. Viimeistele vaihe yllä olevalla päätoiminnolla.</string>
+    <string name="action_pause_brew_guide">Keskeytä opastus</string>
+    <string name="action_resume_brew_guide">Jatka opastusta</string>
+    <string name="action_pause_brew_clock">Keskeytä ajastin</string>
+    <string name="msg_brew_clock_keeps_running">Ajastin jatkaa käyntiä.</string>
+    <string name="msg_brew_guide_paused">Opastus on keskeytetty. Ajastin jatkaa käyntiä.</string>
+    <string name="msg_brew_reference_cues_not_completion">Vain ohjeeksi. Aikavihje ei suorita fyysistä vaihetta loppuun.</string>
     <string name="action_show_more_brew_reference_cues">Näytä lisää viitearvoja</string>
     <string name="action_hide_brew_reference_cues">Piilota ylimääräiset viitearvot</string>
     <string name="label_brew_reference_stage_duration">Vaiheen kesto</string>

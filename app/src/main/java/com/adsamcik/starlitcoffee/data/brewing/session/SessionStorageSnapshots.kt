@@ -156,11 +156,39 @@ data class SessionRuntimeSnapshotV1(
     val pendingEffects: List<PendingSessionEffectSnapshotV1> = emptyList(),
     val acknowledgedEffectIds: List<String> = emptyList(),
     val lastClockReconciliation: ClockReconciliationSnapshotV1? = null,
+    /** Additive V1 field: snapshots written before guide pause remain unpaused. */
+    val isGuidancePaused: Boolean = false,
+    val userTimer: UserBrewTimerSnapshotV1? = null,
+    val timerRevision: Long = 0L,
+    val physicalClock: PhysicalBrewClockSnapshotV1? = null,
 ) {
     companion object {
         const val SCHEMA_VERSION = 1
     }
 }
+
+@Serializable
+data class PhysicalBrewClockSnapshotV1(
+    val startStage: StageInstanceSnapshotV1,
+    val hasStarted: Boolean = false,
+    val originKnown: Boolean = true,
+    val configuredOriginWallClockMillis: Long? = null,
+    val reminderDurationMillis: Long? = null,
+    val timerOnly: Boolean = false,
+    val endStage: StageInstanceSnapshotV1? = null,
+    val endedElapsedMillis: Long? = null,
+)
+
+@Serializable
+data class UserBrewTimerSnapshotV1(
+    val stageInstance: StageInstanceSnapshotV1,
+    val revision: Long,
+    val durationMillis: Long,
+    val originStageElapsedMillis: Long,
+    val originWallClockMillis: Long? = null,
+    val deadlineAtWallClockMillis: Long? = null,
+    val reached: Boolean = false,
+)
 
 @Serializable
 data class StageRuntimeProgressSnapshotV1(
@@ -208,9 +236,12 @@ data class PendingSessionEffectSnapshotV1(
     val alertKind: String? = null,
     val scheduleToken: String? = null,
     val dueAtWallClockMillis: Long? = null,
+    val timerRevision: Long? = null,
 ) {
     companion object {
         const val STAGE_ALERT = "STAGE_ALERT"
+        const val TIMER_ALERT = "TIMER_ALERT"
+        const val SCHEDULE_TIMER_DEADLINE = "SCHEDULE_TIMER_DEADLINE"
         const val SCHEDULE_STAGE_DEADLINE = "SCHEDULE_STAGE_DEADLINE"
         const val CANCEL_STAGE_DEADLINE = "CANCEL_STAGE_DEADLINE"
         const val FINALIZE_BREW_LOG = "FINALIZE_BREW_LOG"
@@ -228,11 +259,22 @@ data class SessionExecutionContextSnapshotV1(
     val coffeeBagId: Long? = null,
     val sourceRecipeId: Long? = null,
     val logPresentation: BrewLogPresentationContextSnapshotV1,
+    val coffeeIdentityId: Long? = null,
+    val grindMemory: GrindMemorySnapshotV1? = null,
+    val guidedJourneyId: String? = null,
+    val usesExternalTimer: Boolean = false,
 ) {
     companion object {
         const val SCHEMA_VERSION = 1
     }
 }
+
+@Serializable
+data class GrindMemorySnapshotV1(
+    val context: com.adsamcik.starlitcoffee.data.model.GrindContext,
+    val value: com.adsamcik.starlitcoffee.data.model.RememberedGrindValue,
+    val source: String,
+)
 
 /**
  * Stable, user-visible log context. It preserves presentation labels as
@@ -249,6 +291,8 @@ data class BrewLogPresentationContextSnapshotV1(
     val filterLabel: String? = null,
     val isDecaf: Boolean = false,
     val notes: String? = null,
+    /** False when the source specifies vessel filling or volume instead of a known mass ratio. */
+    val hasMassRatio: Boolean = true,
 )
 
 /** A convenient three-document boundary matching active-session storage columns. */

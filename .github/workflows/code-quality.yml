@@ -11,6 +11,8 @@ on:
       - 'gradle/**'
       - 'gradle.properties'
       - 'settings.gradle.kts'
+      - 'scripts/setup-github-packages.ps1'
+      - 'tools/test_github_packages_auth.py'
   push:
     branches:
       - main
@@ -23,6 +25,8 @@ on:
       - 'gradle/**'
       - 'gradle.properties'
       - 'settings.gradle.kts'
+      - 'scripts/setup-github-packages.ps1'
+      - 'tools/test_github_packages_auth.py'
   workflow_dispatch:
 
 permissions:
@@ -50,6 +54,11 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
         with:
           cache-provider: basic
+
+      - name: Verify GitHub Packages credential handling
+        run: |
+          chmod +x ./gradlew
+          python3 tools/test_github_packages_auth.py -v
 
       - name: Run static analysis, tests, and debug build
         env:

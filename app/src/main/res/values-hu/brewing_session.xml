@@ -39,7 +39,12 @@
     <string name="format_brew_stage_recorded_grams">Rögzítve %1$.0f g</string>
     <string name="format_brew_stage_remaining_grams">%1$.0f g van hátra</string>
     <string name="label_brew_reference_cues">Referenciaértékek</string>
-    <string name="msg_brew_reference_cues_not_completion">Csak tájékoztatásul. A lépést a fenti fő művelettel fejezd be.</string>
+    <string name="action_pause_brew_guide">Útmutató szüneteltetése</string>
+    <string name="action_resume_brew_guide">Útmutató folytatása</string>
+    <string name="action_pause_brew_clock">Időzítő szüneteltetése</string>
+    <string name="msg_brew_clock_keeps_running">Az időzítő tovább működik.</string>
+    <string name="msg_brew_guide_paused">Az útmutató szünetel. Az időzítő tovább működik.</string>
+    <string name="msg_brew_reference_cues_not_completion">Csak útmutatás. Az időjelzés nem fejez be egy fizikai lépést.</string>
     <string name="action_show_more_brew_reference_cues">További referenciaértékek megjelenítése</string>
     <string name="action_hide_brew_reference_cues">További referenciaértékek elrejtése</string>
     <string name="label_brew_reference_stage_duration">Szakasz időtartama</string>

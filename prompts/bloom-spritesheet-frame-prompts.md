@@ -1,5 +1,10 @@
 # Bloom Spritesheet Frame Prompts
 
+> Historical keyed prompt set. For active bloom artwork use
+> [the native-alpha prompts](bloom-spritesheet-native-alpha-prompts.md) and
+> [the current preparation pipeline](../docs/bloom-spritesheet-splicing.md).
+> The old closed-frame-20 and late-release constraints below are superseded.
+
 Use one prompt per generated source atlas. Paste the common prompt first, then paste one variation-specific frame plan. For completed-bloom still images, use the final still prompt contract at the end of this file and lock the still to the matching `R5C5 Frame 25` source line.
 
 These prompts are written for a 25-frame sheet: 5 columns by 5 rows. They deliberately hold the artwork compressed until frame 20, then reserve frames 21-25 for the final visible bloom. Every frame line names a concrete visual difference from the previous frame.

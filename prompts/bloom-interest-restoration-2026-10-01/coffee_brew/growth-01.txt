@@ -1,0 +1,33 @@
+Create a 25-frame transparent sprite atlas, exactly5 columns by5 rows, left-to-right then top-to-bottom, showing Coffee Brew's aromatic steam being formed. Reference is the approved complete mature pose. Preserve its tactile split coffee bean, warm gold seam, fine ivory-gold layered steam material, asymmetrical side curls and tall central winding plume. End at that mature composition with the same strong height and steam-to-bean proportion.
+
+This is a purposeful sequence of flowing lines forming different regions, NOT a finished three-armed emblem that gets bigger for15 frames. The two side curls form at different times, followed by the tall central rise and fine layered finishing strands. Every introduced coil remains connected and visible. The bean has exactly the same outer contour, size, orientation, texture and position throughout; only the seam's warm light develops. No plant leaves, flower, cup, stars or additional symbols.
+
+25 exact narrative poses:
+F01 Same complete brown split bean silhouette, dark narrow seam, no steam.
+F02 A short warm gold glow appears low in the existing seam.
+F03 Gold glow travels upward to the bean opening, no steam yet.
+F04 A short single ivory-gold vapor tip emerges above the opening.
+F05 The vapor lengthens and gently bends left.
+F06 Its thin end returns right, making a low S-shaped ribbon.
+F07 A left branch grows outward from the lower flow, an open shallow arc; central tip remains modest.
+F08 Left arc turns upward and its thin end starts curling inward.
+F09 Left returning curl nears its inner tip, with transparent space inside, no right coil yet.
+F10 Left curl completes its small unequal loop; low central ribbon persists.
+F11 A new right branch sweeps outward from the central flow while the left loop stays.
+F12 Right branch curves upward into a broad open C; left remains smaller/lower.
+F13 Right arc curls inward with a visibly open inner gap.
+F14 Right returning curl completes, larger/higher than left. Central plume is still only half its mature height.
+F15 Central ribbon rises visibly above the established side curls and bends right.
+F16 Tall central ribbon bends back left, creating the second higher S-curve.
+F17 A thin internal gold filament separates from the central ribbon, exposing a narrow transparent gap.
+F18 A second finer central strand rises along the opposite edge and curls back toward the main flow.
+F19 The upper main tip lifts farther and begins its last delicate bend; retain both side loops and fine strands.
+F20 Fine nested inner strands separate within both side curls; mature structure is mostly present, but top and trailing tips are unfinished.
+F21 A thin left trailing filament unwinds above the left curl, leaving the established main curl intact. One tiny restrained side glint resolves.
+F22 Right trailing filament extends outward and curves back, with a tiny right glint. Keep left trailing filament.
+F23 Tall upper tip rises and separates into the mature fine nested taper, visibly extending the final S-curve.
+F24 The highest thin tip completes its inward hook while lower strands relax apart, preserving transparent gaps.
+F25 The approved mature pose: full tall layered aromatic plume, two unequal nested returning curls, fine trailing ends, restrained resolved glints, richly lit seam. This final movement completes the tip and light resolution, not a wholesale change of style.
+
+Fixed front view and camera scale in all25. Each uniform cell contains one entire bean plus its current steam, fixed bean base and center, ample transparent padding, completely empty gutters, no overlap. The mature top should approach the top safe margin and preserve the reference's209px-height proportion in a256px cell; don't shrink the whole sequence to fit overextended intermediate wisps. Keep all intermediate reach within the final envelope. Paint warm gold edges robustly enough for a148px display, fine nested interior detail with air, not opaque tubes.
+Native alpha transparent background, no floor or background wash. Zero text, numbering, captions, outlines around cells, guides or grid lines.

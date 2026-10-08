@@ -1,6 +1,8 @@
 package com.adsamcik.starlitcoffee.data.work
 
 import android.content.Context
+import com.adsamcik.starlitcoffee.domain.scandiagnostics.ScanLifecycleDiagnostic
+import com.adsamcik.starlitcoffee.scan.observability.ScanAnalyticsTracker
 import com.adsamcik.starlitcoffee.util.AndroidDirectorySync
 import com.adsamcik.starlitcoffee.util.AndroidFileSync
 import com.adsamcik.starlitcoffee.util.BagFieldConfidence
@@ -13,6 +15,7 @@ import com.adsamcik.starlitcoffee.util.RecognitionCapability
 import com.adsamcik.starlitcoffee.util.RecognitionPreference
 import com.adsamcik.starlitcoffee.util.RecognitionRunState
 import dev.tracebox.Tracebox
+import dev.tracebox.api.LogTemplate
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
@@ -28,7 +31,6 @@ import java.nio.file.LinkOption
 import java.nio.file.StandardCopyOption
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
-import dev.tracebox.api.LogTemplate
 
 private object BagDraftStoreTraceboxTemplates {
     val FAILED_TO_READ_BAG_DRAFT = LogTemplate.of("Failed to read bag draft")
@@ -175,7 +177,7 @@ internal fun BagScanDraft.applyRecognitionResult(
         phase = if (phase == BagDraftPhase.CAPTURING) BagDraftPhase.REVIEWING else phase,
         photoUris = incoming.updatedPhotoUrisOr(photoUris),
         fields = mergeRecognitionFields(incomingFields, sourceRevision, focusedFields),
-        recognitionRunState = incoming.resolveRecognitionRunState(incomingFields, terminal),
+        recognitionRunState = incoming.resolveRecognitionRunState(incomingFields, terminal, recognitionPreference),
         recognitionCapability = incoming.updatedRecognitionCapabilityOr(recognitionCapability),
         workId = workId ?: this.workId,
         resultJson = incoming.encodeToStoredJson(),
@@ -223,7 +225,17 @@ private fun BagPhotoProcessingResult.updatedPhotoUrisOr(
 private fun BagPhotoProcessingResult.resolveRecognitionRunState(
     incomingFields: Map<BagDraftField, BagDraftFieldValue>,
     terminal: Boolean,
+    preference: RecognitionPreference,
 ): RecognitionRunState = when {
+    terminal && (
+        llmStatus == LlmEnrichmentStatus.AUTHORIZATION_REQUIRED ||
+            llmStatus == LlmEnrichmentStatus.SETUP_REQUIRED
+        ) -> RecognitionRunState.IDLE
+    terminal && llmStatus == LlmEnrichmentStatus.UNAVAILABLE -> when {
+        preference == RecognitionPreference.ENABLED -> RecognitionRunState.RETRIABLE_FAILURE
+        incomingFields.isNotEmpty() -> RecognitionRunState.COMPLETE
+        else -> RecognitionRunState.IDLE
+    }
     terminal && (
         llmStatus == LlmEnrichmentStatus.FAILED ||
             llmStatus == LlmEnrichmentStatus.TIMED_OUT ||
@@ -237,8 +249,13 @@ private fun BagPhotoProcessingResult.resolveRecognitionRunState(
 private fun BagPhotoProcessingResult.updatedRecognitionCapabilityOr(
     currentCapability: RecognitionCapability,
 ): RecognitionCapability = when (llmStatus) {
+    LlmEnrichmentStatus.AUTHORIZATION_REQUIRED -> RecognitionCapability.AUTHORIZATION_REQUIRED
     LlmEnrichmentStatus.SETUP_REQUIRED -> RecognitionCapability.ASSET_SETUP_REQUIRED
     LlmEnrichmentStatus.UNAVAILABLE -> RecognitionCapability.TEMPORARILY_UNAVAILABLE
+    LlmEnrichmentStatus.SUCCEEDED,
+    LlmEnrichmentStatus.FAILED,
+    LlmEnrichmentStatus.TIMED_OUT,
+    -> RecognitionCapability.READY
     else -> currentCapability
 }
 
@@ -451,14 +468,39 @@ object BagDraftStore {
         sessionId: String,
         phase: BagDraftPhase,
         nowMillis: Long = System.currentTimeMillis(),
-    ): BagScanDraft? = update(context, sessionId) { draft ->
-        when {
-            !draft.isActive -> draft
-            phase == BagDraftPhase.SAVED || phase == BagDraftPhase.DISCARDED ->
-                draft.closeAsTombstone(phase, nowMillis)
-            else -> draft.copy(phase = phase, updatedAtMillis = nowMillis)
+    ): BagScanDraft? = markPhase(directory(context), sessionId, phase, nowMillis)
+
+    @Synchronized
+    internal fun markPhase(
+        directory: File,
+        sessionId: String,
+        phase: BagDraftPhase,
+        nowMillis: Long = System.currentTimeMillis(),
+        fileSync: FileSync = AndroidFileSync,
+        directorySync: DirectorySync = AndroidDirectorySync,
+        emit: (ScanLifecycleDiagnostic) -> Unit = ScanAnalyticsTracker::trackLifecycle,
+    ): BagScanDraft? {
+        val current = read(directory, sessionId)
+        if (current == null) {
+            clearFocusForClosedPhase(sessionId, phase)
+            return null
         }
-    }.also {
+        val next = when {
+            !current.isActive -> current
+            phase == BagDraftPhase.SAVED || phase == BagDraftPhase.DISCARDED ->
+                current.closeAsTombstone(phase, nowMillis)
+            else -> current.copy(phase = phase, updatedAtMillis = nowMillis)
+        }
+        if (next != current) {
+            write(directory, next, fileSync, directorySync)
+            changes.value += 1L
+            bagDraftPhaseDiagnostic(current, next)?.let { recordBagScanLifecycle(it, emit) }
+        }
+        clearFocusForClosedPhase(sessionId, phase)
+        return next
+    }
+
+    private fun clearFocusForClosedPhase(sessionId: String, phase: BagDraftPhase) {
         if (phase == BagDraftPhase.SAVED || phase == BagDraftPhase.DISCARDED) {
             BagDraftFocusRegistry.clear(sessionId)
         }
@@ -492,7 +534,9 @@ object BagDraftStore {
     ): BagScanDraft? {
         val current = read(context, sessionId) ?: return null
         val next = transform(current)
-        if (next != current) write(context, next)
+        if (next != current) {
+            write(context, next)
+        }
         return next
     }
 

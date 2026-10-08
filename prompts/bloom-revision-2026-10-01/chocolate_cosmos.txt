@@ -1,0 +1,35 @@
+Use case: precise-object-edit.
+Asset type: production transparent botanical growth sprite atlas for a calm coffee-brewing app, viewed one cell at a time at about 148px.
+Primary request: create a fully rebuilt 25-frame growth animation for Chocolate Cosmos, using the supplied artwork for its tactile painted style and final flower identity. This is one image atlas, not a contact-sheet presentation.
+Output layout: exactly FIVE columns and FIVE rows of equal SQUARE cells, 25 frames total, row-major from upper-left F1 to lower-right F25. Square canvas ideally 1280x1280. No row gaps or gutters. Grid is mathematical only: absolutely NO lines, borders, labels, numbers, typography, guides, checkerboard, background color or watermark. REAL transparent alpha everywhere outside the plant.
+Every cell contains EXACTLY ONE complete plant, NEVER two. No cut limbs, no spill into neighboring cells. Within each cell keep every pixel of the subject inside an approximately 10% inset safe rectangle. Plant rooted at the same central ground point around (50%,88%) in each cell. Same front three-quarter view, same lighting, same painted depth. Fixed bean base size and shape throughout: warm brown coffee bean, about 26% of cell width, underside at 88% cell height. Keep its crack, texture landmarks, and orientation stable. Mature plant fills approximately 72% of cell height and 72% of width; young sprout remains small above the SAME bean. No camera zoom, no drifting, no shadows extending outside the object.
+Render opaque colored interior surfaces, clean antialiased alpha edges, softly modeled botanical volume, restrained fine detail, crisp silhouettes and petal separation readable at small size. Preserve already-created plant nodes: stems, leaves, buds and petals remain attached, evolve continuously, never vanish or swap sides. Every frame advances a meaningful visible growth action; no repeated near-held repainting, no reversal from flower to bud. Broad changes must have in-between poses. Opening starts well BEFORE last five frames. Only F25 is fully finished; F21–24 each show a distinct final stage.
+SPECIFIC ART DIRECTION
+Preserve dark chocolate-burgundy flowers, gold-brown centers, airy finely divided green foliage. Use THREE persistent stems: tallest center-left A, shorter right B, shorter left C. Establish all three closed buds before flowering. Never move stems or convert open flower to bud. Broad warm burgundy highlights make petals readable on dark UI. Three flowers total at finish, no more.
+EXACT FRAME PLAN (do not print numbers):
+F1: closed upright bean.
+F2: same bean seam opens.
+F3: tiny shoot emerges.
+F4: shoot lengthens.
+F5: two folded seed leaves.
+F6: two seed leaves unfold.
+F7: first feathery leaves grow from retained nodes.
+F8: feathery foliage expands, primary stem A rises.
+F9: A rises, secondary right stem B appears.
+F10: A and B retained, left stem C appears.
+F11: all three stems present with three tiny buds.
+F12: three buds swell on fixed A B C endpoints.
+F13: A bud reddens, B C stay closed.
+F14: A outer petals separate, B C swell.
+F15: A opens quarter-way, B shows red seams, C closed.
+F16: A opens halfway, B tips part, C reddens.
+F17: A three-quarters open, B opens quarter-way, C seams visible.
+F18: A open with center visible, B halfway, C tips part.
+F19: A remains open, B three-quarters, C quarter open.
+F20: A fully open, B open with center, C halfway.
+F21: A B remain open, C three-quarters open.
+F22: A B remain open, C center appears.
+F23: all three open, C inner petals still cupped.
+F24: A B unchanged, C last inner petals flatten.
+F25: three complete burgundy cosmos flowers with readable centers on unchanged A B C stems.
+Final check before delivery: count 5x5 and 25 separate single plants; all 25 complete inside their cells; no missing horizontal bands; no duplicate skinny plants; no holes in intended solid petals; no flattened silhouette texture; no artificial glow.

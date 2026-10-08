@@ -63,7 +63,6 @@ import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.data.inventory.CoffeeUsageRejection
 import com.adsamcik.starlitcoffee.data.repository.CoffeeUsageLogResult
 import com.adsamcik.starlitcoffee.navigation.ScanDraftTransfer
-import com.adsamcik.starlitcoffee.StarlitCoffeeApp
 import com.adsamcik.starlitcoffee.data.work.isAddNewBagReview
 import com.adsamcik.starlitcoffee.data.work.BagDraftPhase
 import com.adsamcik.starlitcoffee.data.work.BagDraftStore
@@ -72,16 +71,13 @@ import com.adsamcik.starlitcoffee.ui.component.BagDraftCard
 import com.adsamcik.starlitcoffee.ui.component.BagCard
 import com.adsamcik.starlitcoffee.ui.component.BagDetailSheet
 import com.adsamcik.starlitcoffee.ui.component.averageLoggedCoffeeAmount
-import com.adsamcik.starlitcoffee.ui.component.ConsentOutcome
 import com.adsamcik.starlitcoffee.ui.component.DecafFilter
 import com.adsamcik.starlitcoffee.ui.component.DestructiveActionDialog
 import com.adsamcik.starlitcoffee.ui.component.EmptyStateBox
 import com.adsamcik.starlitcoffee.ui.component.ScannedBagSaveResult
 import com.adsamcik.starlitcoffee.ui.component.ScreenTopBar
-import com.adsamcik.starlitcoffee.ui.component.messageRes
 import com.adsamcik.starlitcoffee.ui.component.normalizedForCounts
 import com.adsamcik.starlitcoffee.ui.component.persistScannedBag
-import com.adsamcik.starlitcoffee.ui.component.rememberMindlayerConsentFlow
 import com.adsamcik.starlitcoffee.ui.component.rememberMindlayerInstalled
 import com.adsamcik.starlitcoffee.ui.component.shouldApplyBagResultToDraft
 import com.adsamcik.starlitcoffee.util.BagFieldEvidence
@@ -90,7 +86,7 @@ import com.adsamcik.starlitcoffee.util.BagPhotoReviewHint
 import com.adsamcik.starlitcoffee.util.CoffeeBagInsights
 import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
 import com.adsamcik.starlitcoffee.util.MindlayerAvailability
-import com.adsamcik.starlitcoffee.util.MindlayerInstallLink
+import com.adsamcik.starlitcoffee.util.RecognitionPreference
 import com.adsamcik.starlitcoffee.util.RecognitionUiStateMapper
 import com.adsamcik.starlitcoffee.util.ScanPhotoStorage
 import com.adsamcik.starlitcoffee.util.ScanFieldSupport
@@ -244,9 +240,6 @@ fun BagInventoryScreen(
     val couldNotReadLabel = stringResource(R.string.msg_could_not_read_label)
     val couldNotSaveBag = stringResource(R.string.msg_could_not_save_bag)
     val bagSaved = stringResource(R.string.msg_bag_saved)
-    val consentMessages = ConsentOutcome.entries.associateWith { outcome ->
-        stringResource(outcome.messageRes())
-    }
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
     var pendingDiscardDraftSessionId by rememberSaveable { mutableStateOf<String?>(null) }
@@ -355,25 +348,6 @@ fun BagInventoryScreen(
             AiScanAction.GALLERY -> photoPickerLauncher.launch(
                 PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),
             )
-        }
-    }
-
-    // Optional enrichment consent is requested only from the review form. It
-    // never blocks camera capture, photo selection, basic OCR, or manual entry.
-    val aiConsentFlow = rememberMindlayerConsentFlow { outcome ->
-        when (outcome) {
-            ConsentOutcome.GRANTED, ConsentOutcome.ALREADY_APPROVED -> coroutineScope.launch {
-                brewViewModel.enableLabelRecognition()
-                (context.applicationContext as? StarlitCoffeeApp)?.reconnectMindlayer()
-                isProcessingScan = brewViewModel.retryBagPhotoLlm(bagDraftSessionId)
-            }
-            else -> {
-                Toast.makeText(
-                    context,
-                    consentMessages.getValue(outcome),
-                    Toast.LENGTH_LONG,
-                ).show()
-            }
         }
     }
 
@@ -852,9 +826,22 @@ fun BagInventoryScreen(
     // Add bag sheet
     val brewNowLabel = stringResource(R.string.action_brew_now)
     if (showAddSheet) {
+        val recovery = rememberScanRecognitionRecovery(
+            brewViewModel = brewViewModel,
+            data = ScanReviewData(
+                sessionId = bagDraftSessionId,
+                generationId = bagDraftGenerationId,
+                llmStatus = llmStatus,
+                isProcessing = isProcessingScan,
+                fieldEvidence = fieldEvidence,
+            ),
+            onRetake = {},
+            enabled = !isSavingBag && recognitionPreference != RecognitionPreference.DISABLED,
+        )
+        val isRecognizing = isProcessingScan || recovery.isRetrying
         val recognitionPresentation = RecognitionUiStateMapper.fromPipeline(
             pipelineStatus = llmStatus,
-            isProcessing = isProcessingScan,
+            isProcessing = isRecognizing,
             hasValues = fieldEvidence.isNotEmpty() || ocrPrefill != null,
             unresolvedCount = fieldEvidence.values.count {
                 it.confidence != com.adsamcik.starlitcoffee.util.BagFieldConfidence.HIGH
@@ -873,7 +860,7 @@ fun BagInventoryScreen(
             fieldEvidence = fieldEvidence,
             reviewHints = reviewHints,
             recognition = recognitionPresentation,
-            isProcessing = isProcessingScan,
+            isProcessing = isRecognizing,
             isSaving = isSavingBag,
             existingBags = bags,
             onScanBarcode = {
@@ -892,17 +879,12 @@ fun BagInventoryScreen(
             onExploreQrUrl = { url, callback ->
                 brewViewModel.exploreApprovedQrLink(url, callback)
             },
-            onRetryLlmEnrichment = {
-                isProcessingScan = brewViewModel.retryBagPhotoLlm(bagDraftSessionId)
-            },
-            onEnableAi = aiConsentFlow.request,
-            onInstallLabelRecognition = {
-                if (!MindlayerInstallLink.open(context)) {
-                    Toast.makeText(context, R.string.msg_could_not_open_app_store, Toast.LENGTH_LONG).show()
-                }
-            },
-            onSetupAi = brewViewModel::openMindlayerModelSetup,
-            onDisableLabelRecognition = brewViewModel::disableLabelRecognition,
+            onRetryLlmEnrichment = recovery.actions.onRetry,
+            onEnableAi = recovery.actions.onEnable,
+            onInstallLabelRecognition = recovery.actions.onInstall,
+            onSetupAi = recovery.actions.onSetup,
+            setupLaunchState = recovery.actions.setupState,
+            onDisableLabelRecognition = recovery.actions.onDisable,
             onDismiss = {
                 val discardedPhotoUris = capturedPhotoUris
                 val discardedSessionId = bagDraftSessionId

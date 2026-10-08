@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_sets">Kompleti za pripravo</string>
+    <string name="msg_brewing_sets_hint">Shranite ločene komplete za dom, službo ali različne načine priprave.</string>
+    <string name="action_add_brewing_set">Dodaj komplet</string>
+    <string name="action_save_brewing_set">Shrani kot komplet</string>
+    <string name="label_new_brewing_set">Nov komplet</string>
+    <string name="label_edit_brewing_set">Uredi komplet</string>
+    <string name="hint_brewing_set_name">npr. Filter doma</string>
+    <string name="action_manage_brewing_sets">Upravljaj komplete</string>
+    <string name="label_brewing_set_method">Način priprave</string>
+    <string name="msg_delete_brewing_set">Izbrišem ta komplet za pripravo?</string>
+    <string name="screen_first_brewing_set_method">Izberite prvi način priprave</string>
+    <string name="msg_first_brewing_set">Začnite z enim načinom. V naslednjem koraku dodajte več kompletov.</string>
+    <string name="action_retry_brewing_set">Poskusi znova</string>
+</resources>

@@ -1,0 +1,52 @@
+{
+  "status": "production resource matches this export",
+  "source": "Root-authored valve correction after user rejection and Astra anatomy review of the new user reference",
+  "svg_sha256": "ff3b1a990528b604656c983b3036783a6957e6540fee7da2265f1b13291a2e09",
+  "android_sha256": "7f5572a07bee52c618a73050e0fd6ad237a93dcf3828e96529c528e23d5ab174",
+  "production_resource_matches": true,
+  "alpha_bounds_px": {
+    "24": [
+      4,
+      1,
+      19,
+      23
+    ],
+    "28": [
+      5,
+      1,
+      22,
+      27
+    ],
+    "34": [
+      6,
+      2,
+      27,
+      32
+    ],
+    "44": [
+      8,
+      3,
+      35,
+      41
+    ],
+    "88": [
+      17,
+      6,
+      68,
+      82
+    ],
+    "1024": [
+      204,
+      79,
+      788,
+      942
+    ]
+  },
+  "validation": "direct SVG rendering and lossless Android path export; no native app capture",
+  "revision": {
+    "parent_version": 14,
+    "subtitle": "Upright paddle beside a round valve face",
+    "source": "Root-authored valve correction after user rejection and Astra anatomy review of the new user reference",
+    "changes": "Remove the horizontal capsule. Depict a solid circular plug face and offset upright, flat-ended paddle over negative clearance on the front foot, matching the new user photo. Keep a short side connection to the mounting foot. Cap, barrel and external base silhouette retain v14 geometry."
+  }
+}

@@ -1,0 +1,437 @@
+{
+  "method_id": "french-press",
+  "title": "French press brewing guide",
+  "scope": "A conventional coarse-ground, four-minute steep followed by gentle plunging and decanting in a 1 L mesh-filter French press; the beginner recipe is an app-authored starting point, with Bodum-specific safety clearly scoped and Hoffmann settling kept separate.",
+  "research_date": "2026-10-02",
+  "review_status": "editorially_reviewed",
+  "physical_brew_tested": false,
+  "sources": [
+    {
+      "id": "bodum-manual",
+      "title": "Bodum French Press Coffee Makers instructions, version 1, 2019",
+      "url": "https://d9pl0lig74xnv.cloudfront.net/product_manuals/z/p/zp2019-000001_frenchpress_coffeemakers_v1-20190308_pages.pdf",
+      "author_or_organization": "Bodum; original manufacturer manual on a product-manual CDN",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "English pages 5-6: coarse coffee, hot non-boiling water, at least 2.5 cm headroom, plastic spoon, minimum four-minute steep, light plunging pressure, model-specific spout/lid operation, damaged-glass restrictions, screen cleaning and parts-specific dishwasher compatibility."
+      ]
+    },
+    {
+      "id": "stumptown",
+      "title": "Brew Guide: French Press",
+      "url": "https://www.stumptowncoffee.com/pages/brew-guide-french-press",
+      "author_or_organization": "Stumptown Coffee Roasters",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Published 56 g coffee/850 g total water recipe, coarse grind, about 205 F water, first-water clock origin, 450 g initial water, stir at one minute, four-minute plunge start, moving off scale before pressing and carafe decanting."
+      ]
+    },
+    {
+      "id": "counter-culture",
+      "title": "Quick + Easy French Press",
+      "url": "https://counterculturecoffee.com/pages/quick-easy-french-press",
+      "author_or_organization": "Counter Culture Coffee; Sandra, regional educator",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "A different published recipe: 45 g/800 g, 205 F water, medium-coarse grind, clock at water addition, stir at 30 seconds, slow plunge at six minutes; its 1:18 ratio is rounded."
+      ]
+    },
+    {
+      "id": "hoffmann-interview",
+      "title": "Tools and Tips for Better French Press Coffee",
+      "url": "https://imbibemagazine.com/tools-and-tips-for-better-french-press-coffee/",
+      "author_or_organization": "James Hoffmann, original creator interviewed by Penelope Bass for Imbibe, 2025-04-28",
+      "source_type": "original_creator",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Original interview and attributed technique: medium-coarse coffee, four-minute steep, crust stirring and skimming, five additional minutes for settling, screen resting on liquid rather than fully plunging, gentle pour."
+      ]
+    },
+    {
+      "id": "hoffmann-video",
+      "title": "The Ultimate French Press Technique",
+      "url": "https://www.youtube.com/watch?v=st571DYYTR8",
+      "author_or_organization": "James Hoffmann",
+      "source_type": "original_creator",
+      "accessed": "2026-10-02",
+      "access_status": "partial",
+      "supports": [
+        "Original video page identity, author and description only; browser transcript export reports no available transcript, and audio was not reviewed, so precise technique details are supported by the original interview instead."
+      ]
+    },
+    {
+      "id": "comandante",
+      "title": "Comandante FAQ: grind settings and click zero",
+      "url": "https://comandantegrinder.com/pages/faq",
+      "author_or_organization": "Comandante",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "C40 French press/cupping starting range 25-35 clicks, definition of click zero and recipe/coffee/taste dependence."
+      ]
+    },
+    {
+      "id": "encore-esp",
+      "title": "Encore ESP Operations Manual, January 2023 v1.0",
+      "url": "https://assets.breville.com/ZCG495/manual-encoreesp-v1-0-en-010923.pdf",
+      "author_or_organization": "Baratza",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Page 5 lists French press setting 32 as an initial starting point; grind may need adjustment for recipe and taste. Shim changes can shift numeric settings."
+      ]
+    },
+    {
+      "id": "zp6-chart",
+      "title": "Coffee Grind Size Chart for 1Zpresso Manual Coffee Grinder",
+      "url": "https://1zpresso.coffee/grind-setting/",
+      "author_or_organization": "1Zpresso",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Page text confirms model-specific zero and adjustment systems; its linked ZP6 Special image was visually inspected and shows a French press starting band from 5 to 6."
+      ]
+    },
+    {
+      "id": "fellow-chart",
+      "title": "What are the recommended grind settings for Ode Gen 2 Brew Burrs?",
+      "url": "https://help.fellowproducts.com/hc/en-us/articles/9962302561819-What-are-the-recommended-grind-settings-for-Ode-Gen-2-Brew-Burrs",
+      "author_or_organization": "Fellow Products",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "partial",
+      "supports": [
+        "Page text says Gen 2 Brew Burrs require a different guide from Standard Brew Burrs. The linked chart image was visually inspected and identifies French press; its unlabelled arc endpoints do not certify the app's exact numeric 8-10 bounds."
+      ]
+    }
+  ],
+  "recipe": {
+    "name": "App-authored conventional 30 g/450 g beginner baseline",
+    "provenance": "app_authored_synthesis",
+    "source_ids": [
+      "bodum-manual",
+      "stumptown",
+      "counter-culture"
+    ],
+    "equipment": [
+      "1 L French press with matching mesh plunger and all retaining parts",
+      "Burr grinder",
+      "Gram scale",
+      "Timer",
+      "Kettle",
+      "Heat-safe plastic spoon",
+      "Cups or serving carafe"
+    ],
+    "coffee_dose_g": 30,
+    "brew_water_g": 450,
+    "brew_water_ml": null,
+    "ice_g": 0,
+    "target_beverage_g": null,
+    "ratio_basis": "brew_water_input",
+    "ratio_value": 15,
+    "water_temperature_c": {
+      "min": 95,
+      "max": 95,
+      "control": "user; app-selected starting temperature, not an exact maker requirement"
+    },
+    "grind_description": "Coarse, visibly distinct particles rather than powder; use the matching brewer's permitted grind and do not treat grinder numbers as universal.",
+    "expected_time_s": {
+      "min": 240,
+      "max": null,
+      "clock_start": "First brew water contacts coffee",
+      "clock_end": "Coffee safely decanted; 240 seconds marks the plunge start, with additional unprescribed press and pour time"
+    },
+    "completion_signal": "Plunger moves smoothly with light pressure, stops at the grounds without compression, and coffee has been decanted safely.",
+    "scaling": "revalidate_batch_size",
+    "steps": [
+      {
+        "id": "prepare",
+        "instruction": "Inspect the beaker, secure the filter assembly according to the matching model's diagram, preheat with hot rinse water and empty it, then add 30 g coffee and tare the scale.",
+        "why": "Sound equipment and a repeatable water measurement are prerequisites for safe brewing.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Undamaged press on a stable surface, correctly assembled screen, rinse water discarded and scale tared.",
+        "source_ids": [
+          "bodum-manual",
+          "stumptown"
+        ]
+      },
+      {
+        "id": "add-water",
+        "instruction": "Start the timer with first water contact and add all 450 g of 95 C water, stopping if the equipment's safe fill limit would be exceeded.",
+        "why": "The example is based on input-water mass; capacity and required headroom take priority over recipe size.",
+        "water_add_g": 450,
+        "water_cumulative_g": 450,
+        "start_s": 0,
+        "duration_s": null,
+        "completion": "450 g added with all grounds wetted and safe headroom remaining; Bodum's cited manual requires at least 2.5 cm.",
+        "source_ids": [
+          "bodum-manual",
+          "stumptown"
+        ]
+      },
+      {
+        "id": "stir-cover",
+        "instruction": "Stir gently to wet dry pockets, using a heat-safe plastic spoon, then fit the lid with plunger raised and the model's spout cover or lock correctly positioned.",
+        "why": "Even wetting and the matching lid arrangement prepare the conventional steep without pressing early.",
+        "water_add_g": 0,
+        "water_cumulative_g": 450,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "No visibly dry pockets; lid fitted without lowering the screen through the brew.",
+        "source_ids": [
+          "bodum-manual"
+        ]
+      },
+      {
+        "id": "steep",
+        "instruction": "Leave undisturbed until 240 seconds from first water contact; this marks the selected recipe's plunge start.",
+        "why": "Coffee steeps before separation; this is a recipe reference rather than a fixed total completion deadline.",
+        "water_add_g": 0,
+        "water_cumulative_g": 450,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Timer reaches 240 seconds; prepare to plunge safely.",
+        "source_ids": [
+          "bodum-manual",
+          "stumptown"
+        ]
+      },
+      {
+        "id": "plunge",
+        "instruction": "Move the press off the scale onto a stable heat-safe counter. For the cited Bodum models, point the spout away from you. Hold the handle and lower the screen straight down using light pressure; stop at the grounds without compressing. Stop if it binds or requires force.",
+        "why": "Gentle, controlled movement limits hot-liquid surge; the clock never justifies forcing a blocked screen.",
+        "water_add_g": 0,
+        "water_cumulative_g": 450,
+        "start_s": 240,
+        "duration_s": null,
+        "completion": "Smooth low-pressure descent ends at the grounds; otherwise stop and follow the maker's recovery instructions.",
+        "source_ids": [
+          "bodum-manual",
+          "stumptown"
+        ]
+      },
+      {
+        "id": "decant",
+        "instruction": "Open the spout as instructed and pour steadily into cups or a carafe immediately after plunging; optionally leave the sediment-heavy final liquid.",
+        "why": "Decanting separates the served coffee from the grounds and gives an observable endpoint; leaving residue changes collected yield.",
+        "water_add_g": 0,
+        "water_cumulative_g": 450,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Coffee has been safely transferred; cool the equipment before cleaning.",
+        "source_ids": [
+          "bodum-manual",
+          "stumptown"
+        ]
+      }
+    ]
+  },
+  "variants": [
+    {
+      "name": "Stumptown's published four-minute recipe",
+      "how_it_differs": "56 g/850 g, coarse coffee, about 205 F; add 450 g initially, stir at 60 seconds, top up to 850 g, begin plunging at 240 seconds. This guide does not reproduce that staged-water recipe as its baseline.",
+      "source_ids": [
+        "stumptown"
+      ]
+    },
+    {
+      "name": "Counter Culture's six-minute recipe",
+      "how_it_differs": "45 g/800 g, medium-coarse coffee, 205 F, stir at 30 seconds and begin a slow plunge at 360 seconds. Its stated 1:18 is a rounded 17.7778 input-mass ratio.",
+      "source_ids": [
+        "counter-culture"
+      ]
+    },
+    {
+      "name": "Hoffmann crust-break and settling technique",
+      "how_it_differs": "As described in the original interview, use medium-coarse coffee, steep 240 seconds, stir the surface crust and skim floating material, then settle another 300 seconds. Rest the screen at the liquid surface instead of fully plunging and pour gently. This is a separate sequence and does not override brewer restrictions; exact original-video details remain partially accessed.",
+      "source_ids": [
+        "hoffmann-interview",
+        "hoffmann-video",
+        "bodum-manual"
+      ]
+    }
+  ],
+  "troubleshooting": [
+    {
+      "symptom": "Plunger binds or requires force",
+      "check_first": "Stop pressure; inspect screen cleanliness, assembly, damage, headroom and straight movement before changing grind.",
+      "adjustment": "Follow the matching maker's recovery procedure; Bodum describes lifting the plunger, stirring and retrying slowly. Never force it; use a permitted coarser grind on the next brew if necessary.",
+      "source_ids": [
+        "bodum-manual"
+      ]
+    },
+    {
+      "symptom": "Excess grounds or silt in the cup",
+      "check_first": "Check clean, intact and correctly fitted mesh; avoid a fast plunge or rough pour.",
+      "adjustment": "Pour gently and leave more final residue; some fine sediment remains normal. Consider the separate settling technique only with compatible equipment.",
+      "source_ids": [
+        "bodum-manual",
+        "hoffmann-interview"
+      ]
+    },
+    {
+      "symptom": "Weak but otherwise pleasant coffee",
+      "check_first": "Verify measured dose and input-water mass; app-authored diagnostic, not a published creator instruction.",
+      "adjustment": "Increase coffee dose slightly at the same water mass and compare cooled samples.",
+      "source_ids": [
+        "comandante",
+        "counter-culture"
+      ]
+    },
+    {
+      "symptom": "Thin, sour coffee",
+      "check_first": "Confirm full wetting and actual water temperature; app-authored diagnostic.",
+      "adjustment": "Try one small grind adjustment within the brewer's allowed range while holding other variables constant.",
+      "source_ids": [
+        "comandante",
+        "bodum-manual"
+      ]
+    },
+    {
+      "symptom": "Harsh bitterness",
+      "check_first": "Check clean equipment and prompt decanting; app-authored diagnostic.",
+      "adjustment": "Try slightly coarser coffee or lower temperature, changing only one variable and comparing cooled samples.",
+      "source_ids": [
+        "stumptown",
+        "comandante"
+      ]
+    }
+  ],
+  "safety": [
+    "Follow the matching brewer manual; Bodum's cited glass models require at least 2.5 cm headroom and coarse coffee.",
+    "Secure all screen parts before use; keep the press on a stable, heat-safe, non-slip surface and use its handle.",
+    "Never force a plunger; hot coffee can surge out under excessive pressure. Stop if it binds or the press shifts.",
+    "For the cited Bodum glass models, do not use scratched, chipped or cracked beakers, metal stirring utensils or stovetop heating.",
+    "Use the model's correct lid and spout position for pressing and pouring; locking and non-locking lids differ. Bodum's cited manual instructs pointing the spout away from the user while plunging.",
+    "Keep hot coffee and equipment away from children. After cooling enough to handle, dismantle and clean the screen, then reassemble securely; dishwasher suitability is specific to parts and finish."
+  ],
+  "app_audit": [
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:122",
+      "finding": "Current French press defaults are 1:15, 93-96 C, coarse, 240 seconds, no bloom/pulses and unspecified maximum capacity. They represent a coherent conventional starting recipe, not all French press methods.",
+      "severity": "info",
+      "change_recommendation": "Label defaults as the conventional starting recipe and add model-specific capacity/headroom advice; keep a different named settling technique separate.",
+      "source_ids": [
+        "bodum-manual",
+        "stumptown",
+        "counter-culture"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:18",
+      "finding": "French press inherits STANDARD decaf policy, subtracting 30 seconds from the 240-second target; BrewCalculator applies this as 210 seconds. The reviewed sources do not support a universal decaf shortcut.",
+      "severity": "medium",
+      "change_recommendation": "Use selected recipe timing for decaf unless a specific sourced recipe supports a change; do not present 210 seconds as a French press fact.",
+      "source_ids": [
+        "bodum-manual",
+        "stumptown",
+        "counter-culture"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/session/LegacyStagePlanFactory.kt:35",
+      "finding": "The French press typed legacy plan has manual steep and press stages. It does not automatically complete at four minutes or contain a Hoffmann settling sequence.",
+      "severity": "info",
+      "change_recommendation": "Preserve manual completion and recipe-driven timing. A named settling recipe would require its own physical sequence rather than changing conventional press copy.",
+      "source_ids": [
+        "hoffmann-interview",
+        "stumptown"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/LegacyBuiltInGuidanceCatalog.kt:291",
+      "finding": "Steep copy defers to selected timing, press copy uses slow movement to the coffee bed, and stage safety copy at 386-391 explicitly says to stop for forcing, binding or instability. Preparation/completion at 504-527 omit headroom, assembled-screen checks and explicit decanting of unserved coffee.",
+      "severity": "medium",
+      "change_recommendation": "Keep existing low-force and manual guidance; add brief hardware checks and prompt decanting to appropriate preparation/completion placements.",
+      "source_ids": [
+        "bodum-manual",
+        "stumptown"
+      ]
+    },
+    {
+      "path": "app/src/main/res/values/strings.xml:119",
+      "finding": "Legacy prep advises preheating and taring; strings 417-419 advise all-water addition, stirring, steeping and slow plunge/pour-off. Headroom and assembly are not explicit, and clock origin is not stated in the instruction string.",
+      "severity": "low",
+      "change_recommendation": "State first-water clock origin and safe fill/model assembly cues when updating guide content, preserving concise conventional steps.",
+      "source_ids": [
+        "bodum-manual",
+        "stumptown"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/BeverageOutputEstimator.kt:38",
+      "finding": "French press estimator uses 2.2 g/g apparent loss and EXCLUDES_DECANT_RESIDUAL. The profile at BrewingCatalog.kt:257 uses BrewWaterMinusRetention(2.0), and the calculator's uncalibrated fallback uses the enum's 2.0. For 30 g/450 g these different assumptions predict 384 g versus 390 g, before any omitted decant residue. Estimator comments already reject literal absorption-constant semantics.",
+      "severity": "medium",
+      "change_recommendation": "Align approximation/calibration semantics and endpoint definitions across consumers, keep estimates qualified and let users measure actual collected output; do not claim a universal coefficient.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BrewingCatalog.kt:257",
+      "finding": "Generic French press profile has no explicitly supplied safety tags and uses a 2.0 retention model. Live legacy guidance nevertheless supplies hot-glass, hot-liquid and forcing warnings independently.",
+      "severity": "low",
+      "change_recommendation": "If profile-level safety is consumed by additional surfaces, ensure hot-liquid/hot-glass/overflow considerations reach them without falsely claiming current live guidance lacks safety.",
+      "source_ids": [
+        "bodum-manual"
+      ]
+    },
+    {
+      "path": "app/src/main/assets/grinders.json:141",
+      "finding": "Current entries name ZP6 5-6, standard-axle C40 25-35, Ode Gen 2 Brew Burrs 8-10 and Encore ESP 32. C40 and Encore values were verified in manufacturer text and ZP6 in its chart image. Fellow's chart was inspected, but unlabelled arc endpoints do not certify the app's exact 8-10 bounds. Suggested midpoints are app selections. Line 19's immersion-fines impact claim omits sediment and screen-pressure effects.",
+      "severity": "low",
+      "change_recommendation": "Keep numeric settings tied to exact model, burrs and zero/shim conditions, resolve Fellow's chart interpretation before certifying exact bounds, and qualify the fines-impact statement. Generic guidance should use texture rather than an unexplained number.",
+      "source_ids": [
+        "comandante",
+        "encore-esp",
+        "zp6-chart",
+        "fellow-chart",
+        "bodum-manual"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BuiltInP1RecipeCatalog.kt",
+      "finding": "No French press exact recipe occurs in the current P1 recipe catalog, exact typed stage catalog, exact factual errata or August learning-guide audit. The generic French press profile and legacy guidance are present separately; catalog presence is not proof of named-technique or localization coverage.",
+      "severity": "info",
+      "change_recommendation": "Record conventional legacy support accurately; introduce any approved named technique with distinct source identity and reviewed stages rather than editing immutable historical projections.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/screen/BrewTimerScreen.kt:136",
+      "finding": "This no-bloom method inherits ACTIVE_TIMER. The timer auto-starts on screen entry when elapsedSeconds is zero, which can include preparation delay and does not establish first brew-water contact. Manual typed completion remains separate.",
+      "severity": "medium",
+      "change_recommendation": "Start elapsed timing at the selected physical brew event; keep recipe clock origin visible and persist it consistently without an automatic finish deadline.",
+      "source_ids": [
+        "stumptown"
+      ]
+    }
+  ],
+  "uncertainties": [
+    "The selected 30 g/450 g, 95 C recipe is app-authored; no universal best ratio, temperature or steep time is established.",
+    "Safe fill, headroom, screen assembly, lid operation and dishwasher compatibility vary by model; only the cited Bodum manual's covered models were checked.",
+    "Actual collected beverage mass and apparent-loss coefficient have not been measured; sediment left behind alters output.",
+    "Original Hoffmann video audio was not reviewed, and neither research-reader access nor browser transcript export supplied a transcript; the separate settling variant is supported by his original 2025 interview, not a verified full replay of the 2016 video.",
+    "Ode Gen 2's linked chart was visually inspected, but its unlabelled arc endpoints do not certify the app's exact 8-10 French press bounds. The ZP6 Special 5-6 chart band was visually verified.",
+    "No physical brew, localized content review, device execution or release validation was performed."
+  ],
+  "do_not_claim": [
+    "Four minutes is a universal finish deadline or the app's manual stages already impose one.",
+    "Pressing through the grounds and Hoffmann's screen-at-surface settling method are the same recipe.",
+    "Input-water grams equal exact milliliters or the guaranteed poured beverage mass.",
+    "A 2.0 or 2.2 g/g coefficient is a universal physical absorption constant.",
+    "All French presses share one safe fill volume, assembly, dishwasher rule or glass-care specification.",
+    "All decaf French press coffee should steep 30 seconds less.",
+    "Any named grinder setting transfers unchanged to different burrs, axles, calibration or shim state."
+  ]
+}

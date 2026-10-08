@@ -30,14 +30,46 @@ class MigrationTest {
      * drift (a forgotten column/index) that would crash on app upgrade.
      */
     @Test
-    fun migrateAll10To20_matchesExportedSchema() {
+    fun migrateAll10To21_matchesExportedSchema() {
         helper.createDatabase(MIGRATION_TEST_DB, 10).close()
         helper.runMigrationsAndValidate(
             MIGRATION_TEST_DB,
-            20,
+            21,
             true,
             *AppDatabase.ALL_MIGRATIONS,
         ).close()
+    }
+
+    @Test
+    fun migrate20to21_preservesPhysicalPacksHistoryAndUnscopedGrind() {
+        val name = "starlit-coffee-memory-v21"
+        helper.createDatabase(name, 20).apply {
+            execSQL("INSERT INTO coffee_bags (id,name,roaster,isDecaf,createdAt,status,weightG,initialWeightG,grindSetting,barcode) " +
+                "VALUES (7,'Daily Coffee','Roaster',0,1000,'OPEN',123.5,250,'1.14','123456789012')")
+            execSQL("INSERT INTO coffee_bags (id,name,roaster,isDecaf,createdAt,status,weightG,initialWeightG,barcode) " +
+                "VALUES (8,'Daily Coffee','Roaster',0,1001,'FINISHED',0,250,'0123456789012')")
+            execSQL("INSERT INTO brew_logs (id,coffeeBagId,method,doseG,waterG,ratio,isDecaf,createdAt,grindSetting) " +
+                "VALUES (9,7,'V60',20,340,17,0,2000,'1.14')")
+            close()
+        }
+        helper.runMigrationsAndValidate(name, 21, true, CoffeeMemoryMigration).use { db ->
+            db.query("SELECT id,coffeeId,packNumber,weightG,initialWeightG,grindSetting FROM coffee_bags WHERE id=7").use {
+                assertTrue(it.moveToFirst())
+                assertEquals(7L, it.getLong(0)); assertEquals(7L, it.getLong(1)); assertEquals(1, it.getInt(2))
+                assertEquals(123.5, it.getDouble(3), 0.001); assertEquals(250.0, it.getDouble(4), 0.001)
+                assertEquals("1.14", it.getString(5))
+            }
+            db.query("SELECT coffeeBagId,grindSetting FROM brew_logs WHERE id=9").use {
+                assertTrue(it.moveToFirst()); assertEquals(7L, it.getLong(0)); assertEquals("1.14", it.getString(1))
+            }
+            db.query("SELECT COUNT(*) FROM coffee_identities").use { assertTrue(it.moveToFirst()); assertEquals(2, it.getInt(0)) }
+            db.query("SELECT COUNT(*) FROM coffee_barcodes WHERE normalizedCode='00123456789012'").use {
+                assertTrue(it.moveToFirst()); assertEquals(2, it.getInt(0))
+            }
+            for (table in listOf("type_grind_settings", "coffee_grind_settings", "pack_grind_settings")) {
+                db.query("SELECT COUNT(*) FROM $table").use { assertTrue(it.moveToFirst()); assertEquals(0, it.getInt(0)) }
+            }
+        }
     }
 
     @Test
@@ -116,6 +148,7 @@ class MigrationTest {
             true,
             AppDatabase.MIGRATION_18_19,
         ).use { db ->
+            db.setForeignKeyConstraintsEnabled(true)
             db.execSQL(
                 """
                 INSERT INTO coffee_usage_entries (coffeeBagId, amountG, createdAt)

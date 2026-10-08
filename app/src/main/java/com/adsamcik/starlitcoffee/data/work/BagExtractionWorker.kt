@@ -19,12 +19,14 @@ import com.adsamcik.starlitcoffee.data.network.llm.LlmResultCache
 import com.adsamcik.starlitcoffee.data.network.llm.StubLlmInferenceProvider
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
 import com.adsamcik.starlitcoffee.notification.NotificationChannels
+import com.adsamcik.starlitcoffee.notification.withStarlitSmallIcon
 import com.adsamcik.starlitcoffee.scan.BagPhotoExtractor
 import com.adsamcik.starlitcoffee.scan.ScanDeadline
 import com.adsamcik.starlitcoffee.util.BagPhotoProcessingResult
 import com.adsamcik.starlitcoffee.util.ScanProgress
 import com.adsamcik.starlitcoffee.util.ScanStage
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.withContext
 import dev.tracebox.Tracebox
 import dev.tracebox.api.LogTemplate
 
@@ -49,6 +51,7 @@ class BagExtractionWorker(
     private var latestPreviewJson: String? = null
     private var activeSessionId: String? = null
     private var activeGenerationId: String? = null
+    private var scanTelemetry: BagScanRunTelemetry? = null
     private val foregroundNotificationId = foregroundNotificationId(id)
 
     override suspend fun doWork(): Result {
@@ -65,7 +68,7 @@ class BagExtractionWorker(
         return replayStoredBagExtractionResultOrRun(
             storedResult = BagExtractionResultStore.read(applicationContext, workId),
             fallbackReviewContext = fallbackReviewContext,
-            onReplay = { replay -> completeTerminalResult(workId, replay) },
+            onReplay = { replay -> completeTerminalResult(workId, replay, replayed = true) },
             runExtraction = {
                 runExtraction(
                     workId = workId,
@@ -94,6 +97,8 @@ class BagExtractionWorker(
             if (!draftAcceptsResult()) return Result.success()
             reviewContext = input.reviewContext ?: reviewContext
             val photoUris = photosCsv.split(",").map(String::trim).filter(String::isNotBlank)
+            val runLlm = inputData.getBoolean(KEY_RUN_LLM, true)
+            startScanTelemetry(workId, input, reviewContext, runLlm)
             if (photoUris.isEmpty()) {
                 return completeEmptyExtraction(workId, photosCsv, reviewContext)
             }
@@ -107,18 +112,20 @@ class BagExtractionWorker(
             enterForeground()
 
             val knownValues = decodeKnownFieldValues(input.knownValuesJson)
-            val runLlm = inputData.getBoolean(KEY_RUN_LLM, true)
-            val result = buildExtractor()
-                .extract(
+            val result = withContext(checkNotNull(scanTelemetry).identity) {
+                buildExtractor().extract(
                     photoUris = photoUris,
                     knownFieldValues = knownValues,
                     runLlm = runLlm,
                     deadline = ScanDeadline.fromStartedAt(input.createdAtMillis),
                     onProgress = ::publishProgress,
                     onPartialResult = ::publishPreview,
-                )
-                .copy(capturedPhotoUris = photosCsv)
-            if (!draftAcceptsResult()) return Result.success()
+                ).copy(capturedPhotoUris = photosCsv)
+            }
+            if (!draftAcceptsResult()) {
+                scanTelemetry?.cancel()
+                return Result.success()
+            }
             persistDraftResult(result, workId, terminal = true)
             val storedResult = BagExtractionResultStore.writeIfAbsent(
                 applicationContext,
@@ -127,11 +134,9 @@ class BagExtractionWorker(
                 resultJson = result.encodeToStoredJson(),
                 reviewContext = reviewContext,
             )
-            completeTerminalResult(
-                workId = workId,
-                replay = storedResult.toTerminalReplay(reviewContext),
-            )
+            completeTerminalResult(workId, storedResult.toTerminalReplay(reviewContext))
         } catch (error: CancellationException) {
+            scanTelemetry?.cancel()
             throw error
         } catch (error: Exception) {
             Tracebox.log.error(error, BagExtractionWorkerTraceboxTemplates.BAG_EXTRACTION_WORKER_FAILED)
@@ -140,7 +145,10 @@ class BagExtractionWorker(
                 llmStatus = com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus.UNAVAILABLE,
             )
             try {
-                if (!draftAcceptsResult()) return Result.success()
+                if (!draftAcceptsResult()) {
+                    scanTelemetry?.cancel()
+                    return Result.success()
+                }
                 persistDraftResult(failureResult, workId, terminal = true)
                 val storedResult = BagExtractionResultStore.writeIfAbsent(
                     applicationContext,
@@ -149,15 +157,28 @@ class BagExtractionWorker(
                     resultJson = failureResult.encodeToStoredJson(),
                     reviewContext = reviewContext,
                 )
-                completeTerminalResult(
-                    workId = workId,
-                    replay = storedResult.toTerminalReplay(reviewContext),
-                )
+                completeTerminalResult(workId, storedResult.toTerminalReplay(reviewContext))
             } catch (persistenceError: Exception) {
                 Tracebox.log.error(persistenceError, BagExtractionWorkerTraceboxTemplates.COULD_NOT_PERSIST_FAILED_BAG_EXTRACTION_RESULT)
+                scanTelemetry?.finish(failureResult, successful = false)
                 Result.retry()
             }
         }
+    }
+
+    private fun startScanTelemetry(
+        workId: String,
+        input: BagExtractionInput,
+        reviewContext: BagReviewContext?,
+        runLlm: Boolean,
+    ) {
+        scanTelemetry = BagScanRunTelemetry(
+            identity = bagScanDiagnosticContext(
+                activeSessionId, activeGenerationId, workId, input.photoUrisCsv, reviewContext,
+            ),
+            runAttempt = runAttemptCount,
+            aiRequested = runLlm,
+        ).also { it.start(System.currentTimeMillis() - input.createdAtMillis) }
     }
 
     private fun completeEmptyExtraction(
@@ -182,15 +203,30 @@ class BagExtractionWorker(
     private fun completeTerminalResult(
         workId: String,
         replay: BagExtractionTerminalReplay,
+        replayed: Boolean = false,
     ): Result {
         runCatching { BagExtractionCheckpointStore.delete(applicationContext, workId) }
-            .onFailure { error -> Tracebox.log.error(error, BagExtractionWorkerTraceboxTemplates.COULD_NOT_DELETE_TERMINAL_SCAN_CHECKPOINT) }
+            .onFailure { error -> Tracebox.log.error(
+                error,
+                BagExtractionWorkerTraceboxTemplates.COULD_NOT_DELETE_TERMINAL_SCAN_CHECKPOINT,
+            ) }
         if (draftAcceptsResult()) {
+            val result = replay.result ?: BagPhotoProcessingResult()
+            val telemetry = scanTelemetry ?: BagScanRunTelemetry(
+                identity = bagScanDiagnosticContext(
+                    activeSessionId, activeGenerationId, workId,
+                    result.capturedPhotoUris, decodeBagReviewContext(replay.outputData.getString(KEY_REVIEW_CONTEXT_JSON)),
+                ),
+                runAttempt = runAttemptCount,
+            )
+            telemetry.finish(result, replay.successful, replayed)
             BagExtractionScheduler.enqueueCompletionNotification(
                 applicationContext,
                 workId,
                 waitForTerminal = true,
             )
+        } else {
+            scanTelemetry?.cancel()
         }
         return if (replay.successful) {
             Result.success(replay.outputData)
@@ -226,6 +262,7 @@ class BagExtractionWorker(
      * id updates the stage label and progress bar in place.
      */
     private fun publishProgress(progress: ScanProgress) {
+        if (draftAcceptsResult()) scanTelemetry?.progress(progress)
         latestProgress = progress
         publishWorkProgress(progress)
         try {
@@ -241,6 +278,7 @@ class BagExtractionWorker(
     private fun publishPreview(result: BagPhotoProcessingResult) {
         if (!draftAcceptsResult()) return
         persistDraftResult(result, id.toString(), terminal = false)
+        scanTelemetry?.partial(result)
         if (result.hasDeterministicScanData()) {
             runCatching {
                 BagExtractionCheckpointStore.write(
@@ -334,7 +372,7 @@ class BagExtractionWorker(
             applicationContext,
             NotificationChannels.BAG_SCAN_PROGRESS_ID,
         )
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .withStarlitSmallIcon()
             .setContentTitle(applicationContext.getString(R.string.notif_scan_progress_title))
             .setOngoing(true)
             .setOnlyAlertOnce(true)
@@ -354,7 +392,9 @@ class BagExtractionWorker(
         val app = applicationContext as? StarlitCoffeeApp
         return BagPhotoExtractor(
             appContext = applicationContext,
-            coffeeBagRepository = CoffeeBagRepository(db.coffeeBagDao()),
+            coffeeBagRepository = CoffeeBagRepository(
+                db.coffeeBagDao(), db.coffeeIdentityDao(), com.adsamcik.starlitcoffee.data.repository.TransactionRunner.room(db),
+            ),
             qrLinkMetadataExplorer = SafeQrLinkMetadataExplorer(),
             llmProvider = app?.llmProvider ?: StubLlmInferenceProvider(),
             ocrService = app?.ocrService,
@@ -401,6 +441,7 @@ internal fun bagExtractionTerminalOutput(reviewContext: BagReviewContext?): andr
 internal data class BagExtractionTerminalReplay(
     val successful: Boolean,
     val outputData: androidx.work.Data,
+    val result: BagPhotoProcessingResult? = null,
 )
 
 internal fun StoredBagExtractionResult.toTerminalReplay(
@@ -408,6 +449,7 @@ internal fun StoredBagExtractionResult.toTerminalReplay(
 ): BagExtractionTerminalReplay = BagExtractionTerminalReplay(
     successful = successful,
     outputData = bagExtractionTerminalOutput(reviewContext ?: fallbackReviewContext),
+    result = runCatching { decodeBagExtractionResult(resultJson) }.getOrNull(),
 )
 
 internal inline fun <T> replayStoredBagExtractionResultOrRun(

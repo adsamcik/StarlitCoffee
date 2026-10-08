@@ -1,0 +1,126 @@
+{
+  "checked": 17,
+  "expected": 17,
+  "reports": [
+    {
+      "method": "chemex",
+      "review_status": "editorially_reviewed",
+      "verified_sources": 9,
+      "steps": 8,
+      "app_findings": 12
+    },
+    {
+      "method": "automatic-drip",
+      "review_status": "editorially_reviewed",
+      "verified_sources": 11,
+      "steps": 6,
+      "app_findings": 7
+    },
+    {
+      "method": "pulsar",
+      "review_status": "editorially_reviewed",
+      "verified_sources": 8,
+      "steps": 6,
+      "app_findings": 14
+    },
+    {
+      "method": "v60",
+      "review_status": "editorially_reviewed",
+      "verified_sources": 10,
+      "steps": 8,
+      "app_findings": 11
+    },
+    {
+      "method": "clever",
+      "review_status": "editorially_reviewed",
+      "verified_sources": 4,
+      "steps": 7,
+      "app_findings": 6
+    },
+    {
+      "method": "hario-switch",
+      "review_status": "editorially_reviewed",
+      "verified_sources": 6,
+      "steps": 6,
+      "app_findings": 9
+    },
+    {
+      "method": "kalita-wave",
+      "review_status": "editorially_reviewed",
+      "verified_sources": 4,
+      "steps": 6,
+      "app_findings": 10
+    },
+    {
+      "method": "melitta",
+      "review_status": "editorially_reviewed",
+      "verified_sources": 6,
+      "steps": 7,
+      "app_findings": 8
+    },
+    {
+      "method": "turkish",
+      "review_status": "editorially_reviewed",
+      "verified_sources": 4,
+      "steps": 6,
+      "app_findings": 7
+    },
+    {
+      "method": "phin",
+      "review_status": "editorially_reviewed",
+      "verified_sources": 5,
+      "steps": 6,
+      "app_findings": 8
+    },
+    {
+      "method": "french-press",
+      "review_status": "editorially_reviewed",
+      "verified_sources": 7,
+      "steps": 6,
+      "app_findings": 10
+    },
+    {
+      "method": "aeropress",
+      "review_status": "editorially_reviewed",
+      "verified_sources": 13,
+      "steps": 7,
+      "app_findings": 12
+    },
+    {
+      "method": "espresso",
+      "review_status": "editorially_reviewed",
+      "verified_sources": 7,
+      "steps": 7,
+      "app_findings": 10
+    },
+    {
+      "method": "moka-pot",
+      "review_status": "editorially_reviewed",
+      "verified_sources": 10,
+      "steps": 7,
+      "app_findings": 10
+    },
+    {
+      "method": "cold-brew",
+      "review_status": "editorially_reviewed",
+      "verified_sources": 6,
+      "steps": 6,
+      "app_findings": 9
+    },
+    {
+      "method": "siphon",
+      "review_status": "editorially_reviewed",
+      "verified_sources": 8,
+      "steps": 9,
+      "app_findings": 9
+    },
+    {
+      "method": "percolator",
+      "review_status": "editorially_reviewed",
+      "verified_sources": 5,
+      "steps": 7,
+      "app_findings": 6
+    }
+  ],
+  "errors": []
+}

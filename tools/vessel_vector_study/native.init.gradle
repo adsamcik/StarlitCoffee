@@ -1,0 +1,35 @@
+// Opt-in native comparison only; keeps the production raster mappings intact.
+// Default: original traced study. Refined: -PvesselVectorStudyRevision=refined
+// Each revision has its own generated resource root to prevent stale mixing.
+allprojects { project ->
+    project.plugins.withId('com.android.application') {
+        def revision = project.providers.gradleProperty('vesselVectorStudyRevision').getOrElse('base')
+        if (!(revision in ['base', 'refined'])) {
+            throw new GradleException("vesselVectorStudyRevision must be 'base' or 'refined'; received '${revision}'")
+        }
+        def sourceDirectory = project.rootProject.file(revision == 'refined'
+            ? 'docs/assets/vessel-vector-study/refined/android'
+            : 'docs/assets/vessel-vector-study/android')
+        def resourceRoot = project.rootProject.file("build/vessel-vector-study/native-res/${revision}")
+        def candidates = ['espresso', 'cortado', 'cappuccino', 'mug', 'travel'].collect {
+            "vessel_icon_${it}.xml"
+        }
+        def missing = candidates.findAll { !new File(sourceDirectory, it).isFile() }
+        if (!missing.isEmpty()) {
+            throw new GradleException("Missing ${revision} vessel vector candidates in ${sourceDirectory}: ${missing.join(', ')}")
+        }
+        project.copy {
+            from sourceDirectory
+            into new File(resourceRoot, 'drawable')
+            include candidates
+            rename { name -> name.replace('vessel_icon_', 'vessel_vector_study_') }
+        }
+        project.extensions.getByName('androidComponents').finalizeDsl { android ->
+            android.buildTypes.getByName('debug').applicationIdSuffix = '.vesselvectorstudy'
+            android.sourceSets.getByName('debug').res.directories.add(
+                resourceRoot.absolutePath)
+            android.sourceSets.getByName('androidTest').kotlin.directories.add(
+                project.rootProject.file('tools/vessel_vector_study/native-src').absolutePath)
+        }
+    }
+}

@@ -114,7 +114,7 @@ class BrewSessionCompletionPlannerTest {
         assertEquals("OPEN", updatedBag.status)
         assertEquals(COMPLETED_AT, updatedBag.openedDate)
         assertEquals(10f, updatedBag.weightG)
-        assertEquals("6.5", updatedBag.grindSetting)
+        assertEquals(bag.grindSetting, updatedBag.grindSetting)
         assertEquals(null, plan.rotatedToCoffeeBagId)
     }
 
@@ -157,12 +157,12 @@ class BrewSessionCompletionPlannerTest {
     }
 
     @Test
-    fun `completion plan finishes a depleted bag and opens the supplied next sealed bag`() {
+    fun `completion finishes a depleted pack and selects a shared identity pack without opening or copying grind`() {
         val session = completedSession(
             context = executionContext(doseG = 20.0, grindLabel = "7.0"),
         )
-        val current = coffeeBag(id = 7L, status = "SEALED", weightG = 15f)
-        val next = coffeeBag(id = 8L, status = "SEALED", weightG = 250f)
+        val current = coffeeBag(id = 7L, status = "SEALED", weightG = 15f).copy(coffeeId = 2L)
+        val next = coffeeBag(id = 8L, status = "SEALED", weightG = 250f).copy(coffeeId = 2L)
 
         val plan = BrewSessionCompletionPlanner.plan(
             session = session,
@@ -171,19 +171,15 @@ class BrewSessionCompletionPlannerTest {
         )
 
         assertEquals(8L, plan.rotatedToCoffeeBagId)
-        assertEquals(2, plan.coffeeBagUpdates.size)
+        assertEquals(1, plan.coffeeBagUpdates.size)
         val depleted = plan.coffeeBagUpdates[0]
         assertEquals(7L, depleted.id)
         assertEquals("FINISHED", depleted.status)
         assertEquals(0f, depleted.weightG)
         assertEquals(COMPLETED_AT, depleted.openedDate)
-        assertEquals("7.0", depleted.grindSetting)
-        val rotated = plan.coffeeBagUpdates[1]
-        assertEquals(8L, rotated.id)
-        assertEquals("OPEN", rotated.status)
-        assertEquals(250f, rotated.weightG)
-        assertEquals(COMPLETED_AT, rotated.openedDate)
-        assertEquals("7.0", rotated.grindSetting)
+        assertEquals(current.grindSetting, depleted.grindSetting)
+        assertEquals("SEALED", next.status)
+        assertEquals(null, next.openedDate)
     }
 
     @Test

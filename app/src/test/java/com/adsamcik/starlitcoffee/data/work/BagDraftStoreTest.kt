@@ -5,6 +5,7 @@ import com.adsamcik.starlitcoffee.util.DirectorySync
 import com.adsamcik.starlitcoffee.util.FileSync
 import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
+import com.adsamcik.starlitcoffee.util.RecognitionCapability
 import com.adsamcik.starlitcoffee.util.RecognitionPreference
 import com.adsamcik.starlitcoffee.util.RecognitionRunState
 import java.nio.file.Files
@@ -131,6 +132,103 @@ class BagDraftStoreTest {
     }
 
     @Test
+    fun `authorized transient failure retains fields and remains retryable after restoration`() {
+        val directory = Files.createTempDirectory("bag-draft-recovery").toFile()
+        val draft = recognizedDraft().applyRecognitionResult(
+            incoming = BagPhotoProcessingResult(llmStatus = LlmEnrichmentStatus.UNAVAILABLE),
+            sourceRevision = 3L,
+            generationId = "generation-1",
+            workId = "work-1",
+            terminal = true,
+        )
+        try {
+            BagDraftStore.write(directory, draft, FileSync { }, DirectorySync { })
+            val restored = requireNotNull(BagDraftStore.read(directory, draft.sessionId))
+
+            assertEquals(RecognitionCapability.TEMPORARILY_UNAVAILABLE, restored.recognitionCapability)
+            assertEquals(RecognitionRunState.RETRIABLE_FAILURE, restored.recognitionRunState)
+            assertEquals("Recognized coffee", restored.field(BagDraftField.NAME).value)
+            assertEquals(LlmEnrichmentStatus.UNAVAILABLE, decodeBagExtractionResult(restored.resultJson!!).llmStatus)
+        } finally {
+            directory.deleteRecursively()
+        }
+    }
+
+    @Test
+    fun `authorization and setup blockers survive restoration without a competing retry`() {
+        val directory = Files.createTempDirectory("bag-draft-blockers").toFile()
+        val blockers = listOf(
+            LlmEnrichmentStatus.AUTHORIZATION_REQUIRED to RecognitionCapability.AUTHORIZATION_REQUIRED,
+            LlmEnrichmentStatus.SETUP_REQUIRED to RecognitionCapability.ASSET_SETUP_REQUIRED,
+        )
+        try {
+            blockers.forEach { (status, capability) ->
+                val draft = recognizedDraft().applyRecognitionResult(
+                    incoming = BagPhotoProcessingResult(llmStatus = status),
+                    sourceRevision = 3L,
+                    generationId = "generation-1",
+                    workId = "work-1",
+                    terminal = true,
+                )
+                BagDraftStore.write(directory, draft, FileSync { }, DirectorySync { })
+                val restored = requireNotNull(BagDraftStore.read(directory, draft.sessionId))
+
+                assertEquals(capability, restored.recognitionCapability)
+                assertEquals(RecognitionRunState.IDLE, restored.recognitionRunState)
+                assertEquals("Recognized coffee", restored.field(BagDraftField.NAME).value)
+                assertEquals(status, decodeBagExtractionResult(restored.resultJson!!).llmStatus)
+            }
+        } finally {
+            directory.deleteRecursively()
+        }
+    }
+
+    @Test
+    fun `successful recognition clears prior authorization setup and temporary blockers`() {
+        listOf(
+            LlmEnrichmentStatus.AUTHORIZATION_REQUIRED,
+            LlmEnrichmentStatus.SETUP_REQUIRED,
+            LlmEnrichmentStatus.UNAVAILABLE,
+        ).forEach { status ->
+            val blocked = recognizedDraft().applyRecognitionResult(
+                incoming = BagPhotoProcessingResult(llmStatus = status),
+                sourceRevision = 3L,
+                generationId = "generation-1",
+                workId = "work-1",
+                terminal = true,
+            )
+            val recovered = blocked.applyRecognitionResult(
+                incoming = result(name = "Recovered coffee", roaster = "Recovered roaster"),
+                sourceRevision = 4L,
+                generationId = "generation-1",
+                workId = "work-1",
+                terminal = true,
+            )
+
+            assertEquals(RecognitionCapability.READY, recovered.recognitionCapability)
+            assertEquals(RecognitionRunState.COMPLETE, recovered.recognitionRunState)
+            assertEquals("Recovered coffee", recovered.field(BagDraftField.NAME).value)
+        }
+    }
+
+    @Test
+    fun `temporary unavailability does not offer AI retry before recognition is enabled`() {
+        listOf(RecognitionPreference.UNDECIDED, RecognitionPreference.DISABLED).forEach { preference ->
+            val draft = recognizedDraft().copy(recognitionPreference = preference).applyRecognitionResult(
+                incoming = BagPhotoProcessingResult(llmStatus = LlmEnrichmentStatus.UNAVAILABLE),
+                sourceRevision = 3L,
+                generationId = "generation-1",
+                workId = "work-1",
+                terminal = true,
+            )
+
+            assertEquals(RecognitionCapability.TEMPORARILY_UNAVAILABLE, draft.recognitionCapability)
+            assertEquals(RecognitionRunState.IDLE, draft.recognitionRunState)
+            assertEquals("Recognized coffee", draft.field(BagDraftField.NAME).value)
+        }
+    }
+
+    @Test
     fun `closed tombstones retain ownership but redact draft content`() {
         val draft = newBagScanDraft(
             sessionId = UUID.randomUUID().toString(),
@@ -156,6 +254,20 @@ class BagDraftStoreTest {
         assertEquals(null, tombstone.resultJson)
         assertFalse(tombstone.isActive)
     }
+
+    private fun recognizedDraft(): BagScanDraft = newBagScanDraft(
+        sessionId = UUID.randomUUID().toString(),
+        photoUris = listOf("content://front"),
+        reviewContext = BagReviewContext.addNew(),
+        preference = RecognitionPreference.ENABLED,
+        nowMillis = 1L,
+    ).applyRecognitionResult(
+        incoming = result(name = "Recognized coffee", roaster = "Recognized roaster"),
+        sourceRevision = 2L,
+        generationId = "generation-1",
+        workId = "work-1",
+        terminal = true,
+    )
 
     private fun result(name: String, roaster: String?): BagPhotoProcessingResult =
         BagPhotoProcessingResult(

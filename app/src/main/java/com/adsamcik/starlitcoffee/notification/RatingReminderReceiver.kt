@@ -54,7 +54,10 @@ class RatingReminderReceiver : BroadcastReceiver() {
         scope.launch {
             try {
                 if (!hasPostNotificationPermission(appContext)) {
-                    Tracebox.log.warn(RatingReminderReceiverTraceboxTemplates.POST_NOTIFICATIONS_NOT_GRANTED_CANNOT_POST_RATING, argument(brewLogId))
+                    Tracebox.log.warn(
+                        RatingReminderReceiverTraceboxTemplates.POST_NOTIFICATIONS_NOT_GRANTED_CANNOT_POST_RATING,
+                        argument(brewLogId),
+                    )
                     return@launch
                 }
                 NotificationChannels.ensureRatingReminderChannel(appContext)
@@ -65,7 +68,11 @@ class RatingReminderReceiver : BroadcastReceiver() {
                 }
                 postNotification(appContext, brewLogId, methodLabel)
             } catch (error: Exception) {
-                Tracebox.log.error(error, RatingReminderReceiverTraceboxTemplates.FAILED_TO_VALIDATE_RATING_REMINDER_FOR, argument(brewLogId))
+                Tracebox.log.error(
+                    error,
+                    RatingReminderReceiverTraceboxTemplates.FAILED_TO_VALIDATE_RATING_REMINDER_FOR,
+                    argument(brewLogId),
+                )
             } finally {
                 pending.finish()
             }
@@ -101,7 +108,7 @@ class RatingReminderReceiver : BroadcastReceiver() {
         val customView = buildRatingRemoteViews(context, brewLogId, title, body)
 
         val notification = NotificationCompat.Builder(context, NotificationChannels.RATING_REMINDER_ID)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .withStarlitSmallIcon()
             .setContentTitle(title)
             .setContentText(body)
             .setStyle(NotificationCompat.DecoratedCustomViewStyle())

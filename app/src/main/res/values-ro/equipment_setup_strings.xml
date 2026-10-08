@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_set_name_optional">Nume (opțional)</string>
+    <string name="label_starting_recipe">Rețetă inițială</string>
+    <string name="label_starting_amount">Cantitate inițială</string>
+    <string name="msg_brewing_set_recipe_invalid">Introduceți un raport și o cantitate pozitive sau lăsați cantitatea goală.</string>
+    <string name="msg_brewing_sets_onboarding">Alegeți echipamentul. Adăugați seturi pentru acasă sau serviciu și alegeți care se deschide primul.</string>
+    <string name="action_create_brewing_set">Creați un set</string>
+    <string name="cd_brewing_set_options">Opțiuni pentru %1$s</string>
+    <string name="msg_saved_brewing_calculation">Calcul salvat: %1$s. Introduceți o cantitate pentru a-l înlocui.</string>
+</resources>

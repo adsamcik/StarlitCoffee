@@ -1,0 +1,13 @@
+<!-- Accepted prototype recognition icon; tools/import_approved_method_vectors.cjs -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+    <path android:fillColor="#FF000000" android:fillType="evenOdd"
+        android:pathData="M5 2Q5 .5 10 .5T15 2V8.5Q15 10 12 10V12H8V10Q5 10 5 8.5ZM7 2Q7 3 10 3T13 2Q13 1.5 10 1.5T7 2Z" />
+    <path android:fillColor="#FF000000" android:fillType="evenOdd"
+        android:pathData="M15 16.5A5 5 0 1 1 5 16.5 5 5 0 1 1 15 16.5ZM8.5 13.5Q6.5 14.5 7 17Q7.3 18 8.3 17.7T8.8 16.5Q8.5 15.5 9.5 15Z" />
+    <path android:fillColor="#FF000000" android:fillType="evenOdd"
+        android:pathData="M17 5H19V21.5H17ZM19 9H21Q23.5 9 23.5 12T19 15.5V13.5Q21.5 13.5 21.5 12T19 11ZM12 10H18V12H12Z" />
+    <path android:fillColor="#FF000000" android:fillType="evenOdd"
+        android:pathData="M8 22H12V23.5H8ZM2 21.5H6V23.5H2ZM14 21.5H22V23.5H14Z" />
+</vector>

@@ -2,12 +2,14 @@ package com.adsamcik.starlitcoffee.ui.guidance
 
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltInP1RecipeCatalog
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltInRecipeId
+import com.adsamcik.starlitcoffee.domain.brewing.P1RecipeEvidenceClass
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStageDefinition
 import com.adsamcik.starlitcoffee.domain.brewing.session.BuiltInP1ExactStagePlanCatalog
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageInstanceId
 import com.adsamcik.starlitcoffee.domain.brewing.session.StagePlanNode
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageRunStatus
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageCompletionMode
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetySeverity
 import com.adsamcik.starlitcoffee.ui.session.BrewStageCompletionPresentation
 import com.adsamcik.starlitcoffee.ui.session.CurrentBrewStagePresentation
@@ -107,6 +109,31 @@ class P1ExactGuidanceCatalogTest {
         )
         assertEquals(release.completionCriterion, release.full.observableCompletionCue)
         assertEquals(release.completionCriterion, release.concise.completionCue)
+    }
+
+    @Test
+    fun `Chemex handling errata is app authored and preserves amounts and physical completion`() {
+        val id = BuiltInRecipeId("chemex_42_700")
+        val recipe = requireNotNull(BuiltInP1RecipeCatalog.find(id))
+        val guidance = requireNotNull(catalog.findRecipe(id))
+        val preparation = guidance.stages.single { it.sourceStageId == "stage_02" }
+        val drainage = guidance.stages.single { it.sourceStageId == "stage_06" }
+
+        assertEquals(P1RecipeEvidenceClass.APP_AUTHORED_ADAPTATION, recipe.evidence.evidenceClass)
+        assertEquals("App-authored starting recipe", guidance.evidenceStatus)
+        assertTrue(guidance.originalSourceOrProvenance.contains("not a verified"))
+        assertEquals(42.0, recipe.quantities.dryCoffeeDoseG, 0.0)
+        assertEquals(700.0, recipe.quantities.brewWaterInputG!!, 0.0)
+        assertEquals(7, guidance.stages.size)
+        assertTrue(preparation.full.imperativeInstruction.contains("Add 42 g"))
+        assertTrue(preparation.full.imperativeInstruction.contains("zero the scale"))
+        assertTrue(drainage.completionCriterion.contains("Standing water"))
+        assertTrue(drainage.completionCriterion.contains("occasional drips"))
+        assertFalse(drainage.full.observableCompletionCue.contains("bitter", ignoreCase = true))
+        assertEquals(drainage.completionCriterion, drainage.concise.completionCue)
+        assertEquals(drainage.completionCriterion, drainage.full.observableCompletionCue)
+        assertTrue(drainage.full.conciseExplanation.contains("not a completion signal"))
+        assertTrue(planStages(id)[5].completionMode is StageCompletionMode.ObservedEvent)
     }
 
     @Test

@@ -1,0 +1,8 @@
+Use case: precise-object-edit.
+Polish only the perspective of the Pulsar app icon in image 1. The user likes this icon's design; retain its silhouette, proportions, dark charcoal colour, bold filled style, transparent background, detail level and composition. Image 2 is the real brewer reference for physical geometry.
+
+Make the entire brewer read as one coherent cylinder viewed slightly from above. Align the top collar, its opening and recessed inner plate, the bottom chamber plane and the base skirt on one vertical axis, with consistent ellipse orientation and camera elevation. Correct the nested top ellipses and their occlusion so the collar has a believable uniform wall thickness and the inner plate sits naturally inside it. Join the straight transparent chamber sides tangentially and cleanly to the circular collars. Make the lower elliptical rim and skirt follow the same perspective as the top, without a floating disc or mismatched curves.
+
+Refine the perspective of the existing feet and openings to fit that same view and form a stable base. Preserve the upright valve on the visible front-right foot, including its round plug face and offset rectangular paddle; give their attachment and overlap the same perspective as the base, matching image 2.
+
+This is a restrained geometric polish of image 1, not a new design. Keep generous clear negative spaces and readability as a small mobile icon. Smooth deliberate edges, a single uniform charcoal fill, no photographic textures, gradients, lighting or cast shadows. No text or additional objects. Output one isolated icon on a genuinely transparent background.

@@ -74,7 +74,7 @@ class LegacyBrewSessionStartFactoryTest {
         assertEquals(17.0, request.recipe.ratioValue ?: Double.NaN, 0.001)
         assertEquals(94, request.recipe.temperatureC)
         assertEquals("fellow_ode", request.recipe.grinderId)
-        assertEquals("4.0-6.0", request.recipe.grindSetting)
+        assertEquals("4–6", request.recipe.grindSetting)
         assertEquals(55.5, request.recipe.technique.bloomWaterG ?: Double.NaN, 0.001)
         assertEquals(48, request.recipe.technique.bloomDurationSeconds)
         assertEquals("PULSED", request.recipe.technique.pourPattern)
@@ -90,7 +90,7 @@ class LegacyBrewSessionStartFactoryTest {
         assertEquals(18.5, request.executionContext.logPresentation.doseG, 0.001)
         assertEquals(314.5, request.executionContext.logPresentation.waterG, 0.001)
         assertEquals(17.0, request.executionContext.logPresentation.ratio, 0.001)
-        assertEquals("4.0-6.0", request.executionContext.logPresentation.grindLabel)
+        assertEquals("4–6", request.executionContext.logPresentation.grindLabel)
         assertEquals("PAPER", request.executionContext.logPresentation.filterLabel)
         assertTrue(request.executionContext.logPresentation.isDecaf)
         assertEquals("Sweet citrus finish", request.executionContext.logPresentation.notes)
@@ -132,6 +132,7 @@ class LegacyBrewSessionStartFactoryTest {
             BrewMethod.ESPRESSO to ("espresso" to "espresso_pump_generic"),
             BrewMethod.MOKA_POT to ("steam_pressure_multichamber" to "moka_generic_unspecified"),
             BrewMethod.COLD_BREW to ("cold_immersion" to "cold_immersion_generic"),
+            BrewMethod.CHEMEX to ("manual_gravity" to "chemex_unspecified"),
         )
 
         BrewMethod.entries.forEach { method ->

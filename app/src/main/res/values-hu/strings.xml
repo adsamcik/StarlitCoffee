@@ -100,11 +100,8 @@
     <string name="label_increase">%1$s növelése</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Főzés előkészítése</string>
     <!-- Prep screen: single concise method + filter specific tip -->
     <string name="action_ready_to_brew_short">Kész a főzésre</string>
-    <string name="prep_tip_label">Előkészítés</string>
-    <string name="label_recipe_heading">Recept</string>
     <string name="label_temp_short">Hőm.</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Nedvesítse be a papírszűrőt az alaptestben (nyitott szeleppel), majd engedje le. Helyezze fel a hengert, adja hozzá az őrleményt, egyengesse el a kávéágyat, tegye fel az elosztósapkát. Nullázza a mérleget.</string>
@@ -114,8 +111,6 @@
     <string name="prep_tip_french_press">Melegítse elő a French presst, majd öntse ki. Adja hozzá az őrleményt, tegye a mérlegre, és nullázza a víz hozzáadása előtt.</string>
     <string name="prep_tip_espresso">Törölje szárazra a szűrőkart. Adagolja be, ossza el egyenletesen, és tömörítse laposra a rögzítés előtt.</string>
     <string name="prep_tip_moka">Töltse fel az alsó kamrát a szelepig. Töltse meg a kosarat őrleménnyel, egyengesse el — ne tömörítse. Óvatosan szerelje össze.</string>
-    <string name="format_prep_grind_specific">Őrlés: %1$s — %2$s beállítása: %3$s</string>
-    <string name="format_prep_grind_generic">Őrlés: %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Szünet</string>
@@ -148,7 +143,6 @@
     <string name="label_cup_presets">Csésze-előbeállítások</string>
     <string name="action_add_preset">Előbeállítás hozzáadása</string>
     <string name="action_reset_defaults">Visszaállítás alapértelmezettre</string>
-    <string name="msg_presets_hint">Az előbeállítások gyorsgombként jelennek meg a kalkulátoron</string>
     <string name="label_brew_methods">Főzési módszerek</string>
     <string name="msg_methods_hint">A kijelölt módszerek elöl jelennek meg. Koppintson a be- és kikapcsoláshoz.</string>
     <string name="label_default_method">Alapértelmezett módszer</string>
@@ -165,9 +159,9 @@
     <string name="label_bloom_sprite_coffee_starlit">Csillagfényes kávé</string>
     <string name="desc_bloom_sprite_coffee_starlit">Krémarany gőzszirmok apró csillagfényes csillogással.</string>
     <string name="label_bloom_sprite_coffee_latte">Latte bloom</string>
-    <string name="desc_bloom_sprite_coffee_latte">Lágy latte-art rozetta meleg tejhab-árnyalatokban.</string>
+    <string name="desc_bloom_sprite_coffee_latte">Meleg tejhabárnyalatokban kibontakozó latte-art szív.</string>
     <string name="label_bloom_sprite_coffee_plant">Kávénövény</string>
-    <string name="desc_bloom_sprite_coffee_plant">Friss zöld kávépalánta páros levelekkel.</string>
+    <string name="desc_bloom_sprite_coffee_plant">A kávécserje fényes leveleket bont, miközben piros termései beérnek.</string>
     <string name="label_bloom_sprite_cherry_tomato">Koktélparadicsom</string>
     <string name="desc_bloom_sprite_cherry_tomato">Egy kávébabból paradicsominda hajt ki, ahogy a piros termés beérik.</string>
     <string name="label_bloom_sprite_strawberry">Eper</string>
@@ -435,15 +429,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">Mindlayer megnyitása</string>
+    <string name="msg_mindlayer_requires_android">Android 12 vagy újabb szükséges.</string>
     <string name="label_ai_service">MI-szolgáltatás (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Mindlayer beszerzése a Google Playről</string>
-    <string name="msg_mindlayer_install_recommendation">Telepítse a Mindlayert a Google Playről, hogy privát, eszközön futó MI-vel olvashassa a kávécsomagok címkéit. Ezt később a Beállításokban is megteheti.</string>
     <string name="action_test_connection">Kapcsolat tesztelése</string>
     <string name="action_run_test_prompt">Tesztkérés futtatása</string>
     <string name="label_testing">Tesztelés…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">MI bekapcsolása</string>
     <string name="consent_requesting">MI-hozzáférés kérése…</string>
     <string name="consent_granted">MI bekapcsolva</string>
     <string name="consent_already_approved">Az MI már be van kapcsolva</string>
@@ -532,7 +526,6 @@
     <string name="label_volume_ml">Térfogat (ml)</string>
     <string name="msg_dose_from_ratio">A kávéadag az arányból számítódik ki</string>
     <string name="label_icon">Ikon</string>
-    <string name="label_color">Szín</string>
     <string name="action_add">Hozzáadás</string>
     <string name="screen_add_cup_preset_title">Csésze-előbeállítás hozzáadása</string>
     <string name="screen_edit_cup_preset_title">Csésze-előbeállítás szerkesztése</string>
@@ -664,10 +657,10 @@
     <string name="msg_cup_preset_reset_failed">A csészeprofilokat nem sikerült visszaállítani. Próbálja újra.</string>
     <string name="msg_reset_cup_presets">Minden csészeprofilt lecserél az alapértelmezettekre?</string>
     <string name="msg_diagnostic_clear_failed">Nem sikerült minden diagnosztikai adatot törölni. Próbálja újra.</string>
-    <string name="msg_clear_diagnostics">Törli az összes mentett beolvasási munkamenetet és LLM-futtatást?</string>
+    <string name="msg_clear_diagnostics">Törli az összes mentett beolvasási munkamenetet?</string>
     <string name="label_log_scan_corrections">Beolvasási javítások naplózása (az eszközön)</string>
     <string name="msg_log_scan_corrections">Csak ezen az eszközön rögzíti, mit nyert ki az AI és mit mentett. Semmi nem kerül feltöltésre.</string>
-    <string name="format_scan_debug_counts">Munkamenetek: %1$d · LLM-futtatások: %2$d</string>
+    <string name="format_scan_debug_counts">Munkamenetek: %1$d</string>
     <string name="format_scan_session_subject">Beolvasási munkamenet: %1$s</string>
     <string name="action_share_scan_session">Beolvasási munkamenet megosztása</string>
 
@@ -733,4 +726,23 @@
     <string name="msg_learning_subtitle">Szemléletes, lépésről lépésre haladó útmutatók</string>
     <string name="action_show_details">Részletek megjelenítése</string>
     <string name="action_hide_details">Részletek elrejtése</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Újraolvasás eredményei</string>
+    <string name="title_rescan_no_changes">Nem találtunk változást</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">%1$d mező változott:</item>
+        <item quantity="other">%1$d mező változott:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Még nem találtunk változást.</string>
+    <string name="msg_rescan_incomplete">Tekintsd át a már megtalált adatokat, vagy próbáld újra a felismerést.</string>
+    <string name="action_update_bag_so_far">Frissítés a jelenlegi eredményekkel</string>
+    <string name="action_new_bag_so_far">Új csomag a jelenlegi eredményekkel</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Beállítás megnyitása…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Nem sikerült megnyitni a beállítást. Próbálja újra, vagy adja meg a részleteket kézzel.</string>
+    <string name="announce_label_details_ready">A címke részletei készen állnak az ellenőrzésre.</string>
+    <string name="announce_label_recognition_no_result">Nem találtunk részleteket a címkén. Adja meg őket kézzel.</string>
+    <string name="label_show_cup_presets">Megjelenítés a számológépen</string>
+    <string name="cd_cup_preset_options">Csészebeállítások lehetőségei</string>
 </resources>

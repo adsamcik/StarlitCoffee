@@ -39,7 +39,12 @@
     <string name="format_brew_stage_recorded_grams">Registreret %1$.0f g</string>
     <string name="format_brew_stage_remaining_grams">%1$.0f g tilbage</string>
     <string name="label_brew_reference_cues">Referencepunkter</string>
-    <string name="msg_brew_reference_cues_not_completion">Kun vejledende. Fuldfør trinnet med hovedhandlingen ovenfor.</string>
+    <string name="action_pause_brew_guide">Sæt vejledningen på pause</string>
+    <string name="action_resume_brew_guide">Fortsæt vejledningen</string>
+    <string name="action_pause_brew_clock">Sæt timeren på pause</string>
+    <string name="msg_brew_clock_keeps_running">Timeren fortsætter.</string>
+    <string name="msg_brew_guide_paused">Vejledningen er sat på pause. Timeren fortsætter.</string>
+    <string name="msg_brew_reference_cues_not_completion">Kun vejledende. Et tidssignal afslutter ikke et fysisk trin.</string>
     <string name="action_show_more_brew_reference_cues">Vis flere referencepunkter</string>
     <string name="action_hide_brew_reference_cues">Skjul ekstra referencepunkter</string>
     <string name="label_brew_reference_stage_duration">Trinnets varighed</string>

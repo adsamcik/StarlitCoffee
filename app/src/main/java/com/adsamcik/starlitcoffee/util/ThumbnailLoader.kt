@@ -147,7 +147,11 @@ object ThumbnailLoader {
             if (resized !== oriented && !oriented.isRecycled) oriented.recycle()
             resized
         } catch (error: OutOfMemoryError) {
-            Tracebox.log.error(error, ThumbnailLoaderTraceboxTemplates.INSUFFICIENT_MEMORY_TO_LOAD_THUMBNAIL_FOR, argument(filePath))
+            Tracebox.log.error(
+                error,
+                ThumbnailLoaderTraceboxTemplates.INSUFFICIENT_MEMORY_TO_LOAD_THUMBNAIL_FOR,
+                argument(filePath),
+            )
             null
         } catch (e: Exception) {
             Tracebox.log.error(e, ThumbnailLoaderTraceboxTemplates.FAILED_TO_LOAD_THUMBNAIL_FOR, argument(filePath))

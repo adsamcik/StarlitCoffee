@@ -9,12 +9,15 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
@@ -34,18 +37,17 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination
@@ -61,8 +63,6 @@ import com.adsamcik.starlitcoffee.data.db.AppDatabase
 import com.adsamcik.starlitcoffee.data.brewing.session.ActiveBrewSessionEntityMapper
 import com.adsamcik.starlitcoffee.data.brewing.session.ActiveBrewSessionRestoreResult
 import com.adsamcik.starlitcoffee.data.brewing.session.BrewSessionRuntime
-import com.adsamcik.starlitcoffee.data.model.BrewMethod
-import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.data.repository.CupPresetRepository
 import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.data.repository.StableBrewingPreferences
@@ -78,6 +78,7 @@ import com.adsamcik.starlitcoffee.ui.screen.BrewLogDetailScreen
 import com.adsamcik.starlitcoffee.ui.screen.CalculatorBrewScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewTimerScreen
 import com.adsamcik.starlitcoffee.ui.screen.BrewSessionScreen
+import com.adsamcik.starlitcoffee.ui.screen.ColdBrewStartSheet
 import com.adsamcik.starlitcoffee.ui.screen.BloomTimerScreen
 import com.adsamcik.starlitcoffee.ui.guidance.BuiltInInstructionAssetCatalog
 import com.adsamcik.starlitcoffee.ui.guidance.BuiltInP1ExactGuidanceLoader
@@ -85,6 +86,7 @@ import com.adsamcik.starlitcoffee.ui.guidance.BuiltInP1ExactTerminologyLoader
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidancePreferences
 import com.adsamcik.starlitcoffee.ui.guidance.GuidancePresentationLevel
 import com.adsamcik.starlitcoffee.ui.guidance.P1ExactRecipeReleaseGate
+import com.adsamcik.starlitcoffee.ui.guidance.shouldGateSession
 import com.adsamcik.starlitcoffee.ui.screen.CupPresetEditorScreen
 import com.adsamcik.starlitcoffee.ui.screen.DisplaySettingsScreen
 import com.adsamcik.starlitcoffee.ui.screen.DiagnosticsScreen
@@ -93,6 +95,14 @@ import com.adsamcik.starlitcoffee.ui.screen.GuidedScanFlow
 import com.adsamcik.starlitcoffee.ui.screen.BagDraftReviewRoute
 import com.adsamcik.starlitcoffee.ui.screen.MoreScreen
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingMethodsScreen
+import com.adsamcik.starlitcoffee.data.model.BrewingSet
+import com.adsamcik.starlitcoffee.ui.component.BrewingSetDraft
+import com.adsamcik.starlitcoffee.ui.component.BrewActivityHost
+import com.adsamcik.starlitcoffee.ui.session.ActiveBrewSessionPresentation
+import com.adsamcik.starlitcoffee.ui.session.ActiveBrewSessionPresentationMapper
+import com.adsamcik.starlitcoffee.ui.util.PresetIcon
+import com.adsamcik.starlitcoffee.ui.component.initialBrewingSetup
+import java.util.UUID
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingPersonalizeScreen
 import com.adsamcik.starlitcoffee.ui.screen.SavedRecipesScreen
 import com.adsamcik.starlitcoffee.ui.screen.ScanAddBagReview
@@ -143,31 +153,6 @@ private val dimModeRoutes = setOf(
     BloomTimer::class,
 )
 
-private val BrewMethodSetStateSaver: Saver<MutableState<Set<BrewMethod>>, ArrayList<String>> = Saver(
-    save = { state -> ArrayList(state.value.map { it.name }) },
-    restore = { list ->
-        mutableStateOf(
-            list.mapNotNull { runCatching { BrewMethod.valueOf(it) }.getOrNull() }.toSet(),
-        )
-    },
-)
-
-private val BrewMethodStateSaver: Saver<MutableState<BrewMethod>, String> = Saver(
-    save = { it.value.name },
-    restore = { name ->
-        runCatching { BrewMethod.valueOf(name) }.getOrNull()?.let { mutableStateOf(it) }
-    },
-)
-
-private val NullableFilterTypeStateSaver: Saver<MutableState<FilterType?>, String> = Saver(
-    save = { it.value?.name ?: "" },
-    restore = { name ->
-        mutableStateOf(
-            if (name.isEmpty()) null else runCatching { FilterType.valueOf(name) }.getOrNull(),
-        )
-    },
-)
-
 @Composable
 fun StarlitNavHost() {
     val navController = rememberNavController()
@@ -179,7 +164,8 @@ fun StarlitNavHost() {
         factory = BrewViewModelFactory(context as Application),
     )
     val calculatorViewModel: CalculatorViewModel = viewModel {
-        CalculatorViewModel(cupPresetRepository, userPreferencesRepository)
+        CalculatorViewModel(cupPresetRepository, userPreferencesRepository,
+            com.adsamcik.starlitcoffee.data.repository.RecipeRepository(database.recipeDao()))
     }
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -222,24 +208,37 @@ fun StarlitNavHost() {
             val restored = ActiveBrewSessionEntityMapper.restore(entity)
                 as? ActiveBrewSessionRestoreResult.Restored
             val recipe = restored?.value?.recipe
-            recipe == null || !exactRecipeReleaseGate.shouldGatePersistedSession(
-                rawRecipeId = recipe.builtInRecipeId,
-                rawBrewerProfileId = recipe.brewerProfileId,
+            recipe == null || (
+                !exactRecipeReleaseGate.shouldGateSession(recipe,
+                    restored.value.runtime.stagePlan.stages.map { it.definition }) &&
+                    ActiveBrewSessionPresentationMapper.map(restored.value) !is ActiveBrewSessionPresentation.Available
             )
         }?.sessionId
     }
+    val activitySessions = remember(recoverableSessions, exactRecipeReleaseGate) {
+        recoverableSessions.mapNotNull { entity ->
+            val restored = (ActiveBrewSessionEntityMapper.restore(entity)
+                as? ActiveBrewSessionRestoreResult.Restored)?.value ?: return@mapNotNull null
+            val recipe = restored.recipe
+            if (exactRecipeReleaseGate.shouldGateSession(recipe,
+                    restored.runtime.stagePlan.stages.map { it.definition }) ||
+                ActiveBrewSessionPresentationMapper.map(restored) !is ActiveBrewSessionPresentation.Available
+            ) {
+                null
+            } else {
+                restored
+            }
+        }
+    }
+    val focusedSessionId = navBackStackEntry
+        ?.takeIf { it.destination.hasRoute(BrewSession::class) }
+        ?.toRoute<BrewSession>()
+        ?.sessionId
 
     // Track onboarding state for methods screen → personalize screen
-    val onboardingMethods = rememberSaveable(saver = BrewMethodSetStateSaver) {
-        mutableStateOf(emptySet<BrewMethod>())
-    }
-    val onboardingDefault = rememberSaveable(saver = BrewMethodStateSaver) {
-        mutableStateOf(BrewMethod.PULSAR)
-    }
-    val onboardingFilter = rememberSaveable(saver = NullableFilterTypeStateSaver) {
-        mutableStateOf<FilterType?>(null)
-    }
-    val onboardingGrinder = rememberSaveable { mutableStateOf<String?>(null) }
+    val onboardingDrafts = rememberSaveable { mutableStateOf<String?>(null) }
+    val onboardingActiveId = rememberSaveable { mutableStateOf<String?>(null) }
+    val onboardingFirstId = rememberSaveable { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
 
     val showBottomBar = currentDestination?.let { dest ->
@@ -271,6 +270,15 @@ fun StarlitNavHost() {
     }
 
     val durableSessionRuntime = remember(context) { BrewSessionRuntime.create(context) }
+    val calculatorBrewStarter = remember(brewViewModel, calculatorViewModel, durableSessionRuntime) {
+        CalculatorBrewStarter(brewViewModel, calculatorViewModel, durableSessionRuntime.coordinator, scope,
+            onOpenSession = { id -> navController.navigate(BrewSession(id)) { launchSingleTop = true } },
+            onUnavailable = { snackbarHostState.showSnackbar(sessionUnavailableMessage) })
+    }
+    calculatorBrewStarter.pendingColdRequest?.let { request ->
+        ColdBrewStartSheet(request.sessionId.value, calculatorBrewStarter::dismissColdStart,
+            calculatorBrewStarter::startCold)
+    }
 
     // Notification deep link → BrewLogDetail. The bus is owned by MainActivity;
     // we pop the pending id here, navigate, and clear it so a recompose doesn't
@@ -394,18 +402,33 @@ fun StarlitNavHost() {
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
         bottomBar = {
-            if (showBottomBar && !useNavigationRail) {
-                NavigationBar {
-                    bottomNavItems.forEach { item ->
-                        NavigationBarItem(
-                            selected = currentDestination.hasRoute(item.route::class),
-                            onClick = { onSelectTopLevel(item.route) },
-                            icon = {
-                                val label = stringResource(item.labelRes)
-                                Icon(item.icon, contentDescription = label)
+            val hasBottomNavigation = showBottomBar && !useNavigationRail
+            val hasOtherSessions = prefs.onboardingCompleted &&
+                activitySessions.any { it.runtime.sessionId.value != focusedSessionId }
+            if (hasOtherSessions || hasBottomNavigation) {
+                Column(
+                    modifier = if (hasBottomNavigation) Modifier else Modifier.navigationBarsPadding(),
+                ) {
+                    if (hasOtherSessions) {
+                        BrewActivityHost(
+                            sessions = activitySessions,
+                            focusedSessionId = focusedSessionId,
+                            onOpenSession = { id ->
+                                navController.navigate(BrewSession(sessionId = id)) { launchSingleTop = true }
                             },
-                            label = { Text(stringResource(item.labelRes)) },
                         )
+                    }
+                    if (hasBottomNavigation) {
+                        NavigationBar {
+                            bottomNavItems.forEach { item ->
+                                NavigationBarItem(
+                                    selected = currentDestination.hasRoute(item.route::class),
+                                    onClick = { onSelectTopLevel(item.route) },
+                                    icon = { BottomNavigationIcon(item, stringResource(item.labelRes)) },
+                                    label = { Text(stringResource(item.labelRes)) },
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -456,13 +479,19 @@ fun StarlitNavHost() {
                 // Onboarding flow
                 composable<OnboardingMethods> {
                     OnboardingMethodsScreen(
-                        initialMethods = onboardingMethods.value,
-                        initialDefault = onboardingDefault.value.takeIf { onboardingMethods.value.isNotEmpty() },
-                        onNext = { methods, default ->
-                            onboardingMethods.value = methods
-                            onboardingDefault.value = default
-                            navController.navigate(OnboardingPersonalize)
+                        selected = onboardingDrafts.value?.let(BrewingSetDraft::decodeList)
+                            ?.find { it.set.id == onboardingFirstId.value }?.set?.method,
+                        onSelect = { method ->
+                            val drafts = onboardingDrafts.value?.let(BrewingSetDraft::decodeList)
+                            val changed = if (drafts.isNullOrEmpty()) {
+                                listOf(BrewingSetDraft(BrewingSet(UUID.randomUUID().toString(),
+                                    method = method, setup = initialBrewingSetup(method))))
+                            } else drafts.map { draft -> if (draft.set.id == onboardingFirstId.value) draft.withMethod(method) else draft }
+                            onboardingDrafts.value = BrewingSetDraft.encodeList(changed)
+                            if (onboardingFirstId.value == null) onboardingFirstId.value = changed.first().set.id
+                            if (onboardingActiveId.value == null) onboardingActiveId.value = changed.first().set.id
                         },
+                        onNext = { navController.navigate(OnboardingPersonalize) },
                     )
                 }
                 composable<OnboardingPersonalize> { backStackEntry ->
@@ -485,49 +514,55 @@ fun StarlitNavHost() {
                         }
                     }
                     OnboardingPersonalizeScreen(
-                        selectedMethods = onboardingMethods.value,
-                        initialFilter = onboardingFilter.value,
-                        initialGrinder = onboardingGrinder.value,
+                        drafts = BrewingSetDraft.decodeList(requireNotNull(onboardingDrafts.value)),
+                        activeId = requireNotNull(onboardingActiveId.value),
                         isSubmitting = onboardingState.isSubmitting,
                         submitFailed = onboardingState.failure,
                         onBack = {
                             // Save personalize state before going back
                             navController.popBackStack()
                         },
-                        onSelectionChanged = { filter, grinder ->
-                            onboardingFilter.value = filter
-                            onboardingGrinder.value = grinder
+                        onDraftsChanged = { drafts, id ->
+                            onboardingDrafts.value = BrewingSetDraft.encodeList(drafts)
+                            onboardingActiveId.value = id
+                            if (drafts.none { it.set.id == onboardingFirstId.value }) onboardingFirstId.value = id
                         },
-                        onFinish = { filterType, grinderId ->
-                            onboardingViewModel.complete(
-                                enabledMethods = onboardingMethods.value,
-                                defaultMethod = onboardingDefault.value,
-                                filterType = filterType,
-                                grinderId = grinderId,
-                            )
+                        onFinish = { sets, id ->
+                            onboardingViewModel.completeSets(sets, id)
                         },
                     )
                 }
 
                 // Main app screens
-                composable<CalculatorBrew> {
+                composable<CalculatorBrew> { backStackEntry ->
+                    val scannedBarcode by backStackEntry.savedStateHandle
+                        .getStateFlow<String?>(SCANNED_BARCODE_RESULT_KEY, null)
+                        .collectAsStateWithLifecycle()
                     CalculatorBrewScreen(
                         calculatorViewModel = calculatorViewModel,
                         brewViewModel = brewViewModel,
-                        userPreferencesRepository = userPreferencesRepository,
+                        onNavigateToSettings = { navController.navigate(Settings) },
                         onNavigateToBrew = {
                             brewViewModel.startNewBrewSession()
                             if (prefs.skipMethodSelection) {
-                                navController.navigate(BrewTimer)
+                                calculatorBrewStarter.start()
                             } else {
                                 navController.navigate(GrindPrep)
                             }
                         },
                         recoverableSessionId = recoverableSessionId,
+                        isStartingBrew = calculatorBrewStarter.isStarting,
                         onResumeSession = { sessionId ->
                             navController.navigate(BrewSession(sessionId = sessionId)) {
                                 launchSingleTop = true
                             }
+                        },
+                        onNavigateToBarcode = { navController.navigate(BarcodeScanner) },
+                        onNavigateToBags = { navController.navigate(BagInventory) },
+                        scannedBarcodeResult = scannedBarcode,
+                        onScannedBarcodeResultConsumed = {
+                            backStackEntry.savedStateHandle
+                                .consumeOneShotResult<String>(SCANNED_BARCODE_RESULT_KEY)
                         },
                     )
                 }
@@ -560,9 +595,8 @@ fun StarlitNavHost() {
                             )
                         },
                         onBack = {
-                            navController.navigate(CalculatorBrew) {
-                                popUpTo(CalculatorBrew) { inclusive = false }
-                                launchSingleTop = true
+                            if (!navController.popBackStack()) {
+                                navController.navigate(CalculatorBrew) { launchSingleTop = true }
                             }
                         },
                         guidancePreferences = durableGuidancePreferences,
@@ -590,6 +624,11 @@ fun StarlitNavHost() {
                             )
                         },
                         onScreenBackgrounded = {
+                            durableSessionRuntime.markScreenBackgrounded(
+                                com.adsamcik.starlitcoffee.domain.brewing.session.SessionId(
+                                    route.sessionId,
+                                ),
+                            )
                             scope.launch {
                                 durableSessionRuntime.publishBackgroundStatus(
                                     com.adsamcik.starlitcoffee.domain.brewing.session.SessionId(
@@ -601,7 +640,15 @@ fun StarlitNavHost() {
                     )
                 }
 
-                composable<GrindPrep> {
+                composable<GrindPrep> { backStackEntry ->
+                    val scannedBarcode by backStackEntry.savedStateHandle
+                        .getStateFlow<String?>("scanned_barcode", null).collectAsStateWithLifecycle()
+                    val newPackScan by backStackEntry.savedStateHandle
+                        .getStateFlow("prep_new_pack_scan", false).collectAsStateWithLifecycle()
+                    val consumeBarcode = {
+                        backStackEntry.savedStateHandle["scanned_barcode"] = null as String?
+                        backStackEntry.savedStateHandle["prep_new_pack_scan"] = false
+                    }
                     GrindPrepScreen(
                         brewViewModel = brewViewModel,
                         dimModeEnabled = prefs.dimModeEnabled,
@@ -610,7 +657,20 @@ fun StarlitNavHost() {
                         dimModeFullscreen = prefs.dimModeFullscreen,
                         dimModeForceDarkInLight = prefs.dimModeForceDarkInLight,
                         showBrewingInstructions = prefs.showBrewingInstructions,
-                        onNavigateToBrew = { navController.navigate(BrewTimer) },
+                        onNavigateToBrew = calculatorBrewStarter::start,
+                        isStartingBrew = calculatorBrewStarter.isStarting,
+                        onScanToChoose = {
+                            backStackEntry.savedStateHandle["prep_new_pack_scan"] = false
+                            navController.navigate(BarcodeScanner)
+                        },
+                        onScanNewPack = {
+                            backStackEntry.savedStateHandle["prep_new_pack_scan"] = true
+                            navController.navigate(BarcodeScanner)
+                        },
+                        scannedChooseBarcode = scannedBarcode.takeUnless { newPackScan },
+                        scannedNewPackBarcode = scannedBarcode.takeIf { newPackScan },
+                        onScannedChooseBarcodeHandled = consumeBarcode,
+                        onScannedNewPackBarcodeHandled = consumeBarcode,
                         onBack = { navController.popBackStack() },
                     )
                 }
@@ -672,6 +732,9 @@ fun StarlitNavHost() {
                         brewViewModel = brewViewModel,
                         onNavigateToAmount = { navController.navigate(CalculatorBrew) },
                         onBack = { navController.popBackStack() },
+                        onRecipeSelected = { recipe ->
+                            if (calculatorViewModel.loadRecipe(recipe)) brewViewModel.loadRecipe(recipe)
+                        },
                     )
                 }
                 composable<BagInventory> { backStackEntry ->
@@ -1028,10 +1091,19 @@ private fun StarlitNavigationRail(
             NavigationRailItem(
                 selected = currentDestination?.hasRoute(item.route::class) == true,
                 onClick = { onSelect(item.route) },
-                icon = { Icon(item.icon, contentDescription = label) },
+                icon = { BottomNavigationIcon(item, label) },
                 label = { Text(label) },
             )
         }
+    }
+}
+
+@Composable
+private fun BottomNavigationIcon(item: BottomNavItem, label: String) {
+    if (item.route == CalculatorBrew) {
+        PresetIcon("cappuccino", contentDescription = label, modifier = Modifier.size(24.dp))
+    } else {
+        Icon(item.icon, contentDescription = label)
     }
 }
 

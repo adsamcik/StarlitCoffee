@@ -1,0 +1,483 @@
+{
+  "date": "2026-10-06",
+  "tool": "built-in image_gen.imagegen",
+  "flow": "Generated image edits -> unchanged source PNG -> mechanical alpha tracing -> unchanged SVG paths -> Android vector import -> small-size/native review",
+  "icons": {
+    "cappuccino": {
+      "generator_file": "exec-f271790d-05d1-4611-9160-55abbe789384.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/cappuccino.png",
+          "sha256": "1201332922f650f9b7805f3a8c588198375a60eb2912dbf8848c134f03eb3f2b"
+        },
+        {
+          "path": "../rebuild-20261004/generated/mug.png",
+          "sha256": "52d7b266f32efe37bf8f95a646911a89fba5bcd0a2fcdf3b77442d9790f461e6"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit.\nAsset type: single monochrome vessel icon for an Android coffee application, delivered as a transparent PNG to be mechanically vector-traced.\nInput images: Image 1 is the original image-generated cappuccino icon to refine; Image 2 is the original mug style reference.\nPrimary request: Refine the original cappuccino icon so its contours feel polished and consistent with the original mug. Preserve its broad low rounded bowl, open elliptical rim, and substantial organically rounded right handle. Make rim and handle weight balanced and their transparent openings cleanly shaped. Preserve vessel identity and original natural proportions. A small careful refinement, not a geometric reconstruction.\nStyle: flat fully opaque dark charcoal filled silhouette with transparent negative-space cutouts. Smooth rounded contours, consistent moderate edge weight, no fine fragile details; readable at 24\u201332dp. The cup body is fully solid opaque charcoal. Only rim opening and handle opening are transparent.\nComposition: one isolated cup centered on square transparent canvas with generous margins, modest view down into the opening matching the reference.\nConstraints: no saucer, no steam, no decorations, no text, no watermark, no shadow, no gradients, no highlights, no semitransparent body. Do not create a grid, comparison, or additional cups. Actual transparent background.",
+      "transparent_background": true,
+      "source_sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8",
+      "anatomy_reference_sha256": "1201332922f650f9b7805f3a8c588198375a60eb2912dbf8848c134f03eb3f2b"
+    },
+    "espresso": {
+      "generator_file": "exec-bbac2c9e-0dd3-476a-9301-40af0e5d3875.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/espresso.png",
+          "sha256": "1f3c325700316324ed4ea60b402aa4a74741af7c7409046d6fd2fd4e1202b258"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated espresso icon to refine, whose anatomy and proportions must remain recognizable. Image 2 is the refined image-generated cappuccino, used ONLY for the shared visual language, not its anatomy.\nRequest: Make a restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick rim and openings. Keep the compact upright demitasse cup and detached low curved saucer, distinct from the wider low cappuccino. Rounded right handle with generous natural opening. Preserve the clear small gap above the saucer.\nPreserve the original silhouette's character and natural proportions; do not reconstruct it from rigid primitive shapes. One solid fully opaque dark charcoal icon; transparent negative-space cutouts, no gradients or partial transparency inside solid body. Clean continuous edges, simple vessel-specific anatomy, readable at 24\u201332dp.\nComposition: one isolated vessel centered on square actual transparent canvas, generous margins, modest same slight top view as original. No text, watermark, decoration, steam, shadow, comparison sheet, grid or additional vessels. No unrelated edits.",
+      "transparent_background": true,
+      "source_sha256": "7b6873d3d4208bb5aff8677217ffe661a870a16c2afe8cc351360268f67c1d71",
+      "anatomy_reference_sha256": "1f3c325700316324ed4ea60b402aa4a74741af7c7409046d6fd2fd4e1202b258"
+    },
+    "cortado": {
+      "generator_file": "exec-5779d610-159f-404c-aebd-b15c760e72ab.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/cortado.png",
+          "sha256": "038e2753373719023a4d7f8fbba1f2bd16001f3f43fc0a7ec153ec87f45cfb5d"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated cortado icon to refine, whose anatomy and proportions must remain recognizable. Image 2 is the refined image-generated cappuccino, used ONLY for the shared visual language, not its anatomy.\nRequest: Make a restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick rim and openings. Keep the short slightly tapered handleless cortado glass, open elliptical rim, thick base and a single simple rounded vertical glass reflection cutout. Align visual rim weight with the style reference, preserve glass identity.\nPreserve the original silhouette's character and natural proportions; do not reconstruct it from rigid primitive shapes. One solid fully opaque dark charcoal icon; transparent negative-space cutouts, no gradients or partial transparency inside solid body. Clean continuous edges, simple vessel-specific anatomy, readable at 24\u201332dp.\nComposition: one isolated vessel centered on square actual transparent canvas, generous margins, modest same slight top view as original. No text, watermark, decoration, steam, shadow, comparison sheet, grid or additional vessels. No unrelated edits.",
+      "transparent_background": true,
+      "source_sha256": "a8fcfa42dc63d5623489256285697d76a5c05d73bdbfbad2b4267317a7dd7c26",
+      "anatomy_reference_sha256": "038e2753373719023a4d7f8fbba1f2bd16001f3f43fc0a7ec153ec87f45cfb5d"
+    },
+    "mug": {
+      "generator_file": "exec-2380e6a2-c54b-4d3b-97df-3b7eff4e89cb.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/mug.png",
+          "sha256": "52d7b266f32efe37bf8f95a646911a89fba5bcd0a2fcdf3b77442d9790f461e6"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated mug icon to refine, whose anatomy and proportions must remain recognizable. Image 2 is the refined image-generated cappuccino, used ONLY for the shared visual language, not its anatomy.\nRequest: Make a restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick rim and openings. Keep the medium height cylindrical ceramic mug with softly rounded lower corners, open elliptical rim and organic rounded right handle. Preserve its taller profile, distinct from the broad cappuccino. Rim and handle should have balanced visual weight.\nPreserve the original silhouette's character and natural proportions; do not reconstruct it from rigid primitive shapes. One solid fully opaque dark charcoal icon; transparent negative-space cutouts, no gradients or partial transparency inside solid body. Clean continuous edges, simple vessel-specific anatomy, readable at 24\u201332dp.\nComposition: one isolated vessel centered on square actual transparent canvas, generous margins, modest same slight top view as original. No text, watermark, decoration, steam, shadow, comparison sheet, grid or additional vessels. No unrelated edits.",
+      "transparent_background": true,
+      "source_sha256": "a419da6c7fe596546d591bd3b720c029e5321e845279314ec097d67957509ed6",
+      "anatomy_reference_sha256": "52d7b266f32efe37bf8f95a646911a89fba5bcd0a2fcdf3b77442d9790f461e6"
+    },
+    "travel": {
+      "generator_file": "exec-3ca9fbf4-d52b-4dda-a0ad-107910a3e0f2.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/travel.png",
+          "sha256": "31393648b7dff0a3f7d69a5e0ce5ae81a044029e5fa2b2cfff0d97fa20c649fa"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated travel icon to refine, whose anatomy and proportions must remain recognizable. Image 2 is the refined image-generated cappuccino, used ONLY for the shared visual language, not its anatomy.\nRequest: Make a restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick rim and openings. Keep the original tall gently tapered reusable travel cup, compact rounded closed lid, collar and small subtle sipping tab. Refine ONLY the lid contours and two curved lid/collar/body separation seams so they are clean and modestly clearer at small sizes. Keep seams narrow, restrained and natural; no exaggerated floating lid pieces or wide gaps. Fully opaque body, no extra body details.\nPreserve the original silhouette's character and natural proportions; do not reconstruct it from rigid primitive shapes. One solid fully opaque dark charcoal icon; transparent negative-space cutouts, no gradients or partial transparency inside solid body. Clean continuous edges, simple vessel-specific anatomy, readable at 24\u201332dp.\nComposition: one isolated vessel centered on square actual transparent canvas, generous margins, modest same slight top view as original. No text, watermark, decoration, steam, shadow, comparison sheet, grid or additional vessels. No unrelated edits.",
+      "transparent_background": true,
+      "source_sha256": "3681e39be87759018255bd343ea76e59e9fbb8aa9f75245955c4300ab852db09",
+      "anatomy_reference_sha256": "31393648b7dff0a3f7d69a5e0ce5ae81a044029e5fa2b2cfff0d97fa20c649fa"
+    },
+    "takeaway": {
+      "generator_file": "exec-534826a3-1a49-43a9-a4c9-825b5fd7a446.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/takeaway.png",
+          "sha256": "8f096284caa958b37ccb15182d6ece325578eaeb8b7d74702ccaa8ad6950af5c"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated takeaway icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick rim and openings. Keep the tapered disposable takeaway cup, compact closed sipping lid and a single curved sleeve cutout. Keep the lid/body separation a restrained clean gap. Preserve proportions, not a reusable travel mug.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal silhouette, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partial transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "6388002ea8319d66ddd4e3fd4536522ee4402dc85f7e220b6da0dc4fc0f3d041",
+      "anatomy_reference_sha256": "8f096284caa958b37ccb15182d6ece325578eaeb8b7d74702ccaa8ad6950af5c"
+    },
+    "latte_glass": {
+      "generator_file": "exec-6274c060-b76e-45c0-9300-eeb8141171e1.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/latte_glass.png",
+          "sha256": "6e72aad161f2dc93b1d17e4f078dd721561e95513c47491e93fd8ec91b9c5227"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated latte_glass icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick rim and openings. Keep the original medium low handleless tapered latte glass, open elliptical rim and thick rounded base with one curved base cutout. Balance rim weight and preserve its shorter wider shape, distinct from the tall latte glass.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal silhouette, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partial transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "07129311cf035d37da41212991f458923b972b5ff4ffd3e602e02501e919e266",
+      "anatomy_reference_sha256": "6e72aad161f2dc93b1d17e4f078dd721561e95513c47491e93fd8ec91b9c5227"
+    },
+    "carafe": {
+      "generator_file": "exec-c6f79de5-8be3-4738-b5de-52bd83388fda.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/carafe.png",
+          "sha256": "d33596fbd328cf8b6e2528b25c80cc860b2aed630f2d29a696f9f6cad8105af8"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated carafe icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick rim and openings. Keep the original handleless hourglass-shaped glass carafe with slender pinched neck, flared open elliptical rim and broad rounded lower bowl. Preserve its natural continuous curved silhouette. No added marks or handles.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal silhouette, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partial transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "cca14ecd0e7d62b284cbcce0a4181fe109f5383c39829746460ba2f4b8ac89f4",
+      "anatomy_reference_sha256": "d33596fbd328cf8b6e2528b25c80cc860b2aed630f2d29a696f9f6cad8105af8"
+    },
+    "french_press": {
+      "generator_file": "exec-9592d139-aa56-4c1f-bd7b-e6feee92a832.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/french_press.png",
+          "sha256": "458013132e6b58b68b2e6276505822e553905ce231ee5f45f7baf542d3dfd69b"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated french_press icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick edges, rim and openings. Keep the original classic glass French press: upright framed cylinder, small pouring lip on left, organic rounded right handle, low lid, vertical plunger stem and knob. Preserve the recognizable frame, simple lower coffee area and open negative spaces. Cleanly unify frame/handle edge weights without making glass walls fragile or adding detail.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal shapes, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partially transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "0db03afdf0236582caadf4d9eb65f7ade3dad5d340abe76e930292b5b92d1830",
+      "anatomy_reference_sha256": "458013132e6b58b68b2e6276505822e553905ce231ee5f45f7baf542d3dfd69b"
+    },
+    "kettle": {
+      "generator_file": "exec-c42aca88-fe78-44dc-b0bf-ce0a312abf8d.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/kettle.png",
+          "sha256": "f632c415228666f907df47251e438c7ff6180a7b8525fadc6d1b1b4f74a42e7b"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated kettle icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick edges, rim and openings. Keep the original rounded pour-over kettle with graceful curved gooseneck spout pointing left, substantial arched overhead handle, low closed lid and compact knob. Preserve its natural broad rounded pot and graceful spout. Cleanly separate lid and body with a narrow simple curved seam; do not make floating pieces, thin wirework or rigid geometry.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal shapes, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partially transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "744a670da6bbe29837c17df1b0e9d5d04ce70fc7acf64906efd3a9960216c322",
+      "anatomy_reference_sha256": "f632c415228666f907df47251e438c7ff6180a7b8525fadc6d1b1b4f74a42e7b"
+    },
+    "mason_jar": {
+      "generator_file": "exec-de0984f0-970e-4d75-8513-065eb62aa42a.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/mason_jar.png",
+          "sha256": "b005a40c8ec2f3468714926621d33d0d8d5ad7c228ebc7d0db95a0de76ae7fed"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated mason_jar icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick edges, rim and openings. Keep the original handleless rounded mason jar with broad shoulders and open short threaded neck. Preserve the narrow understated neck seam and clean opaque body. Balance neck rim weight with the family and preserve its characteristic jar silhouette.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal shapes, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partially transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "d0c282ba26f825094183c020f68192368dfb09c41dd3ab3de0ea1867a5df7311",
+      "anatomy_reference_sha256": "b005a40c8ec2f3468714926621d33d0d8d5ad7c228ebc7d0db95a0de76ae7fed"
+    },
+    "bowl": {
+      "generator_file": "exec-bb9afeff-aad1-4ccc-9f53-1951d6de6a84.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/bowl.png",
+          "sha256": "7d6a9eb5ccaa813a6499af0815254677f6d14c73c51645ebc0abc088d92a7596"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated bowl icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick edges, rim and openings. Keep the original broad low handleless rounded bowl, open elliptical rim and small integrated foot. Preserve the naturally curved bowl profile, distinct from taller double-wall cups. Unify rim weight without flattening it into a rigid semicircle.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal shapes, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partially transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "7fc4e4cbea1afe7118523be3265c3562f0ac9e0c725f8223d16a00d867d02e58",
+      "anatomy_reference_sha256": "7d6a9eb5ccaa813a6499af0815254677f6d14c73c51645ebc0abc088d92a7596"
+    },
+    "double_wall_espresso": {
+      "generator_file": "exec-2a554233-000c-442e-b441-2d0db696e44f.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/double_wall_espresso.png",
+          "sha256": "c8345b74544ee36e6e4436ea01d2df9201925bd2eeaa0e6e8ebaba2dc92eb2cb"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated double_wall_espresso icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick edges, rim and openings. Keep the original short rounded handleless double-wall espresso glass, open elliptical rim and one clear U-shaped transparent wall gap around the fully opaque inner cup. Preserve the short espresso proportions and smooth naturally rounded base.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal shapes, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partially transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "b76526999973b32498a1949c9528af128e594387cd534c07eeec0678b3ede58d",
+      "anatomy_reference_sha256": "c8345b74544ee36e6e4436ea01d2df9201925bd2eeaa0e6e8ebaba2dc92eb2cb"
+    },
+    "double_wall_tumbler": {
+      "generator_file": "exec-30c8f6cb-5bc7-444a-870e-b289d7ceca66.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/double_wall_tumbler.png",
+          "sha256": "914b5452fb854fc344d02c767473c75f5f60fe6da6f6b3677a83818469cc6b14"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated double_wall_tumbler icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick edges, rim and openings. Keep the original taller rounded handleless double-wall tumbler, open elliptical rim and one clear U-shaped transparent wall gap around the opaque inner body. Preserve the taller elongated proportions, distinct from double-wall espresso.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal shapes, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partially transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "b0bebf894346bc07c2e74fe0add95e2dc528b2c6b5f88af1fe2f896a204e1020",
+      "anatomy_reference_sha256": "914b5452fb854fc344d02c767473c75f5f60fe6da6f6b3677a83818469cc6b14"
+    },
+    "double_wall_mug": {
+      "generator_file": "exec-5330dc78-a28d-4884-b730-504c5d5b95e5.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/double_wall_mug.png",
+          "sha256": "628d139953c934ddaa04af63f4d52d172bd5abe2d0638ffe5e863c8f9e1624a3"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated double_wall_mug icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick edges, rim and openings. Keep the original tall double-wall mug with rounded right handle, open elliptical rim and one continuous U-shaped transparent wall gap around the solid inner cup. Preserve its distinctive vessel proportions and original organically shaped handle. Balance rim, outer wall and handle weights.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal shapes, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partially transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "d5d6d2cbc53dd69b8569acf4a4009fea7062b58b6d22185363ebf9a0fa34fafa",
+      "anatomy_reference_sha256": "628d139953c934ddaa04af63f4d52d172bd5abe2d0638ffe5e863c8f9e1624a3"
+    },
+    "tall_latte_glass": {
+      "generator_file": "exec-24e1951b-4b3e-4558-a743-664dd73866a1.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/tall_latte_glass.png",
+          "sha256": "8480580ea7cf8e1da51da6c3ebd22fa072dc64149fe8b113be67a8b678b7c283"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated tall_latte_glass icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick edges, rim and openings. Keep the original tall slender handleless latte glass, elliptical opening, gently tapered long body, one rounded vertical glass reflection cutout and short thick base separated by a modest curved seam. Preserve its elegant tall proportions, distinct from cortado.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal shapes, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partially transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "6c950ce00444ad98020fe14ff9098b4e4f96bc98d7f414fbfe390d667b35a4e8",
+      "anatomy_reference_sha256": "8480580ea7cf8e1da51da6c3ebd22fa072dc64149fe8b113be67a8b678b7c283"
+    },
+    "aroma_taster": {
+      "generator_file": "exec-46f94536-21e4-4d16-b951-63aec3a98a7e.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/aroma_taster.png",
+          "sha256": "deb4f0a35da5b682dd30f6fef68f59d0553dd5092fed60400d7542b3f9ae91ec"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated aroma_taster icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick edges, rim and openings. Keep the original handleless tulip-shaped aroma tasting cup, subtly flared elliptical mouth, pinched upper neck, rounded belly and integrated short broad foot. Preserve its distinctive silhouette and no extra cutouts in body.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal shapes, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partially transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "545f3826afa1c4cd93a55e8cb220fb0c6fd4e60230b8cb6ac5fda50fc89a2656",
+      "anatomy_reference_sha256": "deb4f0a35da5b682dd30f6fef68f59d0553dd5092fed60400d7542b3f9ae91ec"
+    },
+    "spherical_latte": {
+      "generator_file": "exec-f93d12db-22b4-43a3-a495-1b60f4f77e4f.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/spherical_latte.png",
+          "sha256": "72ee5d15dfc243ee0f0906351a750bb12ce8ecb6fbccce250b40c8899318aefa"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated spherical_latte icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick edges, rim and openings. Keep the original full rounded spherical latte cup, slightly constricted open elliptical rim, large organically rounded handle on right and small integrated foot. Preserve its much fuller globe shape, distinct from cappuccino, and natural generous handle opening.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal shapes, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partially transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "c52480596883712921bd2a919a5ee305e03cde68a84a7c729401ea94d36b8ec7",
+      "anatomy_reference_sha256": "72ee5d15dfc243ee0f0906351a750bb12ce8ecb6fbccce250b40c8899318aefa"
+    },
+    "spouted_espresso_server": {
+      "generator_file": "exec-d36b00e5-e321-4271-b620-ac821872e2a1.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/spouted_espresso_server.png",
+          "sha256": "cc5cb63dc0459c17b7377e83339e6688cc4eab9d50db23de5c990ee6e19eff34"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated spouted_espresso_server icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick edges, rim and openings. Keep the original short small espresso serving pitcher with pointed pouring lip left, organic rounded loop handle right, gently pinched curved walls, rounded lower belly and open elliptical mouth. Preserve the spout as part of the rim opening.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal shapes, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partially transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "e69767e1a7c01b47329c9111c725a8aeb021ccbd29d706ddfc6c515fc079ecac",
+      "anatomy_reference_sha256": "cc5cb63dc0459c17b7377e83339e6688cc4eab9d50db23de5c990ee6e19eff34"
+    },
+    "dot_carafe": {
+      "generator_file": "exec-d95259d2-0905-409f-b105-1328c43fe6c0.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/dot_carafe.png",
+          "sha256": "63ab8865f1e25c1277989724d78115cced47fdd0812ab983f401361f509c94cd"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated dot_carafe icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick edges, rim and openings. Keep the original rounded handleless carafe with pinched narrow neck, open flared rim containing a rounded ball stopper and one simple broad curved reflection cutout on left. Keep stopper naturally seated and the rim opening clear. Preserve anatomy.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal shapes, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partially transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "6ac485c0e3a5b88529ea47255df3ce9963c0763d09bffadde85fecf9cc4f3a74",
+      "anatomy_reference_sha256": "63ab8865f1e25c1277989724d78115cced47fdd0812ab983f401361f509c94cd"
+    },
+    "lid_server": {
+      "generator_file": "exec-75e21eb7-5feb-45ac-bea9-5c3256833470.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/lid_server.png",
+          "sha256": "ecc7150426171b16c50b29ea2c29fe2e609fa822273f3f2bce13ea3e8945734d"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated lid_server icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick edges, rim and openings. Keep the original broad rounded handleless lidded server, compact broad low lid with small integrated knob, modest clean separation from body and curved shoulder opening. Reduce the oversized original separation slightly if necessary so lid sits naturally, not floating far above the body. Preserve the server shape.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal shapes, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partially transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "b31d96735ce5a36a59d993c3603429d087f7212d2c21aecdbe28c5115b351777",
+      "anatomy_reference_sha256": "ecc7150426171b16c50b29ea2c29fe2e609fa822273f3f2bce13ea3e8945734d"
+    },
+    "beehive_server": {
+      "generator_file": "exec-0465bfd8-0a70-437a-8f9a-02e1d8555810.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/beehive_server.png",
+          "sha256": "beeb6c9ab5aea875e01e5fef7dcba9a4913e3b65cd462045d124086460fcbc56"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated beehive_server icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick edges, rim and openings. Keep the original rounded handleless beehive server, narrow curving open neck, flared elliptical mouth, broad rounded stepped lower body and two restrained curved horizontal rib seams. Preserve its recognizably layered beehive form without exaggerated disconnected tiers.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal shapes, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partially transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "b30bc0bcbedd09b6e2458391349240567437705c254b43409489d023dcf2d548",
+      "anatomy_reference_sha256": "beeb6c9ab5aea875e01e5fef7dcba9a4913e3b65cd462045d124086460fcbc56"
+    },
+    "barista_server": {
+      "generator_file": "exec-a85131c3-8195-497f-8be4-59e46021fedf.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/barista_server.png",
+          "sha256": "5bb7d85722362ba17bbae6956ae5e7cf84f8706baa6d9dfad0701d8e5fac6158"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated barista_server icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick edges, rim and openings. Keep the original broad short glass barista server with slight hourglass waist, pointed pouring lip on left, open mouth and substantial organic rounded right handle. Preserve its natural short broad proportions and generous handle opening.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal shapes, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partially transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "1acad301d8c57af871aed009eb7af9e0de1e29e5733cb6d7e8be5b5f3c3237b5",
+      "anatomy_reference_sha256": "5bb7d85722362ba17bbae6956ae5e7cf84f8706baa6d9dfad0701d8e5fac6158"
+    },
+    "angular_server": {
+      "generator_file": "exec-20340b75-b607-4f0e-95ad-7f5ded4e5b83.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/angular_server.png",
+          "sha256": "d952ddb46a6a9a56b4ee84c92ddc31fff3939e0072ec659e2fae7ec1dd635814"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated angular_server icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick edges, rim and openings. Keep the original handleless angular server with open elliptical rim, short pinched neck, sloping straight sides, rounded lower corners and broad flat base. This vessel is deliberately angular; keep its identity while gently softening corners and balancing the rim.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal shapes, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partially transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "dd20481d12c476600864dc0aa83763f7124e7d498991d6f89f356af4b3159cdb",
+      "anatomy_reference_sha256": "d952ddb46a6a9a56b4ee84c92ddc31fff3939e0072ec659e2fae7ec1dd635814"
+    },
+    "faceted_cortado": {
+      "generator_file": "exec-874d6c7d-7c3a-4919-a8ee-0ee00f81b30c.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/faceted_cortado.png",
+          "sha256": "8283d394464838d2e8e24b6f9e4e51a02f51ad947020bc000638cf8879002559"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated faceted_cortado icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick edges, rim and openings. Keep the original short faceted cortado glass with broad elliptical opening, slightly tapered body, two generous simple vertical facet seams and short thick base. Preserve three simple solid facets and modest base gap; no extra facets or texture.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal shapes, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partially transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "fc5e76f87bf1af382530e8466a0c22d02abd6cd00d25a1b564ef8cfbda1e56f5",
+      "anatomy_reference_sha256": "8283d394464838d2e8e24b6f9e4e51a02f51ad947020bc000638cf8879002559"
+    },
+    "ceramic_latte_bowl": {
+      "generator_file": "exec-b98b81c7-bfad-4b8e-bf7d-4b397029eb99.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/ceramic_latte_bowl.png",
+          "sha256": "e8d4870258f9c530dbe50726d1539f5e29c3e21fef395f570eade381d3677115"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated ceramic_latte_bowl icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick edges, rim and openings. Keep the original wide deep handleless ceramic latte bowl with open elliptical rim, generous rounded bowl walls and broad small integrated foot. Preserve its deeper fuller ceramic bowl profile, distinct from the shallower ordinary bowl.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal shapes, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partially transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "1d5696e78af3a1c7a0ddbc5c202db45d7823e39a33c73d0d093533d5bf7e486f",
+      "anatomy_reference_sha256": "e8d4870258f9c530dbe50726d1539f5e29c3e21fef395f570eade381d3677115"
+    },
+    "thermal_carafe": {
+      "generator_file": "exec-5dd43951-4b3a-4a9d-9508-74cd2bd0b4bf.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/thermal_carafe.png",
+          "sha256": "1f2b938063a2e108eb082ea4016d7cdc5e7434f90d8999bd3de1cfd2c8846e8d"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated thermal_carafe icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick edges, rim and openings. Keep the original tall thermal serving jug, gently tapered closed solid body, compact rounded closed lid with a small pour-control tab, short pouring spout on left and large rounded right handle. Keep two restrained clean lid/neck seams, natural organic handle and practical vessel anatomy.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal shapes, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partially transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "98fc0518d32b15f54179ef2d9e2acdb67086e24329d32c099c58cde84360f6a6",
+      "anatomy_reference_sha256": "1f2b938063a2e108eb082ea4016d7cdc5e7434f90d8999bd3de1cfd2c8846e8d"
+    },
+    "double_wall_press": {
+      "generator_file": "exec-0d691a05-39d3-45d8-9a8b-534b0a4857b2.png",
+      "references": [
+        {
+          "path": "../rebuild-20261004/generated/double_wall_press.png",
+          "sha256": "e5614fd746f825c4453bcf9f487126e8360f336744c87bdd880782e270282a19"
+        },
+        {
+          "path": "generated/cappuccino.png",
+          "sha256": "ae962069a5050f1968ed0693d40e3c0217682db14bb8a44163ef14f975db12b8"
+        }
+      ],
+      "prompt": "Use case: precise-object-edit. Asset type: one monochrome vessel icon for Android, transparent PNG to be mechanically vector-traced.\nInputs: Image 1 is the original image-generated double_wall_press icon to refine, preserving its anatomy and proportions. Image 2 is the refined image-generated cappuccino, used ONLY for shared style, not its anatomy.\nRequest: A restrained refinement of Image 1 to match Image 2's bold filled silhouette, smooth rounded contours and balanced moderately thick edges, rim and openings. Keep the original handleless double-wall French press, tall rounded transparent-wall frame, solid low coffee region, centered plunger stem and small rounded knob on a broad low closed lid. Preserve a clear U-shaped wall gap and simple open upper spaces. Distinct from the classic press with a handle. Smooth moderate-weight outer wall, no extra machinery.\nPreserve the original silhouette's character and natural proportions; do not reconstruct from rigid primitive shapes. Fully opaque flat dark charcoal shapes, transparent negative-space cutouts, clean continuous edges, readable at 24\u201332dp.\nOne isolated vessel centered on square genuinely transparent canvas with generous margins and same slight top view. No gradients, partially transparent body, shadow, decoration, text, watermark, steam, extra vessels, grid or comparison.",
+      "transparent_background": true,
+      "source_sha256": "2b909a56bbc87a7a6c197904768698ffd488d2d3d709d5b894a363b2c44c1f07",
+      "anatomy_reference_sha256": "e5614fd746f825c4453bcf9f487126e8360f336744c87bdd880782e270282a19"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="34dp" android:height="34dp" android:viewportWidth="256" android:viewportHeight="256">
+    <path android:fillColor="#E08A31" android:fillType="nonZero" android:pathData="M168 86 C185 75 209 81 221 99 C232 115 236 136 229 156 C222 176 204 190 177 198 L163 181 Z M190 103 C188 122 190 150 184 175 C205 168 215 151 215 132 C215 113 205 101 190 103 Z" />
+    <path android:fillColor="#F39B3E" android:fillType="nonZero" android:pathData="M174 85 C191 79 209 88 218 102 C228 119 231 139 225 154 C222 164 216 171 209 176 C220 161 223 146 219 130 C215 111 204 96 189 95 C184 95 179 96 174 99 Z" />
+    <path android:fillColor="#C7792A" android:fillType="nonZero" android:pathData="M184 175 C205 168 215 151 215 132 C215 115 207 103 195 102 C211 98 221 115 221 132 C221 154 210 173 182 185 Z" />
+    <path android:fillColor="#EE8C36" android:fillType="nonZero" android:pathData="M24 72 C24 112 25 157 31 187 C37 216 58 229 106 229 C150 229 173 216 180 187 C187 159 184 109 184 72 Z" />
+    <path android:fillColor="#FFA144" android:fillType="nonZero" android:pathData="M24 72 C65 84 118 88 160 78 C156 116 145 153 125 181 C105 210 78 225 59 216 C33 204 25 167 24 72 Z" />
+    <path android:fillColor="#E18432" android:fillType="nonZero" android:pathData="M160 78 C168 76 177 74 184 72 C184 111 187 159 180 187 C173 216 150 229 106 229 C88 229 76 227 65 223 C100 226 129 209 146 182 C161 158 164 116 160 78 Z" />
+    <path android:fillColor="#D27A2D" android:fillType="nonZero" android:pathData="M179 75 C181 74 183 73 184 72 C184 111 187 159 180 187 C173 216 150 229 106 229 C88 229 76 227 65 223 C102 225 131 210 150 183 C169 151 178 108 179 75 Z" />
+    <path android:fillColor="#FFCC83" android:fillType="nonZero" android:pathData="M45 96 C40 96 37 100 38 107 L40 171 C41 183 43 192 46 196 C48 200 55 200 56 194 C56 184 52 169 52 153 L52 110 C52 102 50 97 45 96 Z" />
+    <path android:fillColor="#FFF5D4" android:fillType="nonZero" android:pathData="M184 72 C184 86 148 98 104 98 C60 98 24 87 24 72 C24 57 60 45 104 45 C148 45 184 57 184 72 Z" />
+    <path android:fillColor="#EBC089" android:fillType="nonZero" android:pathData="M174 72 C174 83 143 91 104 91 C65 91 34 83 34 72 C34 62 65 53 104 53 C143 53 174 62 174 72 Z" />
+    <path android:fillColor="#61300A" android:fillType="nonZero" android:pathData="M171 75 C165 83 137 89 104 89 C71 89 44 83 37 75 C43 65 70 59 104 59 C138 59 165 65 171 75 Z" />
+    <path android:fillColor="#71390D" android:fillType="nonZero" android:pathData="M40 74 C48 66 73 62 104 62 C125 62 145 64 157 68 C143 65 125 65 107 65 C77 65 53 69 40 74 Z" />
+</vector>

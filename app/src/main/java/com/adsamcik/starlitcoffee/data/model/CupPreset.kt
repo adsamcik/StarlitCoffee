@@ -1,5 +1,8 @@
 package com.adsamcik.starlitcoffee.data.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class CupPreset(
     val id: Long = 0,
     val name: String,

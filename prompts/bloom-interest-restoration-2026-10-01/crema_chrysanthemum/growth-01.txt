@@ -1,0 +1,30 @@
+Use case: illustration-story
+Create one square 5 by 5 sprite atlas, exactly 25 complete Crema Chrysanthemum growth poses in row-major order, on genuinely transparent RGBA. Attached image is the approved mature target. Preserve its warm cream and gold material, dense nested fine curls, small dark central recess, unequal curled petal tips, short stem and vertical split brown bean. No leaves, extra motifs, labels, grid lines, guides, text or background. Each whole plant has empty margin and never touches another cell.
+Fix the same small bean at the same center and baseline in every cell, with identical bean size and material; do not enlarge early beans. Let the flower grow from a tiny ivory point to a dominant many-layered head. The full mature plant should use about 80 percent of cell height and the flower nearly the available safe width. The bean remains about one quarter of mature plant height. Rich internal petal density is essential: many thin inward curls, darker overlaps, small tight inner tips and larger unequal outer curls. Avoid a few fat smooth tubes or a perfectly mirrored daisy. Keep the flower's slight three-quarter bowl depth and persistent petal attachments.
+Build the growth backward from the final target. Every row must add a new visible stage, and every final-row pose must release a different still-folded region. Do not finish the flower by F16 and merely enlarge it afterward. Once exposed, each petal stays attached and progressively uncurls; it must not disappear or reset. The small dark center stays in the same part of the bowl.
+F01 intact small vertical split bean only.
+F02 a fine warm ivory point emerges from the crack.
+F03 ivory point rises visibly, with a tiny rounded tip.
+F04 short pale stem and tight pointed golden bud establish.
+F05 bud enlarges into a small closed cream teardrop above the same bean.
+F06 tight outer petal seams become visible; bud broadens without opening fully.
+F07 first unequal cream tips separate around the closed core.
+F08 the tips bend outward into a small deep cup, revealing a tiny dark center.
+F09 first outer blades unfold to about one third of final flower width.
+F10 a second layer of narrow curled tips rises inside the cup.
+F11 left outer petals curl outward while the rear inner tips stay upright.
+F12 right outer petals unfurl, preserving the left curls and dark recessed center.
+F13 lower-front petal folds separate; the head reaches about half final width.
+F14 fine rear inner curls lift and separate into an additional dense layer.
+F15 neighboring inner curls turn inward, adding depth rather than smooth filler.
+F16 front middle petals unfurl in unequal lengths; bowl reaches about two thirds final width.
+F17 left middle curls release, with small tight inner tips still gathered.
+F18 right middle curls loosen, preserving all previous curls and overlaps.
+F19 the upper/rear rim develops more fine curled tips; broad outer petals are still partly rolled.
+F20 a dense three-quarter-open head at about 80 percent of final width, with front and lower side tips still visibly folded.
+F21 lower-front outer curls unroll down and outward, visibly enlarging the scalloped lower silhouette.
+F22 lower-left curled tips release and turn outward while upper fine curls remain dense.
+F23 lower-right outer curls release, creating an unequal flowing rim and a wider bowl.
+F24 remaining front-middle folds separate; small inner curled tips lift around the dark central recess.
+F25 the complete approved mature head: many varied fine nested cream/gold curls at different depths, large unequal outer tips, small dark center, short pale stem and unchanged bean.
+Painterly tactile finish with fine fold strokes. Preserve mature richness, confident silhouette and organic irregularity. No long closed-bud hold, no final row of the same completed flower, no isolated glitter or arbitrary new decorations.

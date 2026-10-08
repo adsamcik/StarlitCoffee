@@ -21,9 +21,11 @@ import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
 import com.adsamcik.starlitcoffee.data.work.BagExtractionScheduler
 import com.adsamcik.starlitcoffee.data.work.BagExtractionStartupRecovery
 import com.adsamcik.starlitcoffee.diagnostics.StarlitTracebox
-import com.adsamcik.starlitcoffee.scan.observability.PersistentLlmDiagnosticsRecorder
+import com.adsamcik.starlitcoffee.scan.observability.LegacyLlmDiagnosticsStore
+import com.adsamcik.starlitcoffee.scan.observability.TraceboxLlmDiagnosticsRecorder
 import com.adsamcik.starlitcoffee.util.MindlayerAvailability
 import com.adsamcik.starlitcoffee.util.RecognitionPreference
+import com.adsamcik.starlitcoffee.util.RecognitionCapability
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -96,11 +98,19 @@ class StarlitCoffeeApp : Application() {
         }
     }
 
+    /** Manual recovery reuses a healthy client and reconnects failed bindings without consent. */
+    suspend fun reconnectMindlayerIfUnavailable(): Boolean =
+        currentMindlayerServices()?.llmProvider?.isAvailable() == true || reconnectMindlayer()
+
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
         traceboxHandlerProcess = StarlitTracebox.isHandlerProcess(base)
         if (!traceboxHandlerProcess) {
+            val legacyAiDiagnosticsCleared = LegacyLlmDiagnosticsStore.clear(base)
             StarlitTracebox.install(base)
+            if (!legacyAiDiagnosticsCleared) {
+                Tracebox.log.warn(LogTemplate.of("Legacy AI diagnostic data deletion needs retry"))
+            }
         }
     }
 
@@ -180,7 +190,7 @@ class StarlitCoffeeApp : Application() {
                     client = client,
                     llmProvider = MindlayerLlmInferenceProvider(
                         client,
-                        PersistentLlmDiagnosticsRecorder(applicationContext),
+                        TraceboxLlmDiagnosticsRecorder(),
                     ),
                     ocrService = HierarchicalOcrService(MindlayerOcrService(client)),
                 ).also { mindlayerServices = it }
@@ -281,6 +291,10 @@ class StarlitCoffeeApp : Application() {
             if (!MindlayerAvailability.isInstalled(app)) return false
             return app.currentMindlayerServices()?.llmProvider?.isAvailable() ?: true
         }
+
+        override fun unavailableCapability(): RecognitionCapability =
+            app.currentMindlayerServices()?.llmProvider?.unavailableCapability()
+                ?: RecognitionCapability.TEMPORARILY_UNAVAILABLE
 
         override suspend fun prewarm() {
             if (!app.isMindlayerEnrichmentEnabled()) return

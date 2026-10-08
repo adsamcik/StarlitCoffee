@@ -3,6 +3,7 @@
     <string-array name="brew_method_names">
         <item>Pulsar</item><item>V60</item><item>French press</item><item>AeroPress</item>
         <item>Espresso</item><item>Mokkapot</item><item>Cold brew</item>
+        <item>Chemex</item>
     </string-array>
     <string-array name="filter_type_names"><item>Papier</item><item>19K</item><item>40K</item></string-array>
     <string-array name="filter_cup_profiles">
@@ -18,10 +19,5 @@
         <item>Bijenkorfkannetje</item><item>Baristakannetje</item><item>Hoekig kannetje</item>
         <item>Gefacetteerd cortadoglas</item><item>Keramische lattekom</item>
         <item>Thermoskaraf</item><item>Dubbelwandige French press</item>
-    </string-array>
-    <string-array name="preset_color_labels">
-        <item>Standaard</item><item>Bruin</item><item>Chocolade</item><item>Peru</item>
-        <item>Staalblauw</item><item>Zeegroen</item><item>Paars</item><item>Karmozijn</item>
-        <item>Oranje</item><item>Leisteen</item>
     </string-array>
 </resources>

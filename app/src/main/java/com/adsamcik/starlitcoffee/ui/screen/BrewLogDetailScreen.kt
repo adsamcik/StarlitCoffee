@@ -517,7 +517,7 @@ fun BrewLogDetailScreen(
                 estimatedWaterInputG = if (directBeverageYield) {
                     null
                 } else {
-                    measurementContext?.plannedWaterInputG ?: entity.waterG
+                    measurementContext?.plannedWaterInputG ?: entity.waterG.takeIf { it > 0f }
                 },
                 estimatedBeverageOutputG = displayedBeverageOutputG,
                 measuredWaterInputG = entity.measuredWaterInputG.takeIf { measurementContext != null },
@@ -535,6 +535,10 @@ fun BrewLogDetailScreen(
             )
 
             Spacer(modifier = Modifier.height(12.dp))
+            entity.reviewedRecipe()?.quantities?.brewWaterInputMl?.let { ml ->
+                Text("${stringResource(R.string.label_water)}: ${formatNumber(ml)} mL",
+                    style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(8.dp))
+            }
 
             ElevatedCard(
                 shape = MaterialTheme.shapes.large,
@@ -563,7 +567,10 @@ fun BrewLogDetailScreen(
                                         log = entity.copy(coffeeBagId = bagId)
                                     },
                                     onFailure = { error ->
-                                        Tracebox.log.error(error, BrewLogDetailScreenTraceboxTemplates.FAILED_TO_UPDATE_BREW_LOG_COFFEE_BAG)
+                                        Tracebox.log.error(
+                                            error,
+                                            BrewLogDetailScreenTraceboxTemplates.FAILED_TO_UPDATE_BREW_LOG_COFFEE_BAG,
+                                        )
                                         Toast.makeText(
                                             context,
                                             R.string.msg_could_not_save_changes,

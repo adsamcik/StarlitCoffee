@@ -1,0 +1,385 @@
+{
+  "method_id": "percolator",
+  "title": "Percolator brewing guide",
+  "scope": "Presto 02822 six-cup, 120 V AC electric percolator; app-selected four-mark batch using the current 72-875J manufacturer procedure. COLETTI Bozeman stovetop differences are separate.",
+  "research_date": "2026-10-02",
+  "review_status": "editorially_reviewed",
+  "physical_brew_tested": false,
+  "sources": [
+    {
+      "id": "presto_manual",
+      "title": "6-cup stainless steel Coffee Maker instructions, Form 72-875J (2026)",
+      "url": "https://www.gopresto.com/uploads/02822_72_875J_SCM_Eng_Web_Instructions.pdf",
+      "author_or_organization": "National Presto Industries, Inc.",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Cold reservoir start; 2/4/6 nominal coffee-cup marks with matching coffee tablespoon ranges 2–3/3–7/5–8",
+        "Nominal coffee cup means about five ounces of brewed coffee, not exact reservoir input",
+        "Compatible wraparound paper and 3-inch disc paper; regular or percolator grind permitted",
+        "Clean moving tube washer, seated perk tube, basket lid and firmly secured cover",
+        "120 V AC only; ready signal light and continued heating while plugged in",
+        "Never plug in without water or liquid coffee; unplug, cool, prevent immersion and keep base/socket dry",
+        "Only perk tube, basket and basket lid expressly identified as dishwasher-compatible; weak-coffee procedure checks"
+      ]
+    },
+    {
+      "id": "presto_product",
+      "title": "Presto 6-Cup Stainless Steel Coffee Maker, stock 02822",
+      "url": "https://www.gopresto.com/product/presto-6-cup-stainless-steel-coffee-maker-02822",
+      "author_or_organization": "National Presto Industries, Inc.",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Recirculation through the same grounds multiple times",
+        "2–6 nominal five-ounce brewed coffee cups; approximate cup-a-minute marketing estimate",
+        "Ready light and automatic keep-warm operation"
+      ]
+    },
+    {
+      "id": "equal_exchange",
+      "title": "How to Brew a Great Cup of Coffee — Percolators",
+      "url": "https://equalexchange.coop/sites/default/files/brewingtips.pdf",
+      "author_or_organization": "Equal Exchange",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Original Fellowship Blend percolator procedure uses coarser-than-drip grind because liquid passes through grounds repeatedly",
+        "Regular cleaning and fresh service, with thermal carafes for longer service",
+        "This roaster's serving reference is six ounces and cannot be substituted for Presto five-ounce marks"
+      ]
+    },
+    {
+      "id": "coletti_support",
+      "title": "COLETTI Percolator Support — Bozeman brewing procedure",
+      "url": "https://coletticoffee.com/pages/percolator-support",
+      "author_or_organization": "COLETTI Coffee",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Bozeman fill limit is pouring holes behind spout; basket assembly and coarse coffee",
+        "Low-to-medium stovetop heat, visible perking in glass knob, then 4–7 minutes or desired strength",
+        "Steady perking rather than aggressive boiling helps avoid grounds in coffee",
+        "Secure lid when pouring; hot handling requires protection"
+      ]
+    },
+    {
+      "id": "coletti_faq",
+      "title": "Frequently Asked Questions About COLETTI Percolators",
+      "url": "https://coletticoffee.com/pages/faq",
+      "author_or_organization": "COLETTI Coffee",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "COLETTI nominal coffee cups are five ounces; tablespoon-per-cup brewing reference",
+        "Most standard COLETTI models differ from the induction-compatible Bozeman Induction model",
+        "Partial batches require timing adjustment"
+      ]
+    }
+  ],
+  "recipe": {
+    "name": "Four-mark Presto 02822 starting pot",
+    "provenance": "app_authored_synthesis",
+    "source_ids": [
+      "presto_manual",
+      "presto_product",
+      "equal_exchange"
+    ],
+    "equipment": [
+      "Presto 02822 6-cup electric percolator with matching cord, perk tube/washer, basket, basket lid and cover",
+      "Manufacturer-compatible wraparound paper filter",
+      "Actual measuring tablespoon",
+      "Coarse percolator-ground coffee",
+      "Fresh cold drinking water",
+      "Suitable indoor 120 V AC supply and stable counter"
+    ],
+    "coffee_dose_g": null,
+    "coffee_dose_tbsp": 4,
+    "coffee_dose_measure": "Four level measuring tablespoons; app-selected within the manufacturer three-to-seven tablespoon range for the four mark. No verified mass conversion.",
+    "brew_water_g": null,
+    "brew_water_ml": null,
+    "reservoir_fill_mark": 4,
+    "reservoir_fill_mark_min": 2,
+    "reservoir_fill_mark_max": 6,
+    "nominal_coffee_cup_fl_oz": 5,
+    "nominal_coffee_cup_basis": "Manufacturer describes approximately five US fluid ounces brewed coffee per nominal cup; this is not an exact input-water or collected-output calibration.",
+    "ice_g": 0,
+    "target_beverage_g": null,
+    "ratio_basis": "equipment_fill",
+    "ratio_value": null,
+    "water_temperature_c": {
+      "min": null,
+      "max": null,
+      "control": "Fresh cold starting water; electric appliance controls brewing and warming temperatures. No measured numeric temperature is provided."
+    },
+    "grind_description": "Coarse percolator-ground coffee, coarser than drip grind; no exact particle size or grinder setting. Presto also permits regular grind with a compatible filter.",
+    "expected_time_s": {
+      "min": null,
+      "max": null,
+      "clock_start": "Connect the filled, closed appliance's cord to the wall outlet",
+      "clock_end": "Ready signal light illuminates; this indicates readiness rather than a power-off"
+    },
+    "completion_signal": "Presto 02822 ready light; automatic keeping-hot operation continues while the pot remains stationary and plugged in. Disconnect wall then appliance before lifting to serve. No universal timer deadline.",
+    "scaling": "equipment_bound",
+    "capacity_dose_pairs": [
+      {
+        "reservoir_mark": 2,
+        "coffee_tbsp_min": 2,
+        "coffee_tbsp_max": 3
+      },
+      {
+        "reservoir_mark": 4,
+        "coffee_tbsp_min": 3,
+        "coffee_tbsp_max": 7
+      },
+      {
+        "reservoir_mark": 6,
+        "coffee_tbsp_min": 5,
+        "coffee_tbsp_max": 8
+      }
+    ],
+    "steps": [
+      {
+        "id": "prepare",
+        "instruction": "With the appliance cool and unplugged, prepare clean, matching parts. Before first use wash and rinse its interior, cover and basket assembly, keeping base and plug socket dry. Check that the perk-tube washer is clean and moves freely.",
+        "why": "Clean correctly fitted parts enable perking and keep the electrical connection dry.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Clean cool parts, freely moving washer, dry electrical base and socket",
+        "source_ids": [
+          "presto_manual"
+        ]
+      },
+      {
+        "id": "fill_reservoir",
+        "instruction": "Remove the assembly and fill fresh cold water to the internal four mark. Do not substitute four household cups or assume exactly twenty fluid ounces input water.",
+        "why": "This model uses reservoir marks; starting a warm consecutive pot can weaken brewing.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "water_add_ml": null,
+        "water_cumulative_ml": null,
+        "reservoir_fill_mark": 4,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Cold water reaches the internal four mark, within the model's two-to-six range",
+        "source_ids": [
+          "presto_manual",
+          "presto_product"
+        ]
+      },
+      {
+        "id": "load_basket",
+        "instruction": "Place wraparound paper's central hole over the basket stem. Block the stem opening with a finger while adding four level measuring tablespoons of coarse coffee. Fold paper over the coffee and tuck excess inside the basket.",
+        "why": "A fitted filter and clear stem reduce grounds in the pot; the measured dose is repeatable without claiming its mass.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Coffee stays in the paper-lined basket and the stem opening remains clear",
+        "source_ids": [
+          "presto_manual",
+          "equal_exchange"
+        ]
+      },
+      {
+        "id": "assemble",
+        "instruction": "Cover the basket with its metal lid. Seat the perk tube in the bottom perk well; hold it there while fitting the filled basket. Push the pot cover firmly into place.",
+        "why": "Mis-seated tubing or a stuck washer can stop circulation; a secured cover protects against scalding.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Tube seated, basket lid fitted and pot cover firmly secured",
+        "source_ids": [
+          "presto_manual"
+        ]
+      },
+      {
+        "id": "brew",
+        "instruction": "Attach the cord to the filled closed appliance first, then a suitable 120 V AC wall outlet. Leave the lid closed and wait for its ready light.",
+        "why": "The electric model manages brewing; an elapsed timer or stovetop perking window cannot replace its ready indicator.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": 0,
+        "duration_s": null,
+        "completion": "Ready signal light illuminates",
+        "source_ids": [
+          "presto_manual",
+          "presto_product"
+        ]
+      },
+      {
+        "id": "disconnect_serve",
+        "instruction": "Disconnect the wall plug first, then the appliance cord before lifting the pot. Pour using its handle with the cover secured. Optional keep-warm operates while stationary and plugged in; for later service transfer coffee to a thermal carafe.",
+        "why": "Ready does not mean power-off. Disconnecting before lifting simplifies cord handling; serving promptly limits prolonged hot holding.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Coffee served or transferred and appliance disconnected",
+        "source_ids": [
+          "presto_manual",
+          "presto_product",
+          "equal_exchange"
+        ]
+      },
+      {
+        "id": "cool_clean",
+        "instruction": "Let the unplugged appliance cool before removing parts and grounds. Wash and rinse interior, cover and basket assembly without wetting base or plug socket. Only the tube, basket and basket lid are expressly dishwasher-compatible. Dry before reuse.",
+        "why": "Cooling prevents burns; keeping electrical parts dry prevents shock and damage.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Clean freely moving washer and fully dry base/socket; grounds and filter discarded",
+        "source_ids": [
+          "presto_manual"
+        ]
+      }
+    ]
+  },
+  "variants": [
+    {
+      "name": "COLETTI Bozeman stovetop percolator",
+      "how_it_differs": "External low-to-medium heat and visible perking replace an electric ready light. Do not fill past pouring holes. Maker suggests coarse coffee and one tablespoon per nominal five-ounce cup. Clock the 240–420 second window from visible pulses, excluding heat-up; regulate for steady rather than aggressive perking and remove from heat at the chosen stopping point. This is neither a universal seven-minute deadline nor a validated temperature setting. Check exact model induction compatibility.",
+      "source_ids": [
+        "coletti_support",
+        "coletti_faq"
+      ]
+    },
+    {
+      "name": "Another electric model or reservoir size",
+      "how_it_differs": "Follow that model's minimum/maximum marks, dose guidance, compatible filter and completion indicator. Do not copy the 02822 range or assume every nominal coffee cup has the same volume; do not linearly scale an arbitrary mass ratio into a reservoir-bound brewer.",
+      "source_ids": [
+        "presto_manual",
+        "presto_product",
+        "equal_exchange"
+      ]
+    }
+  ],
+  "troubleshooting": [
+    {
+      "symptom": "Weak coffee or little perking",
+      "check_first": "Verify actual measuring tablespoon, clean perk well, freely moving washer, correctly seated tube and cold start; use the matching minimum dose for the reservoir mark.",
+      "adjustment": "After those checks, increase only the dose within this model's published range; do not restart a hot cycle to chase strength.",
+      "source_ids": [
+        "presto_manual"
+      ]
+    },
+    {
+      "symptom": "Grounds or sediment in coffee",
+      "check_first": "Check fitted paper, basket lid and whether coffee entered the stem while loading. For stovetop models check for aggressive boiling.",
+      "adjustment": "Use a compatible filter and, if needed, try a coarser grind on the next batch; do not substitute a moka preparation procedure.",
+      "source_ids": [
+        "presto_manual",
+        "equal_exchange",
+        "coletti_support"
+      ]
+    },
+    {
+      "symptom": "Harsh or bitter pot",
+      "check_first": "Check cleanliness, whether the grind is too fine for repeated circulation and whether coffee was held hot for a long time.",
+      "adjustment": "Serve promptly or transfer for later service; after those checks reduce only dose for the next electric batch. For stovetop batches separately try gentler steady heat or an earlier stopping point within the model's guidance.",
+      "source_ids": [
+        "equal_exchange",
+        "presto_manual",
+        "coletti_support"
+      ]
+    }
+  ],
+  "safety": [
+    "Presto 02822 requires 120 V AC indoors. Keep it off and away from burners/ovens; never treat the electric body as a stovetop pot.",
+    "Never plug in the Presto without water or liquid coffee. Use matching manufacturer-recommended parts; do not energize damaged equipment.",
+    "Keep the lid secured during brewing and serving. Do not remove it while brewing; coffee, grounds and metal parts can scald. Use the handle.",
+    "Attach cord to appliance before wall outlet; disconnect wall outlet then appliance before lifting to serve. Keep-warm operates while stationary and plugged in; ready light does not mean power-off.",
+    "Unplug and allow cooling before dismantling or cleaning. Do not immerse electric appliance, cord or plugs, or wet base or plug receptacle. Dry fully before reuse.",
+    "For this Presto model only perk tube, basket and basket lid are expressly dishwasher-compatible. Follow its manual for periodic deep cleaning.",
+    "For COLETTI stovetop models follow exact fill limit, hob compatibility and hot-handle/lid precautions. Their cleanup instructions do not override electrical safety for a Presto."
+  ],
+  "app_audit": [
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt",
+      "finding": "No Percolator enum entry at baseline 490fc2d4; existing MOKA_POT is a different method. There is no existing Percolator default or stage guidance to correct.",
+      "severity": "info",
+      "change_recommendation": "If method inclusion is approved, add deliberate everyday-method support and localization using equipment-bound quantities, machine-controlled temperature and indicator-based electric completion; do not reuse Moka or filter-ratio defaults.",
+      "source_ids": [
+        "presto_manual",
+        "presto_product"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BrewingCatalog.kt",
+      "finding": "BuiltinBrewingCatalog has no recirculating-percolator family, model profiles or matching filter/basket definitions; current steam_pressure_multichamber is the Moka family. Exact catalog and guidance searches contain no Percolator entries.",
+      "severity": "info",
+      "change_recommendation": "Add a dedicated recirculating family and separately evidenced electric/stovetop profiles, fitted assembly/filter compatibility and model fill bounds; keep pressure-specific Moka semantics separate.",
+      "source_ids": [
+        "presto_manual",
+        "presto_product",
+        "coletti_support"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/Recipe.kt",
+      "finding": "BrewQuantities requires non-null dryCoffeeDoseG and has mass-only reservoir/brew inputs; OutputModel.UserMeasuredOutput already exists. Equipment.kt likewise stores CapacityRangeG. This source procedure uses native marks and tablespoons with unresolved mass conversions.",
+      "severity": "medium",
+      "change_recommendation": "Represent native mark/volume measures explicitly or obtain measured calibration before typed ingestion; leave dose mass and output unresolved instead of using zero or an invented retention coefficient. Use UserMeasuredOutput if serving yield is recorded.",
+      "source_ids": [
+        "presto_manual"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BuiltInP1RecipeCatalog.kt",
+      "finding": "No Percolator exact recipe; BuiltInP1RecipeDefinition requires a positive mass dose and ratios. P1CompletionSemantics lacks a ready-indicator/automatic keep-warm transition meaning. MACHINE_CONTROLLED temperature and MACHINE_SPECIFIC time already exist.",
+      "severity": "medium",
+      "change_recommendation": "Extend quantity and completion semantics before adding this native-mark manufacturer procedure. Preserve existing machine-controlled temperature/time support; do not fabricate a timer interval or reuse single-pass drip completion.",
+      "source_ids": [
+        "presto_manual",
+        "presto_product"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/session/StagePlan.kt",
+      "finding": "Existing PREPARE, ADD_COFFEE, ADD_WATER, HEAT, OBSERVE, SERVE and CLEAN_UP actions and Manual/ObservedEvent completion can cover the workflow. Targets are mass-based, so reservoir marks need typed representation or calibration. Current safety codes are open identifiers.",
+      "severity": "info",
+      "change_recommendation": "Reuse actions and manual acknowledgement of the model's ready light, add dry-heating/secured-lid/electrical-dryness/cool-before-cleaning safety messages and represent native fill quantities. Do not schedule a universal finish alert or decaf subtraction.",
+      "source_ids": [
+        "presto_manual",
+        "presto_product"
+      ]
+    },
+    {
+      "path": "app/src/main/assets/grinders.json",
+      "finding": "The word percolation appears in general extraction/decaf notes listing other methods; this is not a Percolator recipe or a verified grinder setting. No dedicated Percolator setting was found.",
+      "severity": "info",
+      "change_recommendation": "Keep this guide's grind descriptive until a named grinder/burr/calibration is measured; do not infer a Percolator decaf timing or grind adjustment from generic percolation terminology.",
+      "source_ids": [
+        "equal_exchange"
+      ]
+    }
+  ],
+  "uncertainties": [
+    "No physical brewing, device execution, localization or release validation was performed; this is editorially reviewed research content.",
+    "The indexed Presto 72-875H PDF returned HTTP 404; the current manufacturer manual-finder link supplied verified 2026 Form 72-875J.",
+    "Exact input water mass/volume for the four mark, coffee mass per selected tablespoon, retained water and collected beverage yield are not verified. All corresponding numeric fields remain null.",
+    "The source nominal cup is about five ounces brewed coffee. Equal Exchange's own serving table instead uses six-ounce servings, so tables cannot be combined across these sources.",
+    "Electric readiness is the signal light; the appliance continues heating while plugged in. The manual does not promise that readiness disconnects power or specify a measured cycle temperature.",
+    "No exact grinder setting, particle size, universal brewing duration, universal mass ratio or decaf-specific time adjustment is evidenced.",
+    "COLETTI's archived Bozeman PDF has garbled extracted text and a failed page-two screenshot request; its current readable manufacturer support page verifies the stovetop procedure instead. Its 240–420 second perking window excludes heat-up and is not the electric baseline."
+  ],
+  "do_not_claim": [
+    "Percolator is already an everyday app method, exact catalog recipe or localized guide.",
+    "Percolator and Moka are interchangeable, or their fill limits and pressure/heat controls can be copied.",
+    "Four nominal coffee cups are four mugs, exactly twenty fluid ounces input water or a verified beverage yield.",
+    "A tablespoon of coffee has a fixed mass, all percolators share one coffee-to-water mass ratio, or milliliters are exact grams.",
+    "All percolators finish in seven minutes, run at a prescribed measured temperature or can use automatic decaf time subtraction.",
+    "Ready light means automatic power-off, or an electric percolator can be heated on a stove, run empty or immersed for cleaning.",
+    "One model's minimum/maximum fill, dishwasher compatibility, induction support or cleaning chemicals apply to every percolator."
+  ]
+}

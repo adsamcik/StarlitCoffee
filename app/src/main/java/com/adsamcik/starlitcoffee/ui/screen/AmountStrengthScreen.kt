@@ -1,5 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
+import com.adsamcik.starlitcoffee.data.model.GrinderSettingFormatter
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -408,16 +409,18 @@ fun AmountStrengthScreen(
                         )
                     }
                     is GrindResult.Specific -> {
-                        val fmt = { v: Float -> if (v % 1f == 0f) "%.0f".format(v) else "%.1f".format(v) }
+                        val fmt = { v: Float -> GrinderSettingFormatter.label(gr.grinder, v) }
                         val rec = gr.recommendation
+                        val step = GrinderSettingFormatter.adjustment(gr.grinder, rec.adjustmentStepSize)
                         Text(
-                            text = "Setting: ${fmt(rec.suggestedStart)} " +
-                                "(range ${fmt(rec.rangeStart)}–${fmt(rec.rangeEnd)})",
+                            text = "Setting: ${fmt(rec.suggestedStart)}" +
+                                if (rec.rangeStart == rec.rangeEnd) "" else
+                                    " (range ${GrinderSettingFormatter.range(gr.grinder, rec)})",
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurface,
                         )
                         Text(
-                            text = "${gr.recommendation.adjustmentNote} · Adjust by ±${fmt(gr.recommendation.adjustmentStepSize)} to taste",
+                            text = "${rec.adjustmentNote} · Adjust by ±$step to taste",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(top = 2.dp),
@@ -533,4 +536,3 @@ fun AmountStrengthScreen(
         }
     }
 }
-

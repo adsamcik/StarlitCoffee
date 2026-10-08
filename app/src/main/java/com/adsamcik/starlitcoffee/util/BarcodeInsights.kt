@@ -14,7 +14,6 @@ import com.adsamcik.starlitcoffee.data.db.dao.UserBarcodeStemDao
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.UserBarcodeStemEntity
 import java.util.Locale
-import kotlin.math.abs
 
 data class Gs1IssuerRegionInsight(
     val prefix: String,
@@ -154,9 +153,6 @@ object BarcodeInsights {
                     canonicalKey = "true",
                 )
             }
-            matchedBag.weightG
-                ?.takeIf { it > 0f }
-                ?.let { addLocalMatchCandidate("weight", formatWeight(it), supportingText) }
         }
     }
 
@@ -365,15 +361,6 @@ object BarcodeInsights {
                 supportingText = supportingText,
             ),
         )
-    }
-
-    private fun formatWeight(weightG: Float): String {
-        val wholeGrams = weightG.toInt().toFloat()
-        return if (abs(weightG - wholeGrams) < 0.01f) {
-            wholeGrams.toInt().toString()
-        } else {
-            String.format(Locale.US, "%.1f", weightG)
-        }
     }
 
     private data class ObservedBarcodeStem(

@@ -1,0 +1,36 @@
+Input reference is ONE finished flower still, used only for painted material, color and flower identity. Build a NEW square 5-by-5 animation atlas from it, not a zoomed copy of the still. Each complete plant must occupy ONLY the middle 75% of ITS OWN cell; completely empty transparent safety band at least 12% wide on ALL FOUR sides of EACH cell. No subject pixel may touch a cell boundary. Show cumulative growth exactly as below.
+Use case: precise-object-edit.
+Asset type: production transparent botanical growth sprite atlas for a calm coffee-brewing app, viewed one cell at a time at about 148px.
+Primary request: create a fully rebuilt 25-frame growth animation for Bleeding Heart, using the supplied artwork for its tactile painted style and final flower identity. This is one image atlas, not a contact-sheet presentation.
+Output layout: exactly FIVE columns and FIVE rows of equal SQUARE cells, 25 frames total, row-major from upper-left F1 to lower-right F25. Square canvas ideally 1280x1280. No row gaps or gutters. Grid is mathematical only: absolutely NO lines, borders, labels, numbers, typography, guides, checkerboard, background color or watermark. REAL transparent alpha everywhere outside the plant.
+Every cell contains EXACTLY ONE complete plant, NEVER two. No cut limbs, no spill into neighboring cells. Within each cell keep every pixel of the subject inside an approximately 10% inset safe rectangle. Plant rooted at the same central ground point around (50%,88%) in each cell. Same front three-quarter view, same lighting, same painted depth. Fixed bean base size and shape throughout: warm brown coffee bean, about 26% of cell width, underside at 88% cell height. Keep its crack, texture landmarks, and orientation stable. Mature plant fills approximately 72% of cell height and 72% of width; young sprout remains small above the SAME bean. No camera zoom, no drifting, no shadows extending outside the object.
+Render opaque colored interior surfaces, clean antialiased alpha edges, softly modeled botanical volume, restrained fine detail, crisp silhouettes and petal separation readable at small size. Preserve already-created plant nodes: stems, leaves, buds and petals remain attached, evolve continuously, never vanish or swap sides. Every frame advances a meaningful visible growth action; no repeated near-held repainting, no reversal from flower to bud. Broad changes must have in-between poses. Opening starts well BEFORE last five frames. Only F25 is fully finished; F21–24 each show a distinct final stage.
+SPECIFIC ART DIRECTION
+Preserve pink heart-shaped blossoms with white hanging teardrops and finely lobed green leaves. One permanent curved stem sweeping to right, a small left offshoot introduced early, exactly five hanging hearts on right and two on left. Seven blooms total, all buds visible before flowering. Maintain same lobed foliage cluster and stalk endpoints. Avoid horizontal crowding.
+EXACT FRAME PLAN (do not print numbers):
+F1: closed upright bean.
+F2: same bean cracks.
+F3: small green shoot.
+F4: shoot lengthens.
+F5: two tiny folded seed leaves.
+F6: seed leaves spread, stem rises.
+F7: retained leaves develop lobes.
+F8: lobed leaves widen, top stem curves right.
+F9: right arch lengthens, tiny left offshoot appears.
+F10: right arch and left offshoot complete with fixed foliage.
+F11: five tiny right buds and two tiny left buds appear.
+F12: seven retained buds lengthen slightly.
+F13: first two right buds inflate pink, other five attached.
+F14: first two hearts form clefts, remaining buds turn pink.
+F15: third right heart inflates, first two clefts deepen.
+F16: fourth right heart inflates, all seven remain.
+F17: fifth right heart inflates, left pair starts rounding.
+F18: five right hearts retain shapes, first left heart rounds.
+F19: all seven pink hearts now rounded with tiny white tips.
+F20: first two right white teardrops extend, other five remain.
+F21: third and fourth right teardrops extend, all hearts retain positions.
+F22: fifth right and first left teardrops extend.
+F23: last left teardrop extends, all seven hearts remain.
+F24: all hearts subtly open their lower edges, white tips settle.
+F25: fully open seven-heart spray with clear gaps and unchanged foliage.
+Final check before delivery: count 5x5 and 25 separate single plants; all 25 complete inside their cells; no missing horizontal bands; no duplicate skinny plants; no holes in intended solid petals; no flattened silhouette texture; no artificial glow.

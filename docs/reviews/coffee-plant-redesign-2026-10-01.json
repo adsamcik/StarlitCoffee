@@ -1,0 +1,2092 @@
+{
+  "date": "2026-10-01",
+  "animation_id": "coffee_plant",
+  "label": "Coffee plant",
+  "user_direction": "Redesign Coffee plant after Latte bloom",
+  "generation_tool": "built-in image_gen",
+  "asset": "app/src/main/res/drawable-nodpi/bloom_coffee_plant_spritesheet.png",
+  "before_sha256": "5475f2db6b7cb66bd0c3c7044ae035769358d286c30ad1c413892aad9565916a",
+  "after_sha256": "94a4d1a07a3a239fddbbabbf5d991f06c5c28bedd67221258b5addef1f8a5fb4",
+  "selected_source": "docs/assets/bloom-coffee-plant-native-source.png",
+  "selected_source_sha256": "6bb98a770a9d1775a84cb178a3655b153ada6b91feee04b44320033f4be5102b",
+  "preparation_tool": "tools/prepare_bloom_alpha_atlas.py",
+  "normalization": {
+    "source": ".qa-screens\\coffee-plant-redesign-2026-10-01\\selected-source.png",
+    "output": ".qa-screens\\coffee-plant-redesign-2026-10-01\\selected-prepared.png",
+    "source_size": [
+      1280,
+      1280
+    ],
+    "frame_count": 25,
+    "common_scale": 1.0,
+    "baseline": 232,
+    "padding": 24,
+    "alpha_threshold": 24,
+    "source_column_edges": [
+      0,
+      256,
+      512,
+      768,
+      1024,
+      1280
+    ],
+    "source_row_edges": [
+      0,
+      256,
+      512,
+      768,
+      1024,
+      1280
+    ],
+    "frames": [
+      {
+        "frame": 1,
+        "bounds": [
+          94,
+          158,
+          164,
+          233
+        ],
+        "source_anchor": 128.093
+      },
+      {
+        "frame": 2,
+        "bounds": [
+          94,
+          141,
+          164,
+          233
+        ],
+        "source_anchor": 127.862
+      },
+      {
+        "frame": 3,
+        "bounds": [
+          94,
+          127,
+          164,
+          233
+        ],
+        "source_anchor": 127.291
+      },
+      {
+        "frame": 4,
+        "bounds": [
+          94,
+          101,
+          164,
+          233
+        ],
+        "source_anchor": 128.078
+      },
+      {
+        "frame": 5,
+        "bounds": [
+          85,
+          112,
+          177,
+          233
+        ],
+        "source_anchor": 127.555
+      },
+      {
+        "frame": 6,
+        "bounds": [
+          74,
+          118,
+          183,
+          233
+        ],
+        "source_anchor": 127.862
+      },
+      {
+        "frame": 7,
+        "bounds": [
+          65,
+          112,
+          201,
+          233
+        ],
+        "source_anchor": 127.438
+      },
+      {
+        "frame": 8,
+        "bounds": [
+          51,
+          112,
+          214,
+          233
+        ],
+        "source_anchor": 128.108
+      },
+      {
+        "frame": 9,
+        "bounds": [
+          45,
+          75,
+          219,
+          233
+        ],
+        "source_anchor": 127.176
+      },
+      {
+        "frame": 10,
+        "bounds": [
+          48,
+          85,
+          220,
+          233
+        ],
+        "source_anchor": 128.197
+      },
+      {
+        "frame": 11,
+        "bounds": [
+          40,
+          82,
+          219,
+          233
+        ],
+        "source_anchor": 127.859
+      },
+      {
+        "frame": 12,
+        "bounds": [
+          35,
+          75,
+          229,
+          233
+        ],
+        "source_anchor": 128.045
+      },
+      {
+        "frame": 13,
+        "bounds": [
+          39,
+          74,
+          225,
+          233
+        ],
+        "source_anchor": 127.639
+      },
+      {
+        "frame": 14,
+        "bounds": [
+          38,
+          74,
+          230,
+          233
+        ],
+        "source_anchor": 127.934
+      },
+      {
+        "frame": 15,
+        "bounds": [
+          37,
+          68,
+          231,
+          233
+        ],
+        "source_anchor": 127.722
+      },
+      {
+        "frame": 16,
+        "bounds": [
+          36,
+          66,
+          226,
+          233
+        ],
+        "source_anchor": 126.876
+      },
+      {
+        "frame": 17,
+        "bounds": [
+          37,
+          65,
+          228,
+          233
+        ],
+        "source_anchor": 127.484
+      },
+      {
+        "frame": 18,
+        "bounds": [
+          39,
+          66,
+          223,
+          233
+        ],
+        "source_anchor": 127.302
+      },
+      {
+        "frame": 19,
+        "bounds": [
+          34,
+          59,
+          225,
+          233
+        ],
+        "source_anchor": 127.917
+      },
+      {
+        "frame": 20,
+        "bounds": [
+          33,
+          58,
+          228,
+          233
+        ],
+        "source_anchor": 127.725
+      },
+      {
+        "frame": 21,
+        "bounds": [
+          32,
+          59,
+          228,
+          233
+        ],
+        "source_anchor": 128.417
+      },
+      {
+        "frame": 22,
+        "bounds": [
+          34,
+          59,
+          228,
+          233
+        ],
+        "source_anchor": 127.508
+      },
+      {
+        "frame": 23,
+        "bounds": [
+          34,
+          59,
+          228,
+          233
+        ],
+        "source_anchor": 126.976
+      },
+      {
+        "frame": 24,
+        "bounds": [
+          31,
+          60,
+          228,
+          233
+        ],
+        "source_anchor": 127.618
+      },
+      {
+        "frame": 25,
+        "bounds": [
+          32,
+          56,
+          232,
+          233
+        ],
+        "source_anchor": 127.322
+      }
+    ]
+  },
+  "attempts": [
+    {
+      "attempt": "initial",
+      "status": "rejected-scale-resets-and-reconstructed-tiers",
+      "source_sha256": "c01e3a12f10fd2366abaa9f6e668079324e332eee2d2743333299d5022b420b2",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-5f2a1a5d-17d8-4caa-bbcd-b5047e97d449.png",
+      "prompt": "prompts/coffee-plant-redesign-2026-10-01/initial.txt",
+      "prompt_file_sha256": "489979fedaf8aec63637f23636bd48347855f1145e09171ecda79afa04dfa090",
+      "prompt_sent_utf8_sha256": "3ba4d2550e43ab9c50fc738e22273e60f1e03e7459073e5cef030a2befd4b372"
+    },
+    {
+      "attempt": "regenerate-01",
+      "status": "rejected-rectangular-source-layout",
+      "source_sha256": "78dbf9f9d48f13f1678f74aa854b9487eae18ffea15524c13f1496adf9f2660b",
+      "source_size": [
+        1402,
+        1122
+      ],
+      "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-1a6f6d8d-0c97-4482-a785-07664b17c937.png",
+      "prompt": "prompts/coffee-plant-redesign-2026-10-01/regenerate-01.txt",
+      "prompt_file_sha256": "ed4f4331bc3c349ea16837809fd93133934b587bc0302302fec34c51966219f2",
+      "prompt_sent_utf8_sha256": "4491816277c2d00a84d85c4698aabb630d2df2a1b0f95c5d936e22cd98a19666"
+    },
+    {
+      "attempt": "repair-02",
+      "status": "selected-base-atlas-except-premature-frame12-fruit",
+      "source_sha256": "bbe3b87ade3be188068a6871a8911ecc479bcebba71a0405554a7be8512ca0ed",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-7f85be2d-2c0d-4ad8-8c2c-5ac32bfa6273.png",
+      "prompt": "prompts/coffee-plant-redesign-2026-10-01/repair-02.txt",
+      "prompt_file_sha256": "7978c870e7a1a3781f58b153fda695df02f3abffcddd308b189c57369079fe19",
+      "prompt_sent_utf8_sha256": "4ded04a3cb76be9439e7a4ad319b097f986c897d68e903d015375dff801e65f0"
+    },
+    {
+      "attempt": "repair-03",
+      "status": "rejected-premature-fruit-remained",
+      "source_sha256": "6da46cab14eaf2892a34520bdab04dcc0b1f76a951d3120f35200738afb32e8b",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-c1a5105c-eacf-4687-b956-d7ed6af82f92.png",
+      "prompt": "prompts/coffee-plant-redesign-2026-10-01/repair-03.txt",
+      "prompt_file_sha256": "b8b54b1ea7db161752f6dd5bfaa8aa9a5ac16878b4c526600642725d4cb61e0e",
+      "prompt_sent_utf8_sha256": "af0b7ee8c16c45ef964f48da5da80489d9f9821729603ab28dd9f062dda79c36"
+    },
+    {
+      "attempt": "frame12-repair",
+      "status": "selected-complete-native-frame12-pose",
+      "source_sha256": "5ea620c7c5d530e4be519c9d0dd52d4d54cab086114962de95c9a2c5f9b0b589",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-996bb62c-e5ce-449b-af3a-bb73ab9407be.png",
+      "prompt": "prompts/coffee-plant-redesign-2026-10-01/frame12-repair.txt",
+      "prompt_file_sha256": "666c17f83896d26b49991022d487d0a6c4117bb0fde44ff2a1a7dd18f7515c08",
+      "prompt_sent_utf8_sha256": "4a67247023426132131bbcab58d9c7085f25915d406c35b20b2d896725cdd5b3"
+    }
+  ],
+  "whole_pose_curation": {
+    "method": "Whole-native-pose curation; no code-drawn anatomy",
+    "base_atlas": "repair-02-prepared.png",
+    "base_atlas_sha256": "96223a44982ada31ffa345d948e4516da164338eb63f83bb0904e6f34260695c",
+    "replaced_frame": 12,
+    "native_pose": "frame12-native-source.png",
+    "native_pose_sha256": "5ea620c7c5d530e4be519c9d0dd52d4d54cab086114962de95c9a2c5f9b0b589",
+    "native_pose_size": [
+      1254,
+      1254
+    ],
+    "coordinate_conversion_scale": 0.20414673046251994,
+    "translation_px": [
+      -2,
+      -7
+    ],
+    "bounds_alpha24": [
+      35,
+      75,
+      229,
+      233
+    ],
+    "selected_source_sha256": "6bb98a770a9d1775a84cb178a3655b153ada6b91feee04b44320033f4be5102b",
+    "unchanged_whole_poses": 24
+  },
+  "frames": [
+    {
+      "frame": 1,
+      "sha256_rgba_pixels": "4f074631455675bb09fa0dc567de09f0da5c7b474abfbf529f5ce5432066521f",
+      "bounds_alpha24": [
+        94,
+        158,
+        164,
+        233
+      ]
+    },
+    {
+      "frame": 2,
+      "sha256_rgba_pixels": "b4c047f33257bad52d391d82bf8a2df16dd8c4b09274450ba1ea806bbba1c969",
+      "bounds_alpha24": [
+        94,
+        141,
+        164,
+        233
+      ]
+    },
+    {
+      "frame": 3,
+      "sha256_rgba_pixels": "1641de3b6d26f305186e33aca1b7f8fe364f8745d1e5c121337aa2d47f4eef74",
+      "bounds_alpha24": [
+        94,
+        127,
+        164,
+        233
+      ]
+    },
+    {
+      "frame": 4,
+      "sha256_rgba_pixels": "54c88ec02ce57a2f9dd67011f02889233e1d64e430090d63a42185cf99e72b16",
+      "bounds_alpha24": [
+        94,
+        101,
+        164,
+        233
+      ]
+    },
+    {
+      "frame": 5,
+      "sha256_rgba_pixels": "ff241ea2fcd77ecd1626c12e4bdaf40be881d56eb5441182c47ea38492fa4845",
+      "bounds_alpha24": [
+        85,
+        112,
+        177,
+        233
+      ]
+    },
+    {
+      "frame": 6,
+      "sha256_rgba_pixels": "112d9ef479da249db512a7e614ef81f18dd7ecc9c31b1fd93e08dc592ac69108",
+      "bounds_alpha24": [
+        74,
+        118,
+        183,
+        233
+      ]
+    },
+    {
+      "frame": 7,
+      "sha256_rgba_pixels": "ed7e04dc80172695af28c927322c7acb8072c01c8f964b848c639568ad804c14",
+      "bounds_alpha24": [
+        65,
+        112,
+        201,
+        233
+      ]
+    },
+    {
+      "frame": 8,
+      "sha256_rgba_pixels": "8783458a1ee70da850447547ec7c44e8b386d13708c773eadadbe43f884970aa",
+      "bounds_alpha24": [
+        51,
+        112,
+        214,
+        233
+      ]
+    },
+    {
+      "frame": 9,
+      "sha256_rgba_pixels": "b8c57055485c586a05b3b26188265666a09e2a0bd8a9cc62254cb0d25960362d",
+      "bounds_alpha24": [
+        45,
+        75,
+        219,
+        233
+      ]
+    },
+    {
+      "frame": 10,
+      "sha256_rgba_pixels": "319599ade0f94f5a82c1e9cbc05d16ffe90fe5a6d35e28002e434ca45d37abf7",
+      "bounds_alpha24": [
+        48,
+        85,
+        220,
+        233
+      ]
+    },
+    {
+      "frame": 11,
+      "sha256_rgba_pixels": "db808c3d61024d5501d7a43a339ed3bcab4006c7b0f4bad20dcf4198c5a11650",
+      "bounds_alpha24": [
+        40,
+        82,
+        219,
+        233
+      ]
+    },
+    {
+      "frame": 12,
+      "sha256_rgba_pixels": "5db271fedf3ffee2880c3ff17fde4aab68d173430f1225fe8b4cfa78ed12f249",
+      "bounds_alpha24": [
+        35,
+        75,
+        229,
+        233
+      ]
+    },
+    {
+      "frame": 13,
+      "sha256_rgba_pixels": "d88d17db40897690ad1bf3e26c9242e7929779eb87d7cd56dfc45e62b80d5e72",
+      "bounds_alpha24": [
+        39,
+        74,
+        225,
+        233
+      ]
+    },
+    {
+      "frame": 14,
+      "sha256_rgba_pixels": "0613e65fdc2ab78a90f3a82fa003fb472f4a6f458788ab1cc97fc3230d67a35d",
+      "bounds_alpha24": [
+        38,
+        74,
+        230,
+        233
+      ]
+    },
+    {
+      "frame": 15,
+      "sha256_rgba_pixels": "e7e4a9851f1b1bd2aa1dd780a717b94b2e723ad8a42b6534420e6b66ea4239b8",
+      "bounds_alpha24": [
+        37,
+        68,
+        231,
+        233
+      ]
+    },
+    {
+      "frame": 16,
+      "sha256_rgba_pixels": "f8dbf13eff64286529b06ecd2e328967f788d62aa1a7793ff6c1e8e5254f708c",
+      "bounds_alpha24": [
+        36,
+        66,
+        226,
+        233
+      ]
+    },
+    {
+      "frame": 17,
+      "sha256_rgba_pixels": "b9191f34f3930d4429657a8fbab21476f02fd0ec429f42a9755584244daf3085",
+      "bounds_alpha24": [
+        37,
+        65,
+        228,
+        233
+      ]
+    },
+    {
+      "frame": 18,
+      "sha256_rgba_pixels": "5f269ea57a9dd76bfb294a86a9bc83e4b9ece93bd3a583ac73c6e2b3a18f25b1",
+      "bounds_alpha24": [
+        39,
+        66,
+        223,
+        233
+      ]
+    },
+    {
+      "frame": 19,
+      "sha256_rgba_pixels": "8f0b5d88df1f24fe619be78a692f663dbbd142481a48f6e943efebd47e8cb5b7",
+      "bounds_alpha24": [
+        34,
+        59,
+        225,
+        233
+      ]
+    },
+    {
+      "frame": 20,
+      "sha256_rgba_pixels": "a63bd05b84903abf892005db72b04fbfb395289959e51f9b86f57bb87783d11d",
+      "bounds_alpha24": [
+        33,
+        58,
+        228,
+        233
+      ]
+    },
+    {
+      "frame": 21,
+      "sha256_rgba_pixels": "25cdb7b72f6becddb7f8591369da7d9dfeb1329736939a0efd6ed76a9cd6bb02",
+      "bounds_alpha24": [
+        32,
+        59,
+        228,
+        233
+      ]
+    },
+    {
+      "frame": 22,
+      "sha256_rgba_pixels": "9459b19dfdfb2855ef732d7d65bc5b967fbba7292706e102c5d38d668d7c2c9b",
+      "bounds_alpha24": [
+        34,
+        59,
+        228,
+        233
+      ]
+    },
+    {
+      "frame": 23,
+      "sha256_rgba_pixels": "c077dfdf9c30d113979297aecce4ae55fa5ccc863de94df2c4ad5ee0d0a374c3",
+      "bounds_alpha24": [
+        34,
+        59,
+        228,
+        233
+      ]
+    },
+    {
+      "frame": 24,
+      "sha256_rgba_pixels": "32c9faee093ee07382eacd98fe9e1ecb26aee45603bcef193e0e6e4ccb0508c3",
+      "bounds_alpha24": [
+        31,
+        60,
+        228,
+        233
+      ]
+    },
+    {
+      "frame": 25,
+      "sha256_rgba_pixels": "89afcc9723289b03453a0e428ed194418a13ac7fef7a36490fcad3300ca4674a",
+      "bounds_alpha24": [
+        32,
+        56,
+        232,
+        233
+      ]
+    }
+  ],
+  "astra_review": {
+    "reviewer": "Astra",
+    "model": "gpt-6-astra",
+    "id": "coffee_plant",
+    "attempt": "selected",
+    "prepared_sha256": "94a4d1a07a3a239fddbbabbf5d991f06c5c28bedd67221258b5addef1f8a5fb4",
+    "verdict": "accept_with_minor_polish_residuals",
+    "recommendation": "Accept this exact prepared atlas. No meaningful remaining blocker. Preserve current anatomy and gradual cherry finish rather than risking broad regeneration for small paint differences.",
+    "evidence": {
+      "prepared": "selected-prepared.png",
+      "contacts": [
+        "selected_light.png",
+        "selected_dark.png"
+      ],
+      "frames_viewed": 25,
+      "transitions_viewed": 24,
+      "display_size_px": 148,
+      "boundary": "All25 frames and24 transitions inspected as static light/dark contacts plus1280px prepared sheet; no live Compose playback. Fine texture/color differences are not treated as structural failures."
+    },
+    "blockers": [],
+    "resolved_since_initial": [
+      "F15→16 bean/whole-canopy scale reset removed.",
+      "Third leaf pair now appears as a smaller apical pair rather than a broad inserted bottom tier.",
+      "F7→8 leaf contraction removed; early pair widens.",
+      "F1→2 now has a clearly visible green germination tip.",
+      "Mature plant has readable six-leaf canopy and four cherries, with staggered warm ripening.",
+      "Premature F12 cherry removed through native isolated whole-pose edit; no fruit before F14."
+    ],
+    "anatomy_audit": {
+      "leaf_counts": {
+        "F1–4": "No open leaves; closed growing tip.",
+        "F5–9": "Two persistent open leaves.",
+        "F10–12": "Four open leaves.",
+        "F13–25": "Six persistent open leaves in three opposite pairs."
+      },
+      "fruit_counts": {
+        "F1-F13": "No cherries.",
+        "F14-F15": "Two green fruits, one per side.",
+        "F16-F25": "Four cherries, two per side, retained through final maturity."
+      },
+      "branch_continuity": "Side fruiting attachments are legible and do not vanish after establishment; no extra late cluster appears."
+    },
+    "residuals": [
+      {
+        "frames": "F11-F12-F13",
+        "note": "Replacement F12 has a slightly warmer/broader bean, stronger vein highlights and fuller four-leaf silhouette. At148px its style/proportions fit; no false fruit or meaningful reset. Minor paint variation."
+      },
+      {
+        "frames": "F5→6",
+        "note": "Small lowering of unfolding leaf pair while its spread grows; natural pose change, not a whole-plant reset."
+      },
+      {
+        "frames": "F16→18",
+        "note": "Two restrained green-fruit development stages; materially coherent with later ripening, though not large milestones."
+      },
+      {
+        "frames": "F24→25",
+        "note": "One quiet finish/settling transition after full red ripening. Acceptable for completion; avoid risking the stable plant to force another major event."
+      }
+    ],
+    "row_boundaries": {
+      "F5→6": "Same bean and leaf pair, widening with slight natural lowering.",
+      "F10→11": "Four leaves expand without node loss.",
+      "F15→16": "Stable bean/plant; four-fruit cluster becomes established.",
+      "F20→21": "Retained fruit positions advance from yellow/green to orange/yellow."
+    },
+    "transitions": [
+      {
+        "transition": "F01→F02",
+        "status": "pass",
+        "note": "Green shoot tip clearly appears above bean seam; meaningful at148px."
+      },
+      {
+        "transition": "F02→F03",
+        "status": "pass",
+        "note": "Same tip lengthens vertically; bean scale and placement stay stable."
+      },
+      {
+        "transition": "F03→F04",
+        "status": "pass",
+        "note": "Stem and closed paired tip grow; no reset or lost anatomy."
+      },
+      {
+        "transition": "F04→F05",
+        "status": "pass",
+        "note": "First opposite leaf pair unfolds from top; wider silhouette replaces closed tip naturally."
+      },
+      {
+        "transition": "F05→F06",
+        "status": "minor_residual",
+        "note": "First pair lowers slightly while spreading sideways; reads as unfurling rather than whole-plant shrinking. Same bean and two leaves retained."
+      },
+      {
+        "transition": "F06→F07",
+        "status": "pass",
+        "note": "Same first pair gains visible width and leaf surface."
+      },
+      {
+        "transition": "F07→F08",
+        "status": "pass",
+        "note": "First pair broadens further; no former contraction/reclosure."
+      },
+      {
+        "transition": "F08→F09",
+        "status": "pass",
+        "note": "Central stem extends and closed second paired tip emerges; original pair retained."
+      },
+      {
+        "transition": "F09→F10",
+        "status": "pass",
+        "note": "Second opposite pair opens above the retained lower pair; four leaves now clear."
+      },
+      {
+        "transition": "F10→F11",
+        "status": "pass",
+        "note": "Both pairs spread, especially the lower pair; steady stem and bean."
+      },
+      {
+        "transition": "F11→F12",
+        "status": "minor_residual",
+        "note": "Four retained leaves widen slightly; no fruit appears. Bean is a little warmer/broader and leaf-vein gloss stronger from the native replacement, but material and scale remain coherent at148px."
+      },
+      {
+        "transition": "F12→F13",
+        "status": "pass",
+        "note": "A small third opposite pair develops at the apex, reaching six leaves. No cherry vanishes; established plant silhouette remains coherent despite modest native paint variation."
+      },
+      {
+        "transition": "F13→F14",
+        "status": "pass",
+        "note": "Six leaves persist; two green fruit forms establish one per side at the same fruiting nodes."
+      },
+      {
+        "transition": "F14→F15",
+        "status": "pass",
+        "note": "Two green fruit forms and existing six leaves enlarge slightly; no branch loss."
+      },
+      {
+        "transition": "F15→F16",
+        "status": "pass",
+        "note": "Two side clusters develop to four separately readable green cherries. Bean and established canopy no longer reset scale."
+      },
+      {
+        "transition": "F16→F17",
+        "status": "minor_residual",
+        "note": "Four green cherries persist and plump slightly; restrained but coherent growth."
+      },
+      {
+        "transition": "F17→F18",
+        "status": "minor_residual",
+        "note": "Small leaf and fruit fullness changes; quiet stage rather than a new structure. Four fruit identities retained."
+      },
+      {
+        "transition": "F18→F19",
+        "status": "pass",
+        "note": "One left cherry visibly turns yellow while remaining three stay green; clear start to ripening."
+      },
+      {
+        "transition": "F19→F20",
+        "status": "pass",
+        "note": "Second left cherry becomes yellow, completing yellow left pair while right pair remains green."
+      },
+      {
+        "transition": "F20→F21",
+        "status": "pass",
+        "note": "Left pair warms to orange and right pair turns yellow; clear color handoff across row boundary."
+      },
+      {
+        "transition": "F21→F22",
+        "status": "pass",
+        "note": "Left pair becomes warm red while right pair becomes orange; all four attachments persist."
+      },
+      {
+        "transition": "F22→F23",
+        "status": "pass",
+        "note": "Right pair warms toward coral-red; ripe left pair stays red. Distinct intermediate color retained."
+      },
+      {
+        "transition": "F23→F24",
+        "status": "pass",
+        "note": "Right pair reaches warm red, giving four ripe cherries; coherent six-leaf final plant."
+      },
+      {
+        "transition": "F24→F25",
+        "status": "minor_residual",
+        "note": "Quiet final leaf/fruit settling with the same four red cherries. Acceptable single completion beat; does not justify another broad regeneration."
+      }
+    ],
+    "production_edits": false,
+    "accepted": true,
+    "curation_verification": {
+      "record": "curation.json",
+      "complete_native_pose_replaced": 12,
+      "selected_source_other_24_frames_byte_identical": true,
+      "selected_prepared_additional_changes": "Importer shifts F3,F7,F9,F16,F17,F18,F23,F25 exactly +1 pixel horizontally; each matches prior frame after that translation with no other pixel changes. Remaining16 unedited prepared poses are byte-identical.",
+      "artwork_invented_by_code": false,
+      "visual_effect": "One-source-pixel alignment changes have no material continuity impact at148px."
+    },
+    "final_assessment": "Distinct bean-to-sprout, two-to-four-to-six glossy leaf progression, side-fruit emergence and staggered green/yellow/orange/red ripening. Coffee identity is clear at148px in both themes. Stable central stem, no lost mature leaves, no disappearing established fruit, no row4 scale reset."
+  },
+  "independent_astra_review": {
+    "reviewer_model": "gpt-6-astra",
+    "date": "2026-10-01",
+    "candidate": "selected",
+    "prepared_sha256": "94a4d1a07a3a239fddbbabbf5d991f06c5c28bedd67221258b5addef1f8a5fb4",
+    "verdict": "accept-with-minor-polish-residuals",
+    "blockers": [],
+    "reviewed_paths": [
+      "G:/Github/StarlitCoffee/.qa-screens/coffee-plant-redesign-2026-10-01/selected_light.png",
+      "G:/Github/StarlitCoffee/.qa-screens/coffee-plant-redesign-2026-10-01/selected_dark.png",
+      "G:/Github/StarlitCoffee/.qa-screens/coffee-plant-redesign-2026-10-01/selected-prepared.png"
+    ],
+    "method": "Independent review of every F1-25 pose in both 148px theme contacts, followed by full prepared atlas inspection. Alpha>=24 bounds checked at key transitions. Whole-frame byte comparison checked the stated F12-only curation against repair-02-prepared.png. Static visual review, not native or live playback proof.",
+    "findings": [
+      "F11 and repaired F12 each show four leaves and zero fruit. F12 enlarges the existing pairs; F13 adds a small third pair for six leaves without prematurely appearing cherries.",
+      "F12 bean height, seam attachment and baseline remain coherent with F11/F13. Its slightly broader shape and brighter highlights read as minor painted variation rather than a material replacement or positional reset at 148px.",
+      "No cherries appear through F13; F14-15 show two green nodes; F16 establishes four. Those four remain attached and countable through F25, with ripening advancing rather than reversing.",
+      "The previous severe row-boundary size resets are absent. F15/F16 heights are 165/167 source pixels; F20/F21 are 175/174. Width and leaf pose variations at these boundaries are small, not whole-subject scale resets.",
+      "Six glossy leaves and four red cherries are clear in both themes. No blocking transparency holes, edge clipping or detached fragments were observed."
+    ],
+    "residuals": [
+      {
+        "frames": "F11-13",
+        "finding": "F12 is a little broader and more strongly highlighted than its neighbors. Overall bounds go from 179x151 at F11 to 194x158 at F12 to 186x159 at F13; the small width contraction accompanies the new upper pair, without loss of plant height."
+      },
+      {
+        "frames": "F16-18",
+        "finding": "Four green cherries inflate subtly, so these poses are quieter than the later ripening frames."
+      },
+      {
+        "frames": "F24-25",
+        "finding": "All four cherries are already red at F24. F25 provides a modest foliage/fruit fullness finish rather than a new color milestone; its contribution remains restrained."
+      }
+    ],
+    "curation_check": {
+      "selected_source_changed_frames_vs_repair02": [
+        12
+      ],
+      "unchanged_whole_source_poses": 24,
+      "normalization_only_translation_frames": [
+        3,
+        7,
+        9,
+        16,
+        17,
+        18,
+        23,
+        25
+      ],
+      "normalization_translation_source_px": [
+        1,
+        0
+      ],
+      "note": "The curation claim is exact for selected-source.png. Subsequent scale-1.0 registration shifts eight otherwise identical complete poses right by one source pixel; verified exact RGBA equality after translation, with no anatomy changes."
+    },
+    "recommendation": "Accept the selected sequence. The F12 repair removes the premature-fruit defect while preserving a coherent four-leaf to six-leaf handoff. Further regeneration is not necessary for anatomy or growth continuity; retain the listed small pacing/material variations as polish residuals."
+  },
+  "description_resource": "desc_bloom_sprite_coffee_plant",
+  "explicit_locales_updated": 23,
+  "descriptions": {
+    "values": "A coffee plant unfolding glossy leaves and ripening red cherries.",
+    "values-bg": "Кафено растение разгръща лъскави листа, а червените му плодове узряват.",
+    "values-cs": "Kávovník rozvíjí lesklé listy a dozrávají na něm červené kávové třešně.",
+    "values-da": "En kaffeplante folder blanke blade ud, mens de røde kaffebær modner.",
+    "values-de": "Eine Kaffeepflanze entfaltet glänzende Blätter und lässt rote Kaffeekirschen reifen.",
+    "values-el": "Ένα φυτό καφέ ξεδιπλώνει γυαλιστερά φύλλα, ενώ οι κόκκινοι καρποί του ωριμάζουν.",
+    "values-es": "Un cafeto despliega hojas brillantes mientras maduran sus cerezas rojas.",
+    "values-et": "Kohvitaim avab läikivad lehed ja selle punased marjad valmivad.",
+    "values-fi": "Kahvikasvi avaa kiiltävät lehtensä, ja sen punaiset kahvimarjat kypsyvät.",
+    "values-fr": "Un caféier déploie ses feuilles brillantes tandis que ses cerises rouges mûrissent.",
+    "values-hr": "Biljka kave razvija sjajne listove dok joj crveni plodovi dozrijevaju.",
+    "values-hu": "A kávécserje fényes leveleket bont, miközben piros termései beérnek.",
+    "values-it": "Una pianta di caffè dispiega foglie lucide mentre le sue ciliegie rosse maturano.",
+    "values-lt": "Kavamedis skleidžia blizgius lapus ir nokina raudonas uogas.",
+    "values-lv": "Kafijas koks izplaukst ar spīdīgām lapām, un tā sarkanās ogas nogatavojas.",
+    "values-nl": "Een koffieplant ontvouwt glanzende bladeren terwijl de rode koffiebessen rijpen.",
+    "values-pl": "Kawowiec rozwija błyszczące liście, a jego czerwone owoce dojrzewają.",
+    "values-pt": "Um cafeeiro abre folhas brilhantes enquanto os frutos vermelhos amadurecem.",
+    "values-ro": "Un arbore de cafea își deschide frunzele lucioase, iar fructele sale roșii se coc.",
+    "values-sk": "Kávovník rozvíja lesklé listy a dozrievajú na ňom červené kávové čerešne.",
+    "values-sl": "Kavovec razpira sijoče liste, medtem ko njegovi rdeči plodovi zorijo.",
+    "values-sv": "En kaffeplanta vecklar ut blanka blad medan de röda kaffebären mognar.",
+    "values-zh": "咖啡树舒展油亮的叶片，红色咖啡果逐渐成熟。"
+  },
+  "validation_boundary": "Astra reviewed all 25 prepared poses in both 148px themes. Native validation records paused Compose rendering and exact preview/finish comparisons, not physical-device/live timing/dynamic palette proof.",
+  "validation": {
+    "asset_id": "coffee_plant",
+    "created_utc": "2026-10-01T15:26:41.681173+00:00",
+    "status": "passed_bounded_validation",
+    "build_snapshot": {
+      "baseline_commit": "7c2f85951df436fa2d5f055056f4ed23ab6b244c",
+      "method": "git archive of verified build-needed paths plus coffee-plant atlas and23 description-key-only overlays",
+      "build_workspace": "G:\\Github\\StarlitCoffee\\.qa-screens\\coffee-plant-redesign-2026-10-01\\build-workspace-7c2f8595-94a4d1a0",
+      "archive": "G:\\Github\\StarlitCoffee\\.qa-screens\\coffee-plant-redesign-2026-10-01\\committed-build-source-7c2f8595.zip",
+      "archive_sha256": "43e447e49b4d2b4dd32bdeaa60844bab2d8f98308224693a06ff319532a07b9a",
+      "archive_bytes": 59360501,
+      "archive_member_count": 1452,
+      "archive_uncompressed_bytes": 74148468,
+      "included_paths": [
+        "app",
+        "gradle",
+        "config",
+        "build.gradle.kts",
+        "settings.gradle.kts",
+        "gradle.properties",
+        "gradlew",
+        "gradlew.bat"
+      ],
+      "gradle_includes": [
+        ":app"
+      ],
+      "omitted_paths_reason": "Docs/prompts/tools/scripts and testdata are not dependencies of assembleDebug, assembleDebugAndroidTest or Detekt; testdata is accessed only by separate benchmark tasks.",
+      "overlay_files": {
+        "app/src/main/res/drawable-nodpi/bloom_coffee_plant_spritesheet.png": "94a4d1a07a3a239fddbbabbf5d991f06c5c28bedd67221258b5addef1f8a5fb4",
+        "app/src/main/res/values/strings.xml": "c6147db45e9cfc446e1c44383ddd4128d83f1040e138be43e8fcfe209b7e8923",
+        "app/src/main/res/values-bg/strings.xml": "f535a53d7981cfba1668eb47b2f1b9855057ddb4b861399c6af41303f284164e",
+        "app/src/main/res/values-cs/strings.xml": "66c86d96e13a8835e70b9d21aede59ab5a5779b95613b75173b9c8b101cd9d90",
+        "app/src/main/res/values-da/strings.xml": "fd53f4f881ae80b0d4a5ac77650be39300fda569cc4a6b2e933ea70181fcaf0f",
+        "app/src/main/res/values-de/strings.xml": "94c50c72bf2ad8b3350c3ca95db4973d84b06db4eaa2628ac1db0e145ca7bf8c",
+        "app/src/main/res/values-el/strings.xml": "e2fe402b8025d4f9be84e289eb0173e1bf4fed2e7a107cf87a91b1b76717191c",
+        "app/src/main/res/values-es/strings.xml": "f68df3adf58755560344f455a62244063779a4e5dbd79999b32bf5db35a055da",
+        "app/src/main/res/values-et/strings.xml": "6ecd5c4d322274dc813f3e389a81ba2530eba7e8ada167617bfbe76fdcdd254e",
+        "app/src/main/res/values-fi/strings.xml": "4cb2c288ad2cef10c6d0901dea494e5d7d5ee2576a426fbdbb4edc0b28eb1262",
+        "app/src/main/res/values-fr/strings.xml": "ca5c53d0523bc8862cfa70071df1f21711dbf47ca7c40f917d04f19fbc41d146",
+        "app/src/main/res/values-hr/strings.xml": "ba8086b6ebb45a71507e47b7d12a062b690551aeb1b0763fc5c6a078d1ac3b98",
+        "app/src/main/res/values-hu/strings.xml": "78d3c191050cd6b39449b79cb020847c101b6b201344c28338a76641b16454a6",
+        "app/src/main/res/values-it/strings.xml": "143eec281473ae3f36e60ee1d7ef33d899aae98caefce53a7396d22e27ca8673",
+        "app/src/main/res/values-lt/strings.xml": "9a6275e1e6d493e7b4d944afdb32d7775c0682b822dbc950ba4d7aa919751c37",
+        "app/src/main/res/values-lv/strings.xml": "d5b43a089e2c81d567d4a8dd69aa459acc1399d490972c7dabc4340c62be9f8c",
+        "app/src/main/res/values-nl/strings.xml": "2a23411a725ebc2b8498abcccc7c36e11f2a1005455c53dc93525cc2eb7ccefb",
+        "app/src/main/res/values-pl/strings.xml": "558291bf720df1c0e0d2a12d25610f02857d513d3e5a8ca625e4748cebdb9034",
+        "app/src/main/res/values-pt/strings.xml": "775475e16bfd21465f18d81536eb4c8f7bb49d0bdc8952f00a0e119dc63a4897",
+        "app/src/main/res/values-ro/strings.xml": "1eb4df09192b9e1a4f079cabb76195bf25bc31049f5e314bf5d66e78dfa8096f",
+        "app/src/main/res/values-sk/strings.xml": "56bfc9ab9f99732420ea65b4d998cfc6df198634e5947ba485e49a7f6308b82a",
+        "app/src/main/res/values-sl/strings.xml": "2b4cbec04acf0df71b9ee6184897095833c18b5c15118287b19fae7afcff860b",
+        "app/src/main/res/values-sv/strings.xml": "754f750cb85aef8a1c01d9cbc0772efa326092b3e94ecdb6932371f123e3e89a",
+        "app/src/main/res/values-zh/strings.xml": "890de448beb23d1427a811d7a25d160c000aaea407ca94a570687623472d251a"
+      },
+      "overlay_source": "G:\\Github\\StarlitCoffee\\.qa-screens\\coffee-plant-redesign-2026-10-01\\selected-prepared.png",
+      "description_overlays": {
+        "app/src/main/res/values/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "A coffee plant unfolding glossy leaves and ripening red cherries.",
+          "baseline_sha256": "427e58db66c4421378ea3e468dabdf246eb2ad40994af9c4457801e342ca5c77"
+        },
+        "app/src/main/res/values-bg/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "Кафено растение разгръща лъскави листа, а червените му плодове узряват.",
+          "baseline_sha256": "bd0dab2038ba90b33c50e8887d5183741e79309124a6a0a083bdd63b5d55ea4d"
+        },
+        "app/src/main/res/values-cs/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "Kávovník rozvíjí lesklé listy a dozrávají na něm červené kávové třešně.",
+          "baseline_sha256": "162a1cf3a785f622330401137dbdc05942336fdded47f951d06842809862dcbc"
+        },
+        "app/src/main/res/values-da/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "En kaffeplante folder blanke blade ud, mens de røde kaffebær modner.",
+          "baseline_sha256": "9216b964b48f0f8e6f08b63b2f80cdd023bc80aef7788cef40ccfe59b58ad039"
+        },
+        "app/src/main/res/values-de/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "Eine Kaffeepflanze entfaltet glänzende Blätter und lässt rote Kaffeekirschen reifen.",
+          "baseline_sha256": "290a3036a16c043e7ea8788a11c2ba306a464587fc513a7cc540b9539672058d"
+        },
+        "app/src/main/res/values-el/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "Ένα φυτό καφέ ξεδιπλώνει γυαλιστερά φύλλα, ενώ οι κόκκινοι καρποί του ωριμάζουν.",
+          "baseline_sha256": "54766aaf9a2fbacd26af0804a87eb4b4689d227329b8c0e2a1ff1ae1496b4b67"
+        },
+        "app/src/main/res/values-es/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "Un cafeto despliega hojas brillantes mientras maduran sus cerezas rojas.",
+          "baseline_sha256": "b87467becaecf4f4197cdb6198974a3fbec3bfc60c7310f2843b38c633e9c286"
+        },
+        "app/src/main/res/values-et/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "Kohvitaim avab läikivad lehed ja selle punased marjad valmivad.",
+          "baseline_sha256": "ddccf14f09ad22e08cc5894b0c61a7b92cf7d4fd4fb9613b464ccfb533b3ec66"
+        },
+        "app/src/main/res/values-fi/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "Kahvikasvi avaa kiiltävät lehtensä, ja sen punaiset kahvimarjat kypsyvät.",
+          "baseline_sha256": "ee601bbea22fa6254c3c83c444ada173f2e0f240c4c478351ceef9fad0d547be"
+        },
+        "app/src/main/res/values-fr/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "Un caféier déploie ses feuilles brillantes tandis que ses cerises rouges mûrissent.",
+          "baseline_sha256": "d1738bc2c7396fb8ecba125611eb9071acb32dba05a8d52c1b9652d0dac54c74"
+        },
+        "app/src/main/res/values-hr/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "Biljka kave razvija sjajne listove dok joj crveni plodovi dozrijevaju.",
+          "baseline_sha256": "dab4fa425f0b1c8233b05855f1795aa1c9e285f99138ee5b30c600610f2f633c"
+        },
+        "app/src/main/res/values-hu/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "A kávécserje fényes leveleket bont, miközben piros termései beérnek.",
+          "baseline_sha256": "c4bffeb03e7988b5c04feb36f9916e6f54822db58b687bd6dc451cb7f81a6e95"
+        },
+        "app/src/main/res/values-it/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "Una pianta di caffè dispiega foglie lucide mentre le sue ciliegie rosse maturano.",
+          "baseline_sha256": "a7abf33ad0417560a7b5fae1ae21e20743ccea12493a97b657ccc5e71121c79c"
+        },
+        "app/src/main/res/values-lt/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "Kavamedis skleidžia blizgius lapus ir nokina raudonas uogas.",
+          "baseline_sha256": "5f1922063fd6fbfbe4a9b7dad52519c8b7d414359c35e6361b289be33a440b56"
+        },
+        "app/src/main/res/values-lv/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "Kafijas koks izplaukst ar spīdīgām lapām, un tā sarkanās ogas nogatavojas.",
+          "baseline_sha256": "7d8d343e6057be98638d24f86bfe35f38b77e441328747020c589b4756c1f7fb"
+        },
+        "app/src/main/res/values-nl/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "Een koffieplant ontvouwt glanzende bladeren terwijl de rode koffiebessen rijpen.",
+          "baseline_sha256": "953dd7f782837fc072225f04329ed925d4392605a6ad7615aaffad6c56c37c53"
+        },
+        "app/src/main/res/values-pl/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "Kawowiec rozwija błyszczące liście, a jego czerwone owoce dojrzewają.",
+          "baseline_sha256": "e3155bea7a979a3b5404c03c8f5c0a705f86de927d465bec95061bab95d58efc"
+        },
+        "app/src/main/res/values-pt/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "Um cafeeiro abre folhas brilhantes enquanto os frutos vermelhos amadurecem.",
+          "baseline_sha256": "594ac14edfc490646229873aa6a97ae6537fa19337b6a4ad6184a92529b5c5c4"
+        },
+        "app/src/main/res/values-ro/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "Un arbore de cafea își deschide frunzele lucioase, iar fructele sale roșii se coc.",
+          "baseline_sha256": "26963265b6b4c4a4e06796abc0df3737ca1927193bb5b0d10026eb72179fb46d"
+        },
+        "app/src/main/res/values-sk/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "Kávovník rozvíja lesklé listy a dozrievajú na ňom červené kávové čerešne.",
+          "baseline_sha256": "1290c0b77d22f122d49014ee4a3ed354725976c37bd3324c29dd84f41b708c70"
+        },
+        "app/src/main/res/values-sl/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "Kavovec razpira sijoče liste, medtem ko njegovi rdeči plodovi zorijo.",
+          "baseline_sha256": "75ad942ccfeeb0e4979668722a22d4bf549813e08b7af783787350d7740f8e1a"
+        },
+        "app/src/main/res/values-sv/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "En kaffeplanta vecklar ut blanka blad medan de röda kaffebären mognar.",
+          "baseline_sha256": "4fa0334af2c349397f508834068400bdb85746ac16b74d2a2e4c4a0b318bb081"
+        },
+        "app/src/main/res/values-zh/strings.xml": {
+          "key": "desc_bloom_sprite_coffee_plant",
+          "value": "咖啡树舒展油亮的叶片，红色咖啡果逐渐成熟。",
+          "baseline_sha256": "532ab637b28c2d662e80c9f4ce1ebe6bf2556133137bc48b92f99adb26d207f8"
+        }
+      },
+      "baseline_resource_sha256": "5475f2db6b7cb66bd0c3c7044ae035769358d286c30ad1c413892aad9565916a",
+      "instrumentation_source": {
+        "path": "app/src/androidTest/java/com/adsamcik/starlitcoffee/ui/component/BloomSpritesheetRenderingTest.kt",
+        "origin": "committed baseline",
+        "sha256": "953112db5f61ed31344123f3ee45f2da3b18ac866a7829cf3ecd48d9ff9f5c4d"
+      },
+      "review_init_script": {
+        "path": "G:\\Github\\StarlitCoffee\\.qa-screens\\coffee-plant-redesign-2026-10-01\\review-build.init.gradle",
+        "sha256": "de5ec90e7dd43f6bdef0e623b353979af900ac351e74b9ce76e1afbe6db5940b",
+        "application_id_suffix": ".coffeeplantreview",
+        "application_id": "com.adsamcik.starlitcoffee.coffeeplantreview",
+        "app_label": "Coffee plant review"
+      },
+      "local_configuration": "SDK path only; authentication remains with normal Gradle/gh resolution",
+      "build_command": [
+        "G:\\Github\\StarlitCoffee\\.qa-screens\\coffee-plant-redesign-2026-10-01\\build-workspace-7c2f8595-94a4d1a0\\gradlew.bat",
+        "--init-script",
+        "G:\\Github\\StarlitCoffee\\.qa-screens\\coffee-plant-redesign-2026-10-01\\review-build.init.gradle",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        ":app:detekt",
+        "--console=plain",
+        "--no-daemon"
+      ],
+      "build_executed": true,
+      "device_used": false,
+      "build_status": "passed",
+      "build_log_sha256": "29513b618ae7a82fe8a0d4ddd5d8657b0341ab040dc85d2379cf10e6b4fb7fbd",
+      "copied_apks": {
+        "coffee-plant-review.apk": {
+          "sha256": "12e3a9c28815e2d0df76d4ea3c505256dda022b4d28a39a340025126cf4c2f2e",
+          "bytes": 349903436,
+          "package_id": "com.adsamcik.starlitcoffee.coffeeplantreview",
+          "label": "Coffee plant review"
+        },
+        "coffee-plant-review-test.apk": {
+          "sha256": "0eaa928a05b9513781b4458493a224cf35f185e762a6a069c96e1d70e55a4fd1",
+          "bytes": 1536497,
+          "package_id": "com.adsamcik.starlitcoffee.coffeeplantreview.test",
+          "label": null
+        }
+      },
+      "detekt_findings": 0
+    },
+    "isolated_build": {
+      "status": "passed",
+      "tasks": [
+        "assembleDebug",
+        "assembleDebugAndroidTest",
+        "detekt"
+      ],
+      "log": "isolated-build.log",
+      "detekt_report": "isolated-detekt.xml",
+      "detekt_findings": 0,
+      "copied_apks": {
+        "coffee-plant-review.apk": {
+          "sha256": "12e3a9c28815e2d0df76d4ea3c505256dda022b4d28a39a340025126cf4c2f2e",
+          "bytes": 349903436
+        },
+        "coffee-plant-review-test.apk": {
+          "sha256": "0eaa928a05b9513781b4458493a224cf35f185e762a6a069c96e1d70e55a4fd1",
+          "bytes": 1536497
+        }
+      }
+    },
+    "native_validation": {
+      "instrumentation_log": "instrumentation.log",
+      "passed_tests": 2,
+      "arguments": {
+        "bloomOnly": "coffee_plant",
+        "bloomAllFrames": "true",
+        "bloomCapture": "true"
+      },
+      "capture_count": 50,
+      "poses_per_theme": 25,
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "native_capture_shape_hwc": [
+        389,
+        389,
+        4
+      ],
+      "duration_seconds": 48,
+      "countdowns": [
+        48,
+        46,
+        44,
+        42,
+        40,
+        38,
+        36,
+        34,
+        32,
+        30,
+        28,
+        26,
+        24,
+        22,
+        20,
+        18,
+        16,
+        14,
+        12,
+        10,
+        8,
+        6,
+        4,
+        2,
+        0
+      ],
+      "adjacent_comparisons": [
+        {
+          "theme": "light",
+          "from_frame": 1,
+          "to_frame": 2,
+          "from_countdown_seconds": 48,
+          "to_countdown_seconds": 46,
+          "changed_pixels": 11404
+        },
+        {
+          "theme": "light",
+          "from_frame": 2,
+          "to_frame": 3,
+          "from_countdown_seconds": 46,
+          "to_countdown_seconds": 44,
+          "changed_pixels": 12291
+        },
+        {
+          "theme": "light",
+          "from_frame": 3,
+          "to_frame": 4,
+          "from_countdown_seconds": 44,
+          "to_countdown_seconds": 42,
+          "changed_pixels": 13753
+        },
+        {
+          "theme": "light",
+          "from_frame": 4,
+          "to_frame": 5,
+          "from_countdown_seconds": 42,
+          "to_countdown_seconds": 40,
+          "changed_pixels": 17058
+        },
+        {
+          "theme": "light",
+          "from_frame": 5,
+          "to_frame": 6,
+          "from_countdown_seconds": 40,
+          "to_countdown_seconds": 38,
+          "changed_pixels": 18875
+        },
+        {
+          "theme": "light",
+          "from_frame": 6,
+          "to_frame": 7,
+          "from_countdown_seconds": 38,
+          "to_countdown_seconds": 36,
+          "changed_pixels": 19629
+        },
+        {
+          "theme": "light",
+          "from_frame": 7,
+          "to_frame": 8,
+          "from_countdown_seconds": 36,
+          "to_countdown_seconds": 34,
+          "changed_pixels": 24272
+        },
+        {
+          "theme": "light",
+          "from_frame": 8,
+          "to_frame": 9,
+          "from_countdown_seconds": 34,
+          "to_countdown_seconds": 32,
+          "changed_pixels": 27651
+        },
+        {
+          "theme": "light",
+          "from_frame": 9,
+          "to_frame": 10,
+          "from_countdown_seconds": 32,
+          "to_countdown_seconds": 30,
+          "changed_pixels": 31598
+        },
+        {
+          "theme": "light",
+          "from_frame": 10,
+          "to_frame": 11,
+          "from_countdown_seconds": 30,
+          "to_countdown_seconds": 28,
+          "changed_pixels": 32637
+        },
+        {
+          "theme": "light",
+          "from_frame": 11,
+          "to_frame": 12,
+          "from_countdown_seconds": 28,
+          "to_countdown_seconds": 26,
+          "changed_pixels": 38208
+        },
+        {
+          "theme": "light",
+          "from_frame": 12,
+          "to_frame": 13,
+          "from_countdown_seconds": 26,
+          "to_countdown_seconds": 24,
+          "changed_pixels": 42211
+        },
+        {
+          "theme": "light",
+          "from_frame": 13,
+          "to_frame": 14,
+          "from_countdown_seconds": 24,
+          "to_countdown_seconds": 22,
+          "changed_pixels": 37315
+        },
+        {
+          "theme": "light",
+          "from_frame": 14,
+          "to_frame": 15,
+          "from_countdown_seconds": 22,
+          "to_countdown_seconds": 20,
+          "changed_pixels": 41221
+        },
+        {
+          "theme": "light",
+          "from_frame": 15,
+          "to_frame": 16,
+          "from_countdown_seconds": 20,
+          "to_countdown_seconds": 18,
+          "changed_pixels": 53039
+        },
+        {
+          "theme": "light",
+          "from_frame": 16,
+          "to_frame": 17,
+          "from_countdown_seconds": 18,
+          "to_countdown_seconds": 16,
+          "changed_pixels": 47926
+        },
+        {
+          "theme": "light",
+          "from_frame": 17,
+          "to_frame": 18,
+          "from_countdown_seconds": 16,
+          "to_countdown_seconds": 14,
+          "changed_pixels": 49933
+        },
+        {
+          "theme": "light",
+          "from_frame": 18,
+          "to_frame": 19,
+          "from_countdown_seconds": 14,
+          "to_countdown_seconds": 12,
+          "changed_pixels": 52698
+        },
+        {
+          "theme": "light",
+          "from_frame": 19,
+          "to_frame": 20,
+          "from_countdown_seconds": 12,
+          "to_countdown_seconds": 10,
+          "changed_pixels": 52097
+        },
+        {
+          "theme": "light",
+          "from_frame": 20,
+          "to_frame": 21,
+          "from_countdown_seconds": 10,
+          "to_countdown_seconds": 8,
+          "changed_pixels": 52063
+        },
+        {
+          "theme": "light",
+          "from_frame": 21,
+          "to_frame": 22,
+          "from_countdown_seconds": 8,
+          "to_countdown_seconds": 6,
+          "changed_pixels": 51189
+        },
+        {
+          "theme": "light",
+          "from_frame": 22,
+          "to_frame": 23,
+          "from_countdown_seconds": 6,
+          "to_countdown_seconds": 4,
+          "changed_pixels": 52582
+        },
+        {
+          "theme": "light",
+          "from_frame": 23,
+          "to_frame": 24,
+          "from_countdown_seconds": 4,
+          "to_countdown_seconds": 2,
+          "changed_pixels": 54123
+        },
+        {
+          "theme": "light",
+          "from_frame": 24,
+          "to_frame": 25,
+          "from_countdown_seconds": 2,
+          "to_countdown_seconds": 0,
+          "changed_pixels": 55822
+        },
+        {
+          "theme": "dark",
+          "from_frame": 1,
+          "to_frame": 2,
+          "from_countdown_seconds": 48,
+          "to_countdown_seconds": 46,
+          "changed_pixels": 11419
+        },
+        {
+          "theme": "dark",
+          "from_frame": 2,
+          "to_frame": 3,
+          "from_countdown_seconds": 46,
+          "to_countdown_seconds": 44,
+          "changed_pixels": 12302
+        },
+        {
+          "theme": "dark",
+          "from_frame": 3,
+          "to_frame": 4,
+          "from_countdown_seconds": 44,
+          "to_countdown_seconds": 42,
+          "changed_pixels": 13772
+        },
+        {
+          "theme": "dark",
+          "from_frame": 4,
+          "to_frame": 5,
+          "from_countdown_seconds": 42,
+          "to_countdown_seconds": 40,
+          "changed_pixels": 17046
+        },
+        {
+          "theme": "dark",
+          "from_frame": 5,
+          "to_frame": 6,
+          "from_countdown_seconds": 40,
+          "to_countdown_seconds": 38,
+          "changed_pixels": 18882
+        },
+        {
+          "theme": "dark",
+          "from_frame": 6,
+          "to_frame": 7,
+          "from_countdown_seconds": 38,
+          "to_countdown_seconds": 36,
+          "changed_pixels": 19601
+        },
+        {
+          "theme": "dark",
+          "from_frame": 7,
+          "to_frame": 8,
+          "from_countdown_seconds": 36,
+          "to_countdown_seconds": 34,
+          "changed_pixels": 24283
+        },
+        {
+          "theme": "dark",
+          "from_frame": 8,
+          "to_frame": 9,
+          "from_countdown_seconds": 34,
+          "to_countdown_seconds": 32,
+          "changed_pixels": 27634
+        },
+        {
+          "theme": "dark",
+          "from_frame": 9,
+          "to_frame": 10,
+          "from_countdown_seconds": 32,
+          "to_countdown_seconds": 30,
+          "changed_pixels": 31594
+        },
+        {
+          "theme": "dark",
+          "from_frame": 10,
+          "to_frame": 11,
+          "from_countdown_seconds": 30,
+          "to_countdown_seconds": 28,
+          "changed_pixels": 32598
+        },
+        {
+          "theme": "dark",
+          "from_frame": 11,
+          "to_frame": 12,
+          "from_countdown_seconds": 28,
+          "to_countdown_seconds": 26,
+          "changed_pixels": 38171
+        },
+        {
+          "theme": "dark",
+          "from_frame": 12,
+          "to_frame": 13,
+          "from_countdown_seconds": 26,
+          "to_countdown_seconds": 24,
+          "changed_pixels": 42184
+        },
+        {
+          "theme": "dark",
+          "from_frame": 13,
+          "to_frame": 14,
+          "from_countdown_seconds": 24,
+          "to_countdown_seconds": 22,
+          "changed_pixels": 37299
+        },
+        {
+          "theme": "dark",
+          "from_frame": 14,
+          "to_frame": 15,
+          "from_countdown_seconds": 22,
+          "to_countdown_seconds": 20,
+          "changed_pixels": 41193
+        },
+        {
+          "theme": "dark",
+          "from_frame": 15,
+          "to_frame": 16,
+          "from_countdown_seconds": 20,
+          "to_countdown_seconds": 18,
+          "changed_pixels": 53039
+        },
+        {
+          "theme": "dark",
+          "from_frame": 16,
+          "to_frame": 17,
+          "from_countdown_seconds": 18,
+          "to_countdown_seconds": 16,
+          "changed_pixels": 47964
+        },
+        {
+          "theme": "dark",
+          "from_frame": 17,
+          "to_frame": 18,
+          "from_countdown_seconds": 16,
+          "to_countdown_seconds": 14,
+          "changed_pixels": 49915
+        },
+        {
+          "theme": "dark",
+          "from_frame": 18,
+          "to_frame": 19,
+          "from_countdown_seconds": 14,
+          "to_countdown_seconds": 12,
+          "changed_pixels": 52664
+        },
+        {
+          "theme": "dark",
+          "from_frame": 19,
+          "to_frame": 20,
+          "from_countdown_seconds": 12,
+          "to_countdown_seconds": 10,
+          "changed_pixels": 52034
+        },
+        {
+          "theme": "dark",
+          "from_frame": 20,
+          "to_frame": 21,
+          "from_countdown_seconds": 10,
+          "to_countdown_seconds": 8,
+          "changed_pixels": 52033
+        },
+        {
+          "theme": "dark",
+          "from_frame": 21,
+          "to_frame": 22,
+          "from_countdown_seconds": 8,
+          "to_countdown_seconds": 6,
+          "changed_pixels": 51161
+        },
+        {
+          "theme": "dark",
+          "from_frame": 22,
+          "to_frame": 23,
+          "from_countdown_seconds": 6,
+          "to_countdown_seconds": 4,
+          "changed_pixels": 52537
+        },
+        {
+          "theme": "dark",
+          "from_frame": 23,
+          "to_frame": 24,
+          "from_countdown_seconds": 4,
+          "to_countdown_seconds": 2,
+          "changed_pixels": 54060
+        },
+        {
+          "theme": "dark",
+          "from_frame": 24,
+          "to_frame": 25,
+          "from_countdown_seconds": 2,
+          "to_countdown_seconds": 0,
+          "changed_pixels": 55792
+        }
+      ],
+      "minimum_changed_pixels": 11404,
+      "threshold": ">64 changed pixels on each of 48 adjacent pairs",
+      "preview_finish_comparisons": 2,
+      "preview_finish_evidence": "The passing everyFinalPreviewMatchesPlayedFinishInBothThemes method compares played F25 to chooser preview in light and dark themes; no separate preview PNGs are inferred.",
+      "captures": [
+        {
+          "file": "native/coffee_plant_light_48.png",
+          "theme": "light",
+          "frame": 1,
+          "countdown_seconds": 48,
+          "sha256": "7d43d5d3eb5b380c053d551d7957a6cb94fdc5f5decc603964a8cd65c9088ead"
+        },
+        {
+          "file": "native/coffee_plant_light_46.png",
+          "theme": "light",
+          "frame": 2,
+          "countdown_seconds": 46,
+          "sha256": "2ab0be7c83a0c8582aaee487659e6e1ea556520ee0679b60b8f36ea2c75ff21a"
+        },
+        {
+          "file": "native/coffee_plant_light_44.png",
+          "theme": "light",
+          "frame": 3,
+          "countdown_seconds": 44,
+          "sha256": "240c23b6e3d9611216edc3a7fdd7a711810e7218d6650d9d90ca8f5d255ae023"
+        },
+        {
+          "file": "native/coffee_plant_light_42.png",
+          "theme": "light",
+          "frame": 4,
+          "countdown_seconds": 42,
+          "sha256": "07e10ebf0af4703f74333b7cb93798056c6adaeb6f903ca9140656095700bef0"
+        },
+        {
+          "file": "native/coffee_plant_light_40.png",
+          "theme": "light",
+          "frame": 5,
+          "countdown_seconds": 40,
+          "sha256": "535df21b0e01353c1a705735d3fd88bcd5d63f2fdf87e1df4c6af7ac5fd9dfc1"
+        },
+        {
+          "file": "native/coffee_plant_light_38.png",
+          "theme": "light",
+          "frame": 6,
+          "countdown_seconds": 38,
+          "sha256": "6b3ad49934b01a1c4a0ad32c128df4aabe044ed8891dc03652e8e478b0b715d8"
+        },
+        {
+          "file": "native/coffee_plant_light_36.png",
+          "theme": "light",
+          "frame": 7,
+          "countdown_seconds": 36,
+          "sha256": "8def683c5eb26cc833ce83d3c11d68ed9e960b86cfbb38954294e01cec1a9209"
+        },
+        {
+          "file": "native/coffee_plant_light_34.png",
+          "theme": "light",
+          "frame": 8,
+          "countdown_seconds": 34,
+          "sha256": "1dc01547e4ca41bd96365dbfd1238256f58cb26af1c1b46ab3c203b8141dc19c"
+        },
+        {
+          "file": "native/coffee_plant_light_32.png",
+          "theme": "light",
+          "frame": 9,
+          "countdown_seconds": 32,
+          "sha256": "aa57fddc3570d1a304f57c0ef83179a4969ec6e9959b4c1613c0a0ca4fe003e7"
+        },
+        {
+          "file": "native/coffee_plant_light_30.png",
+          "theme": "light",
+          "frame": 10,
+          "countdown_seconds": 30,
+          "sha256": "f3cf51f88b71c02f3a6d4317ebf4169064758f4af9ffe6dec622181bde31b6ec"
+        },
+        {
+          "file": "native/coffee_plant_light_28.png",
+          "theme": "light",
+          "frame": 11,
+          "countdown_seconds": 28,
+          "sha256": "512538fdd4508e82fc1c27d660f91aa87a4c1c33c1c635845c5cfd1b7ea458e3"
+        },
+        {
+          "file": "native/coffee_plant_light_26.png",
+          "theme": "light",
+          "frame": 12,
+          "countdown_seconds": 26,
+          "sha256": "861a0b55f5203de0c129dff8cc7dcd96ad0b8595ff1f57a39c1b2eb5299caf4c"
+        },
+        {
+          "file": "native/coffee_plant_light_24.png",
+          "theme": "light",
+          "frame": 13,
+          "countdown_seconds": 24,
+          "sha256": "e5999dca82b8ef49ebd35d96a13ef1c5eb5669da29f223d33ea2f4c623c5827d"
+        },
+        {
+          "file": "native/coffee_plant_light_22.png",
+          "theme": "light",
+          "frame": 14,
+          "countdown_seconds": 22,
+          "sha256": "f17eb5275962f88edaf5abdf1a7cd3964c931e24f4fcf0c5a150fbeeb2cf5df9"
+        },
+        {
+          "file": "native/coffee_plant_light_20.png",
+          "theme": "light",
+          "frame": 15,
+          "countdown_seconds": 20,
+          "sha256": "8893ea066e97696d1e0555e6ec71375e732ed73c0daf3a8a3aca6ccad7af7684"
+        },
+        {
+          "file": "native/coffee_plant_light_18.png",
+          "theme": "light",
+          "frame": 16,
+          "countdown_seconds": 18,
+          "sha256": "c1a769af9f04c9af33bddb28e6fb9ba63fc72e94a3bb9b0f2fdc124300bce0bd"
+        },
+        {
+          "file": "native/coffee_plant_light_16.png",
+          "theme": "light",
+          "frame": 17,
+          "countdown_seconds": 16,
+          "sha256": "7177c12a16eec503ef655866f5175de3bb7f54c7441543b51034e983fce8bbb7"
+        },
+        {
+          "file": "native/coffee_plant_light_14.png",
+          "theme": "light",
+          "frame": 18,
+          "countdown_seconds": 14,
+          "sha256": "8781da6c49f43593fba77826fe86dfc2045479d8616b0ad76d9ed298b8bab9f8"
+        },
+        {
+          "file": "native/coffee_plant_light_12.png",
+          "theme": "light",
+          "frame": 19,
+          "countdown_seconds": 12,
+          "sha256": "44eeabdda9365372b34a62be9fb5e7725933a23c446ec3458f1e973472e7968f"
+        },
+        {
+          "file": "native/coffee_plant_light_10.png",
+          "theme": "light",
+          "frame": 20,
+          "countdown_seconds": 10,
+          "sha256": "e3b548a85ce212b130f182c1d7c82a514b40d33b8c782295cfa990d636b3ca8f"
+        },
+        {
+          "file": "native/coffee_plant_light_8.png",
+          "theme": "light",
+          "frame": 21,
+          "countdown_seconds": 8,
+          "sha256": "aa3d82928e9af267b1d645e3b1d9a155575d1e6fad5cfcdba173d9663189133a"
+        },
+        {
+          "file": "native/coffee_plant_light_6.png",
+          "theme": "light",
+          "frame": 22,
+          "countdown_seconds": 6,
+          "sha256": "ef8dc5dfc3a5d665651e363d779fe8de003534864a14da33a3cb244f1d8a2feb"
+        },
+        {
+          "file": "native/coffee_plant_light_4.png",
+          "theme": "light",
+          "frame": 23,
+          "countdown_seconds": 4,
+          "sha256": "794be88930da39a88c3c009c993b9d808f4d0ee1ea625bf3de35475948b44d0a"
+        },
+        {
+          "file": "native/coffee_plant_light_2.png",
+          "theme": "light",
+          "frame": 24,
+          "countdown_seconds": 2,
+          "sha256": "9b5876548be1beb7824ccfb1d63f8b7babd5ab4c87fb05114ab4cf3b99f991cb"
+        },
+        {
+          "file": "native/coffee_plant_light_0.png",
+          "theme": "light",
+          "frame": 25,
+          "countdown_seconds": 0,
+          "sha256": "38a3a8060a73ab85bc9a7d88506ab630d2946ba99bb29059b4213bf2d6c7d0e5"
+        },
+        {
+          "file": "native/coffee_plant_dark_48.png",
+          "theme": "dark",
+          "frame": 1,
+          "countdown_seconds": 48,
+          "sha256": "8e98c8e2b4d87ed7fb7c9a5183b7e5368208345e06ae816a65e0089bd0e93d41"
+        },
+        {
+          "file": "native/coffee_plant_dark_46.png",
+          "theme": "dark",
+          "frame": 2,
+          "countdown_seconds": 46,
+          "sha256": "17c97ff5b36c6a20366a46e8376f9688bb6f5675661dab908a9126f271092ce1"
+        },
+        {
+          "file": "native/coffee_plant_dark_44.png",
+          "theme": "dark",
+          "frame": 3,
+          "countdown_seconds": 44,
+          "sha256": "698fb4a9b5c0ae9ddf7c24ec4851ef3e22a28a1b1f8c1f15e54b7c458cb5f914"
+        },
+        {
+          "file": "native/coffee_plant_dark_42.png",
+          "theme": "dark",
+          "frame": 4,
+          "countdown_seconds": 42,
+          "sha256": "7e0b4e4cf28f9f97595643f014c1f2c71923b8623bca92b22713a5cd45522ae6"
+        },
+        {
+          "file": "native/coffee_plant_dark_40.png",
+          "theme": "dark",
+          "frame": 5,
+          "countdown_seconds": 40,
+          "sha256": "13d6f0920d3906e399cd9d7acc176abaf420b7b037e73c2da0262b65eb4ef975"
+        },
+        {
+          "file": "native/coffee_plant_dark_38.png",
+          "theme": "dark",
+          "frame": 6,
+          "countdown_seconds": 38,
+          "sha256": "f814093f575182f74718f0cd8895bf6b7145a7a992d7dcabaec65e54ec79eb5a"
+        },
+        {
+          "file": "native/coffee_plant_dark_36.png",
+          "theme": "dark",
+          "frame": 7,
+          "countdown_seconds": 36,
+          "sha256": "b62274c7bee5e236cd6dbf04bb33cc08b73836235246a1023e927670f65d8019"
+        },
+        {
+          "file": "native/coffee_plant_dark_34.png",
+          "theme": "dark",
+          "frame": 8,
+          "countdown_seconds": 34,
+          "sha256": "42ad11a8dd41fd71e6cf593efb95c233ca06c040578d10816a298147852f9005"
+        },
+        {
+          "file": "native/coffee_plant_dark_32.png",
+          "theme": "dark",
+          "frame": 9,
+          "countdown_seconds": 32,
+          "sha256": "7e861c5486b3f5d9085357099c4ff3449cd0197cd738517e0ea482e73b60880d"
+        },
+        {
+          "file": "native/coffee_plant_dark_30.png",
+          "theme": "dark",
+          "frame": 10,
+          "countdown_seconds": 30,
+          "sha256": "0438205cc5c76d141f7d45a2070cd03d1fb1880b5309b779c726ad197ad65cb0"
+        },
+        {
+          "file": "native/coffee_plant_dark_28.png",
+          "theme": "dark",
+          "frame": 11,
+          "countdown_seconds": 28,
+          "sha256": "6632f713519eb8e88231fda57bd70e02db5d99a01b31fd6f151d750fb11eb72c"
+        },
+        {
+          "file": "native/coffee_plant_dark_26.png",
+          "theme": "dark",
+          "frame": 12,
+          "countdown_seconds": 26,
+          "sha256": "7625565dc2014bd6b70e44a465a1a04a90eb39cc1414ede5cc43c2c5d37785c0"
+        },
+        {
+          "file": "native/coffee_plant_dark_24.png",
+          "theme": "dark",
+          "frame": 13,
+          "countdown_seconds": 24,
+          "sha256": "c50b0f17210f3edeece243ebfcec0ba351e0f768b88ff40ddea079c47d32fbd1"
+        },
+        {
+          "file": "native/coffee_plant_dark_22.png",
+          "theme": "dark",
+          "frame": 14,
+          "countdown_seconds": 22,
+          "sha256": "9e15d21aed97e01ba0ee4e91f955209b1c3d6f2799f2094a8245e9afc4f96788"
+        },
+        {
+          "file": "native/coffee_plant_dark_20.png",
+          "theme": "dark",
+          "frame": 15,
+          "countdown_seconds": 20,
+          "sha256": "908aa512c9cda5dc8e1d77bb49a48aa581d2939825a585453fa33415bdfff815"
+        },
+        {
+          "file": "native/coffee_plant_dark_18.png",
+          "theme": "dark",
+          "frame": 16,
+          "countdown_seconds": 18,
+          "sha256": "2c93b56d5f966a312ea390673413901631acdd3125ef1449274c871b458733b9"
+        },
+        {
+          "file": "native/coffee_plant_dark_16.png",
+          "theme": "dark",
+          "frame": 17,
+          "countdown_seconds": 16,
+          "sha256": "82bf7f2aa9d7245e950136b90c23d9e3360e93e034712d16aadff3b6841c8801"
+        },
+        {
+          "file": "native/coffee_plant_dark_14.png",
+          "theme": "dark",
+          "frame": 18,
+          "countdown_seconds": 14,
+          "sha256": "42b1712e019e0b02a4509059c43bea0b2d0cb65a255a1b58dd0b321cd4215749"
+        },
+        {
+          "file": "native/coffee_plant_dark_12.png",
+          "theme": "dark",
+          "frame": 19,
+          "countdown_seconds": 12,
+          "sha256": "83f21b9879e8361d2b8c02f9fc63c1b99fe1a82d6e647d2bcfb90bb20ed4d91c"
+        },
+        {
+          "file": "native/coffee_plant_dark_10.png",
+          "theme": "dark",
+          "frame": 20,
+          "countdown_seconds": 10,
+          "sha256": "def254bf60a285a170ef6c8aaa36ba8b7fe6bc1bd5313b85cd4044acf59e50af"
+        },
+        {
+          "file": "native/coffee_plant_dark_8.png",
+          "theme": "dark",
+          "frame": 21,
+          "countdown_seconds": 8,
+          "sha256": "b6df397d296c77bfe9bd4b7e7bcbe6416d313e93fda309b76ec552e57b367757"
+        },
+        {
+          "file": "native/coffee_plant_dark_6.png",
+          "theme": "dark",
+          "frame": 22,
+          "countdown_seconds": 6,
+          "sha256": "640e367ff502ec48819e9cd3b0a1989c3a4feb3e1ade22b89fcc6af3afd60c2c"
+        },
+        {
+          "file": "native/coffee_plant_dark_4.png",
+          "theme": "dark",
+          "frame": 23,
+          "countdown_seconds": 4,
+          "sha256": "ef8186d5722a57fbf602c930285408325a64c0dcd70c0a2ed2f01e2892fc41c1"
+        },
+        {
+          "file": "native/coffee_plant_dark_2.png",
+          "theme": "dark",
+          "frame": 24,
+          "countdown_seconds": 2,
+          "sha256": "4fc56c65246b55a1f92ba7a975201ba78ab5c38459c742e5cb9725d0053ae647"
+        },
+        {
+          "file": "native/coffee_plant_dark_0.png",
+          "theme": "dark",
+          "frame": 25,
+          "countdown_seconds": 0,
+          "sha256": "82fc66337c29cf634e0c3cddf6c5bd34c5a31d8319376ab222033279b059caed"
+        }
+      ],
+      "instrumentation_attempts": [
+        {
+          "attempt": 1,
+          "status": "failed",
+          "tests_run": 2,
+          "failures": 1,
+          "seconds": 12.055,
+          "growth_failure": "No compose hierarchies found in the app before first capture",
+          "preview_finish_method": "passed",
+          "log": "instrumentation-first-attempt.log",
+          "log_sha256": "765267a787d85b0bb3429d8915177b287783f2ef3c72b07f7475c6ba24df6497"
+        },
+        {
+          "attempt": 2,
+          "status": "passed",
+          "tests_run": 2,
+          "failures": 0,
+          "seconds": 11.813,
+          "log": "instrumentation.log",
+          "log_sha256": "b837658eb7b659422c460c75771ea6e482c1011d0cf40ed0de6775ccdfaa6bdf",
+          "same_apks_and_test_code": true
+        }
+      ]
+    },
+    "device": {
+      "android_version": "16",
+      "density_dpi": "420",
+      "supplied_evidence": {
+        "device": "emulator-5584",
+        "density_dpi": "420",
+        "density_output": "Physical density: 420",
+        "size_output": "Physical size: 1080x2400",
+        "api": 36,
+        "avd": "Medium_Phone",
+        "android_version": "16"
+      }
+    },
+    "shared_checkout": {
+      "status": "not_run_or_not_supplied",
+      "logs": {},
+      "detekt_finding_count": 0,
+      "detekt_findings": [],
+      "compile_error_count": 0,
+      "compile_errors": [],
+      "coffee_plant_or_shared_renderer_findings": [],
+      "scope_note": "Counts describe only this QA directory's supplied logs; no clean shared-checkout claim is inferred from the isolated build."
+    },
+    "full_unit_suite": {
+      "rerun": false
+    },
+    "boundaries": [
+      "Native evidence is emulator Compose rendering at the supplied Android version/density, not physical-device coverage.",
+      "Tests render exact paused countdown poses with isRunning=false and dynamicColor=false; running tween timing and dynamic colors are not validated.",
+      "The GIF is an offline review playback assembled from native still captures at 480ms per pose, not a live recording of the app animation.",
+      "All native pixels participate in the change check; >64 changed pixels is a distinctness check, not proof of perceptual polish.",
+      "The isolated snapshot passed build/Detekt; shared-checkout results are recorded only when current logs are supplied. Full unit suite was not rerun."
+    ],
+    "artifact_generation": {
+      "display_capture_size_px": 148,
+      "operation": "whole-capture resize and labeled layout only",
+      "gif_frames": 25,
+      "gif_duration_ms_per_frame": 480,
+      "preview_frames": [
+        1,
+        10,
+        18,
+        25
+      ]
+    },
+    "artifacts": {
+      "native_light.png": {
+        "sha256": "fda3228384ef1599e843b946b26400cb0a49a372737d6cefbc42fd8de6a54864"
+      },
+      "native_dark.png": {
+        "sha256": "4b4f09045aab4039248f8819c92c2232132dbef902d22efd55e5c8fd1bec4e56"
+      },
+      "native-plant-playback.gif": {
+        "sha256": "e07897b53935139924da49b790e925e4bd939005521cf35a7bfefe4e62546d97"
+      },
+      "native-plant-preview.png": {
+        "sha256": "9255875e2c17bb68c8643f09a42d7801f53a5bd42b2af1977f97188f44af2e66"
+      }
+    },
+    "evidence_hashes": {
+      "instrumentation.log": "b837658eb7b659422c460c75771ea6e482c1011d0cf40ed0de6775ccdfaa6bdf",
+      "build-snapshot.json": "24b0163ce81b40ce54a34526738036334bec5cf9e48e33cd5e2a040c28b02370",
+      "isolated-build.log": "29513b618ae7a82fe8a0d4ddd5d8657b0341ab040dc85d2379cf10e6b4fb7fbd",
+      "isolated-detekt.xml": "f491e274f0d208f81c3edbc7c1097c30db590a3822fcf579468ac814d9ccc62b",
+      "device-info.json": "3f4ade5a74ee02f9606f7884f13e3d501ea86539ec1ab8ae3fcbec6ddf4e2c40"
+    }
+  },
+  "native_visual_review": {
+    "reviewer": "Astra",
+    "model": "gpt-6-astra",
+    "id": "coffee_plant",
+    "verdict": "accept_with_minor_polish_residuals",
+    "accepted": true,
+    "asset": "app/src/main/res/drawable-nodpi/bloom_coffee_plant_spritesheet.png",
+    "asset_sha256": "94a4d1a07a3a239fddbbabbf5d991f06c5c28bedd67221258b5addef1f8a5fb4",
+    "asset_hash_verified_from_worktree": true,
+    "evidence_reviewed": [
+      "native_light.png (all25 actual native poses at148px)",
+      "native_dark.png (all25 actual native poses at148px)",
+      "native-plant-preview.png (F1,F10,F18,F25, both themes)"
+    ],
+    "frames_reviewed_per_theme": 25,
+    "adjacent_transitions_reviewed_per_theme": 24,
+    "blockers": [],
+    "native_findings": [
+      "Bean baseline and plant registration remain visually stable through the row boundaries; no recurrence of the oldF15→16 whole-plant shrink.",
+      "F11→12→13: F12 retains exactly four leaves and no fruit. Slightly warmer bean and stronger leaf gloss are visible but fit the surrounding material. No meaningful registration jump or structural reset.",
+      "Third leaf pair develops at apex byF13; six mature leaves persist throughF25 without disappearing branches or substituted leaf tiers.",
+      "Fruit count:0 throughF13,2 atF14–15,4 fromF16 throughF25. All four retained cherries remain readable during staggered ripening.",
+      "Central stem, three leaf tiers and warm red final cherries read clearly at148px on both native themes.",
+      "Native finish has no clipped leaves, stray sprite fragments, transparent anatomy holes or colored base rim.",
+      "Compact native preview communicates a substantially clearer seed-to-fruiting-coffee-plant progression."
+    ],
+    "residuals": [
+      {
+        "frames": "F5→6",
+        "note": "Slight lowering while the first pair spreads; natural unfolding, not a scale reset."
+      },
+      {
+        "frames": "F11→12→13",
+        "note": "F12 bean/leaf paint is modestly brighter and its four-leaf canopy slightly fuller; acceptable native-edit variation."
+      },
+      {
+        "frames": "F16–18",
+        "note": "Restrained green-fruit expansion stages before the stronger ripening beats."
+      },
+      {
+        "frames": "F24→25",
+        "note": "Quiet final settling after four cherries become red; acceptable completion beat."
+      }
+    ],
+    "verification_boundary": "Actual Compose-rendered paused progress poses captured on Android16/API36 at420dpi, then assembled into148px contacts. This review verifies native static rendering and neighboring-pose continuity; it does not establish live temporal playback or every physical device/filter configuration. No device control or production changes performed by this reviewer.",
+    "instrumentation_context": {
+      "source": "Root-reported execution results; visual review directly inspected the resulting native contacts.",
+      "rerun": "Both native tests passed in11.813s;50 actual389x389 captures,48 distinct adjacent pairs and2 exact preview/finish matches reported.",
+      "first_attempt": "Initial growth test failed before the first capture because no Compose hierarchy was found. No code changes before passing rerun; first-attempt logs retained by root.",
+      "claim_limit": "The initial transient test failure is not concealed, and this static visual verdict is separate from that execution history."
+    }
+  },
+  "source_reproduction_sha256": "94a4d1a07a3a239fddbbabbf5d991f06c5c28bedd67221258b5addef1f8a5fb4"
+}

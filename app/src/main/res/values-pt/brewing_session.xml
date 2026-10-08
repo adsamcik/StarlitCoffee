@@ -39,7 +39,12 @@
     <string name="format_brew_stage_recorded_grams">Registado %1$.0f g</string>
     <string name="format_brew_stage_remaining_grams">Restam %1$.0f g</string>
     <string name="label_brew_reference_cues">Referências</string>
-    <string name="msg_brew_reference_cues_not_completion">Apenas como orientação. Conclua o passo com a ação principal acima.</string>
+    <string name="action_pause_brew_guide">Pausar guia</string>
+    <string name="action_resume_brew_guide">Retomar guia</string>
+    <string name="action_pause_brew_clock">Pausar temporizador</string>
+    <string name="msg_brew_clock_keeps_running">O temporizador continua.</string>
+    <string name="msg_brew_guide_paused">Guia em pausa. O temporizador continua.</string>
+    <string name="msg_brew_reference_cues_not_completion">Apenas como orientação. Uma indicação de tempo não conclui uma etapa física.</string>
     <string name="action_show_more_brew_reference_cues">Mostrar mais referências</string>
     <string name="action_hide_brew_reference_cues">Ocultar referências adicionais</string>
     <string name="label_brew_reference_stage_duration">Duração da etapa</string>

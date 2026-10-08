@@ -3,6 +3,7 @@
     <string-array name="brew_method_names">
         <item>Pulsar</item><item>V60</item><item>Francoska preša</item><item>AeroPress</item>
         <item>Espresso</item><item>Moka posoda</item><item>Hladno varjenje</item>
+        <item>Chemex</item>
     </string-array>
     <string-array name="filter_type_names"><item>Papirnati</item><item>19K</item><item>40K</item></string-array>
     <string-array name="filter_cup_profiles">
@@ -18,10 +19,5 @@
         <item>Vrček v obliki panja</item><item>Baristični vrček</item><item>Oglati vrček</item>
         <item>Fasetiran kozarec za cortado</item><item>Keramična skleda za latte</item>
         <item>Termovrč</item><item>Dvostenska preša</item>
-    </string-array>
-    <string-array name="preset_color_labels">
-        <item>Privzeto</item><item>Rjava</item><item>Čokoladna</item><item>Peru</item>
-        <item>Jekleno modra</item><item>Morsko zelena</item><item>Vijolična</item><item>Škrlatna</item>
-        <item>Oranžna</item><item>Skrilasta</item>
     </string-array>
 </resources>

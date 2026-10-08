@@ -1,0 +1,12 @@
+<resources>
+    <string name="action_brew_this_guide">Bryg efter denne opskrift</string>
+    <string name="label_freshly_boiled_water">Friskkogt vand</string>
+    <string name="label_machine_temperature">Maskinen styrer temperaturen</string>
+    <string name="action_prepare_this_guide">Forbered kaffe</string>
+    <string name="label_reviewed_guide_english">Opskrift på engelsk</string>
+    <string name="heading_reviewed_sources">Opskrift og kilder</string>
+    <string name="msg_reviewed_fill_quantities">Følg de angivne påfyldningsmærker. Vej den kaffe, du faktisk bruger.</string>
+    <string name="label_measured_coffee_g">Tilført kaffe (g)</string>
+    <string name="label_optional_measured_water_g">Vejet vand (g, valgfrit)</string>
+    <string name="msg_reviewed_equipment_confirm">Mit udstyr passer til denne opskrift.</string>
+</resources>

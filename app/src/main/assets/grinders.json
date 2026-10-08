@@ -1,53 +1,17 @@
 {
   "_meta": {
-    "version": 3,
-    "generated": "2026 web-verified pass — sources fetched/cited per grinder",
+    "version": 4,
+    "verifiedAt": "2026-09-30",
+    "supportPolicy": "Exact model, verified setting notation, and a directly published method/filter starting point or band. No inferred grinder conversions.",
+    "valueEncoding": "Linear dial positions. Ode printed 5.2 is stored as 5 + 2/3; adjustment step is 1/3.",
+    "notes": [
+      "App-selected starts stay within directly published bands; a single published point has no invented range.",
+      "C40 uses its standard axle. Ode uses Gen 2 Brew Burrs. Modified axles and burrs are not supported.",
+      "DF64 was removed because the previous entry did not identify a hardware generation or burr configuration.",
+      "Metal Pulsar predictions and unverified method entries were removed. Unsupported combinations use generic grind guidance.",
+      "Source review is not physical grinder validation."
+    ],
     "sources": {
-      "1zpresso-zp6-special": [
-        "1Zpresso ZP6 dial spec: 9 numbers × 10 micro-clicks = 90 clicks/rotation, ~22 µm/click (cafune.ca, beanmarketshop.com, kofio.co)",
-        "Paper Pulsar median 5.5, range 4.3–6.5 from 6 exact community dial reports (r/pourover users gunga_galungaa, Pizzacooby2007, albertclee, Cathfaern, MC-M; 2024–2025)",
-        "Paper distribution is bimodal: Rao/Gagné cluster ~4.3–5.5; PocketScience-style ~6.5 — suggested 5.2 stays as Rao-style default",
-        "Metal 19K / 40K dial values: NO exact ZP6 Special reports found in community search; current values are inferred from official NextLevel guidance (40K finer mesh / cleaner; 19K 150 µm holes / body) and PAPER→40K→19K finest→coarsest ordering — treat as starting points, tune by taste",
-        "Calibration noise: some users zero at burr lock, others at slight burr touch (r/pourover); shifts cross-user comparability",
-        "Published vendor anchor: Kaldi's Coffee Pulsar recipe lists ZP6 5.0–6.0 (20 g / 320 g near-boiling, 3:30–4:00) — sits inside the community range; suggested 5.2 stays at the lower-cluster default"
-      ],
-      "comandante-c40": [
-        "V60 22-click classic from James Hoffmann ‘ultimate V60 technique’ video",
-        "Pulsar/V60 range 20–28 — community consensus (r/coffee wiki)",
-        "Moka Pot 12–16, Cold Brew 28–34 — Comandante community + barista forums",
-        "Pulsar paper: 7 community dial reports — 24 (Gagné IG), 24 (NextLevel recipe card), 25, 26 (×2), 27 (from 53 Red Clix ÷2), 28 (r/pourover, 2024–2025) — tight cluster 24–28, median 26",
-        "Red Clix normalization: RX35 doubles click count vs standard (Comandante official); divide RC clicks by 2 for std-click equivalence",
-        "Pulsar metal 19K / 40K: only 1 explicit C40 + 19K report (22 clicks, flash-brew/iced — outlier); current values inferred from finest→coarsest ordering and qualitative disc descriptions",
-        "Outlier published anchor: Scott Rao's Pulsar recipe page lists C40 at 18 clicks (25 g / 1:17, 3:30–4:30) — much finer than the community 24–28 cluster; flagged as snippet-only weak source, kept as alternative not default"
-      ],
-      "fellow-ode-gen2": [
-        "Fellow official gear guide: fellowproducts.com/pages/gear-guide-ode",
-        "Honest Coffee Guide chart: honestcoffeeguide.com/fellow-ode-brew-grinder-gen-2-grind-settings/",
-        "Gen 2 burrs grind ~25 µm/step finer than Gen 1; Gen 1 charts NOT applicable",
-        "Pulsar paper: 11 direct community dial reports (r/pourover, r/FellowProducts, home-barista, visualizer.coffee, 2024–2025) — pooled range 5.2–8.0; bimodal cluster: lower 5.2–6.2 for cleaner percolation, upper 7.0–8.0 for pulse-heavy / immersion / Wendelboe-style; Fellow's official Ode pour-over starting point is 5",
-        "Pulsar metal 19K / 40K: NO direct Gen 2 numeric reports found; values extrapolated from paper centroid + finest→coarsest ordering (40K cleaner / clogs more; 19K body-forward 150 µm holes)",
-        "Published vendor anchor: Kaldi's Coffee Pulsar recipe lists Ode Gen 2 5.2 (20 g / 320 g near-boiling, 3:30–4:00) — sits at the lower edge of the community range, matches the cleaner-percolation cluster"
-      ],
-      "baratza-encore-esp": [
-        "Encore ESP dial 1–40 (1–15 espresso band, 10–40 filter): baratza.com/grinder/encore-esp/",
-        "Pulsar paper: only 2 strong direct ESP × Pulsar dial reports found (r/pourover, 2025): 13 worked for immersion, 15 was too fine, 19 worked for percolation; weak Instagram snippet ~26 — center of gravity ~19–20",
-        "Pulsar metal 19K / 40K: NO direct ESP community reports found; current values inferred from official NextLevel guidance (40K cleaner / clogs more; 19K body / 150 µm holes) and finest→coarsest ordering",
-        "Filter chart (V60 13–18, AeroPress 10–16, French Press 28–34): community charts, not direct Pulsar evidence"
-      ],
-      "niche-zero": [
-        "Niche dial 0–50 (max coarse 50): nichecoffee.co.uk + Hoffmann YouTube review",
-        "V60 starting point 28–32 (Hoffmann); Espresso 10–20, French Press 40–50 (Niche community)",
-        "Pulsar paper: 1 exact community dial (Instagram reel @ 40, 18g/300g) + 1 normalized anchor (~600–700 µm Reddit recipe ≈ Niche 35–50) — both point to ~40",
-        "Pulsar metal 19K / 40K: NO direct Niche Zero numeric reports; values extrapolated from paper anchor + finest→coarsest ordering",
-        "Agitation matters more than dial on Pulsar: gentle WWDT alone cut one Niche user's brew time from 8:00 to 5:00 with better taste (r/pourover Rabbit-at-Reddit)"
-      ],
-      "df64": [
-        "DF64 dial 0–90 with stock 64 mm flat burrs: honestcoffeeguide.com/turin-df64-gen-2-grind-settings/",
-        "V60 23–53, Espresso 0–20, French Press 53–90, Cold Brew 65–90 (Honest Coffee Guide chart)",
-        "Stock burrs are espresso-tuned; SSP MP / Brew burrs shift filter ranges ~10 finer",
-        "Pulsar paper: 7 stock-burr DF64 community anchors (r/DF64, r/pourover, r/Coffee 2024–2025) — median ~55, range 50–70; one user moved 70 → 50 with better cup; 50 also reported on Hario Switch as Pulsar-adjacent steep-and-release",
-        "Pulsar metal 19K / 40K: ~0–1 direct DF64 dial reports — values are extrapolated coarser from the paper cluster (Pulsar wants coarser-than-V60; 40K clogs more under agitation; 19K body-forward)"
-      ],
       "decaf": [
         "Direction: COARSER (not finer). Older 'finer for decaf' folk-wisdom assumed weakened cell walls → faster extraction, but post-2019 research points the other way.",
         "Mechanism: decaffeination embrittles the bean → grinding produces more fines → fines accumulate as a low-permeability layer in the bed → percolation slows and channels → coarsen to restore flow.",
@@ -57,26 +21,11 @@
         "Process relief: Swiss Water, Mountain Water, and CO₂ supercritical processes preserve bean structure better → -1 step relief (less coarsening needed). Solvent processes (EA Sugarcane, EA Direct, MC Direct) get no relief — more fines expected.",
         "Final steps clamped to ≥ 0; recommendation moves toward rangeEnd, never beyond."
       ],
-      "pulsar-filter-ordering": [
-        "NextLevel Pulsar Filters product page: paper chosen for consistent flow",
-        "NextLevel Pulsar Stainless Steel Filter Discs: 19K = body/booster, 40K = cleaner cup but more clog-prone than paper",
-        "Coffee ad Astra 'The Pulsar Dripper' — clogging slows extraction so metal discs need slight grind adjustment",
-        "Verified ordering: PAPER (finest) → METAL_40K (mid) → METAL_19K (coarsest, 150 µm holes)"
-      ],
-      "pulsar-official-anchors": [
-        "NextLevel Pulsar product page: optimal batch is 20 g / 340 g (1:17)",
-        "Official paper recipe card 'Steep and Flush | 20 g | 1:17': target grind 750–850 µm avg, brew time 3:30–4:00",
-        "Official paper recipe card 'Jonathan Gagné | 20 g | 1:17': target grind 650 µm (EG-1/Ultra burrs), brew time 3:30",
-        "NextLevel published guidance is micron-based, not grinder-dial-based; per-grinder dial values come from community + vendor recipes (Kaldi's, Rao) where available"
+      "chemex-official-anchor": [
+        "Baratza Encore ESP Operations Manual January 2023 v1.0 p.5: Chemex starting setting 30; https://assets.breville.com/ZCG495/manual-encoreesp-v1-0-en-010923.pdf; verified 2026-09-30",
+        "Setting 30 is a published starting point, not a published optimal range. Other grinders use generic medium-coarse guidance until method-specific evidence is verified."
       ]
-    },
-    "notes": [
-      "Ranges are starting points — your bag, roast date, water and machine will shift the dial.",
-      "Pulsar filter convention (verified 2026): PAPER finest → METAL_40K (finer mesh, mid-grind) → METAL_19K (larger 150 µm holes, coarsest, body-forward).",
-      "Filter-agnostic methods (non-Pulsar) use filterType=null.",
-      "Fellow Ode Gen 2 has no ESPRESSO or MOKA_POT entry — burrs cannot grind that fine.",
-      "DF64 ranges assume stock burrs; SSP MP / HU shift filter brews ~10 dial-units finer."
-    ]
+    }
   },
   "grinders": [
     {
@@ -85,569 +34,313 @@
       "model": "ZP6 Special",
       "isManual": true,
       "scaleType": "DIAL_CLICKS",
-      "clicksPerRotation": 90
+      "clicksPerRotation": 90,
+      "dial": {
+        "notation": "DECIMAL_CLICKS",
+        "minimum": 0,
+        "stepSize": 0.1,
+        "numbersPerRotation": 9
+      },
+      "sourceUrls": [
+        "https://1zpresso.coffee/grind-setting/"
+      ]
     },
     {
       "id": "comandante-c40",
       "brand": "Comandante",
-      "model": "C40",
+      "model": "C40 (standard clicks)",
       "isManual": true,
-      "scaleType": "PURE_CLICKS"
+      "scaleType": "PURE_CLICKS",
+      "dial": {
+        "notation": "CLICK_COUNT",
+        "minimum": 0,
+        "stepSize": 1
+      },
+      "sourceUrls": [
+        "https://comandantegrinder.com/pages/faq"
+      ]
     },
     {
       "id": "fellow-ode-gen2",
       "brand": "Fellow",
-      "model": "Ode Gen 2",
+      "model": "Ode Gen 2 (Gen 2 burrs)",
       "isManual": false,
-      "scaleType": "NUMBERED_DIAL"
+      "scaleType": "NUMBERED_DIAL",
+      "dial": {
+        "notation": "FELLOW_ODE",
+        "minimum": 1,
+        "maximum": 11,
+        "stepSize": 0.3333333333333333
+      },
+      "sourceUrls": [
+        "https://help.fellowproducts.com/hc/en-us/articles/9962302561819-What-are-the-recommended-grind-settings-for-Ode-Gen-2-Brew-Burrs",
+        "https://fellowproducts.com/products/ode-brew-grinder-gen-2"
+      ]
     },
     {
       "id": "baratza-encore-esp",
       "brand": "Baratza",
       "model": "Encore ESP",
       "isManual": false,
-      "scaleType": "NUMBERED_DIAL"
+      "scaleType": "NUMBERED_DIAL",
+      "dial": {
+        "notation": "NUMBERED",
+        "minimum": 1,
+        "maximum": 40,
+        "stepSize": 1
+      },
+      "sourceUrls": [
+        "https://assets.breville.com/ZCG495/manual-encoreesp-v1-0-en-010923.pdf"
+      ]
     },
     {
       "id": "niche-zero",
       "brand": "Niche",
       "model": "Zero",
       "isManual": false,
-      "scaleType": "NUMBERED_DIAL"
-    },
-    {
-      "id": "df64",
-      "brand": "DF64",
-      "model": "DF64",
-      "isManual": false,
-      "scaleType": "NUMBERED_DIAL"
+      "scaleType": "NUMBERED_DIAL",
+      "dial": {
+        "notation": "NUMBERED",
+        "minimum": 0,
+        "maximum": 50
+      },
+      "sourceUrls": [
+        "https://www.nichecoffee.co.uk/blogs/exploring-coffee/how-to-dial-in-your-niche-zero",
+        "https://www.nichecoffee.co.uk/blogs/exploring-coffee/how-to-calibrate-your-grinder-for-optimum-performance"
+      ]
     }
   ],
   "recommendations": [
     {
       "grinderId": "1zpresso-zp6-special",
       "methodId": "PULSAR",
-      "filterType": "PAPER",
-      "rangeStart": 4.3,
-      "rangeEnd": 6.5,
+      "rangeStart": 5.0,
+      "rangeEnd": 6.0,
       "suggestedStart": 5.2,
       "adjustmentStepSize": 0.2,
-      "adjustmentNote": "Pulsar + paper — Rao-style default 5.2; community range 4.3–6.5 (coarser ~6.5 for low-agitation / PocketScience-style)"
+      "adjustmentNote": "Pulsar paper — Kaldi's published 5–6 starting range; tune to the recipe and taste",
+      "sourceUrls": [
+        "https://kaldiscoffee.com/blogs/recipes/nextlevel-pulsar-dripper-brew-recipe"
+      ],
+      "filterType": "PAPER"
     },
     {
       "grinderId": "1zpresso-zp6-special",
-      "methodId": "PULSAR",
-      "filterType": "METAL_19K",
-      "rangeStart": 5.5,
-      "rangeEnd": 5.9,
-      "suggestedStart": 5.7,
+      "methodId": "V60",
+      "rangeStart": 4.0,
+      "rangeEnd": 5.0,
+      "suggestedStart": 4.5,
       "adjustmentStepSize": 0.2,
-      "adjustmentNote": "Pulsar 19K — coarsest, 150 µm holes for body & boost"
+      "adjustmentNote": "Manufacturer pour-over range; calibrated zero",
+      "sourceUrls": [
+        "https://1zpresso.coffee/grind-setting/"
+      ]
     },
     {
       "grinderId": "1zpresso-zp6-special",
-      "methodId": "PULSAR",
-      "filterType": "METAL_40K",
-      "rangeStart": 5.3,
-      "rangeEnd": 5.7,
+      "methodId": "FRENCH_PRESS",
+      "rangeStart": 5.0,
+      "rangeEnd": 6.0,
       "suggestedStart": 5.5,
       "adjustmentStepSize": 0.2,
-      "adjustmentNote": "Pulsar 40K — finer mesh; clean cup, slight coarsen vs paper to limit clogging"
+      "adjustmentNote": "Manufacturer French press range; calibrated zero",
+      "sourceUrls": [
+        "https://1zpresso.coffee/grind-setting/"
+      ]
     },
     {
-      "grinderId": "1zpresso-zp6-special",
+      "grinderId": "comandante-c40",
       "methodId": "V60",
-      "filterType": null,
-      "rangeStart": 3.5,
-      "rangeEnd": 4.5,
-      "suggestedStart": 4.0,
-      "adjustmentStepSize": 0.2,
-      "adjustmentNote": "V60 medium-fine; drawdown 2:30–3:30"
+      "rangeStart": 18.0,
+      "rangeEnd": 35.0,
+      "suggestedStart": 24.0,
+      "adjustmentStepSize": 1.0,
+      "adjustmentNote": "Manufacturer pour-over range; standard axle, clicks from zero",
+      "sourceUrls": [
+        "https://comandantegrinder.com/pages/faq"
+      ]
     },
     {
-      "grinderId": "1zpresso-zp6-special",
+      "grinderId": "comandante-c40",
       "methodId": "FRENCH_PRESS",
-      "filterType": null,
+      "rangeStart": 25.0,
+      "rangeEnd": 35.0,
+      "suggestedStart": 30.0,
+      "adjustmentStepSize": 1.0,
+      "adjustmentNote": "Manufacturer French press range; standard axle, clicks from zero",
+      "sourceUrls": [
+        "https://comandantegrinder.com/pages/faq"
+      ]
+    },
+    {
+      "grinderId": "comandante-c40",
+      "methodId": "ESPRESSO",
       "rangeStart": 7.0,
-      "rangeEnd": 8.5,
-      "suggestedStart": 7.5,
-      "adjustmentStepSize": 0.2,
-      "adjustmentNote": "French press coarse — reduce sediment"
+      "rangeEnd": 13.0,
+      "suggestedStart": 10.0,
+      "adjustmentStepSize": 1.0,
+      "adjustmentNote": "Manufacturer espresso range; standard axle, clicks from zero",
+      "sourceUrls": [
+        "https://comandantegrinder.com/pages/faq"
+      ]
     },
     {
-      "grinderId": "1zpresso-zp6-special",
-      "methodId": "AEROPRESS",
-      "filterType": null,
-      "rangeStart": 2.5,
-      "rangeEnd": 3.5,
-      "suggestedStart": 3.0,
-      "adjustmentStepSize": 0.2,
-      "adjustmentNote": "AeroPress standard — tune by recipe"
-    },
-    {
-      "grinderId": "1zpresso-zp6-special",
-      "methodId": "ESPRESSO",
-      "filterType": null,
-      "rangeStart": 1.0,
-      "rangeEnd": 2.0,
-      "suggestedStart": 1.4,
-      "adjustmentStepSize": 0.1,
-      "adjustmentNote": "Espresso fine — ZP6 not ideal but workable"
-    },
-    {
-      "grinderId": "1zpresso-zp6-special",
+      "grinderId": "comandante-c40",
       "methodId": "MOKA_POT",
-      "filterType": null,
-      "rangeStart": 2.0,
-      "rangeEnd": 2.8,
-      "suggestedStart": 2.4,
-      "adjustmentStepSize": 0.2,
-      "adjustmentNote": "Moka — just coarser than espresso"
+      "rangeStart": 14.0,
+      "rangeEnd": 20.0,
+      "suggestedStart": 17.0,
+      "adjustmentStepSize": 1.0,
+      "adjustmentNote": "Manufacturer stovetop range; standard axle, clicks from zero",
+      "sourceUrls": [
+        "https://comandantegrinder.com/pages/faq"
+      ]
     },
     {
-      "grinderId": "1zpresso-zp6-special",
-      "methodId": "COLD_BREW",
-      "filterType": null,
-      "rangeStart": 8.5,
-      "rangeEnd": 10.0,
-      "suggestedStart": 9.0,
-      "adjustmentStepSize": 0.2,
-      "adjustmentNote": "Cold brew extra coarse — 12–18h steep"
-    },
-
-    {
-      "grinderId": "comandante-c40",
+      "grinderId": "fellow-ode-gen2",
       "methodId": "PULSAR",
-      "filterType": "PAPER",
-      "rangeStart": 24,
-      "rangeEnd": 28,
-      "suggestedStart": 26,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar paper · community median 26, range 24–28 (Gagné IG, NextLevel recipe card, r/pourover)"
+      "rangeStart": 5.666666666666667,
+      "rangeEnd": 5.666666666666667,
+      "suggestedStart": 5.666666666666667,
+      "adjustmentStepSize": 0.3333333333333333,
+      "adjustmentNote": "Kaldi's paper recipe starts at printed 5.2: number 5 plus two clicks",
+      "sourceUrls": [
+        "https://kaldiscoffee.com/blogs/recipes/nextlevel-pulsar-dripper-brew-recipe"
+      ],
+      "filterType": "PAPER"
     },
     {
-      "grinderId": "comandante-c40",
-      "methodId": "PULSAR",
-      "filterType": "METAL_19K",
-      "rangeStart": 28,
-      "rangeEnd": 32,
-      "suggestedStart": 29,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar 19K — coarsest, 150 µm holes, body-forward"
-    },
-    {
-      "grinderId": "comandante-c40",
-      "methodId": "PULSAR",
-      "filterType": "METAL_40K",
-      "rangeStart": 26,
-      "rangeEnd": 30,
-      "suggestedStart": 27,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar 40K — finer mesh, clean cup, slight coarsen vs paper to limit clogging"
-    },
-    {
-      "grinderId": "comandante-c40",
+      "grinderId": "fellow-ode-gen2",
       "methodId": "V60",
-      "filterType": null,
-      "rangeStart": 18,
-      "rangeEnd": 25,
-      "suggestedStart": 22,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "V60 — classic Hoffmann 22 clicks"
-    },
-    {
-      "grinderId": "comandante-c40",
-      "methodId": "FRENCH_PRESS",
-      "filterType": null,
-      "rangeStart": 28,
-      "rangeEnd": 35,
-      "suggestedStart": 30,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "French press coarse — lean cleaner"
-    },
-    {
-      "grinderId": "comandante-c40",
-      "methodId": "AEROPRESS",
-      "filterType": null,
-      "rangeStart": 15,
-      "rangeEnd": 22,
-      "suggestedStart": 18,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "AeroPress — finer for inverted/short"
-    },
-    {
-      "grinderId": "comandante-c40",
-      "methodId": "ESPRESSO",
-      "filterType": null,
-      "rangeStart": 5,
-      "rangeEnd": 12,
-      "suggestedStart": 8,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Espresso — C40 marginal; best for lever"
-    },
-    {
-      "grinderId": "comandante-c40",
-      "methodId": "MOKA_POT",
-      "filterType": null,
-      "rangeStart": 10,
-      "rangeEnd": 16,
-      "suggestedStart": 13,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Moka — fine, above espresso range"
-    },
-    {
-      "grinderId": "comandante-c40",
-      "methodId": "COLD_BREW",
-      "filterType": null,
-      "rangeStart": 28,
-      "rangeEnd": 36,
-      "suggestedStart": 32,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Cold brew coarse — 12–16 h fridge steep, 1:8 ratio"
-    },
-
-    {
-      "grinderId": "fellow-ode-gen2",
-      "methodId": "PULSAR",
-      "filterType": "PAPER",
-      "rangeStart": 5.2,
-      "rangeEnd": 7.2,
-      "suggestedStart": 6.1,
-      "adjustmentStepSize": 0.2,
-      "adjustmentNote": "Pulsar paper · community range 5.2–7.2 · go finer (~5.5) for clean percolation, coarser (~7.0) for pulse-heavy / immersion"
-    },
-    {
-      "grinderId": "fellow-ode-gen2",
-      "methodId": "PULSAR",
-      "filterType": "METAL_19K",
-      "rangeStart": 6.0,
+      "rangeStart": 4.0,
       "rangeEnd": 8.0,
-      "suggestedStart": 7.0,
-      "adjustmentStepSize": 0.2,
-      "adjustmentNote": "Pulsar 19K — coarsest, 150 µm holes, more body · extrapolated from paper centroid"
+      "suggestedStart": 5.0,
+      "adjustmentStepSize": 0.3333333333333333,
+      "adjustmentNote": "Manufacturer pour-over band; Gen 2 Brew Burrs",
+      "sourceUrls": [
+        "https://help.fellowproducts.com/hc/en-us/articles/9962302561819-What-are-the-recommended-grind-settings-for-Ode-Gen-2-Brew-Burrs"
+      ]
     },
     {
       "grinderId": "fellow-ode-gen2",
-      "methodId": "PULSAR",
-      "filterType": "METAL_40K",
-      "rangeStart": 5.5,
-      "rangeEnd": 7.5,
-      "suggestedStart": 6.5,
-      "adjustmentStepSize": 0.2,
-      "adjustmentNote": "Pulsar 40K — finer mesh, slight coarsen vs paper to limit clogging · extrapolated"
-    },
-    {
-      "grinderId": "fellow-ode-gen2",
-      "methodId": "V60",
-      "filterType": null,
+      "methodId": "AEROPRESS",
       "rangeStart": 3.0,
-      "rangeEnd": 5.0,
+      "rangeEnd": 6.0,
       "suggestedStart": 4.0,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "V60 — Ode's sweet spot"
+      "adjustmentStepSize": 0.3333333333333333,
+      "adjustmentNote": "Manufacturer AeroPress band; Gen 2 Brew Burrs",
+      "sourceUrls": [
+        "https://help.fellowproducts.com/hc/en-us/articles/9962302561819-What-are-the-recommended-grind-settings-for-Ode-Gen-2-Brew-Burrs"
+      ]
     },
     {
       "grinderId": "fellow-ode-gen2",
       "methodId": "FRENCH_PRESS",
-      "filterType": null,
       "rangeStart": 8.0,
       "rangeEnd": 10.0,
       "suggestedStart": 9.0,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "French press coarse on Ode"
-    },
-    {
-      "grinderId": "fellow-ode-gen2",
-      "methodId": "AEROPRESS",
-      "filterType": null,
-      "rangeStart": 3.0,
-      "rangeEnd": 5.0,
-      "suggestedStart": 4.0,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "AeroPress — tune to recipe"
+      "adjustmentStepSize": 0.3333333333333333,
+      "adjustmentNote": "Manufacturer French press band; Gen 2 Brew Burrs",
+      "sourceUrls": [
+        "https://help.fellowproducts.com/hc/en-us/articles/9962302561819-What-are-the-recommended-grind-settings-for-Ode-Gen-2-Brew-Burrs"
+      ]
     },
     {
       "grinderId": "fellow-ode-gen2",
       "methodId": "COLD_BREW",
-      "filterType": null,
       "rangeStart": 9.0,
       "rangeEnd": 11.0,
       "suggestedStart": 10.0,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Cold brew — Ode's max coarse"
-    },
-
-    {
-      "grinderId": "baratza-encore-esp",
-      "methodId": "PULSAR",
-      "filterType": "PAPER",
-      "rangeStart": 18,
-      "rangeEnd": 24,
-      "suggestedStart": 20,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar paper — medium-coarse"
-    },
-    {
-      "grinderId": "baratza-encore-esp",
-      "methodId": "PULSAR",
-      "filterType": "METAL_19K",
-      "rangeStart": 22,
-      "rangeEnd": 28,
-      "suggestedStart": 24,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar 19K — coarsest, 150 µm holes, full body"
-    },
-    {
-      "grinderId": "baratza-encore-esp",
-      "methodId": "PULSAR",
-      "filterType": "METAL_40K",
-      "rangeStart": 20,
-      "rangeEnd": 26,
-      "suggestedStart": 22,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar 40K — finer mesh, slight coarsen vs paper to limit clogging"
-    },
-    {
-      "grinderId": "baratza-encore-esp",
-      "methodId": "V60",
-      "filterType": null,
-      "rangeStart": 12,
-      "rangeEnd": 18,
-      "suggestedStart": 15,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "V60 — drawdown 3:00 target"
-    },
-    {
-      "grinderId": "baratza-encore-esp",
-      "methodId": "FRENCH_PRESS",
-      "filterType": null,
-      "rangeStart": 28,
-      "rangeEnd": 34,
-      "suggestedStart": 30,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "French press coarse on Encore ESP"
-    },
-    {
-      "grinderId": "baratza-encore-esp",
-      "methodId": "AEROPRESS",
-      "filterType": null,
-      "rangeStart": 10,
-      "rangeEnd": 16,
-      "suggestedStart": 12,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "AeroPress — medium-fine"
+      "adjustmentStepSize": 0.3333333333333333,
+      "adjustmentNote": "Manufacturer cold brew band; Gen 2 Brew Burrs",
+      "sourceUrls": [
+        "https://help.fellowproducts.com/hc/en-us/articles/9962302561819-What-are-the-recommended-grind-settings-for-Ode-Gen-2-Brew-Burrs"
+      ]
     },
     {
       "grinderId": "baratza-encore-esp",
       "methodId": "ESPRESSO",
-      "filterType": null,
-      "rangeStart": 1,
-      "rangeEnd": 8,
-      "suggestedStart": 4,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Espresso — Encore ESP low 1–15 range"
+      "rangeStart": 15.0,
+      "rangeEnd": 15.0,
+      "suggestedStart": 15.0,
+      "adjustmentStepSize": 1.0,
+      "adjustmentNote": "Manufacturer starting point for 18 g medium-roast espresso",
+      "sourceUrls": [
+        "https://assets.breville.com/ZCG495/manual-encoreesp-v1-0-en-010923.pdf"
+      ]
     },
     {
       "grinderId": "baratza-encore-esp",
-      "methodId": "MOKA_POT",
-      "filterType": null,
-      "rangeStart": 6,
-      "rangeEnd": 11,
-      "suggestedStart": 8,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Moka — just above espresso band"
-    },
-    {
-      "grinderId": "baratza-encore-esp",
-      "methodId": "COLD_BREW",
-      "filterType": null,
-      "rangeStart": 34,
-      "rangeEnd": 40,
-      "suggestedStart": 37,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Cold brew — max coarse on Encore"
-    },
-
-    {
-      "grinderId": "niche-zero",
-      "methodId": "PULSAR",
-      "filterType": "PAPER",
-      "rangeStart": 38,
-      "rangeEnd": 42,
-      "suggestedStart": 40,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar paper · only direct community dial point — gentle WWDT matters more than dial nudges"
-    },
-    {
-      "grinderId": "niche-zero",
-      "methodId": "PULSAR",
-      "filterType": "METAL_19K",
-      "rangeStart": 42,
-      "rangeEnd": 46,
-      "suggestedStart": 44,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar 19K — coarsest, 150 µm holes, body-forward · extrapolated from paper +4"
-    },
-    {
-      "grinderId": "niche-zero",
-      "methodId": "PULSAR",
-      "filterType": "METAL_40K",
-      "rangeStart": 40,
-      "rangeEnd": 44,
-      "suggestedStart": 42,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Pulsar 40K — finer mesh, slight coarsen vs paper to limit clogging · extrapolated"
-    },
-    {
-      "grinderId": "niche-zero",
-      "methodId": "V60",
-      "filterType": null,
-      "rangeStart": 28,
-      "rangeEnd": 38,
-      "suggestedStart": 32,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "V60 — Niche filter range"
-    },
-    {
-      "grinderId": "niche-zero",
-      "methodId": "FRENCH_PRESS",
-      "filterType": null,
-      "rangeStart": 42,
-      "rangeEnd": 48,
-      "suggestedStart": 45,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "French press — coarse end of dial"
-    },
-    {
-      "grinderId": "niche-zero",
       "methodId": "AEROPRESS",
-      "filterType": null,
-      "rangeStart": 22,
-      "rangeEnd": 32,
-      "suggestedStart": 27,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "AeroPress — flexible, recipe-driven"
+      "rangeStart": 22.0,
+      "rangeEnd": 22.0,
+      "suggestedStart": 22.0,
+      "adjustmentStepSize": 1.0,
+      "adjustmentNote": "Manufacturer AeroPress starting point",
+      "sourceUrls": [
+        "https://assets.breville.com/ZCG495/manual-encoreesp-v1-0-en-010923.pdf"
+      ]
+    },
+    {
+      "grinderId": "baratza-encore-esp",
+      "methodId": "V60",
+      "rangeStart": 25.0,
+      "rangeEnd": 25.0,
+      "suggestedStart": 25.0,
+      "adjustmentStepSize": 1.0,
+      "adjustmentNote": "Manufacturer Hario V60 starting point",
+      "sourceUrls": [
+        "https://assets.breville.com/ZCG495/manual-encoreesp-v1-0-en-010923.pdf"
+      ]
+    },
+    {
+      "grinderId": "baratza-encore-esp",
+      "methodId": "FRENCH_PRESS",
+      "rangeStart": 32.0,
+      "rangeEnd": 32.0,
+      "suggestedStart": 32.0,
+      "adjustmentStepSize": 1.0,
+      "adjustmentNote": "Manufacturer French press starting point",
+      "sourceUrls": [
+        "https://assets.breville.com/ZCG495/manual-encoreesp-v1-0-en-010923.pdf"
+      ]
     },
     {
       "grinderId": "niche-zero",
       "methodId": "ESPRESSO",
-      "filterType": null,
-      "rangeStart": 8,
-      "rangeEnd": 20,
-      "suggestedStart": 14,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Espresso — Niche's core strength"
+      "rangeStart": 10.0,
+      "rangeEnd": 20.0,
+      "suggestedStart": 15.0,
+      "adjustmentStepSize": 1.0,
+      "adjustmentNote": "Manufacturer espresso range; calibrated stepless dial",
+      "sourceUrls": [
+        "https://www.nichecoffee.co.uk/blogs/exploring-coffee/how-to-dial-in-your-niche-zero"
+      ]
     },
     {
       "grinderId": "niche-zero",
-      "methodId": "MOKA_POT",
-      "filterType": null,
-      "rangeStart": 18,
-      "rangeEnd": 26,
-      "suggestedStart": 22,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Moka — fine, above espresso"
-    },
-    {
-      "grinderId": "niche-zero",
-      "methodId": "COLD_BREW",
-      "filterType": null,
-      "rangeStart": 45,
-      "rangeEnd": 50,
-      "suggestedStart": 48,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Cold brew — coarsest on Niche"
-    },
-
-    {
-      "grinderId": "df64",
-      "methodId": "PULSAR",
-      "filterType": "PAPER",
-      "rangeStart": 45,
-      "rangeEnd": 60,
-      "suggestedStart": 50,
-      "adjustmentStepSize": 2,
-      "adjustmentNote": "Stock burrs · Pulsar paper · community median ~55, target 3:30–4:30 drawdown"
-    },
-    {
-      "grinderId": "df64",
-      "methodId": "PULSAR",
-      "filterType": "METAL_19K",
-      "rangeStart": 54,
-      "rangeEnd": 64,
-      "suggestedStart": 58,
-      "adjustmentStepSize": 2,
-      "adjustmentNote": "Stock burrs · 19K mesh, coarsest of the three (150 µm holes) · extrapolated"
-    },
-    {
-      "grinderId": "df64",
-      "methodId": "PULSAR",
-      "filterType": "METAL_40K",
-      "rangeStart": 50,
-      "rangeEnd": 60,
-      "suggestedStart": 54,
-      "adjustmentStepSize": 2,
-      "adjustmentNote": "Stock burrs · 40K mesh, finer than 19K · slight coarsen vs paper to limit clogging · extrapolated"
-    },
-    {
-      "grinderId": "df64",
       "methodId": "V60",
+      "rangeStart": 35.0,
+      "rangeEnd": 50.0,
+      "suggestedStart": 40.0,
+      "adjustmentStepSize": 1.0,
+      "adjustmentNote": "Manufacturer V60 range; calibrated stepless dial",
+      "sourceUrls": [
+        "https://www.nichecoffee.co.uk/blogs/exploring-coffee/how-to-dial-in-your-niche-zero"
+      ]
+    },
+    {
+      "grinderId": "baratza-encore-esp",
+      "methodId": "CHEMEX",
       "filterType": null,
       "rangeStart": 30,
-      "rangeEnd": 50,
-      "suggestedStart": 40,
-      "adjustmentStepSize": 2,
-      "adjustmentNote": "Stock burrs · V60 medium · SSP MP shifts ~10 finer"
-    },
-    {
-      "grinderId": "df64",
-      "methodId": "FRENCH_PRESS",
-      "filterType": null,
-      "rangeStart": 55,
-      "rangeEnd": 80,
-      "suggestedStart": 65,
-      "adjustmentStepSize": 3,
-      "adjustmentNote": "Coarse, 4 min steep, plunge slowly"
-    },
-    {
-      "grinderId": "df64",
-      "methodId": "AEROPRESS",
-      "filterType": null,
-      "rangeStart": 25,
-      "rangeEnd": 50,
-      "suggestedStart": 35,
-      "adjustmentStepSize": 2,
-      "adjustmentNote": "Standard 1:15, 2 min total · finer for shorter brews"
-    },
-    {
-      "grinderId": "df64",
-      "methodId": "ESPRESSO",
-      "filterType": null,
-      "rangeStart": 5,
-      "rangeEnd": 18,
-      "suggestedStart": 10,
+      "rangeEnd": 30,
+      "suggestedStart": 30,
       "adjustmentStepSize": 1,
-      "adjustmentNote": "18g→36g in 28–32s · stock burrs work, SSP HU preferred"
-    },
-    {
-      "grinderId": "df64",
-      "methodId": "MOKA_POT",
-      "filterType": null,
-      "rangeStart": 19,
-      "rangeEnd": 35,
-      "suggestedStart": 25,
-      "adjustmentStepSize": 1,
-      "adjustmentNote": "Just coarser than espresso · don't tamp"
-    },
-    {
-      "grinderId": "df64",
-      "methodId": "COLD_BREW",
-      "filterType": null,
-      "rangeStart": 65,
-      "rangeEnd": 90,
-      "suggestedStart": 75,
-      "adjustmentStepSize": 5,
-      "adjustmentNote": "Very coarse, 1:8 ratio, 12–16 h fridge"
+      "adjustmentNote": "Start at 30 (Baratza guide). If drainage stalls, check the spout air channel, then try coarser. Tune by taste.",
+      "sourceUrls": [
+        "https://assets.breville.com/ZCG495/manual-encoreesp-v1-0-en-010923.pdf"
+      ]
     }
   ]
 }

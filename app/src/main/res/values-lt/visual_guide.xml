@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="heading_guide_why">Kodėl šis žingsnis?</string>
+    <string name="action_guide_steps">Žingsniai</string>
+    <string name="action_guide_overview">Apžvalga</string>
+    <string name="label_guide_untimed">Skaitykite savo tempu</string>
+    <string name="action_continue_reading">Tęsti skaitymą</string>
+    <string name="action_read_guide">Skaityti vadovą</string>
+    <string name="action_read_ahead">Skaityti toliau</string>
+    <string name="action_return_to_live_brew">Grįžti prie ruošimo</string>
+    <string name="label_guide_done_when">Baigta, kai</string>
+</resources>

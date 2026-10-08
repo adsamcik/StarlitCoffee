@@ -1,0 +1,32 @@
+Use case: precise-object-edit. Create a production transparent botanical growth sprite atlas, using the supplied historical mature strawberry as the visual reference for species identity, tactile painted style, asymmetric fruit locations, and broad split brown coffee-bean base. Reconstruct that rich finish and author its growth backward. One square image, exactly 5 columns x 5 rows, 25 complete individual poses in chronological row-major order. No text, numbers, lines, checkerboard, backdrop, glow or ground outside the small brown base. True transparent alpha. Equal square cells with generous fully transparent gutters; every entire plant must stay safely inside its own cell. Fixed front camera, fixed bean orientation/width/position, common scale across all25. Never enlarge or shrink the bean between poses. Keep 12% transparent padding each cell; final plant fills about80%cell height. Broad split bean about40%final plant height in width, brown throughout, no turquoise rim.
+
+The finish: recognizably strawberry, a layered low crown/rosette of glossy deeply serrated trifoliate leaves on readable curved green petioles, NOT a generic symmetrical tree. Exactly FOUR large hanging conical heart-shaped strawberries with tiny recessed golden surface seeds, NOT raspberry drupelets or round cherries. Stable asymmetric positions A upper-left, B low-left, C far-right a little below A, D inner-low-right, as in reference. One separate five-petal white flower with yellow center stays at the upper-left crown above A, never turns into a berry. Three persistent trifoliate leaf groups (nine leaflets) at upper-left, upper-right and lower/back crown; overlap naturally but do not delete leaves. Four fruit stalks emerge and remain attached; fruit steadily enlarge, become pointed and ripen forward from green through cream/pink to scarlet. Once a fruit or leaf appears, it never disappears, shrinks, changes branch or resets. Once the white flower opens it stays open in EVERY later cell, including row starts. Keep bean visible below foliage. Organic asymmetry and lush material, no mirrored four-dot layout.
+
+Complete retained anatomy in each frame:
+01 Same broad split brown bean only, a tiny green point in the crack, no foliage.
+02 Same bean, short curved shoot with its closed first trifoliate leaf.
+03 Same bean, taller curved shoot, first leaf's central leaflet half-open and two side leaflets folded.
+04 Same bean, first trifoliate group open with all three small serrated leaflets.
+05 Same bean, retained first three leaflets expanded, second trifoliate group curled emerging to the right.
+06 Same bean, first group retained, second group's three leaflets half-open to the right; low crown begins.
+07 Same bean, first and second groups both open (six leaflets), third group folded behind low crown.
+08 Same bean, six established leaflets retained, third group's three leaflets half-open; petioles spread organically.
+09 Same bean, all three trifoliate groups open (nine retained leaflets), small separate upper-left flower bud and four short curved fruit stalks A/B/C/D with tiny green tips.
+10 Same bean and nine leaflets, same four stalks A/B/C/D extending and all four green bud tips swelling; upper-left white-flower bud opens a narrow seam.
+11 Same bean, nine leaflets, four retained green fruit buds A/B/C/D, separate upper-left flower half-open showing yellow center.
+12 Same bean, nine leaflets, four tiny conical green fruit A/B/C/D with green calyxes; separate white/yellow flower fully open and retained from now on.
+13 Same bean, nine leaflets, open white flower, four green conical fruit A/B/C/D slightly larger with beginning seed texture.
+14 Same bean, nine leaflets, open white flower, four larger green seed-textured fruit at exactly A/B/C/D.
+15 Same bean, nine leaflets, open white flower, four fuller conical green fruit; A and B becoming pale green, C and D darker green.
+16 Same bean, nine leaflets, open white flower, all four fruit larger; A and B cream-green, C and D pale green, all seeds visible.
+17 Same bean, nine leaflets, open white flower, four retained fuller berries; A has faint pink blush, B cream, C/D pale green.
+18 Same bean, nine leaflets, open white flower, four retained berries; A rosy pink, B beginning pink, C cream, D pale green.
+19 Same bean, nine leaflets, open white flower, four retained berries; A red-pink, B rosy pink, C starting pink, D cream.
+20 Same bean, nine leaflets, open white flower, four retained berries; A scarlet, B red-pink, C rosy pink, D starting pink.
+21 Same bean, nine leaflets, open white flower, all four berries near full size; A scarlet, B scarlet, C red-pink, D rosy pink.
+22 Same bean, nine leaflets, open white flower, all four retained berries; A/B full red, C almost red, D stronger red-pink.
+23 Same bean, nine leaflets, open white flower, all four retained berries; A/B/C full red, D red with a pale shoulder.
+24 Same bean, nine leaflets, open white flower, all four retained berries almost fully ripe; D pale shoulder nearly red, subtly fuller seed-textured volume.
+25 Same bean, same nine leafy leaflets and open white flower, all FOUR large ripe scarlet asymmetric conical seed-textured strawberries A/B/C/D. Rich lush final reference-faithful finish, fixed base and complete plant; a small final maturation step only, no new fruit/branches/leaves at the end.
+
+Prioritize structural continuity and readable growth in every adjacent frame and across row boundaries 5->6,10->11,15->16,20->21. No reclosed flower, no late added berries, no whole-subject scale reset.

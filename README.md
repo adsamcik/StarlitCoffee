@@ -30,18 +30,39 @@ pass its automated localization and release validation. See
 - Access to the public Mindlayer and Tracebox GitHub Packages dependencies
 
 GitHub Packages requires authentication even for public Maven packages. The
-build checks `GITHUB_TOKEN` and then an authenticated GitHub CLI session
-(`gh auth token`). A token used for package downloads needs `read:packages`.
+build uses a classic token with `read:packages` or an authenticated GitHub CLI
+session. Credential precedence is Gradle properties (including `-P`), environment
+variables, `local.properties`, then `gh auth token --hostname github.com`.
+Within each source, `GH_TOKEN` takes precedence over `GITHUB_TOKEN`. This lets CI
+and command-line overrides replace stale local credentials.
 Local Maven artifacts remain available through `mavenLocal()` for Mindlayer and
 Tracebox contributors.
 
-The repository includes a one-time setup helper. It signs in through GitHub CLI,
-requests only package-read access, and keeps the token in GitHub CLI's credential
-store:
+The setup helper verifies the exact Mindlayer and Tracebox versions using the
+credentials Gradle selects. If needed, it signs in through GitHub CLI and adds
+package-read access, keeping the token in GitHub CLI's credential store:
 
 ```powershell
 .\scripts\setup-github-packages.ps1
 ```
+
+For a check without interactive sign-in, run
+`.\scripts\setup-github-packages.ps1 -CheckOnly` or
+`.\gradlew.bat checkGitHubPackagesAuth`. The check reports the credential source
+and verifies both registries with live authenticated HEAD requests, even when
+dependencies are cached. It never displays tokens.
+
+If authentication is rejected, replace or remove any explicit token override;
+refreshing GitHub CLI does not change an override. For a CLI token, run
+`gh auth refresh --hostname github.com --scopes read:packages`. Fine-grained
+personal access tokens do not support this Maven registry.
+
+Developers with multiple GitHub accounts can set `GITHUB_USERNAME` to select a
+stored CLI account without changing the active login. For explicit tokens, use
+the token owner's username. `GITHUB_OWNER` only selects the package repository
+owner and defaults to `adsamcik`; CI uses `GITHUB_ACTOR` as the default username.
+On Windows, Gradle also checks standard GitHub CLI installation paths when an
+already-running Android Studio has an outdated `PATH`.
 
 Android Studio normally creates `local.properties` with the local SDK path. The
 file is intentionally ignored and must never be committed.
@@ -71,6 +92,10 @@ On Windows:
 
 On macOS or Linux, use `./gradlew` with the same tasks.
 
+Authentication regression checks use synthetic tokens and a local registry:
+`python tools/test_github_packages_auth.py`. They require Python 3 and the
+configured Gradle/JDK runtime, and leave stored GitHub credentials unchanged.
+
 The debug APK is written beneath `app/build/outputs/apk/debug/`. Device-backed
 OCR/LLM benchmarks require a connected Android device and the committed
 synthetic corpus; see [testdata/README.md](testdata/README.md).
@@ -91,6 +116,22 @@ synthetic corpus; see [testdata/README.md](testdata/README.md).
 Start with the architecture decisions in [docs/adr](docs/adr) and the current
 implementation report in
 [docs/plans/2026-08-04-brewing-platform-implementation-report.md](docs/plans/2026-08-04-brewing-platform-implementation-report.md).
+
+The [brewing guide research pack](docs/brewing/research/2026-10-02-method-guides/README.md)
+contains English guides and an accuracy audit for 17 brewing methods. It records
+recipe provenance, equipment limits, and sources separately from app support.
+
+The [visual guide design](docs/brewing/design/2026-10-02-visual-guides/DESIGN.md)
+includes an [interactive prototype](docs/brewing/design/2026-10-02-visual-guides/prototype.html)
+for brewing alongside the guide or exploring the same steps at your own pace.
+Chemex, espresso, and cold brew demonstrate the shared workflow; the design maps
+all 17 researched methods. This is a design proposal, with
+[browser review notes](docs/brewing/design/2026-10-02-visual-guides/REVIEW.md), before
+Android implementation.
+
+The [method icon review](docs/brewing/design/2026-10-02-method-icons/README.md)
+pairs equipment photographs with individual generator briefs and transparent
+candidates for all 17 methods, using the existing brewer icon style.
 
 ## Contributing and security
 

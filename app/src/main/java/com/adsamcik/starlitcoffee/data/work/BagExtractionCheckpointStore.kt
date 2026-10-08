@@ -66,7 +66,10 @@ object BagExtractionCheckpointStore {
     internal fun read(directory: File, workId: String): String? {
         val file = checkpointFile(directory, workId).takeIf(::isSafeRegularFile) ?: return null
         return runCatching(file::readText)
-            .onFailure { error -> Tracebox.log.error(error, BagExtractionCheckpointStoreTraceboxTemplates.FAILED_TO_READ_BAG_EXTRACTION_CHECKPOINT) }
+            .onFailure { error -> Tracebox.log.error(
+                error,
+                BagExtractionCheckpointStoreTraceboxTemplates.FAILED_TO_READ_BAG_EXTRACTION_CHECKPOINT,
+            ) }
             .getOrNull()
     }
 

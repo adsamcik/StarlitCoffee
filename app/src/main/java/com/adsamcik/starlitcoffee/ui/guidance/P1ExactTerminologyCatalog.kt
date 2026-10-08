@@ -281,7 +281,10 @@ object BuiltInP1ExactTerminologyLoader {
     }
 
     private fun unavailable(exception: Exception): BuiltInP1ExactTerminologyLoadResult.Unavailable {
-        Tracebox.log.error(exception, P1ExactTerminologyCatalogTraceboxTemplates.EXACT_P1_TERMINOLOGY_IS_UNAVAILABLE_REFERENCES_WILL)
+        Tracebox.log.error(
+            exception,
+            P1ExactTerminologyCatalogTraceboxTemplates.EXACT_P1_TERMINOLOGY_IS_UNAVAILABLE_REFERENCES_WILL,
+        )
         return BuiltInP1ExactTerminologyLoadResult.Unavailable(
             reason = exception.message ?: exception::class.java.simpleName,
         )

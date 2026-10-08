@@ -20,7 +20,7 @@ class LegacyStagePlanFactoryTest {
     }
 
     @Test
-    fun `bloom methods count down bloom before a manual brew stage`() {
+    fun `bloom methods count down bloom before manual brewing`() {
         BrewMethod.entries.filter(BrewMethod::hasBloom).forEach { method ->
             val stages = directStages(LegacyStagePlanFactory.create(method))
 
@@ -29,7 +29,7 @@ class LegacyStagePlanFactoryTest {
                 StageCompletionMode.Countdown(method.bloomDurationSeconds * 1_000L),
                 stages.first().completionMode,
             )
-            assertEquals(BrewStageAction.POUR, stages.last().action)
+            assertEquals(BrewStageAction.POUR, stages[1].action)
             assertEquals(StageCompletionMode.Manual, stages.last().completionMode)
         }
     }

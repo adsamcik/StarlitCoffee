@@ -60,13 +60,12 @@ class BarcodeInsightsTest {
                 "processType",
                 "variety",
                 "tastingNotes",
-                "weight",
             ),
             candidates.map { it.fieldName }.toSet(),
         )
         assertTrue(candidates.all { it.sourceType == BagFieldSourceType.LOCAL_BARCODE_MATCH })
         assertTrue(candidates.none { it.value == "2025-01-01" || it.value == "Personal notes" })
-        assertEquals("250", candidates.first { it.fieldName == "weight" }.value)
+        assertTrue("Remaining balance must not be reused as a new purchase's size", candidates.none { it.fieldName == "weight" })
         assertEquals("BRAZIL", candidates.first { it.fieldName == "origin" }.canonicalKey)
         assertEquals("CERRADO", candidates.first { it.fieldName == "region" }.canonicalKey)
         assertEquals("MEDIUM", candidates.first { it.fieldName == "roastLevel" }.canonicalKey)

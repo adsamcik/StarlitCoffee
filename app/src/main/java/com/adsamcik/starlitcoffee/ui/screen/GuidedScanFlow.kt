@@ -2,22 +2,16 @@ package com.adsamcik.starlitcoffee.ui.screen
 
 import android.widget.Toast
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
 import com.adsamcik.starlitcoffee.R
-import com.adsamcik.starlitcoffee.StarlitCoffeeApp
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.data.work.BagReviewContext
 import com.adsamcik.starlitcoffee.data.work.BagReviewMode
@@ -30,14 +24,11 @@ import com.adsamcik.starlitcoffee.navigation.ScanDraftTransfer
 import com.adsamcik.starlitcoffee.navigation.ScanThumbnailFocus
 import com.adsamcik.starlitcoffee.ui.component.AddBagSheet
 import com.adsamcik.starlitcoffee.ui.component.BagFormSnapshot
-import com.adsamcik.starlitcoffee.ui.component.ConsentOutcome
 import com.adsamcik.starlitcoffee.ui.component.DestructiveActionDialog
 import com.adsamcik.starlitcoffee.ui.component.RescanDeltaDialog
 import com.adsamcik.starlitcoffee.ui.component.ScannedBagSaveResult
-import com.adsamcik.starlitcoffee.ui.component.messageRes
 import com.adsamcik.starlitcoffee.ui.component.persistRescannedBagUpdate
 import com.adsamcik.starlitcoffee.ui.component.persistScannedBag
-import com.adsamcik.starlitcoffee.ui.component.rememberMindlayerConsentFlow
 import com.adsamcik.starlitcoffee.ui.component.rememberMindlayerInstalled
 import com.adsamcik.starlitcoffee.util.BagFieldEvidence
 import com.adsamcik.starlitcoffee.util.BagPhotoRect
@@ -46,10 +37,10 @@ import com.adsamcik.starlitcoffee.util.BagPhotoProcessingResult
 import com.adsamcik.starlitcoffee.util.BagPhotoScanSupport
 import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
 import com.adsamcik.starlitcoffee.util.MindlayerAvailability
-import com.adsamcik.starlitcoffee.util.MindlayerInstallLink
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
 import com.adsamcik.starlitcoffee.util.RecognitionUiStateMapper
-import com.adsamcik.starlitcoffee.util.RecognitionCapability
+import com.adsamcik.starlitcoffee.util.RecognitionPreference
+import com.adsamcik.starlitcoffee.util.RecognitionRunState
 import com.adsamcik.starlitcoffee.util.ScanPhotoStorage
 import com.adsamcik.starlitcoffee.viewmodel.BagScanCaptureViewModel
 import com.adsamcik.starlitcoffee.viewmodel.BagScanDraftViewModel
@@ -302,6 +293,18 @@ private fun BagPhotoProcessingResult.toScanReviewData(
 internal fun shouldDeleteStagedPhotosOnExit(ownershipTransferred: Boolean): Boolean =
     !ownershipTransferred
 
+/** Preserve recognition state even before the first durable result is published. */
+internal fun BagScanDraft.toScanReviewData(): ScanReviewData {
+    val processing = recognitionRunState == RecognitionRunState.RUNNING ||
+        recognitionRunState == RecognitionRunState.PARTIAL
+    val result = resultJson?.let { runCatching { decodeBagExtractionResult(it) }.getOrNull() }
+    return (result?.toScanReviewData(sessionId, processing) ?: ScanReviewData(isProcessing = processing)).copy(
+        sessionId = sessionId,
+        capturedPhotoUris = photoUris.joinToString(",").takeIf(String::isNotBlank),
+        generationId = generationId,
+    )
+}
+
 /** Exact-session review destination shared by capture, inventory, and notifications. */
 @Composable
 fun BagDraftReviewRoute(
@@ -326,20 +329,7 @@ fun BagDraftReviewRoute(
     }
     if (current == null || !current.isActive) return
 
-    val result = remember(current.resultJson) {
-        current.resultJson?.let { encoded ->
-            runCatching { decodeBagExtractionResult(encoded) }.getOrNull()
-        }
-    }
-    val data = remember(current, result) {
-        (result?.toScanReviewData(
-            sessionId = current.sessionId,
-            isProcessing = current.recognitionRunState == com.adsamcik.starlitcoffee.util.RecognitionRunState.RUNNING ||
-                current.recognitionRunState == com.adsamcik.starlitcoffee.util.RecognitionRunState.PARTIAL,
-        ) ?: initialScanReviewData(current.sessionId).copy(
-            capturedPhotoUris = current.photoUris.joinToString(",").takeIf(String::isNotBlank),
-        )).copy(generationId = current.generationId)
-    }
+    val data = remember(current) { current.toScanReviewData() }
 
     fun leaveDraft() {
         draftViewModel.markBackgrounded()
@@ -390,6 +380,7 @@ fun BagDraftReviewRoute(
             data = data,
             callbacks = callbacks,
             onNewBag = onNewBagTransfer,
+            durableDraft = current,
         )
     } else {
         ScanAddBagReview(
@@ -434,42 +425,15 @@ fun ScanAddBagReview(
     val recognitionPreference by brewViewModel.recognitionPreference.collectAsStateWithLifecycle()
     val mindlayerInstalled = rememberMindlayerInstalled()
     val scope = rememberCoroutineScope()
-    val lifecycleOwner = LocalLifecycleOwner.current
     val savedLabel = stringResource(R.string.msg_bag_saved)
     val couldNotReadLabel = stringResource(R.string.msg_could_not_read_label)
     val couldNotSaveBag = stringResource(R.string.msg_could_not_save_bag)
-    val consentMessages = ConsentOutcome.entries.associateWith { outcome ->
-        stringResource(outcome.messageRes())
-    }
-    var isRetryingLlm by remember { mutableStateOf(false) }
-    var setupReturnPending by rememberSaveable { mutableStateOf(false) }
-    LaunchedEffect(data.llmStatus, data.fieldEvidence, data.generationId) {
-        isRetryingLlm = false
-    }
-    val aiConsentFlow = rememberMindlayerConsentFlow { outcome ->
-        when (outcome) {
-            ConsentOutcome.GRANTED, ConsentOutcome.ALREADY_APPROVED -> scope.launch {
-                brewViewModel.enableLabelRecognition()
-                (context.applicationContext as? StarlitCoffeeApp)?.reconnectMindlayer()
-                isRetryingLlm = data.sessionId?.let(brewViewModel::retryBagPhotoLlm) == true
-            }
-            else -> Toast.makeText(context, consentMessages.getValue(outcome), Toast.LENGTH_LONG).show()
-        }
-    }
-    DisposableEffect(lifecycleOwner, setupReturnPending, data.sessionId) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME && setupReturnPending) {
-                setupReturnPending = false
-                scope.launch {
-                    (context.applicationContext as? StarlitCoffeeApp)?.reconnectMindlayer()
-                    isRetryingLlm = data.sessionId?.let(brewViewModel::retryBagPhotoLlm) == true
-                }
-            }
-        }
-        lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
-    }
     var isSavingBag by remember { mutableStateOf(false) }
+    val recovery = rememberScanRecognitionRecovery(
+        brewViewModel, data, callbacks.onScanMore,
+        enabled = !isSavingBag && recognitionPreference != RecognitionPreference.DISABLED,
+    )
+    val isRetryingLlm = recovery.isRetrying
     val recognitionPresentation = remember(
         data.llmStatus,
         data.isProcessing,
@@ -480,27 +444,18 @@ fun ScanAddBagReview(
         isRetryingLlm,
     ) {
         if (durableDraft != null) {
-            val capability = when {
-                data.llmStatus == LlmEnrichmentStatus.SETUP_REQUIRED ->
-                    RecognitionCapability.ASSET_SETUP_REQUIRED
-                data.llmStatus == LlmEnrichmentStatus.UNAVAILABLE &&
-                    !MindlayerAvailability.isSupported() ->
-                    RecognitionCapability.UNSUPPORTED
-                data.llmStatus == LlmEnrichmentStatus.UNAVAILABLE &&
-                    !mindlayerInstalled ->
-                    RecognitionCapability.INSTALLATION_REQUIRED
-                data.llmStatus == LlmEnrichmentStatus.UNAVAILABLE ->
-                    RecognitionCapability.AUTHORIZATION_REQUIRED
-                else -> durableDraft.recognitionCapability
-            }
-            RecognitionUiStateMapper.map(
-                capability = capability,
-                runState = durableDraft.recognitionRunState,
+            RecognitionUiStateMapper.fromPipeline(
+                pipelineStatus = data.llmStatus,
+                isProcessing = data.isProcessing || isRetryingLlm,
                 preference = recognitionPreference,
                 hasValues = durableDraft.fields.values.any { !it.value.isNullOrBlank() },
                 unresolvedCount = durableDraft.fields.values.count {
                     it.reviewState == BagDraftReviewState.NEEDS_REVIEW
                 },
+                mindlayerSupported = MindlayerAvailability.isSupported(),
+                mindlayerInstalled = mindlayerInstalled,
+                fallbackCapability = durableDraft.recognitionCapability,
+                fallbackRunState = durableDraft.recognitionRunState,
             )
         } else {
             RecognitionUiStateMapper.fromPipeline(
@@ -532,20 +487,12 @@ fun ScanAddBagReview(
         existingBags = existingBags,
         onScanMorePhotos = callbacks.onScanMore,
         onExploreQrUrl = { url, callback -> brewViewModel.exploreApprovedQrLink(url, callback) },
-        onRetryLlmEnrichment = {
-            isRetryingLlm = data.sessionId?.let(brewViewModel::retryBagPhotoLlm) == true
-        },
-        onEnableAi = aiConsentFlow.request,
-        onInstallLabelRecognition = {
-            if (!MindlayerInstallLink.open(context)) {
-                Toast.makeText(context, R.string.msg_could_not_open_app_store, Toast.LENGTH_LONG).show()
-            }
-        },
-        onSetupAi = {
-            setupReturnPending = true
-            brewViewModel.openMindlayerModelSetup()
-        },
-        onDisableLabelRecognition = brewViewModel::disableLabelRecognition,
+        onRetryLlmEnrichment = recovery.actions.onRetry,
+        onEnableAi = recovery.actions.onEnable,
+        onInstallLabelRecognition = recovery.actions.onInstall,
+        onSetupAi = recovery.actions.onSetup,
+        setupLaunchState = recovery.actions.setupState,
+        onDisableLabelRecognition = recovery.actions.onDisable,
         onDismiss = callbacks.onExit,
         initialFormOverride = durableDraft?.toBagFormSnapshot(),
         onUserFieldChange = { fieldName, value ->
@@ -663,15 +610,37 @@ fun ScanRescanReview(
     data: ScanReviewData,
     callbacks: ScanReviewCallbacks,
     onNewBag: (ScanDraftTransfer) -> Unit,
+    durableDraft: BagScanDraft? = null,
 ) {
-    val resolvedFields = remember(data.fieldEvidence) {
-        resolveRescanFieldEvidence(data.fieldEvidence)
-            .mapValues { (_, evidence) -> evidence.value }
+    val evidence = remember(data.fieldEvidence) { resolveRescanFieldEvidence(data.fieldEvidence) }
+    val resolvedFields = remember(evidence) {
+        evidence.mapValues { (_, value) -> value.value }
     }
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var showDiscardDialog by remember { mutableStateOf(false) }
     var isUpdatingBag by remember { mutableStateOf(false) }
+    val recognitionPreference by brewViewModel.recognitionPreference.collectAsStateWithLifecycle()
+    val recovery = rememberScanRecognitionRecovery(
+        brewViewModel, data, callbacks.onScanMore,
+        enabled = !isUpdatingBag && recognitionPreference != RecognitionPreference.DISABLED,
+    )
+    val mindlayerInstalled = rememberMindlayerInstalled()
+    val isProcessing = data.isProcessing || recovery.isRetrying
+    val recognition = RecognitionUiStateMapper.fromPipeline(
+        pipelineStatus = data.llmStatus,
+        isProcessing = isProcessing,
+        hasValues = resolvedFields.isNotEmpty(),
+        unresolvedCount = evidence.values.count {
+            it.confidence != com.adsamcik.starlitcoffee.util.BagFieldConfidence.HIGH
+        },
+        preference = recognitionPreference,
+        mindlayerSupported = MindlayerAvailability.isSupported(),
+        mindlayerInstalled = mindlayerInstalled,
+        fallbackCapability = durableDraft?.recognitionCapability
+            ?: com.adsamcik.starlitcoffee.util.RecognitionCapability.READY,
+        fallbackRunState = durableDraft?.recognitionRunState ?: RecognitionRunState.IDLE,
+    )
 
     if (showDiscardDialog) {
         DestructiveActionDialog(
@@ -691,6 +660,11 @@ fun ScanRescanReview(
         resolvedFields = resolvedFields,
         reviewedPhotoUris = data.capturedPhotoUris,
         isUpdating = isUpdatingBag,
+        recognition = recognition,
+        isProcessing = isProcessing,
+        isComplete = isRescanRecognitionComplete(data, isProcessing, recognitionPreference) &&
+            recognition.offer == null && recognition.recoveryAction == null,
+        recognitionActions = recovery.actions,
         onUpdateBag = { updated ->
             if (isUpdatingBag) return@RescanDeltaDialog
             val saveSessionId = checkNotNull(data.sessionId) {
@@ -716,7 +690,10 @@ fun ScanRescanReview(
                             Toast.makeText(context, R.string.msg_could_not_read_label, Toast.LENGTH_LONG).show()
                         }
                         is ScannedBagSaveResult.Failed -> {
-                            Tracebox.log.error(updateResult.error, GuidedScanFlowTraceboxTemplates.FAILED_TO_UPDATE_RESCANNED_COFFEE_BAG)
+                            Tracebox.log.error(
+                                updateResult.error,
+                                GuidedScanFlowTraceboxTemplates.FAILED_TO_UPDATE_RESCANNED_COFFEE_BAG,
+                            )
                             Toast.makeText(
                                 context,
                                 R.string.msg_could_not_save_changes,
@@ -737,6 +714,7 @@ fun ScanRescanReview(
             }
         },
         onNewBag = { fields ->
+            if (isUpdatingBag) return@RescanDeltaDialog
             onNewBag(
                 ScanDraftTransfer(
                     fields = fields,
@@ -752,10 +730,18 @@ fun ScanRescanReview(
             )
             callbacks.onTransfer()
         },
-        onDismiss = { showDiscardDialog = true },
+        onDismiss = { if (!isUpdatingBag) showDiscardDialog = true },
     )
 }
 
 internal fun resolveRescanFieldEvidence(
     fieldEvidence: Map<String, BagFieldEvidence>,
 ): Map<String, BagFieldEvidence> = BagPhotoScanSupport.sanitizeFieldEvidence(fieldEvidence)
+
+internal fun isRescanRecognitionComplete(
+    data: ScanReviewData,
+    isProcessing: Boolean,
+    preference: RecognitionPreference,
+): Boolean = !isProcessing && resolveRescanFieldEvidence(data.fieldEvidence).isNotEmpty() &&
+    (preference == RecognitionPreference.DISABLED || data.llmStatus == LlmEnrichmentStatus.SUCCEEDED ||
+        data.llmStatus == LlmEnrichmentStatus.NOT_RUN)

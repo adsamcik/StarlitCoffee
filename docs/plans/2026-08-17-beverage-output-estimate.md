@@ -31,8 +31,8 @@ retention, extracted solids, evaporation, and similar residuals.
 - **Configuration decision:** This is a contextual input interpretation, not a
   permanent Settings toggle. It returns to Water in when an unsupported method
   is selected.
-- **Failure behavior:** Espresso and moka never expose the generic inverse
-  model. Invalid ratios fail closed instead of returning an impossible dose.
+- **Failure behavior:** Espresso uses its direct dose-to-yield model; moka does
+  not expose the generic inverse model. Invalid ratios fail closed instead of returning an impossible dose.
   French press copy notes that liquid intentionally left in the press is not
   included.
 - **Accessibility impact:** The control uses a text label and selected state,
@@ -53,9 +53,63 @@ retention, extracted solids, evaporation, and similar residuals.
 | French press | 2.2 | Excludes intentionally unpoured decant residual |
 | AeroPress | 1.8 | Paper, normally fully pressed; protocol-sensitive |
 | Cold brew | 2.0 | Paper/gravity-drained concentrate central value |
-| Espresso | — | Dose-to-beverage yield is already the primary model |
+| Espresso | — | Direct dose-to-beverage yield; in-cup planning uses the beverage ratio |
 | Moka pot | — | Pot, fill, heat, and stop point require calibration |
 
 The UI presents rounded grams and explicitly labels the result as approximate.
 The internal calculation retains full floating-point precision for downstream
 brew setup.
+
+## Calculator presentation
+
+The live preview uses one stable glyph per physical quantity: coffee beans for
+dry dose, a water drop for brew water, and a visibly filled cup for collected
+beverage. The compact labels `Coffee`, `Water`, and `In cup` keep the physical
+quantities unambiguous without explanatory copy. The selected calculation
+target has a persistent filled-and-outlined container, and every in-cup value
+retains the `≈` marker.
+All three VectorDrawables are mechanically fitted from approved ImageGen
+concepts; their provenance and raster-fidelity gates are documented in
+`docs/calculation-icon-vectorization.md`.
+The three physical quantities are presented as a single row of large,
+independently tappable cards. The selected card uses the quantity's expressive
+Material colour and higher contrast; unselected cards stay quiet with a subtle
+outline. Tapping any available card makes that quantity the calculator input,
+while the other cards continue to show the values derived from the same brew
+relationship. Methods without a supported beverage-output model keep the
+in-cup card unavailable rather than pretending to know an estimate.
+
+There are no separators, editing label, explanatory sentence, or permanent
+setting below the selector. TalkBack exposes each card's quantity, value,
+selection state, and availability. The French-press residual qualification
+remains contextual.
+
+## Remembered and named setups
+
+Each method starts at its own ratio and remembers the expression, input
+quantity, ratio, filter, and grinder across switches and app restarts. Espresso
+uses Coffee and In cup; its Water in card is hidden because beverage yield does
+not determine water input. Moka's In cup card is hidden until a calibrated output
+model is supported. Available cards share the full row width, and the enlarged-text
+layout stacks only those cards.
+Derived filter-brew output is approximate; requested output and espresso yield
+are planned targets. Compact espresso results also identify cup yield or dose,
+never water input.
+
+- **User value and scenario:** Repeated everyday brewing resumes without rebuilding
+  the setup; named Home/Work favorites cover recurring changes of equipment.
+- **Default and discoverability:** Remember automatically. The existing heart
+  saves a named favorite; a contextual picker appears in the settings row when
+  favorites exist. The existing Favorites screen handles deletion.
+- **Core flow and configuration:** No new setting, mandatory step, or second
+  preset collection. Each method's ratio options match that method, and fractional
+  espresso ratios retain their decimals.
+- **Failure and compatibility:** Invalid remembered entries fall back to method
+  defaults. Legacy favorites load their dose and equipment. The old global ratio
+  cannot be attributed to a method and is replaced by method defaults on first use.
+- **Accessibility:** Named setups use standard labeled menu items and touch targets;
+  the existing quantity cards expose selection and availability to TalkBack.
+- **Technical cost:** Per-method DataStore values and optional calculator intent
+  in the existing versioned recipe snapshot; no database migration.
+- **Removal criteria:** Simplify the quick picker if it obscures the primary ratio
+  action or duplicates a future unified favorites surface.

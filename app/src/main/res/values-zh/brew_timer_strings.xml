@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_set_brew_reminder">设置提醒</string>
+    <string name="action_edit_brew_reminder">编辑提醒</string>
+    <string name="action_remove_brew_reminder">移除提醒</string>
+    <string name="label_brew_reminder">提醒</string>
+    <string name="label_timer_duration">时长</string>
+    <string name="label_timer_seconds">秒</string>
+    <string name="label_timer_minutes">分钟</string>
+    <string name="label_timer_hours">小时</string>
+    <string name="msg_brew_reminder_origin">从本步骤开始计时。修改时长会保留已经过的时间。步骤完成时仍需由你确认。</string>
+    <string name="msg_brew_reminder_reached">已到提醒时间。继续前请检查咖啡。</string>
+    <string name="title_cold_brew">冷萃咖啡</string>
+    <string name="title_cold_brew_timer">冷萃计时器</string>
+    <string name="action_follow_brew_guide">跟随指南</string>
+    <string name="action_just_set_brew_timer">仅设置计时器</string>
+    <string name="action_start_timer">启动计时器</string>
+    <string name="action_start_steeping">开始浸泡</string>
+    <string name="action_end_brew_timer">结束计时器</string>
+    <string name="action_add_brew_start_time">添加开始时间</string>
+    <string name="label_brew_start_now">现在开始</string>
+    <string name="label_brew_start_earlier">已于之前开始</string>
+    <string name="label_brew_start_unknown">开始时间未知</string>
+    <string name="label_brew_hours_ago">几小时前</string>
+    <string name="label_brew_minutes_ago">几分钟前</string>
+    <string name="msg_cold_brew_refrigerated">加盖并冷藏在 4 °C 或更低温度。默认浸泡时间为 14 小时。</string>
+    <string name="msg_cold_brew_start_origin">咖啡完全浸湿且加盖容器放入冰箱时开始计时。</string>
+    <string name="msg_brew_start_unknown">添加实际开始时间以计算提醒。在此之前不会估计结束时间。</string>
+    <string name="msg_brew_timer_ended">计时器已结束</string>
+    <string name="label_brew_extraction_ended">萃取已完成</string>
+    <string name="msg_brew_notifications_disabled">提醒已关闭。咖啡冲煮仍在继续。</string>
+    <string name="action_allow_brew_notifications">允许提醒</string>
+    <string name="msg_brew_reminders_may_be_late">离开应用后，Android 可能会延迟提醒。</string>
+    <string name="action_allow_precise_brew_reminders">允许精确提醒</string>
+</resources>

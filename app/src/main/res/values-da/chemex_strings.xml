@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_tip_chemex">Brug Chemex-filterpapir i den rigtige størrelse. Placer tre lag mod hældetuden, skyl med varmt vand og hæld skyllevandet ud. Tilsæt middelgroft malet kaffe og nulstil vægten. Hold luftkanalen åben.</string>
+    <string name="instruction_chemex_bloom">Fugt al kaffen med vandet til bloom, og lad bloom afsluttes.</string>
+    <string name="instruction_chemex_pour">Hæld forsigtigt op til den samlede vandmængde. Lad niveauet falde mellem hældningerne, og hold det under kanten.</string>
+    <string name="instruction_chemex_drawdown">Vent, til vandet er løbet gennem kaffen. Fjern filteret, sving forsigtigt rundt og server ved at holde i kraven eller håndtaget.</string>
+    <string name="label_filter_chemex_bonded">Chemex-filterpapir</string>
+</resources>

@@ -1,0 +1,160 @@
+{
+  "algorithm": "subpixel-contours-schneider-constrained-dp",
+  "android_sha256": "75b8009dbd2eed8129155ecff5e45c2dd5385f5c7ed1be8e502febf95d0a5ed9",
+  "contours": [
+    {
+      "candidate_knots": 25,
+      "corners": 2,
+      "segments": 3,
+      "source_points": 790
+    },
+    {
+      "candidate_knots": 43,
+      "corners": 5,
+      "segments": 8,
+      "source_points": 1070
+    },
+    {
+      "candidate_knots": 188,
+      "corners": 21,
+      "segments": 42,
+      "source_points": 5452
+    },
+    {
+      "candidate_knots": 10,
+      "corners": 3,
+      "segments": 4,
+      "source_points": 190
+    },
+    {
+      "candidate_knots": 15,
+      "corners": 2,
+      "segments": 2,
+      "source_points": 406
+    },
+    {
+      "candidate_knots": 17,
+      "corners": 3,
+      "segments": 4,
+      "source_points": 386
+    },
+    {
+      "candidate_knots": 16,
+      "corners": 2,
+      "segments": 2,
+      "source_points": 398
+    }
+  ],
+  "dependencies": {
+    "Pillow": "12.3.0",
+    "numpy": "2.3.5",
+    "pypdfium2": "5.13.0",
+    "reportlab": "4.4.9"
+  },
+  "export": {
+    "contour_groups": [
+      [
+        0
+      ],
+      [
+        1
+      ],
+      [
+        2,
+        5,
+        6
+      ],
+      [
+        3
+      ],
+      [
+        4
+      ]
+    ],
+    "coordinate_decimal_places": 6,
+    "max_path_data_length": 3000,
+    "path_count": 5,
+    "path_data_lengths": [
+      190,
+      464,
+      2866,
+      255,
+      139
+    ]
+  },
+  "normalization": {
+    "bbox": [
+      356,
+      184,
+      898,
+      1062
+    ],
+    "mode": "white-background",
+    "offset": [
+      -2.28246013667426,
+      -2.191343963553532
+    ],
+    "scale": 0.022779043280182234,
+    "source_size": [
+      1254,
+      1254
+    ]
+  },
+  "parameters": {
+    "error": 0.055,
+    "padding": 2,
+    "viewport": 24.0
+  },
+  "quality": {
+    "actual_sizes": {
+      "24": {
+        "mean_absolute_coverage_error": 0.00525599128540305
+      },
+      "36": {
+        "mean_absolute_coverage_error": 0.005322561123214718
+      },
+      "48": {
+        "mean_absolute_coverage_error": 0.00552662037037037
+      }
+    },
+    "boundary": {
+      "mean": 0.013731836985492005,
+      "p99": 0.045096637537850634,
+      "sample_spacing": 0.015,
+      "source_to_vector_max": 0.05535680463990733,
+      "units": "24-unit viewport; sampled distance, not analytic Hausdorff",
+      "vector_to_source_max": 0.05535680463990733
+    },
+    "failures": [],
+    "joins": {
+      "preserved_corner_joins": 38,
+      "smooth_joins": 27,
+      "smooth_max_tangent_mismatch_degrees": 0.014250790493407018
+    },
+    "limits": {
+      "max_actual_size_coverage_mae": 0.015,
+      "max_boundary_p99_viewport_units": 0.09150000000000001,
+      "max_boundary_viewport_units": 0.11574999999999999,
+      "min_iou": 0.97
+    },
+    "passed": true,
+    "silhouette_iou": 0.9884806225272683,
+    "source_topology": {
+      "components": 5,
+      "holes": 2
+    },
+    "vector_topology": {
+      "components": 5,
+      "holes": 2
+    },
+    "winding_preserved": true
+  },
+  "schema": 1,
+  "source_file": "grinder-niche.png",
+  "source_sha256": "22a84ce15b31bf6b0bea77e2a4ade128d08e732698c0be603ca876ffa8d06f95",
+  "svg_sha256": "cc239f17f7d5ffe15083b859642ca72e8fa9c769099456c6037838777462e5a4",
+  "total_anchors": 65,
+  "total_control_points": 130,
+  "total_segments": 65,
+  "version": "1.1.0"
+}

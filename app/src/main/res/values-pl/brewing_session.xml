@@ -39,7 +39,12 @@
     <string name="format_brew_stage_recorded_grams">Zapisano %1$.0f g</string>
     <string name="format_brew_stage_remaining_grams">Pozostało %1$.0f g</string>
     <string name="label_brew_reference_cues">Wartości orientacyjne</string>
-    <string name="msg_brew_reference_cues_not_completion">Tylko jako wskazówka. Ukończ krok za pomocą głównej czynności powyżej.</string>
+    <string name="action_pause_brew_guide">Wstrzymaj instrukcję</string>
+    <string name="action_resume_brew_guide">Wznów instrukcję</string>
+    <string name="action_pause_brew_clock">Wstrzymaj minutnik</string>
+    <string name="msg_brew_clock_keeps_running">Minutnik nadal działa.</string>
+    <string name="msg_brew_guide_paused">Instrukcja wstrzymana. Minutnik nadal działa.</string>
+    <string name="msg_brew_reference_cues_not_completion">Tylko wskazówka. Sygnał czasowy nie kończy czynności fizycznej.</string>
     <string name="action_show_more_brew_reference_cues">Pokaż więcej wartości</string>
     <string name="action_hide_brew_reference_cues">Ukryj dodatkowe wartości</string>
     <string name="label_brew_reference_stage_duration">Czas trwania etapu</string>

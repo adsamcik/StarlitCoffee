@@ -1,0 +1,154 @@
+{
+  "date": "2026-10-06",
+  "authoring": "Shared hand-authored filled vector family; historical generated sources preserved.",
+  "rules": {
+    "viewport": "0 0 1024 1024",
+    "nominal_mouth_side_rim_units": 48,
+    "nominal_handle_wall_units": 72,
+    "lid_seam_units": 24,
+    "minimum_detail_units": 28,
+    "style": "Rounded filled silhouettes, elliptical openings, restrained anatomy details, theme tint."
+  },
+  "icons": {
+    "espresso": {
+      "svg_sha256": "9d8e36c09127a87d27c2c7da31d89383e64c609d02d76795e4b62e96fe87dda0",
+      "based_on_svg_sha256": "3c16e35f94e3c260569104f05325d0cf88cfe42940d19bacf3be879893f64531",
+      "paths": 3
+    },
+    "cortado": {
+      "svg_sha256": "16f4ffce8584dcba03c4f14be7af595aae4004fb5d52011805cf5cba8eeeea0b",
+      "based_on_svg_sha256": "4766e324395fadfef03c6a4c438add0c0427288860197224f731566986120385",
+      "paths": 1
+    },
+    "cappuccino": {
+      "svg_sha256": "2cbd0aa5f21590a1710baab681a7285ffb6d80ffd6ca3aa3dbfceea8902d9c7b",
+      "based_on_svg_sha256": "761bfddda4b303ba9f92b092c33b4d6a58287051176d10ced2ed722dfb1aae89",
+      "paths": 2
+    },
+    "mug": {
+      "svg_sha256": "9462d2d51060aa60ebf35558e7b865775951387e5c60977bc0b88193971c765d",
+      "based_on_svg_sha256": "ad804cce440dc3b50ba39f909f86333bb95d8435a2fc40c54f93db88c6968267",
+      "paths": 2
+    },
+    "travel": {
+      "svg_sha256": "630c61c6d130b12893fc58db63c966649a5cef6ea80d4d87fc38a74de19d8426",
+      "based_on_svg_sha256": "5f8778f55f24ecce8a2014241112111b19af0caf678beeabf8c293479094e091",
+      "paths": 3
+    },
+    "takeaway": {
+      "svg_sha256": "1961cba96b76fdffa4fd506dde69cb41ba3637233930323d5b169db5c36c9050",
+      "based_on_svg_sha256": "8b84a1dc7e1a94b2d1e2ac2c3f7ab42c415bc6f022353030c5f593614373f5d1",
+      "paths": 2
+    },
+    "latte_glass": {
+      "svg_sha256": "97f2515e4a6631534fa462a63106b27818a4e5e4e78e672ef2722c65e8e88468",
+      "based_on_svg_sha256": "01e8cecf08b0d661d7e2f78cf9d2542997a6b906484c04bccc6e3fe1e1e558d7",
+      "paths": 1
+    },
+    "carafe": {
+      "svg_sha256": "17dad4d1d9f517fb45b362525bffca06f44c95fe67305143e6501bc64a417746",
+      "based_on_svg_sha256": "41adeba34fd88c4e2f47d0141b259063459a22ce5e1a30bdb4fc022857040b38",
+      "paths": 1
+    },
+    "french_press": {
+      "svg_sha256": "5d8756fd30da3aeb320a42237b4cd84ad7a75b71438ef997467716709b568c09",
+      "based_on_svg_sha256": "11d4d6560ea47cb79b9a4ad7cc112f7df6444fcf8e82a01958c3f8436179e377",
+      "paths": 6
+    },
+    "kettle": {
+      "svg_sha256": "bf25fcfdf79e5bca5d0a11f0b9387ea54c2740f02506ef187f427777ec9df97a",
+      "based_on_svg_sha256": "4a356e1afa2afedd90ab3c9fac025a70379f8966c11d9cad30b2bec2ab4b2dd0",
+      "paths": 5
+    },
+    "mason_jar": {
+      "svg_sha256": "fc8f1b992b33425fbe01e930813f27ac40eb725d79204296bbab74b3177f6b1f",
+      "based_on_svg_sha256": "f50ad5ea81d13b6e8af06ede4ca3212e387c2efda249af9587b73b793e854bb9",
+      "paths": 1
+    },
+    "bowl": {
+      "svg_sha256": "cf111dc7db2a75b5fe527bfd496cbdb05a3eb5f503fda748b6b5182c77377895",
+      "based_on_svg_sha256": "03748ea2a4d1d3d32f7ef73f17994cf05b9306901a59bf8f10d757c7c6341760",
+      "paths": 1
+    },
+    "double_wall_espresso": {
+      "svg_sha256": "bc802ddcd3cf7064ebbe5f61da6c9fded208cb0594d721709541e1d5c1947525",
+      "based_on_svg_sha256": "1722e0d258d6ccf647d9c1d006ef38414d6e1b4d1805871b970c4313f9550ae6",
+      "paths": 1
+    },
+    "double_wall_tumbler": {
+      "svg_sha256": "8c1a3e2fd64747f358a5a14ecb578c3ada5ec8faf26e1d85bd80bbd92bf09b32",
+      "based_on_svg_sha256": "93c8ff42ab2aa1137833be7d18fb837b639e3107d0018d7d243819fd221497ce",
+      "paths": 1
+    },
+    "double_wall_mug": {
+      "svg_sha256": "b8569ad255564f44b6db9202113844376227e4148bb5647bec773fc88a889a62",
+      "based_on_svg_sha256": "54abb12d2481729f2345a7b6b9f24b93906b4b9ddecdeb5c2365e3f784776900",
+      "paths": 2
+    },
+    "tall_latte_glass": {
+      "svg_sha256": "ff031962c09891503e43df4503e47acfc39443b7667a06224fef3c047cd03624",
+      "based_on_svg_sha256": "1fc70a0ef3511a40c7658554fd186c846d5c31194b01ed4f1977b444ef523f11",
+      "paths": 1
+    },
+    "aroma_taster": {
+      "svg_sha256": "744e7b0591ea19489c63c854a94a64660d764c26bfc0a173fd28845365d767c9",
+      "based_on_svg_sha256": "23181d4ada1505c312502fa9893284235977689d4d178aa5b3bae03bf1b4210d",
+      "paths": 1
+    },
+    "spherical_latte": {
+      "svg_sha256": "9f64f601c1fb74c6e06fca6c8476b34a0b505e9a7044a7125019db213572cc7a",
+      "based_on_svg_sha256": "45d4df85954fa8c3c6286a3e61fe1bc79e5bf4fceefe702b947d9b50853fd2a6",
+      "paths": 2
+    },
+    "spouted_espresso_server": {
+      "svg_sha256": "8435ffc3bc5cb00ae8a123585733cbab1b055a783db20065652246dffba0d916",
+      "based_on_svg_sha256": "28c648dbe98d0fde90e6864f58f578a13c4b6d0ee63ad127f22c1554af6c36b0",
+      "paths": 2
+    },
+    "dot_carafe": {
+      "svg_sha256": "123fe1a1fc8a427a18ff0a5fbfb046587834115cdfb80a2c7346e401d7533930",
+      "based_on_svg_sha256": "4723e44f51643dbd47d3ad0fdbfecf410add050b2766b191cdab8406e47aa0e0",
+      "paths": 2
+    },
+    "lid_server": {
+      "svg_sha256": "c6adfc287cde585406f85abc25e64c48c9bd3ff6b46d65d0cd36be9492322881",
+      "based_on_svg_sha256": "1a0930c7745873da7875a302d58dec16f658a812c43ee16e0c3f13d06a511413",
+      "paths": 3
+    },
+    "beehive_server": {
+      "svg_sha256": "b9145b710758ff04a8a06da2afd5de3b77cb0e25c5cc72c3f4fe640e822e8cb1",
+      "based_on_svg_sha256": "674d3402de67bd830c9005be1595d7d50ae5f2700b3c72f45eb045974e74b174",
+      "paths": 1
+    },
+    "barista_server": {
+      "svg_sha256": "8074b70bcfdbec7f03499e5219b973380741327f2823eefe44d94711524c19fe",
+      "based_on_svg_sha256": "c2429b95b613188df551f0d91e3c98d3583ce4bed94b87fc62f598eaca54d2e7",
+      "paths": 2
+    },
+    "angular_server": {
+      "svg_sha256": "54bbd9b4d1a199d2fab5ccbde8a68ec77b5ffb7913c0e1454094f097b46f89a1",
+      "based_on_svg_sha256": "ce3a53db2735f9b8da4fe39a5e8a91d826cc8f5c18bbcb2271e572d67fddf7a4",
+      "paths": 1
+    },
+    "faceted_cortado": {
+      "svg_sha256": "c05b5bcd31d2df998fa166c2e334c798c5e0338ce860466339cda5e67b5194b1",
+      "based_on_svg_sha256": "833db0f01c24c64a640d003ee98c9c83c111aa41c615208b650cf1bd0e3506a7",
+      "paths": 1
+    },
+    "ceramic_latte_bowl": {
+      "svg_sha256": "179bf9ac1a97c2b7e788f5fca106f1816d39036a4523e0137895dc177f78fae5",
+      "based_on_svg_sha256": "b456996b2872af39ee82931cfb57f5b896f801633d2122e6951b6de2d6a1b6c7",
+      "paths": 1
+    },
+    "thermal_carafe": {
+      "svg_sha256": "e118fb6bcafb5cb57701168eafa63e22f3b9796ef68cb20fe39c740feaa8f506",
+      "based_on_svg_sha256": "5f124509275677fb914b0824d00b1ee9a7c8343c8cc2accf5ab3827613a123c3",
+      "paths": 3
+    },
+    "double_wall_press": {
+      "svg_sha256": "c442cc1d8dec9c71908a93bd9c7ec58bdc1b341ddb3656dd4a740403e3f6ff77",
+      "based_on_svg_sha256": "de42d69f2b2fd532f700e290973a703edbacc945bae3591c5e81973269c59a76",
+      "paths": 7
+    }
+  }
+}

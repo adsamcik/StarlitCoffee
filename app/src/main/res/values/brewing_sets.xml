@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_brewing_sets">Brewing sets</string>
+    <string name="msg_brewing_sets_hint">Keep separate setups for home, work, or different brewing methods.</string>
+    <string name="action_add_brewing_set">Add set</string>
+    <string name="action_save_brewing_set">Save as set</string>
+    <string name="label_new_brewing_set">New set</string>
+    <string name="label_edit_brewing_set">Edit set</string>
+    <string name="hint_brewing_set_name">e.g. Home filter</string>
+    <string name="action_manage_brewing_sets">Manage sets</string>
+    <string name="label_brewing_set_method">Brew method</string>
+    <string name="msg_delete_brewing_set">Delete this brewing set?</string>
+    <string name="screen_first_brewing_set_method">Choose your first method</string>
+    <string name="msg_first_brewing_set">Start with one method. Add more sets in the next step.</string>
+    <string name="action_retry_brewing_set">Try again</string>
+</resources>

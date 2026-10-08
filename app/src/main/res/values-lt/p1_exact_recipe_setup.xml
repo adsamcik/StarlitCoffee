@@ -54,7 +54,7 @@
     <string name="label_brewer_profile_v60">V60</string>
     <string name="label_brewer_profile_wave_185">Wave 185 plokščiu dugnu</string>
     <string name="label_brewer_profile_wedge">Pleišto formos driperis</string>
-    <string name="label_brewer_profile_thick_paper_carafe">Kavos ruošimo įrenginys su grafinu ir storu popieriniu filtru</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Chemex</string>
     <string name="label_brewer_profile_conical">Universalus kūginis driperis</string>
     <string name="label_brewer_profile_family_manual_gravity">Rankinis gravitacinis plikymas</string>
     <string name="label_brewer_profile_pulsar">Pulsar</string>

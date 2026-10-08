@@ -55,7 +55,7 @@
     <string name="label_brewer_profile_v60">V60</string>
     <string name="label_brewer_profile_wave_185">Tasapohjainen Wave 185</string>
     <string name="label_brewer_profile_wedge">Kiilamainen suodatinsuppilo</string>
-    <string name="label_brewer_profile_thick_paper_carafe">Kannukahvinkeitin paksulla paperisuodattimella</string>
+    <string name="label_brewer_profile_thick_paper_carafe">Chemex</string>
     <string name="label_brewer_profile_conical">Yleismallinen kartiomainen suodatinsuppilo</string>
     <string name="label_brewer_profile_family_manual_gravity">Manuaalinen painovoimauutto</string>
     <string name="label_brewer_profile_pulsar">Pulsar</string>

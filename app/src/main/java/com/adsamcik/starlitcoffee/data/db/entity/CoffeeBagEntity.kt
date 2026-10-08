@@ -1,6 +1,8 @@
 package com.adsamcik.starlitcoffee.data.db.entity
 
 import androidx.room.Entity
+import androidx.room.ColumnInfo
+import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
@@ -12,7 +14,12 @@ import androidx.room.PrimaryKey
         Index("regionId"),
         Index("processTypeId"),
         Index(value = ["scanSessionId"], unique = true),
-    ]
+        Index("coffeeId"),
+    ],
+    foreignKeys = [ForeignKey(
+        entity = CoffeeIdentityEntity::class,
+        parentColumns = ["id"], childColumns = ["coffeeId"], onDelete = ForeignKey.SET_NULL,
+    )],
 )
 data class CoffeeBagEntity(
     @PrimaryKey(autoGenerate = true)
@@ -51,4 +58,6 @@ data class CoffeeBagEntity(
     val decafProcess: String? = null,
     val status: String = "SEALED",
     val createdAt: Long = System.currentTimeMillis(),
+    val coffeeId: Long? = null,
+    @ColumnInfo(defaultValue = "1") val packNumber: Int = 1,
 )

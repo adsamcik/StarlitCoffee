@@ -13,6 +13,17 @@ changelog entry. Confirm that the changelog version matches the app's
 `versionName` and that the release validation suite passes before declaring the
 app ready to release.
 
+## Icon artwork workflow
+
+All icon artwork edits must go through the full image-generator flow: edit or
+generate the raster artwork, preserve the original output and exact prompt,
+mechanically trace its contours, import those paths unchanged, then review
+small-size light/dark and native rendering. Do not redraw or adjust SVG or
+Android path coordinates by hand. Make visual corrections in the image
+generator and repeat tracing. For vessel icons, use
+`tools/import_approved_vessel_vectors.py` and the provenance in
+`docs/brewing/design/2026-10-02-visual-guides/assets/cup-icons/generated-consistency-20261006/`.
+
 ## Product philosophy: intentional simplicity
 
 Design and develop the application with the discipline commonly associated with Apple’s product ethos: every element must earn its place, the primary experience must feel coherent and polished, and internal complexity must not become user-facing complexity.

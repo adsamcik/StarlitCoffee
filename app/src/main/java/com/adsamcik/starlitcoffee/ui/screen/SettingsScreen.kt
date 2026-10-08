@@ -4,7 +4,6 @@ import android.content.ActivityNotFoundException
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -22,20 +21,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Restore
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.FilledTonalIconButton
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeFlexibleTopAppBar
@@ -59,9 +47,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.core.graphics.toColorInt
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.testTag
@@ -73,8 +58,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.data.model.BrewingSet
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
-import com.adsamcik.starlitcoffee.data.model.FilterType
+import com.adsamcik.starlitcoffee.data.model.CalculatorSetup
+import com.adsamcik.starlitcoffee.ui.component.BrewingSetEditor
+import com.adsamcik.starlitcoffee.ui.component.BrewingSetsSettings
+import java.util.UUID
 import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
 import com.adsamcik.starlitcoffee.data.repository.CupPresetRepository
 import com.adsamcik.starlitcoffee.ui.component.SettingsGroup
@@ -83,8 +72,7 @@ import com.adsamcik.starlitcoffee.ui.component.SettingsRowDivider
 import com.adsamcik.starlitcoffee.ui.component.SettingsSectionHeader
 import com.adsamcik.starlitcoffee.ui.component.SettingsSelectorBlock
 import com.adsamcik.starlitcoffee.ui.component.SettingsSwitchRow
-import com.adsamcik.starlitcoffee.ui.util.PresetIcon
-import com.adsamcik.starlitcoffee.ui.util.localizedDisplayName
+import com.adsamcik.starlitcoffee.ui.component.CupPresetsSettings
 import com.adsamcik.starlitcoffee.util.VibrationHelper
 import com.adsamcik.starlitcoffee.BuildConfig
 import android.Manifest
@@ -98,10 +86,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.adsamcik.starlitcoffee.scan.observability.ScanBugReporter
-import com.adsamcik.starlitcoffee.scan.observability.ScanLlmDiagnosticsStore
 import com.adsamcik.starlitcoffee.scan.observability.ScanSessionRingBuffer
 import com.adsamcik.starlitcoffee.ui.component.DestructiveActionDialog
 import com.adsamcik.starlitcoffee.ui.component.MindlayerDiagnosticsCard
+import com.adsamcik.starlitcoffee.ui.component.MindlayerSettingsRow
 import com.adsamcik.starlitcoffee.ui.component.ScanHistoryDialog
 import com.adsamcik.starlitcoffee.ui.component.formatSessionForShare
 import com.adsamcik.starlitcoffee.util.RecognitionPreference
@@ -112,10 +100,6 @@ import com.adsamcik.starlitcoffee.viewmodel.SettingsUiState
 import com.adsamcik.starlitcoffee.viewmodel.SettingsViewModel
 
 private const val PRIVACY_POLICY_URL = "https://adsamcik.github.io/StarlitCoffee/privacy/"
-
-private val checkIcon: @Composable () -> Unit = {
-    Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize))
-}
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -135,6 +119,10 @@ fun SettingsScreen(
     val operationState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
     var showResetPresetsDialog by rememberSaveable { mutableStateOf(false) }
+    var editingSetId by rememberSaveable { mutableStateOf<String?>(null) }
+    var editorIsNew by rememberSaveable { mutableStateOf(false) }
+    var deletingSetId by rememberSaveable { mutableStateOf<String?>(null) }
+    val grinderData = remember(context) { GrinderDataSource.getInstance(context) }
     val isBusy = operationState.operation != SettingsOperation.IDLE
     val isResettingPresets = operationState.operation == SettingsOperation.RESETTING_CUP_PRESETS
     val requestBack = { if (!isBusy) onBack() }
@@ -143,6 +131,10 @@ fun SettingsScreen(
     BackHandler(onBack = requestBack)
 
     LaunchedEffect(operationState.completion) {
+        if (operationState.completion == SettingsCompletion.BREWING_SET_SAVED) {
+            editingSetId = null
+            viewModel.consumeCompletion()
+        }
         if (operationState.completion == SettingsCompletion.CUP_PRESETS_RESET) {
             showResetPresetsDialog = false
             viewModel.consumeCompletion()
@@ -173,6 +165,24 @@ fun SettingsScreen(
                 }
             },
         )
+    }
+
+    editingSetId?.let { id ->
+        val original = remember(id) {
+            prefs.brewingSets.find { it.id == id } ?: BrewingSet(id = id, method = prefs.defaultMethod,
+                setup = com.adsamcik.starlitcoffee.ui.component.initialBrewingSetup(prefs.defaultMethod).copy(
+                    filterType = if (prefs.defaultMethod == BrewMethod.PULSAR) prefs.defaultFilterType?.name ?: "PAPER" else null,
+                    grinderId = prefs.selectedGrinderId))
+        }
+        BrewingSetEditor(original, editorIsNew, grinderData, isBusy,
+            onSave = viewModel::saveBrewingSet, onSaveRecipe = viewModel::saveBrewingSetRecipe,
+            saveFailed = operationState.failure == SettingsFailure.SAVE, onDismiss = { editingSetId = null })
+    }
+    deletingSetId?.let { id ->
+        DestructiveActionDialog(titleRes = R.string.action_delete, confirmLabelRes = R.string.action_delete,
+            messageRes = R.string.msg_delete_brewing_set, enabled = !isBusy,
+            onConfirm = { viewModel.deleteBrewingSet(id); deletingSetId = null },
+            onDismiss = { deletingSetId = null })
     }
 
     Scaffold(
@@ -217,229 +227,30 @@ fun SettingsScreen(
             // ---------- Brewing ----------
             SettingsSectionHeader(stringResource(R.string.label_settings_section_brewing))
 
-            // Cup presets — keeps its add/reset actions and tappable list.
             SettingsGroup {
-                Column(modifier = Modifier.padding(20.dp)) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Text(
-                            text = stringResource(R.string.label_cup_presets),
-                            style = MaterialTheme.typography.titleMedium,
-                            modifier = Modifier.semantics { heading() },
-                        )
-                        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                            FilledTonalIconButton(
-                                onClick = {
-                                    if (!isBusy) onNavigateToCupPresetEditor(null)
-                                },
-                                enabled = !isBusy,
-                                modifier = Modifier.size(48.dp),
-                            ) {
-                                Icon(
-                                    Icons.Filled.Add,
-                                    contentDescription = stringResource(R.string.action_add_preset),
-                                    modifier = Modifier.size(24.dp),
-                                )
-                            }
-                            IconButton(
-                                onClick = { showResetPresetsDialog = true },
-                                enabled = !isBusy,
-                                modifier = Modifier.size(48.dp),
-                            ) {
-                                Icon(
-                                    Icons.Filled.Restore,
-                                    contentDescription = stringResource(R.string.action_reset_defaults),
-                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    modifier = Modifier.size(24.dp),
-                                )
-                            }
-                        }
-                    }
-                    Text(
-                        text = stringResource(R.string.msg_presets_hint),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    cupPresets.forEach { preset ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable(enabled = !isBusy) {
-                                    onNavigateToCupPresetEditor(preset.id)
-                                }
-                                .padding(vertical = 8.dp),
-                            horizontalArrangement = Arrangement.spacedBy(12.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            val dotColor = preset.colorHex?.let {
-                                try { Color(it.toColorInt()) } catch (_: IllegalArgumentException) { null }
-                            } ?: MaterialTheme.colorScheme.secondaryContainer
-                            Box(
-                                modifier = Modifier
-                                    .size(40.dp)
-                                    .background(
-                                        MaterialTheme.colorScheme.surfaceContainerHighest,
-                                        CircleShape,
-                                    ),
-                                contentAlignment = Alignment.Center,
-                            ) {
-                                PresetIcon(
-                                    iconName = preset.iconName,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(24.dp),
-                                )
-                                Box(
-                                    modifier = Modifier
-                                        .align(Alignment.BottomEnd)
-                                        .size(8.dp)
-                                        .clip(CircleShape)
-                                        .background(dotColor)
-                                        .border(
-                                            1.dp,
-                                            MaterialTheme.colorScheme.surfaceContainerLow,
-                                            CircleShape,
-                                        ),
-                                )
-                            }
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text(
-                                    text = preset.name,
-                                    style = MaterialTheme.typography.titleMedium,
-                                )
-                                Text(
-                                    text = "${preset.waterMl.toInt()} ${stringResource(R.string.unit_ml)}",
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
-                            }
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                    }
-                }
+                BrewingSetsSettings(
+                    sets = prefs.brewingSets,
+                    selectedId = prefs.activeBrewingSetId,
+                    grinderData = grinderData,
+                    enabled = !isBusy,
+                    onSelect = viewModel::selectBrewingSet,
+                    onEdit = { editorIsNew = false; editingSetId = it.id },
+                    onDelete = { deletingSetId = it.id },
+                    onAdd = { editorIsNew = true; editingSetId = UUID.randomUUID().toString() },
+                )
             }
 
-            // Brew configuration — methods, default, filter, grinder grouped together.
-            SettingsGroup {
-                SettingsSelectorBlock(
-                    title = stringResource(R.string.label_brew_methods),
-                    summary = stringResource(R.string.msg_methods_hint),
-                ) {
-                    FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalArrangement = Arrangement.spacedBy(4.dp),
-                    ) {
-                        BrewMethod.entries.forEach { method ->
-                            val enabled = prefs.enabledMethods.contains(method)
-                            FilterChip(
-                                selected = enabled,
-                                enabled = !isBusy,
-                                onClick = {
-                                    val newSet = if (enabled) {
-                                        if (prefs.enabledMethods.size > 1) {
-                                            prefs.enabledMethods - method
-                                        } else {
-                                            return@FilterChip
-                                        }
-                                    } else {
-                                        prefs.enabledMethods + method
-                                    }
-                                    viewModel.updateMethodSelection(newSet, prefs.defaultMethod)
-                                },
-                                label = { Text(method.localizedDisplayName()) },
-                                leadingIcon = if (enabled) checkIcon else null,
-                            )
-                        }
-                    }
-                }
-                SettingsRowDivider()
-                SettingsSelectorBlock(title = stringResource(R.string.label_default_method)) {
-                    FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalArrangement = Arrangement.spacedBy(4.dp),
-                    ) {
-                        prefs.enabledMethods.forEach { method ->
-                            val isDefault = prefs.defaultMethod == method
-                            FilterChip(
-                                selected = isDefault,
-                                enabled = !isBusy,
-                                onClick = {
-                                    viewModel.updateDefaultMethod(prefs.enabledMethods, method)
-                                },
-                                label = { Text(method.localizedDisplayName()) },
-                                leadingIcon = if (isDefault) checkIcon else null,
-                            )
-                        }
-                    }
-                }
-                SettingsRowDivider()
-                SettingsSelectorBlock(
-                    title = stringResource(R.string.label_pulsar_filter_type),
-                    summary = stringResource(R.string.msg_pulsar_settings_applied),
-                ) {
-                    FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    ) {
-                        FilterChip(
-                            selected = prefs.defaultFilterType == null,
-                            enabled = !isBusy,
-                            onClick = { viewModel.updateDefaultFilterType(null) },
-                            label = { Text(stringResource(R.string.label_none)) },
-                            leadingIcon = if (prefs.defaultFilterType == null) checkIcon else null,
-                        )
-                        FilterType.entries.forEach { filter ->
-                            val isFilterSelected = prefs.defaultFilterType == filter
-                            FilterChip(
-                                selected = isFilterSelected,
-                                enabled = !isBusy,
-                                onClick = { viewModel.updateDefaultFilterType(filter) },
-                                label = { Text(filter.localizedDisplayName()) },
-                                leadingIcon = if (isFilterSelected) checkIcon else null,
-                            )
-                        }
-                    }
-                }
-                SettingsRowDivider()
-                SettingsSelectorBlock(title = stringResource(R.string.label_your_grinder)) {
-                    FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalArrangement = Arrangement.spacedBy(4.dp),
-                    ) {
-                        FilterChip(
-                            selected = prefs.selectedGrinderId == null,
-                            enabled = !isBusy,
-                            onClick = { viewModel.updateSelectedGrinder(null) },
-                            label = { Text(stringResource(R.string.label_no_grinder)) },
-                            leadingIcon = if (prefs.selectedGrinderId == null) checkIcon else null,
-                        )
-                        GrinderDataSource.getInstance(context).grinders.forEach { grinder ->
-                            val isGrinderSelected = prefs.selectedGrinderId == grinder.id
-                            FilterChip(
-                                selected = isGrinderSelected,
-                                enabled = !isBusy,
-                                onClick = { viewModel.updateSelectedGrinder(grinder.id) },
-                                label = {
-                                    val label = if (grinder.brand == grinder.model) {
-                                        grinder.model
-                                    } else {
-                                        "${grinder.brand} ${grinder.model}"
-                                    }
-                                    Text(label)
-                                },
-                                leadingIcon = if (isGrinderSelected) checkIcon else null,
-                            )
-                        }
-                    }
-                }
-            }
+            CupPresetsSettings(
+                presets = cupPresets,
+                showOnCalculator = prefs.showCupPresets,
+                enabled = !isBusy,
+                onShowOnCalculatorChange = viewModel::updateShowCupPresets,
+                onEdit = { onNavigateToCupPresetEditor(it) },
+                onAdd = { onNavigateToCupPresetEditor(null) },
+                onReset = { showResetPresetsDialog = true },
+            )
 
+            // The same named sets are selected here and on the Brew screen.
             // Brew flow toggles.
             SettingsGroup {
                 SettingsSwitchRow(
@@ -478,16 +289,11 @@ fun SettingsScreen(
             // ---------- Scanning ----------
             SettingsSectionHeader(stringResource(R.string.label_settings_section_scanning))
             SettingsGroup {
-                SettingsSwitchRow(
-                    title = stringResource(R.string.label_enhanced_label_recognition),
-                    summary = stringResource(R.string.msg_enhanced_label_recognition),
-                    checked = prefs.labelRecognitionPreference == RecognitionPreference.ENABLED,
+                MindlayerSettingsRow(
+                    preference = prefs.labelRecognitionPreference,
                     enabled = !isBusy,
-                    onCheckedChange = { enabled ->
-                        viewModel.updateLabelRecognitionPreference(
-                            if (enabled) RecognitionPreference.ENABLED else RecognitionPreference.DISABLED,
-                        )
-                    },
+                    enableRecognition = { viewModel.saveLabelRecognitionPreference(RecognitionPreference.ENABLED) },
+                    disableRecognition = { viewModel.saveLabelRecognitionPreference(RecognitionPreference.DISABLED) },
                 )
                 SettingsRowDivider()
                 SettingsNavigationRow(
@@ -561,7 +367,10 @@ fun SettingsScreen(
             // ---------- Developer (debug only) ----------
             if (BuildConfig.DEBUG) {
                 SettingsSectionHeader(stringResource(R.string.label_settings_section_developer))
-                MindlayerDiagnosticsCard()
+                MindlayerDiagnosticsCard(
+                    enableRecognition = { viewModel.saveLabelRecognitionPreference(RecognitionPreference.ENABLED) },
+                    enabled = !isBusy,
+                )
                 ScanDebugCard(viewModel = viewModel, operationState = operationState)
                 // Phase 3 — opt-in, on-device capture of model-vs-user field
                 // corrections, used to measure extraction quality on real bags.
@@ -592,7 +401,6 @@ private fun ScanDebugCard(
     val context = LocalContext.current
     val resources = LocalResources.current
     var sessions by remember { mutableStateOf(ScanSessionRingBuffer.getAll(context)) }
-    var llmPasses by remember { mutableStateOf(ScanLlmDiagnosticsStore.getAll(context)) }
     var showHistory by rememberSaveable { mutableStateOf(false) }
     var showClearDialog by rememberSaveable { mutableStateOf(false) }
     val isClearing = operationState.operation == SettingsOperation.CLEARING_DIAGNOSTICS
@@ -601,7 +409,6 @@ private fun ScanDebugCard(
     LaunchedEffect(operationState.completion) {
         if (operationState.completion == SettingsCompletion.DIAGNOSTICS_CLEARED) {
             sessions = emptyList()
-            llmPasses = emptyList()
             showClearDialog = false
             viewModel.consumeCompletion()
         }
@@ -638,7 +445,6 @@ private fun ScanDebugCard(
                 text = stringResource(
                     R.string.format_scan_debug_counts,
                     sessions.size,
-                    llmPasses.size,
                 ),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,

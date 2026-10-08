@@ -1,0 +1,441 @@
+{
+  "method_id": "siphon",
+  "title": "Siphon brewing guide",
+  "scope": "Hario Technica TCAR-3 three-cup brewer with supplied alcohol lamp and F-103S cloth-filter assembly using FS-103 cloth; Hario coffee-first procedure",
+  "research_date": "2026-10-02",
+  "review_status": "editorially_reviewed",
+  "physical_brew_tested": false,
+  "sources": [
+    {
+      "id": "hario_tcar_manual",
+      "title": "Hario Coffee Syphon TCAR instruction manual, pages 3-5 and 7-10 (Hario-authored manual mirrored by ManualsLib)",
+      "url": "https://www.manualslib.com/manual/4267319/Hario-Coffee-Syphon.html",
+      "author_or_organization": "HARIO Co., Ltd.",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Browser UI inspection of original manual pages and diagrams; secure stand fastener, filter chain and hook, coffee before heating, 120 mL per cup, medium grind, 40-60 seconds after water rises, stationary lit lamp, heat removal and natural return",
+        "Matching alcohol lamp: liquid fuel-type alcohol only, approximately 3 mm wick, flame below 4 cm, no refilling or moving lit lamp, snuffer cover, fuel-container instructions",
+        "Cool glass before wet contact, inspect damage, prevent overheating nearly empty lower bowl, cloth first-use and refrigerated wet storage"
+      ]
+    },
+    {
+      "id": "hario_technica_product",
+      "title": "Hario Technica TCAR-2/TCAR-3/TCAR-5 product specifications",
+      "url": "https://shop.hariocorp.co.jp/products/tca-2",
+      "author_or_organization": "HARIO NETSHOP / HARIO",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "TCAR-3 practical capacity 360 mL, brimful capacity 440 mL; three sizes have distinct capacity and hardware"
+      ]
+    },
+    {
+      "id": "hario_cloth_compatibility",
+      "title": "FS-103 cloth replacement filter compatibility",
+      "url": "https://shop.hariocorp.co.jp/products/fs-103",
+      "author_or_organization": "HARIO NETSHOP / HARIO",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "FS-103 cloth belongs to F-103S assembly and supports TCA and TCAR Technica models; it is not cloth for F-103P/F-103M"
+      ]
+    },
+    {
+      "id": "hario_cloth_care",
+      "title": "HARIO Syphon Cloth Filters FS-103: preparation and care",
+      "url": "https://www.hario-canada.ca/products/hario-syphon-cloth-filter-5-pk",
+      "author_or_organization": "Hario Canada (regional HARIO product source)",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "First-use boiling-water dip; wash after use, toothbrush cleaning, submerged fresh-water refrigerated storage, regular water changes"
+      ]
+    },
+    {
+      "id": "hario_paper_holder",
+      "title": "F-103MN stainless holder with paper filters: model compatibility",
+      "url": "https://shop.hariocorp.co.jp/products/f-103mn",
+      "author_or_organization": "HARIO NETSHOP / HARIO",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Holder for disposable paper compatible with TCA-2/TCA-3/TCAR-2/TCAR-3; explicitly incompatible with TCA-5/TCAR-5; linked matching paper CF-103E"
+      ]
+    },
+    {
+      "id": "hario_next_metal_manual",
+      "title": "Hario NEXT NXAR-5 manual, page 4: metal filter care (Hario-authored manual mirrored by ManualsLib)",
+      "url": "https://www.manualslib.com/manual/4390380/Hario-Next-Nxar-5.html?page=4#manual",
+      "author_or_organization": "HARIO Co., Ltd.",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Inspected original page in browser; NXA/SCA-only metal assembly, marked mesh face upward when fitting silicone ring, disassemble for washing, gentle toothbrush cleaning, dry before storing, fine grind can block mesh, sharp edge and deformation precautions"
+      ]
+    },
+    {
+      "id": "stumptown_vacuum_recipe",
+      "title": "How to Brew with a Vacuum Pot",
+      "url": "https://www.stumptowncoffee.com/pages/brew-guide-vacuum-pot",
+      "author_or_organization": "Stumptown Coffee Roasters",
+      "source_type": "roaster",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "Separate original 40 g, five-mark recipe with coffee added after transfer, table-salt medium grind, timer starting at coffee addition, gentle fold at 40 seconds, heat off at 90 seconds and approximate finish at 180 seconds",
+        "Some water remains in lower globe during transfer; heatup time varies"
+      ]
+    },
+    {
+      "id": "hario_tca_older_manual",
+      "title": "Hario Coffee Syphon TCA/50A user manual (older Hario-authored manual mirrored by ManualsLib)",
+      "url": "https://www.manualslib.com/manual/2836953/Hario-Coffee-Syphon-Tca-50a.html",
+      "author_or_organization": "HARIO",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "verified",
+      "supports": [
+        "No dry heating; avoid wet contact with hot glass and cold-water thermal shock; mild detergent and nonabrasive sponge for cooled glass"
+      ]
+    },
+    {
+      "id": "hario_official_manual_blocked",
+      "title": "Official TCAR product manual linked by Hario USA",
+      "url": "https://global.hario.com/product/TCAR.pdf",
+      "author_or_organization": "HARIO",
+      "source_type": "manufacturer",
+      "accessed": "2026-10-02",
+      "access_status": "blocked",
+      "supports": [
+        "Official original manual endpoint was identified but returned HTTP 403; not used as read evidence"
+      ]
+    }
+  ],
+  "recipe": {
+    "name": "App-authored Hario Technica TCAR-3 starting procedure with selected 60-second steep",
+    "provenance": "app_authored_synthesis",
+    "source_ids": [
+      "hario_tcar_manual",
+      "hario_technica_product",
+      "hario_cloth_compatibility",
+      "stumptown_vacuum_recipe"
+    ],
+    "equipment": [
+      "Hario Technica TCAR-3, practical capacity 360 mL, supplied mounted stand and upper-bowl support",
+      "F-103S assembly with FS-103 cloth filter",
+      "Supplied Hario alcohol lamp, appropriate liquid fuel alcohol and snuffer cover",
+      "Grinder, coffee scale, water-volume measure, timer, Hario spoon or bamboo paddle, dry heat protection and cups"
+    ],
+    "coffee_dose_g": 30,
+    "brew_water_g": null,
+    "brew_water_ml": 360,
+    "ice_g": 0,
+    "target_beverage_g": null,
+    "ratio_basis": "volume_per_mass",
+    "ratio_value": 12,
+    "water_temperature_c": {
+      "min": null,
+      "max": null,
+      "control": "Heat source controlled; water begins boiling in lower chamber before upright sealing and transfer. No numerical brewing-slurry target is specified by this manual."
+    },
+    "grind_description": "Medium, approximately table salt; not espresso powder. No exact grinder-model setting is established.",
+    "expected_time_s": {
+      "min": null,
+      "max": null,
+      "clock_start": "Ignition for optional total observation. Editorial steep-clock convention: start the distinct selected 60-second clock immediately when the initial gentle stir ends after completed water transfer; the manual gives that sequence without explicit stopwatch zero",
+      "clock_end": "Coffee has returned through the cloth and liquid flow has stopped; heating and return durations are not fixed"
+    },
+    "completion_signal": "Liquid has returned into the lower chamber through the filter and flow has stopped before separating the upper chamber",
+    "scaling": "equipment_bound",
+    "steps": [
+      {
+        "id": "prepare",
+        "instruction": "Inspect intact glass and gasket, secure the lower bowl fastener, rinse the brewer and work on a level dry heat-safe surface. Dip new cloth in boiling water, center its assembly and pull the chain down to hook it at the upper stem end.",
+        "why": "A secure mount, seal and filter are prerequisites for controlled transfer and filtration.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Stand is secure, glass is undamaged and cloth assembly is centered and hooked.",
+        "source_ids": [
+          "hario_tcar_manual",
+          "hario_cloth_care"
+        ]
+      },
+      {
+        "id": "add_coffee",
+        "instruction": "Add 30 g medium-ground coffee to the upper chamber above the cloth. Keep the chamber in its support.",
+        "why": "This baseline follows Hario's coffee-first sequence, rather than a water-first roaster recipe.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "All measured coffee is in the upper chamber before heating and transfer.",
+        "source_ids": [
+          "hario_tcar_manual"
+        ]
+      },
+      {
+        "id": "fill_lower",
+        "instruction": "Add 360 mL water to the lower bowl, up to its three-cup mark; dry the outside. Hot water may shorten heating, but no exact initial temperature is required here.",
+        "why": "Hario defines each marked water cup as 120 mL. Brimful capacity is not a brew target.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "water_add_ml": 360,
+        "water_cumulative_ml": 360,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Lower bowl is filled to the three-cup mark and its outside is dry.",
+        "source_ids": [
+          "hario_tcar_manual",
+          "hario_technica_product"
+        ]
+      },
+      {
+        "id": "heat_and_transfer",
+        "instruction": "While the lamp is unlit, set approximately 3 mm exposed wick. Center it under the bowl, then light it and keep the flame below 4 cm. Rest the upper chamber at an angle; when water starts boiling, seat it gently upright. Watch water rise, with a little remaining below.",
+        "why": "Heating and water transfer precede the timed post-transfer steep; early upright sealing changes the procedure.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Water has risen into the upper chamber; heating and transfer have no universal deadline.",
+        "source_ids": [
+          "hario_tcar_manual",
+          "stumptown_vacuum_recipe"
+        ]
+      },
+      {
+        "id": "steep",
+        "instruction": "After completed transfer, stir gently to wet and loosen grounds. Start our steep clock immediately when this initial stir ends. Continue controlled centered heating for the selected 60 seconds; avoid overheating the nearly empty lower bowl.",
+        "why": "60 seconds is our selected point within Hario's 40-60-second range. The manual gives water-rise, stir and heat sequence without explicit stopwatch zero; starting immediately after the initial stir is our editorial convention, not an exact published mandatory prescription.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": 0,
+        "duration_s": 60,
+        "completion": "The selected 60-second clock from the end of the initial gentle stir has elapsed; coffee is fully wetted.",
+        "source_ids": [
+          "hario_tcar_manual"
+        ]
+      },
+      {
+        "id": "remove_heat",
+        "instruction": "At the selected 60-second steep endpoint, use dry heat protection to move the mounted stand away from the stationary lamp, then snuff the lamp with its cover and check that it is out. Never move a lit lamp.",
+        "why": "Removing heat lets the lower chamber cool and initiates filtered return.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": 60,
+        "duration_s": null,
+        "completion": "Brewer is clear of the heat source and the lamp flame is completely extinguished.",
+        "source_ids": [
+          "hario_tcar_manual"
+        ]
+      },
+      {
+        "id": "return",
+        "instruction": "Let the coffee return naturally through the cloth. Record this as a separate return duration. Wait for liquid flow to stop; do not force the hot chambers apart.",
+        "why": "Return is observed rather than ended by an invented deadline.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Coffee has returned to the lower bowl and liquid flow has stopped.",
+        "source_ids": [
+          "hario_tcar_manual"
+        ]
+      },
+      {
+        "id": "serve",
+        "instruction": "Hold the stand securely, gently rock the upper chamber free and place it in its support. Serve with dry heat protection as needed.",
+        "why": "Waiting for return completion avoids pulling apart an active hot assembly.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Upper chamber rests securely in its support and coffee is served safely.",
+        "source_ids": [
+          "hario_tcar_manual"
+        ]
+      },
+      {
+        "id": "clean_up",
+        "instruction": "Cool glass before washing it with mild detergent and a nonabrasive sponge. Wash and gently brush cloth, then store submerged in fresh water in the refrigerator, changing water regularly.",
+        "why": "Glass care and cloth care are distinct; hot glass and wet contact risk thermal shock.",
+        "water_add_g": null,
+        "water_cumulative_g": null,
+        "start_s": null,
+        "duration_s": null,
+        "completion": "Cooled brewer is clean and cloth has been cleaned and stored correctly.",
+        "source_ids": [
+          "hario_tca_older_manual",
+          "hario_cloth_care"
+        ]
+      }
+    ]
+  },
+  "variants": [
+    {
+      "name": "Stumptown water-first vacuum-pot recipe",
+      "how_it_differs": "Separate 40 g/five-mark recipe: water transfers before coffee addition; its timer starts at addition, gentle fold at 40 seconds, heat removed at 90 seconds and approximate complete return around 180 seconds. Do not import its clock or shown butane-burner heat instruction into Hario's coffee-first alcohol-lamp baseline. The page does not establish a reproducible numeric volume for an unspecified brewer's five mark.",
+      "source_ids": [
+        "stumptown_vacuum_recipe"
+      ]
+    },
+    {
+      "name": "Paper filter on TCAR-3",
+      "how_it_differs": "Hario F-103MN holder supports TCAR-3 with matching paper CF-103E and excludes TCAR-5. Paper is discarded after brewing; cloth wet storage does not apply. Assembly and rinsing details were not verified, so this is a compatibility option rather than a complete validated variant recipe.",
+      "source_ids": [
+        "hario_paper_holder"
+      ]
+    },
+    {
+      "name": "Hario NXA/SCA metal-filter brewer",
+      "how_it_differs": "NXAR manual limits its mesh assembly to NXA/SCA, so it is not a Technica substitute. Fit the mesh with its marked face up when attaching the silicone ring; disassemble for washing, clean gently with a fine toothbrush and dry before storage. Watch sharp edges, deformation and blockage from fine grounds. Revalidate the recipe and return duration for that brewer.",
+      "source_ids": [
+        "hario_next_metal_manual"
+      ]
+    }
+  ],
+  "troubleshooting": [
+    {
+      "symptom": "Water fails to rise or returns too early",
+      "check_first": "Stop heat; after cooling inspect gasket seating, filter installation, stand and centered lamp setup.",
+      "adjustment": "App-authored diagnostic order: restore correct equipment setup before changing grind or applying more heat; never force a hot seal.",
+      "source_ids": [
+        "hario_tcar_manual"
+      ]
+    },
+    {
+      "symptom": "Return through the cloth is unusually slow",
+      "check_first": "Confirm heat was removed; inspect and clean the cloth and its assembly after cooling.",
+      "adjustment": "App-authored next-brew suggestion: if equipment is clear and correctly fitted, try a slightly coarser grind while keeping dose and steep fixed. Do not force hot glass apart or chill it with a wet cloth.",
+      "source_ids": [
+        "hario_tcar_manual",
+        "hario_cloth_care"
+      ]
+    },
+    {
+      "symptom": "Normal transfer and return, but harsh or thin taste",
+      "check_first": "Confirm dose, 360 mL marked fill, medium grind, complete wetting and the post-transfer clock origin.",
+      "adjustment": "App-authored taste experiment: change grind one small step, slightly coarser for harshness or finer for thinness, and record the result. This is a starting experiment, not a guaranteed diagnosis.",
+      "source_ids": [
+        "hario_tcar_manual"
+      ]
+    }
+  ],
+  "safety": [
+    "Inspect glass and gasket, secure the lower bowl fastener and use a stable dry heat-safe surface away from combustibles and children. Use only the matching siphon heat source.",
+    "Dry the outside before heating. Never heat dry glass or continue unnecessary heating when the lower bowl is nearly empty. Keep hands and face clear of possible hot-water spurts.",
+    "For the supplied Hario alcohol lamp only: use liquid fuel-type alcohol; not gel fuel, gasoline, benzene or kerosene. Fill no higher than its holder level. Use the supplied wick, about 3 mm exposed, and flame under 4 cm. Prepare and adjust while unlit.",
+    "Do not move or refill a lit lamp. Snuff with its cover and verify extinction. Read the actual fuel-container instructions; this guide has not verified a particular formulation or ventilation label.",
+    "The stand and glass can be hot. Use dry heat protection when moving the mounted stand. Wait for complete return before gently separating the upper chamber; do not force, yank or strongly twist hot glass.",
+    "Prevent thermal shock: let glass cool before washing, touching it with a wet cloth or placing it on a wet surface. Do not strike glass with a metal implement; use mild detergent and nonabrasive cleaning after cooling.",
+    "Cloth is cleaned and stored submerged in fresh water in the refrigerator with regular water changes. Paper is disposable; the separate NXA/SCA metal assembly is washed and dried. Do not apply one material's preparation or storage to another."
+  ],
+  "app_audit": [
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/data/model/BrewMethod.kt:64",
+      "finding": "Current everyday registry contains eight methods and no siphon/vacuum entry. No existing siphon default ratio, temperature, grind or timer is present to correct.",
+      "severity": "info",
+      "change_recommendation": "If implementation is approved, append an everyday method with stable enum/localization order, method-specific timing and routing. Do not present this research draft as current app support.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BrewingCatalog.kt:57",
+      "finding": "Current methodFamilies, brewer profiles, filters and aliases have no siphon/vacuum family or Technica profile. Existing steam_pressure_multichamber is the moka family, not an evidenced siphon profile.",
+      "severity": "info",
+      "change_recommendation": "Add a dedicated heated-vacuum family and named TCAR-3 profile with correct filter and heater compatibility only in a separately approved app pass.",
+      "source_ids": [
+        "hario_tcar_manual",
+        "hario_technica_product",
+        "hario_cloth_compatibility"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/BuiltInP1RecipeCatalog.kt:220",
+      "finding": "The exact recipe list and associated typed stage catalog have no siphon recipe. No result of this research is a currently executable exact guide.",
+      "severity": "info",
+      "change_recommendation": "Add an explicitly attributed coffee-first manufacturer procedure separately from a water-first roaster recipe, retaining their distinct clocks.",
+      "source_ids": [
+        "hario_tcar_manual",
+        "stumptown_vacuum_recipe"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/Recipe.kt:59",
+      "finding": "BrewQuantities and QuantityRole store input and output masses; RatioDefinition has no volume-per-mass numerator. This marked 360 mL procedure cannot be faithfully encoded as exact 360 g. OutputModel.UserMeasuredOutput already allows avoiding an unsupported yield estimate.",
+      "severity": "medium",
+      "change_recommendation": "Extend typed units for water volume and volume-per-mass ratios, or use a separately researched mass recipe. Preserve null predicted yield and measured output rather than inventing a retention coefficient.",
+      "source_ids": [
+        "hario_tcar_manual"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/Equipment.kt",
+      "finding": "CapacityRangeG is mass-only. FilterMedium includes CLOTH/METAL/PAPER and heat/safety tags exist, but heater metadata does not identify a burner model, compatible fuel or flame-control contract.",
+      "severity": "medium",
+      "change_recommendation": "Represent model-specific practical volume capacity and approved filter/heater combinations. Keep the 440 mL brimful volume out of brewing capacity and attach instructions to the matching lamp rather than to generic OPEN_FLAME.",
+      "source_ids": [
+        "hario_technica_product",
+        "hario_tcar_manual",
+        "hario_paper_holder",
+        "hario_next_metal_manual"
+      ]
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/domain/brewing/session/StagePlan.kt:81",
+      "finding": "Existing stage types have PREPARE/ADD_COFFEE/HEAT/OBSERVE/STEEP/FILTER and ObservedEvent/ElapsedRange completion, plus stage-relative time targets. Reference quantity targets are mass-only and no siphon-specific plan exists.",
+      "severity": "medium",
+      "change_recommendation": "Reuse existing observed transfer and return completions with a separate post-transfer steep duration; add volume reference targets, secure-mount/seal/filter/heat-removed states and equipment safety content. Avoid inventing a total brew deadline.",
+      "source_ids": [
+        "hario_tcar_manual"
+      ]
+    },
+    {
+      "path": "app/src/main/assets/grinders.json",
+      "finding": "No siphon/syphon/vacuum grinder entry was found; file support policy already requires an exact model and directly published method/filter evidence.",
+      "severity": "info",
+      "change_recommendation": "Retain generic medium texture guidance; do not infer a numeric grinder setting from V60 or another method.",
+      "source_ids": []
+    },
+    {
+      "path": "docs/brewing/learning-guide-factual-audit-2026-08-19.md",
+      "finding": "The historical factual audit covers existing P1/Pulsar guides and contains no siphon entry. The reviewed current factual errata likewise contain no siphon correction.",
+      "severity": "info",
+      "change_recommendation": "Report siphon as a researched proposed method and keep historical source projections intact.",
+      "source_ids": []
+    },
+    {
+      "path": "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1ExactGuidanceFactualErrata.kt",
+      "finding": "Current errata cover existing Clever timing, cezve provenance and Cup-One safety; no siphon guidance is implemented here.",
+      "severity": "info",
+      "change_recommendation": "Do not confuse an absence of siphon with an unresolved corrected issue in another method; add fresh scoped guidance when implementation is approved.",
+      "source_ids": []
+    }
+  ],
+  "uncertainties": [
+    "Official TCAR PDF endpoint returned HTTP 403. Hario-authored TCAR pages were verified via ManualsLib browser UI; a retailer-hosted scanned PDF was identified but did not provide readable extracted text. The older TCA/50A manual is supporting care evidence, not assumed proof of every TCAR revision.",
+    "The selected 30 g / 360 mL and 60-second example fixes measured amounts and a point within the manufacturer's approximate dose and 40-60-second range; it is not an exact mandatory recipe or universal best ratio. Our timer starts immediately when the initial gentle stir ends after completed transfer; that stopwatch-zero convention is editorial because the manual specifies sequence rather than an explicit clock origin.",
+    "No numerical slurry-temperature target or heating/return duration is established for this baseline. Water volume is not silently converted to grams and the manufacturer's approximate output is not a guaranteed beverage-mass target.",
+    "Paper holder installation and rinsing were not verified; the paper option is compatibility evidence, not a complete validated variant. Japanese F-103MN excludes five-cup Technica models despite broader regional all-siphons advertising.",
+    "No particular fuel-container label, formulation or ventilation requirement was inspected. Use the matching lamp manual and actual fuel instructions; burner guidance cannot be transferred to unspecified butane or electric heaters.",
+    "The guide is research content only: no physical brewing, device execution, localization review or release validation was performed."
+  ],
+  "do_not_claim": [
+    "Siphon already exists in the app's everyday registry, typed catalog or localized exact guides.",
+    "360 mL is exactly 360 g, 12 mL/g is a verified 1:12 mass ratio, or 440 mL brimful capacity is a safe brew fill.",
+    "All siphons share a ratio, temperature, coffee-addition order, 60-second steep or fixed total finish.",
+    "Thirty grams and 360 mL guarantee a precise beverage yield or retention coefficient.",
+    "Stumptown's five mark proves 600 mL for every brewer, or its approximately 180-second finish includes heating.",
+    "The Hario NXA/SCA metal filter fits Technica, every paper holder fits five-cup Technica, or cloth/paper/metal preparation and storage are interchangeable.",
+    "Any alcohol formulation is suitable, a flame recipe supplies another burner's fuel/ventilation instructions, or hot glass should be forced apart or chilled to speed return.",
+    "Source review proves physical brewing performance or app/release readiness."
+  ]
+}

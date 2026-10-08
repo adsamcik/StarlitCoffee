@@ -1,0 +1,12 @@
+<resources>
+    <string name="action_brew_this_guide">Valmista selle retsepti järgi</string>
+    <string name="label_freshly_boiled_water">Värskelt keedetud vesi</string>
+    <string name="label_machine_temperature">Temperatuuri reguleerib masin</string>
+    <string name="action_prepare_this_guide">Valmista kohv ette</string>
+    <string name="label_reviewed_guide_english">Retsept inglise keeles</string>
+    <string name="heading_reviewed_sources">Retsept ja allikad</string>
+    <string name="msg_reviewed_fill_quantities">Järgi märgitud täitepiire. Kaalu kohv, mida tegelikult kasutad.</string>
+    <string name="label_measured_coffee_g">Lisatud kohv (g)</string>
+    <string name="label_optional_measured_water_g">Kaalutud vesi (g, valikuline)</string>
+    <string name="msg_reviewed_equipment_confirm">Minu varustus sobib selle retseptiga.</string>
+</resources>

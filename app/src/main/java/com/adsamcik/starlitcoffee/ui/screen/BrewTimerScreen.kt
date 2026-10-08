@@ -697,7 +697,11 @@ private fun BrewGuidanceCard(
             }
         }
         state.bloomFinished && state.bloomMarkedAtSeconds != null -> Guidance(
-            primary = stringResource(R.string.instruction_pour_total, state.waterG),
+            primary = if (state.method == BrewMethod.CHEMEX) {
+                stringResource(requireNotNull(methodTimerGuidanceRes(state)))
+            } else {
+                stringResource(R.string.instruction_pour_total, state.waterG)
+            },
             secondary = if (isPulsar) stringResource(R.string.instruction_open_valve_short) else null,
         )
         hasBloom -> Guidance(
@@ -756,7 +760,7 @@ private fun BrewGuidanceCard(
 private fun methodTimerGuidanceRes(
     state: BrewUiState,
 ): Int? {
-    if (state.method.hasBloom) return null
+    if (state.method.hasBloom && state.method != BrewMethod.CHEMEX) return null
 
     val guidance = state.method.stageGuidance
     return when {

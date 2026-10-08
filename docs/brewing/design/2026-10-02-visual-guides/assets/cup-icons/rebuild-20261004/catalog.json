@@ -1,0 +1,174 @@
+{
+  "date": "2026-10-04",
+  "scope": "All 28 vessel designs in availablePresetIcons; historical custom alias uses bowl; unknown names fall back to mug. Shared generic calculator and navigation cup symbols follow this family. Rating character artwork and brewing instruction scenes are distinct illustrations.",
+  "entries": [
+    {
+      "key": "espresso",
+      "label": "Espresso",
+      "anatomy_reference": "references/espresso.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_espresso.png"
+    },
+    {
+      "key": "cortado",
+      "label": "Cortado",
+      "anatomy_reference": "references/cortado.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_cortado.png"
+    },
+    {
+      "key": "cappuccino",
+      "label": "Cappuccino",
+      "anatomy_reference": "references/cappuccino.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_cappuccino.png"
+    },
+    {
+      "key": "mug",
+      "label": "Mug",
+      "anatomy_reference": "references/mug.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_mug.png"
+    },
+    {
+      "key": "travel",
+      "label": "Travel cup",
+      "anatomy_reference": "references/travel.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_travel.png"
+    },
+    {
+      "key": "takeaway",
+      "label": "Takeaway cup",
+      "anatomy_reference": "references/takeaway.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_takeaway.png"
+    },
+    {
+      "key": "latte_glass",
+      "label": "Latte glass",
+      "anatomy_reference": "references/latte_glass.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_latte_glass.png"
+    },
+    {
+      "key": "carafe",
+      "label": "Carafe",
+      "anatomy_reference": "references/carafe.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_carafe.png"
+    },
+    {
+      "key": "french_press",
+      "label": "French press",
+      "anatomy_reference": "references/french_press.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_french_press.png"
+    },
+    {
+      "key": "kettle",
+      "label": "Kettle",
+      "anatomy_reference": "references/kettle.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_kettle.png"
+    },
+    {
+      "key": "mason_jar",
+      "label": "Mason jar",
+      "anatomy_reference": "references/mason_jar.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_mason_jar.png"
+    },
+    {
+      "key": "bowl",
+      "label": "Bowl",
+      "anatomy_reference": "references/bowl.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_bowl.png"
+    },
+    {
+      "key": "double_wall_espresso",
+      "label": "Double-wall espresso cup",
+      "anatomy_reference": "references/double_wall_espresso.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_double_wall_espresso.png"
+    },
+    {
+      "key": "double_wall_tumbler",
+      "label": "Double-wall tumbler",
+      "anatomy_reference": "references/double_wall_tumbler.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_double_wall_tumbler.png"
+    },
+    {
+      "key": "double_wall_mug",
+      "label": "Double-wall mug",
+      "anatomy_reference": "references/double_wall_mug.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_double_wall_mug.png"
+    },
+    {
+      "key": "tall_latte_glass",
+      "label": "Tall latte glass",
+      "anatomy_reference": "references/tall_latte_glass.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_tall_latte_glass.png"
+    },
+    {
+      "key": "aroma_taster",
+      "label": "Aroma taster",
+      "anatomy_reference": "references/aroma_taster.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_aroma_taster.png"
+    },
+    {
+      "key": "spherical_latte",
+      "label": "Spherical latte cup",
+      "anatomy_reference": "references/spherical_latte.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_spherical_latte.png"
+    },
+    {
+      "key": "spouted_espresso_server",
+      "label": "Spouted espresso server",
+      "anatomy_reference": "references/spouted_espresso_server.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_spouted_espresso_server.png"
+    },
+    {
+      "key": "dot_carafe",
+      "label": "Dot carafe",
+      "anatomy_reference": "references/dot_carafe.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_dot_carafe.png"
+    },
+    {
+      "key": "lid_server",
+      "label": "Lid server",
+      "anatomy_reference": "references/lid_server.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_lid_server.png"
+    },
+    {
+      "key": "beehive_server",
+      "label": "Beehive server",
+      "anatomy_reference": "references/beehive_server.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_beehive_server.png"
+    },
+    {
+      "key": "barista_server",
+      "label": "Barista server",
+      "anatomy_reference": "references/barista_server.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_barista_server.png"
+    },
+    {
+      "key": "angular_server",
+      "label": "Angular server",
+      "anatomy_reference": "references/angular_server.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_angular_server.png"
+    },
+    {
+      "key": "faceted_cortado",
+      "label": "Faceted cortado glass",
+      "anatomy_reference": "references/faceted_cortado.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_faceted_cortado.png"
+    },
+    {
+      "key": "ceramic_latte_bowl",
+      "label": "Ceramic latte bowl",
+      "anatomy_reference": "references/ceramic_latte_bowl.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_ceramic_latte_bowl.png"
+    },
+    {
+      "key": "thermal_carafe",
+      "label": "Thermal carafe",
+      "anatomy_reference": "references/thermal_carafe.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_thermal_carafe.png"
+    },
+    {
+      "key": "double_wall_press",
+      "label": "Double-wall press",
+      "anatomy_reference": "references/double_wall_press.png",
+      "native_resource": "app/src/main/res/drawable-nodpi/vessel_icon_double_wall_press.png"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-03",
+  "mode": "built-in image_gen edit",
+  "scope": "Strengthen Espresso / Cappuccino distinction only; other three retained",
+  "prompts": [
+    {
+      "id": "espresso",
+      "prompt": "Use case: precise-object-edit. Asset type: monochrome coffee cup preset icon, readable at 24 pixels. Input image 1 is the edit target, espresso v2. Input image 2 is supporting style/context reference, the accepted calculator icon family; preserve the existing rounded solid single-color treatment. Change only vessel proportions to make espresso clearly distinct from the cappuccino and large mug. Espresso should be a small narrow upright porcelain demitasse with body width about 10 units and height 12 units in a 24-unit icon grid: nearly straight upright walls and only bottom corners rounded, short compact right handle projecting 3 units with a generous clear opening. The shallow detached saucer should be about 16-17 units wide and 1.5-2 units high, separated from the cup by a broad 2-unit transparent gap. The mouth is a small horizontal elliptical transparent opening, with a robust thick upper rim. Do not make a wide round bowl, full-size tall mug, large D handle, or thick deep plate. Match the accepted bold rounded filled monochrome icon style, uniform dark charcoal fill, smooth edges, generous negative spaces, no shading, no texture, no gradients, no text, no steam, no liquid decoration, no cast shadow. One centered isolated icon on a genuinely transparent background, comfortably framed like the target."
+    },
+    {
+      "id": "cappuccino",
+      "prompt": "Use case: precise-object-edit. Asset type: monochrome coffee cup preset icon, readable at 24 pixels. Input image 1 is edit target cappuccino v2. Input image 2 is supporting style/context reference, the accepted calculator icon family. Change only vessel proportions to make cappuccino clearly distinct from narrow upright espresso and tall mug. Make a very broad low ceramic cappuccino bowl: body width about 18 units and height 9 units in a 24-unit icon grid, width-to-height ratio approximately 2:1. Widest at the elliptical mouth, curve inward immediately below the rim down to a small curved base, no vertical sidewall segments and no long flat bottom. A short right loop handle projects sideways about 4 units with a generous horizontal oval transparent opening; the full symbol should fit within 22.5 grid units. Keep a broad elliptical transparent mouth with a thick upper bridge and robust lower lip. No saucer. Preserve rounded bold filled single-color icon style, uniform charcoal fill and smooth edges. No shading, gradients, texture, text, steam, foam detail, liquid decoration, cast shadow, or straight-sided mug shape. One centered isolated icon on a genuinely transparent background; preserve overall visual framing while using the broad shallow bowl silhouette."
+    }
+  ]
+}

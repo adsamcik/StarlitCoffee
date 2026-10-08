@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_active_brews">正在冲煮</string>
+    <string name="label_brew_activity_ready">准备开始</string>
+    <string name="label_brew_activity_paused">计时器已暂停</string>
+    <string name="label_brew_activity_save">正在保存冲煮记录</string>
+    <string name="label_brew_activity_timing_reached">已达到目标时间</string>
+    <string name="format_brew_activity_elapsed">已用时 %1$s</string>
+    <string name="format_brew_activity_time_left">剩余 %1$s</string>
+    <string name="format_brew_activity_hours">%1$d 小时 %2$d 分钟</string>
+    <string name="format_brew_activity_minutes">%1$d:%2$02d</string>
+    <string name="cd_open_active_brew">打开%1$s。%2$s</string>
+    <string name="cd_choose_active_brews">选择冲煮。正在进行：%3$d。%1$s。%2$s</string>
+</resources>

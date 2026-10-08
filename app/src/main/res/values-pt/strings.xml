@@ -102,11 +102,8 @@
     <string name="label_increase">Aumentar %1$s</string>
 
     <!-- Grind Prep Screen -->
-    <string name="screen_grind_prep_title">Preparar o café</string>
 <string name="action_ready_to_brew_short">Pronto para preparar</string>
     <!-- Prep screen: single concise method + filter specific tip -->
-    <string name="prep_tip_label">Preparação</string>
-    <string name="label_recipe_heading">Receita</string>
     <string name="label_temp_short">Temp.</string>
     <string name="label_bloom_short">Bloom</string>
     <string name="prep_tip_pulsar_paper">Molhe o filtro de papel na base (válvula aberta) e deixe escorrer. Monte o cilindro, adicione o café moído, nivele a cama e coloque a tampa de dispersão. Tare a balança.</string>
@@ -116,8 +113,6 @@
     <string name="prep_tip_french_press">Pré-aqueça a prensa, depois esvazie-a. Adicione o café moído, coloque na balança e tare antes de adicionar água.</string>
     <string name="prep_tip_espresso">Seque o porta-filtro. Doseie, distribua e compacte nivelado antes de encaixar.</string>
     <string name="prep_tip_moka">Encha a câmara inferior até à válvula. Encha o cesto com café moído, nivele — não compacte. Monte com cuidado.</string>
-    <string name="format_prep_grind_specific">Moagem %1$s — definir %2$s para %3$s</string>
-    <string name="format_prep_grind_generic">Moagem %1$s — %2$s (%3$s)</string>
 
     <!-- Brew Timer Screen -->
     <string name="action_pause">Pausar</string>
@@ -150,7 +145,6 @@
     <string name="label_cup_presets">Predefinições de chávena</string>
     <string name="action_add_preset">Adicionar predefinição</string>
     <string name="action_reset_defaults">Repor predefinições</string>
-    <string name="msg_presets_hint">As predefinições aparecem como botões rápidos na calculadora</string>
     <string name="label_brew_methods">Métodos de preparação</string>
     <string name="msg_methods_hint">Os métodos selecionados aparecem primeiro. Toque para alternar.</string>
     <string name="label_default_method">Método predefinido</string>
@@ -167,9 +161,9 @@
     <string name="label_bloom_sprite_coffee_starlit">Café estrelado</string>
     <string name="desc_bloom_sprite_coffee_starlit">Pétalas de vapor creme-dourado com pequenos brilhos estrelados.</string>
     <string name="label_bloom_sprite_coffee_latte">Bloom latte</string>
-    <string name="desc_bloom_sprite_coffee_latte">Roseta suave de latte art em tons quentes de espuma de leite.</string>
+    <string name="desc_bloom_sprite_coffee_latte">Um coração de latte art que se desdobra em tons quentes de espuma de leite.</string>
     <string name="label_bloom_sprite_coffee_plant">Cafeeiro</string>
-    <string name="desc_bloom_sprite_coffee_plant">Rebento verde fresco de cafeeiro com folhas emparelhadas.</string>
+    <string name="desc_bloom_sprite_coffee_plant">Um cafeeiro abre folhas brilhantes enquanto os frutos vermelhos amadurecem.</string>
     <string name="label_bloom_sprite_cherry_tomato">Tomate-cereja</string>
     <string name="desc_bloom_sprite_cherry_tomato">Um grão de café brota numa rama de tomateiro enquanto frutos vermelhos amadurecem.</string>
     <string name="label_bloom_sprite_strawberry">Morango</string>
@@ -437,15 +431,15 @@
     <!-- FieldChipPicker -->
 
     <!-- MindlayerSettingsCard -->
+    <string name="action_open_mindlayer">Abrir Mindlayer</string>
+    <string name="msg_mindlayer_requires_android">Requer Android 12 ou posterior.</string>
     <string name="label_ai_service">Serviço de IA (Mindlayer)</string>
     <string name="action_mindlayer_google_play">Obter o Mindlayer no Google Play</string>
-    <string name="msg_mindlayer_install_recommendation">Instale o Mindlayer a partir do Google Play para ler rótulos de embalagens de café com IA privada no dispositivo. Pode fazê-lo mais tarde nas Definições.</string>
     <string name="action_test_connection">Testar ligação</string>
     <string name="action_run_test_prompt">Executar prompt de teste</string>
     <string name="label_testing">A testar…</string>
 
     <!-- Mindlayer AI consent -->
-    <string name="action_enable_ai">Ativar IA</string>
     <string name="consent_requesting">A pedir acesso à IA…</string>
     <string name="consent_granted">IA ativada</string>
     <string name="consent_already_approved">A IA já está ativada</string>
@@ -534,7 +528,6 @@
     <string name="label_volume_ml">Volume (ml)</string>
     <string name="msg_dose_from_ratio">A dose de café é calculada a partir do seu rácio</string>
     <string name="label_icon">Ícone</string>
-    <string name="label_color">Cor</string>
     <string name="action_add">Adicionar</string>
     <string name="screen_add_cup_preset_title">Adicionar predefinição de chávena</string>
     <string name="screen_edit_cup_preset_title">Editar predefinição de chávena</string>
@@ -666,10 +659,10 @@
     <string name="msg_cup_preset_reset_failed">Não foi possível repor os perfis de chávena. Tente novamente.</string>
     <string name="msg_reset_cup_presets">Substituir todos os perfis de chávena pelos predefinidos?</string>
     <string name="msg_diagnostic_clear_failed">Não foi possível limpar todos os diagnósticos. Tente novamente.</string>
-    <string name="msg_clear_diagnostics">Limpar todas as sessões de leitura e passagens LLM guardadas?</string>
+    <string name="msg_clear_diagnostics">Limpar todas as sessões de leitura guardadas?</string>
     <string name="label_log_scan_corrections">Registar correções de leitura (no dispositivo)</string>
     <string name="msg_log_scan_corrections">Regista apenas neste dispositivo o que a IA extraiu e o que guardou. Nada é enviado.</string>
-    <string name="format_scan_debug_counts">Sessões: %1$d · Passagens LLM: %2$d</string>
+    <string name="format_scan_debug_counts">Sessões: %1$d</string>
     <string name="format_scan_session_subject">Sessão de leitura: %1$s</string>
     <string name="action_share_scan_session">Partilhar sessão de leitura</string>
 
@@ -735,4 +728,24 @@
     <string name="msg_learning_subtitle">Guias visuais de preparação passo a passo</string>
     <string name="action_show_details">Mostrar detalhes</string>
     <string name="action_hide_details">Ocultar detalhes</string>
+
+    <!-- Rescan review -->
+    <string name="title_rescan_results">Resultados da nova leitura</string>
+    <string name="title_rescan_no_changes">Nenhuma alteração encontrada</string>
+    <plurals name="format_rescan_changed_fields">
+        <item quantity="one">%1$d campo alterado:</item>
+        <item quantity="many">%1$d campos alterados:</item>
+        <item quantity="other">%1$d campos alterados:</item>
+    </plurals>
+    <string name="msg_rescan_no_changes_yet">Ainda não foram encontradas alterações.</string>
+    <string name="msg_rescan_incomplete">Reveja os dados encontrados ou tente o reconhecimento novamente.</string>
+    <string name="action_update_bag_so_far">Atualizar com os resultados atuais</string>
+    <string name="action_new_bag_so_far">Novo pacote com os resultados atuais</string>
+    <!-- Label recognition setup and announcements -->
+    <string name="msg_opening_label_recognition_setup">Abrindo a configuração…</string>
+    <string name="msg_could_not_open_label_recognition_setup">Não foi possível abrir a configuração. Tente novamente ou insira os detalhes manualmente.</string>
+    <string name="announce_label_details_ready">Os detalhes do rótulo estão prontos para revisão.</string>
+    <string name="announce_label_recognition_no_result">Não foram encontrados detalhes no rótulo. Insira os detalhes manualmente.</string>
+    <string name="label_show_cup_presets">Mostrar na calculadora</string>
+    <string name="cd_cup_preset_options">Opções das chávenas predefinidas</string>
 </resources>

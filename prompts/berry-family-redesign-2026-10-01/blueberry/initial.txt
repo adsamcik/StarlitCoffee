@@ -1,0 +1,37 @@
+Use case: stylized-concept.
+Asset: a polished 25-frame transparent growth-animation spritesheet for a small Android coffee timer. Produce ONE square image with exactly 5 columns and 5 rows, 25 uniform cells in row-major chronological order. No labels, grid, borders, guides, colored background or shadow outside each plant. Genuine alpha transparency. Every cell contains one COMPLETE plant including its entire bean and small soil ring, surrounded by generous empty gutters. Never touch a cell edge.
+
+The attached image is the EXACT MATURE BLUEBERRY DESIGN REFERENCE, not an animation to copy. Build backward from this richer final design. Recreate its warm tactile painted material, big dusty-blue berries with visible dark star-shaped calyx crowns, irregular overlapping oval pointed leaves, slender woody branched stems, two pale pink-white hanging bell flowers at upper left, and broad brown split coffee bean with small soil ring. Keep the same camera, frontal three-quarter view, lighting, bean silhouette, bean seam, soil ring, baseline and native-pixel scale in ALL 25 cells. The bean is already full-sized in frame1 and never changes. Growth adds and unfolds plant anatomy rather than zooming a smaller mature plant.
+
+LOCK THE FINAL ANATOMY FIRST: exactly SEVEN berries, distributed like the reference: two on the left, two through the middle (one upper-middle and one lower/front), three on the right (upper, outer-right, lower-right). Preserve their individual branching attachments and overlap order. TWO separate pale hanging bell flowers and one small green flower bud remain upper-left in the mature finish; those two bells NEVER turn into fruit. The seven fruit buds are different nodes. All seven fruit sites are visibly established together BEFORE berries enlarge; from frame13 onward EVERY frame contains the same seven berries. No final-frame addition of missing fruit. Preserve every established leaf, branch, bell and fruit; partial occlusion is okay but never delete and restore leaves. A young opened leaf must not turn back into a bud.
+
+Final style: a richly branched but airy blueberry shrub, natural asymmetry and layered pointed oval leaves, large readable powdery blueberries with pale blue bloom and dark calyx stars. Restrained highlights, no shiny blue marbles, no raspberry drupelets, no serrated strawberry foliage. Keep the original abundance, not a simple mirrored four-dot plant. Final frame25 must be the supplied reference's recognizable composition, with the SAME material/base used throughout.
+
+Plan all 25 complete poses explicitly:
+F01: Only the identical full-sized split bean and soil ring.
+F02: Same bean; tiny green tip emerges from the seam.
+F03: Tip extends into a short curved stem, no leaves yet.
+F04: First small left/right pointed-oval leaf tips begin opening on persistent lower nodes.
+F05: Those same two leaves open wider; terminal stem grows above them.
+F06: Lower leaves enlarge and retain their attachments; two higher leaf tips emerge on the future branching skeleton.
+F07: Higher leaves unfold; stem becomes visibly branched, preserving the lower pair.
+F08: Existing leaf layers widen and additional crown leaf tips emerge; woody central stem follows the final bent architecture.
+F09: The crown unfolds into the reference's asymmetric leafy skeleton; tiny branchlets at all seven future fruit positions become visible.
+F10: Same retained leaves and branchlets; seven tiny closed green fruit buds emerge on the fixed left2/middle2/right3 sites. Two separate upper-left flower buds appear, destined to remain bells.
+F11: All seven fruit buds enlarge slightly on the same branches; the TWO separate upper-left flower buds become pale hanging bell shapes.
+F12: Two pale bells open and remain open forever after. Seven fruit-site buds begin rounded green ovaries with tiny calyx tips. Leaf layers approach their final spread.
+F13: Exactly seven small green round blueberries are clear, left2/middle2/right3; two open bells and all foliage persist.
+F14: The same seven green berries plump, showing small calyx stars; same two open bells and all branches remain.
+F15: Same seven green berries reach about half final diameter; retained leaves become fuller, never rearranged. Same two bells.
+F16: Same seven green berries approach three-quarter final diameter, calyx stars readable. Same two bells, base and branch identities.
+F17: Same seven berries reach near-final roundness, still green with pale bloom; same two open bells. No new berries later.
+F18: Left TWO berries blush pink while middle TWO and right THREE remain green; seven fruit and two bells persist.
+F19: Left TWO turn plum-purple, middle TWO start rosy blush, right THREE stay green; same seven nodes/two bells.
+F20: Left TWO become violet-blue, middle TWO pink-purple, right THREE pale green; all seven retained, two bells open.
+F21: Left TWO reach dusty blue; middle TWO violet-purple; right THREE blush rose. Same seven positions, two open bells.
+F22: Left TWO and middle TWO dusty blue; right THREE plum-purple. Same foliage, seven berries, two bells.
+F23: Upper-right berry becomes dusty blue, outer-right and lower-right remain violet; other four stay blue. Seven fruit, two bells.
+F24: Outer-right berry becomes dusty blue, lower-right is deep violet and almost fully plump; other six stay blue. Seven fruit, two bells.
+F25: Last lower-right berry becomes full dusty blue. All SEVEN ripe blueberries and TWO pale hanging bells form the rich original reference finish, same base, scale, branches, leaves and fruit overlap as preceding frames. This is ripening completion, not a replacement plant.
+
+Every adjacent cell must show purposeful forward development. No pink/purple berry ever returns to green. Reserve visible final ripening for the last row; do not finish all berries early and hold. The only late changes are gradual fruit ripening/fullness and subtle natural leaf settling. Fixed bean and soil ring. Clean transparent gutters, no text of any kind.

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_set_brew_reminder">Ställ in påminnelse</string>
+    <string name="action_edit_brew_reminder">Ändra påminnelse</string>
+    <string name="action_remove_brew_reminder">Ta bort påminnelse</string>
+    <string name="label_brew_reminder">Påminnelse</string>
+    <string name="label_timer_duration">Tid</string>
+    <string name="label_timer_seconds">Sekunder</string>
+    <string name="label_timer_minutes">Minuter</string>
+    <string name="label_timer_hours">Timmar</string>
+    <string name="msg_brew_reminder_origin">Från början av detta steg. Ändrad tid behåller tiden som redan gått. Du bekräftar fortfarande själv när steget är klart.</string>
+    <string name="msg_brew_reminder_reached">Dags för påminnelsen. Kontrollera kaffet innan du fortsätter.</string>
+    <string name="title_cold_brew">Cold brew</string>
+    <string name="title_cold_brew_timer">Cold brew-timer</string>
+    <string name="action_follow_brew_guide">Följ guiden</string>
+    <string name="action_just_set_brew_timer">Ställ bara in timer</string>
+    <string name="action_start_timer">Starta timer</string>
+    <string name="action_start_steeping">Börja dra</string>
+    <string name="action_end_brew_timer">Avsluta timer</string>
+    <string name="action_add_brew_start_time">Lägg till starttid</string>
+    <string name="label_brew_start_now">Börjar nu</string>
+    <string name="label_brew_start_earlier">Började tidigare</string>
+    <string name="label_brew_start_unknown">Starttid okänd</string>
+    <string name="label_brew_hours_ago">Timmar sedan</string>
+    <string name="label_brew_minutes_ago">Minuter sedan</string>
+    <string name="msg_cold_brew_refrigerated">Förvara täckt i kylskåp vid högst 4 °C. Förvald dragtid är 14 timmar.</string>
+    <string name="msg_cold_brew_start_origin">Starta när kaffet är helt blött och den täckta behållaren ställs i kylskåpet.</string>
+    <string name="msg_brew_start_unknown">Ange den faktiska starttiden för att beräkna en påminnelse. Tills dess uppskattas ingen sluttid.</string>
+    <string name="msg_brew_timer_ended">Timer avslutad</string>
+    <string name="label_brew_extraction_ended">Extraktion avslutad</string>
+    <string name="msg_brew_notifications_disabled">Påminnelser är avstängda. Bryggningen fortsätter.</string>
+    <string name="action_allow_brew_notifications">Tillåt påminnelser</string>
+    <string name="msg_brew_reminders_may_be_late">Android kan fördröja påminnelser när du lämnar appen.</string>
+    <string name="action_allow_precise_brew_reminders">Tillåt exakta påminnelser</string>
+</resources>

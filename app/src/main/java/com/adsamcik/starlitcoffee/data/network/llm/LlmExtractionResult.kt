@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.data.network.llm
 
 import com.adsamcik.starlitcoffee.util.BagFieldCandidate
+import com.adsamcik.starlitcoffee.util.RecognitionCapability
 
 /**
  * Sealed result type for LLM extraction — forces callers to handle all cases.
@@ -14,10 +15,10 @@ sealed interface LlmExtractionResult {
         val tokensUsed: Int = 0,
     ) : LlmExtractionResult
 
-    /** LLM service is not configured or not reachable. */
+    /** A typed recovery route; diagnostic text must never determine consent. */
     data class Unavailable(
         val reason: String,
-        val setupRequired: Boolean = false,
+        val capability: RecognitionCapability = RecognitionCapability.TEMPORARILY_UNAVAILABLE,
     ) : LlmExtractionResult
 
     /** LLM call failed (network error, rate limit, etc.). */

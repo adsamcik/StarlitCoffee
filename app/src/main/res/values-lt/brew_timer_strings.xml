@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_set_brew_reminder">Nustatyti priminimą</string>
+    <string name="action_edit_brew_reminder">Redaguoti priminimą</string>
+    <string name="action_remove_brew_reminder">Pašalinti priminimą</string>
+    <string name="label_brew_reminder">Priminimas</string>
+    <string name="label_timer_duration">Trukmė</string>
+    <string name="label_timer_seconds">Sekundės</string>
+    <string name="label_timer_minutes">Minutės</string>
+    <string name="label_timer_hours">Valandos</string>
+    <string name="msg_brew_reminder_origin">Nuo šio žingsnio pradžios. Pakeitus trukmę, išsaugomas jau praėjęs laikas. Žingsnio pabaigą vis tiek patvirtinate patys.</string>
+    <string name="msg_brew_reminder_reached">Atėjo priminimo laikas. Prieš tęsdami patikrinkite kavą.</string>
+    <string name="title_cold_brew">Cold brew</string>
+    <string name="title_cold_brew_timer">Cold brew laikmatis</string>
+    <string name="action_follow_brew_guide">Vadovautis gidu</string>
+    <string name="action_just_set_brew_timer">Tik nustatyti laikmatį</string>
+    <string name="action_start_timer">Paleisti laikmatį</string>
+    <string name="action_start_steeping">Pradėti mirkymą</string>
+    <string name="action_end_brew_timer">Baigti laikmatį</string>
+    <string name="action_add_brew_start_time">Pridėti pradžios laiką</string>
+    <string name="label_brew_start_now">Pradedama dabar</string>
+    <string name="label_brew_start_earlier">Pradėta anksčiau</string>
+    <string name="label_brew_start_unknown">Pradžios laikas nežinomas</string>
+    <string name="label_brew_hours_ago">Prieš kiek valandų</string>
+    <string name="label_brew_minutes_ago">Prieš kiek minučių</string>
+    <string name="msg_cold_brew_refrigerated">Laikykite uždengtą šaldytuve, 4 °C ar žemesnėje temperatūroje. Numatytoji mirkymo trukmė – 14 valandų.</string>
+    <string name="msg_cold_brew_start_origin">Paleiskite, kai kava visiškai sudrėkinta ir uždengtas indas įdėtas į šaldytuvą.</string>
+    <string name="msg_brew_start_unknown">Pridėkite tikrąjį pradžios laiką, kad būtų apskaičiuotas priminimas. Iki tol pabaigos laikas nevertinamas.</string>
+    <string name="msg_brew_timer_ended">Laikmatis baigtas</string>
+    <string name="label_brew_extraction_ended">Ekstrakcija baigta</string>
+    <string name="msg_brew_notifications_disabled">Priminimai išjungti. Kavos ruošimas tęsiasi.</string>
+    <string name="action_allow_brew_notifications">Leisti priminimus</string>
+    <string name="msg_brew_reminders_may_be_late">Android gali atidėti priminimus, kai išeinate iš programos.</string>
+    <string name="action_allow_precise_brew_reminders">Leisti tikslius priminimus</string>
+</resources>

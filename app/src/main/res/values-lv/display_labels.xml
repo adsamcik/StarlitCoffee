@@ -3,6 +3,7 @@
     <string-array name="brew_method_names">
         <item>Pulsar</item><item>V60</item><item>Franču prese</item><item>AeroPress</item>
         <item>Espreso</item><item>Moka kanna</item><item>Aukstā ekstrakcija</item>
+        <item>Chemex</item>
     </string-array>
     <string-array name="filter_type_names"><item>Papīra</item><item>19K</item><item>40K</item></string-array>
     <string-array name="filter_cup_profiles">
@@ -18,10 +19,5 @@
         <item>Bišu stropa kanniņa</item><item>Baristas kanniņa</item><item>Stūraina kanniņa</item>
         <item>Slīpēta kortado glāze</item><item>Keramikas latte bļoda</item>
         <item>Termokarafe</item><item>Dubultsienu prese</item>
-    </string-array>
-    <string-array name="preset_color_labels">
-        <item>Noklusējuma</item><item>Brūna</item><item>Šokolādes</item><item>Peru</item>
-        <item>Tērauda zila</item><item>Jūras zaļa</item><item>Violeta</item><item>Karmīnsarkana</item>
-        <item>Oranža</item><item>Šīfera</item>
     </string-array>
 </resources>

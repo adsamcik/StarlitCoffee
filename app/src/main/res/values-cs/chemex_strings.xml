@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prep_tip_chemex">Použijte papírový filtr Chemex správné velikosti. Tři vrstvy umístěte k výlevce, propláchněte horkou vodou a vodu vylijte. Přidejte středně hrubě mletou kávu a vynulujte váhu. Vzduchový kanálek nechte volný.</string>
+    <string name="instruction_chemex_bloom">Vodou pro předspaření namočte všechnu kávu a nechte předspaření dokončit.</string>
+    <string name="instruction_chemex_pour">Nalévejte zvolna až do celkového množství vody. Mezi nálevy nechte hladinu klesnout a držte ji pod okrajem.</string>
+    <string name="instruction_chemex_drawdown">Počkejte, až voda proteče kávou. Vyjměte filtr, jemně promíchejte krouživým pohybem a podávejte. Držte Chemex za límec nebo ucho.</string>
+    <string name="label_filter_chemex_bonded">Papírový filtr Chemex</string>
+</resources>

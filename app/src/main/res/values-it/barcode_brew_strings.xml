@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_to_brew">Scansiona per preparare</string>
+    <string name="msg_barcode_brew_no_match">Nessun caffè disponibile ha questo codice a barre. Controlla il codice nei dettagli salvati della confezione.</string>
+    <string name="msg_barcode_brew_choose_bag">Più confezioni hanno questo codice a barre. Scegli quella che stai usando.</string>
+    <string name="msg_barcode_brew_enter_amount">%1$s selezionato. Imposta una quantità, poi tocca Prepara.</string>
+</resources>

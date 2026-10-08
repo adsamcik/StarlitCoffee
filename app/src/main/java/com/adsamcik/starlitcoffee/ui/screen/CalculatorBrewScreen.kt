@@ -1,13 +1,15 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
+import android.widget.Toast
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,21 +17,23 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Backspace
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.BookmarkAdd
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.LocalCafe
 import androidx.compose.material3.AssistChip
-import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
@@ -45,6 +49,7 @@ import androidx.compose.material3.InputChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -62,6 +67,10 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -69,24 +78,29 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
+import androidx.compose.material3.TextButton
 import com.adsamcik.starlitcoffee.calculator.CalcEvaluator.InputDirection
 import com.adsamcik.starlitcoffee.calculator.CalculatorQuantityTarget
+import com.adsamcik.starlitcoffee.calculator.calculatorRatioOptions
+import com.adsamcik.starlitcoffee.calculator.formatCalculatorRatio
+import com.adsamcik.starlitcoffee.data.model.BrewOutputSemantics
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
+import com.adsamcik.starlitcoffee.data.model.BrewingSet
+import com.adsamcik.starlitcoffee.data.model.GrinderDataProvider
+import com.adsamcik.starlitcoffee.ui.component.BrewingSetEditor
+import com.adsamcik.starlitcoffee.ui.component.BrewingSetPicker
+import java.util.UUID
 import com.adsamcik.starlitcoffee.data.model.CalcOp
 import com.adsamcik.starlitcoffee.data.model.CalcToken
 import com.adsamcik.starlitcoffee.data.model.CupPreset
-import com.adsamcik.starlitcoffee.data.model.FilterType
-import com.adsamcik.starlitcoffee.data.model.Grinder
 import com.adsamcik.starlitcoffee.data.model.GrinderDataSource
-import com.adsamcik.starlitcoffee.data.repository.UserPreferences
-import com.adsamcik.starlitcoffee.data.repository.UserPreferencesRepository
-import com.adsamcik.starlitcoffee.domain.BeverageOutputEstimator
+import com.adsamcik.starlitcoffee.data.model.grindersFor
+import com.adsamcik.starlitcoffee.data.model.InputMode
 import com.adsamcik.starlitcoffee.ui.adaptive.LocalWindowWidthClass
 import com.adsamcik.starlitcoffee.ui.component.CalculationQuantityIcon
 import com.adsamcik.starlitcoffee.ui.component.CalculationQuantityIconType
 import com.adsamcik.starlitcoffee.ui.component.CalculatorQuantityCardItem
 import com.adsamcik.starlitcoffee.ui.component.CalculatorQuantitySelector
-import com.adsamcik.starlitcoffee.ui.component.SaveFavoriteDialog
 import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import com.adsamcik.starlitcoffee.ui.util.PresetIcon
 import com.adsamcik.starlitcoffee.viewmodel.BrewViewModel
@@ -98,34 +112,45 @@ import com.adsamcik.starlitcoffee.viewmodel.WaterAmountMode
 fun CalculatorBrewScreen(
     calculatorViewModel: CalculatorViewModel,
     brewViewModel: BrewViewModel,
-    userPreferencesRepository: UserPreferencesRepository,
     onNavigateToBrew: () -> Unit,
     recoverableSessionId: String?,
     onResumeSession: (String) -> Unit,
+    onNavigateToBarcode: () -> Unit,
+    onNavigateToBags: () -> Unit,
+    scannedBarcodeResult: String? = null,
+    onScannedBarcodeResultConsumed: () -> Unit = {},
+    onNavigateToSettings: (() -> Unit)? = null,
+    isStartingBrew: Boolean = false,
 ) {
     val state by calculatorViewModel.uiState.collectAsStateWithLifecycle()
     val brewState by brewViewModel.uiState.collectAsStateWithLifecycle()
 
-    val prefs by userPreferencesRepository.userPreferences.collectAsStateWithLifecycle(
-        initialValue = UserPreferences(),
-    )
-
-    // Brew config (method/filter/grinder) is owned by BrewViewModel — its
-    // `applyUserDefaults()` already seeds these from prefs at VM init. Keep
-    // local read-only aliases for ergonomics; mutations go directly to the VM.
-    val selectedMethod = brewState.method
-    val selectedFilter = brewState.filterType
-    val selectedGrinderId = brewState.selectedGrinderId
-
-    LaunchedEffect(selectedMethod, brewState.beverageOutputCalibration) {
-        calculatorViewModel.setBrewContext(
-            method = selectedMethod,
-            calibration = brewState.beverageOutputCalibration,
-        )
+    // The selected set owns calculator input and equipment; preparation receives the same values.
+    val selectedMethod = state.brewMethod
+    val selectedFilter = state.filterType
+    val context = LocalContext.current
+    val grinderData = remember { GrinderDataSource.getInstance(context) }
+    val grinders = grinderData.grindersFor(state.brewMethod, selectedFilter)
+    val selectedGrinderId = state.grinderId?.takeIf { id -> grinders.any { it.id == id } }
+    LaunchedEffect(state.brewMethod, brewState.beverageOutputCalibration, state.preferencesLoaded) {
+        if (state.preferencesLoaded) {
+            calculatorViewModel.setBrewContext(
+                method = selectedMethod,
+                calibration = brewState.beverageOutputCalibration,
+            )
+        }
     }
 
-    val context = LocalContext.current
-    val grinders = remember { GrinderDataSource.getInstance(context).grinders }
+    LaunchedEffect(state.brewMethod, selectedFilter, state.grinderId, state.preferencesLoaded) {
+        if (state.preferencesLoaded) {
+            if (brewViewModel.uiState.value.method != state.brewMethod) brewViewModel.setMethod(state.brewMethod)
+            if (state.grinderId != selectedGrinderId) {
+                calculatorViewModel.setEquipment(selectedFilter, selectedGrinderId)
+            }
+            brewViewModel.setFilterType(selectedFilter)
+            brewViewModel.setGrinder(selectedGrinderId)
+        }
+    }
 
     // Compact-height adaptation. Reference values (dp):
     //   - Small phones (5" / Pixel 4a): ~683 dp
@@ -159,21 +184,30 @@ fun CalculatorBrewScreen(
     val twoPaneCalculator = LocalWindowWidthClass.current.isWide && isLandscape
 
     val coffeeBags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
+    val inventoryLoaded by brewViewModel.isCoffeeBagInventoryLoaded.collectAsStateWithLifecycle()
     val selectedBagId by brewViewModel.selectedBagId.collectAsStateWithLifecycle()
     val selectedBag = remember(coffeeBags, selectedBagId) {
         coffeeBags.find { it.id == selectedBagId }
     }
 
-    var showSaveFavoriteDialog by remember { mutableStateOf(false) }
+    var newSetId by rememberSaveable { mutableStateOf<String?>(null) }
+    LaunchedEffect(state.savedSetId) {
+        if (state.savedSetId == newSetId && newSetId != null) {
+            newSetId = null
+            calculatorViewModel.consumeSetSaveOutcome()
+        }
+    }
 
     val scrollState = rememberScrollState()
 
-    // Calc-side derived values (ratio, dose) need to land on BrewViewModel
-    // before downstream actions that snapshot the brew state (save recipe,
-    // start brew). Method/filter/grinder are already in the VM via direct
-    // chip handlers, so only the calc-derived fields need explicit syncing.
+    // Snapshot the whole selected set before starting, including a switch whose
+    // presentation effect has not reached the preparation ViewModel yet.
     val syncCalcDerivedState: () -> Unit = {
+        if (brewViewModel.uiState.value.method != state.brewMethod) brewViewModel.setMethod(state.brewMethod)
+        brewViewModel.setFilterType(state.filterType)
+        brewViewModel.setGrinder(selectedGrinderId)
         brewViewModel.setCustomRatio(state.ratio.toString())
+        brewViewModel.setInputMode(InputMode.COFFEE_TO_WATER)
         brewViewModel.setAmount(state.previewDoseG.toString())
     }
 
@@ -187,22 +221,20 @@ fun CalculatorBrewScreen(
             tokens = state.tokens,
             direction = state.inputDirection,
             waterAmountMode = state.waterAmountMode,
-            canSaveFavorite = state.hasValidExpression && state.previewDoseG > 0f,
+            canSaveSet = state.preferencesLoaded,
             showInlineResult = isCompactHeight && state.hasValidExpression,
             previewDoseG = state.previewDoseG,
             previewWaterMl = state.previewWaterMl,
+            isBeverageYield = state.brewMethod.outputSemantics == BrewOutputSemantics.BEVERAGE_YIELD,
             isCompactHeight = isCompactHeight,
-            onSaveFavorite = {
-                syncCalcDerivedState()
-                showSaveFavoriteDialog = true
-            },
+            onSaveSet = { newSetId = UUID.randomUUID().toString() },
         )
     }
 
     val previewAndConfig: @Composable () -> Unit = {
-        val outputModel = BeverageOutputEstimator.modelFor(state.brewMethod)
+        val isYield = state.brewMethod.outputSemantics == BrewOutputSemantics.BEVERAGE_YIELD
         val coffeeValue = formatQuantityCardAmount(state.previewDoseG)
-        val waterValue = formatQuantityCardAmount(state.previewWaterMl)
+        val waterValue = if (isYield) "—" else formatQuantityCardAmount(state.previewWaterMl)
         val cupValue = state.previewBeverageG?.let(::formatQuantityCardAmount) ?: "—"
         val gramsUnit = stringResource(R.string.unit_grams)
         CalculatorQuantitySelector(
@@ -220,6 +252,7 @@ fun CalculatorBrewScreen(
                     value = waterValue,
                     spokenValue = quantityCardSpokenValue(waterValue, gramsUnit),
                     icon = CalculationQuantityIconType.WATER_IN,
+                    enabled = CalculatorQuantityTarget.WATER_IN.isAvailableFor(state.brewMethod),
                 ),
                 CalculatorQuantityCardItem(
                     target = CalculatorQuantityTarget.IN_CUP,
@@ -227,6 +260,7 @@ fun CalculatorBrewScreen(
                     value = cupValue,
                     spokenValue = if (
                         state.previewBeverageG != null &&
+                        !isYield &&
                         state.quantityTarget != CalculatorQuantityTarget.IN_CUP
                     ) {
                         stringResource(
@@ -238,18 +272,65 @@ fun CalculatorBrewScreen(
                     },
                     icon = CalculationQuantityIconType.CUP_OUTPUT,
                     approximate = state.previewBeverageG != null &&
+                        !isYield &&
                         state.quantityTarget != CalculatorQuantityTarget.IN_CUP,
-                    enabled = outputModel != null,
+                    enabled = CalculatorQuantityTarget.IN_CUP.isAvailableFor(state.brewMethod),
                 ),
             ),
             selected = state.quantityTarget,
             onSelect = calculatorViewModel::selectQuantity,
             compact = isCompactHeight,
         )
+        if (hasInStockBarcodeBags(coffeeBags) || selectedBag != null) {
+            Spacer(modifier = Modifier.height(sectionSpacer))
+        }
+        BarcodeBrewEntry(
+            bags = coffeeBags,
+            inventoryLoaded = inventoryLoaded,
+            scannedBarcode = scannedBarcodeResult,
+            onBarcodeConsumed = onScannedBarcodeResultConsumed,
+            onScan = onNavigateToBarcode,
+            onViewBeans = onNavigateToBags,
+            onSelectBag = { bagId ->
+                val requestedQuantity = calculatorViewModel.uiState.value.quantityTarget
+                brewViewModel.selectBag(bagId)
+                // Bag selection can restore its last method. Recompute an in-cup
+                // amount for that method before taking the preparation snapshot.
+                val selectedBrewState = brewViewModel.uiState.value
+                calculatorViewModel.setBrewContext(
+                    method = selectedBrewState.method,
+                    calibration = selectedBrewState.beverageOutputCalibration,
+                )
+                val scanCalcState = calculatorViewModel.uiState.value
+                if (
+                    scanCalcState.hasValidExpression && scanCalcState.previewDoseG > 0f &&
+                    scanCalcState.quantityTarget == requestedQuantity
+                ) {
+                    brewViewModel.selectBagForBrewing(bagId)
+                    brewViewModel.setFilterType(scanCalcState.filterType)
+                    brewViewModel.setGrinder(
+                        scanCalcState.grinderId?.takeIf {
+                            grinderData.grindersFor(scanCalcState.brewMethod, scanCalcState.filterType)
+                                .any { grinder -> grinder.id == it }
+                        },
+                    )
+                    brewViewModel.setCustomRatio(scanCalcState.ratio.toString())
+                    brewViewModel.setInputMode(InputMode.COFFEE_TO_WATER)
+                    brewViewModel.setAmount(scanCalcState.previewDoseG.toString())
+                    onNavigateToBrew()
+                } else {
+                    val bagName = coffeeBags.firstOrNull { it.id == bagId }?.name.orEmpty()
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.msg_barcode_brew_enter_amount, bagName),
+                        Toast.LENGTH_LONG,
+                    ).show()
+                }
+            },
+        )
         // Selected bag indicator — visible reminder that a bag is in play,
         // with one-tap clear so the user can switch to brewing without one.
         selectedBag?.let { bag ->
-            Spacer(modifier = Modifier.height(sectionSpacer))
             InputChip(
                 selected = true,
                 onClick = { brewViewModel.selectBag(null) },
@@ -261,8 +342,8 @@ fun CalculatorBrewScreen(
                     )
                 },
                 leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Filled.LocalCafe,
+                    PresetIcon(
+                        iconName = "cappuccino",
                         contentDescription = null,
                         modifier = Modifier.size(InputChipDefaults.IconSize),
                     )
@@ -278,39 +359,41 @@ fun CalculatorBrewScreen(
         }
     }
 
-    val pills: @Composable () -> Unit = {
-        // Pills bar — quick-access brew settings near the keyboard, within
-        // thumb reach while the user is entering numbers. Replaces the older
-        // expandable config card.
-        BrewSettingsPillBar(
-            enabledMethods = prefs.enabledMethods.toList(),
+    val settingsToolbar: @Composable () -> Unit = {
+        BrewSettingsToolbar(
+            sets = state.brewingSets,
+            selectedSetId = state.activeBrewingSetId,
             selectedMethod = selectedMethod,
-            selectedFilter = selectedFilter,
-            selectedGrinderId = selectedGrinderId,
-            grinders = grinders,
+            grinderData = grinderData,
             ratio = state.ratio,
-            onMethodChange = { brewViewModel.setMethod(it) },
-            onFilterChange = { brewViewModel.setFilterType(it) },
-            onGrinderChange = { brewViewModel.setGrinder(it) },
-            onRatioChange = { calculatorViewModel.setRatio(it) },
+            onSetChange = calculatorViewModel::selectBrewingSet,
+            onRatioChange = calculatorViewModel::setRatio,
             recoverableSessionId = recoverableSessionId,
             onResumeSession = onResumeSession,
+            onManage = onNavigateToSettings,
+            onBackspace = calculatorViewModel::backspace,
         )
+        if (state.setSaveFailed && newSetId == null) {
+            TextButton(onClick = calculatorViewModel::retrySetupSave) {
+                Text(stringResource(R.string.msg_settings_save_failed) + " " + stringResource(R.string.action_retry_brewing_set))
+            }
+        }
     }
 
     val keyboard: @Composable () -> Unit = {
         CalculatorKeyboard(
             presets = state.availablePresets,
-            hasValidExpression = state.hasValidExpression,
+            showCupPresets = state.preferencesLoaded && state.showCupPresets,
+            hasValidExpression = state.hasValidExpression && !isStartingBrew,
             isCompactHeight = isCompactHeight,
             isTallHeight = isTallHeight,
             onDigit = { calculatorViewModel.appendDigit(it) },
             onDecimal = { calculatorViewModel.appendDecimal() },
             onOperator = { calculatorViewModel.appendOperator(it) },
             onPreset = { calculatorViewModel.appendPreset(it) },
-            onBackspace = { calculatorViewModel.backspace() },
             onClear = { calculatorViewModel.clear() },
             onBrew = {
+                selectedBagId?.let(brewViewModel::selectBagForBrewing)
                 syncCalcDerivedState()
                 onNavigateToBrew()
             },
@@ -335,7 +418,7 @@ fun CalculatorBrewScreen(
                 Spacer(modifier = Modifier.height(sectionSpacer))
                 previewAndConfig()
                 Spacer(modifier = Modifier.height(sectionSpacer))
-                pills()
+                settingsToolbar()
             }
             Spacer(modifier = Modifier.width(16.dp))
             Box(
@@ -364,7 +447,7 @@ fun CalculatorBrewScreen(
                 previewAndConfig()
             }
             Spacer(modifier = Modifier.height(sectionSpacer))
-            pills()
+            settingsToolbar()
             // Calculator keyboard — pinned to bottom, outside scroll
             Spacer(modifier = Modifier.height(barSpacer))
             keyboard()
@@ -372,15 +455,12 @@ fun CalculatorBrewScreen(
         }
     }
 
-    if (showSaveFavoriteDialog) {
-        SaveFavoriteDialog(
-            suggestedName = "",
-            onSave = { name ->
-                brewViewModel.saveRecipe(name)
-                showSaveFavoriteDialog = false
-            },
-            onDismiss = { showSaveFavoriteDialog = false },
-        )
+    newSetId?.let { id ->
+        val draft = remember(id) { BrewingSet(id = id, method = state.brewMethod, setup = calculatorViewModel.currentSetup()) }
+        BrewingSetEditor(draft, isNew = true, grinderData = grinderData,
+            isSaving = state.setSaveInProgress, saveFailed = state.setSaveFailed,
+            onSave = calculatorViewModel::saveBrewingSet,
+            onDismiss = { newSetId = null; calculatorViewModel.consumeSetSaveOutcome() })
     }
 }
 
@@ -389,12 +469,13 @@ private fun ExpressionHeader(
     tokens: List<CalcToken>,
     direction: InputDirection,
     waterAmountMode: WaterAmountMode,
-    canSaveFavorite: Boolean,
+    canSaveSet: Boolean,
     showInlineResult: Boolean,
     previewDoseG: Float,
     previewWaterMl: Float,
+    isBeverageYield: Boolean,
     isCompactHeight: Boolean,
-    onSaveFavorite: () -> Unit,
+    onSaveSet: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -412,6 +493,7 @@ private fun ExpressionHeader(
                     waterAmountMode = waterAmountMode,
                     doseG = previewDoseG,
                     waterMl = previewWaterMl,
+                    isBeverageYield = isBeverageYield,
                 )
             } else {
                 null
@@ -420,16 +502,16 @@ private fun ExpressionHeader(
         )
 
         IconButton(
-            onClick = onSaveFavorite,
-            enabled = canSaveFavorite,
+            onClick = onSaveSet,
+            enabled = canSaveSet,
             modifier = Modifier
                 .size(40.dp)
-                .testTag("save_favorite_button"),
+                .testTag("save_set_button"),
         ) {
             Icon(
-                imageVector = Icons.Filled.FavoriteBorder,
-                contentDescription = stringResource(R.string.action_save_as_favorite),
-                tint = if (canSaveFavorite) {
+                    imageVector = Icons.Filled.BookmarkAdd,
+                contentDescription = stringResource(R.string.action_save_brewing_set),
+                tint = if (canSaveSet) {
                     MaterialTheme.colorScheme.primary
                 } else {
                     MaterialTheme.colorScheme.onSurfaceVariant
@@ -444,24 +526,35 @@ private fun ExpressionHeader(
  * ("= 💧 340g") so the icon's tint matches the result side without the
  * caller needing to thread Material colors through.
  */
-private data class InlineResult(
+internal data class InlineResult(
     val icon: CalculationQuantityIconType,
     val value: String,
     val side: ResultSide,
 )
 
-private enum class ResultSide { COFFEE, WATER }
+internal enum class ResultSide { COFFEE, WATER, CUP }
 
 /**
  * Picks the inline result side: the user's input direction names the side
  * they're typing, so the result is always the *other* side.
  */
-private fun buildInlineResult(
+internal fun buildInlineResult(
     direction: InputDirection,
     waterAmountMode: WaterAmountMode,
     doseG: Float,
     waterMl: Float,
+    isBeverageYield: Boolean = false,
 ): InlineResult = when {
+    isBeverageYield && direction == InputDirection.DOSE -> InlineResult(
+        icon = CalculationQuantityIconType.CUP_OUTPUT,
+        value = formatAmount(waterMl),
+        side = ResultSide.CUP,
+    )
+    isBeverageYield -> InlineResult(
+        icon = CalculationQuantityIconType.COFFEE_DOSE,
+        value = formatAmount(doseG),
+        side = ResultSide.COFFEE,
+    )
     direction == InputDirection.WATER && waterAmountMode == WaterAmountMode.BEVERAGE_OUTPUT -> InlineResult(
         icon = CalculationQuantityIconType.WATER_IN,
         value = formatAmount(waterMl),
@@ -551,6 +644,7 @@ private fun ExpressionDisplay(
                         tint = when (result.side) {
                             ResultSide.COFFEE -> MaterialTheme.colorScheme.primary
                             ResultSide.WATER -> MaterialTheme.colorScheme.secondary
+                            ResultSide.CUP -> MaterialTheme.colorScheme.tertiary
                         },
                         modifier = Modifier.size(if (isCompactHeight) 22.dp else 26.dp),
                     )
@@ -567,141 +661,94 @@ private fun ExpressionDisplay(
 }
 
 @Composable
-private fun BrewSettingsPillBar(
-    enabledMethods: List<BrewMethod>,
+internal fun BrewSettingsToolbar(
+    sets: List<BrewingSet>,
+    selectedSetId: String?,
     selectedMethod: BrewMethod,
-    selectedFilter: FilterType?,
-    selectedGrinderId: String?,
-    grinders: List<Grinder>,
+    grinderData: GrinderDataProvider,
     ratio: Float,
-    onMethodChange: (BrewMethod) -> Unit,
-    onFilterChange: (FilterType?) -> Unit,
-    onGrinderChange: (String?) -> Unit,
+    onSetChange: (String) -> Unit,
     onRatioChange: (Float) -> Unit,
     recoverableSessionId: String?,
     onResumeSession: (String) -> Unit,
+    onManage: (() -> Unit)?,
+    onBackspace: () -> Unit,
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .horizontalScroll(rememberScrollState()),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        // Method pill — only when more than one method is enabled in Settings.
-        if (enabledMethods.size > 1) {
-            PillDropdown(
-                label = selectedMethod.displayName,
-                options = enabledMethods.map { method ->
-                    PillOption(
-                        label = method.displayName,
-                        selected = method == selectedMethod,
-                        onClick = { onMethodChange(method) },
-                    )
-                },
-            )
-        }
-
-        recoverableSessionId?.let { sessionId ->
-            AssistChip(
-                onClick = { onResumeSession(sessionId) },
-                label = { Text(stringResource(R.string.action_resume)) },
-            )
-        }
-
-        // Ratio pill — always visible. Options match the legacy ratio dialog.
-        val ratioOptions = listOf(2f, 8f, 10f, 15f, 16f, 17f, 18f)
-        PillDropdown(
-            label = "1:${ratio.toInt()}",
+    val ratioOptions = selectedMethod.calculatorRatioOptions(ratio)
+    val ratioPicker: @Composable (Modifier) -> Unit = { modifier ->
+        RatioDropdown(
+            label = "1:${formatCalculatorRatio(ratio)}",
             options = ratioOptions.map { value ->
-                PillOption(
-                    label = "1:${value.toInt()}",
-                    selected = value == ratio,
-                    onClick = { onRatioChange(value) },
-                )
+                RatioOption("1:${formatCalculatorRatio(value)}", value == ratio) { onRatioChange(value) }
             },
+            modifier = modifier,
+            contentDescription = stringResource(R.string.cd_ratio, formatCalculatorRatio(ratio)),
         )
-
-        // Filter pill — Pulsar only (FilterType is a Pulsar-specific concept).
-        if (selectedMethod == BrewMethod.PULSAR) {
-            val noFilterLabel = stringResource(R.string.label_no_filter)
-            val pillLabel = selectedFilter?.displayName ?: noFilterLabel
-            PillDropdown(
-                label = pillLabel,
-                options = buildList {
-                    add(
-                        PillOption(
-                            label = noFilterLabel,
-                            selected = selectedFilter == null,
-                            onClick = { onFilterChange(null) },
-                        ),
-                    )
-                    FilterType.entries.forEach { filter ->
-                        add(
-                            PillOption(
-                                label = filter.displayName,
-                                selected = filter == selectedFilter,
-                                onClick = { onFilterChange(filter) },
-                            ),
-                        )
+    }
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        BoxWithConstraints(Modifier.fillMaxWidth()) {
+            val stackControls = maxWidth < 360.dp && LocalDensity.current.fontScale > 1.2f
+            if (stackControls) {
+                // Give the brewer name room when larger text leaves too little
+                // width beside the ratio and delete controls.
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    BrewingSetPicker(sets, selectedSetId, grinderData, onSetChange, onManage,
+                        modifier = Modifier.fillMaxWidth(), showSummary = true)
+                    Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        ratioPicker(Modifier.weight(1f).fillMaxHeight())
+                        CalculatorBackspaceButton(onBackspace, Modifier.fillMaxHeight())
                     }
-                },
-            )
+                }
+            } else {
+                Row(modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    BrewingSetPicker(sets, selectedSetId, grinderData, onSetChange, onManage,
+                        modifier = Modifier.weight(1f).fillMaxHeight(), showSummary = true)
+                    ratioPicker(Modifier.fillMaxHeight())
+                    CalculatorBackspaceButton(onBackspace, Modifier.fillMaxHeight())
+                }
+            }
         }
-
-        // Grinder pill — only when grinder data is available.
-        if (grinders.isNotEmpty()) {
-            val noGrinderLabel = stringResource(R.string.label_none)
-            val selectedGrinder = grinders.find { it.id == selectedGrinderId }
-            val pillLabel = selectedGrinder?.let { g ->
-                if (g.brand == g.model) g.model else "${g.brand} ${g.model}"
-            } ?: noGrinderLabel
-            PillDropdown(
-                label = pillLabel,
-                options = buildList {
-                    add(
-                        PillOption(
-                            label = noGrinderLabel,
-                            selected = selectedGrinderId == null,
-                            onClick = { onGrinderChange(null) },
-                        ),
-                    )
-                    grinders.forEach { g ->
-                        val gLabel = if (g.brand == g.model) g.model else "${g.brand} ${g.model}"
-                        add(
-                            PillOption(
-                                label = gLabel,
-                                selected = g.id == selectedGrinderId,
-                                onClick = { onGrinderChange(g.id) },
-                            ),
-                        )
-                    }
-                },
-            )
+        recoverableSessionId?.let { id ->
+            AssistChip(onClick = { onResumeSession(id) }, label = { Text(stringResource(R.string.action_resume)) })
         }
     }
 }
 
-private data class PillOption(
+private data class RatioOption(
     val label: String,
     val selected: Boolean,
     val onClick: () -> Unit,
 )
 
 @Composable
-private fun PillDropdown(
+private fun RatioDropdown(
     label: String,
-    options: List<PillOption>,
+    options: List<RatioOption>,
+    modifier: Modifier = Modifier,
+    contentDescription: String,
 ) {
     var expanded by remember { mutableStateOf(false) }
     val arrowRotation by animateFloatAsState(
         targetValue = if (expanded) 180f else 0f,
-        label = "PillDropdownArrow",
+        label = "RatioDropdownArrow",
     )
-    Box {
-        AssistChip(
+    Box(modifier = modifier, propagateMinConstraints = true) {
+        Surface(
             onClick = { expanded = true },
-            label = {
+            modifier = Modifier.fillMaxHeight().heightIn(min = 56.dp).widthIn(min = 88.dp)
+                .testTag("calculator_ratio_picker")
+                .semantics { this.contentDescription = contentDescription; role = Role.Button },
+            shape = RoundedCornerShape(16.dp),
+            color = if (expanded) MaterialTheme.colorScheme.secondaryContainer
+                else MaterialTheme.colorScheme.surfaceContainerHigh,
+            contentColor = if (expanded) MaterialTheme.colorScheme.onSecondaryContainer
+                else MaterialTheme.colorScheme.onSurface,
+        ) {
+            Row(Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = label,
                     style = MaterialTheme.typography.labelLarge,
@@ -709,39 +756,16 @@ private fun PillDropdown(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-            },
-            trailingIcon = {
                 Icon(
                     imageVector = Icons.Filled.KeyboardArrowDown,
                     contentDescription = null,
                     modifier = Modifier
-                        .size(AssistChipDefaults.IconSize)
+                        .size(18.dp)
                         .rotate(arrowRotation),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-            },
-            colors = AssistChipDefaults.assistChipColors(
-                containerColor = if (expanded) {
-                    MaterialTheme.colorScheme.secondaryContainer
-                } else {
-                    Color.Transparent
-                },
-                labelColor = if (expanded) {
-                    MaterialTheme.colorScheme.onSecondaryContainer
-                } else {
-                    MaterialTheme.colorScheme.onSurface
-                },
-                trailingIconContentColor = if (expanded) {
-                    MaterialTheme.colorScheme.onSecondaryContainer
-                } else {
-                    MaterialTheme.colorScheme.onSurfaceVariant
-                },
-            ),
-            border = if (expanded) {
-                null
-            } else {
-                AssistChipDefaults.assistChipBorder(enabled = true)
-            },
-        )
+            }
+        }
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
@@ -798,8 +822,9 @@ private fun PillDropdown(
 }
 
 @Composable
-private fun CalculatorKeyboard(
+internal fun CalculatorKeyboard(
     presets: List<CupPreset>,
+    showCupPresets: Boolean,
     hasValidExpression: Boolean,
     isCompactHeight: Boolean,
     isTallHeight: Boolean,
@@ -807,12 +832,10 @@ private fun CalculatorKeyboard(
     onDecimal: () -> Unit,
     onOperator: (CalcOp) -> Unit,
     onPreset: (CupPreset) -> Unit,
-    onBackspace: () -> Unit,
     onClear: () -> Unit,
     onBrew: () -> Unit,
 ) {
     val rowSpacing = if (isCompactHeight) 6.dp else 8.dp
-    val presetRowHeight = if (isCompactHeight) 44.dp else 48.dp
     // Tall phones (e.g. Pixel 7 Pro, Galaxy S24 Ultra in portrait) leave too
     // much empty space above the keyboard with the standard 56dp keys, so
     // grow them for easier thumb reach. Compact wins over tall when both
@@ -825,55 +848,8 @@ private fun CalculatorKeyboard(
     Column(
         verticalArrangement = Arrangement.spacedBy(rowSpacing),
     ) {
-        // Row 1: Preset buttons + backspace.
-        // Chips use the default tonal container — a single neutral colour from
-        // the active scheme — so the row reads as one calm strip of icons
-        // rather than five competing colour blocks. Per-preset [CupPreset.colorHex]
-        // is intentionally ignored here: it's still useful for list/settings
-        // contexts, but inside the calculator it was too loud for what is
-        // ultimately a quick-tap utility row. Icons fill ~70% of the chip so
-        // the vessel art is legible at this 44-48dp size.
-        val presetIconSize = if (isCompactHeight) 32.dp else 34.dp
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(rowSpacing),
-        ) {
-            presets.take(5).forEach { preset ->
-                FilledTonalIconButton(
-                    onClick = { onPreset(preset) },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(presetRowHeight),
-                ) {
-                    PresetIcon(
-                        iconName = preset.iconName,
-                        contentDescription = preset.name,
-                        modifier = Modifier.size(presetIconSize),
-                    )
-                }
-            }
-            // Fill remaining space if fewer than 5 presets
-            repeat((5 - presets.take(5).size).coerceAtLeast(0)) {
-                Spacer(modifier = Modifier.weight(1f))
-            }
-            // Backspace button
-            FilledTonalIconButton(
-                onClick = onBackspace,
-                modifier = Modifier
-                    .weight(1f)
-                    .height(presetRowHeight),
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.Backspace,
-                    contentDescription = stringResource(R.string.cd_backspace),
-                    modifier = Modifier.size(22.dp),
-                )
-            }
-        }
-
-        // Visual breath between the preset/utility row and the calculation rows.
-        if (!isCompactHeight) {
-            Spacer(modifier = Modifier.height(2.dp))
+        if (showCupPresets && presets.isNotEmpty()) {
+            CalculatorPresetBar(presets, onPreset)
         }
 
         // Rows 2-5: Number pad + operators + brew button.
@@ -925,6 +901,65 @@ private fun CalculatorKeyboard(
             CalcKey(".", Modifier.weight(1f).height(keyHeight)) { onDecimal() }
             ClearKey(Modifier.weight(1f).height(keyHeight)) { onClear() }
         }
+    }
+}
+
+@Composable
+internal fun CalculatorPresetBar(
+    presets: List<CupPreset>,
+    onPreset: (CupPreset) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    if (presets.isEmpty()) return
+    val fontScale = LocalDensity.current.fontScale
+    val unit = stringResource(R.string.unit_ml)
+    BoxWithConstraints(modifier = modifier.fillMaxWidth().testTag("calculator_preset_bar")) {
+        // Share the available width on phones; scroll every saved cup on narrow
+        // windows or with larger text instead of squeezing or hiding shortcuts.
+        val visibleCount = minOf(presets.size, 5)
+        val itemWidth = maxOf(64.dp * fontScale, (maxWidth - 8.dp * (visibleCount - 1)) / visibleCount)
+        LazyRow(
+            modifier = Modifier.fillMaxWidth().testTag("calculator_cup_presets"),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            items(presets, key = { it.id }) { preset ->
+                Surface(
+                    onClick = { onPreset(preset) },
+                    modifier = Modifier.width(itemWidth).heightIn(min = 64.dp)
+                        .testTag("calculator_preset_${preset.id}"),
+                    shape = RoundedCornerShape(12.dp),
+                    color = MaterialTheme.colorScheme.surfaceContainerLow,
+                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                ) {
+                    Column(
+                        modifier = Modifier.padding(horizontal = 4.dp, vertical = 6.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                    ) {
+                        PresetIcon(preset.iconName, preset.name, Modifier.size(28.dp))
+                        Text(
+                            text = quantityCardSpokenValue(formatQuantityCardAmount(preset.waterMl), unit),
+                            style = MaterialTheme.typography.labelMedium,
+                            textAlign = TextAlign.Center,
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun CalculatorBackspaceButton(onBackspace: () -> Unit, modifier: Modifier = Modifier) {
+    FilledTonalIconButton(
+        onClick = onBackspace,
+        modifier = modifier.width(48.dp).heightIn(min = 56.dp).testTag("calculator_backspace"),
+        shape = RoundedCornerShape(16.dp),
+        colors = IconButtonDefaults.filledTonalIconButtonColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            contentColor = MaterialTheme.colorScheme.onSurfaceVariant),
+    ) {
+        Icon(Icons.AutoMirrored.Filled.Backspace, stringResource(R.string.cd_backspace), Modifier.size(22.dp))
     }
 }
 

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Espresso &amp; Cappuccino · Starlit Coffee</title>
+<style>
+*{box-sizing:border-box}body{margin:0;padding:28px;background:#eeedf7;color:#30323b;font:15px/1.5 system-ui,sans-serif}main{max-width:640px;margin:auto}h1{font-size:25px;margin:16px 0 6px}p{margin:0 0 22px;color:#565c70}a{color:#4f5f91;text-underline-offset:4px}.panel{border-radius:28px;background:#f9f8ff;padding:20px;margin-top:18px}.panel h2{font-size:14px;margin:0 0 12px}.pair{display:grid;grid-template-columns:1fr 1fr;gap:24px}.icon{display:flex;flex-direction:column;align-items:center;gap:12px}.hero svg{display:block;width:96px;height:96px}.sizes{display:flex;gap:22px;align-items:end}.sample{display:flex;flex-direction:column;align-items:center;gap:8px}.sample svg{display:block;width:var(--size);height:var(--size)}small{font-size:12px}.dark{background:#292e46;color:#e2e6ff}.dark a{color:#c1caff}footer{margin-top:20px;font-size:12px;color:#565c70}@media(max-width:440px){body{padding:20px 12px}.pair{gap:12px}.panel{padding:16px}.sizes{gap:12px}}
+</style>
+<main>
+<a href="prototype.html">← App preview</a> · <a href="assets/cup-icons/rebuild-20261004/gallery.html">All 28 vessels</a>
+<h1>Espresso &amp; Cappuccino</h1>
+<p>Espresso gains a compact demitasse and detached saucer. Cappuccino keeps its rounded bowl.</p>
+<section class="panel"><h2>Light appearance</h2><div class="pair"></div></section>
+<section class="panel dark"><h2>Dark appearance</h2><div class="pair"></div></section>
+<footer>Generated refinement → mechanically traced SVG. Shown at actual 24, 28 and 34 px. Prototype review.</footer>
+</main>
+<script src="vessel-icons.js?v=espresso-saucer-20261004"></script>
+<script>
+document.querySelectorAll('.pair').forEach(el=>{el.innerHTML=[['espresso','Espresso'],['cappuccino','Cappuccino']].map(([key,label])=>`<article class="icon"><b>${label}</b><div class="hero">${vesselIcon(key)}</div><div class="sizes">${[24,28,34].map(size=>`<span class="sample" style="--size:${size}px">${vesselIcon(key)}<small>${size}</small></span>`).join('')}</div></article>`).join('');});
+</script>
+</html>

@@ -1,0 +1,3981 @@
+{
+  "date": "2026-10-01",
+  "animation_id": "raspberry",
+  "label": "Raspberry",
+  "user_direction": "Work backward from the richer original Raspberry finish and preserve its branched clusters, large textured berries and white blossom.",
+  "generation_tool": "built-in image_gen",
+  "asset": "app/src/main/res/drawable-nodpi/bloom_raspberry_spritesheet.png",
+  "before_sha256": "3e7eeba8103ffffefe9ff674f35fec714678f0741c6804aeb788fa90832e7272",
+  "after_sha256": "3562683749a341e9c4f977eab7e19ef68acd9e92931bfc73905ed6fd03207976",
+  "selected_source": "docs/assets/bloom-raspberry-native-source.png",
+  "selected_source_sha256": "729a2420a43e2244a818cb406c4c26ed281fd31446ff02599d57997b2464bbe0",
+  "original_final_reference": {
+    "source_commit": "b7914c30cd7e89829fc9d57cee9f0b07389eb776",
+    "source_asset": "app/src/main/res/drawable-nodpi/bloom_raspberry_spritesheet.png",
+    "frame_index": 24,
+    "frame_sha256": "cef3605c5a64ca8d150a1197dc888b83f8eda8b5f5566e6e1b376ce5ff0fc921",
+    "frame_hash_encoding": "raw RGBA pixels; not PNG file bytes",
+    "png_sha256": "b9ed8bbe13d31b49dc13fabf3f57490fe6f24605e531db9bb2b8971e05aa9c94",
+    "source_atlas_sha256": "a1f4e551b862b01a4d006a4fe0ed1489e61e250b68ddf86bf58a048419b7e486"
+  },
+  "final_preservation": {
+    "method": "Reference-faithful native reconstruction of the richer original finish.",
+    "pixel_exact_original_final": false,
+    "source_final_pixel_exact_before_normalization": false,
+    "retained_character": "Asymmetric branched serrated foliage, seven large drupelet-textured raspberries (left3/right4), one clear white crown blossom and green buds, split bean and shallow soil ring.",
+    "boundary": "Original provenance does not imply identical artwork. Source-pose identity and prepared/runtime pixels are checked separately."
+  },
+  "preparation_tool": "tools/prepare_bloom_alpha_atlas.py",
+  "normalization": {
+    "source": ".qa-screens\\raspberry-redesign-2026-10-01\\selected-source.png",
+    "output": ".qa-screens\\raspberry-redesign-2026-10-01\\selected-prepared.png",
+    "source_size": [
+      1280,
+      1280
+    ],
+    "frame_count": 25,
+    "common_scale": 1.0,
+    "baseline": 232,
+    "padding": 24,
+    "alpha_threshold": 24,
+    "source_column_edges": [
+      0,
+      256,
+      512,
+      768,
+      1024,
+      1280
+    ],
+    "source_row_edges": [
+      0,
+      256,
+      512,
+      768,
+      1024,
+      1280
+    ],
+    "frames": [
+      {
+        "frame": 1,
+        "bounds": [
+          76,
+          156,
+          181,
+          233
+        ],
+        "source_anchor": 127.985
+      },
+      {
+        "frame": 2,
+        "bounds": [
+          77,
+          146,
+          182,
+          233
+        ],
+        "source_anchor": 127.482
+      },
+      {
+        "frame": 3,
+        "bounds": [
+          76,
+          117,
+          181,
+          233
+        ],
+        "source_anchor": 127.593
+      },
+      {
+        "frame": 4,
+        "bounds": [
+          76,
+          113,
+          181,
+          233
+        ],
+        "source_anchor": 127.619
+      },
+      {
+        "frame": 5,
+        "bounds": [
+          60,
+          88,
+          193,
+          233
+        ],
+        "source_anchor": 128.151
+      },
+      {
+        "frame": 6,
+        "bounds": [
+          56,
+          73,
+          198,
+          233
+        ],
+        "source_anchor": 128.139
+      },
+      {
+        "frame": 7,
+        "bounds": [
+          56,
+          56,
+          197,
+          233
+        ],
+        "source_anchor": 128.125
+      },
+      {
+        "frame": 8,
+        "bounds": [
+          47,
+          54,
+          207,
+          233
+        ],
+        "source_anchor": 127.777
+      },
+      {
+        "frame": 9,
+        "bounds": [
+          48,
+          34,
+          223,
+          233
+        ],
+        "source_anchor": 127.998
+      },
+      {
+        "frame": 10,
+        "bounds": [
+          32,
+          35,
+          228,
+          233
+        ],
+        "source_anchor": 127.993
+      },
+      {
+        "frame": 11,
+        "bounds": [
+          33,
+          35,
+          227,
+          233
+        ],
+        "source_anchor": 127.801
+      },
+      {
+        "frame": 12,
+        "bounds": [
+          33,
+          33,
+          227,
+          233
+        ],
+        "source_anchor": 127.895
+      },
+      {
+        "frame": 13,
+        "bounds": [
+          32,
+          32,
+          227,
+          233
+        ],
+        "source_anchor": 128.187
+      },
+      {
+        "frame": 14,
+        "bounds": [
+          35,
+          37,
+          224,
+          233
+        ],
+        "source_anchor": 128.253
+      },
+      {
+        "frame": 15,
+        "bounds": [
+          35,
+          38,
+          224,
+          233
+        ],
+        "source_anchor": 128.21
+      },
+      {
+        "frame": 16,
+        "bounds": [
+          33,
+          31,
+          227,
+          233
+        ],
+        "source_anchor": 128.008
+      },
+      {
+        "frame": 17,
+        "bounds": [
+          32,
+          31,
+          227,
+          233
+        ],
+        "source_anchor": 127.957
+      },
+      {
+        "frame": 18,
+        "bounds": [
+          32,
+          31,
+          229,
+          233
+        ],
+        "source_anchor": 127.762
+      },
+      {
+        "frame": 19,
+        "bounds": [
+          35,
+          38,
+          224,
+          233
+        ],
+        "source_anchor": 128.317
+      },
+      {
+        "frame": 20,
+        "bounds": [
+          33,
+          31,
+          227,
+          233
+        ],
+        "source_anchor": 127.978
+      },
+      {
+        "frame": 21,
+        "bounds": [
+          32,
+          30,
+          227,
+          233
+        ],
+        "source_anchor": 128.149
+      },
+      {
+        "frame": 22,
+        "bounds": [
+          32,
+          30,
+          228,
+          233
+        ],
+        "source_anchor": 127.857
+      },
+      {
+        "frame": 23,
+        "bounds": [
+          32,
+          30,
+          227,
+          233
+        ],
+        "source_anchor": 128.234
+      },
+      {
+        "frame": 24,
+        "bounds": [
+          32,
+          30,
+          226,
+          233
+        ],
+        "source_anchor": 128.304
+      },
+      {
+        "frame": 25,
+        "bounds": [
+          32,
+          30,
+          227,
+          233
+        ],
+        "source_anchor": 127.568
+      }
+    ]
+  },
+  "attempts": [
+    {
+      "attempt": "initial",
+      "status": "Complete source poses1–4 and6–7 retained as canonicalF1–F6; source8–10 supplied bridge context before replacement. Fruiting/terminal sequence rejected for missing berries, leaf loss and ripening reversal.",
+      "source_path": "initial-source.png",
+      "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-5ed8ce93-0866-4bc9-b368-7f3f772ff3b3.png",
+      "prompt": "prompts/raspberry-redesign-2026-10-01/initial.txt",
+      "source_sha256": "9301b5b650d24e33d8f37611a07f4d1d88b2e58774fc58419c7beb93166b4c08",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "prompt_file_sha256": "701d5b9739d0c27d9fe905f8a61862cf5d9307e337b61d1113bc3f3f0889fe6d",
+      "prompt_sent_utf8_sha256": "1ea37f962850b6b3674f05023af134411100a69f2d0a6f3d563faa8114b6582d"
+    },
+    {
+      "attempt": "repair-01",
+      "status": "Rejected: missing fruit before final and early leaf loss persisted.",
+      "source_path": "repair-01-source.png",
+      "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-d2be74c9-b109-41bd-a5f1-6a68f148ab6d.png",
+      "prompt": "prompts/raspberry-redesign-2026-10-01/repair-01.txt",
+      "source_sha256": "80a268df958af38753ba6e48ac89768630a284dbc9ea99cf9448056accfc9f4b",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "prompt_file_sha256": "9368f3d775dcecaada8eb04e12fbfe3ced9a831137ad152eef5d47581ec5c06a",
+      "prompt_sent_utf8_sha256": "97186b0289b7b6d7f3f96e0572633e4f2595a677681ce65710f67bcedac88880"
+    },
+    {
+      "attempt": "fruiting-bank",
+      "status": "Seven persistent fruiting nodes retained; three complete poses replaced to keep white flower open.",
+      "source_path": "fruiting-bank-source.png",
+      "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-0f5775de-851c-4427-a8c8-afd502aa7454.png",
+      "prompt": "prompts/raspberry-redesign-2026-10-01/fruiting-bank.txt",
+      "source_sha256": "519bfaaa03d132d5d89702f0d5ac3201fc4823ce7952a86598139c3be25d3f06",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "prompt_file_sha256": "7048f62fd3df7345497cc73a1a345e2400908c858a663f29e0279f4cef2ad773",
+      "prompt_sent_utf8_sha256": "08ea686c82cef784e5edf76785da85034a67be8ed095ad8b1bdebf427cad388f"
+    },
+    {
+      "attempt": "flower-repair",
+      "status": "Native complete-pose replacements for canonicalF14/F15/F19; no component mixing.",
+      "source_path": "flower-repair-source.png",
+      "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-750e2446-289e-48ff-abd0-bd5a6eb3c3f6.png",
+      "prompt": "prompts/raspberry-redesign-2026-10-01/flower-repair.txt",
+      "source_sha256": "188f4626c7b4b6a50af29c64ff3d578a5e1b5119eea6ddcf7ed76335c6ef24f0",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "prompt_file_sha256": "afcea2d1fb535692fd61328c2e887a2231fa95c5476e70f585aeb0c62fe37e2a",
+      "prompt_sent_utf8_sha256": "39b4a3e7433708c264d4327c1bb4c590670648bd7c3156abdea4a14858034f72"
+    },
+    {
+      "attempt": "growth-bridge",
+      "status": "Native complete-pose replacements for F7–F9 to introduce fuller branching progressively before fruiting.",
+      "source_path": "growth-bridge-source.png",
+      "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-867305e9-1538-4c7a-bde9-494f1dbb95c8.png",
+      "prompt": "prompts/raspberry-redesign-2026-10-01/growth-bridge.txt",
+      "source_sha256": "cf04a0ef5ce0b7464384865151ecc155671df3a277f07e36175659369b1211d7",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "prompt_file_sha256": "80b86a24d3923206c2821f605aa4ad956849c429a2cf6f08c044697e750e0caf",
+      "prompt_sent_utf8_sha256": "bbda33e5d2661648b6b865b6dd6cc4c2293a96a666d035c354b523f3bd8ed8ad"
+    }
+  ],
+  "whole_pose_curation": {
+    "method": "Complete native panels1/2/3 replace F7/F8/F9; no component edits, drawing or per-pose sizing.",
+    "base_source": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\flower-selected-source.png",
+    "base_source_sha256": "7841d711d6b3606c028781b304952c82bd177ab19b64e24f2fe0f23780e1dd6e",
+    "base_curation_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\flower-curation.json",
+    "base_curation_sha256": "e7b52055dac5c6f9c842b3b729712b9af5e6abb8160bc0186970896e58f33090",
+    "base_curation": {
+      "method": "Three complete native2x2 whole-pose replacements; no components/drawing/per-pose fit.",
+      "base_source": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\candidate-source.png",
+      "base_source_sha256": "3b5523a266d4216d9c1c6922385a3d12d2df0059ca4468e37e856c4186403a30",
+      "base_curation_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\candidate-curation.json",
+      "base_curation_sha256": "c7dd770fe178a6991a5170239eaf62b2fc1eddb510e14e1fd679a2663a82d74d",
+      "base_curation": {
+        "method": "Complete native whole-pose curation; no component swaps, code drawing, recoloring, tween synthesis or independent-fit scaling.",
+        "early_source": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\initial-prepared.png",
+        "early_source_sha256": "ce56815557bf68addc6cb6333979221b98e28ac4c7d566f37667f5a1ee5fa9f4",
+        "early_selection_one_based": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "all9_early_cells_rgba_byte_identical": true,
+        "original_initial_native_source_sha256": "9301b5b650d24e33d8f37611a07f4d1d88b2e58774fc58419c7beb93166b4c08",
+        "early_normalization_record": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\previews\\initial-prepared.json",
+        "bank_source": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\fruiting-bank-source.png",
+        "bank_source_sha256": "519bfaaa03d132d5d89702f0d5ac3201fc4823ce7952a86598139c3be25d3f06",
+        "bank_tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-0f5775de-851c-4427-a8c8-afd502aa7454.png",
+        "bank_source_size": [
+          1254,
+          1254
+        ],
+        "bank_column_edges": [
+          0,
+          314,
+          627,
+          940,
+          1254
+        ],
+        "bank_row_edges": [
+          0,
+          314,
+          627,
+          934,
+          1254
+        ],
+        "bank_shared_native_pixel_scale": 0.745579363428334,
+        "bank_nominal_cell_to256_scale": 0.8165869218500797,
+        "reviewed_base_width_px": 105.0,
+        "base_width_measurement": "alpha>=24 horizontal extent in bottom32px band including bean/soil; not a canopy fit",
+        "bank_base_widths_px": [
+          104,
+          104,
+          105,
+          105,
+          104,
+          104,
+          104,
+          105,
+          106,
+          105,
+          104,
+          105,
+          104,
+          104,
+          105,
+          104
+        ],
+        "bank_base_width_median_px": 104.0,
+        "early_base_widths_px": [
+          105,
+          105,
+          105,
+          105,
+          104,
+          105,
+          106,
+          105,
+          105
+        ],
+        "alignment": {
+          "x_anchor": 128,
+          "bottom_occupied_y": 232,
+          "bank_registration": "integer whole-pose translation"
+        },
+        "alpha_boundary": "Curator does not clear/paint alpha; bank resizing uses Lanczos. Transparent margin pixels may be outside the cell after registration; all alpha>=24 pixels are proved retained. Existing importer performs final alpha cleanup and one final global normalization.",
+        "original_final_used": false,
+        "frames": [
+          {
+            "frame": 1,
+            "source_kind": "prepared-complete-native-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\initial-prepared.png",
+            "source_frame": 1,
+            "source_crop_box": [
+              0,
+              0,
+              256,
+              256
+            ],
+            "source_cell_rgba_sha256": "4f772cc6ca49811a10014528af7b1a84ddf24ec11422070cec2928ee6497cbbe",
+            "scale": 1.0,
+            "translation_px": [
+              0,
+              0
+            ],
+            "output_cell_rgba_sha256": "4f772cc6ca49811a10014528af7b1a84ddf24ec11422070cec2928ee6497cbbe",
+            "pixel_exact_to_selected_source_cell": true,
+            "bottom32_base_width_px": 105
+          },
+          {
+            "frame": 2,
+            "source_kind": "prepared-complete-native-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\initial-prepared.png",
+            "source_frame": 2,
+            "source_crop_box": [
+              256,
+              0,
+              512,
+              256
+            ],
+            "source_cell_rgba_sha256": "108c2927d989c4628956c2f36bf9534d2900f07f74c412458d3c90c835ebbf8a",
+            "scale": 1.0,
+            "translation_px": [
+              0,
+              0
+            ],
+            "output_cell_rgba_sha256": "108c2927d989c4628956c2f36bf9534d2900f07f74c412458d3c90c835ebbf8a",
+            "pixel_exact_to_selected_source_cell": true,
+            "bottom32_base_width_px": 105
+          },
+          {
+            "frame": 3,
+            "source_kind": "prepared-complete-native-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\initial-prepared.png",
+            "source_frame": 3,
+            "source_crop_box": [
+              512,
+              0,
+              768,
+              256
+            ],
+            "source_cell_rgba_sha256": "ea91501b71a18da115ab4b55ffa339066cb9fefe22d3d5713a42de9c0cce609b",
+            "scale": 1.0,
+            "translation_px": [
+              0,
+              0
+            ],
+            "output_cell_rgba_sha256": "ea91501b71a18da115ab4b55ffa339066cb9fefe22d3d5713a42de9c0cce609b",
+            "pixel_exact_to_selected_source_cell": true,
+            "bottom32_base_width_px": 105
+          },
+          {
+            "frame": 4,
+            "source_kind": "prepared-complete-native-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\initial-prepared.png",
+            "source_frame": 4,
+            "source_crop_box": [
+              768,
+              0,
+              1024,
+              256
+            ],
+            "source_cell_rgba_sha256": "05c2bd7be9288d79868d7d841e3d25933e4027f5f011e7fa155cd6699e76a096",
+            "scale": 1.0,
+            "translation_px": [
+              0,
+              0
+            ],
+            "output_cell_rgba_sha256": "05c2bd7be9288d79868d7d841e3d25933e4027f5f011e7fa155cd6699e76a096",
+            "pixel_exact_to_selected_source_cell": true,
+            "bottom32_base_width_px": 105
+          },
+          {
+            "frame": 5,
+            "source_kind": "prepared-complete-native-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\initial-prepared.png",
+            "source_frame": 6,
+            "source_crop_box": [
+              0,
+              256,
+              256,
+              512
+            ],
+            "source_cell_rgba_sha256": "abae8e67ccdedcd5e04425609c9301279a299e14d9c1a9916dc67fff5459b1cc",
+            "scale": 1.0,
+            "translation_px": [
+              0,
+              0
+            ],
+            "output_cell_rgba_sha256": "abae8e67ccdedcd5e04425609c9301279a299e14d9c1a9916dc67fff5459b1cc",
+            "pixel_exact_to_selected_source_cell": true,
+            "bottom32_base_width_px": 104
+          },
+          {
+            "frame": 6,
+            "source_kind": "prepared-complete-native-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\initial-prepared.png",
+            "source_frame": 7,
+            "source_crop_box": [
+              256,
+              256,
+              512,
+              512
+            ],
+            "source_cell_rgba_sha256": "a7b865ea308e2ae6c65f402ef3f83c7660540976c8aef7f372692459f2c3e36b",
+            "scale": 1.0,
+            "translation_px": [
+              0,
+              0
+            ],
+            "output_cell_rgba_sha256": "a7b865ea308e2ae6c65f402ef3f83c7660540976c8aef7f372692459f2c3e36b",
+            "pixel_exact_to_selected_source_cell": true,
+            "bottom32_base_width_px": 105
+          },
+          {
+            "frame": 7,
+            "source_kind": "prepared-complete-native-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\initial-prepared.png",
+            "source_frame": 8,
+            "source_crop_box": [
+              512,
+              256,
+              768,
+              512
+            ],
+            "source_cell_rgba_sha256": "d3d38e86739cd2f87dbaf361bf03841a3efa5469f44bf3f549beb557c69f93a8",
+            "scale": 1.0,
+            "translation_px": [
+              0,
+              0
+            ],
+            "output_cell_rgba_sha256": "d3d38e86739cd2f87dbaf361bf03841a3efa5469f44bf3f549beb557c69f93a8",
+            "pixel_exact_to_selected_source_cell": true,
+            "bottom32_base_width_px": 106
+          },
+          {
+            "frame": 8,
+            "source_kind": "prepared-complete-native-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\initial-prepared.png",
+            "source_frame": 9,
+            "source_crop_box": [
+              768,
+              256,
+              1024,
+              512
+            ],
+            "source_cell_rgba_sha256": "808c283d3dfcde4adc53377ab34207ca9973af62b11405213b892ca7029b338a",
+            "scale": 1.0,
+            "translation_px": [
+              0,
+              0
+            ],
+            "output_cell_rgba_sha256": "808c283d3dfcde4adc53377ab34207ca9973af62b11405213b892ca7029b338a",
+            "pixel_exact_to_selected_source_cell": true,
+            "bottom32_base_width_px": 105
+          },
+          {
+            "frame": 9,
+            "source_kind": "prepared-complete-native-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\initial-prepared.png",
+            "source_frame": 10,
+            "source_crop_box": [
+              1024,
+              256,
+              1280,
+              512
+            ],
+            "source_cell_rgba_sha256": "ba5579dfb1530715139d8832d64e85a596cdb69fdde847143316913e8d46a15c",
+            "scale": 1.0,
+            "translation_px": [
+              0,
+              0
+            ],
+            "output_cell_rgba_sha256": "ba5579dfb1530715139d8832d64e85a596cdb69fdde847143316913e8d46a15c",
+            "pixel_exact_to_selected_source_cell": true,
+            "bottom32_base_width_px": 105
+          },
+          {
+            "frame": 10,
+            "source_kind": "native-fruiting-bank-complete-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\fruiting-bank-source.png",
+            "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-0f5775de-851c-4427-a8c8-afd502aa7454.png",
+            "source_frame": 1,
+            "source_crop_box": [
+              0,
+              0,
+              314,
+              314
+            ],
+            "source_cell_rgba_sha256": "9d5144a9d8abec842bfe5de613cc34a1c3008df50ba144efffa56b0f4ce1db9a",
+            "shared_native_pixel_scale": 0.745579363428334,
+            "scaled_cell_size": [
+              234,
+              234
+            ],
+            "translation_px": [
+              -5,
+              21
+            ],
+            "bounds_alpha24": [
+              32,
+              35,
+              228,
+              233
+            ],
+            "bottom32_base_width_px": 104,
+            "visible_pixels_clipped": 0,
+            "output_cell_rgba_sha256": "18a7972ee57e7f3ca313ad7606c96cdef7517da086e612347e0166def92bf98c"
+          },
+          {
+            "frame": 11,
+            "source_kind": "native-fruiting-bank-complete-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\fruiting-bank-source.png",
+            "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-0f5775de-851c-4427-a8c8-afd502aa7454.png",
+            "source_frame": 2,
+            "source_crop_box": [
+              314,
+              0,
+              627,
+              314
+            ],
+            "source_cell_rgba_sha256": "a0c941f10197122c9142d800dc304611611fa346d815ca4d756ac90ef7c80557",
+            "shared_native_pixel_scale": 0.745579363428334,
+            "scaled_cell_size": [
+              233,
+              234
+            ],
+            "translation_px": [
+              5,
+              21
+            ],
+            "bounds_alpha24": [
+              33,
+              35,
+              227,
+              233
+            ],
+            "bottom32_base_width_px": 104,
+            "visible_pixels_clipped": 0,
+            "output_cell_rgba_sha256": "d255a56da271996a6dea9a837aaaaf7f9e804015eda275af6bc5c6d5a50ac436"
+          },
+          {
+            "frame": 12,
+            "source_kind": "native-fruiting-bank-complete-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\fruiting-bank-source.png",
+            "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-0f5775de-851c-4427-a8c8-afd502aa7454.png",
+            "source_frame": 3,
+            "source_crop_box": [
+              627,
+              0,
+              940,
+              314
+            ],
+            "source_cell_rgba_sha256": "dd3e218bb37c4bc886605f683dbe023994f8b0ddd5ead2bd7ce4f92e528ff70b",
+            "shared_native_pixel_scale": 0.745579363428334,
+            "scaled_cell_size": [
+              233,
+              234
+            ],
+            "translation_px": [
+              15,
+              21
+            ],
+            "bounds_alpha24": [
+              33,
+              33,
+              227,
+              233
+            ],
+            "bottom32_base_width_px": 105,
+            "visible_pixels_clipped": 0,
+            "output_cell_rgba_sha256": "bfd7bfb1e5f85f44cf70dde2db212d50006d56a2c245c8c7e593b05617718ea6"
+          },
+          {
+            "frame": 13,
+            "source_kind": "native-fruiting-bank-complete-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\fruiting-bank-source.png",
+            "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-0f5775de-851c-4427-a8c8-afd502aa7454.png",
+            "source_frame": 4,
+            "source_crop_box": [
+              940,
+              0,
+              1254,
+              314
+            ],
+            "source_cell_rgba_sha256": "717aaef14278a51174ac964044181fd72e522855f53bea70a689ffaa8333c6eb",
+            "shared_native_pixel_scale": 0.745579363428334,
+            "scaled_cell_size": [
+              234,
+              234
+            ],
+            "translation_px": [
+              24,
+              21
+            ],
+            "bounds_alpha24": [
+              32,
+              32,
+              227,
+              233
+            ],
+            "bottom32_base_width_px": 105,
+            "visible_pixels_clipped": 0,
+            "output_cell_rgba_sha256": "df45d824ce96dfe7af1e06ca8a3452c226bcb67bad7447b86338e7f3f7f268ca"
+          },
+          {
+            "frame": 14,
+            "source_kind": "native-fruiting-bank-complete-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\fruiting-bank-source.png",
+            "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-0f5775de-851c-4427-a8c8-afd502aa7454.png",
+            "source_frame": 5,
+            "source_crop_box": [
+              0,
+              314,
+              314,
+              627
+            ],
+            "source_cell_rgba_sha256": "c56897f8a9c84235b242936525896400b24ba4dae4827044d5a053b03f1eeb15",
+            "shared_native_pixel_scale": 0.745579363428334,
+            "scaled_cell_size": [
+              234,
+              233
+            ],
+            "translation_px": [
+              -5,
+              26
+            ],
+            "bounds_alpha24": [
+              33,
+              33,
+              229,
+              233
+            ],
+            "bottom32_base_width_px": 104,
+            "visible_pixels_clipped": 0,
+            "output_cell_rgba_sha256": "c7897c31c55fcd45b87e4c6b397d7709f9c483c051be7098a184b7c78186c67a"
+          },
+          {
+            "frame": 15,
+            "source_kind": "native-fruiting-bank-complete-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\fruiting-bank-source.png",
+            "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-0f5775de-851c-4427-a8c8-afd502aa7454.png",
+            "source_frame": 6,
+            "source_crop_box": [
+              314,
+              314,
+              627,
+              627
+            ],
+            "source_cell_rgba_sha256": "c98d1e7b235e802e9b065b65591330b609ee1bbb485e6b27c278091cee24a681",
+            "shared_native_pixel_scale": 0.745579363428334,
+            "scaled_cell_size": [
+              233,
+              233
+            ],
+            "translation_px": [
+              5,
+              25
+            ],
+            "bounds_alpha24": [
+              32,
+              32,
+              227,
+              233
+            ],
+            "bottom32_base_width_px": 104,
+            "visible_pixels_clipped": 0,
+            "output_cell_rgba_sha256": "5b32e902a946890a06711ef70d56172017e426cff23378b1498ba7551d0c3fd5"
+          },
+          {
+            "frame": 16,
+            "source_kind": "native-fruiting-bank-complete-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\fruiting-bank-source.png",
+            "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-0f5775de-851c-4427-a8c8-afd502aa7454.png",
+            "source_frame": 7,
+            "source_crop_box": [
+              627,
+              314,
+              940,
+              627
+            ],
+            "source_cell_rgba_sha256": "73a525b04a7d522237ec66c514b2a8876bcd1b7dc0ee77f4cf6940f7b959dd08",
+            "shared_native_pixel_scale": 0.745579363428334,
+            "scaled_cell_size": [
+              233,
+              233
+            ],
+            "translation_px": [
+              15,
+              26
+            ],
+            "bounds_alpha24": [
+              33,
+              31,
+              227,
+              233
+            ],
+            "bottom32_base_width_px": 104,
+            "visible_pixels_clipped": 0,
+            "output_cell_rgba_sha256": "66568d8ed323efb71e8c3fe169c2d71e4864f5096d939b01dda9fc2f3c903199"
+          },
+          {
+            "frame": 17,
+            "source_kind": "native-fruiting-bank-complete-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\fruiting-bank-source.png",
+            "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-0f5775de-851c-4427-a8c8-afd502aa7454.png",
+            "source_frame": 8,
+            "source_crop_box": [
+              940,
+              314,
+              1254,
+              627
+            ],
+            "source_cell_rgba_sha256": "c44eefd3270411312577bc1d798e81e37b66be684b8c2756f3114232a4998356",
+            "shared_native_pixel_scale": 0.745579363428334,
+            "scaled_cell_size": [
+              234,
+              233
+            ],
+            "translation_px": [
+              24,
+              26
+            ],
+            "bounds_alpha24": [
+              32,
+              31,
+              227,
+              233
+            ],
+            "bottom32_base_width_px": 105,
+            "visible_pixels_clipped": 0,
+            "output_cell_rgba_sha256": "10fc5f38c180b41f3178280af696b6c200d22529d69d8d751453c61e2f0164f4"
+          },
+          {
+            "frame": 18,
+            "source_kind": "native-fruiting-bank-complete-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\fruiting-bank-source.png",
+            "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-0f5775de-851c-4427-a8c8-afd502aa7454.png",
+            "source_frame": 9,
+            "source_crop_box": [
+              0,
+              627,
+              314,
+              934
+            ],
+            "source_cell_rgba_sha256": "43e338e1e46c7e4618a4a3dae0b21ca61473bfe9d0adda8fd33a4645a41ef2f7",
+            "shared_native_pixel_scale": 0.745579363428334,
+            "scaled_cell_size": [
+              234,
+              228
+            ],
+            "translation_px": [
+              -5,
+              30
+            ],
+            "bounds_alpha24": [
+              32,
+              31,
+              229,
+              233
+            ],
+            "bottom32_base_width_px": 106,
+            "visible_pixels_clipped": 0,
+            "output_cell_rgba_sha256": "f2c7b3d2ddea7f9732a96b9129c4b45e1ed214b81241d279a1094a6f30e376dd"
+          },
+          {
+            "frame": 19,
+            "source_kind": "native-fruiting-bank-complete-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\fruiting-bank-source.png",
+            "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-0f5775de-851c-4427-a8c8-afd502aa7454.png",
+            "source_frame": 10,
+            "source_crop_box": [
+              314,
+              627,
+              627,
+              934
+            ],
+            "source_cell_rgba_sha256": "dc81c1695506d869ea41d2fd910fcf5e0444c49bad78f0cb247a4faa87ae87c1",
+            "shared_native_pixel_scale": 0.745579363428334,
+            "scaled_cell_size": [
+              233,
+              228
+            ],
+            "translation_px": [
+              5,
+              30
+            ],
+            "bounds_alpha24": [
+              32,
+              33,
+              226,
+              233
+            ],
+            "bottom32_base_width_px": 105,
+            "visible_pixels_clipped": 0,
+            "output_cell_rgba_sha256": "b3abebca2aed14d090ff0adf919d8d6d2bb975e8dd9a47505e5752c3bf20561b"
+          },
+          {
+            "frame": 20,
+            "source_kind": "native-fruiting-bank-complete-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\fruiting-bank-source.png",
+            "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-0f5775de-851c-4427-a8c8-afd502aa7454.png",
+            "source_frame": 11,
+            "source_crop_box": [
+              627,
+              627,
+              940,
+              934
+            ],
+            "source_cell_rgba_sha256": "3ee31c004a388972f459fb8c60af1d16511cb560294fd73522b06e589fb9b6d6",
+            "shared_native_pixel_scale": 0.745579363428334,
+            "scaled_cell_size": [
+              233,
+              228
+            ],
+            "translation_px": [
+              15,
+              30
+            ],
+            "bounds_alpha24": [
+              33,
+              31,
+              227,
+              233
+            ],
+            "bottom32_base_width_px": 104,
+            "visible_pixels_clipped": 0,
+            "output_cell_rgba_sha256": "f48418f7c8cb4ada44ab56553ed5997763dba221aef6a496df902ddd955bc52f"
+          },
+          {
+            "frame": 21,
+            "source_kind": "native-fruiting-bank-complete-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\fruiting-bank-source.png",
+            "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-0f5775de-851c-4427-a8c8-afd502aa7454.png",
+            "source_frame": 12,
+            "source_crop_box": [
+              940,
+              627,
+              1254,
+              934
+            ],
+            "source_cell_rgba_sha256": "b2e44b945960c5bd6c65236eae492298f77bc48f43d21eae1edb39bac094b0de",
+            "shared_native_pixel_scale": 0.745579363428334,
+            "scaled_cell_size": [
+              234,
+              228
+            ],
+            "translation_px": [
+              24,
+              30
+            ],
+            "bounds_alpha24": [
+              32,
+              30,
+              227,
+              233
+            ],
+            "bottom32_base_width_px": 105,
+            "visible_pixels_clipped": 0,
+            "output_cell_rgba_sha256": "50bbe7c5b17f75a8b479ee5f4d5f7a6a7e03ded23f7ed045dc676750fbfd72af"
+          },
+          {
+            "frame": 22,
+            "source_kind": "native-fruiting-bank-complete-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\fruiting-bank-source.png",
+            "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-0f5775de-851c-4427-a8c8-afd502aa7454.png",
+            "source_frame": 13,
+            "source_crop_box": [
+              0,
+              934,
+              314,
+              1254
+            ],
+            "source_cell_rgba_sha256": "aab85c41200b2a6dea5b35e0c0b57a4436c3900c8963e675f2d0ace50e90b931",
+            "shared_native_pixel_scale": 0.745579363428334,
+            "scaled_cell_size": [
+              234,
+              238
+            ],
+            "translation_px": [
+              -5,
+              30
+            ],
+            "bounds_alpha24": [
+              32,
+              30,
+              228,
+              233
+            ],
+            "bottom32_base_width_px": 104,
+            "visible_pixels_clipped": 0,
+            "output_cell_rgba_sha256": "6b3e57c7b5c1f914f5129265e1d97dbd0149a1f33ebfe8d6c0b3f47693011025"
+          },
+          {
+            "frame": 23,
+            "source_kind": "native-fruiting-bank-complete-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\fruiting-bank-source.png",
+            "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-0f5775de-851c-4427-a8c8-afd502aa7454.png",
+            "source_frame": 14,
+            "source_crop_box": [
+              314,
+              934,
+              627,
+              1254
+            ],
+            "source_cell_rgba_sha256": "91499e4114f887db944d6bc9234b19114d54f545b9f5bac2b79657fe5b434ef1",
+            "shared_native_pixel_scale": 0.745579363428334,
+            "scaled_cell_size": [
+              233,
+              238
+            ],
+            "translation_px": [
+              5,
+              29
+            ],
+            "bounds_alpha24": [
+              32,
+              30,
+              227,
+              233
+            ],
+            "bottom32_base_width_px": 104,
+            "visible_pixels_clipped": 0,
+            "output_cell_rgba_sha256": "f6ca158ece1bde575f0884e8ee18c3af6dd4d918b5a97bb875f76e9318db012d"
+          },
+          {
+            "frame": 24,
+            "source_kind": "native-fruiting-bank-complete-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\fruiting-bank-source.png",
+            "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-0f5775de-851c-4427-a8c8-afd502aa7454.png",
+            "source_frame": 15,
+            "source_crop_box": [
+              627,
+              934,
+              940,
+              1254
+            ],
+            "source_cell_rgba_sha256": "754c0be38279d74750e86832a1118fd0bba2eff21d933a516d958f5efac72d1d",
+            "shared_native_pixel_scale": 0.745579363428334,
+            "scaled_cell_size": [
+              233,
+              238
+            ],
+            "translation_px": [
+              15,
+              30
+            ],
+            "bounds_alpha24": [
+              32,
+              30,
+              226,
+              233
+            ],
+            "bottom32_base_width_px": 105,
+            "visible_pixels_clipped": 0,
+            "output_cell_rgba_sha256": "805d94f3ec4716d94bb06519ad770e7e2a63496de4875747f16b9b1f08d6daca"
+          },
+          {
+            "frame": 25,
+            "source_kind": "native-fruiting-bank-complete-pose",
+            "source_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\fruiting-bank-source.png",
+            "tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-0f5775de-851c-4427-a8c8-afd502aa7454.png",
+            "source_frame": 16,
+            "source_crop_box": [
+              940,
+              934,
+              1254,
+              1254
+            ],
+            "source_cell_rgba_sha256": "ec111e4ab284af7dbf720f61a0a52ca065635d560b3ec35bbb11125d5c019834",
+            "shared_native_pixel_scale": 0.745579363428334,
+            "scaled_cell_size": [
+              234,
+              238
+            ],
+            "translation_px": [
+              23,
+              29
+            ],
+            "bounds_alpha24": [
+              32,
+              30,
+              227,
+              233
+            ],
+            "bottom32_base_width_px": 104,
+            "visible_pixels_clipped": 0,
+            "output_cell_rgba_sha256": "3d4bb97c3f486ced482df40763cb64c025a95f251558269707fb38b5536f199c"
+          }
+        ],
+        "selected_source": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\candidate-source.png",
+        "selected_source_sha256": "3b5523a266d4216d9c1c6922385a3d12d2df0059ca4468e37e856c4186403a30",
+        "final_normalization_performed": false,
+        "next_step": "Run existing tools/prepare_bloom_alpha_atlas.py on this1280px source; review all24 transitions in both148px themes before acceptance."
+      },
+      "native_source": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\flower-repair-source.png",
+      "native_source_sha256": "188f4626c7b4b6a50af29c64ff3d578a5e1b5119eea6ddcf7ed76335c6ef24f0",
+      "native_source_size": [
+        1254,
+        1254
+      ],
+      "native_tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-750e2446-289e-48ff-abd0-bd5a6eb3c3f6.png",
+      "input_montage_lineage_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\montage-lineage.json",
+      "input_montage_lineage_sha256": "7c0446ac63ed18d0c38f3f2b05fcd159806300661cfb8c6ed2c565b8d7d0bbfa",
+      "input_montage_lineage": {
+        "source": "fruiting-bank-source.png",
+        "source_sha256": "519bfaaa03d132d5d89702f0d5ac3201fc4823ce7952a86598139c3be25d3f06",
+        "source_size": [
+          1254,
+          1254
+        ],
+        "source_column_edges": [
+          0,
+          332,
+          633,
+          936,
+          1254
+        ],
+        "source_row_edges": [
+          0,
+          306,
+          608,
+          909,
+          1254
+        ],
+        "separator_validation": "Each internal cut lies on an entirely alpha-zero full-source row/column. Entire rectangular native cells retained, including faint-alpha pixels.",
+        "output": "flower-repair-input.png",
+        "output_sha256": "b57c67253c6187142bcc763fa8653c7e085033272f0f507fb2d16f435242ced0",
+        "output_size": [
+          768,
+          768
+        ],
+        "cell_size": [
+          384,
+          384
+        ],
+        "scale": 1.0,
+        "operation": "Crop and transparent-pad complete poses only; integer translations align visible soil baseline and silhouette center; no resizing, drawing, masking, recoloring or component edits.",
+        "mapping": [
+          {
+            "output_cell_1_based": 1,
+            "output_cell_role": "context_keep_unchanged",
+            "source_bank_frame_1_based": 4,
+            "source_grid_row_1_based": 1,
+            "source_grid_column_1_based": 4,
+            "source_crop_xyxy_exclusive": [
+              936,
+              0,
+              1254,
+              306
+            ],
+            "padding_translation_within_output_cell_xy": [
+              47,
+              66
+            ],
+            "output_paste_xy": [
+              47,
+              66
+            ],
+            "source_crop_rgba_sha256": "70e91185ec1c7954674abe0ded80f38c10c7f580f72c8cc9e36171bbcd7d2a23",
+            "requested_output": "Complete same seven-fruit plant, same berry colors, leaf/cane architecture and broad bean/soil; retain fully open white upper-left crown flower matching B4."
+          },
+          {
+            "output_cell_1_based": 2,
+            "output_cell_role": "repair_open_white_flower_only",
+            "source_bank_frame_1_based": 5,
+            "source_grid_row_1_based": 2,
+            "source_grid_column_1_based": 1,
+            "source_crop_xyxy_exclusive": [
+              0,
+              306,
+              332,
+              608
+            ],
+            "padding_translation_within_output_cell_xy": [
+              10,
+              65
+            ],
+            "output_paste_xy": [
+              394,
+              65
+            ],
+            "source_crop_rgba_sha256": "f9e4c49e9245ed09cb9310ef8781086aec3f12168d0a9c635e7de478031e0be4",
+            "requested_output": "Complete same seven-fruit plant, same berry colors, leaf/cane architecture and broad bean/soil; retain fully open white upper-left crown flower matching B4."
+          },
+          {
+            "output_cell_1_based": 3,
+            "output_cell_role": "repair_open_white_flower_only",
+            "source_bank_frame_1_based": 6,
+            "source_grid_row_1_based": 2,
+            "source_grid_column_1_based": 2,
+            "source_crop_xyxy_exclusive": [
+              332,
+              306,
+              633,
+              608
+            ],
+            "padding_translation_within_output_cell_xy": [
+              43,
+              64
+            ],
+            "output_paste_xy": [
+              43,
+              448
+            ],
+            "source_crop_rgba_sha256": "fa3310016de67aa985679025b81e06caf5b4314ca545501a759224ceba10c667",
+            "requested_output": "Complete same seven-fruit plant, same berry colors, leaf/cane architecture and broad bean/soil; retain fully open white upper-left crown flower matching B4."
+          },
+          {
+            "output_cell_1_based": 4,
+            "output_cell_role": "repair_open_white_flower_only",
+            "source_bank_frame_1_based": 10,
+            "source_grid_row_1_based": 3,
+            "source_grid_column_1_based": 2,
+            "source_crop_xyxy_exclusive": [
+              332,
+              608,
+              633,
+              909
+            ],
+            "padding_translation_within_output_cell_xy": [
+              44,
+              59
+            ],
+            "output_paste_xy": [
+              428,
+              443
+            ],
+            "source_crop_rgba_sha256": "ed7152f07806b75e1ee8a37a84269d64d4d89d2677c9e9f2a82b44ced0601259",
+            "requested_output": "Complete same seven-fruit plant, same berry colors, leaf/cane architecture and broad bean/soil; retain fully open white upper-left crown flower matching B4."
+          }
+        ]
+      },
+      "source_column_edges": [
+        0,
+        627,
+        1254
+      ],
+      "source_row_edges": [
+        0,
+        627,
+        1254
+      ],
+      "nominal_panel_to256_scale": 0.4082934609250399,
+      "nominal_bottom32_base_widths": [
+        97,
+        97,
+        96,
+        97
+      ],
+      "reviewed_base_width_px": 104.0,
+      "shared_native_pixel_scale": 0.43775793748664066,
+      "resulting_median_base_width_px": 104.0,
+      "replacements": [
+        {
+          "frame": 14,
+          "native_panel_one_based": 2,
+          "native_crop_box": [
+            627,
+            0,
+            1254,
+            627
+          ],
+          "native_cell_rgba_sha256": "0d19f6a7ae93f29d828076cc105ac2c42bb1549b5557ac53e2cb9ac850164ffa",
+          "old_cell_rgba_sha256": "c7897c31c55fcd45b87e4c6b397d7709f9c483c051be7098a184b7c78186c67a",
+          "shared_native_pixel_scale": 0.43775793748664066,
+          "scaled_cell_size": [
+            274,
+            274
+          ],
+          "translation_px": [
+            -8,
+            -19
+          ],
+          "bounds_alpha24": [
+            35,
+            37,
+            224,
+            233
+          ],
+          "bottom32_base_width_px": 104,
+          "output_cell_rgba_sha256": "719c8f0bfbb95ce1317a1f290f46fa3d609b873bb40c0216567a50018d9997bf",
+          "visible_pixels_clipped": 0
+        },
+        {
+          "frame": 15,
+          "native_panel_one_based": 3,
+          "native_crop_box": [
+            0,
+            627,
+            627,
+            1254
+          ],
+          "native_cell_rgba_sha256": "b9f92e7e02f7785256c8af61aada324cdd06ca99e39f5a8e34bb1edbb95f7251",
+          "old_cell_rgba_sha256": "5b32e902a946890a06711ef70d56172017e426cff23378b1498ba7551d0c3fd5",
+          "shared_native_pixel_scale": 0.43775793748664066,
+          "scaled_cell_size": [
+            274,
+            274
+          ],
+          "translation_px": [
+            -8,
+            -19
+          ],
+          "bounds_alpha24": [
+            35,
+            38,
+            224,
+            233
+          ],
+          "bottom32_base_width_px": 104,
+          "output_cell_rgba_sha256": "53e7f4d63ff723f6338910ef9d4bb280492849e5ecd052cd9948d37d2873ee11",
+          "visible_pixels_clipped": 0
+        },
+        {
+          "frame": 19,
+          "native_panel_one_based": 4,
+          "native_crop_box": [
+            627,
+            627,
+            1254,
+            1254
+          ],
+          "native_cell_rgba_sha256": "eae17e9cbc78339701b38878d180e6d6e2bfacc3b0a1acc90d98d553e383da3f",
+          "old_cell_rgba_sha256": "b3abebca2aed14d090ff0adf919d8d6d2bb975e8dd9a47505e5752c3bf20561b",
+          "shared_native_pixel_scale": 0.43775793748664066,
+          "scaled_cell_size": [
+            274,
+            274
+          ],
+          "translation_px": [
+            -8,
+            -19
+          ],
+          "bounds_alpha24": [
+            35,
+            38,
+            224,
+            233
+          ],
+          "bottom32_base_width_px": 104,
+          "output_cell_rgba_sha256": "269ab3a84dee1bf7ef1eaa345b120dfca01621a7640fb02075d457d41f05221a",
+          "visible_pixels_clipped": 0
+        }
+      ],
+      "other22_source_cells_byte_identical": true,
+      "unchanged_cells": [
+        {
+          "frame": 1,
+          "rgba_sha256": "4f772cc6ca49811a10014528af7b1a84ddf24ec11422070cec2928ee6497cbbe",
+          "byte_identical": true
+        },
+        {
+          "frame": 2,
+          "rgba_sha256": "108c2927d989c4628956c2f36bf9534d2900f07f74c412458d3c90c835ebbf8a",
+          "byte_identical": true
+        },
+        {
+          "frame": 3,
+          "rgba_sha256": "ea91501b71a18da115ab4b55ffa339066cb9fefe22d3d5713a42de9c0cce609b",
+          "byte_identical": true
+        },
+        {
+          "frame": 4,
+          "rgba_sha256": "05c2bd7be9288d79868d7d841e3d25933e4027f5f011e7fa155cd6699e76a096",
+          "byte_identical": true
+        },
+        {
+          "frame": 5,
+          "rgba_sha256": "abae8e67ccdedcd5e04425609c9301279a299e14d9c1a9916dc67fff5459b1cc",
+          "byte_identical": true
+        },
+        {
+          "frame": 6,
+          "rgba_sha256": "a7b865ea308e2ae6c65f402ef3f83c7660540976c8aef7f372692459f2c3e36b",
+          "byte_identical": true
+        },
+        {
+          "frame": 7,
+          "rgba_sha256": "d3d38e86739cd2f87dbaf361bf03841a3efa5469f44bf3f549beb557c69f93a8",
+          "byte_identical": true
+        },
+        {
+          "frame": 8,
+          "rgba_sha256": "808c283d3dfcde4adc53377ab34207ca9973af62b11405213b892ca7029b338a",
+          "byte_identical": true
+        },
+        {
+          "frame": 9,
+          "rgba_sha256": "ba5579dfb1530715139d8832d64e85a596cdb69fdde847143316913e8d46a15c",
+          "byte_identical": true
+        },
+        {
+          "frame": 10,
+          "rgba_sha256": "18a7972ee57e7f3ca313ad7606c96cdef7517da086e612347e0166def92bf98c",
+          "byte_identical": true
+        },
+        {
+          "frame": 11,
+          "rgba_sha256": "d255a56da271996a6dea9a837aaaaf7f9e804015eda275af6bc5c6d5a50ac436",
+          "byte_identical": true
+        },
+        {
+          "frame": 12,
+          "rgba_sha256": "bfd7bfb1e5f85f44cf70dde2db212d50006d56a2c245c8c7e593b05617718ea6",
+          "byte_identical": true
+        },
+        {
+          "frame": 13,
+          "rgba_sha256": "df45d824ce96dfe7af1e06ca8a3452c226bcb67bad7447b86338e7f3f7f268ca",
+          "byte_identical": true
+        },
+        {
+          "frame": 16,
+          "rgba_sha256": "66568d8ed323efb71e8c3fe169c2d71e4864f5096d939b01dda9fc2f3c903199",
+          "byte_identical": true
+        },
+        {
+          "frame": 17,
+          "rgba_sha256": "10fc5f38c180b41f3178280af696b6c200d22529d69d8d751453c61e2f0164f4",
+          "byte_identical": true
+        },
+        {
+          "frame": 18,
+          "rgba_sha256": "f2c7b3d2ddea7f9732a96b9129c4b45e1ed214b81241d279a1094a6f30e376dd",
+          "byte_identical": true
+        },
+        {
+          "frame": 20,
+          "rgba_sha256": "f48418f7c8cb4ada44ab56553ed5997763dba221aef6a496df902ddd955bc52f",
+          "byte_identical": true
+        },
+        {
+          "frame": 21,
+          "rgba_sha256": "50bbe7c5b17f75a8b479ee5f4d5f7a6a7e03ded23f7ed045dc676750fbfd72af",
+          "byte_identical": true
+        },
+        {
+          "frame": 22,
+          "rgba_sha256": "6b3e57c7b5c1f914f5129265e1d97dbd0149a1f33ebfe8d6c0b3f47693011025",
+          "byte_identical": true
+        },
+        {
+          "frame": 23,
+          "rgba_sha256": "f6ca158ece1bde575f0884e8ee18c3af6dd4d918b5a97bb875f76e9318db012d",
+          "byte_identical": true
+        },
+        {
+          "frame": 24,
+          "rgba_sha256": "805d94f3ec4716d94bb06519ad770e7e2a63496de4875747f16b9b1f08d6daca",
+          "byte_identical": true
+        },
+        {
+          "frame": 25,
+          "rgba_sha256": "3d4bb97c3f486ced482df40763cb64c025a95f251558269707fb38b5536f199c",
+          "byte_identical": true
+        }
+      ],
+      "selected_source": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\flower-selected-source.png",
+      "selected_source_sha256": "7841d711d6b3606c028781b304952c82bd177ab19b64e24f2fe0f23780e1dd6e",
+      "original_final_used": false,
+      "no_code_drawn_anatomy": true,
+      "normalization": {
+        "source": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\flower-selected-source.png",
+        "output": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\flower-selected-prepared.png",
+        "source_size": [
+          1280,
+          1280
+        ],
+        "frame_count": 25,
+        "common_scale": 1.0,
+        "baseline": 232,
+        "padding": 24,
+        "alpha_threshold": 24,
+        "source_column_edges": [
+          0,
+          256,
+          512,
+          768,
+          1024,
+          1280
+        ],
+        "source_row_edges": [
+          0,
+          256,
+          512,
+          768,
+          1024,
+          1280
+        ],
+        "frames": [
+          {
+            "frame": 1,
+            "bounds": [
+              76,
+              156,
+              181,
+              233
+            ],
+            "source_anchor": 127.985
+          },
+          {
+            "frame": 2,
+            "bounds": [
+              77,
+              146,
+              182,
+              233
+            ],
+            "source_anchor": 127.482
+          },
+          {
+            "frame": 3,
+            "bounds": [
+              76,
+              117,
+              181,
+              233
+            ],
+            "source_anchor": 127.593
+          },
+          {
+            "frame": 4,
+            "bounds": [
+              76,
+              113,
+              181,
+              233
+            ],
+            "source_anchor": 127.619
+          },
+          {
+            "frame": 5,
+            "bounds": [
+              60,
+              88,
+              193,
+              233
+            ],
+            "source_anchor": 128.151
+          },
+          {
+            "frame": 6,
+            "bounds": [
+              56,
+              73,
+              198,
+              233
+            ],
+            "source_anchor": 128.139
+          },
+          {
+            "frame": 7,
+            "bounds": [
+              57,
+              63,
+              197,
+              233
+            ],
+            "source_anchor": 128.095
+          },
+          {
+            "frame": 8,
+            "bounds": [
+              55,
+              59,
+              208,
+              233
+            ],
+            "source_anchor": 128.211
+          },
+          {
+            "frame": 9,
+            "bounds": [
+              55,
+              59,
+              210,
+              233
+            ],
+            "source_anchor": 127.708
+          },
+          {
+            "frame": 10,
+            "bounds": [
+              32,
+              35,
+              228,
+              233
+            ],
+            "source_anchor": 127.993
+          },
+          {
+            "frame": 11,
+            "bounds": [
+              33,
+              35,
+              227,
+              233
+            ],
+            "source_anchor": 127.801
+          },
+          {
+            "frame": 12,
+            "bounds": [
+              33,
+              33,
+              227,
+              233
+            ],
+            "source_anchor": 127.895
+          },
+          {
+            "frame": 13,
+            "bounds": [
+              32,
+              32,
+              227,
+              233
+            ],
+            "source_anchor": 128.187
+          },
+          {
+            "frame": 14,
+            "bounds": [
+              35,
+              37,
+              224,
+              233
+            ],
+            "source_anchor": 128.253
+          },
+          {
+            "frame": 15,
+            "bounds": [
+              35,
+              38,
+              224,
+              233
+            ],
+            "source_anchor": 128.21
+          },
+          {
+            "frame": 16,
+            "bounds": [
+              33,
+              31,
+              227,
+              233
+            ],
+            "source_anchor": 128.008
+          },
+          {
+            "frame": 17,
+            "bounds": [
+              32,
+              31,
+              227,
+              233
+            ],
+            "source_anchor": 127.957
+          },
+          {
+            "frame": 18,
+            "bounds": [
+              32,
+              31,
+              229,
+              233
+            ],
+            "source_anchor": 127.762
+          },
+          {
+            "frame": 19,
+            "bounds": [
+              35,
+              38,
+              224,
+              233
+            ],
+            "source_anchor": 128.317
+          },
+          {
+            "frame": 20,
+            "bounds": [
+              33,
+              31,
+              227,
+              233
+            ],
+            "source_anchor": 127.978
+          },
+          {
+            "frame": 21,
+            "bounds": [
+              32,
+              30,
+              227,
+              233
+            ],
+            "source_anchor": 128.149
+          },
+          {
+            "frame": 22,
+            "bounds": [
+              32,
+              30,
+              228,
+              233
+            ],
+            "source_anchor": 127.857
+          },
+          {
+            "frame": 23,
+            "bounds": [
+              32,
+              30,
+              227,
+              233
+            ],
+            "source_anchor": 128.234
+          },
+          {
+            "frame": 24,
+            "bounds": [
+              32,
+              30,
+              226,
+              233
+            ],
+            "source_anchor": 128.304
+          },
+          {
+            "frame": 25,
+            "bounds": [
+              32,
+              30,
+              227,
+              233
+            ],
+            "source_anchor": 127.568
+          }
+        ]
+      },
+      "prepared_sha256": "e293f4e01d5600810f274174cf413122a1273804a6a4c7cc7b3e4d3302dedcef"
+    },
+    "native_source": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\growth-bridge-source.png",
+    "native_source_sha256": "cf04a0ef5ce0b7464384865151ecc155671df3a277f07e36175659369b1211d7",
+    "native_source_size": [
+      1254,
+      1254
+    ],
+    "native_tool_file": "C:/Users/adam-/.codex/generated_images/01a0f6c5-8195-7e51-97c0-202dd2254615/exec-867305e9-1538-4c7a-bde9-494f1dbb95c8.png",
+    "prompt": "prompts/raspberry-redesign-2026-10-01/growth-bridge.txt",
+    "prompt_file_sha256": "80b86a24d3923206c2821f605aa4ad956849c429a2cf6f08c044697e750e0caf",
+    "input_montage_lineage_path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\growth-bridge-lineage.json",
+    "input_montage_lineage_sha256": "ce238f259dbc3da6eeffb94127b45e7f5b4c0f291c769da0d7d631de49b11147",
+    "input_montage_lineage": {
+      "source": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\candidate-source.png",
+      "source_sha256": "3b5523a266d4216d9c1c6922385a3d12d2df0059ca4468e37e856c4186403a30",
+      "operation": "Exact complete 256px cell copying, no resampling, alpha compositing, pixel edits or per-frame scale.",
+      "output": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\growth-bridge-input.png",
+      "output_size": [
+        512,
+        512
+      ],
+      "output_sha256": "855150fb99ea6bbd4f0e20a8b3fbccad0ff484e5232d39d873fa4f9d6cd93bb2",
+      "layout": "2x2 row-major: F7 top-left, F8 top-right, F9 bottom-left, F10 bottom-right.",
+      "poses": [
+        {
+          "frame_one_based": 7,
+          "source_crop_box_exclusive": [
+            256,
+            256,
+            512,
+            512
+          ],
+          "panel_position_xy": [
+            0,
+            0
+          ],
+          "rgba_sha256": "d3d38e86739cd2f87dbaf361bf03841a3efa5469f44bf3f549beb557c69f93a8"
+        },
+        {
+          "frame_one_based": 8,
+          "source_crop_box_exclusive": [
+            512,
+            256,
+            768,
+            512
+          ],
+          "panel_position_xy": [
+            256,
+            0
+          ],
+          "rgba_sha256": "808c283d3dfcde4adc53377ab34207ca9973af62b11405213b892ca7029b338a"
+        },
+        {
+          "frame_one_based": 9,
+          "source_crop_box_exclusive": [
+            768,
+            256,
+            1024,
+            512
+          ],
+          "panel_position_xy": [
+            0,
+            256
+          ],
+          "rgba_sha256": "ba5579dfb1530715139d8832d64e85a596cdb69fdde847143316913e8d46a15c"
+        },
+        {
+          "frame_one_based": 10,
+          "source_crop_box_exclusive": [
+            1024,
+            256,
+            1280,
+            512
+          ],
+          "panel_position_xy": [
+            256,
+            256
+          ],
+          "rgba_sha256": "18a7972ee57e7f3ca313ad7606c96cdef7517da086e612347e0166def92bf98c"
+        }
+      ],
+      "preceding_reference": {
+        "frame_one_based": 6,
+        "path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\growth-bridge-f6-reference.png",
+        "source_crop_box_exclusive": [
+          0,
+          256,
+          256,
+          512
+        ],
+        "rgba_sha256": "a7b865ea308e2ae6c65f402ef3f83c7660540976c8aef7f372692459f2c3e36b",
+        "file_sha256": "297c591c4ab77f8f8817f2233503226d706724bfc77c5b320020130fb44f4087"
+      },
+      "prompt": "prompts/raspberry-redesign-2026-10-01/growth-bridge.txt",
+      "use": "Native image-edit input only; no generated artwork or application-resource changes performed."
+    },
+    "source_column_edges": [
+      0,
+      627,
+      1254
+    ],
+    "source_row_edges": [
+      0,
+      627,
+      1254
+    ],
+    "nominal_panel_to256_scale": 0.4082934609250399,
+    "nominal_bottom32_base_widths_all4": [
+      105,
+      106,
+      107,
+      106
+    ],
+    "base_width_measurement": "alpha>=24 horizontal extent of bottom32px band including bean/soil",
+    "reviewed_base_width_px": 105,
+    "shared_native_pixel_scale": 0.4044416358219735,
+    "resulting_median_base_width_px": 104.0,
+    "registration": {
+      "anchor_x": 128,
+      "baseline_y": 232
+    },
+    "replacements": [
+      {
+        "frame": 7,
+        "native_panel_one_based": 1,
+        "native_crop_box": [
+          0,
+          0,
+          627,
+          627
+        ],
+        "native_cell_rgba_sha256": "c5c2ef59749c3786ce961c703b7049b077828be71e34a6cc1e2ec58a7c5ba508",
+        "old_cell_rgba_sha256": "d3d38e86739cd2f87dbaf361bf03841a3efa5469f44bf3f549beb557c69f93a8",
+        "shared_native_pixel_scale": 0.4044416358219735,
+        "scaled_cell_size": [
+          253,
+          253
+        ],
+        "translation_px": [
+          -8,
+          2
+        ],
+        "bounds_alpha24": [
+          56,
+          56,
+          197,
+          233
+        ],
+        "bottom32_base_width_px": 104,
+        "output_cell_rgba_sha256": "7a47632dfad3b320b6f47d562340a1a00e185524857ccbed2cba85c51dce8aec",
+        "visible_pixels_clipped": 0
+      },
+      {
+        "frame": 8,
+        "native_panel_one_based": 2,
+        "native_crop_box": [
+          627,
+          0,
+          1254,
+          627
+        ],
+        "native_cell_rgba_sha256": "50c8a16be3035b922b720498c701602e1cdf5c03559310f6bdd1cf5f4d0d9e97",
+        "old_cell_rgba_sha256": "808c283d3dfcde4adc53377ab34207ca9973af62b11405213b892ca7029b338a",
+        "shared_native_pixel_scale": 0.4044416358219735,
+        "scaled_cell_size": [
+          253,
+          253
+        ],
+        "translation_px": [
+          2,
+          2
+        ],
+        "bounds_alpha24": [
+          47,
+          54,
+          207,
+          233
+        ],
+        "bottom32_base_width_px": 104,
+        "output_cell_rgba_sha256": "418794a90d13c16c167bbbf2f9d425f86ab10df55d705fe09d0f419cfb267a46",
+        "visible_pixels_clipped": 0
+      },
+      {
+        "frame": 9,
+        "native_panel_one_based": 3,
+        "native_crop_box": [
+          0,
+          627,
+          627,
+          1254
+        ],
+        "native_cell_rgba_sha256": "e20a2f25dfd9b2beccc5011a72b8f47ada4c8bb7cfc9142e88c440cd1287b964",
+        "old_cell_rgba_sha256": "ba5579dfb1530715139d8832d64e85a596cdb69fdde847143316913e8d46a15c",
+        "shared_native_pixel_scale": 0.4044416358219735,
+        "scaled_cell_size": [
+          253,
+          253
+        ],
+        "translation_px": [
+          -10,
+          4
+        ],
+        "bounds_alpha24": [
+          48,
+          34,
+          223,
+          233
+        ],
+        "bottom32_base_width_px": 106,
+        "output_cell_rgba_sha256": "fe0874d1c4b063b87e6103c3fe1e6f6e4422b55409dd0401f15ffe602b177a05",
+        "visible_pixels_clipped": 0
+      }
+    ],
+    "other22_source_cells_byte_identical": true,
+    "unchanged_cells": [
+      {
+        "frame": 1,
+        "rgba_sha256": "4f772cc6ca49811a10014528af7b1a84ddf24ec11422070cec2928ee6497cbbe",
+        "byte_identical": true
+      },
+      {
+        "frame": 2,
+        "rgba_sha256": "108c2927d989c4628956c2f36bf9534d2900f07f74c412458d3c90c835ebbf8a",
+        "byte_identical": true
+      },
+      {
+        "frame": 3,
+        "rgba_sha256": "ea91501b71a18da115ab4b55ffa339066cb9fefe22d3d5713a42de9c0cce609b",
+        "byte_identical": true
+      },
+      {
+        "frame": 4,
+        "rgba_sha256": "05c2bd7be9288d79868d7d841e3d25933e4027f5f011e7fa155cd6699e76a096",
+        "byte_identical": true
+      },
+      {
+        "frame": 5,
+        "rgba_sha256": "abae8e67ccdedcd5e04425609c9301279a299e14d9c1a9916dc67fff5459b1cc",
+        "byte_identical": true
+      },
+      {
+        "frame": 6,
+        "rgba_sha256": "a7b865ea308e2ae6c65f402ef3f83c7660540976c8aef7f372692459f2c3e36b",
+        "byte_identical": true
+      },
+      {
+        "frame": 10,
+        "rgba_sha256": "18a7972ee57e7f3ca313ad7606c96cdef7517da086e612347e0166def92bf98c",
+        "byte_identical": true
+      },
+      {
+        "frame": 11,
+        "rgba_sha256": "d255a56da271996a6dea9a837aaaaf7f9e804015eda275af6bc5c6d5a50ac436",
+        "byte_identical": true
+      },
+      {
+        "frame": 12,
+        "rgba_sha256": "bfd7bfb1e5f85f44cf70dde2db212d50006d56a2c245c8c7e593b05617718ea6",
+        "byte_identical": true
+      },
+      {
+        "frame": 13,
+        "rgba_sha256": "df45d824ce96dfe7af1e06ca8a3452c226bcb67bad7447b86338e7f3f7f268ca",
+        "byte_identical": true
+      },
+      {
+        "frame": 14,
+        "rgba_sha256": "719c8f0bfbb95ce1317a1f290f46fa3d609b873bb40c0216567a50018d9997bf",
+        "byte_identical": true
+      },
+      {
+        "frame": 15,
+        "rgba_sha256": "53e7f4d63ff723f6338910ef9d4bb280492849e5ecd052cd9948d37d2873ee11",
+        "byte_identical": true
+      },
+      {
+        "frame": 16,
+        "rgba_sha256": "66568d8ed323efb71e8c3fe169c2d71e4864f5096d939b01dda9fc2f3c903199",
+        "byte_identical": true
+      },
+      {
+        "frame": 17,
+        "rgba_sha256": "10fc5f38c180b41f3178280af696b6c200d22529d69d8d751453c61e2f0164f4",
+        "byte_identical": true
+      },
+      {
+        "frame": 18,
+        "rgba_sha256": "f2c7b3d2ddea7f9732a96b9129c4b45e1ed214b81241d279a1094a6f30e376dd",
+        "byte_identical": true
+      },
+      {
+        "frame": 19,
+        "rgba_sha256": "269ab3a84dee1bf7ef1eaa345b120dfca01621a7640fb02075d457d41f05221a",
+        "byte_identical": true
+      },
+      {
+        "frame": 20,
+        "rgba_sha256": "f48418f7c8cb4ada44ab56553ed5997763dba221aef6a496df902ddd955bc52f",
+        "byte_identical": true
+      },
+      {
+        "frame": 21,
+        "rgba_sha256": "50bbe7c5b17f75a8b479ee5f4d5f7a6a7e03ded23f7ed045dc676750fbfd72af",
+        "byte_identical": true
+      },
+      {
+        "frame": 22,
+        "rgba_sha256": "6b3e57c7b5c1f914f5129265e1d97dbd0149a1f33ebfe8d6c0b3f47693011025",
+        "byte_identical": true
+      },
+      {
+        "frame": 23,
+        "rgba_sha256": "f6ca158ece1bde575f0884e8ee18c3af6dd4d918b5a97bb875f76e9318db012d",
+        "byte_identical": true
+      },
+      {
+        "frame": 24,
+        "rgba_sha256": "805d94f3ec4716d94bb06519ad770e7e2a63496de4875747f16b9b1f08d6daca",
+        "byte_identical": true
+      },
+      {
+        "frame": 25,
+        "rgba_sha256": "3d4bb97c3f486ced482df40763cb64c025a95f251558269707fb38b5536f199c",
+        "byte_identical": true
+      }
+    ],
+    "panel4_F10_context_not_installed": true,
+    "selected_source": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\selected-source.png",
+    "selected_source_sha256": "729a2420a43e2244a818cb406c4c26ed281fd31446ff02599d57997b2464bbe0",
+    "original_final_used": false,
+    "no_code_drawn_anatomy": true,
+    "normalization": "Pending separate whole-atlas importer run."
+  },
+  "frames": [
+    {
+      "frame": 1,
+      "sha256_rgba_pixels": "4f772cc6ca49811a10014528af7b1a84ddf24ec11422070cec2928ee6497cbbe",
+      "bounds_alpha24": [
+        76,
+        156,
+        181,
+        233
+      ]
+    },
+    {
+      "frame": 2,
+      "sha256_rgba_pixels": "939bb73cfe3eacc20469483cf856244a811f470f3aa29c345abc49985526f1c2",
+      "bounds_alpha24": [
+        77,
+        146,
+        182,
+        233
+      ]
+    },
+    {
+      "frame": 3,
+      "sha256_rgba_pixels": "ea91501b71a18da115ab4b55ffa339066cb9fefe22d3d5713a42de9c0cce609b",
+      "bounds_alpha24": [
+        76,
+        117,
+        181,
+        233
+      ]
+    },
+    {
+      "frame": 4,
+      "sha256_rgba_pixels": "05c2bd7be9288d79868d7d841e3d25933e4027f5f011e7fa155cd6699e76a096",
+      "bounds_alpha24": [
+        76,
+        113,
+        181,
+        233
+      ]
+    },
+    {
+      "frame": 5,
+      "sha256_rgba_pixels": "abae8e67ccdedcd5e04425609c9301279a299e14d9c1a9916dc67fff5459b1cc",
+      "bounds_alpha24": [
+        60,
+        88,
+        193,
+        233
+      ]
+    },
+    {
+      "frame": 6,
+      "sha256_rgba_pixels": "a7b865ea308e2ae6c65f402ef3f83c7660540976c8aef7f372692459f2c3e36b",
+      "bounds_alpha24": [
+        56,
+        73,
+        198,
+        233
+      ]
+    },
+    {
+      "frame": 7,
+      "sha256_rgba_pixels": "b88c686c7185994f8fc8de3742d7b2a7993f04f73096825c463bac87310ae0cf",
+      "bounds_alpha24": [
+        56,
+        56,
+        197,
+        233
+      ]
+    },
+    {
+      "frame": 8,
+      "sha256_rgba_pixels": "dc34eb9819b37d481c6fd781d155ea6a98a8e0316c23c26474fcc329ef9fca68",
+      "bounds_alpha24": [
+        47,
+        54,
+        207,
+        233
+      ]
+    },
+    {
+      "frame": 9,
+      "sha256_rgba_pixels": "b489893051b5b6d4f4e5370d9bdba2ad16de2b4907bac6966260328c4b477bc2",
+      "bounds_alpha24": [
+        48,
+        34,
+        223,
+        233
+      ]
+    },
+    {
+      "frame": 10,
+      "sha256_rgba_pixels": "edaa9875d479a81cbe0204d8ea4920e7cfa55ddb8f27cd0244188e04e3c0c063",
+      "bounds_alpha24": [
+        32,
+        35,
+        228,
+        233
+      ]
+    },
+    {
+      "frame": 11,
+      "sha256_rgba_pixels": "fa6cd39b4a5167d23eff72901ab43a702c2ca276f1ce231821c6204da00de533",
+      "bounds_alpha24": [
+        33,
+        35,
+        227,
+        233
+      ]
+    },
+    {
+      "frame": 12,
+      "sha256_rgba_pixels": "17e2790ecb7ea546cd7335c341c66c0b431cf7d2dfd5e542b24bdb316951f29e",
+      "bounds_alpha24": [
+        33,
+        33,
+        227,
+        233
+      ]
+    },
+    {
+      "frame": 13,
+      "sha256_rgba_pixels": "a7da24006b8f246f099a6cb3c7c13160ba07bac858bf8353411a3a22c9f91712",
+      "bounds_alpha24": [
+        32,
+        32,
+        227,
+        233
+      ]
+    },
+    {
+      "frame": 14,
+      "sha256_rgba_pixels": "8739f6969762cf7b6082b4e838d683c5b97dd91a38efabfd5002f65c3d5d7c4c",
+      "bounds_alpha24": [
+        35,
+        37,
+        224,
+        233
+      ]
+    },
+    {
+      "frame": 15,
+      "sha256_rgba_pixels": "822d7a4ed8d044dbeb804106422b54bf59ae55d6a4bc2f034b3218f949ce2be8",
+      "bounds_alpha24": [
+        35,
+        38,
+        224,
+        233
+      ]
+    },
+    {
+      "frame": 16,
+      "sha256_rgba_pixels": "caecca02799ee4429a59c097c95fee7f95f04855d4cafd491956db9f069e1190",
+      "bounds_alpha24": [
+        33,
+        31,
+        227,
+        233
+      ]
+    },
+    {
+      "frame": 17,
+      "sha256_rgba_pixels": "b8d6cf082bcb8f491b0187cf393450977c1f5e349a29d0245390564bf39292dd",
+      "bounds_alpha24": [
+        32,
+        31,
+        227,
+        233
+      ]
+    },
+    {
+      "frame": 18,
+      "sha256_rgba_pixels": "ed5699acd270bc52293a932bc310818420f131ea3bbd209df3632cff631edf1a",
+      "bounds_alpha24": [
+        32,
+        31,
+        229,
+        233
+      ]
+    },
+    {
+      "frame": 19,
+      "sha256_rgba_pixels": "85754bf71b89078c061bc939f3ece7ee2297bc06a3f44bf69019aa928449af01",
+      "bounds_alpha24": [
+        35,
+        38,
+        224,
+        233
+      ]
+    },
+    {
+      "frame": 20,
+      "sha256_rgba_pixels": "0ebb5e70b2945193c0ae377800563a4d818ac5f2d6227bd7b8fddea6ff9f7cf1",
+      "bounds_alpha24": [
+        33,
+        31,
+        227,
+        233
+      ]
+    },
+    {
+      "frame": 21,
+      "sha256_rgba_pixels": "21401373415f2d08e8ea9a499b4d8f17640b1a8350f824450c4265dc7ef0227c",
+      "bounds_alpha24": [
+        32,
+        30,
+        227,
+        233
+      ]
+    },
+    {
+      "frame": 22,
+      "sha256_rgba_pixels": "e0e6d749e3adf881d22cac0a947f786214334caaca4558079fbbf7465c75c53a",
+      "bounds_alpha24": [
+        32,
+        30,
+        228,
+        233
+      ]
+    },
+    {
+      "frame": 23,
+      "sha256_rgba_pixels": "f78723185beacd97ae46cffdb5530a456e10b8f0c2d7272c7eaaf7c969f42ab2",
+      "bounds_alpha24": [
+        32,
+        30,
+        227,
+        233
+      ]
+    },
+    {
+      "frame": 24,
+      "sha256_rgba_pixels": "126631994d6bc2435a298e9055b3d768e3dacdc1a2c7f0ef99a9c667ef14f5b8",
+      "bounds_alpha24": [
+        32,
+        30,
+        226,
+        233
+      ]
+    },
+    {
+      "frame": 25,
+      "sha256_rgba_pixels": "8ba4124adc2a93e59f1c466fce0d4bba159ed1ed7176e5c137bb3c73e09e14a0",
+      "bounds_alpha24": [
+        32,
+        30,
+        227,
+        233
+      ]
+    }
+  ],
+  "astra_review": {
+    "reviewer": "Astra botanical visual review",
+    "candidate": "selected",
+    "prepared_sha256": "3562683749a341e9c4f977eab7e19ef68acd9e92931bfc73905ed6fd03207976",
+    "verdict": "accept_with_minor_polish_residuals",
+    "accepted": true,
+    "blockers": [],
+    "evidence": [
+      "selected-prepared.png",
+      "selected_light.png",
+      "selected_dark.png",
+      "astra-selected-flower-neighbors.png",
+      "original-final.png"
+    ],
+    "boundary": "Independent visual inspection of all25 static poses and all24 adjacent transitions in both opaque148px approximate-renderer themes, plus native256px atlas and focused neighbor board. This does not establish actual Compose rendering or live playback smoothness.",
+    "inventory": {
+      "fruit": "Seven identifiable persistent sites from F10 onward, L3/R4; green buds become textured aggregate berries and ripen in place.",
+      "flower": "One open white upper-left crown flower from F12 through F25; no repaired flower reclosure.",
+      "base": "Broad split brown bean and soil ring stay similarly sized and registered throughout."
+    },
+    "target_similarity": "The final reconstructs the original's asymmetric leafy cane, seven large conical/aggregate raspberries, white crown flower and broad bean/soil ring. It restores mature abundance and recognizable raspberry texture. It is reference-faithful reconstruction, not an exact copy of the historical final pixels.",
+    "repair_assessment": {
+      "early_bridge": "F7-F9 now stage upper leaves, branches and fruiting buds before the fuller F10 canopy. Established lower leaves/cane persist; no meaningful early reset remains.",
+      "flower_poses": "F14/F15/F19 retain all seven berries and the open white flower. F13->F14 and F18->F19 have a slightly lower/tighter crown and altered leaf/flower placement. Focused native-size inspection does not show a meaningful berry-size reversal; berries remain comparable or plumper. Base width alone was not used as proof of canopy continuity.",
+      "late_growth": "Ripening proceeds forward across retained fruit; all seven exist well before the final row. F21-F24 still develop the right-side colors; F24->F25 is one quiet mature settling transition."
+    },
+    "residuals": [
+      {
+        "frames": "F13->F14->F16; F18->F19->F20",
+        "issue": "Small crown height, leaf placement and flower placement shifts from native whole-pose repairs are visible at source size and subtly at148px. They do not read as fruit deletion, replanting or meaningful growth reversal.",
+        "severity": "minor polish"
+      },
+      {
+        "frames": "F9->F10",
+        "issue": "A fuller canopy/bud step and slight painted-material difference remain at the bridge-to-bank join, now supported by preceding branch development.",
+        "severity": "minor polish"
+      },
+      {
+        "frames": "F10->F11; F23->F25",
+        "issue": "Subtle swelling/maturation changes; late motion is deliberately quieter after the main color payoff.",
+        "severity": "minor pacing"
+      }
+    ],
+    "alpha_assessment": "No material bright-green fringe or missing-alpha surface is apparent on either opaque148px theme contact; raw transparent RGB noise was not treated as a visible defect.",
+    "transitions": [
+      {
+        "from": 1,
+        "to": 2,
+        "note": "F2 adds a green shoot above the fixed cracked bean."
+      },
+      {
+        "from": 2,
+        "to": 3,
+        "note": "The shoot lengthens; bean and soil remain registered."
+      },
+      {
+        "from": 3,
+        "to": 4,
+        "note": "A first left leaf opens around the taller shoot."
+      },
+      {
+        "from": 4,
+        "to": 5,
+        "note": "The retained first leaf expands and side leaves unfold."
+      },
+      {
+        "from": 5,
+        "to": 6,
+        "note": "Stem and leaves extend cumulatively; no lost basal leaflets or crown reclosure."
+      },
+      {
+        "from": 6,
+        "to": 7,
+        "note": "New bridge pose raises the crown and opens another lateral leaf; lower pair remains."
+      },
+      {
+        "from": 7,
+        "to": 8,
+        "note": "Crown opens into a fuller upper leaf pair; established lower foliage persists."
+      },
+      {
+        "from": 8,
+        "to": 9,
+        "note": "Side branches and several green fruiting buds appear, separating branch formation from the later full seven-node state."
+      },
+      {
+        "from": 9,
+        "to": 10,
+        "note": "Canopy fills and all seven L3/R4 fruiting sites become distinct; bean stays similarly sized. Slight painted-material change at the bank entry."
+      },
+      {
+        "from": 10,
+        "to": 11,
+        "note": "Seven green buds swell subtly, retaining the same positions."
+      },
+      {
+        "from": 11,
+        "to": 12,
+        "note": "Seven aggregate green fruit enlarge and the white crown flower opens."
+      },
+      {
+        "from": 12,
+        "to": 13,
+        "note": "Seven green berries continue swelling; flower and branching remain."
+      },
+      {
+        "from": 13,
+        "to": 14,
+        "note": "Repaired pose keeps the open white flower and seven fruit. Crown is slightly lower/tighter and leaves shift, but fruit do not materially shrink and base scale remains coherent."
+      },
+      {
+        "from": 14,
+        "to": 15,
+        "note": "Seven fruit and open flower persist; subtle green-fruit swelling/refinement."
+      },
+      {
+        "from": 15,
+        "to": 16,
+        "note": "Canopy returns to the neighboring bank placement; left berries pale and enlarge. Small crown placement recovery is visible, without disappearance or growth reversal."
+      },
+      {
+        "from": 16,
+        "to": 17,
+        "note": "Seven fruit remain; left three pale further and gain mature aggregate volume."
+      },
+      {
+        "from": 17,
+        "to": 18,
+        "note": "Left three turn pink while all four right fruit remain green."
+      },
+      {
+        "from": 18,
+        "to": 19,
+        "note": "Repaired pose retains the open flower and all seven fruit. Left three deepen pink and inner-right turns pink; crown sits slightly lower but fruit remain comparably plump."
+      },
+      {
+        "from": 19,
+        "to": 20,
+        "note": "Left three deepen red, right fruit continue warming; open flower retained. Slight crown placement recovery."
+      },
+      {
+        "from": 20,
+        "to": 21,
+        "note": "Upper-right/inner-right ripen red; far-right and lower-right remain pink."
+      },
+      {
+        "from": 21,
+        "to": 22,
+        "note": "Far-right ripens red and lower-right stays peach-pink; seven fruit remain."
+      },
+      {
+        "from": 22,
+        "to": 23,
+        "note": "Lower-right advances to red-pink; the rest retain mature red."
+      },
+      {
+        "from": 23,
+        "to": 24,
+        "note": "Lower-right deepens red; modest maturation change."
+      },
+      {
+        "from": 24,
+        "to": 25,
+        "note": "Quiet mature settling/highlight change, with seven red berries and open flower retained."
+      }
+    ]
+  },
+  "independent_astra_review": {
+    "reviewer": "Astra",
+    "model": "gpt-6-astra",
+    "id": "raspberry",
+    "candidate": "selected",
+    "prepared_sha256": "3562683749a341e9c4f977eab7e19ef68acd9e92931bfc73905ed6fd03207976",
+    "source_sha256": "729a2420a43e2244a818cb406c4c26ed281fd31446ff02599d57997b2464bbe0",
+    "verdict": "accept_with_minor_polish_residuals",
+    "accepted": true,
+    "blockers": [],
+    "method": "Independently inspected all25 poses and24 adjacent transitions in both148px opaque theme contacts and full prepared atlas against the original final reference. Read nested curation records and verified all22 non-bridge source cells equal the reviewed flower selection.",
+    "evidence": [
+      "selected_light.png",
+      "selected_dark.png",
+      "selected-prepared.png",
+      "original-final.png",
+      "curation.json"
+    ],
+    "counts_and_persistence": {
+      "early_growth": "Bean germination grows into retained lateral leaves, then additional crown foliage and curved fruit-bearing branches. No definite leaf deletion or whole-plant reset remains in the final early sequence.",
+      "fruit": "Bud positions develop throughF9–11; seven identifiable textured berries (left3/right4) are clear fromF12 and remain throughF25. Fruit enlarge/ripen in place; no final count insertion.",
+      "flower": "One open white crown flower persistsF12–25. The previous F14/F15/F19 closure reversals are resolved. Green crown buds remain part of the target composition.",
+      "color": "No observed ripe/pink fruit returns to green. Left then right groups ripen, with lower-right finishing acrossF22–24."
+    },
+    "growth_bridge_seams": "F6→7→8→9→10 now distributes leafy expansion and truss/bud arrival across several stages. F8→9 still develops branches briskly, but F9 provides a visible younger bud-bearing version ofF10 rather than jumping directly from sparse four-leaf plant to mature canopy. Bean/soil proportions remain coherent.",
+    "flower_repair_seams": "F13→14→15→16 andF18→19→20 retain all seven berries, open white flower and stable base. Repaired poses have minor leaf fullness, berry contour and flower-position differences. At148px these read as small native-paint variations, without changed anatomy or material identity. F15 bean angle variation is minor.",
+    "original_target_fidelity": "Restores the richer original identity: asymmetric fuller branches, seven large drupelet-textured berries, serrated layered foliage, one white blossom and green buds above the split bean/soil ring. Exact branch angles, individual leaf shapes and original pixels differ; accept as reference-faithful native reconstruction.",
+    "residuals": [
+      "Brisk F8→9 branching/bud development.",
+      "Quiet F10→11 andF16→17 expansion.",
+      "Small native whole-pose paint/contour variation at flower replacement joins.",
+      "One quiet final settling frame after ordered late ripening."
+    ],
+    "all24_transitions": [
+      {
+        "from": 1,
+        "to": 2,
+        "status": "pass",
+        "observation": "Green point emerges at retained bean seam."
+      },
+      {
+        "from": 2,
+        "to": 3,
+        "status": "pass",
+        "observation": "Sprout lengthens while bean/soil stays fixed."
+      },
+      {
+        "from": 3,
+        "to": 4,
+        "status": "pass",
+        "observation": "First lateral leaf unfolds."
+      },
+      {
+        "from": 4,
+        "to": 5,
+        "status": "pass",
+        "observation": "More lateral foliage opens; omitted initialF5 avoids the old leaf-reset pose."
+      },
+      {
+        "from": 5,
+        "to": 6,
+        "status": "pass",
+        "observation": "Stem and retained lateral foliage extend."
+      },
+      {
+        "from": 6,
+        "to": 7,
+        "status": "pass",
+        "observation": "BridgeF7 keeps lower leaf attachments while extending terminal/upper foliage; base/material match."
+      },
+      {
+        "from": 7,
+        "to": 8,
+        "status": "pass",
+        "observation": "BridgeF8 broadens the upper branches and adds lasting leaves, approaching the mature skeleton."
+      },
+      {
+        "from": 8,
+        "to": 9,
+        "status": "minor_residual",
+        "observation": "BridgeF9 establishes curving bud-bearing side branches in a fairly brisk step, but this follows the visibly expandedF8 foliage and retains the lower leaf pair."
+      },
+      {
+        "from": 9,
+        "to": 10,
+        "status": "pass",
+        "observation": "F10 fills out the established bud-bearing canopy, adds the remaining dense lower foliage and crown buds; no bean-size or camera reset."
+      },
+      {
+        "from": 10,
+        "to": 11,
+        "status": "minor_residual",
+        "observation": "Same seven hanging bud sites enlarge modestly; a quiet pre-fruiting stage."
+      },
+      {
+        "from": 11,
+        "to": 12,
+        "status": "pass",
+        "observation": "Seven textured green berries become clear and white crown flower opens."
+      },
+      {
+        "from": 12,
+        "to": 13,
+        "status": "pass",
+        "observation": "Same seven green fruit swell; white flower remains open."
+      },
+      {
+        "from": 13,
+        "to": 14,
+        "status": "minor_residual",
+        "observation": "Complete native flower repair retains seven berries and open flower. Leaf fullness and flower position shift modestly without a missing-node event."
+      },
+      {
+        "from": 14,
+        "to": 15,
+        "status": "pass",
+        "observation": "Second repaired green-fruit pose keeps flower open and seven berries; slight bean contour variation is not a perceptible registration reset at148px."
+      },
+      {
+        "from": 15,
+        "to": 16,
+        "status": "minor_residual",
+        "observation": "Return to base bank has a small canopy/paint shift, but berry attachments, leaf presence, flower and base persist; left fruit begin lightening."
+      },
+      {
+        "from": 16,
+        "to": 17,
+        "status": "minor_residual",
+        "observation": "Modest left-berry cream/fullness advance while right stays green."
+      },
+      {
+        "from": 17,
+        "to": 18,
+        "status": "pass",
+        "observation": "Left3 turns pink, right4 stays greener; clear staggered ripening."
+      },
+      {
+        "from": 18,
+        "to": 19,
+        "status": "pass",
+        "observation": "RepairedF19 keeps flower open while left deepens and inner-right blushes; no fruit count loss."
+      },
+      {
+        "from": 19,
+        "to": 20,
+        "status": "pass",
+        "observation": "Left3 is red and remaining right fruit begin pink; repaired-to-bank join keeps base and attachments coherent."
+      },
+      {
+        "from": 20,
+        "to": 21,
+        "status": "pass",
+        "observation": "Upper/inner-right redden; outer/lower-right remain pink."
+      },
+      {
+        "from": 21,
+        "to": 22,
+        "status": "pass",
+        "observation": "Outer-right becomes red; last lower-right berry stays peach/pink."
+      },
+      {
+        "from": 22,
+        "to": 23,
+        "status": "pass",
+        "observation": "Last lower-right fruit deepens pink-red; recognizable final ripening beat."
+      },
+      {
+        "from": 23,
+        "to": 24,
+        "status": "pass",
+        "observation": "Last lower-right fruit reaches mature red; all seven retained."
+      },
+      {
+        "from": 24,
+        "to": 25,
+        "status": "minor_residual",
+        "observation": "Quiet final settling after the previous clear ripening beats; no anatomy addition or whole-plant replacement."
+      }
+    ],
+    "curation_verification": {
+      "source_record": "curation.json",
+      "bridge_replacements": [
+        7,
+        8,
+        9
+      ],
+      "other22_source_cells_rgba_byte_identical_to_flower_selection": true,
+      "frame_components_spliced": false,
+      "code_drawn_anatomy": false
+    },
+    "recommendation": "Accept this exact prepared atlas for isolated native rendering validation. No remaining blocking anatomy, scale, color-reversal or final-identity fault was found.",
+    "boundary": "Static full-size/148px review and source-provenance checks only. No live Compose playback, physical-device, dynamic-color or native test claim."
+  },
+  "validation": {
+    "asset_id": "raspberry",
+    "created_utc": "2026-10-01T17:03:41.756766+00:00",
+    "status": "passed_bounded_validation",
+    "build_snapshot": {
+      "baseline_commit": "98eb74b8647fa29689e831353a8e7c1059f3b4cb",
+      "method": "git archive of verified build-needed paths plus only the reviewed Raspberry atlas",
+      "build_workspace": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\build-workspace-98eb74b8-35626837",
+      "archive": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\committed-build-source-98eb74b8.zip",
+      "archive_sha256": "5dbcbd4b41781feae55c85883300cbccd1b790297a4cbc12c712accbba789d9f",
+      "archive_bytes": 59565170,
+      "archive_member_count": 1458,
+      "archive_uncompressed_bytes": 74404186,
+      "included_paths": [
+        "app",
+        "gradle",
+        "config",
+        "build.gradle.kts",
+        "settings.gradle.kts",
+        "gradle.properties",
+        "gradlew",
+        "gradlew.bat"
+      ],
+      "gradle_includes": [
+        ":app"
+      ],
+      "omitted_paths_reason": "Docs/prompts/tools/scripts and testdata are not dependencies of assembleDebug, assembleDebugAndroidTest or Detekt; testdata is accessed only by separate benchmark tasks.",
+      "overlay_files": {
+        "app/src/main/res/drawable-nodpi/bloom_raspberry_spritesheet.png": "3562683749a341e9c4f977eab7e19ef68acd9e92931bfc73905ed6fd03207976"
+      },
+      "overlay_source": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\selected-prepared.png",
+      "description_overlays": {},
+      "reviewed_resource_sha256": "3562683749a341e9c4f977eab7e19ef68acd9e92931bfc73905ed6fd03207976",
+      "baseline_resource_sha256": "3e7eeba8103ffffefe9ff674f35fec714678f0741c6804aeb788fa90832e7272",
+      "instrumentation_source": {
+        "path": "app/src/androidTest/java/com/adsamcik/starlitcoffee/ui/component/BloomSpritesheetRenderingTest.kt",
+        "origin": "committed baseline",
+        "sha256": "953112db5f61ed31344123f3ee45f2da3b18ac866a7829cf3ecd48d9ff9f5c4d"
+      },
+      "review_init_script": {
+        "path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\review-build.init.gradle",
+        "sha256": "6977a927c9651e2acbdd12237930c6f623a66dbcef7a31fbafd1e39fe2fa82d8",
+        "application_id_suffix": ".raspberryreview",
+        "application_id": "com.adsamcik.starlitcoffee.raspberryreview",
+        "app_label": "Raspberry review"
+      },
+      "local_configuration": "SDK path only; authentication remains with normal Gradle/gh resolution",
+      "build_command": [
+        "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\build-workspace-98eb74b8-35626837\\gradlew.bat",
+        "--init-script",
+        "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\review-build.init.gradle",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        ":app:detekt",
+        "--console=plain",
+        "--no-daemon"
+      ],
+      "build_executed": true,
+      "device_used": false,
+      "acceptance_guards": [
+        {
+          "path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\selected-review.json",
+          "sha256": "bac8855cf3454c3786901a46f1a8ed4e2f32c71aa732730443b5502593674f97",
+          "verdict": "accept_with_minor_polish_residuals",
+          "prepared_sha256": "3562683749a341e9c4f977eab7e19ef68acd9e92931bfc73905ed6fd03207976"
+        },
+        {
+          "path": "G:\\Github\\StarlitCoffee\\.qa-screens\\raspberry-redesign-2026-10-01\\selected-cross-review.json",
+          "sha256": "14a0ed11564a1fe9a2ae453cd6c328a856225ebfaba9f8959adad6f3089a2409",
+          "verdict": "accept_with_minor_polish_residuals",
+          "prepared_sha256": "3562683749a341e9c4f977eab7e19ef68acd9e92931bfc73905ed6fd03207976"
+        }
+      ],
+      "build_status": "passed",
+      "build_elapsed_seconds": 270.204,
+      "build_exit_code": 0,
+      "build_log_sha256": "b80fbe3e0e39deb560114526bdb57845ff99c6b4933588f68265e06bd510bb25",
+      "copied_apks": {
+        "raspberry-review.apk": {
+          "sha256": "7704a4a43459c25fa7e37f6a6fb7dce96b9cafdc3b2aa330071ea6369dd81c72",
+          "bytes": 350420976,
+          "package_id": "com.adsamcik.starlitcoffee.raspberryreview",
+          "label": "Raspberry review"
+        },
+        "raspberry-review-test.apk": {
+          "sha256": "a8aca86a870291d2c9642231f33e0fb2569c7631f3222c82a3bd220cef4937c6",
+          "bytes": 1552525,
+          "package_id": "com.adsamcik.starlitcoffee.raspberryreview.test",
+          "label": null
+        }
+      },
+      "detekt_findings": 0
+    },
+    "reviewed_asset_sha256": "3562683749a341e9c4f977eab7e19ef68acd9e92931bfc73905ed6fd03207976",
+    "isolated_build": {
+      "status": "passed",
+      "tasks": [
+        "assembleDebug",
+        "assembleDebugAndroidTest",
+        "detekt"
+      ],
+      "log": "isolated-build.log",
+      "detekt_report": "isolated-detekt.xml",
+      "detekt_findings": 0,
+      "copied_apks": {
+        "raspberry-review.apk": {
+          "sha256": "7704a4a43459c25fa7e37f6a6fb7dce96b9cafdc3b2aa330071ea6369dd81c72",
+          "bytes": 350420976
+        },
+        "raspberry-review-test.apk": {
+          "sha256": "a8aca86a870291d2c9642231f33e0fb2569c7631f3222c82a3bd220cef4937c6",
+          "bytes": 1552525
+        }
+      }
+    },
+    "native_validation": {
+      "instrumentation_log": "instrumentation.log",
+      "passed_tests": 2,
+      "arguments": {
+        "bloomOnly": "raspberry",
+        "bloomAllFrames": "true",
+        "bloomCapture": "true"
+      },
+      "capture_count": 50,
+      "poses_per_theme": 25,
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "native_capture_shape_hwc": [
+        389,
+        389,
+        4
+      ],
+      "duration_seconds": 48,
+      "countdowns": [
+        48,
+        46,
+        44,
+        42,
+        40,
+        38,
+        36,
+        34,
+        32,
+        30,
+        28,
+        26,
+        24,
+        22,
+        20,
+        18,
+        16,
+        14,
+        12,
+        10,
+        8,
+        6,
+        4,
+        2,
+        0
+      ],
+      "adjacent_comparisons": [
+        {
+          "theme": "light",
+          "from_frame": 1,
+          "to_frame": 2,
+          "from_countdown_seconds": 48,
+          "to_countdown_seconds": 46,
+          "changed_pixels": 16406
+        },
+        {
+          "theme": "light",
+          "from_frame": 2,
+          "to_frame": 3,
+          "from_countdown_seconds": 46,
+          "to_countdown_seconds": 44,
+          "changed_pixels": 17309
+        },
+        {
+          "theme": "light",
+          "from_frame": 3,
+          "to_frame": 4,
+          "from_countdown_seconds": 44,
+          "to_countdown_seconds": 42,
+          "changed_pixels": 18720
+        },
+        {
+          "theme": "light",
+          "from_frame": 4,
+          "to_frame": 5,
+          "from_countdown_seconds": 42,
+          "to_countdown_seconds": 40,
+          "changed_pixels": 27257
+        },
+        {
+          "theme": "light",
+          "from_frame": 5,
+          "to_frame": 6,
+          "from_countdown_seconds": 40,
+          "to_countdown_seconds": 38,
+          "changed_pixels": 31293
+        },
+        {
+          "theme": "light",
+          "from_frame": 6,
+          "to_frame": 7,
+          "from_countdown_seconds": 38,
+          "to_countdown_seconds": 36,
+          "changed_pixels": 35020
+        },
+        {
+          "theme": "light",
+          "from_frame": 7,
+          "to_frame": 8,
+          "from_countdown_seconds": 36,
+          "to_countdown_seconds": 34,
+          "changed_pixels": 44811
+        },
+        {
+          "theme": "light",
+          "from_frame": 8,
+          "to_frame": 9,
+          "from_countdown_seconds": 34,
+          "to_countdown_seconds": 32,
+          "changed_pixels": 62486
+        },
+        {
+          "theme": "light",
+          "from_frame": 9,
+          "to_frame": 10,
+          "from_countdown_seconds": 32,
+          "to_countdown_seconds": 30,
+          "changed_pixels": 70999
+        },
+        {
+          "theme": "light",
+          "from_frame": 10,
+          "to_frame": 11,
+          "from_countdown_seconds": 30,
+          "to_countdown_seconds": 28,
+          "changed_pixels": 66115
+        },
+        {
+          "theme": "light",
+          "from_frame": 11,
+          "to_frame": 12,
+          "from_countdown_seconds": 28,
+          "to_countdown_seconds": 26,
+          "changed_pixels": 67602
+        },
+        {
+          "theme": "light",
+          "from_frame": 12,
+          "to_frame": 13,
+          "from_countdown_seconds": 26,
+          "to_countdown_seconds": 24,
+          "changed_pixels": 68133
+        },
+        {
+          "theme": "light",
+          "from_frame": 13,
+          "to_frame": 14,
+          "from_countdown_seconds": 24,
+          "to_countdown_seconds": 22,
+          "changed_pixels": 71207
+        },
+        {
+          "theme": "light",
+          "from_frame": 14,
+          "to_frame": 15,
+          "from_countdown_seconds": 22,
+          "to_countdown_seconds": 20,
+          "changed_pixels": 66288
+        },
+        {
+          "theme": "light",
+          "from_frame": 15,
+          "to_frame": 16,
+          "from_countdown_seconds": 20,
+          "to_countdown_seconds": 18,
+          "changed_pixels": 72191
+        },
+        {
+          "theme": "light",
+          "from_frame": 16,
+          "to_frame": 17,
+          "from_countdown_seconds": 18,
+          "to_countdown_seconds": 16,
+          "changed_pixels": 69334
+        },
+        {
+          "theme": "light",
+          "from_frame": 17,
+          "to_frame": 18,
+          "from_countdown_seconds": 16,
+          "to_countdown_seconds": 14,
+          "changed_pixels": 70512
+        },
+        {
+          "theme": "light",
+          "from_frame": 18,
+          "to_frame": 19,
+          "from_countdown_seconds": 14,
+          "to_countdown_seconds": 12,
+          "changed_pixels": 73409
+        },
+        {
+          "theme": "light",
+          "from_frame": 19,
+          "to_frame": 20,
+          "from_countdown_seconds": 12,
+          "to_countdown_seconds": 10,
+          "changed_pixels": 73036
+        },
+        {
+          "theme": "light",
+          "from_frame": 20,
+          "to_frame": 21,
+          "from_countdown_seconds": 10,
+          "to_countdown_seconds": 8,
+          "changed_pixels": 69839
+        },
+        {
+          "theme": "light",
+          "from_frame": 21,
+          "to_frame": 22,
+          "from_countdown_seconds": 8,
+          "to_countdown_seconds": 6,
+          "changed_pixels": 70254
+        },
+        {
+          "theme": "light",
+          "from_frame": 22,
+          "to_frame": 23,
+          "from_countdown_seconds": 6,
+          "to_countdown_seconds": 4,
+          "changed_pixels": 71052
+        },
+        {
+          "theme": "light",
+          "from_frame": 23,
+          "to_frame": 24,
+          "from_countdown_seconds": 4,
+          "to_countdown_seconds": 2,
+          "changed_pixels": 71405
+        },
+        {
+          "theme": "light",
+          "from_frame": 24,
+          "to_frame": 25,
+          "from_countdown_seconds": 2,
+          "to_countdown_seconds": 0,
+          "changed_pixels": 72007
+        },
+        {
+          "theme": "dark",
+          "from_frame": 1,
+          "to_frame": 2,
+          "from_countdown_seconds": 48,
+          "to_countdown_seconds": 46,
+          "changed_pixels": 16391
+        },
+        {
+          "theme": "dark",
+          "from_frame": 2,
+          "to_frame": 3,
+          "from_countdown_seconds": 46,
+          "to_countdown_seconds": 44,
+          "changed_pixels": 17305
+        },
+        {
+          "theme": "dark",
+          "from_frame": 3,
+          "to_frame": 4,
+          "from_countdown_seconds": 44,
+          "to_countdown_seconds": 42,
+          "changed_pixels": 18761
+        },
+        {
+          "theme": "dark",
+          "from_frame": 4,
+          "to_frame": 5,
+          "from_countdown_seconds": 42,
+          "to_countdown_seconds": 40,
+          "changed_pixels": 27267
+        },
+        {
+          "theme": "dark",
+          "from_frame": 5,
+          "to_frame": 6,
+          "from_countdown_seconds": 40,
+          "to_countdown_seconds": 38,
+          "changed_pixels": 31312
+        },
+        {
+          "theme": "dark",
+          "from_frame": 6,
+          "to_frame": 7,
+          "from_countdown_seconds": 38,
+          "to_countdown_seconds": 36,
+          "changed_pixels": 35001
+        },
+        {
+          "theme": "dark",
+          "from_frame": 7,
+          "to_frame": 8,
+          "from_countdown_seconds": 36,
+          "to_countdown_seconds": 34,
+          "changed_pixels": 44757
+        },
+        {
+          "theme": "dark",
+          "from_frame": 8,
+          "to_frame": 9,
+          "from_countdown_seconds": 34,
+          "to_countdown_seconds": 32,
+          "changed_pixels": 62418
+        },
+        {
+          "theme": "dark",
+          "from_frame": 9,
+          "to_frame": 10,
+          "from_countdown_seconds": 32,
+          "to_countdown_seconds": 30,
+          "changed_pixels": 70945
+        },
+        {
+          "theme": "dark",
+          "from_frame": 10,
+          "to_frame": 11,
+          "from_countdown_seconds": 30,
+          "to_countdown_seconds": 28,
+          "changed_pixels": 66129
+        },
+        {
+          "theme": "dark",
+          "from_frame": 11,
+          "to_frame": 12,
+          "from_countdown_seconds": 28,
+          "to_countdown_seconds": 26,
+          "changed_pixels": 67584
+        },
+        {
+          "theme": "dark",
+          "from_frame": 12,
+          "to_frame": 13,
+          "from_countdown_seconds": 26,
+          "to_countdown_seconds": 24,
+          "changed_pixels": 68150
+        },
+        {
+          "theme": "dark",
+          "from_frame": 13,
+          "to_frame": 14,
+          "from_countdown_seconds": 24,
+          "to_countdown_seconds": 22,
+          "changed_pixels": 71188
+        },
+        {
+          "theme": "dark",
+          "from_frame": 14,
+          "to_frame": 15,
+          "from_countdown_seconds": 22,
+          "to_countdown_seconds": 20,
+          "changed_pixels": 66415
+        },
+        {
+          "theme": "dark",
+          "from_frame": 15,
+          "to_frame": 16,
+          "from_countdown_seconds": 20,
+          "to_countdown_seconds": 18,
+          "changed_pixels": 72151
+        },
+        {
+          "theme": "dark",
+          "from_frame": 16,
+          "to_frame": 17,
+          "from_countdown_seconds": 18,
+          "to_countdown_seconds": 16,
+          "changed_pixels": 69355
+        },
+        {
+          "theme": "dark",
+          "from_frame": 17,
+          "to_frame": 18,
+          "from_countdown_seconds": 16,
+          "to_countdown_seconds": 14,
+          "changed_pixels": 70457
+        },
+        {
+          "theme": "dark",
+          "from_frame": 18,
+          "to_frame": 19,
+          "from_countdown_seconds": 14,
+          "to_countdown_seconds": 12,
+          "changed_pixels": 73368
+        },
+        {
+          "theme": "dark",
+          "from_frame": 19,
+          "to_frame": 20,
+          "from_countdown_seconds": 12,
+          "to_countdown_seconds": 10,
+          "changed_pixels": 72986
+        },
+        {
+          "theme": "dark",
+          "from_frame": 20,
+          "to_frame": 21,
+          "from_countdown_seconds": 10,
+          "to_countdown_seconds": 8,
+          "changed_pixels": 69855
+        },
+        {
+          "theme": "dark",
+          "from_frame": 21,
+          "to_frame": 22,
+          "from_countdown_seconds": 8,
+          "to_countdown_seconds": 6,
+          "changed_pixels": 70287
+        },
+        {
+          "theme": "dark",
+          "from_frame": 22,
+          "to_frame": 23,
+          "from_countdown_seconds": 6,
+          "to_countdown_seconds": 4,
+          "changed_pixels": 71000
+        },
+        {
+          "theme": "dark",
+          "from_frame": 23,
+          "to_frame": 24,
+          "from_countdown_seconds": 4,
+          "to_countdown_seconds": 2,
+          "changed_pixels": 71306
+        },
+        {
+          "theme": "dark",
+          "from_frame": 24,
+          "to_frame": 25,
+          "from_countdown_seconds": 2,
+          "to_countdown_seconds": 0,
+          "changed_pixels": 71957
+        }
+      ],
+      "minimum_changed_pixels": 16391,
+      "threshold": ">64 changed pixels on each of 48 adjacent pairs",
+      "preview_finish_comparisons": 2,
+      "preview_finish_evidence": "The passing everyFinalPreviewMatchesPlayedFinishInBothThemes method compares played F25 to chooser preview in light and dark themes; no separate preview PNGs are inferred.",
+      "captures": [
+        {
+          "file": "native/raspberry_light_48.png",
+          "theme": "light",
+          "frame": 1,
+          "countdown_seconds": 48,
+          "sha256": "1b8b0cd22c22ddc26653a784190805555075317c169587225f22544df5b53a75"
+        },
+        {
+          "file": "native/raspberry_light_46.png",
+          "theme": "light",
+          "frame": 2,
+          "countdown_seconds": 46,
+          "sha256": "fffd4c9cc3044ecbc0f491c3c965085248eb62aac40a19d79ad2e039c1efcb23"
+        },
+        {
+          "file": "native/raspberry_light_44.png",
+          "theme": "light",
+          "frame": 3,
+          "countdown_seconds": 44,
+          "sha256": "eaf07394457748e74d98044f0308a438cd5da54c32466136ebf6c2c2337a1ccf"
+        },
+        {
+          "file": "native/raspberry_light_42.png",
+          "theme": "light",
+          "frame": 4,
+          "countdown_seconds": 42,
+          "sha256": "b275b17588276955351901c22e1642aa4fa1afa1edfc03dee94ddc32c6e73ba3"
+        },
+        {
+          "file": "native/raspberry_light_40.png",
+          "theme": "light",
+          "frame": 5,
+          "countdown_seconds": 40,
+          "sha256": "bf97b809ce8c50cef226231e251032a82ad4de215579b29da0acaf9186553513"
+        },
+        {
+          "file": "native/raspberry_light_38.png",
+          "theme": "light",
+          "frame": 6,
+          "countdown_seconds": 38,
+          "sha256": "163b52325b3ca2f96f4807310e707e0b5433dd61f135581b79cbbcf125348bfe"
+        },
+        {
+          "file": "native/raspberry_light_36.png",
+          "theme": "light",
+          "frame": 7,
+          "countdown_seconds": 36,
+          "sha256": "a6c8388a22a692b86961dbdd82cdac05e4a897af3f195dd647854c02f36b1df3"
+        },
+        {
+          "file": "native/raspberry_light_34.png",
+          "theme": "light",
+          "frame": 8,
+          "countdown_seconds": 34,
+          "sha256": "9fabfb6a2439b01406eb41f488aa926e9f11ac6f262c6d78a58add3ffeda0f84"
+        },
+        {
+          "file": "native/raspberry_light_32.png",
+          "theme": "light",
+          "frame": 9,
+          "countdown_seconds": 32,
+          "sha256": "bc9c6eda069d75d72676a0af3fc53cc40850e2bc280800c7d0efdccc2fadca26"
+        },
+        {
+          "file": "native/raspberry_light_30.png",
+          "theme": "light",
+          "frame": 10,
+          "countdown_seconds": 30,
+          "sha256": "00ab8d9339b65bbea260ffca364ac9ac6931bfd088102563285a0fd082ddc4c7"
+        },
+        {
+          "file": "native/raspberry_light_28.png",
+          "theme": "light",
+          "frame": 11,
+          "countdown_seconds": 28,
+          "sha256": "52c302f38ef554333a42e6a0d27aef710d246f653e686e50590d796411e3c780"
+        },
+        {
+          "file": "native/raspberry_light_26.png",
+          "theme": "light",
+          "frame": 12,
+          "countdown_seconds": 26,
+          "sha256": "7f6a67790121fefd51f11bc2d3dab92c526552c66dbee2991f12b6c4d4ce0aba"
+        },
+        {
+          "file": "native/raspberry_light_24.png",
+          "theme": "light",
+          "frame": 13,
+          "countdown_seconds": 24,
+          "sha256": "665e8bc4d42b9637b574cfddb960ee910b30fee023390eb1f1d7827ece2adafd"
+        },
+        {
+          "file": "native/raspberry_light_22.png",
+          "theme": "light",
+          "frame": 14,
+          "countdown_seconds": 22,
+          "sha256": "1afb11fc6147e53ac6dd560966e9e081cf4394a5ad583510f4f368401d02492e"
+        },
+        {
+          "file": "native/raspberry_light_20.png",
+          "theme": "light",
+          "frame": 15,
+          "countdown_seconds": 20,
+          "sha256": "0fb9fb99aec7853a14fd7dfff3fc0458549969e5afcce9dcab027dc3f5ded897"
+        },
+        {
+          "file": "native/raspberry_light_18.png",
+          "theme": "light",
+          "frame": 16,
+          "countdown_seconds": 18,
+          "sha256": "355d3b7cb1b7338b112417c6c302bf7ad5b3b244ac63b9992eaeb1f63468586f"
+        },
+        {
+          "file": "native/raspberry_light_16.png",
+          "theme": "light",
+          "frame": 17,
+          "countdown_seconds": 16,
+          "sha256": "ad9a6ffb5d75a3e6b6f121a8fa9f1294e0ddeb3c5ac72992b41ce586ad819ff1"
+        },
+        {
+          "file": "native/raspberry_light_14.png",
+          "theme": "light",
+          "frame": 18,
+          "countdown_seconds": 14,
+          "sha256": "0eef42b1dc3e635104d166f0c63a2dc28d36da7b8b3b0dd51b100225a7a7be4c"
+        },
+        {
+          "file": "native/raspberry_light_12.png",
+          "theme": "light",
+          "frame": 19,
+          "countdown_seconds": 12,
+          "sha256": "41d299ea142dfa77436b16b4d3cc60769071fe91e7fb33d66345232ccd434758"
+        },
+        {
+          "file": "native/raspberry_light_10.png",
+          "theme": "light",
+          "frame": 20,
+          "countdown_seconds": 10,
+          "sha256": "ee5facc3fe430c2df8ff4fd1793692c24ea972d4e2ee647cd3de20546b39ff25"
+        },
+        {
+          "file": "native/raspberry_light_8.png",
+          "theme": "light",
+          "frame": 21,
+          "countdown_seconds": 8,
+          "sha256": "7d24f00534c6fa1a588e01b24f6d93e601fead6fa937a7f85d68c89a91476158"
+        },
+        {
+          "file": "native/raspberry_light_6.png",
+          "theme": "light",
+          "frame": 22,
+          "countdown_seconds": 6,
+          "sha256": "9f30645e1a3e4966289c90903065d8d175e151b564417ffba5debd259914fe3e"
+        },
+        {
+          "file": "native/raspberry_light_4.png",
+          "theme": "light",
+          "frame": 23,
+          "countdown_seconds": 4,
+          "sha256": "2c3ea5b0b83bc6b6c8cdb0194feb6218b14e4098b5c2b4061b0b88100f494c15"
+        },
+        {
+          "file": "native/raspberry_light_2.png",
+          "theme": "light",
+          "frame": 24,
+          "countdown_seconds": 2,
+          "sha256": "774e44765ddc4877da1a7004df72976459a14c7f11738c55c4c07e6578a83347"
+        },
+        {
+          "file": "native/raspberry_light_0.png",
+          "theme": "light",
+          "frame": 25,
+          "countdown_seconds": 0,
+          "sha256": "8bca1f0a959025ae8ed2611ed629185e9cb2e9f1cf1669f3b5441d46390093c5"
+        },
+        {
+          "file": "native/raspberry_dark_48.png",
+          "theme": "dark",
+          "frame": 1,
+          "countdown_seconds": 48,
+          "sha256": "526f989aac7a89a4ed0c3abd0d9dc01db4430a15be1d46eec8af0c12b2d826cd"
+        },
+        {
+          "file": "native/raspberry_dark_46.png",
+          "theme": "dark",
+          "frame": 2,
+          "countdown_seconds": 46,
+          "sha256": "2f703736ee0d48b1e36fa092509adad2f843af5da0f952b98d244186ff2a3809"
+        },
+        {
+          "file": "native/raspberry_dark_44.png",
+          "theme": "dark",
+          "frame": 3,
+          "countdown_seconds": 44,
+          "sha256": "f43b85955e7eab3458114f2104390bcd239f8ef70dcca38f17396e6c7e51b417"
+        },
+        {
+          "file": "native/raspberry_dark_42.png",
+          "theme": "dark",
+          "frame": 4,
+          "countdown_seconds": 42,
+          "sha256": "c258d89ac72bf738c2386ac711546c7cc3fbf6aa463c3eee9db54618898aa582"
+        },
+        {
+          "file": "native/raspberry_dark_40.png",
+          "theme": "dark",
+          "frame": 5,
+          "countdown_seconds": 40,
+          "sha256": "f19d8cfa25511a7cec4d0abdff80186c5ae56e6c83bdce3b4d587ee1f2394aa3"
+        },
+        {
+          "file": "native/raspberry_dark_38.png",
+          "theme": "dark",
+          "frame": 6,
+          "countdown_seconds": 38,
+          "sha256": "c81c478ae7758e7e48f18df03ff8a131d5381bed076a81b958cb4938fc49c3a9"
+        },
+        {
+          "file": "native/raspberry_dark_36.png",
+          "theme": "dark",
+          "frame": 7,
+          "countdown_seconds": 36,
+          "sha256": "5fa5d6cd83332638687e4e5ab8b44baf003c1e80100630e2568ad8032a1bf677"
+        },
+        {
+          "file": "native/raspberry_dark_34.png",
+          "theme": "dark",
+          "frame": 8,
+          "countdown_seconds": 34,
+          "sha256": "5b91b5be4bb53bd15248bdc9ec9649c55579d739536d6929002bb7a28840bb13"
+        },
+        {
+          "file": "native/raspberry_dark_32.png",
+          "theme": "dark",
+          "frame": 9,
+          "countdown_seconds": 32,
+          "sha256": "c3a5069447bb5be594e3ca1df9d8b0e62611f5585c8905184d8a40407b002a67"
+        },
+        {
+          "file": "native/raspberry_dark_30.png",
+          "theme": "dark",
+          "frame": 10,
+          "countdown_seconds": 30,
+          "sha256": "24a26af574799a9819369b66a67f84ff31ae5b8ab471431a78c5369dc0cdf99e"
+        },
+        {
+          "file": "native/raspberry_dark_28.png",
+          "theme": "dark",
+          "frame": 11,
+          "countdown_seconds": 28,
+          "sha256": "5ef161e4c735e01591960477b967ab7dd3cdb6c7dd14b883800ad32dac389dd1"
+        },
+        {
+          "file": "native/raspberry_dark_26.png",
+          "theme": "dark",
+          "frame": 12,
+          "countdown_seconds": 26,
+          "sha256": "cd9f5a6361a2fdea3e3717899e5f363c28eb82d84af92350c09cb52207776c72"
+        },
+        {
+          "file": "native/raspberry_dark_24.png",
+          "theme": "dark",
+          "frame": 13,
+          "countdown_seconds": 24,
+          "sha256": "ebd12cc92e66b8fcafe1a0234037c62f1969574efac7bdfd955bd7d4084bccda"
+        },
+        {
+          "file": "native/raspberry_dark_22.png",
+          "theme": "dark",
+          "frame": 14,
+          "countdown_seconds": 22,
+          "sha256": "090316b374a21906f122c06b0536b57026974ce16dbae4b7bb8cfe01946a7a88"
+        },
+        {
+          "file": "native/raspberry_dark_20.png",
+          "theme": "dark",
+          "frame": 15,
+          "countdown_seconds": 20,
+          "sha256": "1b1f2ead0e518c80959bb00d52c26d00a86d587ee034a557cdbf65da703527ac"
+        },
+        {
+          "file": "native/raspberry_dark_18.png",
+          "theme": "dark",
+          "frame": 16,
+          "countdown_seconds": 18,
+          "sha256": "ba66e032da3488f0ca88b1376946a70eaf4d7c24537f694af5d97314da919111"
+        },
+        {
+          "file": "native/raspberry_dark_16.png",
+          "theme": "dark",
+          "frame": 17,
+          "countdown_seconds": 16,
+          "sha256": "b1a7630559f34bd12e925eff07527613f23a884d89bf7eff9eb05219d7e8d796"
+        },
+        {
+          "file": "native/raspberry_dark_14.png",
+          "theme": "dark",
+          "frame": 18,
+          "countdown_seconds": 14,
+          "sha256": "e1a67caa38cc63726ca4dec0c62397ded60bfcf2bedec4a35599ad5f3faad1f8"
+        },
+        {
+          "file": "native/raspberry_dark_12.png",
+          "theme": "dark",
+          "frame": 19,
+          "countdown_seconds": 12,
+          "sha256": "e128144e1eea5592943bb107f8a746690213e5a8ef054ef8e10754c8f6a14a84"
+        },
+        {
+          "file": "native/raspberry_dark_10.png",
+          "theme": "dark",
+          "frame": 20,
+          "countdown_seconds": 10,
+          "sha256": "df839a746be0520332c0547bfd9de67f31c763416f797cfc471a39e2d2257690"
+        },
+        {
+          "file": "native/raspberry_dark_8.png",
+          "theme": "dark",
+          "frame": 21,
+          "countdown_seconds": 8,
+          "sha256": "16d44f5f1e3d23763ceaead19d9e84128e9e1389f413b6d35f944d92895b4401"
+        },
+        {
+          "file": "native/raspberry_dark_6.png",
+          "theme": "dark",
+          "frame": 22,
+          "countdown_seconds": 6,
+          "sha256": "fffb7c4be2ad0190cf02e6f4316c4caf731578f4094cfdf96e3299a90b7c15e4"
+        },
+        {
+          "file": "native/raspberry_dark_4.png",
+          "theme": "dark",
+          "frame": 23,
+          "countdown_seconds": 4,
+          "sha256": "7e9df5c2d744723d09d6cb828cf9997825acbbd19c5b09198423892a43ac4534"
+        },
+        {
+          "file": "native/raspberry_dark_2.png",
+          "theme": "dark",
+          "frame": 24,
+          "countdown_seconds": 2,
+          "sha256": "92913e7b982c800fcc87dba1ecdcddd0def20d9d79ceaffa03511e66dd0401b6"
+        },
+        {
+          "file": "native/raspberry_dark_0.png",
+          "theme": "dark",
+          "frame": 25,
+          "countdown_seconds": 0,
+          "sha256": "c3b2dba183a68649cacd9eb17bed72360063f915429edf6aac8e991917298c3e"
+        }
+      ],
+      "instrumentation_attempts": [
+        {
+          "log": "instrumentation.log",
+          "log_sha256": "502e2a1854dde8bba0c4bb19224ecad224e85dc675902cc5b941585eea2fb352",
+          "status": "passed",
+          "selected_validation_run": true
+        }
+      ],
+      "instrumentation_elapsed_seconds": 15.747
+    },
+    "device": {
+      "android_version": "16",
+      "density_dpi": "Physical density: 420",
+      "supplied_evidence": {
+        "device": "emulator-5554",
+        "avd": "Medium_Phone",
+        "android_release": "16",
+        "api_level": "36",
+        "density": "Physical density: 420",
+        "display_size": "Physical size: 1080x2400",
+        "claim_agent": "raspberrybloom-review",
+        "launched_headless_for_this_review": false
+      }
+    },
+    "shared_checkout": {
+      "status": "not_run_or_not_supplied",
+      "logs": {},
+      "detekt_finding_count": 0,
+      "detekt_findings": [],
+      "compile_error_count": 0,
+      "compile_errors": [],
+      "raspberry_or_shared_renderer_findings": [],
+      "scope_note": "Counts describe only this QA directory's supplied logs; no clean shared-checkout claim is inferred from the isolated build."
+    },
+    "full_unit_suite": {
+      "rerun": false
+    },
+    "boundaries": [
+      "Native evidence is emulator Compose rendering at the supplied Android version/density, not physical-device coverage.",
+      "Tests render exact paused countdown poses with isRunning=false and dynamicColor=false; running tween timing and dynamic colors are not validated.",
+      "The GIF is an offline review playback assembled from native still captures at 480ms per pose, not a live recording of the app animation.",
+      "All native pixels participate in the change check; >64 changed pixels is a distinctness check, not proof of perceptual polish.",
+      "The isolated snapshot passed build/Detekt; shared-checkout results are recorded only when current logs are supplied. Full unit suite was not rerun."
+    ],
+    "artifact_generation": {
+      "display_capture_size_px": 148,
+      "operation": "whole-capture resize and labeled layout only",
+      "gif_frames": 25,
+      "gif_duration_ms_per_frame": 480,
+      "preview_frames": [
+        1,
+        10,
+        18,
+        25
+      ]
+    },
+    "artifacts": {
+      "native_light.png": {
+        "sha256": "79064f6f9dacf7f484e50b87f8831e2bfa01bcff016e151eb93908cb18df7084"
+      },
+      "native_dark.png": {
+        "sha256": "045e1c5d80c80c56b589a0eb846f590ad52319a94786ccdbb7cab129886261c8"
+      },
+      "native-raspberry-playback.gif": {
+        "sha256": "fab794768b0732a38f2d162aded2ad228d7653fbb2fd978ba1b924955a577996"
+      },
+      "native-raspberry-preview.png": {
+        "sha256": "6c017c847d1d8db1c976a9a858ffd6ca8db78cf0b7b83824feeccb4b8a40d01f"
+      }
+    },
+    "evidence_hashes": {
+      "instrumentation.log": "502e2a1854dde8bba0c4bb19224ecad224e85dc675902cc5b941585eea2fb352",
+      "build-snapshot.json": "93554c2ebd6292f0bebb51a564c5f75eacce6384d3b18c16b8d4bdcf96f99559",
+      "isolated-build.log": "b80fbe3e0e39deb560114526bdb57845ff99c6b4933588f68265e06bd510bb25",
+      "isolated-detekt.xml": "f491e274f0d208f81c3edbc7c1097c30db590a3822fcf579468ac814d9ccc62b",
+      "device-info.json": "6dfef95d1b80f604bbba0945b8a0f30786cf7aeb6bb1bde85d060d12a3c5e571"
+    }
+  },
+  "native_visual_review": {
+    "reviewer": "Astra botanical visual review",
+    "candidate": "native selected Raspberry",
+    "asset_sha256": "3562683749a341e9c4f977eab7e19ef68acd9e92931bfc73905ed6fd03207976",
+    "prepared_sha256": "3562683749a341e9c4f977eab7e19ef68acd9e92931bfc73905ed6fd03207976",
+    "verdict": "accept_with_minor_polish_residuals",
+    "accepted": true,
+    "blockers": [],
+    "evidence": [
+      "native_light.png",
+      "native_dark.png",
+      "native-raspberry-preview.png",
+      "native/raspberry_light_22.png",
+      "native/raspberry_dark_12.png",
+      "selected-review.json",
+      "original-final.png",
+      "device-info.json",
+      "instrumentation.log"
+    ],
+    "boundary": "All25 paused actual Compose poses and all24 adjacent transitions visually reviewed in both theme contact sheets at148px, with native389px spot inspection of repaired F14 light and F19 dark. Android16/API36 emulator at420dpi. These are paused-state captures, not a live timed animation capture; no claim about running tween timing, performance, physical-device behavior or other densities. Reviewer used saved files only and did not operate the device.",
+    "native_capture_checks": {
+      "themes": {
+        "light": {
+          "captures": 25,
+          "distinct_adjacent_pairs": 24
+        },
+        "dark": {
+          "captures": 25,
+          "distinct_adjacent_pairs": 24
+        }
+      },
+      "capture_sizes": [
+        [
+          389,
+          389
+        ]
+      ],
+      "total_captures": 50,
+      "distinct_adjacent_pairs": 48,
+      "instrumentation_log": "OK (2 tests), 15.747s",
+      "preview_finish_comparisons": "Parent validation reports two exact matches; this review visually confirms the shown finish, without independently recomputing those two comparisons."
+    },
+    "findings": [
+      "Actual Compose rendering agrees with the selected static review; no new clipping, visible alpha defect or rendering regression.",
+      "Seven L3/R4 fruiting sites persist from F10 through F25, growing into clearly aggregate raspberries with forward ripening.",
+      "White crown flower stays open F12-F25, including native repaired F14/F15/F19.",
+      "Early F7-F9 bridge stages leaves and lateral fruiting branches before the fuller F10 state; no meaningful leaf loss or replanting.",
+      "F13->F14 and F18->F19 show small crown/leaf placement variation, not meaningful berry shrink. Bean/soil registration and scale remain coherent.",
+      "Final finish preserves the original reference intent: rich asymmetric seven-berry cane, serrated leafy foliage, white flower, broad split bean and soil ring; it is a reconstruction, not historical pixel reuse."
+    ],
+    "residuals": [
+      {
+        "frames": "F13->F14->F16; F18->F19->F20",
+        "issue": "Small crown height, leaf placement and flower placement shifts from native whole-pose repairs are visible at source size and subtly at148px. They do not read as fruit deletion, replanting or meaningful growth reversal.",
+        "severity": "minor polish"
+      },
+      {
+        "frames": "F9->F10",
+        "issue": "A fuller canopy/bud step and slight painted-material difference remain at the bridge-to-bank join, now supported by preceding branch development.",
+        "severity": "minor polish"
+      },
+      {
+        "frames": "F10->F11; F23->F25",
+        "issue": "Subtle swelling/maturation changes; late motion is deliberately quieter after the main color payoff.",
+        "severity": "minor pacing"
+      }
+    ],
+    "transitions": [
+      {
+        "from": 1,
+        "to": 2,
+        "note": "F2 adds a green shoot above the fixed cracked bean.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 2,
+        "to": 3,
+        "note": "The shoot lengthens; bean and soil remain registered.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 3,
+        "to": 4,
+        "note": "A first left leaf opens around the taller shoot.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 4,
+        "to": 5,
+        "note": "The retained first leaf expands and side leaves unfold.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 5,
+        "to": 6,
+        "note": "Stem and leaves extend cumulatively; no lost basal leaflets or crown reclosure.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 6,
+        "to": 7,
+        "note": "New bridge pose raises the crown and opens another lateral leaf; lower pair remains.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 7,
+        "to": 8,
+        "note": "Crown opens into a fuller upper leaf pair; established lower foliage persists.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 8,
+        "to": 9,
+        "note": "Side branches and several green fruiting buds appear, separating branch formation from the later full seven-node state.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 9,
+        "to": 10,
+        "note": "Canopy fills and all seven L3/R4 fruiting sites become distinct; bean stays similarly sized. Slight painted-material change at the bank entry.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 10,
+        "to": 11,
+        "note": "Seven green buds swell subtly, retaining the same positions.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 11,
+        "to": 12,
+        "note": "Seven aggregate green fruit enlarge and the white crown flower opens.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 12,
+        "to": 13,
+        "note": "Seven green berries continue swelling; flower and branching remain.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 13,
+        "to": 14,
+        "note": "Repaired pose keeps the open white flower and seven fruit. Crown is slightly lower/tighter and leaves shift, but fruit do not materially shrink and base scale remains coherent.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 14,
+        "to": 15,
+        "note": "Seven fruit and open flower persist; subtle green-fruit swelling/refinement.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 15,
+        "to": 16,
+        "note": "Canopy returns to the neighboring bank placement; left berries pale and enlarge. Small crown placement recovery is visible, without disappearance or growth reversal.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 16,
+        "to": 17,
+        "note": "Seven fruit remain; left three pale further and gain mature aggregate volume.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 17,
+        "to": 18,
+        "note": "Left three turn pink while all four right fruit remain green.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 18,
+        "to": 19,
+        "note": "Repaired pose retains the open flower and all seven fruit. Left three deepen pink and inner-right turns pink; crown sits slightly lower but fruit remain comparably plump.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 19,
+        "to": 20,
+        "note": "Left three deepen red, right fruit continue warming; open flower retained. Slight crown placement recovery.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 20,
+        "to": 21,
+        "note": "Upper-right/inner-right ripen red; far-right and lower-right remain pink.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 21,
+        "to": 22,
+        "note": "Far-right ripens red and lower-right stays peach-pink; seven fruit remain.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 22,
+        "to": 23,
+        "note": "Lower-right advances to red-pink; the rest retain mature red.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 23,
+        "to": 24,
+        "note": "Lower-right deepens red; modest maturation change.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      },
+      {
+        "from": 24,
+        "to": 25,
+        "note": "Quiet mature settling/highlight change, with seven red berries and open flower retained.",
+        "native_review": "Confirmed acceptable in both actual Compose theme contacts; any minor residual is stated in the note."
+      }
+    ]
+  },
+  "scope": {
+    "app_resources_replaced": 1,
+    "description_changes": false,
+    "renderer_changes": false,
+    "animation_id_changed": false,
+    "other_bloom_atlases_changed": false
+  },
+  "validation_boundary": "Prepared contacts approximate filtering and halo at148px. Paused native Compose captures verify rendering and adjacent poses, not live tween timing, dynamic-color or physical-device playback. Full unit suite not rerun.",
+  "source_reproduction_sha256": "3562683749a341e9c4f977eab7e19ef68acd9e92931bfc73905ed6fd03207976"
+}
