@@ -1,0 +1,92 @@
+[
+  {
+    "key": "01-focus-timers",
+    "direction": "FOCUS",
+    "scenario": "timers",
+    "file": "01-focus-timers.png",
+    "source": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-ec8ede1a-5f81-4bad-ad32-3b1484b97d80.png",
+    "reference": "C:\\Users\\adam-\\GitHub\\StarlitCoffee\\src\\docs\\brewing\\design\\2026-10-08-flow-directions\\01-focus.png",
+    "corrected": false
+  },
+  {
+    "key": "01-focus-guided",
+    "direction": "FOCUS",
+    "scenario": "guided",
+    "file": "01-focus-guided.png",
+    "source": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-095e6de0-ed67-4ac4-8d41-12e75e1848db.png",
+    "reference": "C:\\Users\\adam-\\GitHub\\StarlitCoffee\\src\\docs\\brewing\\design\\2026-10-08-flow-directions\\01-focus.png",
+    "corrected": false
+  },
+  {
+    "key": "02-timeline-timers",
+    "direction": "BREW TIMELINE",
+    "scenario": "timers",
+    "file": "02-timeline-timers.png",
+    "source": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-dfdba82d-e5f0-4dcf-8918-7ea6bf7e670e.png",
+    "reference": "C:\\Users\\adam-\\GitHub\\StarlitCoffee\\src\\docs\\brewing\\design\\2026-10-08-flow-directions\\02-timeline.png",
+    "corrected": false
+  },
+  {
+    "key": "02-timeline-guided",
+    "direction": "BREW TIMELINE",
+    "scenario": "guided",
+    "file": "02-timeline-guided.png",
+    "source": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-6089e079-5924-4b1a-93d8-8380dee86d3b.png",
+    "reference": "C:\\Users\\adam-\\GitHub\\StarlitCoffee\\src\\docs\\brewing\\design\\2026-10-08-flow-directions\\02-timeline.png",
+    "corrected": false
+  },
+  {
+    "key": "03-workspace-timers",
+    "direction": "RECIPE WORKSPACE",
+    "scenario": "timers",
+    "file": "03-workspace-timers.png",
+    "source": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-5edf4703-6a07-451e-bdbc-b2da0a04d439.png",
+    "reference": "C:\\Users\\adam-\\GitHub\\StarlitCoffee\\src\\docs\\brewing\\design\\2026-10-08-flow-directions\\03-workspace.png",
+    "corrected": false
+  },
+  {
+    "key": "03-workspace-guided",
+    "direction": "RECIPE WORKSPACE",
+    "scenario": "guided",
+    "file": "03-workspace-guided.png",
+    "source": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-e0c1b646-1324-486e-bd7e-cba1fa0ccabe.png",
+    "reference": "C:\\Users\\adam-\\GitHub\\StarlitCoffee\\src\\docs\\brewing\\design\\2026-10-08-flow-directions\\03-workspace.png",
+    "corrected": false
+  },
+  {
+    "key": "04-ritual-timers",
+    "direction": "VISUAL RITUAL",
+    "scenario": "timers",
+    "file": "04-ritual-timers.png",
+    "source": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-0b175d9f-7dc8-4a1a-8595-9740cabdbea5.png",
+    "reference": "C:\\Users\\adam-\\GitHub\\StarlitCoffee\\src\\docs\\brewing\\design\\2026-10-08-flow-directions\\04-ritual.png",
+    "corrected": true
+  },
+  {
+    "key": "04-ritual-guided",
+    "direction": "VISUAL RITUAL",
+    "scenario": "guided",
+    "file": "04-ritual-guided.png",
+    "source": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-9bda96f1-2906-455c-a096-6d91ff2fa292.png",
+    "reference": "C:\\Users\\adam-\\GitHub\\StarlitCoffee\\src\\docs\\brewing\\design\\2026-10-08-flow-directions\\04-ritual.png",
+    "corrected": true
+  },
+  {
+    "key": "05-instrument-timers",
+    "direction": "INSTRUMENT PANEL",
+    "scenario": "timers",
+    "file": "05-instrument-timers.png",
+    "source": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-4829dbb8-7362-40c2-b975-ae744f33073e.png",
+    "reference": "C:\\Users\\adam-\\GitHub\\StarlitCoffee\\src\\docs\\brewing\\design\\2026-10-08-flow-directions\\05-instrument.png",
+    "corrected": false
+  },
+  {
+    "key": "05-instrument-guided",
+    "direction": "INSTRUMENT PANEL",
+    "scenario": "guided",
+    "file": "05-instrument-guided.png",
+    "source": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-3c5dd339-b636-47b3-bcae-1361a328b269.png",
+    "reference": "C:\\Users\\adam-\\GitHub\\StarlitCoffee\\src\\docs\\brewing\\design\\2026-10-08-flow-directions\\05-instrument.png",
+    "corrected": false
+  }
+]

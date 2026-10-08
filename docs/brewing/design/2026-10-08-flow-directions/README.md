@@ -4,6 +4,8 @@ Created 2026-10-08 using the built-in image generator. These are visual proposal
 
 Each board compares a short brew ready to start bloom with a cold brew already steeping. The intent is to compare information structure as well as visual style.
 
+Follow-up: [ten scenario boards, two per direction](scenario-pairs/README.md) separately explore basic and concurrent timers, and learning a method while brewing with another long brew still running.
+
 | Direction | Central idea | Trade-off |
 | --- | --- | --- |
 | 01 Focus | One current instruction and quantity, compact recipe facts, one primary control. Closest to the older timer. | Upcoming stages need a disclosure. |
