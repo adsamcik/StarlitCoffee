@@ -3,6 +3,7 @@ package com.adsamcik.starlitcoffee.notification
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.NotificationManager
+import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.pm.PackageManager
@@ -44,6 +45,8 @@ class DurableBrewSessionStatusNotifier(
     context: Context,
     private val nowWallClockMillis: () -> Long = System::currentTimeMillis,
     private val isForegroundVisible: (String) -> Boolean = BrewSessionVisibilityRegistry::isVisible,
+    private val notificationDelivery: ((SessionId, Notification) -> Unit)? = null,
+    private val notificationCleared: ((SessionId) -> Unit)? = null,
 ) : BrewSessionStatusNotifier {
     private val appContext = context.applicationContext
     private val releaseGate by lazy {
@@ -78,6 +81,8 @@ class DurableBrewSessionStatusNotifier(
     }
 
     override fun clear(sessionId: SessionId) {
+        notificationCleared?.let { it(sessionId); return }
+        BrewTimerNotificationService.remove(sessionId.value)
         runCatching {
             NotificationManagerCompat.from(appContext).cancel(
                 durableBrewStatusNotificationTag(sessionId.value),
@@ -101,10 +106,8 @@ class DurableBrewSessionStatusNotifier(
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
-        val notification = NotificationCompat.Builder(appContext, NotificationChannels.BREW_STATUS_ID)
-            .withStarlitSmallIcon()
-            .setContentTitle(appContext.localizedBrewMethodLabel(session.executionContext.logPresentation.methodLabel))
-            .setContentText(listOf(session.recipe.reviewedGuide?.let { guide ->
+        val title = appContext.localizedBrewMethodLabel(session.executionContext.logPresentation.methodLabel)
+        val body = listOf(session.recipe.reviewedGuide?.let { guide ->
                 guide.steps.firstOrNull { guide.contentId(it) == session.runtime.currentStage?.definition?.contentId }?.title()
             } ?: appContext.getString(presentation.action.labelResource()),
                 appContext.getString(when (presentation.clock) {
@@ -113,7 +116,11 @@ class DurableBrewSessionStatusNotifier(
                     DurableBrewStatusClock.TIMING_REACHED -> R.string.label_brew_activity_timing_reached
                     DurableBrewStatusClock.UNKNOWN_START -> R.string.label_brew_start_unknown
                     DurableBrewStatusClock.EXTRACTION_ENDED -> R.string.label_brew_extraction_ended
-                })).joinToString(" · "))
+                })).joinToString(" · ")
+        val builder = NotificationCompat.Builder(appContext, NotificationChannels.BREW_STATUS_ID)
+            .withStarlitSmallIcon()
+            .setContentTitle(title)
+            .setContentText(body)
             .setContentIntent(pendingIntent)
             .setWhen(presentation.chronometerWallClockMillis ?: 0L)
             .setShowWhen(presentation.chronometerWallClockMillis != null)
@@ -123,17 +130,33 @@ class DurableBrewSessionStatusNotifier(
             .setOnlyAlertOnce(true)
             .setCategory(NotificationCompat.CATEGORY_PROGRESS)
             .setPriority(NotificationCompat.PRIORITY_LOW)
+        // A rejected background-service start retains Android's independently ticking clock.
+        val fallback = builder.build()
+        val notification = builder
+            .setShowWhen(false)
+            .setUsesChronometer(false)
+            .setStyle(NotificationCompat.DecoratedCustomViewStyle())
+            .setCustomContentView(brewTimerRemoteViews(appContext, R.layout.notification_brew_timer, title, body, presentation))
+            .setCustomBigContentView(brewTimerRemoteViews(appContext, R.layout.notification_brew_timer_expanded, title, body, presentation))
             .build()
+        deliver(sessionId, notification, fallback)
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun deliver(sessionId: SessionId, notification: Notification, fallback: Notification) {
         runCatching {
+            notificationDelivery?.let { it(sessionId, notification); return }
+            if (BrewTimerNotificationService.show(appContext, sessionId.value, notification, fallback)) return
             NotificationManagerCompat.from(appContext).notify(
                 durableBrewStatusNotificationTag(sessionId.value),
                 STATUS_NOTIFICATION_ID,
-                notification,
+                fallback,
             )
         }.onFailure { error ->
             // Permission can be revoked after the preflight check. The durable
             // session stays intact and a later foreground/background cycle can retry.
             Tracebox.log.error(error, DurableBrewSessionStatusNotifierTraceboxTemplates.UNABLE_TO_POST_DURABLE_BREW_STATUS_NOTIFICATION)
+            notificationCleared?.invoke(sessionId)
         }
     }
 

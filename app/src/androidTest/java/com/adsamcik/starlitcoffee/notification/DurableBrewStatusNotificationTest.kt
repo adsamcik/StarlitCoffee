@@ -30,12 +30,15 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
-/** Real OS posting/chronometer flags and PendingIntent identity; no brewing DB fixtures are inserted. */
+/** Real OS custom-content posting and PendingIntent identity through the delivery seam.
+ * No brewing DB fixtures are inserted; this class does not exercise service lifetime or refresh.
+ */
 @RunWith(AndroidJUnit4::class)
 @SdkSuppress(minSdkVersion = 33)
 class DurableBrewStatusNotificationTest {
@@ -70,7 +73,8 @@ class DurableBrewStatusNotificationTest {
             notifier.publish(session)
             val notification = posted(runtime.sessionId).notification
             assertEquals(guide.methodName, notification.extras.getCharSequence(Notification.EXTRA_TITLE).toString())
-            assertTrue(notification.extras.getBoolean(Notification.EXTRA_SHOW_CHRONOMETER))
+            assertFalse(notification.extras.getBoolean(Notification.EXTRA_SHOW_CHRONOMETER))
+            assertNotNull(notification.contentView)
             assertTrue(notification.extras.getBoolean(Notification.EXTRA_CHRONOMETER_COUNT_DOWN))
             assertEquals(now + 600_000L, notification.`when`)
             assertTrue(notification.flags and Notification.FLAG_ONLY_ALERT_ONCE != 0)
@@ -90,7 +94,7 @@ class DurableBrewStatusNotificationTest {
 
     @After
     fun restoreOwnedState() {
-        ownedSessions.forEach(DurableBrewSessionStatusNotifier(context)::clear)
+        ownedSessions.forEach(notifier()::clear)
         ownedSessions.forEach { id ->
             listOf("durable-brew-cue:${id.value}", "durable-brew-timer:${id.value}").forEach { tag ->
                 manager.cancel(tag, 20_002)
@@ -163,7 +167,7 @@ class DurableBrewStatusNotificationTest {
     }
 
     @Test
-    fun guidePauseSilencesStageCueWhileOsChronometerKeepsItsOriginalDeadline() = runBlocking<Unit> {
+    fun guidePauseSilencesStageCueWhileCustomStatusKeepsItsOriginalDeadline() = runBlocking<Unit> {
         val session = session(BrewMethod.V60).let { it.copy(runtime = it.runtime.copy(isGuidancePaused = true)) }
         val effect = PendingSessionEffect.StageAlert(
             effectId = SessionEffectId("native-guide-pause-${UUID.randomUUID()}"),
@@ -177,7 +181,8 @@ class DurableBrewStatusNotificationTest {
         notifier().publish(session)
         val status = posted(session.runtime.sessionId).notification
         assertEquals(now + 45_000L, status.`when`)
-        assertTrue(status.extras.getBoolean(Notification.EXTRA_SHOW_CHRONOMETER))
+        assertFalse(status.extras.getBoolean(Notification.EXTRA_SHOW_CHRONOMETER))
+        assertNotNull(status.contentView)
         assertFalse(manager.activeNotifications.any { it.id == alertId })
         assertEquals(BrewSessionStatus.RUNNING, session.runtime.status)
     }
@@ -191,7 +196,8 @@ class DurableBrewStatusNotificationTest {
             val notification = posted(session.runtime.sessionId).notification
             assertEquals(context.localizedBrewMethodLabel(method.name),
                 notification.extras.getCharSequence(Notification.EXTRA_TITLE).toString())
-            assertTrue(notification.extras.getBoolean(Notification.EXTRA_SHOW_CHRONOMETER))
+            assertFalse(notification.extras.getBoolean(Notification.EXTRA_SHOW_CHRONOMETER))
+            assertNotNull(notification.contentView)
             assertEquals(method.hasBloom || method == BrewMethod.COLD_BREW,
                 notification.extras.getBoolean(Notification.EXTRA_CHRONOMETER_COUNT_DOWN))
             when {
@@ -231,7 +237,7 @@ class DurableBrewStatusNotificationTest {
     @Test
     fun focusedEndedAndReleaseGatedBrewsWithdrawOnlyTheirOwnStatus() {
         val hidden = mutableSetOf<String>()
-        val notifier = DurableBrewSessionStatusNotifier(context, { now }, hidden::contains)
+        val notifier = notifier(hidden::contains)
         val first = session(BrewMethod.V60)
         val second = session(BrewMethod.COLD_BREW)
         notifier.publish(first)
@@ -252,7 +258,11 @@ class DurableBrewStatusNotificationTest {
         assertFalse(isPosted(first.runtime.sessionId))
     }
 
-    private fun notifier() = DurableBrewSessionStatusNotifier(context, { now }, { false })
+    private fun notifier(visible: (String) -> Boolean = { false }) = DurableBrewSessionStatusNotifier(
+        context, { now }, visible,
+        notificationDelivery = { id, notification -> manager.notify(durableBrewStatusNotificationTag(id.value), 20_001, notification) },
+        notificationCleared = { id -> manager.cancel(durableBrewStatusNotificationTag(id.value), 20_001) },
+    )
 
     private fun posted(id: SessionId): android.service.notification.StatusBarNotification {
         repeat(50) {

@@ -18,6 +18,7 @@
     -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
 
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 
@@ -83,6 +84,14 @@
         </activity>
 
         <receiver android:name=".data.work.BrewDeadlineReceiver" android:exported="false" />
+        <service
+            android:name=".notification.BrewTimerNotificationService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Display updates for user-started brewing timers: minute precision until the final three minutes, then second precision." />
+        </service>
         <receiver android:name=".data.work.BrewClockRecoveryReceiver" android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

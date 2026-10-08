@@ -1,0 +1,19 @@
+{
+  "source_sha256": "cba21d2e6d11b1c2cde7aeeee9ac84e125f75fdaa7897bf30f0e74c876784a52",
+  "crop_bounds": [
+    242,
+    273,
+    444,
+    421
+  ],
+  "paths": {
+    "outline": {
+      "svg_sha256": "966eb17139ca8c32e61287601ea7d11edc878bae74af31e172d4a35eb15338a5",
+      "filled_pixels": 4192
+    },
+    "bowl": {
+      "svg_sha256": "43eacabb36b0f7ba8fba31afff4f9dfeadad1b6dfee76751c0546e96dca2b1ff",
+      "filled_pixels": 15169
+    }
+  }
+}

@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Visual brew notifications** — a centered coffee cup fills with timer progress,
+  with compact hour/minute labels and seconds shown during the final three minutes.
+  More space is available for brew and stage titles.
 - **Cup preset visibility** — hide the cup row from Settings → Cup presets for
   a simpler calculator. The choice is remembered, with brewer, ratio and delete
   controls still available above the keypad.

@@ -48,6 +48,22 @@ internal fun durableBrewStatusPresentation(
         DurableBrewStatusClock.TIMING_REACHED, DurableBrewStatusClock.UNKNOWN_START,
         DurableBrewStatusClock.EXTRACTION_ENDED -> null
     }
+    return DurableBrewStatusPresentation(
+        stage.action, clock, chronometer,
+        timeMillis = if (clock == DurableBrewStatusClock.ELAPSED) {
+            presentation.totalActiveElapsedMillis
+        } else remaining ?: 0L,
+        cupFillFraction = cupFillFraction(runtime, presentation, remaining, clock),
+    )
+}
+
+private fun cupFillFraction(
+    runtime: SessionRuntimeState,
+    presentation: ActiveBrewSessionPresentation.Available,
+    remaining: Long?,
+    clock: DurableBrewStatusClock,
+): Float? {
+    val stage = presentation.currentStage ?: return null
     val stageElapsed = stage.elapsedActiveMillis
     val duration = presentation.userTimer?.durationMillis ?: maxOf(
         when (val completion = stage.completion) {
@@ -59,16 +75,9 @@ internal fun durableBrewStatusPresentation(
         (runtime.currentStage?.definition?.advanceConstraint?.notBeforeBrewElapsedMillis ?: 0L) -
             (presentation.totalActiveElapsedMillis - stageElapsed),
     )
-    val fill = if (remaining != null && duration > 0L &&
+    return if (remaining != null && duration > 0L &&
         clock in setOf(DurableBrewStatusClock.COUNTDOWN, DurableBrewStatusClock.TIMING_REACHED)
     ) {
         (1.0 - remaining.toDouble() / duration).coerceIn(0.0, 1.0).toFloat()
     } else null
-    return DurableBrewStatusPresentation(
-        stage.action, clock, chronometer,
-        timeMillis = if (clock == DurableBrewStatusClock.ELAPSED) {
-            presentation.totalActiveElapsedMillis
-        } else remaining ?: 0L,
-        cupFillFraction = fill,
-    )
 }

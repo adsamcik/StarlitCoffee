@@ -1,0 +1,29 @@
+{
+  "rendering": "Cairo SVG contour review; native rendering is a separate instrumentation check",
+  "notification_icon_sizes": [
+    40,
+    48
+  ],
+  "sizes": {
+    "24": {
+      "binary_outline_iou": 0.6933,
+      "mean_alpha_error": 0.0361
+    },
+    "32": {
+      "binary_outline_iou": 0.7903,
+      "mean_alpha_error": 0.0341
+    },
+    "40": {
+      "binary_outline_iou": 0.9198,
+      "mean_alpha_error": 0.0199
+    },
+    "48": {
+      "binary_outline_iou": 0.9544,
+      "mean_alpha_error": 0.0096
+    },
+    "202": {
+      "binary_outline_iou": 1.0,
+      "mean_alpha_error": 0.0
+    }
+  }
+}

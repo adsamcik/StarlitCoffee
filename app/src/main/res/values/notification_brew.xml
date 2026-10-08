@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="notification_brew_cup_outline">#303128</color>
+    <color name="notification_brew_cup_fill">#657400</color>
+    <color name="notification_brew_divider">#40303128</color>
+</resources>
