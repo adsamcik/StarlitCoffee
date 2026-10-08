@@ -1,0 +1,18 @@
+[
+  {
+    "key": "minimal-bloom-timers",
+    "file": "minimal-bloom-timers.png",
+    "source": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-5cc5a155-007f-40e5-a064-418008fe00ec.png",
+    "editTarget": "C:\\Users\\adam-\\GitHub\\StarlitCoffee\\src\\docs\\brewing\\design\\2026-10-08-flow-directions\\minimal-baseline\\minimal-timers.png",
+    "artReference": "C:\\Users\\adam-\\GitHub\\StarlitCoffee\\src\\app\\src\\main\\res\\drawable-nodpi\\bloom_coffee_flower_spritesheet.png",
+    "pose": "completed bloom retained during later brewing"
+  },
+  {
+    "key": "minimal-bloom-guided",
+    "file": "minimal-bloom-guided.png",
+    "source": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-550b83ca-6499-42d5-a74d-7b3a3703ffe2.png",
+    "editTarget": "C:\\Users\\adam-\\GitHub\\StarlitCoffee\\src\\docs\\brewing\\design\\2026-10-08-flow-directions\\minimal-baseline\\minimal-guided.png",
+    "artReference": "C:\\Users\\adam-\\GitHub\\StarlitCoffee\\src\\app\\src\\main\\res\\drawable-nodpi\\bloom_coffee_flower_spritesheet.png",
+    "pose": "initial bloom pose before starting"
+  }
+]
