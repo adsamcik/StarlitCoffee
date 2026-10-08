@@ -6,6 +6,7 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.SessionRuntimeState
 import com.adsamcik.starlitcoffee.ui.session.ActiveBrewSessionPresentation
 import com.adsamcik.starlitcoffee.ui.session.ActiveBrewSessionPresentationMapper
 import com.adsamcik.starlitcoffee.ui.session.BrewActivityPresentationMapper
+import com.adsamcik.starlitcoffee.ui.session.BrewStageCompletionPresentation
 
 internal enum class DurableBrewStatusClock { ELAPSED, COUNTDOWN, TIMING_REACHED, UNKNOWN_START, EXTRACTION_ENDED }
 
@@ -14,6 +15,8 @@ internal data class DurableBrewStatusPresentation(
     val action: BrewStageAction,
     val clock: DurableBrewStatusClock,
     val chronometerWallClockMillis: Long?,
+    val timeMillis: Long = 0L,
+    val cupFillFraction: Float? = null,
 )
 
 internal fun durableBrewStatusPresentation(
@@ -45,5 +48,27 @@ internal fun durableBrewStatusPresentation(
         DurableBrewStatusClock.TIMING_REACHED, DurableBrewStatusClock.UNKNOWN_START,
         DurableBrewStatusClock.EXTRACTION_ENDED -> null
     }
-    return DurableBrewStatusPresentation(stage.action, clock, chronometer)
+    val stageElapsed = stage.elapsedActiveMillis
+    val duration = presentation.userTimer?.durationMillis ?: maxOf(
+        when (val completion = stage.completion) {
+            is BrewStageCompletionPresentation.Countdown -> completion.targetElapsedMillis
+            is BrewStageCompletionPresentation.ElapsedRange -> completion.minimumElapsedMillis
+            else -> 0L
+        },
+        runtime.currentStage?.definition?.advanceConstraint?.notBeforeStageElapsedMillis ?: 0L,
+        (runtime.currentStage?.definition?.advanceConstraint?.notBeforeBrewElapsedMillis ?: 0L) -
+            (presentation.totalActiveElapsedMillis - stageElapsed),
+    )
+    val fill = if (remaining != null && duration > 0L &&
+        clock in setOf(DurableBrewStatusClock.COUNTDOWN, DurableBrewStatusClock.TIMING_REACHED)
+    ) {
+        (1.0 - remaining.toDouble() / duration).coerceIn(0.0, 1.0).toFloat()
+    } else null
+    return DurableBrewStatusPresentation(
+        stage.action, clock, chronometer,
+        timeMillis = if (clock == DurableBrewStatusClock.ELAPSED) {
+            presentation.totalActiveElapsedMillis
+        } else remaining ?: 0L,
+        cupFillFraction = fill,
+    )
 }

@@ -42,6 +42,17 @@ class DurableBrewStatusPresentationTest {
     }
 
     @Test
+    fun `cup fills against the same target as the countdown`() {
+        val runtime = runtime(StageCompletionMode.Countdown(60_000L))
+        assertEquals(0f, durableBrewStatusPresentation(runtime, 1_000L)?.cupFillFraction)
+        assertEquals(0.5f, durableBrewStatusPresentation(runtime, 31_000L)?.cupFillFraction)
+        assertEquals(1f, durableBrewStatusPresentation(runtime, 61_000L)?.cupFillFraction)
+        val constrained = runtime(StageCompletionMode.Countdown(10_000L),
+            StageAdvanceConstraint(notBeforeBrewElapsedMillis = 30_000L))
+        assertEquals(0.5f, durableBrewStatusPresentation(constrained, 16_000L)?.cupFillFraction)
+    }
+
+    @Test
     fun `source advance floor remains later than the completion timer`() {
         val runtime = runtime(StageCompletionMode.Countdown(10_000L),
             StageAdvanceConstraint(notBeforeBrewElapsedMillis = 30_000L))
@@ -68,6 +79,7 @@ class DurableBrewStatusPresentationTest {
         ))))
         val presentation = requireNotNull(durableBrewStatusPresentation(runtime, 61_000L))
         assertEquals(DurableBrewStatusClock.ELAPSED, presentation.clock)
+        assertNull(presentation.cupFillFraction)
         assertEquals(1_000L, presentation.chronometerWallClockMillis)
         assertNull(runtime.currentProgress?.actuals?.beverageYieldGrams)
     }
