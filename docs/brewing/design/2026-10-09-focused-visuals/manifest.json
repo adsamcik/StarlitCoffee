@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-09",
+  "generator": "built-in image_gen",
+  "images": [
+    {
+      "file": "02-guided-pour.png",
+      "originalGeneratorFile": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-bcaba934-99ba-49e7-bd44-6a458fd9c5fe.png",
+      "sha256": "566EA8B9E06AAFFCA1808EA98662A0C7BCC60A667EE9D471696C4B0098E8844D",
+      "width": 941,
+      "height": 1672
+    },
+    {
+      "file": "01-basic-timer.png",
+      "originalGeneratorFile": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-baf83fb2-2425-4161-9515-51ca570582fd.png",
+      "sha256": "A8EFB88F229B95D3958B481EE73CC3C938DB576668848AEAFDE4394B1D045F8A",
+      "width": 941,
+      "height": 1672
+    }
+  ],
+  "verification": "PNG headers/dimensions verified; saved copies byte-identical to retained generator originals; static visual review."
+}
