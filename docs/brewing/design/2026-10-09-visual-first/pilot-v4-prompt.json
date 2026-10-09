@@ -1,0 +1,5 @@
+{
+  "prompt": "Use case: ui-mockup. Precise edit of input two-screen UI. RIGHT Guided pour ONLY: restore PRIMARYBUTTON exact '340 g reached', never Finish brew in guidedpour. Replace complexbrewerillustrationwithONEsimplified instructional CROSS-SECTION detail, no kettle/server/scale/valve/base/chamberhardware. Just a small openoutline rectangle representing coffeebed region: thin brownstippledbedalongBOTTOM, lilac TARGETwaterlineabovebed, verticalbracketfromTOPofbedtowaterline, label exact 'Target: ~1 cm above bed'. Fill the gapbetweenbedandtargetlinewithveryfaint water tint. This is a schematic TARGET, not livedata. No hardwareavoidsfalsevalvemounting. Makefigure smallandfunctional,retainwordcue 'Open valve · pulse'. LEFTbasicunchangedincludingFrom1:00 cue,Finishbrew. PreserveALLclocks/20g340gcontext/existingflower/Recipeheader/Coldrow/nav/theme. Critical rightbutton '340 g reached' mustremainexact; do notcopyFinishbrewfromleft.",
+  "referenceImage": "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-visual-first/01-pilot-v3.png",
+  "outputFile": "01-pilot-v4.png"
+}

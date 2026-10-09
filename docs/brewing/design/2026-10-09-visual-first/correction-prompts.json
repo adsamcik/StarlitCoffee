@@ -1,0 +1,76 @@
+[
+  {
+    "file": "01-preparation",
+    "changes": "LEFTG01andMIDDLEG02ONLY removeentireColdbackgroundrow/separator: noothersinthesetwostates. RIGHTB01mustkeepColdrow. LEFTG01addsmallcaption 'Shallow water · seat paper' abovevalvecycle andtiny?helpnearPrimefilterheading. KeepcorrectClosed(horizontal)→Open(vertical)→Closed(horizontal)glyphs,Paperflatnoair,primaryPaperseated. PreserveALLotherrecipecontext,beanposes,no clocksG01G02,00:00B01,controls;groundfooterappropriatelywithoutphantomrow.",
+    "prompt": "Use case: ui-mockup. Precise targeted edit of input1 state board. Preserveallvisual/copy/controls notexplicitlymentioned,selectedminimalvisualfirsttheme,flatcompleteAndroidscreens. LEFTG01andMIDDLEG02ONLY removeentireColdbackgroundrow/separator: noothersinthesetwostates. RIGHTB01mustkeepColdrow. LEFTG01addsmallcaption 'Shallow water · seat paper' abovevalvecycle andtiny?helpnearPrimefilterheading. KeepcorrectClosed(horizontal)→Open(vertical)→Closed(horizontal)glyphs,Paperflatnoair,primaryPaperseated. PreserveALLotherrecipecontext,beanposes,no clocksG01G02,00:00B01,controls;groundfooterappropriatelywithoutphantomrow.",
+    "referenceImages": [
+      "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-visual-first/01-preparation.png"
+    ],
+    "outputFile": "01-preparation-v2.png"
+  },
+  {
+    "file": "02-bloom",
+    "changes": "LEFTG03andMIDDLEG04 removewholeinventedColdrow/separator; RIGHTG05keepsColdrow. LEFTG03 valvecue mustbeUNAMBIGUOUS: Open glyph has a single lever pointing VERTICALLYUP fromcircularhub, followedbydrip andClosedglyphsingleleverHORIZONTALLYRIGHT. CaptionOpen→closeatfirstdrips;primary60g+firstdripsreached unchanged. MIDDLEG04replaceincorrectswirlarrowsaroundvalvewithONEsmallinstructionvisual ofPULSARbrewCHAMBER heldbyBLACKbase,gentleswirlarcaroundCHAMBER/coffee notaroundhandle; leverHORIZONTALclosed. Input2actualphoto isfactualreferenceforblackbase,closedleverlocation,handgrip; usemonochrome/lilacsmallfunctionalillustrationnotphoto/browncircle. Shortcaption 'Hold base · once, gently'; additional tiny 'All grounds wet'. PrimaryBloomretained. RIGHTG05closedglyphleverHORIZONTALRIGHTsameconvention,labelKeepclosed. Preserveallclock/animationstates/25sto1:00/target340/Pauseguidekeepsclockrunning. Do notturnswirlinto repeatedvalveturns.",
+    "prompt": "Use case: ui-mockup. Precise targeted edit of input1 state board. Preserveallvisual/copy/controls notexplicitlymentioned,selectedminimalvisualfirsttheme,flatcompleteAndroidscreens. LEFTG03andMIDDLEG04 removewholeinventedColdrow/separator; RIGHTG05keepsColdrow. LEFTG03 valvecue mustbeUNAMBIGUOUS: Open glyph has a single lever pointing VERTICALLYUP fromcircularhub, followedbydrip andClosedglyphsingleleverHORIZONTALLYRIGHT. CaptionOpen→closeatfirstdrips;primary60g+firstdripsreached unchanged. MIDDLEG04replaceincorrectswirlarrowsaroundvalvewithONEsmallinstructionvisual ofPULSARbrewCHAMBER heldbyBLACKbase,gentleswirlarcaroundCHAMBER/coffee notaroundhandle; leverHORIZONTALclosed. Input2actualphoto isfactualreferenceforblackbase,closedleverlocation,handgrip; usemonochrome/lilacsmallfunctionalillustrationnotphoto/browncircle. Shortcaption 'Hold base · once, gently'; additional tiny 'All grounds wet'. PrimaryBloomretained. RIGHTG05closedglyphleverHORIZONTALRIGHTsameconvention,labelKeepclosed. Preserveallclock/animationstates/25sto1:00/target340/Pauseguidekeepsclockrunning. Do notturnswirlinto repeatedvalveturns.",
+    "referenceImages": [
+      "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-visual-first/02-bloom.png",
+      "C:/Users/adam-/GitHub/StarlitCoffee/src/app/src/main/res/drawable-nodpi/instruction_pulsar_gagne_20_340_stage_04_instruction_default.webp"
+    ],
+    "outputFile": "02-bloom-v2.png"
+  },
+  {
+    "file": "03-pouring",
+    "changes": "RIGHTG08 ONLY removeverticalmeasurementBRACKETbesidedrainedcoffeebed. Thereisnodistancemeasuredatdrawdown; retainflatstippledbedwithno standingwater, label 'End cue: no standing water' usingthinleaderlineifneeded. No claimactualdrainobservedbeforebutton. PreserveALLothercopy/art/times/footers/action andbothleft/middletargetheightdiagrams.",
+    "prompt": "Use case: ui-mockup. Precise targeted edit of input1 state board. Preserveallvisual/copy/controls notexplicitlymentioned,selectedminimalvisualfirsttheme,flatcompleteAndroidscreens. RIGHTG08 ONLY removeverticalmeasurementBRACKETbesidedrainedcoffeebed. Thereisnodistancemeasuredatdrawdown; retainflatstippledbedwithno standingwater, label 'End cue: no standing water' usingthinleaderlineifneeded. No claimactualdrainobservedbeforebutton. PreserveALLothercopy/art/times/footers/action andbothleft/middletargetheightdiagrams.",
+    "referenceImages": [
+      "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-visual-first/03-pouring.png"
+    ],
+    "outputFile": "03-pouring-v2.png"
+  },
+  {
+    "file": "04-completion",
+    "changes": "LEFTG09only heading exact 'Close valve & serve'. Replaceincorrecthand-under-SERVERvisualwithaccuratePulsarBREWERheldbyitsBLACKBASE liftedclearOVERstationaryserver,asINPUT2sourcephotoillustrates. Keepclosedhorizontallever onblackbase; bothhandscontactBLACKBASE ONLY,NOTclearhotchamber; nohandsundertheglassserver. StylizetoONEsmallmonochrome/lilacfunctionalillustration,notbrowncircle/photo. Visibletext 'Hot · lift only by base' and 'Heat-safe surface' remain. Preserve04:08reported drawdown time,20g/340gcontext,flower,Finishbrew,currentColdrowandRIGHTcompletedunchanged. Diagramexplains liftingbrewer notliftingserver.",
+    "prompt": "Use case: ui-mockup. Precise targeted edit of input1 state board. Preserveallvisual/copy/controls notexplicitlymentioned,selectedminimalvisualfirsttheme,flatcompleteAndroidscreens. LEFTG09only heading exact 'Close valve & serve'. Replaceincorrecthand-under-SERVERvisualwithaccuratePulsarBREWERheldbyitsBLACKBASE liftedclearOVERstationaryserver,asINPUT2sourcephotoillustrates. Keepclosedhorizontallever onblackbase; bothhandscontactBLACKBASE ONLY,NOTclearhotchamber; nohandsundertheglassserver. StylizetoONEsmallmonochrome/lilacfunctionalillustration,notbrowncircle/photo. Visibletext 'Hot · lift only by base' and 'Heat-safe surface' remain. Preserve04:08reported drawdown time,20g/340gcontext,flower,Finishbrew,currentColdrowandRIGHTcompletedunchanged. Diagramexplains liftingbrewer notliftingserver.",
+    "referenceImages": [
+      "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-visual-first/04-completion.png",
+      "C:/Users/adam-/GitHub/StarlitCoffee/src/app/src/main/res/drawable-nodpi/instruction_pulsar_gagne_20_340_stage_08_instruction_default.webp"
+    ],
+    "outputFile": "04-completion-v2.png"
+  },
+  {
+    "file": "05-slower-brewing",
+    "changes": "LEFTL01 Open→firstdrips→Closedvalvediagram: OpenleverVERTICALLYUP, ClosedleverHORIZONTALLYRIGHT,notbothvertical. Removecheckmarkbefore 'Bloom reference passed',leaveplainquiettext(nophysicalcompletioninferred). MIDDLEL02RESTOREseparatequietBACKGROUNDrowunder340greachedbutton: two-line 'Cold brew' / 'Reminder reached',rightchevron. Primarymovesjustaboveit,mainelapsedMUSTremain04:50; NEVERputReminderreachedatmainPulsarclock. LEFTandRIGHTmustremainNOotherrow. Preserveall3finalbloomanimationposes,01:12/04:50/06:05,unfinishedtargets,actualactions,andcurrentvisualdiagrams.",
+    "prompt": "Use case: ui-mockup. Precise targeted edit of input1 state board. Preserveallvisual/copy/controls notexplicitlymentioned,selectedminimalvisualfirsttheme,flatcompleteAndroidscreens. LEFTL01 Open→firstdrips→Closedvalvediagram: OpenleverVERTICALLYUP, ClosedleverHORIZONTALLYRIGHT,notbothvertical. Removecheckmarkbefore 'Bloom reference passed',leaveplainquiettext(nophysicalcompletioninferred). MIDDLEL02RESTOREseparatequietBACKGROUNDrowunder340greachedbutton: two-line 'Cold brew' / 'Reminder reached',rightchevron. Primarymovesjustaboveit,mainelapsedMUSTremain04:50; NEVERputReminderreachedatmainPulsarclock. LEFTandRIGHTmustremainNOotherrow. Preserveall3finalbloomanimationposes,01:12/04:50/06:05,unfinishedtargets,actualactions,andcurrentvisualdiagrams.",
+    "referenceImages": [
+      "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-visual-first/05-slower-brewing.png"
+    ],
+    "outputFile": "05-slower-brewing-v2.png"
+  },
+  {
+    "file": "09-cold-progress",
+    "changes": "RIGHTC08replacecaption 'Clean server · below rim' with exact 'Clean server · below filter rim'. Fit/wrapnaturally. PreserveALLotherdiagrams,50/400quantities,hours/minutesunits,reportedsteep label,safety,manualfilteringactions,NOotherrows andNO bloom.",
+    "prompt": "Use case: ui-mockup. Precise targeted edit of input1 state board. Preserveallvisual/copy/controls notexplicitlymentioned,selectedminimalvisualfirsttheme,flatcompleteAndroidscreens. RIGHTC08replacecaption 'Clean server · below rim' with exact 'Clean server · below filter rim'. Fit/wrapnaturally. PreserveALLotherdiagrams,50/400quantities,hours/minutesunits,reportedsteep label,safety,manualfilteringactions,NOotherrows andNO bloom.",
+    "referenceImages": [
+      "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-visual-first/09-cold-progress.png"
+    ],
+    "outputFile": "09-cold-progress-v2.png"
+  },
+  {
+    "file": "12-reading",
+    "changes": "RIGHTH03 ONLYrestoreindependenttwo-lineBACKGROUNDrow 'Cold brew' / '12 h 37 m until reminder' pluschevron,separatedBELOWgroundedResumeguidebutton. Preserve02:20elapsed/currenttarget340/Guidepaused/Clockkeepsrunning/finalflower. LEFT/MIDDLEreadingstatesunchanged. Do notoverwriteprimaryclockorputColdrowintoother2.",
+    "prompt": "Use case: ui-mockup. Precise targeted edit of input1 state board. Preserveallvisual/copy/controls notexplicitlymentioned,selectedminimalvisualfirsttheme,flatcompleteAndroidscreens. RIGHTH03 ONLYrestoreindependenttwo-lineBACKGROUNDrow 'Cold brew' / '12 h 37 m until reminder' pluschevron,separatedBELOWgroundedResumeguidebutton. Preserve02:20elapsed/currenttarget340/Guidepaused/Clockkeepsrunning/finalflower. LEFT/MIDDLEreadingstatesunchanged. Do notoverwriteprimaryclockorputColdrowintoother2.",
+    "referenceImages": [
+      "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-visual-first/12-reading.png"
+    ],
+    "outputFile": "12-reading-v2.png"
+  },
+  {
+    "file": "13-reminders",
+    "changes": "Allthree screens ONLY replace verbose/redundantstoragecue 'Keep brew covered at ≤4 °C or colder' withexact 'Covered · ≤4 °C'. Samehighcontrast/safetyreadability. PreserveALLelapsed/remindervalues,notificationstates/actions,modalunderlaydim,14Hourscontrols/SaveCancelRemove,Endtimer;no otherchanges.",
+    "prompt": "Use case: ui-mockup. Precise targeted edit of input1 state board. Preserveallvisual/copy/controls notexplicitlymentioned,selectedminimalvisualfirsttheme,flatcompleteAndroidscreens. Allthree screens ONLY replace verbose/redundantstoragecue 'Keep brew covered at ≤4 °C or colder' withexact 'Covered · ≤4 °C'. Samehighcontrast/safetyreadability. PreserveALLelapsed/remindervalues,notificationstates/actions,modalunderlaydim,14Hourscontrols/SaveCancelRemove,Endtimer;no otherchanges.",
+    "referenceImages": [
+      "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-visual-first/13-reminders.png"
+    ],
+    "outputFile": "13-reminders-v2.png"
+  }
+]

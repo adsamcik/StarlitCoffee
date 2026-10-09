@@ -1,0 +1,5 @@
+{
+  "prompt": "Use case: ui-mockup. Edit input pilot preserving every UIclock,quantity,target,flower,footer/action andflatminimaltheme. LEFT changeonlysecondarycue to exact 'From 1:00 · Open valve, pulse-pour'. RIGHT simplifyONLY teachingdiagram: remove kettle, collectionserver andscale; retain ONEsmall line drawing of TOPPulsarbrewCHAMBER,dispersioncap,blackbase,verticalOPENvalvelever. Draw a thinflatbrownstippledcoffeeBED atBOTTOMofCHAMBERjustABOVEblackbase, lilactargetwaterlineABOVETHATBED,shortverticalbracketbetweenbedtopandwaterline label 'Target: ~1 cm above bed'. A few discontinuousdropletmarksabovecapconveyPULSEpouring, no kettle. DiagramisTARGETinstruction, no livedata/no checkmarks. Keep it smallandsecondarytoexistingflower,notcard. Do not change340gtext/action or reducephysicalcueclarity. Otherpixels/layoutascloseaspossible.",
+  "referenceImage": "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-visual-first/01-pilot-v2.png",
+  "outputFile": "01-pilot-v3.png"
+}

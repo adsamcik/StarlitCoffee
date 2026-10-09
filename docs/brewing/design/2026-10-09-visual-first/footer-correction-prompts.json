@@ -1,0 +1,12 @@
+[
+  {
+    "file": "05-slower-brewing-v3.png",
+    "ref": "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-visual-first/05-slower-brewing-v2.png",
+    "prompt": "Use case: ui-mockup. MIDDLESREENL02ONLY smallstylecorrection: remove roundedRECTANGULARCARDoutline/background aroundthebottomCold brew/Reminder reachedrow. UseFLATsameblackbackgroundasscreen withONEsubtlehorizontal separatorABOVErow, rightchevron. Keep rowin samebottompositionBELOW340greachedprimary. PreserveALL3screensclocks,words,targetdiagrams,flower,controls,open/closedglyphs,NOotherrowleft/right. Do notmoveReminderreachedtomainclock04:50."
+  },
+  {
+    "file": "12-reading-v3.png",
+    "ref": "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-visual-first/12-reading-v2.png",
+    "prompt": "Use case: ui-mockup. RIGHTSCREENH03 ONLYfooter correction: SWAPpositionsoftheResume guidebuttonandColdbackgroundrow. PRIMARYfullwidthlilac 'Resume guide' MUSTbe ABOVE thetwo-linequietrow 'Cold brew' / '12 h 37 m until reminder' withrightchevron. Primaryaroundy760,separatoraroundy835,rowaroundy870(fullboardcoordinates); navbelowrow. REMOVElargecircularjarbadgefromrow; ordinarytextrowlikechosenbaseline,nobadge/card. PreserveallotherH03text340gtotal/Clockkeepsrunning/Guidepaused/02:20Elapsed/finalflower/context andALLLEFT/MIDDLEhelp/Recipeimagesunchanged. Nootherclocks,words,symbolsadded."
+  }
+]

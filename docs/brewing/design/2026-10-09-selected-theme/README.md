@@ -1,5 +1,7 @@
 # Selected brewing theme — state gallery
 
+Latest refinement: [visual-first gallery with shorter copy](../2026-10-09-visual-first/README.md).
+
 46 representative screens on 16 boards, plus the refined baseline. Generated with the built-in image generator, 2026-10-09, from the user's selected Reading order theme and the existing bloom animation atlas. This is a static design proposal; app code is unchanged.
 
 [Open the browsable gallery](gallery.html) · [State coverage and shared variants](STATE_MATRIX.md) · [Exact initial prompts](state-prompts.json)
