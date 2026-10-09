@@ -1,0 +1,286 @@
+{
+  "baseline": "theme-baseline-v2.png",
+  "screenCount": 46,
+  "boards": [
+    {
+      "title": "Preparation",
+      "file": "01-preparation.png",
+      "states": [
+        {
+          "id": "G01",
+          "title": "Prime filter"
+        },
+        {
+          "id": "G02",
+          "title": "Dose and tare"
+        },
+        {
+          "id": "B01",
+          "title": "Basic ready"
+        }
+      ]
+    },
+    {
+      "title": "Guided bloom",
+      "file": "02-bloom-v2.png",
+      "states": [
+        {
+          "id": "G03",
+          "title": "Pour bloom"
+        },
+        {
+          "id": "G04",
+          "title": "Close and swirl"
+        },
+        {
+          "id": "G05",
+          "title": "Wait for bloom"
+        }
+      ]
+    },
+    {
+      "title": "Current target and drawdown",
+      "file": "03-pouring-v2.png",
+      "states": [
+        {
+          "id": "G06",
+          "title": "Bloom cue reached"
+        },
+        {
+          "id": "G07",
+          "title": "Main pour"
+        },
+        {
+          "id": "G08",
+          "title": "Drawdown"
+        }
+      ]
+    },
+    {
+      "title": "Serving and completion",
+      "file": "04-completion.png",
+      "states": [
+        {
+          "id": "G09",
+          "title": "Safe serving"
+        },
+        {
+          "id": "G10",
+          "title": "Completed"
+        }
+      ]
+    },
+    {
+      "title": "Unfinished work remains visible",
+      "file": "05-slower-brewing-v3.png",
+      "states": [
+        {
+          "id": "L01",
+          "title": "Bloom pour unfinished"
+        },
+        {
+          "id": "L02",
+          "title": "Main pour slower"
+        },
+        {
+          "id": "L03",
+          "title": "Drawdown slower"
+        }
+      ]
+    },
+    {
+      "title": "Basic recipe timers",
+      "file": "06-basic-timing-v2.png",
+      "states": [
+        {
+          "id": "B02",
+          "title": "Basic during bloom"
+        },
+        {
+          "id": "B03",
+          "title": "Basic after bloom"
+        },
+        {
+          "id": "B04",
+          "title": "Basic ended"
+        }
+      ]
+    },
+    {
+      "title": "Cold timer-only start origins",
+      "file": "07-cold-start-v2.png",
+      "states": [
+        {
+          "id": "C01",
+          "title": "Start now"
+        },
+        {
+          "id": "C02",
+          "title": "Started earlier"
+        },
+        {
+          "id": "C03",
+          "title": "Start unknown"
+        }
+      ]
+    },
+    {
+      "title": "Guided cold preparation",
+      "file": "08-cold-preparation-v2.png",
+      "states": [
+        {
+          "id": "C04",
+          "title": "Clean and prepare"
+        },
+        {
+          "id": "C05",
+          "title": "Combine and cover"
+        }
+      ]
+    },
+    {
+      "title": "Steep, reminder and filtration",
+      "file": "09-cold-progress-v2.png",
+      "states": [
+        {
+          "id": "C06",
+          "title": "Steeping"
+        },
+        {
+          "id": "C07",
+          "title": "Reminder reached"
+        },
+        {
+          "id": "C08",
+          "title": "Filtering"
+        }
+      ]
+    },
+    {
+      "title": "Cold serving and cleanup",
+      "file": "10-cold-finish.png",
+      "states": [
+        {
+          "id": "C09",
+          "title": "Dilute serving"
+        },
+        {
+          "id": "C10",
+          "title": "Clean up"
+        },
+        {
+          "id": "C11",
+          "title": "Cold completed"
+        }
+      ]
+    },
+    {
+      "title": "Independent concurrent sessions",
+      "file": "11-concurrent-v3.png",
+      "states": [
+        {
+          "id": "X01",
+          "title": "One background brew"
+        },
+        {
+          "id": "X02",
+          "title": "Choose another brew"
+        },
+        {
+          "id": "X03",
+          "title": "Other reminder reached"
+        }
+      ]
+    },
+    {
+      "title": "Help, recipe and paused guidance",
+      "file": "12-reading-v2.png",
+      "states": [
+        {
+          "id": "H01",
+          "title": "Contextual help"
+        },
+        {
+          "id": "H02",
+          "title": "Read recipe ahead"
+        },
+        {
+          "id": "H03",
+          "title": "Guide paused"
+        }
+      ]
+    },
+    {
+      "title": "Reminder controls and limitations",
+      "file": "13-reminders-v2.png",
+      "states": [
+        {
+          "id": "R01",
+          "title": "Edit reminder"
+        },
+        {
+          "id": "R02",
+          "title": "Precise reminder off"
+        },
+        {
+          "id": "R03",
+          "title": "Notifications denied"
+        }
+      ]
+    },
+    {
+      "title": "Coherent recoverable states",
+      "file": "14-recovery-v2.png",
+      "states": [
+        {
+          "id": "E01",
+          "title": "Guide unavailable, timer valid"
+        },
+        {
+          "id": "E02",
+          "title": "Confirmation pending"
+        },
+        {
+          "id": "E03",
+          "title": "Confirmation failed"
+        }
+      ]
+    },
+    {
+      "title": "Restoration and cancellation",
+      "file": "15-session-handling-v2.png",
+      "states": [
+        {
+          "id": "S01",
+          "title": "Restoring"
+        },
+        {
+          "id": "S02",
+          "title": "Saved session unavailable"
+        },
+        {
+          "id": "S03",
+          "title": "Cancel selected brew"
+        }
+      ]
+    },
+    {
+      "title": "Methods without bloom",
+      "file": "16-without-bloom-v2.png",
+      "states": [
+        {
+          "id": "N01",
+          "title": "Immersion"
+        },
+        {
+          "id": "N02",
+          "title": "Gentle pressing"
+        },
+        {
+          "id": "N03",
+          "title": "Beverage yield"
+        }
+      ]
+    }
+  ]
+}

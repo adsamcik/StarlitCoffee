@@ -1,0 +1,354 @@
+{
+  "date": "2026-10-09",
+  "mode": "built-in",
+  "screenCount": 46,
+  "referenceImages": [
+    "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-selected-theme/theme-baseline.png",
+    "C:\\Users\\adam-\\GitHub\\StarlitCoffee\\src\\app\\src\\main\\res\\drawable-nodpi\\bloom_coffee_flower_spritesheet.png"
+  ],
+  "commonPrompt": "Use case: ui-mockup. Generate a high-fidelity landscape design state board with equal-width TALL Android screens arranged side by side, each fully visible from status bar through footer/navigation. Image 1 is the approved selected-theme visual baseline, STRICT style reference. Image 2 is actual bloom-animation 5x5 sprite atlas, artwork reference ONLY. Use one appropriate frame in a bloom-capable Pulsar screen; never show sprite grid. Near-black FLAT interface, white sans typography, lilac accents, OPEN left aligned reading order, no cards, no decorative graphics/device frames/gradients. Large left elapsed clock, small useful dose and recipe total water above, established animation to clock's right only when applicable. Main current physical task, limited source-useful copy, full-width grounded primary footer above distinct separated two-line background session row when a background is specified. No background row when none; no empty placeholders. Every screen stable/footer readable, scroll content if necessary rather than overlapping/footer clipping. Label each state ID and short name OUTSIDE phone screenshot on surrounding neutral board margin. Within app no design commentary. Use exact supplied text naturally spaced, break long lines. This is a static design proposal, no new sensors/measured masses/automatic actuals. Timer elapsed is known; task completion requires source-specific explicit report in guidance. Primary footer is not forced report in basic mode. Large screen-side margins, simple Android icons only. Render supplied content carefully.",
+  "sheets": [
+    {
+      "file": "01-preparation",
+      "title": "Preparation",
+      "states": [
+        {
+          "id": "G01",
+          "title": "Prime filter",
+          "body": "Guided Pulsar. 20 g coffee / 340 g total water small. No running timer. Initial bean pose small on right. Current heading 'Prime the paper'. Copy 'Valve closed → open over sink → closed'. Completion cue 'Paper flat, no air pocket'. Help link. Primary 'Paper seated'. No background sessions."
+        },
+        {
+          "id": "G02",
+          "title": "Dose and tare",
+          "body": "Guided Pulsar. Main '20 g coffee'. Context '340 g total water · 1:17'. No running clock, initial bean. Copy 'Level the bed, fit cap, tare to 0 g'. 'Coarse grind'. Primary 'Ready for water'. No other sessions."
+        },
+        {
+          "id": "B01",
+          "title": "Basic ready",
+          "body": "Basic Pulsar. 20 g coffee /340 g total water. 00:00 labelled 'Not started'. Initial bean. Cue 'First water starts the clock'. Secondary 'Bloom reference: 60 g · about 99 °C'. Grounded primary 'Start with first water'. Background Cold brew /12 h 37 m until reminder."
+        }
+      ],
+      "prompt": "Use case: ui-mockup. Generate a high-fidelity landscape design state board with equal-width TALL Android screens arranged side by side, each fully visible from status bar through footer/navigation. Image 1 is the approved selected-theme visual baseline, STRICT style reference. Image 2 is actual bloom-animation 5x5 sprite atlas, artwork reference ONLY. Use one appropriate frame in a bloom-capable Pulsar screen; never show sprite grid. Near-black FLAT interface, white sans typography, lilac accents, OPEN left aligned reading order, no cards, no decorative graphics/device frames/gradients. Large left elapsed clock, small useful dose and recipe total water above, established animation to clock's right only when applicable. Main current physical task, limited source-useful copy, full-width grounded primary footer above distinct separated two-line background session row when a background is specified. No background row when none; no empty placeholders. Every screen stable/footer readable, scroll content if necessary rather than overlapping/footer clipping. Label each state ID and short name OUTSIDE phone screenshot on surrounding neutral board margin. Within app no design commentary. Use exact supplied text naturally spaced, break long lines. This is a static design proposal, no new sensors/measured masses/automatic actuals. Timer elapsed is known; task completion requires source-specific explicit report in guidance. Primary footer is not forced report in basic mode. Large screen-side margins, simple Android icons only. Render supplied content carefully.\nBoard: Preparation\nSCREEN 1 [G01 Prime filter]: Guided Pulsar. 20 g coffee / 340 g total water small. No running timer. Initial bean pose small on right. Current heading 'Prime the paper'. Copy 'Valve closed → open over sink → closed'. Completion cue 'Paper flat, no air pocket'. Help link. Primary 'Paper seated'. No background sessions.\nSCREEN 2 [G02 Dose and tare]: Guided Pulsar. Main '20 g coffee'. Context '340 g total water · 1:17'. No running clock, initial bean. Copy 'Level the bed, fit cap, tare to 0 g'. 'Coarse grind'. Primary 'Ready for water'. No other sessions.\nSCREEN 3 [B01 Basic ready]: Basic Pulsar. 20 g coffee /340 g total water. 00:00 labelled 'Not started'. Initial bean. Cue 'First water starts the clock'. Secondary 'Bloom reference: 60 g · about 99 °C'. Grounded primary 'Start with first water'. Background Cold brew /12 h 37 m until reminder."
+    },
+    {
+      "file": "02-bloom",
+      "title": "Guided bloom",
+      "states": [
+        {
+          "id": "G03",
+          "title": "Pour bloom",
+          "body": "Guided Pulsar; elapsed00:12, early sprout animation right. Main 'Pour to 60 g total'. 'Valve open · about 99 °C'. Cue 'Look for the first drips'. 20gcoffee/340gtotal small. Primary '60 g and first drips reached'. Help. No background row."
+        },
+        {
+          "id": "G04",
+          "title": "Close and swirl",
+          "body": "Elapsed00:22, sprout pose. Main 'Close valve'. Copy 'At first drips, swirl once gently'. 'Hold the black base'. Cue 'Bloom fully wet and retained'. Primary 'Bloom retained'. Small 20g/340g. No other row."
+        },
+        {
+          "id": "G05",
+          "title": "Wait for bloom",
+          "body": "Elapsed00:35; half-open flower pose. Main 'Let bloom rest'. 'Keep valve closed'. '25 s to 1:00'. Small preview 'Next: open valve, pour to 340 g total'. No Next or disabled fake completion button. Quiet outlined 'Pause guide' footer, label 'Brew clock keeps running'. OtherCold12h37m row."
+        }
+      ],
+      "prompt": "Use case: ui-mockup. Generate a high-fidelity landscape design state board with equal-width TALL Android screens arranged side by side, each fully visible from status bar through footer/navigation. Image 1 is the approved selected-theme visual baseline, STRICT style reference. Image 2 is actual bloom-animation 5x5 sprite atlas, artwork reference ONLY. Use one appropriate frame in a bloom-capable Pulsar screen; never show sprite grid. Near-black FLAT interface, white sans typography, lilac accents, OPEN left aligned reading order, no cards, no decorative graphics/device frames/gradients. Large left elapsed clock, small useful dose and recipe total water above, established animation to clock's right only when applicable. Main current physical task, limited source-useful copy, full-width grounded primary footer above distinct separated two-line background session row when a background is specified. No background row when none; no empty placeholders. Every screen stable/footer readable, scroll content if necessary rather than overlapping/footer clipping. Label each state ID and short name OUTSIDE phone screenshot on surrounding neutral board margin. Within app no design commentary. Use exact supplied text naturally spaced, break long lines. This is a static design proposal, no new sensors/measured masses/automatic actuals. Timer elapsed is known; task completion requires source-specific explicit report in guidance. Primary footer is not forced report in basic mode. Large screen-side margins, simple Android icons only. Render supplied content carefully.\nBoard: Guided bloom\nSCREEN 1 [G03 Pour bloom]: Guided Pulsar; elapsed00:12, early sprout animation right. Main 'Pour to 60 g total'. 'Valve open · about 99 °C'. Cue 'Look for the first drips'. 20gcoffee/340gtotal small. Primary '60 g and first drips reached'. Help. No background row.\nSCREEN 2 [G04 Close and swirl]: Elapsed00:22, sprout pose. Main 'Close valve'. Copy 'At first drips, swirl once gently'. 'Hold the black base'. Cue 'Bloom fully wet and retained'. Primary 'Bloom retained'. Small 20g/340g. No other row.\nSCREEN 3 [G05 Wait for bloom]: Elapsed00:35; half-open flower pose. Main 'Let bloom rest'. 'Keep valve closed'. '25 s to 1:00'. Small preview 'Next: open valve, pour to 340 g total'. No Next or disabled fake completion button. Quiet outlined 'Pause guide' footer, label 'Brew clock keeps running'. OtherCold12h37m row."
+    },
+    {
+      "file": "03-pouring",
+      "title": "Current target and drawdown",
+      "states": [
+        {
+          "id": "G06",
+          "title": "Bloom cue reached",
+          "body": "Elapsed01:00 final flower retained. Main 'Open valve'. Copy 'Pulse-pour to 340 g total'. 'Keep water about 1 cm above the bed'. No artificial new 60-second wait. Primary '340 g reached'. 20gcoffee/340gtotalwater context. Cold background12h37m."
+        },
+        {
+          "id": "G07",
+          "title": "Main pour",
+          "body": "Elapsed02:10 final flower retained. Main 'Pour to 340 g total'. 'Valve open · small pulses'. 'Pause pouring if water rises above 1 cm'. Primary '340 g reached'. No invented measured-current grams, no280g helper. 20gcoffee/340gtotal. Cold background12h37m."
+        },
+        {
+          "id": "G08",
+          "title": "Drawdown",
+          "body": "Elapsed03:45 final flower. Heading 'Let water drain'. 'Wait until no standing water remains'. 'Recipe reference: 3:30–4:30 total'. Primary 'No standing water'. No automatic finish. Small20g/340g. Cold background12h37m."
+        }
+      ],
+      "prompt": "Use case: ui-mockup. Generate a high-fidelity landscape design state board with equal-width TALL Android screens arranged side by side, each fully visible from status bar through footer/navigation. Image 1 is the approved selected-theme visual baseline, STRICT style reference. Image 2 is actual bloom-animation 5x5 sprite atlas, artwork reference ONLY. Use one appropriate frame in a bloom-capable Pulsar screen; never show sprite grid. Near-black FLAT interface, white sans typography, lilac accents, OPEN left aligned reading order, no cards, no decorative graphics/device frames/gradients. Large left elapsed clock, small useful dose and recipe total water above, established animation to clock's right only when applicable. Main current physical task, limited source-useful copy, full-width grounded primary footer above distinct separated two-line background session row when a background is specified. No background row when none; no empty placeholders. Every screen stable/footer readable, scroll content if necessary rather than overlapping/footer clipping. Label each state ID and short name OUTSIDE phone screenshot on surrounding neutral board margin. Within app no design commentary. Use exact supplied text naturally spaced, break long lines. This is a static design proposal, no new sensors/measured masses/automatic actuals. Timer elapsed is known; task completion requires source-specific explicit report in guidance. Primary footer is not forced report in basic mode. Large screen-side margins, simple Android icons only. Render supplied content carefully.\nBoard: Current target and drawdown\nSCREEN 1 [G06 Bloom cue reached]: Elapsed01:00 final flower retained. Main 'Open valve'. Copy 'Pulse-pour to 340 g total'. 'Keep water about 1 cm above the bed'. No artificial new 60-second wait. Primary '340 g reached'. 20gcoffee/340gtotalwater context. Cold background12h37m.\nSCREEN 2 [G07 Main pour]: Elapsed02:10 final flower retained. Main 'Pour to 340 g total'. 'Valve open · small pulses'. 'Pause pouring if water rises above 1 cm'. Primary '340 g reached'. No invented measured-current grams, no280g helper. 20gcoffee/340gtotal. Cold background12h37m.\nSCREEN 3 [G08 Drawdown]: Elapsed03:45 final flower. Heading 'Let water drain'. 'Wait until no standing water remains'. 'Recipe reference: 3:30–4:30 total'. Primary 'No standing water'. No automatic finish. Small20g/340g. Cold background12h37m."
+    },
+    {
+      "file": "04-completion",
+      "title": "Serving and completion",
+      "states": [
+        {
+          "id": "G09",
+          "title": "Safe serving",
+          "body": "Guided Pulsar drawdown already reported, display04:08 label 'Reported drawdown time', final flower. 'Close valve and serve'. Copy 'Lift only by the black base'. Visible warm-muted safety line with small caution icon: 'Chamber and liquid may be hot'. 'Set on a heat-safe surface'. Primary 'Finish brew'. Coldbackground12h37m. No claim late tap is exact physical completion time."
+        },
+        {
+          "id": "G10",
+          "title": "Completed",
+          "body": "Pulsar. Final flower retained. 'Brew complete'. '20 g coffee · 340 g recipe water'. '04:08 reported drawdown time'. Quiet simple completion screen without ratings/logging/analytics. Primary 'Done'. Coldbackground12h37m remains independently active."
+        }
+      ],
+      "prompt": "Use case: ui-mockup. Generate a high-fidelity landscape design state board with equal-width TALL Android screens arranged side by side, each fully visible from status bar through footer/navigation. Image 1 is the approved selected-theme visual baseline, STRICT style reference. Image 2 is actual bloom-animation 5x5 sprite atlas, artwork reference ONLY. Use one appropriate frame in a bloom-capable Pulsar screen; never show sprite grid. Near-black FLAT interface, white sans typography, lilac accents, OPEN left aligned reading order, no cards, no decorative graphics/device frames/gradients. Large left elapsed clock, small useful dose and recipe total water above, established animation to clock's right only when applicable. Main current physical task, limited source-useful copy, full-width grounded primary footer above distinct separated two-line background session row when a background is specified. No background row when none; no empty placeholders. Every screen stable/footer readable, scroll content if necessary rather than overlapping/footer clipping. Label each state ID and short name OUTSIDE phone screenshot on surrounding neutral board margin. Within app no design commentary. Use exact supplied text naturally spaced, break long lines. This is a static design proposal, no new sensors/measured masses/automatic actuals. Timer elapsed is known; task completion requires source-specific explicit report in guidance. Primary footer is not forced report in basic mode. Large screen-side margins, simple Android icons only. Render supplied content carefully.\nBoard: Serving and completion\nSCREEN 1 [G09 Safe serving]: Guided Pulsar drawdown already reported, display04:08 label 'Reported drawdown time', final flower. 'Close valve and serve'. Copy 'Lift only by the black base'. Visible warm-muted safety line with small caution icon: 'Chamber and liquid may be hot'. 'Set on a heat-safe surface'. Primary 'Finish brew'. Coldbackground12h37m. No claim late tap is exact physical completion time.\nSCREEN 2 [G10 Completed]: Pulsar. Final flower retained. 'Brew complete'. '20 g coffee · 340 g recipe water'. '04:08 reported drawdown time'. Quiet simple completion screen without ratings/logging/analytics. Primary 'Done'. Coldbackground12h37m remains independently active."
+    },
+    {
+      "file": "05-slower-brewing",
+      "title": "Unfinished work remains visible",
+      "states": [
+        {
+          "id": "L01",
+          "title": "Bloom pour unfinished",
+          "body": "Guided Pulsar elapsed01:12 final animation timing pose retained, NOT proof physical completion. Heading 'Pour to 60 g total'. 'Valve open · look for first drips'. Calm note 'Bloom time reference has passed'. Primary '60 g and first drips reached'. No autojump, speed-up or fresh full wait; 20g/340g small. No other row."
+        },
+        {
+          "id": "L02",
+          "title": "Main pour slower",
+          "body": "Guided Pulsar elapsed04:50, finalflower. Main 'Pour to 340 g total'. 'Keep water about 1 cm above the bed'. Calm 'Continue the current pour'. 'Recipe total-time reference: 3:30–4:30'. Primary '340 g reached'. Not fasterpour, notnewwater target. Coldbackground reminderreached row."
+        },
+        {
+          "id": "L03",
+          "title": "Drawdown slower",
+          "body": "Guided Pulsar elapsed06:05, finalflower. 'Let water drain'. 'Wait until no standing water remains'. Calm 'Beyond the 3:30–4:30 reference'. Primary 'No standing water'. No timeoutcompletion/extraagitation. No other row."
+        }
+      ],
+      "prompt": "Use case: ui-mockup. Generate a high-fidelity landscape design state board with equal-width TALL Android screens arranged side by side, each fully visible from status bar through footer/navigation. Image 1 is the approved selected-theme visual baseline, STRICT style reference. Image 2 is actual bloom-animation 5x5 sprite atlas, artwork reference ONLY. Use one appropriate frame in a bloom-capable Pulsar screen; never show sprite grid. Near-black FLAT interface, white sans typography, lilac accents, OPEN left aligned reading order, no cards, no decorative graphics/device frames/gradients. Large left elapsed clock, small useful dose and recipe total water above, established animation to clock's right only when applicable. Main current physical task, limited source-useful copy, full-width grounded primary footer above distinct separated two-line background session row when a background is specified. No background row when none; no empty placeholders. Every screen stable/footer readable, scroll content if necessary rather than overlapping/footer clipping. Label each state ID and short name OUTSIDE phone screenshot on surrounding neutral board margin. Within app no design commentary. Use exact supplied text naturally spaced, break long lines. This is a static design proposal, no new sensors/measured masses/automatic actuals. Timer elapsed is known; task completion requires source-specific explicit report in guidance. Primary footer is not forced report in basic mode. Large screen-side margins, simple Android icons only. Render supplied content carefully.\nBoard: Unfinished work remains visible\nSCREEN 1 [L01 Bloom pour unfinished]: Guided Pulsar elapsed01:12 final animation timing pose retained, NOT proof physical completion. Heading 'Pour to 60 g total'. 'Valve open · look for first drips'. Calm note 'Bloom time reference has passed'. Primary '60 g and first drips reached'. No autojump, speed-up or fresh full wait; 20g/340g small. No other row.\nSCREEN 2 [L02 Main pour slower]: Guided Pulsar elapsed04:50, finalflower. Main 'Pour to 340 g total'. 'Keep water about 1 cm above the bed'. Calm 'Continue the current pour'. 'Recipe total-time reference: 3:30–4:30'. Primary '340 g reached'. Not fasterpour, notnewwater target. Coldbackground reminderreached row.\nSCREEN 3 [L03 Drawdown slower]: Guided Pulsar elapsed06:05, finalflower. 'Let water drain'. 'Wait until no standing water remains'. Calm 'Beyond the 3:30–4:30 reference'. Primary 'No standing water'. No timeoutcompletion/extraagitation. No other row."
+    },
+    {
+      "file": "06-basic-timing",
+      "title": "Basic recipe timers",
+      "states": [
+        {
+          "id": "B02",
+          "title": "Basic during bloom",
+          "body": "Basic Pulsar elapsed00:35, half-open flower,20gcoffee/340gtotal. Conditional reference heading 'Bloom · until 1:00'. '60 g bloom water'. 'Keep valve closed after first drips'. Grounded 'Finish brew'. No guide-report button. Cold12h37m row."
+        },
+        {
+          "id": "B03",
+          "title": "Basic after bloom",
+          "body": "Exactly improvedbaseline style. Elapsed01:22,finalflower,20g/340g. 'After bloom · from 1:00'. 'Pour to 340 g total'. 'Open valve · pulse gently'. 'Keep water about 1 cm above the bed'. Primary 'Finish brew'. Cold12h37m row. No actual equipment-state assertion."
+        },
+        {
+          "id": "B04",
+          "title": "Basic ended",
+          "body": "Pulsar basic timer ended manually,finalflower. 'Timer ended'. '04:35 recorded time'. '20 g coffee · 340 g recipe water'. Do not assert drain observed, serving done, or measured water. Primary 'Done'. Cold12h37m row."
+        }
+      ],
+      "prompt": "Use case: ui-mockup. Generate a high-fidelity landscape design state board with equal-width TALL Android screens arranged side by side, each fully visible from status bar through footer/navigation. Image 1 is the approved selected-theme visual baseline, STRICT style reference. Image 2 is actual bloom-animation 5x5 sprite atlas, artwork reference ONLY. Use one appropriate frame in a bloom-capable Pulsar screen; never show sprite grid. Near-black FLAT interface, white sans typography, lilac accents, OPEN left aligned reading order, no cards, no decorative graphics/device frames/gradients. Large left elapsed clock, small useful dose and recipe total water above, established animation to clock's right only when applicable. Main current physical task, limited source-useful copy, full-width grounded primary footer above distinct separated two-line background session row when a background is specified. No background row when none; no empty placeholders. Every screen stable/footer readable, scroll content if necessary rather than overlapping/footer clipping. Label each state ID and short name OUTSIDE phone screenshot on surrounding neutral board margin. Within app no design commentary. Use exact supplied text naturally spaced, break long lines. This is a static design proposal, no new sensors/measured masses/automatic actuals. Timer elapsed is known; task completion requires source-specific explicit report in guidance. Primary footer is not forced report in basic mode. Large screen-side margins, simple Android icons only. Render supplied content carefully.\nBoard: Basic recipe timers\nSCREEN 1 [B02 Basic during bloom]: Basic Pulsar elapsed00:35, half-open flower,20gcoffee/340gtotal. Conditional reference heading 'Bloom · until 1:00'. '60 g bloom water'. 'Keep valve closed after first drips'. Grounded 'Finish brew'. No guide-report button. Cold12h37m row.\nSCREEN 2 [B03 Basic after bloom]: Exactly improvedbaseline style. Elapsed01:22,finalflower,20g/340g. 'After bloom · from 1:00'. 'Pour to 340 g total'. 'Open valve · pulse gently'. 'Keep water about 1 cm above the bed'. Primary 'Finish brew'. Cold12h37m row. No actual equipment-state assertion.\nSCREEN 3 [B04 Basic ended]: Pulsar basic timer ended manually,finalflower. 'Timer ended'. '04:35 recorded time'. '20 g coffee · 340 g recipe water'. Do not assert drain observed, serving done, or measured water. Primary 'Done'. Cold12h37m row."
+    },
+    {
+      "file": "07-cold-start",
+      "title": "Cold timer-only start origins",
+      "states": [
+        {
+          "id": "C01",
+          "title": "Start now",
+          "body": "Cold brew startup form, NO bloom art. Small50gcoffee/400gextractionwater, editable 'Reminder after 14 h'. Mode 'Timer only'. 'When did steeping start?' choices Now selected / Earlier / Not sure. 'Start when wet, covered and cold'. 'Keep covered at 4 °C or colder'. Primary 'Start timer'. No runningelapsed beforestart."
+        },
+        {
+          "id": "C02",
+          "title": "Started earlier",
+          "body": "Samecoldstartupform50g400g14hTimeronly. Earlier selected. Fields 'Hours ago' 1 and 'Minutes ago' 20. Note 'Use when steeping actually began'. Safety 'Keep covered at 4 °C or colder'. Primary 'Start timer'. No bean/flower, no continuous elapsed yet."
+        },
+        {
+          "id": "C03",
+          "title": "Start unknown",
+          "body": "Cold timer-only active originunknown, no preciseelapsed/countdown. Main 'Start time unknown'. 'Add when steeping began to time the reminder'. Small50g/400g. Safety 'Keep covered at 4 °C or colder'. Primary 'Add brew start time'. Secondary 'End timer'. No14h time guarantee, no guessed origin, no bloomart."
+        }
+      ],
+      "prompt": "Use case: ui-mockup. Generate a high-fidelity landscape design state board with equal-width TALL Android screens arranged side by side, each fully visible from status bar through footer/navigation. Image 1 is the approved selected-theme visual baseline, STRICT style reference. Image 2 is actual bloom-animation 5x5 sprite atlas, artwork reference ONLY. Use one appropriate frame in a bloom-capable Pulsar screen; never show sprite grid. Near-black FLAT interface, white sans typography, lilac accents, OPEN left aligned reading order, no cards, no decorative graphics/device frames/gradients. Large left elapsed clock, small useful dose and recipe total water above, established animation to clock's right only when applicable. Main current physical task, limited source-useful copy, full-width grounded primary footer above distinct separated two-line background session row when a background is specified. No background row when none; no empty placeholders. Every screen stable/footer readable, scroll content if necessary rather than overlapping/footer clipping. Label each state ID and short name OUTSIDE phone screenshot on surrounding neutral board margin. Within app no design commentary. Use exact supplied text naturally spaced, break long lines. This is a static design proposal, no new sensors/measured masses/automatic actuals. Timer elapsed is known; task completion requires source-specific explicit report in guidance. Primary footer is not forced report in basic mode. Large screen-side margins, simple Android icons only. Render supplied content carefully.\nBoard: Cold timer-only start origins\nSCREEN 1 [C01 Start now]: Cold brew startup form, NO bloom art. Small50gcoffee/400gextractionwater, editable 'Reminder after 14 h'. Mode 'Timer only'. 'When did steeping start?' choices Now selected / Earlier / Not sure. 'Start when wet, covered and cold'. 'Keep covered at 4 °C or colder'. Primary 'Start timer'. No runningelapsed beforestart.\nSCREEN 2 [C02 Started earlier]: Samecoldstartupform50g400g14hTimeronly. Earlier selected. Fields 'Hours ago' 1 and 'Minutes ago' 20. Note 'Use when steeping actually began'. Safety 'Keep covered at 4 °C or colder'. Primary 'Start timer'. No bean/flower, no continuous elapsed yet.\nSCREEN 3 [C03 Start unknown]: Cold timer-only active originunknown, no preciseelapsed/countdown. Main 'Start time unknown'. 'Add when steeping began to time the reminder'. Small50g/400g. Safety 'Keep covered at 4 °C or colder'. Primary 'Add brew start time'. Secondary 'End timer'. No14h time guarantee, no guessed origin, no bloomart."
+    },
+    {
+      "file": "08-cold-preparation",
+      "title": "Guided cold preparation",
+      "states": [
+        {
+          "id": "C04",
+          "title": "Clean and prepare",
+          "body": "GuidedCold50gcoffee/400gextractionwater. No activeclock,no bloomart. 'Prepare clean equipment'. 'Use a clean food-safe vessel with room for the brew'. 'Make space in the fridge at 4 °C or colder'. Primary 'Equipment ready'."
+        },
+        {
+          "id": "C05",
+          "title": "Combine and cover",
+          "body": "GuidedCold50g/400g, no runningclock. 'Add 400 g cold water'. 'Gently stir to wet all 50 g coffee'. 'Cover and refrigerate at 4 °C or colder'. Cue 'Begin timing once fully wet, covered and cold'. Primary 'Begin steeping'. Help. No confirmation inferred from prior preparation."
+        }
+      ],
+      "prompt": "Use case: ui-mockup. Generate a high-fidelity landscape design state board with equal-width TALL Android screens arranged side by side, each fully visible from status bar through footer/navigation. Image 1 is the approved selected-theme visual baseline, STRICT style reference. Image 2 is actual bloom-animation 5x5 sprite atlas, artwork reference ONLY. Use one appropriate frame in a bloom-capable Pulsar screen; never show sprite grid. Near-black FLAT interface, white sans typography, lilac accents, OPEN left aligned reading order, no cards, no decorative graphics/device frames/gradients. Large left elapsed clock, small useful dose and recipe total water above, established animation to clock's right only when applicable. Main current physical task, limited source-useful copy, full-width grounded primary footer above distinct separated two-line background session row when a background is specified. No background row when none; no empty placeholders. Every screen stable/footer readable, scroll content if necessary rather than overlapping/footer clipping. Label each state ID and short name OUTSIDE phone screenshot on surrounding neutral board margin. Within app no design commentary. Use exact supplied text naturally spaced, break long lines. This is a static design proposal, no new sensors/measured masses/automatic actuals. Timer elapsed is known; task completion requires source-specific explicit report in guidance. Primary footer is not forced report in basic mode. Large screen-side margins, simple Android icons only. Render supplied content carefully.\nBoard: Guided cold preparation\nSCREEN 1 [C04 Clean and prepare]: GuidedCold50gcoffee/400gextractionwater. No activeclock,no bloomart. 'Prepare clean equipment'. 'Use a clean food-safe vessel with room for the brew'. 'Make space in the fridge at 4 °C or colder'. Primary 'Equipment ready'.\nSCREEN 2 [C05 Combine and cover]: GuidedCold50g/400g, no runningclock. 'Add 400 g cold water'. 'Gently stir to wet all 50 g coffee'. 'Cover and refrigerate at 4 °C or colder'. Cue 'Begin timing once fully wet, covered and cold'. Primary 'Begin steeping'. Help. No confirmation inferred from prior preparation."
+    },
+    {
+      "file": "09-cold-progress",
+      "title": "Steep, reminder and filtration",
+      "states": [
+        {
+          "id": "C06",
+          "title": "Steeping",
+          "body": "GuidedCold,no bloom. Main12h37m label 'Until reminder'. Small '1 h 23 m elapsed' and50gcoffee/400gextractionwater. 'Let coffee steep'. 'Keep covered at 4 °C or colder'. Link 'Edit reminder'. No activego-nextjustbecausereminderconfigured. Primary 'Begin filtering' manualphysicaltransition."
+        },
+        {
+          "id": "C07",
+          "title": "Reminder reached",
+          "body": "GuidedCold14h08m elapsed,true steepstillpending. 'Reminder reached'. 'Ready to filter?' 'Keep covered at 4 °C or colder'. Small 'A reminder does not confirm food safety'. 'Edit reminder'. Primary 'Begin filtering'. No automaticphysicalend, nostrained/safe/completeclaim."
+        },
+        {
+          "id": "C08",
+          "title": "Filtering",
+          "body": "GuidedCold,userreportedtransitionintofiltering. 'Filter the brew'. 'Drain useful liquid and separate the grounds'. 'Use a clean server; avoid filling above the filter rim'. Visible 'Serve or refrigerate promptly at 4 °C or colder'. Small '14 h 08 m reported steep time', stopped reference, NOT ongoing elapsed extraction. Primary 'Filtering complete'. No fabricated countdown or fixedfilterdeadline."
+        }
+      ],
+      "prompt": "Use case: ui-mockup. Generate a high-fidelity landscape design state board with equal-width TALL Android screens arranged side by side, each fully visible from status bar through footer/navigation. Image 1 is the approved selected-theme visual baseline, STRICT style reference. Image 2 is actual bloom-animation 5x5 sprite atlas, artwork reference ONLY. Use one appropriate frame in a bloom-capable Pulsar screen; never show sprite grid. Near-black FLAT interface, white sans typography, lilac accents, OPEN left aligned reading order, no cards, no decorative graphics/device frames/gradients. Large left elapsed clock, small useful dose and recipe total water above, established animation to clock's right only when applicable. Main current physical task, limited source-useful copy, full-width grounded primary footer above distinct separated two-line background session row when a background is specified. No background row when none; no empty placeholders. Every screen stable/footer readable, scroll content if necessary rather than overlapping/footer clipping. Label each state ID and short name OUTSIDE phone screenshot on surrounding neutral board margin. Within app no design commentary. Use exact supplied text naturally spaced, break long lines. This is a static design proposal, no new sensors/measured masses/automatic actuals. Timer elapsed is known; task completion requires source-specific explicit report in guidance. Primary footer is not forced report in basic mode. Large screen-side margins, simple Android icons only. Render supplied content carefully.\nBoard: Steep, reminder and filtration\nSCREEN 1 [C06 Steeping]: GuidedCold,no bloom. Main12h37m label 'Until reminder'. Small '1 h 23 m elapsed' and50gcoffee/400gextractionwater. 'Let coffee steep'. 'Keep covered at 4 °C or colder'. Link 'Edit reminder'. No activego-nextjustbecausereminderconfigured. Primary 'Begin filtering' manualphysicaltransition.\nSCREEN 2 [C07 Reminder reached]: GuidedCold14h08m elapsed,true steepstillpending. 'Reminder reached'. 'Ready to filter?' 'Keep covered at 4 °C or colder'. Small 'A reminder does not confirm food safety'. 'Edit reminder'. Primary 'Begin filtering'. No automaticphysicalend, nostrained/safe/completeclaim.\nSCREEN 3 [C08 Filtering]: GuidedCold,userreportedtransitionintofiltering. 'Filter the brew'. 'Drain useful liquid and separate the grounds'. 'Use a clean server; avoid filling above the filter rim'. Visible 'Serve or refrigerate promptly at 4 °C or colder'. Small '14 h 08 m reported steep time', stopped reference, NOT ongoing elapsed extraction. Primary 'Filtering complete'. No fabricated countdown or fixedfilterdeadline."
+    },
+    {
+      "file": "10-cold-finish",
+      "title": "Cold serving and cleanup",
+      "states": [
+        {
+          "id": "C09",
+          "title": "Dilute serving",
+          "body": "Coldguide,no bloom, no runningclock. 'Make a 200 g serving'. '100 g concentrate + 100 g cold water'. 'Serving water, separate from the 400 g brew water'. 'Before ice or milk'. Visible 'Keep unused concentrate covered at 4 °C or colder'. Primary 'Serving ready'. No coffeestrength/caffeineclaim."
+        },
+        {
+          "id": "C10",
+          "title": "Clean up",
+          "body": "Coldguide,no bloom,no runningclock. 'Wash and dry equipment'. 'Discard grounds and filter'. 'Keep unused concentrate covered at 4 °C or colder'. Primary 'Finish brew'. Small50gcoffee/400gextractionwater as recipecontext, notyield."
+        },
+        {
+          "id": "C11",
+          "title": "Cold completed",
+          "body": "Cold,no bloom. 'Brew complete'. '50 g coffee · 400 g extraction water'. '14 h 08 m reported steep time'. 'Keep unused concentrate covered at 4 °C or colder'. Primary 'Done'. No storagelifeguarantee, no measuredyield."
+        }
+      ],
+      "prompt": "Use case: ui-mockup. Generate a high-fidelity landscape design state board with equal-width TALL Android screens arranged side by side, each fully visible from status bar through footer/navigation. Image 1 is the approved selected-theme visual baseline, STRICT style reference. Image 2 is actual bloom-animation 5x5 sprite atlas, artwork reference ONLY. Use one appropriate frame in a bloom-capable Pulsar screen; never show sprite grid. Near-black FLAT interface, white sans typography, lilac accents, OPEN left aligned reading order, no cards, no decorative graphics/device frames/gradients. Large left elapsed clock, small useful dose and recipe total water above, established animation to clock's right only when applicable. Main current physical task, limited source-useful copy, full-width grounded primary footer above distinct separated two-line background session row when a background is specified. No background row when none; no empty placeholders. Every screen stable/footer readable, scroll content if necessary rather than overlapping/footer clipping. Label each state ID and short name OUTSIDE phone screenshot on surrounding neutral board margin. Within app no design commentary. Use exact supplied text naturally spaced, break long lines. This is a static design proposal, no new sensors/measured masses/automatic actuals. Timer elapsed is known; task completion requires source-specific explicit report in guidance. Primary footer is not forced report in basic mode. Large screen-side margins, simple Android icons only. Render supplied content carefully.\nBoard: Cold serving and cleanup\nSCREEN 1 [C09 Dilute serving]: Coldguide,no bloom, no runningclock. 'Make a 200 g serving'. '100 g concentrate + 100 g cold water'. 'Serving water, separate from the 400 g brew water'. 'Before ice or milk'. Visible 'Keep unused concentrate covered at 4 °C or colder'. Primary 'Serving ready'. No coffeestrength/caffeineclaim.\nSCREEN 2 [C10 Clean up]: Coldguide,no bloom,no runningclock. 'Wash and dry equipment'. 'Discard grounds and filter'. 'Keep unused concentrate covered at 4 °C or colder'. Primary 'Finish brew'. Small50gcoffee/400gextractionwater as recipecontext, notyield.\nSCREEN 3 [C11 Cold completed]: Cold,no bloom. 'Brew complete'. '50 g coffee · 400 g extraction water'. '14 h 08 m reported steep time'. 'Keep unused concentrate covered at 4 °C or colder'. Primary 'Done'. No storagelifeguarantee, no measuredyield."
+    },
+    {
+      "file": "11-concurrent",
+      "title": "Independent concurrent sessions",
+      "states": [
+        {
+          "id": "X01",
+          "title": "One background brew",
+          "body": "ForegroundbasicPulsar01:22 finalflower,20g/340g,conditionalAfterbloomtarget340openvalvepulse. Grounded 'Finish brew' scopedPulsaronly. Separatetwo-lineCold brew /12h37muntilreminder chevron whole-rowtap."
+        },
+        {
+          "id": "X02",
+          "title": "Choose another brew",
+          "body": "SameforegroundPulsar dimmedbehind native minimal dark bottomsheet 'Other brews'. Separate tappablerows 'Cold brew' /12h37muntilreminder and 'French press' /2m10s elapsed. Eachchevron. Close affordance. No aggregateStopall orclockreset. No roundeddashboardcards."
+        },
+        {
+          "id": "X03",
+          "title": "Other reminder reached",
+          "body": "ForegroundguidedPulsarmainpour02:10finalflower,20g/340g,primary340greached. Footerbackgroundrow 'Cold brew' /'Reminder reached' modestlilacdotandchevron. No modal takeover, no severe redwarning, no autofilter/completion, no clockfreeze."
+        }
+      ],
+      "prompt": "Use case: ui-mockup. Generate a high-fidelity landscape design state board with equal-width TALL Android screens arranged side by side, each fully visible from status bar through footer/navigation. Image 1 is the approved selected-theme visual baseline, STRICT style reference. Image 2 is actual bloom-animation 5x5 sprite atlas, artwork reference ONLY. Use one appropriate frame in a bloom-capable Pulsar screen; never show sprite grid. Near-black FLAT interface, white sans typography, lilac accents, OPEN left aligned reading order, no cards, no decorative graphics/device frames/gradients. Large left elapsed clock, small useful dose and recipe total water above, established animation to clock's right only when applicable. Main current physical task, limited source-useful copy, full-width grounded primary footer above distinct separated two-line background session row when a background is specified. No background row when none; no empty placeholders. Every screen stable/footer readable, scroll content if necessary rather than overlapping/footer clipping. Label each state ID and short name OUTSIDE phone screenshot on surrounding neutral board margin. Within app no design commentary. Use exact supplied text naturally spaced, break long lines. This is a static design proposal, no new sensors/measured masses/automatic actuals. Timer elapsed is known; task completion requires source-specific explicit report in guidance. Primary footer is not forced report in basic mode. Large screen-side margins, simple Android icons only. Render supplied content carefully.\nBoard: Independent concurrent sessions\nSCREEN 1 [X01 One background brew]: ForegroundbasicPulsar01:22 finalflower,20g/340g,conditionalAfterbloomtarget340openvalvepulse. Grounded 'Finish brew' scopedPulsaronly. Separatetwo-lineCold brew /12h37muntilreminder chevron whole-rowtap.\nSCREEN 2 [X02 Choose another brew]: SameforegroundPulsar dimmedbehind native minimal dark bottomsheet 'Other brews'. Separate tappablerows 'Cold brew' /12h37muntilreminder and 'French press' /2m10s elapsed. Eachchevron. Close affordance. No aggregateStopall orclockreset. No roundeddashboardcards.\nSCREEN 3 [X03 Other reminder reached]: ForegroundguidedPulsarmainpour02:10finalflower,20g/340g,primary340greached. Footerbackgroundrow 'Cold brew' /'Reminder reached' modestlilacdotandchevron. No modal takeover, no severe redwarning, no autofilter/completion, no clockfreeze."
+    },
+    {
+      "file": "12-reading",
+      "title": "Help, recipe and paused guidance",
+      "states": [
+        {
+          "id": "H01",
+          "title": "Contextual help",
+          "body": "Pulsar guide help sheet over preservedactive mainpour02:10 and finalflower. Title 'Keep the water low'. Copy 'Pour through the cap in small pulses. Pause pouring when water rises more than about 1 cm above the bed.' Small 'Brew clock keeps running'. Primary 'Back to brewing'. No reset/advance."
+        },
+        {
+          "id": "H02",
+          "title": "Read recipe ahead",
+          "body": "Pulsar Recipe view title, visible compact '20 g coffee · 340 g water · 1:17'. Scrollable plan: 'Prime paper', 'Dose, cap, tare', '60 g bloom · valve open, then close at first drips', 'Closed bloom to 1:00', 'Open valve · pulse to 340 g total', 'Drawdown · 3:30–4:30 reference', 'Close valve · lift by base'. Subtle current indicator atpulse stage. Small live '02:10 elapsed · clock running'. Primary 'Back to brewing'. Recipe read-only, no completedstageedits."
+        },
+        {
+          "id": "H03",
+          "title": "Guide paused",
+          "body": "Pulsar02:20elapsedfinalflower,20g/340g. 'Guide paused'. 'Brew clock keeps running'. Keep useful 'Current target: 340 g total'. Visible current safety content if any; no newrecipehazard. Primary 'Resume guide'. Coldbackground12h37m. No ambiguous Pauseclock."
+        }
+      ],
+      "prompt": "Use case: ui-mockup. Generate a high-fidelity landscape design state board with equal-width TALL Android screens arranged side by side, each fully visible from status bar through footer/navigation. Image 1 is the approved selected-theme visual baseline, STRICT style reference. Image 2 is actual bloom-animation 5x5 sprite atlas, artwork reference ONLY. Use one appropriate frame in a bloom-capable Pulsar screen; never show sprite grid. Near-black FLAT interface, white sans typography, lilac accents, OPEN left aligned reading order, no cards, no decorative graphics/device frames/gradients. Large left elapsed clock, small useful dose and recipe total water above, established animation to clock's right only when applicable. Main current physical task, limited source-useful copy, full-width grounded primary footer above distinct separated two-line background session row when a background is specified. No background row when none; no empty placeholders. Every screen stable/footer readable, scroll content if necessary rather than overlapping/footer clipping. Label each state ID and short name OUTSIDE phone screenshot on surrounding neutral board margin. Within app no design commentary. Use exact supplied text naturally spaced, break long lines. This is a static design proposal, no new sensors/measured masses/automatic actuals. Timer elapsed is known; task completion requires source-specific explicit report in guidance. Primary footer is not forced report in basic mode. Large screen-side margins, simple Android icons only. Render supplied content carefully.\nBoard: Help, recipe and paused guidance\nSCREEN 1 [H01 Contextual help]: Pulsar guide help sheet over preservedactive mainpour02:10 and finalflower. Title 'Keep the water low'. Copy 'Pour through the cap in small pulses. Pause pouring when water rises more than about 1 cm above the bed.' Small 'Brew clock keeps running'. Primary 'Back to brewing'. No reset/advance.\nSCREEN 2 [H02 Read recipe ahead]: Pulsar Recipe view title, visible compact '20 g coffee · 340 g water · 1:17'. Scrollable plan: 'Prime paper', 'Dose, cap, tare', '60 g bloom · valve open, then close at first drips', 'Closed bloom to 1:00', 'Open valve · pulse to 340 g total', 'Drawdown · 3:30–4:30 reference', 'Close valve · lift by base'. Subtle current indicator atpulse stage. Small live '02:10 elapsed · clock running'. Primary 'Back to brewing'. Recipe read-only, no completedstageedits.\nSCREEN 3 [H03 Guide paused]: Pulsar02:20elapsedfinalflower,20g/340g. 'Guide paused'. 'Brew clock keeps running'. Keep useful 'Current target: 340 g total'. Visible current safety content if any; no newrecipehazard. Primary 'Resume guide'. Coldbackground12h37m. No ambiguous Pauseclock."
+    },
+    {
+      "file": "13-reminders",
+      "title": "Reminder controls and limitations",
+      "states": [
+        {
+          "id": "R01",
+          "title": "Edit reminder",
+          "body": "Activecold steep behind native darkdialog 'Edit reminder'. Numericvalue14,units Hours selected (Seconds / Minutes / Hours controls). Note 'From the known steep start'. Buttons 'Cancel' and 'Save'; secondary 'Remove reminder'. No bloomart. Visibleunderlyingcold4°Csafety remains where possible."
+        },
+        {
+          "id": "R02",
+          "title": "Precise reminder off",
+          "body": "Activecold1h23melapsed,12h37muntilreminder. Inline calm block 'Reminders may arrive late'. 'Android can delay reminders while you are away'. Link 'Allow precise reminders'. 'Edit reminder'. Primary 'End timer'. Keep 'Covered at 4 °C or colder'. No catastrophic fullredcard."
+        },
+        {
+          "id": "R03",
+          "title": "Notifications denied",
+          "body": "Activecold12h37muntilreminder/1h23melapsed,4°Csafety. Inline 'Notifications are off'. 'You can check this timer here'. Link 'Open notification settings'. 'Edit reminder'. Primary 'End timer'. No claimprecisepermissionfixesnotificationdenial, no automaticpermissiongrant."
+        }
+      ],
+      "prompt": "Use case: ui-mockup. Generate a high-fidelity landscape design state board with equal-width TALL Android screens arranged side by side, each fully visible from status bar through footer/navigation. Image 1 is the approved selected-theme visual baseline, STRICT style reference. Image 2 is actual bloom-animation 5x5 sprite atlas, artwork reference ONLY. Use one appropriate frame in a bloom-capable Pulsar screen; never show sprite grid. Near-black FLAT interface, white sans typography, lilac accents, OPEN left aligned reading order, no cards, no decorative graphics/device frames/gradients. Large left elapsed clock, small useful dose and recipe total water above, established animation to clock's right only when applicable. Main current physical task, limited source-useful copy, full-width grounded primary footer above distinct separated two-line background session row when a background is specified. No background row when none; no empty placeholders. Every screen stable/footer readable, scroll content if necessary rather than overlapping/footer clipping. Label each state ID and short name OUTSIDE phone screenshot on surrounding neutral board margin. Within app no design commentary. Use exact supplied text naturally spaced, break long lines. This is a static design proposal, no new sensors/measured masses/automatic actuals. Timer elapsed is known; task completion requires source-specific explicit report in guidance. Primary footer is not forced report in basic mode. Large screen-side margins, simple Android icons only. Render supplied content carefully.\nBoard: Reminder controls and limitations\nSCREEN 1 [R01 Edit reminder]: Activecold steep behind native darkdialog 'Edit reminder'. Numericvalue14,units Hours selected (Seconds / Minutes / Hours controls). Note 'From the known steep start'. Buttons 'Cancel' and 'Save'; secondary 'Remove reminder'. No bloomart. Visibleunderlyingcold4°Csafety remains where possible.\nSCREEN 2 [R02 Precise reminder off]: Activecold1h23melapsed,12h37muntilreminder. Inline calm block 'Reminders may arrive late'. 'Android can delay reminders while you are away'. Link 'Allow precise reminders'. 'Edit reminder'. Primary 'End timer'. Keep 'Covered at 4 °C or colder'. No catastrophic fullredcard.\nSCREEN 3 [R03 Notifications denied]: Activecold12h37muntilreminder/1h23melapsed,4°Csafety. Inline 'Notifications are off'. 'You can check this timer here'. Link 'Open notification settings'. 'Edit reminder'. Primary 'End timer'. No claimprecisepermissionfixesnotificationdenial, no automaticpermissiongrant."
+    },
+    {
+      "file": "14-recovery",
+      "title": "Coherent recoverable states",
+      "states": [
+        {
+          "id": "E01",
+          "title": "Guide unavailable, timer valid",
+          "body": "ValidbasicPulsar timer02:10 finalflower,20g/340g. Inline 'Guide unavailable'. 'Your timer is still running'. Link 'Retry guide'. Retain recipe facts if valid. Primary 'Finish brew'. Cold12h37m. This is missing guidecontent ONLY, NOT invalidsaved session. No inventedsubstituterecipe."
+        },
+        {
+          "id": "E02",
+          "title": "Confirmation pending",
+          "body": "GuidedPulsarmainpour02:10finalflower,target340g,20g/340g. Footer actiongreyedwithtinyprogress and text 'Saving confirmation…'. No extrafailurebanner,noduplicatepress,noprematuredrawdown. Small 'Brew clock keeps running'. Cold12h37m."
+        },
+        {
+          "id": "E03",
+          "title": "Confirmation failed",
+          "body": "GuidedPulsarmainpour02:12finalflower,target340g. Inline nearfooter 'Confirmation was not saved'. 'Current step is unchanged'. Primary 'Retry confirmation'. No genericNextorclaimedcompletion. Clockrunning,Cold12h37m. No loss of usercontext."
+        }
+      ],
+      "prompt": "Use case: ui-mockup. Generate a high-fidelity landscape design state board with equal-width TALL Android screens arranged side by side, each fully visible from status bar through footer/navigation. Image 1 is the approved selected-theme visual baseline, STRICT style reference. Image 2 is actual bloom-animation 5x5 sprite atlas, artwork reference ONLY. Use one appropriate frame in a bloom-capable Pulsar screen; never show sprite grid. Near-black FLAT interface, white sans typography, lilac accents, OPEN left aligned reading order, no cards, no decorative graphics/device frames/gradients. Large left elapsed clock, small useful dose and recipe total water above, established animation to clock's right only when applicable. Main current physical task, limited source-useful copy, full-width grounded primary footer above distinct separated two-line background session row when a background is specified. No background row when none; no empty placeholders. Every screen stable/footer readable, scroll content if necessary rather than overlapping/footer clipping. Label each state ID and short name OUTSIDE phone screenshot on surrounding neutral board margin. Within app no design commentary. Use exact supplied text naturally spaced, break long lines. This is a static design proposal, no new sensors/measured masses/automatic actuals. Timer elapsed is known; task completion requires source-specific explicit report in guidance. Primary footer is not forced report in basic mode. Large screen-side margins, simple Android icons only. Render supplied content carefully.\nBoard: Coherent recoverable states\nSCREEN 1 [E01 Guide unavailable, timer valid]: ValidbasicPulsar timer02:10 finalflower,20g/340g. Inline 'Guide unavailable'. 'Your timer is still running'. Link 'Retry guide'. Retain recipe facts if valid. Primary 'Finish brew'. Cold12h37m. This is missing guidecontent ONLY, NOT invalidsaved session. No inventedsubstituterecipe.\nSCREEN 2 [E02 Confirmation pending]: GuidedPulsarmainpour02:10finalflower,target340g,20g/340g. Footer actiongreyedwithtinyprogress and text 'Saving confirmation…'. No extrafailurebanner,noduplicatepress,noprematuredrawdown. Small 'Brew clock keeps running'. Cold12h37m.\nSCREEN 3 [E03 Confirmation failed]: GuidedPulsarmainpour02:12finalflower,target340g. Inline nearfooter 'Confirmation was not saved'. 'Current step is unchanged'. Primary 'Retry confirmation'. No genericNextorclaimedcompletion. Clockrunning,Cold12h37m. No loss of usercontext."
+    },
+    {
+      "file": "15-session-handling",
+      "title": "Restoration and cancellation",
+      "states": [
+        {
+          "id": "S01",
+          "title": "Restoring",
+          "body": "Darkminimal 'Restoring brews…' spinner, no fictitious00:00timer, no substitutedrecipe/bloom. Small 'Checking saved session'. Existing alreadyvalidated othercoldrow ifknown12h37m separate; restoringforeground data notasserted. No guessedcounts orsuccess."
+        },
+        {
+          "id": "S02",
+          "title": "Saved session unavailable",
+          "body": "Foreground 'This brew cannot be restored'. 'Saved session data is unavailable or unsupported'. Nofallbackrecipe, no guessedtime,targetorflower. Primary 'Back to brews'. Validindependentcoldrow 'Cold brew' /12h37muntilreminder remainsavailable. No automaticdelete orreset all."
+        },
+        {
+          "id": "S03",
+          "title": "Cancel selected brew",
+          "body": "ActivePulsar02:10finalflowerbehindnative confirmationdialog 'End this brew?' Copy 'This ends the Pulsar session. Your cold brew keeps running.' Actions 'Keep brewing' and 'End Pulsar'. No destructivealltimers wording ordeletehistory. Dimmedbackground preserves groundedfooter andquietcoldrow."
+        }
+      ],
+      "prompt": "Use case: ui-mockup. Generate a high-fidelity landscape design state board with equal-width TALL Android screens arranged side by side, each fully visible from status bar through footer/navigation. Image 1 is the approved selected-theme visual baseline, STRICT style reference. Image 2 is actual bloom-animation 5x5 sprite atlas, artwork reference ONLY. Use one appropriate frame in a bloom-capable Pulsar screen; never show sprite grid. Near-black FLAT interface, white sans typography, lilac accents, OPEN left aligned reading order, no cards, no decorative graphics/device frames/gradients. Large left elapsed clock, small useful dose and recipe total water above, established animation to clock's right only when applicable. Main current physical task, limited source-useful copy, full-width grounded primary footer above distinct separated two-line background session row when a background is specified. No background row when none; no empty placeholders. Every screen stable/footer readable, scroll content if necessary rather than overlapping/footer clipping. Label each state ID and short name OUTSIDE phone screenshot on surrounding neutral board margin. Within app no design commentary. Use exact supplied text naturally spaced, break long lines. This is a static design proposal, no new sensors/measured masses/automatic actuals. Timer elapsed is known; task completion requires source-specific explicit report in guidance. Primary footer is not forced report in basic mode. Large screen-side margins, simple Android icons only. Render supplied content carefully.\nBoard: Restoration and cancellation\nSCREEN 1 [S01 Restoring]: Darkminimal 'Restoring brews…' spinner, no fictitious00:00timer, no substitutedrecipe/bloom. Small 'Checking saved session'. Existing alreadyvalidated othercoldrow ifknown12h37m separate; restoringforeground data notasserted. No guessedcounts orsuccess.\nSCREEN 2 [S02 Saved session unavailable]: Foreground 'This brew cannot be restored'. 'Saved session data is unavailable or unsupported'. Nofallbackrecipe, no guessedtime,targetorflower. Primary 'Back to brews'. Validindependentcoldrow 'Cold brew' /12h37muntilreminder remainsavailable. No automaticdelete orreset all.\nSCREEN 3 [S03 Cancel selected brew]: ActivePulsar02:10finalflowerbehindnative confirmationdialog 'End this brew?' Copy 'This ends the Pulsar session. Your cold brew keeps running.' Actions 'Keep brewing' and 'End Pulsar'. No destructivealltimers wording ordeletehistory. Dimmedbackground preserves groundedfooter andquietcoldrow."
+    },
+    {
+      "file": "16-without-bloom",
+      "title": "Methods without bloom",
+      "states": [
+        {
+          "id": "N01",
+          "title": "Immersion",
+          "body": "French press basic20gcoffee/300grecipewater,02:10elapsed,NO bean,flower,mascot,illustrationplaceholder. Openleftalignedclock. 'Let coffee steep'. 'Recipe reference: 4:00 total'. Usefulwaterdosecontextalwaysvisible. Primary 'Finish brew'. Cold12h37mrow. No newgenericstopwatch."
+        },
+        {
+          "id": "N02",
+          "title": "Gentle pressing",
+          "body": "AeroPressguided15gcoffee/225gwater,02:05elapsed. NO bloomart, openminimalhierarchy. 'Press gently'. 'Use steady pressure; do not force'. 'Pause pressure if resistance is high'. Primary 'Press complete'. Sourceobservedphysicalpressnotfixeddeadline. Cold12h37mrow."
+        },
+        {
+          "id": "N03",
+          "title": "Beverage yield",
+          "body": "Espressobasic18gcoffee,primarytarget '36 g beverage'.00:28elapsed. NO bloomart. 'Target yield · 1:2'. 'Recipe reference: 25–35 s'. Primary 'Finish brew'. NEVERlabel36gwaterinput orassume18gcoffeeiswatervolume; no fakelivescale. Cold12h37mrow."
+        }
+      ],
+      "prompt": "Use case: ui-mockup. Generate a high-fidelity landscape design state board with equal-width TALL Android screens arranged side by side, each fully visible from status bar through footer/navigation. Image 1 is the approved selected-theme visual baseline, STRICT style reference. Image 2 is actual bloom-animation 5x5 sprite atlas, artwork reference ONLY. Use one appropriate frame in a bloom-capable Pulsar screen; never show sprite grid. Near-black FLAT interface, white sans typography, lilac accents, OPEN left aligned reading order, no cards, no decorative graphics/device frames/gradients. Large left elapsed clock, small useful dose and recipe total water above, established animation to clock's right only when applicable. Main current physical task, limited source-useful copy, full-width grounded primary footer above distinct separated two-line background session row when a background is specified. No background row when none; no empty placeholders. Every screen stable/footer readable, scroll content if necessary rather than overlapping/footer clipping. Label each state ID and short name OUTSIDE phone screenshot on surrounding neutral board margin. Within app no design commentary. Use exact supplied text naturally spaced, break long lines. This is a static design proposal, no new sensors/measured masses/automatic actuals. Timer elapsed is known; task completion requires source-specific explicit report in guidance. Primary footer is not forced report in basic mode. Large screen-side margins, simple Android icons only. Render supplied content carefully.\nBoard: Methods without bloom\nSCREEN 1 [N01 Immersion]: French press basic20gcoffee/300grecipewater,02:10elapsed,NO bean,flower,mascot,illustrationplaceholder. Openleftalignedclock. 'Let coffee steep'. 'Recipe reference: 4:00 total'. Usefulwaterdosecontextalwaysvisible. Primary 'Finish brew'. Cold12h37mrow. No newgenericstopwatch.\nSCREEN 2 [N02 Gentle pressing]: AeroPressguided15gcoffee/225gwater,02:05elapsed. NO bloomart, openminimalhierarchy. 'Press gently'. 'Use steady pressure; do not force'. 'Pause pressure if resistance is high'. Primary 'Press complete'. Sourceobservedphysicalpressnotfixeddeadline. Cold12h37mrow.\nSCREEN 3 [N03 Beverage yield]: Espressobasic18gcoffee,primarytarget '36 g beverage'.00:28elapsed. NO bloomart. 'Target yield · 1:2'. 'Recipe reference: 25–35 s'. Primary 'Finish brew'. NEVERlabel36gwaterinput orassume18gcoffeeiswatervolume; no fakelivescale. Cold12h37mrow."
+    }
+  ]
+}

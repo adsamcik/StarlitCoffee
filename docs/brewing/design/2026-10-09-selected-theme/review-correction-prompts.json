@@ -1,0 +1,16 @@
+[
+  {
+    "file": "14-recovery",
+    "change": "Middle E02 and right E03: the user already reported reaching340g. Replace action heading 'Pour to340g total' with exact '340 g reported'. Replace all valve/pour/waterlevelinstruction lines with small 'Recipe target: 340 g total' and 'Your report is awaiting confirmation'. Do not ask them to physically repeatpour. Middle retains disabled 'Saving confirmation…' and runningclock. Right retains 'Confirmation was not saved' and 'Current step is unchanged', button 'Retry confirmation' retries SAME submittedreport, not repouring. PreserveleftE01unchanged,all clocks, finalflower, independentColdrow,style.",
+    "prompt": "Use case: ui-mockup. Precise edit of input state board; preserve all content/layout not explicitly mentioned. Middle E02 and right E03: the user already reported reaching340g. Replace action heading 'Pour to340g total' with exact '340 g reported'. Replace all valve/pour/waterlevelinstruction lines with small 'Recipe target: 340 g total' and 'Your report is awaiting confirmation'. Do not ask them to physically repeatpour. Middle retains disabled 'Saving confirmation…' and runningclock. Right retains 'Confirmation was not saved' and 'Current step is unchanged', button 'Retry confirmation' retries SAME submittedreport, not repouring. PreserveleftE01unchanged,all clocks, finalflower, independentColdrow,style.",
+    "referenceImage": "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-selected-theme/14-recovery.png",
+    "outputFile": "14-recovery-v2.png"
+  },
+  {
+    "file": "12-reading",
+    "change": "Right H03 only replace 'Keep about 1 cm above the bed' with exact 'Keep water about 1 cm above the bed'. Preserve all other text,pausedguidecontext,running02:20clock,Resumeguide,other two reading screens andColdrow.",
+    "prompt": "Use case: ui-mockup. Precise edit of input state board; preserve all content/layout not explicitly mentioned. Right H03 only replace 'Keep about 1 cm above the bed' with exact 'Keep water about 1 cm above the bed'. Preserve all other text,pausedguidecontext,running02:20clock,Resumeguide,other two reading screens andColdrow.",
+    "referenceImage": "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-selected-theme/12-reading.png",
+    "outputFile": "12-reading-v2.png"
+  }
+]

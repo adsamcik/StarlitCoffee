@@ -1,0 +1,65 @@
+[
+  {
+    "file": "theme-baseline",
+    "change": "Change only two copy lines. Replace 'Valve open · pulse gently' with 'Open valve · pulse gently'. Replace 'Keep about 1 cm above the bed' with 'Keep water about 1 cm above the bed'. Preserve every other pixel/layout/clock/footer/art as closely as possible.",
+    "prompt": "Use case: ui-mockup. Precise correction of input image, preserve selected minimal theme, complete state board, all invariants not mentioned. Change only two copy lines. Replace 'Valve open · pulse gently' with 'Open valve · pulse gently'. Replace 'Keep about 1 cm above the bed' with 'Keep water about 1 cm above the bed'. Preserve every other pixel/layout/clock/footer/art as closely as possible.",
+    "referenceImage": "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-selected-theme/theme-baseline.png",
+    "outputFile": "theme-baseline-v2.png"
+  },
+  {
+    "file": "02-bloom",
+    "change": "In left G03 screen, replace 'Look for the first drips' with 'Close valve at first drips'. Keep the pour target60g, valveopen firstpour,99C,elapsed00:12,confirmation and other two screens unchanged. Closing valve is immediatephysicalcue BEFORE retrievingphone. No extra button.",
+    "prompt": "Use case: ui-mockup. Precise correction of input image, preserve selected minimal theme, complete state board, all invariants not mentioned. In left G03 screen, replace 'Look for the first drips' with 'Close valve at first drips'. Keep the pour target60g, valveopen firstpour,99C,elapsed00:12,confirmation and other two screens unchanged. Closing valve is immediatephysicalcue BEFORE retrievingphone. No extra button.",
+    "referenceImage": "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-selected-theme/02-bloom.png",
+    "outputFile": "02-bloom-v2.png"
+  },
+  {
+    "file": "03-pouring",
+    "change": "In middle G07 replace waterlevelhelper with exact 'Pause pouring if water rises more than about 1 cm above the bed'. Wrap legibly. Preserve all other screens/actions/clocks/art/footer.",
+    "prompt": "Use case: ui-mockup. Precise correction of input image, preserve selected minimal theme, complete state board, all invariants not mentioned. In middle G07 replace waterlevelhelper with exact 'Pause pouring if water rises more than about 1 cm above the bed'. Wrap legibly. Preserve all other screens/actions/clocks/art/footer.",
+    "referenceImage": "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-selected-theme/03-pouring.png",
+    "outputFile": "03-pouring-v2.png"
+  },
+  {
+    "file": "05-slower-brewing",
+    "change": "Left L01 replace bud pose with fully OPEN white coffee flower on brown bean, same final pose as middle and right atelapsed01:12, because elapsedanimation iscompleteeven whenphysicalpourstillpending. Add exact immediatelyvisible cue 'Close valve at first drips' under firstpourvalveopen cue. Middle L02 backgroundrow replace countdown with exact 'Reminder reached'. Preserve all clocks,unfinishedtargets,buttons,remainingcopy andminimaltheme.",
+    "prompt": "Use case: ui-mockup. Precise correction of input image, preserve selected minimal theme, complete state board, all invariants not mentioned. Left L01 replace bud pose with fully OPEN white coffee flower on brown bean, same final pose as middle and right atelapsed01:12, because elapsedanimation iscompleteeven whenphysicalpourstillpending. Add exact immediatelyvisible cue 'Close valve at first drips' under firstpourvalveopen cue. Middle L02 backgroundrow replace countdown with exact 'Reminder reached'. Preserve all clocks,unfinishedtargets,buttons,remainingcopy andminimaltheme.",
+    "referenceImage": "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-selected-theme/05-slower-brewing.png",
+    "outputFile": "05-slower-brewing-v2.png"
+  },
+  {
+    "file": "06-basic-timing",
+    "change": "Middle B03 only: replace 'Valve open · pulse gently' with imperative 'Open valve · pulse gently'. Replace helper with exact 'Keep water about 1 cm above the bed'. Preserve other two screens, primaryFinishbrew, clocks,artandfooters.",
+    "prompt": "Use case: ui-mockup. Precise correction of input image, preserve selected minimal theme, complete state board, all invariants not mentioned. Middle B03 only: replace 'Valve open · pulse gently' with imperative 'Open valve · pulse gently'. Replace helper with exact 'Keep water about 1 cm above the bed'. Preserve other two screens, primaryFinishbrew, clocks,artandfooters.",
+    "referenceImage": "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-selected-theme/06-basic-timing.png",
+    "outputFile": "06-basic-timing-v2.png"
+  },
+  {
+    "file": "07-cold-start",
+    "change": "All three screens: change header Pulsar to exact 'Cold brew'; change400glabel to '400 g steeping water'. Preserve forms50g,14h,origins,unknownno clock,4°Csafety,buttons and entirelyNO bloomart.",
+    "prompt": "Use case: ui-mockup. Precise correction of input image, preserve selected minimal theme, complete state board, all invariants not mentioned. All three screens: change header Pulsar to exact 'Cold brew'; change400glabel to '400 g steeping water'. Preserve forms50g,14h,origins,unknownno clock,4°Csafety,buttons and entirelyNO bloomart.",
+    "referenceImage": "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-selected-theme/07-cold-start.png",
+    "outputFile": "07-cold-start-v2.png"
+  },
+  {
+    "file": "08-cold-preparation",
+    "change": "Both screens: change header Pulsar to exact 'Cold brew'; change400glabel to '400 g steeping water'. Preserve all other text,fullywetcoveredcoldorigin,untimedprep,buttons,safetyandNO bloomart.",
+    "prompt": "Use case: ui-mockup. Precise correction of input image, preserve selected minimal theme, complete state board, all invariants not mentioned. Both screens: change header Pulsar to exact 'Cold brew'; change400glabel to '400 g steeping water'. Preserve all other text,fullywetcoveredcoldorigin,untimedprep,buttons,safetyandNO bloomart.",
+    "referenceImage": "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-selected-theme/08-cold-preparation.png",
+    "outputFile": "08-cold-preparation-v2.png"
+  },
+  {
+    "file": "09-cold-progress",
+    "change": "Allthree Coldbrew screens: REMOVE ALL bean/flower/plantart completely; use cleanemptyspace,no substituteillustration. REMOVE backgroundCold brew rowfrom left andmiddle: these are focusedCold withNO other sessions. Left C06 dominant numeric must '12 h 37 m' labelled 'Until reminder'; small '1 h 23 m elapsed'. Middle C07 actualelapsed numeric must '14 h 08 m' labelled 'Elapsed'. Right C08 numeric '14 h 08 m' labelled 'Reported steep time', no duplicateambiguous14:08orongoingelapsed. Preserve original50g/400gextractionwater,physicalcurrenttasks,4°Csafety,user 'Begin filtering' and 'Filtering complete' actions. Reminderexpiry doesnotendsteep. No bloemartanywhere.",
+    "prompt": "Use case: ui-mockup. Precise correction of input image, preserve selected minimal theme, complete state board, all invariants not mentioned. Allthree Coldbrew screens: REMOVE ALL bean/flower/plantart completely; use cleanemptyspace,no substituteillustration. REMOVE backgroundCold brew rowfrom left andmiddle: these are focusedCold withNO other sessions. Left C06 dominant numeric must '12 h 37 m' labelled 'Until reminder'; small '1 h 23 m elapsed'. Middle C07 actualelapsed numeric must '14 h 08 m' labelled 'Elapsed'. Right C08 numeric '14 h 08 m' labelled 'Reported steep time', no duplicateambiguous14:08orongoingelapsed. Preserve original50g/400gextractionwater,physicalcurrenttasks,4°Csafety,user 'Begin filtering' and 'Filtering complete' actions. Reminderexpiry doesnotendsteep. No bloemartanywhere.",
+    "referenceImage": "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-selected-theme/09-cold-progress.png",
+    "outputFile": "09-cold-progress-v2.png"
+  },
+  {
+    "file": "11-concurrent",
+    "change": "Left X01 basic: change to imperative 'Open valve · pulse gently' and exact 'Keep water about 1 cm above the bed', keepFinishbrew. MiddleX02chooserunchanged. RightX03 GUIDEDmainpour: replace Finishbrew button with exact '340 g reached'; removeconditionalAfterbloomline and instead preserve340target+ 'Valve open · small pulses' + 'Keep water about 1 cm above the bed'. Preserve rightelapsed02:10,finalflower,Cold reminderreachedrow,no takeover. Allotherlayoutunchanged.",
+    "prompt": "Use case: ui-mockup. Precise correction of input image, preserve selected minimal theme, complete state board, all invariants not mentioned. Left X01 basic: change to imperative 'Open valve · pulse gently' and exact 'Keep water about 1 cm above the bed', keepFinishbrew. MiddleX02chooserunchanged. RightX03 GUIDEDmainpour: replace Finishbrew button with exact '340 g reached'; removeconditionalAfterbloomline and instead preserve340target+ 'Valve open · small pulses' + 'Keep water about 1 cm above the bed'. Preserve rightelapsed02:10,finalflower,Cold reminderreachedrow,no takeover. Allotherlayoutunchanged.",
+    "referenceImage": "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-selected-theme/11-concurrent.png",
+    "outputFile": "11-concurrent-v2.png"
+  }
+]

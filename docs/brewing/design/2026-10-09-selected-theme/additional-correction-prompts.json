@@ -1,0 +1,30 @@
+[
+  {
+    "file": "13-reminders",
+    "change": "Allscreens are ACTIVE STEEPING, not leftoverconcentrate. Replace all 'Keep unused concentrate covered at4°C...' with exact 'Keep brew covered at 4 °C or colder'. LeftR01 mustlooklike propernative modal: dim entireunderlyingcoldscreen, centered Editreminderdialog isonlyactivelayer; footer Endtimer behinddialogdimmed,inactive. Preserve14Hourselect,knownstart,SaveCancelRemovecontrols. Middle/rightnotifications actionablecontent and elapsed/countdownpreserved; add 'Elapsed' label below1h23m, removegrayinfoCARDBACKGROUNDS usequietinlineblock andthinseparator. No bloomart.",
+    "prompt": "Use case: ui-mockup. Precise edit of input state board; preserve all content/layout not explicitly mentioned. Allscreens are ACTIVE STEEPING, not leftoverconcentrate. Replace all 'Keep unused concentrate covered at4°C...' with exact 'Keep brew covered at 4 °C or colder'. LeftR01 mustlooklike propernative modal: dim entireunderlyingcoldscreen, centered Editreminderdialog isonlyactivelayer; footer Endtimer behinddialogdimmed,inactive. Preserve14Hourselect,knownstart,SaveCancelRemovecontrols. Middle/rightnotifications actionablecontent and elapsed/countdownpreserved; add 'Elapsed' label below1h23m, removegrayinfoCARDBACKGROUNDS usequietinlineblock andthinseparator. No bloomart.",
+    "referenceImage": "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-selected-theme/13-reminders.png",
+    "outputFile": "13-reminders-v2.png"
+  },
+  {
+    "file": "14-recovery",
+    "change": "MiddleE02 andrightE03 replace waterhelper with exact 'Keep water about 1 cm above the bed'. Preserve allothercontent, disabledpendingaction, savedfailureRetryconfirmation, actualclocktimes,otherColdindependentrow andfinalflower.",
+    "prompt": "Use case: ui-mockup. Precise edit of input state board; preserve all content/layout not explicitly mentioned. MiddleE02 andrightE03 replace waterhelper with exact 'Keep water about 1 cm above the bed'. Preserve allothercontent, disabledpendingaction, savedfailureRetryconfirmation, actualclocktimes,otherColdindependentrow andfinalflower.",
+    "referenceImage": "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-selected-theme/14-recovery.png",
+    "outputFile": "14-recovery-v2.png"
+  },
+  {
+    "file": "15-session-handling",
+    "change": "LeftS01andmiddleS02 header must generic 'Brews', not 'Cold brew': selectedrestoring/unavailableforegroundrecipeunknown; knownindependentColdrowvalidonly. RightS03 replace bud with fullyOPENfinalwhitecoffeefloweronbean at02:10. Rightcancelmustbe nativeMODAL withentireunderlyingPulsarscreenDIMMEDincludingclock,flower,andbothfootercontrols; Keepbrewing/EndPulsar dialogonlyactive. Preservecopyandremainingclocks/knownbackgroundrow/actions.",
+    "prompt": "Use case: ui-mockup. Precise edit of input state board; preserve all content/layout not explicitly mentioned. LeftS01andmiddleS02 header must generic 'Brews', not 'Cold brew': selectedrestoring/unavailableforegroundrecipeunknown; knownindependentColdrowvalidonly. RightS03 replace bud with fullyOPENfinalwhitecoffeefloweronbean at02:10. Rightcancelmustbe nativeMODAL withentireunderlyingPulsarscreenDIMMEDincludingclock,flower,andbothfootercontrols; Keepbrewing/EndPulsar dialogonlyactive. Preservecopyandremainingclocks/knownbackgroundrow/actions.",
+    "referenceImage": "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-selected-theme/15-session-handling.png",
+    "outputFile": "15-session-handling-v2.png"
+  },
+  {
+    "file": "16-without-bloom",
+    "change": "Allthree screens restorebaseline thinlightclockfont, add 'Elapsed' below clock. ALL footers replaceinventedsnowflake/Cold12h37m/unusedconcentratecopy with properquiettwo-line 'Cold brew' then '12 h 37 m until reminder' plusrightchevron, afterseparatorunderprimarybutton. No snowflake,no unrelatedsafetyfooter. RightN03 espresso MUSTshow large PRIMARY '36 g beverage' ascurrentyieldtarget, secondary 'Target yield · 1:2', existing18gcoffeedose,00:28elapsed,25–35sreference,Finishbrew. This isrecipe beverageyieldtarget, not sensedactual, neverwaterinput. No bean/flower/bloomart foranythree. Preservemethodnames,20/300Frenchpress,15/225AeroPress,safe gentlepress text andbuttons.",
+    "prompt": "Use case: ui-mockup. Precise edit of input state board; preserve all content/layout not explicitly mentioned. Allthree screens restorebaseline thinlightclockfont, add 'Elapsed' below clock. ALL footers replaceinventedsnowflake/Cold12h37m/unusedconcentratecopy with properquiettwo-line 'Cold brew' then '12 h 37 m until reminder' plusrightchevron, afterseparatorunderprimarybutton. No snowflake,no unrelatedsafetyfooter. RightN03 espresso MUSTshow large PRIMARY '36 g beverage' ascurrentyieldtarget, secondary 'Target yield · 1:2', existing18gcoffeedose,00:28elapsed,25–35sreference,Finishbrew. This isrecipe beverageyieldtarget, not sensedactual, neverwaterinput. No bean/flower/bloomart foranythree. Preservemethodnames,20/300Frenchpress,15/225AeroPress,safe gentlepress text andbuttons.",
+    "referenceImage": "C:/Users/adam-/GitHub/StarlitCoffee/src/docs/brewing/design/2026-10-09-selected-theme/16-without-bloom.png",
+    "outputFile": "16-without-bloom-v2.png"
+  }
+]

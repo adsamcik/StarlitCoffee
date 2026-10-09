@@ -1,0 +1,594 @@
+{
+  "date": "2026-10-09",
+  "generator": "built-in image_gen",
+  "boardCount": 16,
+  "representativeScreenCount": 46,
+  "selectedBaseline": "theme-baseline-v2.png",
+  "selectedBoards": [
+    {
+      "title": "Preparation",
+      "file": "01-preparation.png",
+      "states": [
+        {
+          "id": "G01",
+          "title": "Prime filter"
+        },
+        {
+          "id": "G02",
+          "title": "Dose and tare"
+        },
+        {
+          "id": "B01",
+          "title": "Basic ready"
+        }
+      ]
+    },
+    {
+      "title": "Guided bloom",
+      "file": "02-bloom-v2.png",
+      "states": [
+        {
+          "id": "G03",
+          "title": "Pour bloom"
+        },
+        {
+          "id": "G04",
+          "title": "Close and swirl"
+        },
+        {
+          "id": "G05",
+          "title": "Wait for bloom"
+        }
+      ]
+    },
+    {
+      "title": "Current target and drawdown",
+      "file": "03-pouring-v2.png",
+      "states": [
+        {
+          "id": "G06",
+          "title": "Bloom cue reached"
+        },
+        {
+          "id": "G07",
+          "title": "Main pour"
+        },
+        {
+          "id": "G08",
+          "title": "Drawdown"
+        }
+      ]
+    },
+    {
+      "title": "Serving and completion",
+      "file": "04-completion.png",
+      "states": [
+        {
+          "id": "G09",
+          "title": "Safe serving"
+        },
+        {
+          "id": "G10",
+          "title": "Completed"
+        }
+      ]
+    },
+    {
+      "title": "Unfinished work remains visible",
+      "file": "05-slower-brewing-v3.png",
+      "states": [
+        {
+          "id": "L01",
+          "title": "Bloom pour unfinished"
+        },
+        {
+          "id": "L02",
+          "title": "Main pour slower"
+        },
+        {
+          "id": "L03",
+          "title": "Drawdown slower"
+        }
+      ]
+    },
+    {
+      "title": "Basic recipe timers",
+      "file": "06-basic-timing-v2.png",
+      "states": [
+        {
+          "id": "B02",
+          "title": "Basic during bloom"
+        },
+        {
+          "id": "B03",
+          "title": "Basic after bloom"
+        },
+        {
+          "id": "B04",
+          "title": "Basic ended"
+        }
+      ]
+    },
+    {
+      "title": "Cold timer-only start origins",
+      "file": "07-cold-start-v2.png",
+      "states": [
+        {
+          "id": "C01",
+          "title": "Start now"
+        },
+        {
+          "id": "C02",
+          "title": "Started earlier"
+        },
+        {
+          "id": "C03",
+          "title": "Start unknown"
+        }
+      ]
+    },
+    {
+      "title": "Guided cold preparation",
+      "file": "08-cold-preparation-v2.png",
+      "states": [
+        {
+          "id": "C04",
+          "title": "Clean and prepare"
+        },
+        {
+          "id": "C05",
+          "title": "Combine and cover"
+        }
+      ]
+    },
+    {
+      "title": "Steep, reminder and filtration",
+      "file": "09-cold-progress-v2.png",
+      "states": [
+        {
+          "id": "C06",
+          "title": "Steeping"
+        },
+        {
+          "id": "C07",
+          "title": "Reminder reached"
+        },
+        {
+          "id": "C08",
+          "title": "Filtering"
+        }
+      ]
+    },
+    {
+      "title": "Cold serving and cleanup",
+      "file": "10-cold-finish.png",
+      "states": [
+        {
+          "id": "C09",
+          "title": "Dilute serving"
+        },
+        {
+          "id": "C10",
+          "title": "Clean up"
+        },
+        {
+          "id": "C11",
+          "title": "Cold completed"
+        }
+      ]
+    },
+    {
+      "title": "Independent concurrent sessions",
+      "file": "11-concurrent-v3.png",
+      "states": [
+        {
+          "id": "X01",
+          "title": "One background brew"
+        },
+        {
+          "id": "X02",
+          "title": "Choose another brew"
+        },
+        {
+          "id": "X03",
+          "title": "Other reminder reached"
+        }
+      ]
+    },
+    {
+      "title": "Help, recipe and paused guidance",
+      "file": "12-reading-v2.png",
+      "states": [
+        {
+          "id": "H01",
+          "title": "Contextual help"
+        },
+        {
+          "id": "H02",
+          "title": "Read recipe ahead"
+        },
+        {
+          "id": "H03",
+          "title": "Guide paused"
+        }
+      ]
+    },
+    {
+      "title": "Reminder controls and limitations",
+      "file": "13-reminders-v2.png",
+      "states": [
+        {
+          "id": "R01",
+          "title": "Edit reminder"
+        },
+        {
+          "id": "R02",
+          "title": "Precise reminder off"
+        },
+        {
+          "id": "R03",
+          "title": "Notifications denied"
+        }
+      ]
+    },
+    {
+      "title": "Coherent recoverable states",
+      "file": "14-recovery-v2.png",
+      "states": [
+        {
+          "id": "E01",
+          "title": "Guide unavailable, timer valid"
+        },
+        {
+          "id": "E02",
+          "title": "Confirmation pending"
+        },
+        {
+          "id": "E03",
+          "title": "Confirmation failed"
+        }
+      ]
+    },
+    {
+      "title": "Restoration and cancellation",
+      "file": "15-session-handling-v2.png",
+      "states": [
+        {
+          "id": "S01",
+          "title": "Restoring"
+        },
+        {
+          "id": "S02",
+          "title": "Saved session unavailable"
+        },
+        {
+          "id": "S03",
+          "title": "Cancel selected brew"
+        }
+      ]
+    },
+    {
+      "title": "Methods without bloom",
+      "file": "16-without-bloom-v2.png",
+      "states": [
+        {
+          "id": "N01",
+          "title": "Immersion"
+        },
+        {
+          "id": "N02",
+          "title": "Gentle pressing"
+        },
+        {
+          "id": "N03",
+          "title": "Beverage yield"
+        }
+      ]
+    }
+  ],
+  "attempts": [
+    {
+      "file": "theme-baseline-v2.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-c9fb19d3-8e3c-4853-9271-1176c2027cb2.png",
+      "sha256": "CFD999849750FFFE306EB1FA0952E339AE83D52BAB014A73F115AB4945500787",
+      "width": 887,
+      "height": 1774,
+      "selected": true,
+      "supersededWorkspaceCopyRemoved": false
+    },
+    {
+      "file": "theme-baseline.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-ffc19eeb-a739-4d3d-ace7-7dc8c95f0f57.png",
+      "sha256": "5CF98457129E914321B797ABF1C694595003D47D571C116A78EA66F0F8DC19CE",
+      "width": 887,
+      "height": 1774,
+      "selected": false,
+      "supersededWorkspaceCopyRemoved": true
+    },
+    {
+      "file": "16-without-bloom-v2.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-c966a861-4b26-4614-9458-7fbc35f2e83c.png",
+      "sha256": "0A4515A135318AE29B759DFF16ACF0AD99CC00F7E28EC4AA07E6206723B36289",
+      "width": 1536,
+      "height": 1024,
+      "selected": true,
+      "supersededWorkspaceCopyRemoved": false
+    },
+    {
+      "file": "16-without-bloom.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-3e52fb8d-ea00-4874-8d9d-c9f346e92175.png",
+      "sha256": "24E89171AAE4F457568A6631A5FB010419AE4A6FDD5B18860B6DEC2258A75A78",
+      "width": 1536,
+      "height": 1024,
+      "selected": false,
+      "supersededWorkspaceCopyRemoved": true
+    },
+    {
+      "file": "15-session-handling-v2.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-66d29828-3546-4c92-958d-c4398aa1bfe9.png",
+      "sha256": "DAC6B6EE3FB2D347C27BB8BDD93C51EFCAE1B32D7AC7B226A1B725DA9FEECD05",
+      "width": 1536,
+      "height": 1024,
+      "selected": true,
+      "supersededWorkspaceCopyRemoved": false
+    },
+    {
+      "file": "15-session-handling.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-8ffcce28-04d1-4095-8c67-f015568e2697.png",
+      "sha256": "E5230C85C51C7D352A1DAF480D9CAF936203C4C350B4AE71CA175DA40D955DED",
+      "width": 1536,
+      "height": 1024,
+      "selected": false,
+      "supersededWorkspaceCopyRemoved": true
+    },
+    {
+      "file": "14-recovery-v2.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-a1a3a493-0606-49fa-860e-42ab24112433.png",
+      "sha256": "18F0B3CEA7D6D78A2C295AA183C88BBD5062F7DEE3BB26BF3BE09ECE985BA4EB",
+      "width": 1536,
+      "height": 1024,
+      "selected": true,
+      "supersededWorkspaceCopyRemoved": false
+    },
+    {
+      "file": "14-recovery.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-1a38c24c-2cf3-4c5f-9063-31daa92ee765.png",
+      "sha256": "A4709038D4D31D8B678EF4B856CF11876F1C1BF13C3F5A8FB9E87D7C9ADCA262",
+      "width": 1536,
+      "height": 1024,
+      "selected": false,
+      "supersededWorkspaceCopyRemoved": true
+    },
+    {
+      "file": "13-reminders-v2.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-c161cb9f-8f04-430a-956f-414909c63b20.png",
+      "sha256": "267EF373C0C20F990017A08DFE8E226B3C02B03F2D9A36CC20DCA15FFBB0FE56",
+      "width": 1536,
+      "height": 1024,
+      "selected": true,
+      "supersededWorkspaceCopyRemoved": false
+    },
+    {
+      "file": "13-reminders.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-be85b1cd-5aea-47b8-837c-5e2fa8c462e4.png",
+      "sha256": "23B386C7581A1CAD9DB34F2C19C2FCF28131FA3202A9C864A090EB1A62FE823A",
+      "width": 1536,
+      "height": 1024,
+      "selected": false,
+      "supersededWorkspaceCopyRemoved": true
+    },
+    {
+      "file": "12-reading-v2.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-0280996a-b7c6-4b86-b98c-356828e33b11.png",
+      "sha256": "05CBC81111D4FD52AB7D2CA38593F106FBEBDD046E1A74C84E69F1A89031F755",
+      "width": 1536,
+      "height": 1024,
+      "selected": true,
+      "supersededWorkspaceCopyRemoved": false
+    },
+    {
+      "file": "12-reading.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-264e5455-f3cd-461d-9b92-859dd6553b33.png",
+      "sha256": "B960E0E7A8A86517664BD7B38F9A204D52129983EC6E8794DB367D16BE728852",
+      "width": 1536,
+      "height": 1024,
+      "selected": false,
+      "supersededWorkspaceCopyRemoved": true
+    },
+    {
+      "file": "11-concurrent-v3.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-3339ac21-6ddb-444f-b3ce-cb762b79484e.png",
+      "sha256": "3C50F2981FA8A876CFF4091A676DBB364B130598FF48FCA570D895AADA82DC3C",
+      "width": 1536,
+      "height": 1024,
+      "selected": true,
+      "supersededWorkspaceCopyRemoved": false
+    },
+    {
+      "file": "11-concurrent-v2.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-7c8f9317-43c1-4ff9-9f4f-ab503cb30975.png",
+      "sha256": "EC8C877DF7FC81EF8EC5D9512C411218145F95E53255A2B995B39BB3DC77E245",
+      "width": 1536,
+      "height": 1024,
+      "selected": false,
+      "supersededWorkspaceCopyRemoved": true
+    },
+    {
+      "file": "11-concurrent.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-8379afd9-5f7c-4216-8fc6-926e88beb080.png",
+      "sha256": "86E41B9BBE403978BEF75E07DBDC321F4BFFB1B508A26902635D1A10F67DA542",
+      "width": 1536,
+      "height": 1024,
+      "selected": false,
+      "supersededWorkspaceCopyRemoved": true
+    },
+    {
+      "file": "10-cold-finish.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-5a5f39b4-2d16-4d9c-bb53-672495b5d419.png",
+      "sha256": "503210E96517BB81590D9E8C8964F4979DC84555B75C67195A513C7D8C49A87F",
+      "width": 1536,
+      "height": 1024,
+      "selected": true,
+      "supersededWorkspaceCopyRemoved": false
+    },
+    {
+      "file": "09-cold-progress-v2.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-f5932c8f-9709-4b44-a2f5-9ce4777d4cec.png",
+      "sha256": "76F839A0E77BD1B7AA3A98E1E564B72475A20CAA9C6472741236446125C2DDD0",
+      "width": 1536,
+      "height": 1024,
+      "selected": true,
+      "supersededWorkspaceCopyRemoved": false
+    },
+    {
+      "file": "09-cold-progress.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-af48b11e-16a6-4664-a28c-1cf4556286d7.png",
+      "sha256": "CDC6A4F58F1DD1A84665A6C2DBBDA505631068ED3081A5548911A529307F13AD",
+      "width": 1536,
+      "height": 1024,
+      "selected": false,
+      "supersededWorkspaceCopyRemoved": true
+    },
+    {
+      "file": "08-cold-preparation-v2.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-fb264e33-4409-4490-bed8-d019fb72ef05.png",
+      "sha256": "B5C8682310C9C8411D8475378B9543BFC12D865105D0F27B64A4965E7D5812FB",
+      "width": 1536,
+      "height": 1024,
+      "selected": true,
+      "supersededWorkspaceCopyRemoved": false
+    },
+    {
+      "file": "08-cold-preparation.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-91cf03b8-da0a-447e-869e-408b72aead3f.png",
+      "sha256": "00981A7B4A100B38C082530722BE0210A0AE5BAF24D5F7DE566868D2E3B2BA6D",
+      "width": 1536,
+      "height": 1024,
+      "selected": false,
+      "supersededWorkspaceCopyRemoved": true
+    },
+    {
+      "file": "07-cold-start-v2.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-b968254d-89b4-4733-a249-7cf122873d90.png",
+      "sha256": "3CDAB5C71FA0A3C448CB827EA7C59BC14302326902595F5F2717BC7D708438C1",
+      "width": 1536,
+      "height": 1024,
+      "selected": true,
+      "supersededWorkspaceCopyRemoved": false
+    },
+    {
+      "file": "07-cold-start.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-63991326-3a06-4a16-84fa-6505ffd59f0a.png",
+      "sha256": "4B967F77194B3E8118D4D549695643BE2B7949048CDA0D9747F37ED908E607E7",
+      "width": 1536,
+      "height": 1024,
+      "selected": false,
+      "supersededWorkspaceCopyRemoved": true
+    },
+    {
+      "file": "06-basic-timing-v2.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-7fcab248-1538-4821-9e2d-e8fddc34cef0.png",
+      "sha256": "D28B1B65254BA477D50A6E376B981BDF745275D535433E9AD6EDF5847CE1C4FE",
+      "width": 1536,
+      "height": 1024,
+      "selected": true,
+      "supersededWorkspaceCopyRemoved": false
+    },
+    {
+      "file": "06-basic-timing.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-7c7a6a2b-2ab7-4858-9cad-3759b1752217.png",
+      "sha256": "B449AE1C8BA3B81B765DB2BFD2189DB1BCBC07F0CAE6B7B4E773E5D39DC6B220",
+      "width": 1536,
+      "height": 1024,
+      "selected": false,
+      "supersededWorkspaceCopyRemoved": true
+    },
+    {
+      "file": "05-slower-brewing-v3.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-071b3f99-3cb1-4bd6-a116-5fb163d60bc5.png",
+      "sha256": "377BC1017E54BCF647B51DA6FFB00D210432CD3A91654D93B933CEF012592359",
+      "width": 1536,
+      "height": 1024,
+      "selected": true,
+      "supersededWorkspaceCopyRemoved": false
+    },
+    {
+      "file": "05-slower-brewing-v2.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-67eabda0-1975-48e6-978b-84b31a0cf8ec.png",
+      "sha256": "C28CA4E4D8D15748112821E51450BA17A86B24A7A9FB040003248667C40C7AE0",
+      "width": 1536,
+      "height": 1024,
+      "selected": false,
+      "supersededWorkspaceCopyRemoved": true
+    },
+    {
+      "file": "05-slower-brewing.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-fa7150c6-20ba-42d6-8afd-4b7404f42a91.png",
+      "sha256": "E07B87FC32C04C3220BFEED22D048FA2491DB1B3E82083E003E0EAA339344E4D",
+      "width": 1536,
+      "height": 1024,
+      "selected": false,
+      "supersededWorkspaceCopyRemoved": true
+    },
+    {
+      "file": "04-completion.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-4328cdec-31ff-445a-8502-a8cdfa9dc596.png",
+      "sha256": "318A3E04E50F23A84CE278364805F4195C2A6521E5A7C53F081F5EDCEE348639",
+      "width": 1536,
+      "height": 1024,
+      "selected": true,
+      "supersededWorkspaceCopyRemoved": false
+    },
+    {
+      "file": "03-pouring-v2.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-6b33b2ea-9bf5-4f48-afe2-77df9def250c.png",
+      "sha256": "E499B0CC44710D9232C0ECEFD2084BEA128FE089BED550503821D941A56687BD",
+      "width": 1536,
+      "height": 1024,
+      "selected": true,
+      "supersededWorkspaceCopyRemoved": false
+    },
+    {
+      "file": "03-pouring.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-fbce7412-feb8-4749-b05c-d9e563b78390.png",
+      "sha256": "65BCFED2C4964703F29153288D0898C6F3A64AA195A5BAEB38AB29064080A35D",
+      "width": 1536,
+      "height": 1024,
+      "selected": false,
+      "supersededWorkspaceCopyRemoved": true
+    },
+    {
+      "file": "02-bloom-v2.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-f732e030-a8f6-4825-bcff-d806b565c463.png",
+      "sha256": "7C3A316AA42978A9432FB06B686D822881FB8DF00770ABE3BCCA4156E2335CDA",
+      "width": 1536,
+      "height": 1024,
+      "selected": true,
+      "supersededWorkspaceCopyRemoved": false
+    },
+    {
+      "file": "02-bloom.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-69e0ea79-6508-421a-8582-e0230e943188.png",
+      "sha256": "6F6717705A1EBB4CB00BB7B458052F0F7D4A3239229288B4059560F85EF9391E",
+      "width": 1536,
+      "height": 1024,
+      "selected": false,
+      "supersededWorkspaceCopyRemoved": true
+    },
+    {
+      "file": "01-preparation.png",
+      "generatedSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-6156aeb4-fc9a-44e6-8794-41ba7fbf27e2.png",
+      "sha256": "CED60EAC5F54DC6FA11E27B245B6BFB385555454463B783942FF95FA0D058D1A",
+      "width": 1536,
+      "height": 1024,
+      "selected": true,
+      "supersededWorkspaceCopyRemoved": false
+    }
+  ],
+  "selectedOriginal": {
+    "file": "selected-original.png",
+    "source": "C:\\Users\\adam-\\.codex\\generated_images\\01a11b72-89cf-7b03-be94-ad3675bcbffa\\exec-ca99be90-a622-4fde-8ff6-286facf9b9e5.png",
+    "sha256": "F541CDCAAA41F317E15437DCA25D303AE7915DCD13B081145B04252E546BC3AA"
+  },
+  "verification": "All generated workspace copies byte-identical to retained original sources; PNG headers/dimensions read; 46 unique states on 16 boards; targeted Astra static review."
+}
