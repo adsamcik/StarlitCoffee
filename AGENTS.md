@@ -30,6 +30,12 @@ Design and develop the application with the discipline commonly associated with 
 
 This does **not** mean copying Apple’s visual style. It means applying the following product principles.
 
+### Visual communication first
+
+Throughout StarlitCoffee, always aim to minimize user-facing text and maximize useful visual communication. Use clear illustrations, diagrams, animations, quantities, and visual states to make the current task understandable at a glance. Prefer a short action cue and a relevant visual; place longer explanations in contextual Help or read-ahead content.
+
+Keep the text necessary for unambiguous quantities and units, action labels, timing meaning, safety, and accessible operation. Visuals must convey the correct physical process and distinguish instructions or targets from confirmed measurements. Preserve the established bloom-animation identity and minimal layout; every visual must earn its place by improving understanding.
+
 ### Agent responsibility and permission boundary
 
 Apply this philosophy to product, design, architecture, implementation, review, testing, and documentation decisions.
