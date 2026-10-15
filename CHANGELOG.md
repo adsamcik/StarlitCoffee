@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.0] — 2026-10-15
+
 ### Added
 
 - **Visual brew notifications** — a centered coffee cup fills with timer progress,
@@ -607,7 +609,8 @@ shipped in version `1.0.0` (`versionCode = 1`).
 - Background timer & rating-reminder services in favour of
   in-process state and `WorkManager` where appropriate.
 
-[Unreleased]: https://github.com/adsamcik/StarlitCoffee/compare/v1.5.0...HEAD
+[Unreleased]: https://github.com/adsamcik/StarlitCoffee/compare/v1.6.0...HEAD
+[1.6.0]: https://github.com/adsamcik/StarlitCoffee/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/adsamcik/StarlitCoffee/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/adsamcik/StarlitCoffee/compare/v1.2.0...v1.4.0
 [1.2.0]: https://github.com/adsamcik/StarlitCoffee/compare/v1.1.0...v1.2.0
