@@ -22,6 +22,19 @@ checks in the localization and release workflows. Release optimization and
 retrace-artifact requirements are documented in
 [release-optimization.md](release-optimization.md).
 
+## Build-tool security dependencies
+
+The root `build.gradle.kts` constrains vulnerable transitive AGP dependencies on
+the buildscript classpath. `app/build.gradle.kts` also constrains the independent
+`androidLintTool` configuration, which does not inherit the root constraints.
+Bouncy Castle's provider, PKIX and utility modules stay aligned; jose4j, JDOM,
+Commons Lang and HttpClient use patched minimum versions where affected. These
+constraints do not add dependencies to the app. Review them when upgrading AGP
+and remove each override once upstream resolves a sufficiently patched version.
+Use `buildEnvironment` and `:app:dependencies --configuration androidLintTool`
+to inspect both tooling graphs, and
+`:app:dependencies --configuration releaseRuntimeClasspath` to check app scope.
+
 ## Zero-baseline enforcement
 
 `config/detekt/detekt.yml` sets `maxIssues` to zero and

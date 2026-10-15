@@ -9,6 +9,22 @@ plugins {
     jacoco
 }
 
+// AGP resolves lint separately from the root buildscript classpath. Constrain
+// only this tool configuration; application dependency versions stay untouched.
+configurations.matching { it.name == "androidLintTool" }.configureEach {
+    listOf(
+        "org.bouncycastle:bcprov-jdk18on:1.85",
+        "org.bouncycastle:bcpkix-jdk18on:1.85",
+        "org.bouncycastle:bcutil-jdk18on:1.85",
+        "org.apache.commons:commons-lang3:3.18.0",
+        "org.apache.httpcomponents:httpclient:4.5.14",
+    ).forEach { coordinate ->
+        project.dependencies.constraints.add(name, coordinate) {
+            because("Patch vulnerable libraries in AGP's isolated lint tool classpath")
+        }
+    }
+}
+
 extensions.configure<ApplicationExtension>("android") {
     namespace = "com.adsamcik.starlitcoffee"
     compileSdk = 37
