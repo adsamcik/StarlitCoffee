@@ -25,9 +25,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   explanations. Read at your own pace or prepare a durable brew from the same
   recipe. The 30 g / 480 g Chemex guide remains separate from the 42 g / 700 g recipe.
 - **App-wide brew timers** — running brews remain accessible across navigation
-  and continue outside the app. Custom reminders, quiet ongoing notifications
-  and due alerts use the persisted session. Cold-brew Start offers a guide or a
-  timer, with a refrigerated default and editable duration or start time.
+  and continue outside the app. When multiple brews are active, choose which to
+  reopen. Custom reminders, quiet ongoing notifications and due alerts use the
+  persisted session. Cold-brew Start offers a guide or a timer, with a
+  refrigerated default and editable duration or start time.
 - **Coffee and grind memory** — preparation remembers compatible settings for a
   coffee type, coffee or physical pack, with a temporary setting for one brew.
   Existing stock and brew-history links survive the database upgrade.
@@ -92,6 +93,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   color dots and the unused color picker are removed; saved cup amounts stay intact.
 - Optional AI label recognition now uses Mindlayer `1.0.0-alpha.9` and resumes
   after idle disconnect or automatic reconnection without repeating setup.
+- Updated the Android libraries and build tools, including Kotlin `2.4.21`,
+  Compose BOM `2026.09.00`, Material 3 `1.5.0-beta01`, Android Gradle Plugin
+  `9.4.1` and Gradle `9.8.0`, alongside camera, navigation, storage and
+  background-work library updates.
 - **More expressive bloom animations** — all 44 animations now grow and unfold
   more clearly, with intact petals, steadier positioning, and polished finishes
   in light and dark themes. Finished previews match the bloom shown while brewing.
@@ -157,13 +162,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Mindlayer connection checks stop after five seconds instead of waiting
   indefinitely. When time runs out, the editable fields already found are
   returned rather than leaving analysis running forever.
-- Updated the Mindlayer SDK integration to `1.0.0-alpha.7` and now checks the
-  required OCR/chat model readiness before starting doomed AI work.
+- Optional AI label recognition checks the required OCR/chat model readiness
+  before starting analysis, so unavailable models lead to setup and recovery.
 - Saved barcode and QR data now takes precedence over AI guesses, and AI-only
   values no longer appear as high-confidence facts.
 
 ### Fixed
 
+- Starting Bloom now resumes a paused timer before beginning the bloom countdown.
 - Quick brew ratings preserve existing notes and flavor tags.
 - Weak and strong taste feedback remain distinct from sour and bitter feedback,
   so future coaching reflects the observation that was actually selected.

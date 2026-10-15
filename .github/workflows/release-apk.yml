@@ -45,6 +45,25 @@ jobs:
         with:
           python-version: '3.13'
 
+      # A manually selected older tag may predate the notes exporter. Use the
+      # workflow's tooling while keeping all app sources at the selected tag.
+      - name: Check out release tooling
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: .release-tools
+          persist-credentials: false
+          sparse-checkout: |
+            tools/extract_release_notes.py
+            tools/test_extract_release_notes.py
+          sparse-checkout-cone-mode: false
+
+      - name: Test and extract curated release notes
+        run: |
+          python -m unittest discover -s .release-tools/tools -p test_extract_release_notes.py
+          python .release-tools/tools/extract_release_notes.py --tag "$TAG" \
+            --changelog CHANGELOG.md --output build/release-notes.md
+
       - name: Validate exact-guidance localization sources
         run: |
           python tools/generate_p1_exact_terminology_references.py --check
@@ -107,12 +126,13 @@ jobs:
         run: |
           apk='${{ steps.apk.outputs.path }}'
           # Attach to the existing (curated) release without touching its notes;
-          # if no release exists yet for the tag, create one with generated notes.
+          # New releases use the complete, dated CHANGELOG.md entry, including
+          # direct commits omitted by GitHub's generated PR summaries.
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release upload "$TAG" "$apk" --repo "$GITHUB_REPOSITORY" --clobber
           else
             gh release create "$TAG" "$apk" --repo "$GITHUB_REPOSITORY" \
-              --title "$TAG" --generate-notes
+              --title "$TAG" --notes-file build/release-notes.md
           fi
 
       - name: Preserve the R8 retrace mapping
