@@ -49,12 +49,6 @@
     <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
     <string name="format_cup_volume">🥤 ~%1$.0fg puodelyje</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
-    <plurals name="format_selected">
-        <item quantity="one">%1$d pasirinkta</item>
-        <item quantity="few">%1$d pasirinkta</item>
-        <item quantity="many">%1$d pasirinkta</item>
-        <item quantity="other">%1$d pasirinkta</item>
-    </plurals>
 
     <!-- Method Picker Screen -->
     <string name="screen_method_picker_title">Sukonfigūruokite plikymą</string>
@@ -78,7 +72,6 @@
     <string name="action_brew_without_bag">Plikyti nepasirinkus pakuotės</string>
     <string name="label_best_now">Geriausia dabar</string>
     <string name="format_grind_generic">Malimas: %1$s – %2$s</string>
-    <string name="format_grind_specific_range">Malimo nustatymas: %1$s–%2$s · Koreguokite pagal skonį</string>
     <string name="format_weight_left"> · liko %1$.0fg</string>
     <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
     <string name="tip_pulsar">💡 Pulsar patarimas: Pildami laikykite skystį ~1cm virš kavos sluoksnio. Daugelis plikina 20–25g subalansuotam puodeliui.</string>
@@ -147,9 +140,6 @@
     <string name="label_cup_presets">Puodelių šablonai</string>
     <string name="action_add_preset">Pridėti šabloną</string>
     <string name="action_reset_defaults">Atkurti numatytuosius</string>
-    <string name="label_brew_methods">Plikymo būdai</string>
-    <string name="msg_methods_hint">Pasirinkti būdai rodomi pirmiausia. Bakstelėkite, kad perjungtumėte.</string>
-    <string name="label_default_method">Numatytasis būdas</string>
     <string name="label_bloom_animation_settings">Bloomo animacijos</string>
     <string name="msg_bloom_animation_settings_subtitle">Pasirinkite, kaip dažnai rodomas kiekvienas bloomo vaizdinys</string>
     <string name="screen_bloom_animation_settings_title">Bloomo animacijos</string>
@@ -239,17 +229,10 @@
     <string name="format_recipe_summary">%1$sg kavos / %2$sg vandens</string>
 
     <!-- Onboarding Personalize Screen -->
-    <string name="screen_personalize_title">Pritaikykite plikymą sau</string>
-    <string name="label_pulsar_filter_type">Pulsar filtro tipas</string>
-    <string name="msg_filter_hint">Turi įtakos puodelio profiliui ir malimo rekomendacijoms</string>
     <string name="label_your_grinder">Jūsų malūnėlis</string>
-    <string name="msg_grinder_hint">Nebūtina — įgalina konkrečias malimo rekomendacijas. Pasirinkite „Nėra malūnėlio / Kita“, jei jūsiškio sąraše nėra.</string>
     <string name="label_no_grinder">Nėra malūnėlio / Kita</string>
 
     <!-- Onboarding Methods Screen -->
-    <string name="screen_methods_title">Kuo plikote kavą?</string>
-    <string name="msg_methods_subtitle">Pasirinkite plikymo būdus. Bakstelėkite ★, kad nustatytumėte numatytąjį.</string>
-    <string name="label_set_as_default">Nustatyti numatytuoju</string>
 
     <!-- More Screen -->
     <string name="screen_more_title">Daugiau</string>
@@ -309,7 +292,6 @@
     <string name="cd_about_cup_volume">Apie puodelio tūrį</string>
 
     <!-- Brew Visualization / Coffee Insights -->
-    <string name="label_target">Tikslas</string>
     <!-- Grind notes -->
     <!-- Dose notes -->
     <!-- Brew Method names -->
@@ -512,7 +494,6 @@
     <string name="action_sync_to_bag">Sinchronizuoti su pakuote</string>
 
     <!-- SettingsScreen -->
-    <string name="msg_pulsar_settings_applied">Taikoma plikant su Pulsar</string>
     <string name="label_quick_brew">Greitas plikymas</string>
     <string name="msg_quick_brew_hint">Praleisti malimo paruošimo žingsnį ir pradedant plikyti eiti tiesiai į laikmatį</string>
     <string name="label_show_brewing_instructions">Rodyti plikymo instrukcijas</string>
@@ -656,7 +637,6 @@
     <string name="msg_could_not_save_changes">Nepavyko išsaugoti pakeitimų</string>
     <string name="msg_could_not_delete">Nepavyko ištrinti. Bandykite dar kartą.</string>
     <string name="dialog_delete_cup_preset_message">Ištrinti šį puodelio profilį?</string>
-    <string name="msg_onboarding_save_failed">Nepavyko išsaugoti sąrankos. Bandykite dar kartą.</string>
     <string name="msg_settings_save_failed">Nepavyko išsaugoti šio nustatymo. Bandykite dar kartą.</string>
     <string name="msg_cup_preset_reset_failed">Nepavyko atkurti puodelių profilių. Bandykite dar kartą.</string>
     <string name="msg_reset_cup_presets">Pakeisti visus puodelių profilius numatytaisiais?</string>

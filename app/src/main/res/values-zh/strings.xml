@@ -49,9 +49,6 @@
     <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
     <string name="format_cup_volume">🥤 ~%1$.0fg入杯</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
-<plurals name="format_selected">
-        <item quantity="other">已选%1$d项</item>
-    </plurals>
 
     <!-- Method Picker Screen -->
     <string name="screen_method_picker_title">配置冲煮</string>
@@ -75,7 +72,6 @@
     <string name="action_brew_without_bag">不选择咖啡袋直接冲煮</string>
     <string name="label_best_now">现在最佳</string>
     <string name="format_grind_generic">研磨：%1$s – %2$s</string>
-    <string name="format_grind_specific_range">研磨度：%1$s–%2$s · 按口味调整</string>
     <string name="format_weight_left"> · 剩余%1$.0fg</string>
     <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
     <string name="tip_pulsar">💡 Pulsar提示：注水时让液面保持在粉层上方约1cm。多数用户用20–25g冲煮一杯平衡风味。</string>
@@ -141,9 +137,6 @@
     <string name="label_cup_presets">杯量预设</string>
     <string name="action_add_preset">添加预设</string>
     <string name="action_reset_defaults">恢复默认</string>
-    <string name="label_brew_methods">冲煮方式</string>
-    <string name="msg_methods_hint">已选方式会优先显示。点按可切换。</string>
-    <string name="label_default_method">默认方式</string>
     <string name="label_bloom_animation_settings">闷蒸动画</string>
     <string name="msg_bloom_animation_settings_subtitle">选择每个闷蒸精灵出现的频率</string>
     <string name="screen_bloom_animation_settings_title">闷蒸动画</string>
@@ -232,17 +225,10 @@
     <string name="label_untitled">未命名</string>
     <string name="format_recipe_summary">%1$sg咖啡 / %2$sg水</string>
     <!-- Onboarding Personalize Screen -->
-    <string name="screen_personalize_title">个性化你的冲煮</string>
-    <string name="label_pulsar_filter_type">Pulsar滤纸/滤网类型</string>
-    <string name="msg_filter_hint">影响杯中风味和研磨建议</string>
     <string name="label_your_grinder">你的磨豆机</string>
-    <string name="msg_grinder_hint">可选—启用具体研磨度建议。如果列表中没有你的磨豆机，请选择“无磨豆机/其他”。</string>
     <string name="label_no_grinder">无磨豆机/其他</string>
 
     <!-- Onboarding Methods Screen -->
-    <string name="screen_methods_title">你用什么冲煮？</string>
-    <string name="msg_methods_subtitle">选择你的冲煮方式。点按★设为默认。</string>
-    <string name="label_set_as_default">设为默认</string>
 
     <!-- More Screen -->
     <string name="screen_more_title">更多</string>
@@ -301,7 +287,6 @@
     <string name="cd_about_cup_volume">关于入杯量</string>
 
     <!-- Brew Visualization / Coffee Insights -->
-<string name="label_target">目标</string>
 <!-- Grind notes -->
 <!-- Dose notes -->
 <!-- Brew Method names -->
@@ -504,7 +489,6 @@
     <string name="action_sync_to_bag">同步到咖啡袋</string>
 
     <!-- SettingsScreen -->
-    <string name="msg_pulsar_settings_applied">使用Pulsar冲煮时生效</string>
     <string name="label_quick_brew">快速冲煮</string>
     <string name="msg_quick_brew_hint">开始冲煮时跳过研磨准备步骤，直接进入计时器</string>
     <string name="label_show_brewing_instructions">显示冲煮指引</string>
@@ -648,7 +632,6 @@
     <string name="msg_could_not_save_changes">无法保存更改</string>
     <string name="msg_could_not_delete">无法删除，请重试。</string>
     <string name="dialog_delete_cup_preset_message">删除此杯量预设？</string>
-    <string name="msg_onboarding_save_failed">无法保存设置，请重试。</string>
     <string name="msg_settings_save_failed">无法保存此设置，请重试。</string>
     <string name="msg_cup_preset_reset_failed">无法重置杯量预设，请重试。</string>
     <string name="msg_reset_cup_presets">用默认值替换所有杯量预设？</string>

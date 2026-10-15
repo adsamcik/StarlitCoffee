@@ -70,12 +70,6 @@
     <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
     <string name="format_cup_volume">🥤 ~%1$.0fg v šálku</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
-<plurals name="format_selected">
-        <item quantity="one">%1$d vybráno</item>
-        <item quantity="few">%1$d vybráno</item>
-        <item quantity="many">%1$d vybráno</item>
-        <item quantity="other">%1$d vybráno</item>
-    </plurals>
 
     <!-- Method Picker Screen -->
     <string name="screen_method_picker_title">Nastavte si přípravu</string>
@@ -139,9 +133,6 @@
     <string name="label_cup_presets">Předvolby šálků</string>
     <string name="action_add_preset">Přidat předvolbu</string>
     <string name="action_reset_defaults">Obnovit výchozí</string>
-    <string name="label_brew_methods">Metody přípravy</string>
-    <string name="msg_methods_hint">Vybrané metody se zobrazí jako první. Klepněte pro přepnutí.</string>
-    <string name="label_default_method">Výchozí metoda</string>
     <string name="label_bloom_animation_settings">Animace bloomu</string>
     <string name="msg_bloom_animation_settings_subtitle">Zvolte, jak často se má každá animace bloomu objevit.</string>
     <string name="screen_bloom_animation_settings_title">Animace bloomu</string>
@@ -231,17 +222,10 @@
     <string name="format_recipe_summary">%1$sg kávy / %2$sg vody</string>
 
     <!-- Onboarding Personalize Screen -->
-    <string name="screen_personalize_title">Přizpůsobte si přípravu</string>
-    <string name="label_pulsar_filter_type">Typ filtru Pulsar</string>
-    <string name="msg_filter_hint">Ovlivňuje profil šálku a doporučení mletí</string>
     <string name="label_your_grinder">Váš mlýnek</string>
-    <string name="msg_grinder_hint">Volitelné — umožní doporučení konkrétního nastavení mletí. Pokud váš mlýnek není v seznamu, zvolte Bez mlýnku / Jiný.</string>
     <string name="label_no_grinder">Bez mlýnku / Jiný</string>
 
     <!-- Onboarding Methods Screen -->
-    <string name="screen_methods_title">Čím připravujete kávu?</string>
-    <string name="msg_methods_subtitle">Vyberte své metody přípravy. Klepněte na ★ pro nastavení výchozí.</string>
-    <string name="label_set_as_default">Nastavit jako výchozí</string>
 
     <!-- More Screen -->
     <string name="screen_more_title">Více</string>
@@ -301,7 +285,6 @@
     <string name="cd_about_cup_volume">O objemu šálku</string>
 
     <!-- Brew Visualization / Coffee Insights -->
-<string name="label_target">Cíl</string>
 <!-- Grind notes -->
 <!-- Dose notes -->
 <!-- Brew Method names -->
@@ -399,7 +382,6 @@
 
     <!-- Grind formatting -->
     <string name="format_grind_generic">Mletí: %1$s – %2$s</string>
-    <string name="format_grind_specific_range">Nastavení mletí: %1$s–%2$s · Upravte podle chuti</string>
 
     <!-- Tips -->
     <string name="tip_pulsar">💡 Tip pro Pulsar: Během nalévání udržujte hladinu ~1 cm nad kávovým ložem. Většina uživatelů připravuje 20–25 g pro vyvážený šálek.</string>
@@ -539,7 +521,6 @@
     <string name="action_sync_to_bag">Synchronizovat s balením</string>
 
     <!-- SettingsScreen -->
-    <string name="msg_pulsar_settings_applied">Platí při přípravě s Pulsarem</string>
     <string name="label_quick_brew">Rychlá příprava</string>
     <string name="msg_quick_brew_hint">Přeskočit krok přípravy mletí a přejít rovnou na časovač</string>
     <string name="label_show_brewing_instructions">Zobrazovat instrukce</string>
@@ -683,7 +664,6 @@
     <string name="msg_could_not_save_changes">Změny se nepodařilo uložit</string>
     <string name="msg_could_not_delete">Položku se nepodařilo odstranit. Zkuste to znovu.</string>
     <string name="dialog_delete_cup_preset_message">Smazat tento profil šálku?</string>
-    <string name="msg_onboarding_save_failed">Nastavení se nepodařilo uložit. Zkuste to znovu.</string>
     <string name="msg_settings_save_failed">Toto nastavení se nepodařilo uložit. Zkuste to znovu.</string>
     <string name="msg_cup_preset_reset_failed">Profily šálků se nepodařilo obnovit. Zkuste to znovu.</string>
     <string name="msg_reset_cup_presets">Nahradit všechny profily šálků výchozími?</string>

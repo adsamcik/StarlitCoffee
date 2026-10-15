@@ -44,8 +44,22 @@ class CoffeeBagRepository(
     }
 
     suspend fun updateBag(entity: CoffeeBagEntity) = transactionRunner.runInTransaction {
+        val previous = coffeeBagDao.getByIdOnce(entity.id)
         coffeeBagDao.update(entity)
         val coffeeId = entity.coffeeId
+        if (previous != null && coffeeId != null && previous.coffeeId == coffeeId) {
+            identityDao?.let { coffeeDao ->
+                val identity = coffeeDao.getById(coffeeId) ?: return@let
+                // A sibling pack can retain older metadata. Only fields changed by this edit
+                // correct the shared coffee; stock/date updates must not undo another correction.
+                val corrected = identity.copy(
+                    name = if (entity.name != previous.name) entity.name else identity.name,
+                    roaster = if (entity.roaster != previous.roaster) entity.roaster else identity.roaster,
+                    isDecaf = if (entity.isDecaf != previous.isDecaf) entity.isDecaf else identity.isDecaf,
+                )
+                if (corrected != identity) coffeeDao.update(corrected)
+            }
+        }
         if (coffeeId != null) coffeeBarcodeKey(entity.barcode)?.let { code ->
             identityDao?.addBarcode(CoffeeBarcodeEntity(coffeeId, code, requireNotNull(entity.barcode)))
         }

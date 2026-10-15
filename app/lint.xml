@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <lint>
     <!--
+      This wrapper is deliberately pinned while the release candidate is qualified.
+      A newer-release advisory is not a compatibility failure. The properties-file
+      detector does not honor inline suppression comments, so scope the exception
+      to this declaration here; compatibility and security detectors stay enabled.
+    -->
+    <issue id="AndroidGradlePluginVersion">
+        <ignore path="../gradle/wrapper/gradle-wrapper.properties" />
+    </issue>
+    <!--
       These illustrations intentionally reuse accepted artwork. Their distinct resource names are
       stable instruction-stage identifiers required by the generated catalogue and verification
       tools; the reuse relationship is recorded in the asset tracker.

@@ -314,7 +314,6 @@ fun BagDraftReviewRoute(
     onExit: () -> Unit,
     onScanMore: (String) -> Unit,
     onMissing: () -> Unit,
-    onNewBagTransfer: (ScanDraftTransfer) -> Unit,
 ) {
     val context = LocalContext.current.applicationContext
     val scope = rememberCoroutineScope()
@@ -379,7 +378,17 @@ fun BagDraftReviewRoute(
             bag = target,
             data = data,
             callbacks = callbacks,
-            onNewBag = onNewBagTransfer,
+            onNewBag = {
+                try {
+                    if (draftViewModel.convertRescanToNewBag(current.generationId)) {
+                        brewViewModel.completeBagPhotoReview(current.sessionId)
+                        brewViewModel.cancelBagPhotoProcessing(current.sessionId)
+                    }
+                } catch (error: Exception) {
+                    Tracebox.log.error(error, GuidedScanFlowTraceboxTemplates.FAILED_TO_SAVE_SCANNED_COFFEE_BAG)
+                    Toast.makeText(context, R.string.msg_could_not_save_changes, Toast.LENGTH_LONG).show()
+                }
+            },
             durableDraft = current,
         )
     } else {
@@ -728,7 +737,7 @@ fun ScanRescanReview(
                     detectedQrUrl = data.detectedQrUrl,
                 ),
             )
-            callbacks.onTransfer()
+            if (durableDraft == null) callbacks.onTransfer()
         },
         onDismiss = { if (!isUpdatingBag) showDiscardDialog = true },
     )

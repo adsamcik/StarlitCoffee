@@ -49,10 +49,6 @@
     <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
     <string name="format_cup_volume">🥤 ~%1$.0fg in der Tasse</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
-<plurals name="format_selected">
-        <item quantity="one">%1$d ausgewählt</item>
-        <item quantity="other">%1$d ausgewählt</item>
-    </plurals>
 
     <!-- Method Picker Screen -->
     <string name="screen_method_picker_title">Zubereitung konfigurieren</string>
@@ -76,7 +72,6 @@
     <string name="action_brew_without_bag">Ohne ausgewählte Packung brühen</string>
     <string name="label_best_now">Jetzt am besten</string>
     <string name="format_grind_generic">Mahlung: %1$s – %2$s</string>
-    <string name="format_grind_specific_range">Mahlgrad: %1$s–%2$s · Nach Geschmack anpassen</string>
     <string name="format_weight_left"> · %1$.0fg übrig</string>
     <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
     <string name="tip_pulsar">💡 Pulsar-Tipp: Halten Sie den Wasserstand beim Eingießen ~1cm über dem Kaffeebett. Die meisten Nutzer brühen 20–25g für eine ausgewogene einzelne Tasse.</string>
@@ -143,9 +138,6 @@
     <string name="label_cup_presets">Tassen-Voreinstellungen</string>
     <string name="action_add_preset">Voreinstellung hinzufügen</string>
     <string name="action_reset_defaults">Auf Standard zurücksetzen</string>
-    <string name="label_brew_methods">Brühmethoden</string>
-    <string name="msg_methods_hint">Ausgewählte Methoden erscheinen zuerst. Zum Umschalten tippen.</string>
-    <string name="label_default_method">Standardmethode</string>
     <string name="label_bloom_animation_settings">Bloom-Animationen</string>
     <string name="msg_bloom_animation_settings_subtitle">Legen Sie fest, wie oft jedes Bloom-Sprite erscheint</string>
     <string name="screen_bloom_animation_settings_title">Bloom-Animationen</string>
@@ -235,17 +227,10 @@
     <string name="format_recipe_summary">%1$sg Kaffee / %2$sg Wasser</string>
 
     <!-- Onboarding Personalize Screen -->
-    <string name="screen_personalize_title">Zubereitung personalisieren</string>
-    <string name="label_pulsar_filter_type">Pulsar-Filtertyp</string>
-    <string name="msg_filter_hint">Beeinflusst das Tassenprofil und die Mahlgrad-Empfehlungen</string>
     <string name="label_your_grinder">Ihre Mühle</string>
-    <string name="msg_grinder_hint">Optional — ermöglicht konkrete Mahlgrad-Empfehlungen. Wählen Sie Keine Mühle / Andere, wenn Ihre nicht aufgeführt ist.</string>
     <string name="label_no_grinder">Keine Mühle / Andere</string>
 
     <!-- Onboarding Methods Screen -->
-    <string name="screen_methods_title">Womit brühen Sie?</string>
-    <string name="msg_methods_subtitle">Wählen Sie Ihre Brühmethoden. Tippen Sie auf ★, um Ihre Standardmethode festzulegen.</string>
-    <string name="label_set_as_default">Als Standard festlegen</string>
 
     <!-- More Screen -->
     <string name="screen_more_title">Mehr</string>
@@ -305,7 +290,6 @@
     <string name="cd_about_cup_volume">Zur Tassenmenge</string>
 
     <!-- Brew Visualization / Coffee Insights -->
-<string name="label_target">Ziel</string>
 <!-- Grind notes -->
 <!-- Dose notes -->
 <!-- Brew Method names -->
@@ -508,7 +492,6 @@
     <string name="action_sync_to_bag">Mit Packung synchronisieren</string>
 
     <!-- SettingsScreen -->
-    <string name="msg_pulsar_settings_applied">Wird beim Brühen mit Pulsar angewendet</string>
     <string name="label_quick_brew">Schnellbrühen</string>
     <string name="msg_quick_brew_hint">Überspringt die Mahlvorbereitung und wechselt beim Starten einer Zubereitung direkt zum Timer</string>
     <string name="label_show_brewing_instructions">Brühanweisungen anzeigen</string>
@@ -652,7 +635,6 @@
     <string name="msg_could_not_save_changes">Änderungen konnten nicht gespeichert werden</string>
     <string name="msg_could_not_delete">Löschen fehlgeschlagen. Bitte versuche es erneut.</string>
     <string name="dialog_delete_cup_preset_message">Dieses Tassenprofil löschen?</string>
-    <string name="msg_onboarding_save_failed">Die Einrichtung konnte nicht gespeichert werden. Bitte erneut versuchen.</string>
     <string name="msg_settings_save_failed">Diese Einstellung konnte nicht gespeichert werden. Bitte erneut versuchen.</string>
     <string name="msg_cup_preset_reset_failed">Die Tassenprofile konnten nicht zurückgesetzt werden. Bitte erneut versuchen.</string>
     <string name="msg_reset_cup_presets">Alle Tassenprofile durch die Standardwerte ersetzen?</string>

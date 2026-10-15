@@ -89,6 +89,14 @@ internal class FakeBrewLogDao : BrewLogDao {
         }
     }
 
+    override suspend fun updateRatingAndTasteFeedback(logId: Long, rating: Float, tasteFeedback: String?) {
+        val index = logs.indexOfFirst { it.id == logId }
+        if (index >= 0) {
+            logs[index] = logs[index].copy(rating = rating, tasteFeedback = tasteFeedback)
+            flow.value = logs.toList()
+        }
+    }
+
     override suspend fun updateCoffeeBag(logId: Long, bagId: Long?) {
         val index = logs.indexOfFirst { it.id == logId }
         if (index >= 0) {

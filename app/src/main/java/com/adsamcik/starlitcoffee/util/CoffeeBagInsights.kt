@@ -358,6 +358,9 @@ object CoffeeBagInsights {
             TasteFeedback.ASTRINGENT,
             TasteFeedback.CLOGGED,
             -> GrindOutcomeTag.TOO_FINE
+            TasteFeedback.TOO_WEAK,
+            TasteFeedback.TOO_STRONG,
+            -> GrindOutcomeTag.UNKNOWN
         }
     }
 }

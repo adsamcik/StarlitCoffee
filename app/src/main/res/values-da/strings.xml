@@ -49,10 +49,6 @@
     <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
     <string name="format_cup_volume">🥤 ~%1$.0fg i koppen</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
-    <plurals name="format_selected">
-        <item quantity="one">%1$d valgt</item>
-        <item quantity="other">%1$d valgt</item>
-    </plurals>
 
     <!-- Method Picker Screen -->
     <string name="screen_method_picker_title">Konfigurer dit bryg</string>
@@ -76,7 +72,6 @@
     <string name="action_brew_without_bag">Bryg uden at vælge pose</string>
     <string name="label_best_now">Bedst nu</string>
     <string name="format_grind_generic">Maling: %1$s – %2$s</string>
-    <string name="format_grind_specific_range">Malingsgrad: %1$s–%2$s · Juster efter smag</string>
     <string name="format_weight_left"> · %1$.0fg tilbage</string>
     <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
     <string name="tip_pulsar">💡 Pulsar-tip: Hold slurryen ~1cm over kaffebedet under hældningerne. De fleste brygger 20–25g for en balanceret enkelt kop.</string>
@@ -143,9 +138,6 @@
     <string name="label_cup_presets">Kopforudindstillinger</string>
     <string name="action_add_preset">Tilføj forudindstilling</string>
     <string name="action_reset_defaults">Nulstil til standarder</string>
-    <string name="label_brew_methods">Brygmetoder</string>
-    <string name="msg_methods_hint">Valgte metoder vises først. Tryk for at slå til eller fra.</string>
-    <string name="label_default_method">Standardmetode</string>
     <string name="label_bloom_animation_settings">Bloom-animationer</string>
     <string name="msg_bloom_animation_settings_subtitle">Vælg hvor ofte hver bloom-sprite vises</string>
     <string name="screen_bloom_animation_settings_title">Bloom-animationer</string>
@@ -235,17 +227,10 @@
     <string name="format_recipe_summary">%1$sg kaffe / %2$sg vand</string>
 
     <!-- Onboarding Personalize Screen -->
-    <string name="screen_personalize_title">Tilpas dit bryg</string>
-    <string name="label_pulsar_filter_type">Pulsar-filtertype</string>
-    <string name="msg_filter_hint">Påvirker kopprofil og malingsanbefalinger</string>
     <string name="label_your_grinder">Din kværn</string>
-    <string name="msg_grinder_hint">Valgfrit — giver specifikke anbefalinger til malingsgrad. Vælg Ingen kværn / Andet, hvis din ikke er på listen.</string>
     <string name="label_no_grinder">Ingen kværn / Andet</string>
 
     <!-- Onboarding Methods Screen -->
-    <string name="screen_methods_title">Hvad brygger du med?</string>
-    <string name="msg_methods_subtitle">Vælg dine brygmetoder. Tryk på ★ for at vælge standard.</string>
-    <string name="label_set_as_default">Angiv som standard</string>
 
     <!-- More Screen -->
     <string name="screen_more_title">Mere</string>
@@ -304,7 +289,6 @@
     <string name="cd_about_cup_volume">Om kopvolumen</string>
 
     <!-- Brew Visualization / Coffee Insights -->
-    <string name="label_target">Mål</string>
 <!-- Grind notes -->
 <!-- Dose notes -->
 <!-- Brew Method names -->
@@ -507,7 +491,6 @@
     <string name="action_sync_to_bag">Synkroniser med pose</string>
 
     <!-- SettingsScreen -->
-    <string name="msg_pulsar_settings_applied">Anvendes ved brygning med Pulsar</string>
     <string name="label_quick_brew">Hurtigt bryg</string>
     <string name="msg_quick_brew_hint">Spring forberedelse af maling over, og gå direkte til timeren, når du starter et bryg</string>
     <string name="label_show_brewing_instructions">Vis bryggevejledning</string>
@@ -651,7 +634,6 @@
     <string name="msg_could_not_save_changes">Ændringerne kunne ikke gemmes</string>
     <string name="msg_could_not_delete">Kunne ikke slette. Prøv igen.</string>
     <string name="dialog_delete_cup_preset_message">Slet denne kopprofil?</string>
-    <string name="msg_onboarding_save_failed">Din opsætning kunne ikke gemmes. Prøv igen.</string>
     <string name="msg_settings_save_failed">Denne indstilling kunne ikke gemmes. Prøv igen.</string>
     <string name="msg_cup_preset_reset_failed">Kopprofilerne kunne ikke nulstilles. Prøv igen.</string>
     <string name="msg_reset_cup_presets">Erstat alle kopprofiler med standarderne?</string>

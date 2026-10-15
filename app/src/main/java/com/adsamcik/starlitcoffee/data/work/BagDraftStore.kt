@@ -420,6 +420,17 @@ object BagDraftStore {
         if (!draft.isActive || draft.generationId != generationId) draft else draft.copy(workId = workId)
     }
 
+    /** Persist the new review owner before former rescan work is cancelled. */
+    @Synchronized
+    fun convertRescanToNewBag(
+        context: Context,
+        sessionId: String,
+        expectedGenerationId: String?,
+        nowMillis: Long = System.currentTimeMillis(),
+    ): BagScanDraft? = update(context, sessionId) { draft ->
+        draft.convertRescanToNewBag(expectedGenerationId, UUID.randomUUID().toString(), nowMillis)
+    }
+
     @Synchronized
     fun applyResult(
         context: Context,

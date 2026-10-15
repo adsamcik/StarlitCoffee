@@ -49,12 +49,6 @@
     <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
     <string name="format_cup_volume">🥤 ~%1$.0fg v šálke</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
-<plurals name="format_selected">
-        <item quantity="one">%1$d vybrané</item>
-        <item quantity="few">%1$d vybrané</item>
-        <item quantity="many">%1$d vybrané</item>
-        <item quantity="other">%1$d vybrané</item>
-    </plurals>
 
     <!-- Method Picker Screen -->
     <string name="screen_method_picker_title">Nastavte si prípravu</string>
@@ -78,7 +72,6 @@
     <string name="action_brew_without_bag">Pripraviť bez výberu balenia</string>
     <string name="label_best_now">Najlepšie teraz</string>
     <string name="format_grind_generic">Mletie: %1$s – %2$s</string>
-    <string name="format_grind_specific_range">Nastavenie mletia: %1$s–%2$s · Upravte podľa chuti</string>
     <string name="format_weight_left"> · zostáva %1$.0fg</string>
     <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
     <string name="tip_pulsar">💡 Tip pre Pulsar: Počas nalievania udržiavajte hladinu ~1cm nad kávovým lôžkom. Väčšina používateľov pripravuje 20–25g pre vyváženú šálku.</string>
@@ -147,9 +140,6 @@
     <string name="label_cup_presets">Predvoľby šálok</string>
     <string name="action_add_preset">Pridať predvoľbu</string>
     <string name="action_reset_defaults">Obnoviť predvolené</string>
-    <string name="label_brew_methods">Metódy prípravy</string>
-    <string name="msg_methods_hint">Vybrané metódy sa zobrazia ako prvé. Klepnutím prepnete.</string>
-    <string name="label_default_method">Predvolená metóda</string>
     <string name="label_bloom_animation_settings">Bloom animácie</string>
     <string name="msg_bloom_animation_settings_subtitle">Zvoľte, ako často sa má zobraziť každá bloom animácia</string>
     <string name="screen_bloom_animation_settings_title">Bloom animácie</string>
@@ -239,17 +229,10 @@
     <string name="format_recipe_summary">%1$sg kávy / %2$sg vody</string>
 
     <!-- Onboarding Personalize Screen -->
-    <string name="screen_personalize_title">Prispôsobte si prípravu</string>
-    <string name="label_pulsar_filter_type">Typ filtra Pulsar</string>
-    <string name="msg_filter_hint">Ovplyvňuje profil šálky a odporúčania mletia</string>
     <string name="label_your_grinder">Váš mlynček</string>
-    <string name="msg_grinder_hint">Voliteľné — umožní konkrétne odporúčania mletia. Ak váš mlynček nie je v zozname, vyberte Bez mlynčeka / Iný.</string>
     <string name="label_no_grinder">Bez mlynčeka / Iný</string>
 
     <!-- Onboarding Methods Screen -->
-    <string name="screen_methods_title">Čím pripravujete kávu?</string>
-    <string name="msg_methods_subtitle">Vyberte svoje metódy prípravy. Klepnutím na ★ nastavíte predvolenú.</string>
-    <string name="label_set_as_default">Nastaviť ako predvolenú</string>
 
     <!-- More Screen -->
     <string name="screen_more_title">Viac</string>
@@ -308,7 +291,6 @@
     <string name="cd_about_cup_volume">O objeme šálky</string>
 
     <!-- Brew Visualization / Coffee Insights -->
-<string name="label_target">Cieľ</string>
 <!-- Grind notes -->
 <!-- Dose notes -->
 <!-- Brew Method names -->
@@ -511,7 +493,6 @@
     <string name="action_sync_to_bag">Synchronizovať s balením</string>
 
     <!-- SettingsScreen -->
-    <string name="msg_pulsar_settings_applied">Platí pri príprave metódou Pulsar</string>
     <string name="label_quick_brew">Rýchla príprava</string>
     <string name="msg_quick_brew_hint">Preskočiť krok prípravy mletia a po spustení prípravy prejsť rovno na časovač</string>
     <string name="label_show_brewing_instructions">Zobrazovať pokyny prípravy</string>
@@ -655,7 +636,6 @@
     <string name="msg_could_not_save_changes">Zmeny sa nepodarilo uložiť</string>
     <string name="msg_could_not_delete">Položku sa nepodarilo odstrániť. Skúste to znova.</string>
     <string name="dialog_delete_cup_preset_message">Odstrániť tento profil šálky?</string>
-    <string name="msg_onboarding_save_failed">Nastavenie sa nepodarilo uložiť. Skúste to znova.</string>
     <string name="msg_settings_save_failed">Toto nastavenie sa nepodarilo uložiť. Skúste to znova.</string>
     <string name="msg_cup_preset_reset_failed">Profily šálok sa nepodarilo obnoviť. Skúste to znova.</string>
     <string name="msg_reset_cup_presets">Nahradiť všetky profily šálok predvolenými?</string>

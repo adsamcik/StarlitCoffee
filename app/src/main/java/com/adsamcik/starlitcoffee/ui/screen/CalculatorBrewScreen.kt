@@ -63,6 +63,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.platform.testTag
@@ -129,6 +130,7 @@ fun CalculatorBrewScreen(
     val selectedMethod = state.brewMethod
     val selectedFilter = state.filterType
     val context = LocalContext.current
+    val resources = LocalResources.current
     val grinderData = remember { GrinderDataSource.getInstance(context) }
     val grinders = grinderData.grindersFor(state.brewMethod, selectedFilter)
     val selectedGrinderId = state.grinderId?.takeIf { id -> grinders.any { it.id == id } }
@@ -322,7 +324,7 @@ fun CalculatorBrewScreen(
                     val bagName = coffeeBags.firstOrNull { it.id == bagId }?.name.orEmpty()
                     Toast.makeText(
                         context,
-                        context.getString(R.string.msg_barcode_brew_enter_amount, bagName),
+                        resources.getString(R.string.msg_barcode_brew_enter_amount, bagName),
                         Toast.LENGTH_LONG,
                     ).show()
                 }
@@ -692,7 +694,7 @@ internal fun BrewSettingsToolbar(
                 // Give the brewer name room when larger text leaves too little
                 // width beside the ratio and delete controls.
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    BrewingSetPicker(sets, selectedSetId, grinderData, onSetChange, onManage,
+                    BrewingSetPicker(sets, selectedSetId, grinderData, onSetChange, onManage = onManage,
                         modifier = Modifier.fillMaxWidth(), showSummary = true)
                     Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -703,7 +705,7 @@ internal fun BrewSettingsToolbar(
             } else {
                 Row(modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    BrewingSetPicker(sets, selectedSetId, grinderData, onSetChange, onManage,
+                    BrewingSetPicker(sets, selectedSetId, grinderData, onSetChange, onManage = onManage,
                         modifier = Modifier.weight(1f).fillMaxHeight(), showSummary = true)
                     ratioPicker(Modifier.fillMaxHeight())
                     CalculatorBackspaceButton(onBackspace, Modifier.fillMaxHeight())

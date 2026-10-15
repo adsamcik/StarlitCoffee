@@ -49,11 +49,6 @@
     <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
     <string name="format_cup_volume">🥤 ~%1$.0fg en tasse</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
-<plurals name="format_selected">
-        <item quantity="one">%1$d sélectionné</item>
-        <item quantity="many">%1$d sélectionnés</item>
-        <item quantity="other">%1$d sélectionnés</item>
-    </plurals>
 
     <!-- Method Picker Screen -->
     <string name="screen_method_picker_title">Configurer votre préparation</string>
@@ -77,7 +72,6 @@
     <string name="action_brew_without_bag">Préparer sans sélectionner de paquet</string>
     <string name="label_best_now">Idéal maintenant</string>
     <string name="format_grind_generic">Mouture : %1$s – %2$s</string>
-    <string name="format_grind_specific_range">Réglage de mouture : %1$s–%2$s · Ajustez au goût</string>
     <string name="format_weight_left"> · %1$.0fg restants</string>
     <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
     <string name="tip_pulsar">💡 Astuce Pulsar : gardez la boue environ 1 cm au-dessus du lit de café pendant les versements. La plupart des utilisateurs préparent 20–25 g pour une tasse équilibrée.</string>
@@ -145,9 +139,6 @@
     <string name="label_cup_presets">Préréglages de tasse</string>
     <string name="action_add_preset">Ajouter un préréglage</string>
     <string name="action_reset_defaults">Réinitialiser par défaut</string>
-    <string name="label_brew_methods">Méthodes de préparation</string>
-    <string name="msg_methods_hint">Les méthodes sélectionnées apparaissent en premier. Touchez pour activer ou désactiver.</string>
-    <string name="label_default_method">Méthode par défaut</string>
     <string name="label_bloom_animation_settings">Animations de pré-infusion</string>
     <string name="msg_bloom_animation_settings_subtitle">Choisissez la fréquence d\'apparition de chaque sprite de pré-infusion</string>
     <string name="screen_bloom_animation_settings_title">Animations de pré-infusion</string>
@@ -237,17 +228,10 @@
     <string name="format_recipe_summary">%1$sg de café / %2$sg d\'eau</string>
 
     <!-- Onboarding Personalize Screen -->
-    <string name="screen_personalize_title">Personnaliser votre préparation</string>
-    <string name="label_pulsar_filter_type">Type de filtre Pulsar</string>
-    <string name="msg_filter_hint">Influe sur le profil en tasse et les recommandations de mouture</string>
     <string name="label_your_grinder">Votre moulin</string>
-    <string name="msg_grinder_hint">Facultatif — active les recommandations de mouture précises. Choisissez Aucun moulin / Autre si le vôtre n\'est pas listé.</string>
     <string name="label_no_grinder">Aucun moulin / Autre</string>
 
     <!-- Onboarding Methods Screen -->
-    <string name="screen_methods_title">Avec quoi préparez-vous ?</string>
-    <string name="msg_methods_subtitle">Sélectionnez vos méthodes de préparation. Touchez ★ pour définir votre méthode par défaut.</string>
-    <string name="label_set_as_default">Définir par défaut</string>
 
     <!-- More Screen -->
     <string name="screen_more_title">Plus</string>
@@ -307,7 +291,6 @@
     <string name="cd_about_cup_volume">À propos du volume en tasse</string>
 
     <!-- Brew Visualization / Coffee Insights -->
-<string name="label_target">Cible</string>
 <!-- Grind notes -->
 <!-- Dose notes -->
 <!-- Brew Method names -->
@@ -510,7 +493,6 @@
     <string name="action_sync_to_bag">Synchroniser avec le paquet</string>
 
     <!-- SettingsScreen -->
-    <string name="msg_pulsar_settings_applied">Appliqué lors des préparations avec Pulsar</string>
     <string name="label_quick_brew">Préparation rapide</string>
     <string name="msg_quick_brew_hint">Ignorer l\'étape de préparation de la mouture et passer directement au minuteur lorsque vous démarrez une préparation</string>
     <string name="label_show_brewing_instructions">Afficher les instructions de préparation</string>
@@ -654,7 +636,6 @@
     <string name="msg_could_not_save_changes">Impossible d’enregistrer les modifications</string>
     <string name="msg_could_not_delete">Impossible de supprimer. Réessayez.</string>
     <string name="dialog_delete_cup_preset_message">Supprimer ce profil de tasse ?</string>
-    <string name="msg_onboarding_save_failed">Impossible d’enregistrer votre configuration. Réessayez.</string>
     <string name="msg_settings_save_failed">Impossible d’enregistrer ce réglage. Réessayez.</string>
     <string name="msg_cup_preset_reset_failed">Impossible de réinitialiser les profils de tasse. Réessayez.</string>
     <string name="msg_reset_cup_presets">Remplacer tous les profils de tasse par ceux par défaut ?</string>

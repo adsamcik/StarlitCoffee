@@ -29,9 +29,9 @@ import com.adsamcik.starlitcoffee.util.RecognitionStatusText
 @Composable
 fun RecognitionStatusCard(
     presentation: RecognitionPresentation,
+    modifier: Modifier = Modifier,
     actions: RecognitionActions = RecognitionActions(),
     enabled: Boolean = true,
-    modifier: Modifier = Modifier,
 ) {
     val setupMessage = when (actions.setupState) {
         RecognitionSetupState.OPENING -> stringResource(R.string.msg_opening_label_recognition_setup)

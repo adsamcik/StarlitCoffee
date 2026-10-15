@@ -11,6 +11,7 @@ import com.adsamcik.starlitcoffee.data.work.BagDraftField
 import com.adsamcik.starlitcoffee.data.work.BagDraftFocusRegistry
 import com.adsamcik.starlitcoffee.data.work.BagDraftPhase
 import com.adsamcik.starlitcoffee.data.work.BagDraftStore
+import com.adsamcik.starlitcoffee.data.work.BagReviewMode
 import com.adsamcik.starlitcoffee.data.work.BagScanDraft
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -73,6 +74,13 @@ class BagScanDraftViewModel(
 
     fun markDiscarded() {
         _draft.value = BagDraftStore.markPhase(application, sessionId, BagDraftPhase.DISCARDED)
+    }
+
+    fun convertRescanToNewBag(expectedGenerationId: String?): Boolean {
+        val converted = BagDraftStore.convertRescanToNewBag(application, sessionId, expectedGenerationId)
+        _draft.value = converted
+        return converted?.isActive == true &&
+            converted.reviewContext.mode == BagReviewMode.ADD_NEW
     }
 
     override fun onCleared() {

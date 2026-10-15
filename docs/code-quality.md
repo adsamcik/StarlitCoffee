@@ -38,8 +38,15 @@ boundaries may catch the framework-level `Exception` type when their explicit
 contract is to log and degrade safely; this boundary policy is configured once
 rather than repeated as source annotation noise.
 
-Android lint has one reviewed configuration file, `app/lint.xml`. Its only
-resource exception covers generated WebP aliases that intentionally share bytes
+The wrapper declaration has an exact-source `AndroidGradlePluginVersion`
+exception for the deliberately pinned, compatible Gradle toolchain. That check
+reports the availability of newer releases, not a broken build contract. Its
+properties-file detector ignores inline suppression comments, so `app/lint.xml`
+matches only the wrapper file. Qualify toolchain upgrades separately;
+compatibility and security checks remain enabled.
+
+Android lint has one reviewed configuration file, `app/lint.xml`. Its resource
+exception covers generated WebP aliases that intentionally share bytes
 while retaining stable resource identifiers. New aliases must be added to the
 canonical asset tracker and independently reviewed; the exception must never be
 expanded into a general duplicate-resource waiver.

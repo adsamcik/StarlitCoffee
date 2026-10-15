@@ -4,7 +4,10 @@ import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.model.BrewRating
+import com.adsamcik.starlitcoffee.data.model.HomeContextCard
+import com.adsamcik.starlitcoffee.data.model.TasteIssue
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -120,6 +123,34 @@ class CoffeeBagInsightsTest {
         assertEquals("6.0", insight.bestGrindSetting)
         assertEquals(GrindOutcomeTag.TOO_COARSE, insight.recentOutcomes.first().outcome)
         assertTrue(insight.adjustmentHint.orEmpty().contains("finer", ignoreCase = true))
+    }
+
+    @Test
+    fun `strength feedback does not imply an incorrect grind setting`() {
+        for (issue in listOf(TasteIssue.TOO_WEAK, TasteIssue.TOO_STRONG)) {
+            val insight = CoffeeBagInsights.buildGrindInsight(
+                bag = bag(),
+                brewLogs = listOf(log(id = 1L, grindSetting = "6.0", tasteFeedback = issue.tasteFeedback.name)),
+            )
+
+            assertEquals(GrindOutcomeTag.UNKNOWN, insight.recentOutcomes.single().outcome)
+            assertFalse(insight.adjustmentHint.orEmpty().contains("finer"))
+            assertFalse(insight.adjustmentHint.orEmpty().contains("coarser"))
+        }
+    }
+
+    @Test
+    fun `strength feedback offers ratio advice without calling it sour or bitter`() {
+        for (issue in listOf(TasteIssue.TOO_WEAK, TasteIssue.TOO_STRONG)) {
+            val card = HomeContextCard.resolve(
+                bags = emptyList(),
+                brewLogs = listOf(log(id = 1L, rating = BrewRating.BAD.storedValue, tasteFeedback = issue.tasteFeedback.name)),
+                selectedBagId = null,
+            ) as HomeContextCard.CoachingTip
+
+            assertEquals(issue.suggestion, card.detail)
+            assertTrue(card.tip.contains(issue.label.removePrefix("Too ")))
+        }
     }
 
     // --- Brew picker ranking ---

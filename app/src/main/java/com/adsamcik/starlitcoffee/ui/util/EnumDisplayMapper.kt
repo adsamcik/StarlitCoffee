@@ -24,6 +24,8 @@ fun TasteFeedback.displayNameRes(): Int = when (this) {
     TasteFeedback.TOO_BITTER -> R.string.feedback_too_bitter
     TasteFeedback.ASTRINGENT -> R.string.feedback_astringent
     TasteFeedback.CLOGGED -> R.string.feedback_clogged
+    TasteFeedback.TOO_WEAK -> R.string.taste_issue_too_weak
+    TasteFeedback.TOO_STRONG -> R.string.taste_issue_too_strong
 }
 
 fun TasteFeedback.emoji(): String = when (this) {
@@ -32,6 +34,8 @@ fun TasteFeedback.emoji(): String = when (this) {
     TasteFeedback.TOO_BITTER -> "😖"
     TasteFeedback.ASTRINGENT -> "😣"
     TasteFeedback.CLOGGED -> "🚫"
+    TasteFeedback.TOO_WEAK -> "💧"
+    TasteFeedback.TOO_STRONG -> "💪"
 }
 
 @StringRes
@@ -50,6 +54,8 @@ fun TasteFeedback.getDisplayAdjustmentTextRes(hasGrinder: Boolean, isPulsar: Boo
         if (hasGrinder) R.string.adjust_clogged_pulsar_grinder else R.string.adjust_clogged_pulsar_no_grinder
     } else if (hasGrinder) R.string.adjust_clogged_grinder
     else R.string.adjust_clogged_no_grinder
+    TasteFeedback.TOO_WEAK -> R.string.taste_issue_weak_suggestion
+    TasteFeedback.TOO_STRONG -> R.string.taste_issue_strong_suggestion
 }
 
 // --- InputMode ---

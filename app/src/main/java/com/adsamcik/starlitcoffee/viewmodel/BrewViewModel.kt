@@ -1228,12 +1228,10 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
     ) {
         val repository = brewLogRepository ?: return
         viewModelScope.launch {
-            repository.updateFeedback(
+            repository.updateRatingAndTasteFeedback(
                 logId = logId,
                 rating = rating.storedValue,
-                notes = null,
                 tasteFeedback = tasteFeedback?.name,
-                flavorTags = emptyList(),
             )
             cancelRatingReminder(logId)
             refreshLastUnrated()

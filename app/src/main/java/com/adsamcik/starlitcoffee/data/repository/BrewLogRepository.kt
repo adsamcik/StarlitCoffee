@@ -68,6 +68,10 @@ class BrewLogRepository(
     suspend fun updateRating(logId: Long, rating: Float, notes: String?) =
         brewLogDao.updateRating(logId, rating, notes)
 
+    /** Quick check-in leaves the log's notes and separately stored flavor tags untouched. */
+    suspend fun updateRatingAndTasteFeedback(logId: Long, rating: Float, tasteFeedback: String?) =
+        brewLogDao.updateRatingAndTasteFeedback(logId, rating, tasteFeedback)
+
     suspend fun updateFeedback(
         logId: Long,
         rating: Float?,

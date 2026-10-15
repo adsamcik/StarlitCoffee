@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBarcodeEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeIdentityEntity
 import kotlinx.coroutines.flow.Flow
@@ -17,6 +18,8 @@ interface CoffeeIdentityDao {
     suspend fun getById(id: Long): CoffeeIdentityEntity?
 
     @Insert suspend fun insert(coffee: CoffeeIdentityEntity): Long
+
+    @Update suspend fun update(coffee: CoffeeIdentityEntity)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addBarcode(code: CoffeeBarcodeEntity)

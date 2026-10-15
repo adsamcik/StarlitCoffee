@@ -49,10 +49,6 @@
     <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
     <string name="format_cup_volume">🥤 ~%1$.0fg в чашата</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
-<plurals name="format_selected">
-        <item quantity="one">%1$d избран</item>
-        <item quantity="other">%1$d избрани</item>
-    </plurals>
 
     <!-- Method Picker Screen -->
     <string name="screen_method_picker_title">Настройте приготвянето</string>
@@ -76,7 +72,6 @@
     <string name="action_brew_without_bag">Пригответе без избран пакет</string>
     <string name="label_best_now">Най-добро сега</string>
     <string name="format_grind_generic">Смилане: %1$s – %2$s</string>
-    <string name="format_grind_specific_range">Настройка на смилане: %1$s–%2$s · Коригирайте според вкуса</string>
     <string name="format_weight_left"> · остават %1$.0fg</string>
     <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
     <string name="tip_pulsar">💡 Съвет за Pulsar: Поддържайте слърито ~1cm над кафеното легло по време на наливанията. Повечето хора приготвят 20–25g за балансирана единична чаша.</string>
@@ -143,9 +138,6 @@
     <string name="label_cup_presets">Предварителни чаши</string>
     <string name="action_add_preset">Добавете предварителна настройка</string>
     <string name="action_reset_defaults">Върнете настройките по подразбиране</string>
-    <string name="label_brew_methods">Методи за приготвяне</string>
-    <string name="msg_methods_hint">Избраните методи се показват първи. Докоснете, за да включите или изключите.</string>
-    <string name="label_default_method">Метод по подразбиране</string>
     <string name="label_bloom_animation_settings">Анимации на блум</string>
     <string name="msg_bloom_animation_settings_subtitle">Изберете колко често да се появява всеки блум спрайт</string>
     <string name="screen_bloom_animation_settings_title">Анимации на блум</string>
@@ -235,17 +227,10 @@
     <string name="format_recipe_summary">%1$sg кафе / %2$sg вода</string>
 
     <!-- Onboarding Personalize Screen -->
-    <string name="screen_personalize_title">Персонализирайте приготвянето</string>
-    <string name="label_pulsar_filter_type">Тип филтър Pulsar</string>
-    <string name="msg_filter_hint">Влияе на профила в чашата и препоръките за смилане</string>
     <string name="label_your_grinder">Вашата мелачка</string>
-    <string name="msg_grinder_hint">По избор — включва конкретни препоръки за смилане. Изберете Без мелачка / Друга, ако Вашата не е в списъка.</string>
     <string name="label_no_grinder">Без мелачка / Друга</string>
 
     <!-- Onboarding Methods Screen -->
-    <string name="screen_methods_title">С какво приготвяте?</string>
-    <string name="msg_methods_subtitle">Изберете методите си за приготвяне. Докоснете ★, за да зададете стандартния.</string>
-    <string name="label_set_as_default">Задайте по подразбиране</string>
 
     <!-- More Screen -->
     <string name="screen_more_title">Още</string>
@@ -305,7 +290,6 @@
     <string name="cd_about_cup_volume">За обема в чашата</string>
 
     <!-- Brew Visualization / Coffee Insights -->
-<string name="label_target">Цел</string>
 <!-- Grind notes -->
 <!-- Dose notes -->
 <!-- Brew Method names -->
@@ -508,7 +492,6 @@
     <string name="action_sync_to_bag">Синхронизирайте с пакета</string>
 
     <!-- SettingsScreen -->
-    <string name="msg_pulsar_settings_applied">Прилага се при приготвяне с Pulsar</string>
     <string name="label_quick_brew">Бързо приготвяне</string>
     <string name="msg_quick_brew_hint">Пропуснете стъпката за подготовка на смилането и преминете направо към таймера, когато започнете приготвяне</string>
     <string name="label_show_brewing_instructions">Показване на инструкции за приготвяне</string>
@@ -652,7 +635,6 @@
     <string name="msg_could_not_save_changes">Промените не можаха да бъдат запазени</string>
     <string name="msg_could_not_delete">Изтриването не бе успешно. Опитайте отново.</string>
     <string name="dialog_delete_cup_preset_message">Да се изтрие ли този профил за чаша?</string>
-    <string name="msg_onboarding_save_failed">Настройката не можа да бъде запазена. Опитайте отново.</string>
     <string name="msg_settings_save_failed">Тази настройка не можа да бъде запазена. Опитайте отново.</string>
     <string name="msg_cup_preset_reset_failed">Профилите за чаши не можаха да бъдат нулирани. Опитайте отново.</string>
     <string name="msg_reset_cup_presets">Да се заменят ли всички профили за чаши със стандартните?</string>

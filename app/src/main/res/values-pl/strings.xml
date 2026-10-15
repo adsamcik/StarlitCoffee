@@ -49,12 +49,6 @@
     <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
     <string name="format_cup_volume">🥤 ~%1$.0fg w filiżance</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
-<plurals name="format_selected">
-        <item quantity="one">Wybrano %1$d</item>
-        <item quantity="few">Wybrano %1$d</item>
-        <item quantity="many">Wybrano %1$d</item>
-        <item quantity="other">Wybrano %1$d</item>
-    </plurals>
 
     <!-- Method Picker Screen -->
     <string name="screen_method_picker_title">Skonfiguruj parzenie</string>
@@ -78,7 +72,6 @@
     <string name="action_brew_without_bag">Zaparz bez wyboru opakowania</string>
     <string name="label_best_now">Najlepsze teraz</string>
     <string name="format_grind_generic">Mielenie: %1$s – %2$s</string>
-    <string name="format_grind_specific_range">Stopień mielenia: %1$s–%2$s · Dopasuj do smaku</string>
     <string name="format_weight_left"> · zostało %1$.0fg</string>
     <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
     <string name="tip_pulsar">💡 Wskazówka Pulsar: podczas dolewek utrzymuj poziom zawiesiny ~1 cm nad złożem kawy. Większość osób parzy 20–25 g, aby uzyskać zbalansowaną pojedynczą filiżankę.</string>
@@ -147,9 +140,6 @@
     <string name="label_cup_presets">Presety filiżanek</string>
     <string name="action_add_preset">Dodaj preset</string>
     <string name="action_reset_defaults">Przywróć domyślne</string>
-    <string name="label_brew_methods">Metody parzenia</string>
-    <string name="msg_methods_hint">Wybrane metody pojawiają się jako pierwsze. Dotknij, aby przełączyć.</string>
-    <string name="label_default_method">Metoda domyślna</string>
     <string name="label_bloom_animation_settings">Animacje bloom</string>
     <string name="msg_bloom_animation_settings_subtitle">Wybierz, jak często ma pojawiać się każda animacja bloom</string>
     <string name="screen_bloom_animation_settings_title">Animacje bloom</string>
@@ -239,17 +229,10 @@
     <string name="format_recipe_summary">%1$sg kawy / %2$sg wody</string>
 
     <!-- Onboarding Personalize Screen -->
-    <string name="screen_personalize_title">Spersonalizuj parzenie</string>
-    <string name="label_pulsar_filter_type">Typ filtra Pulsar</string>
-    <string name="msg_filter_hint">Wpływa na profil filiżanki i rekomendacje mielenia</string>
     <string name="label_your_grinder">Twój młynek</string>
-    <string name="msg_grinder_hint">Opcjonalnie — umożliwia konkretne rekomendacje stopnia mielenia. Wybierz Bez młynka / Inny, jeśli Twojego nie ma na liście.</string>
     <string name="label_no_grinder">Bez młynka / Inny</string>
 
     <!-- Onboarding Methods Screen -->
-    <string name="screen_methods_title">Czym parzysz kawę?</string>
-    <string name="msg_methods_subtitle">Wybierz swoje metody parzenia. Dotknij ★, aby ustawić domyślną.</string>
-    <string name="label_set_as_default">Ustaw jako domyślną</string>
 
     <!-- More Screen -->
     <string name="screen_more_title">Więcej</string>
@@ -308,7 +291,6 @@
     <string name="cd_about_cup_volume">O objętości filiżanki</string>
 
     <!-- Brew Visualization / Coffee Insights -->
-<string name="label_target">Cel</string>
 <!-- Grind notes -->
 <!-- Dose notes -->
 <!-- Brew Method names -->
@@ -511,7 +493,6 @@
     <string name="action_sync_to_bag">Zsynchronizuj z opakowaniem</string>
 
     <!-- SettingsScreen -->
-    <string name="msg_pulsar_settings_applied">Stosowane podczas parzenia z Pulsarem</string>
     <string name="label_quick_brew">Szybkie parzenie</string>
     <string name="msg_quick_brew_hint">Pomiń krok przygotowania mielenia i przejdź prosto do timera po rozpoczęciu parzenia</string>
     <string name="label_show_brewing_instructions">Pokazuj instrukcje parzenia</string>
@@ -655,7 +636,6 @@
     <string name="msg_could_not_save_changes">Nie udało się zapisać zmian</string>
     <string name="msg_could_not_delete">Nie udało się usunąć. Spróbuj ponownie.</string>
     <string name="dialog_delete_cup_preset_message">Usunąć ten profil filiżanki?</string>
-    <string name="msg_onboarding_save_failed">Nie udało się zapisać konfiguracji. Spróbuj ponownie.</string>
     <string name="msg_settings_save_failed">Nie udało się zapisać tego ustawienia. Spróbuj ponownie.</string>
     <string name="msg_cup_preset_reset_failed">Nie udało się zresetować profili filiżanek. Spróbuj ponownie.</string>
     <string name="msg_reset_cup_presets">Zastąpić wszystkie profile filiżanek domyślnymi?</string>

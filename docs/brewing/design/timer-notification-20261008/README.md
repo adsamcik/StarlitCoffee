@@ -44,6 +44,26 @@ traces both masks at 8x nearest-neighbor sampling with the existing pinned vtrac
 toolchain, then imports the SVG paths through the existing vessel-vector converter.
 No SVG or Android contour coordinates are drawn or adjusted by hand.
 
+The Android export uses lossless path encoding: a traced cubic is replaced by
+`H` or `V` only when both controls lie exactly and monotonically between its
+endpoints on that horizontal or vertical line. Decimal coordinates are not
+rounded; curved segments, subpaths, winding and the retained SVGs are unchanged.
+This reduces the outline from 21,381 to 2,923 characters and the bowl from 7,014
+to 958, below Android lint's long-path limit. Corrections to the artwork still
+require the generator/tracer workflow above.
+
+The standard-library geometry checks compare every source/native segment and
+cover real curves, backtracking controls, decimal endpoints and multiple subpaths.
+An additional sharp/librsvg comparison rendered both original and exported
+contours byte-identically at the original 202-pixel crop width and 1,616-pixel
+trace width. At 24, 32, 40 and 48 pixels the renderer antialiases straight cubics
+and lines slightly differently: the maximum channel difference is 9/255 (8/255
+at the actual 40/48-pixel sizes), with a mean channel difference below 0.15/255.
+Exact segment geometry is verified independently of those rasterization
+differences. The comparison record is retained in
+`build/timer-notification-path-pixel-equivalence.json`. These are static contour
+checks; native rendering retains the verification boundary below.
+
 `trace-report.json` records source/SVG hashes. `contour-review.json` records
 source-resolution and small-size render comparisons. Source-resolution outline
 binary IoU is 1.0; the actual 40/48 pixel notification sizes have mean alpha errors
@@ -57,6 +77,15 @@ Reproduce imports:
 ```powershell
 uv run --no-project --with vtracer==1.0.0a3 --with numpy==2.3.5 --with pillow==12.3.0 python tools/import_timer_notification_cup.py
 python docs/brewing/design/timer-notification-20261008/build_preview.py
+```
+
+Re-export the preserved, hash-verified generator trace without retracing, or
+verify the canonical export (both use only the Python standard library):
+
+```powershell
+python tools/import_timer_notification_cup.py --retained-traces
+python tools/import_timer_notification_cup.py --check
+python tools/test_timer_notification_path_encoding.py
 ```
 
 ## Native verification

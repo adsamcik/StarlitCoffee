@@ -2,6 +2,7 @@ package com.adsamcik.starlitcoffee.viewmodel
 
 import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
+import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
 import com.adsamcik.starlitcoffee.data.db.entity.SavedRecipeEntity
 import com.adsamcik.starlitcoffee.testutil.FakeBrewLogDao
 import com.adsamcik.starlitcoffee.testutil.FakeCoffeeBagDao
@@ -16,6 +17,7 @@ import com.adsamcik.starlitcoffee.data.model.GrindDescriptor
 import com.adsamcik.starlitcoffee.data.model.HomeContextCard
 import com.adsamcik.starlitcoffee.data.model.InputMode
 import com.adsamcik.starlitcoffee.data.model.TasteFeedback
+import com.adsamcik.starlitcoffee.data.model.TasteIssue
 import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
 import com.adsamcik.starlitcoffee.data.repository.CoffeeUsageLogResult
@@ -2177,9 +2179,9 @@ class BrewViewModelTest {
 
     private fun createPersistenceViewModel(
         ratingReminders: RatingReminders? = null,
+        brewLogRepository: BrewLogRepository = BrewLogRepository(null, FakeBrewLogDao(), FakeFlavorTagDao()),
     ): BrewViewModel {
         val recipeRepository = RecipeRepository(FakeRecipeDao())
-        val brewLogRepository = BrewLogRepository(null, FakeBrewLogDao(), FakeFlavorTagDao())
         val coffeeBagDao = FakeCoffeeBagDao()
         val coffeeBagRepository = CoffeeBagRepository(coffeeBagDao)
         val coffeeUsageRepository = CoffeeUsageRepository(
@@ -2275,6 +2277,45 @@ class BrewViewModelTest {
         assertEquals(BrewRating.BAD.storedValue, log.rating)
         assertEquals("TOO_BITTER", log.tasteFeedback)
         assertNull(vm.lastUnratedBrew.value)
+    }
+
+    @Test
+    fun `quick check-in preserves saved notes and flavor tags`() = runTest {
+        val repository = BrewLogRepository(null, FakeBrewLogDao(), FakeFlavorTagDao())
+        val vm = createPersistenceViewModel(brewLogRepository = repository)
+        vm.logBrew()
+        val logId = requireNotNull(vm.lastUnratedBrew.value).id
+        repository.updateFeedback(
+            logId = logId,
+            rating = null,
+            notes = "Sweet finish, keep this note",
+            tasteFeedback = null,
+            flavorTags = listOf(FlavorTagEntity(brewLogId = logId, descriptor = "Honey", intensity = 3)),
+        )
+        val savedNotes = vm.brewLogs.value.single().freeformNotes
+        val savedTags = vm.flavorTags.value
+        assertEquals(1, savedTags.size)
+
+        vm.quickRateBrewLog(logId, BrewRating.GOOD)
+
+        val rated = vm.brewLogs.value.single()
+        assertEquals(BrewRating.GOOD.storedValue, rated.rating)
+        assertEquals("BALANCED", rated.tasteFeedback)
+        assertEquals(savedNotes, rated.freeformNotes)
+        assertEquals(savedTags, vm.flavorTags.value)
+    }
+
+    @Test
+    fun `strength issues retain their own meaning in brew history`() {
+        val vm = createPersistenceViewModel()
+        for (issue in listOf(TasteIssue.TOO_WEAK, TasteIssue.TOO_STRONG)) {
+            vm.logBrew()
+            val logId = requireNotNull(vm.lastUnratedBrew.value).id
+
+            vm.quickRateBrewLog(logId, BrewRating.BAD, issue.tasteFeedback)
+
+            assertEquals(issue.name, vm.brewLogs.value.single { it.id == logId }.tasteFeedback)
+        }
     }
 
     private fun setElapsedSeconds(targetViewModel: BrewViewModel, elapsedSeconds: Int) {

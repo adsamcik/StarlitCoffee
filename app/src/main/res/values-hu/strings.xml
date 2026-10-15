@@ -49,10 +49,6 @@
     <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
     <string name="format_cup_volume">🥤 ~%1$.0fg a csészében</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
-    <plurals name="format_selected">
-        <item quantity="one">%1$d kijelölve</item>
-        <item quantity="other">%1$d kijelölve</item>
-    </plurals>
 
     <!-- Method Picker Screen -->
     <string name="screen_method_picker_title">Főzés összeállítása</string>
@@ -76,7 +72,6 @@
     <string name="action_brew_without_bag">Főzés zacskó kiválasztása nélkül</string>
     <string name="label_best_now">Most a legjobb</string>
     <string name="format_grind_generic">Őrlés: %1$s – %2$s</string>
-    <string name="format_grind_specific_range">Őrlési fokozat: %1$s–%2$s · Ízlés szerint állítsa</string>
     <string name="format_weight_left"> · %1$.0fg maradt</string>
     <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
     <string name="tip_pulsar">💡 Pulsar tipp: Öntés közben tartsa a kávélevet kb. 1 cm-rel a kávéágy felett. A legtöbben 20–25 g-ot főznek egy kiegyensúlyozott csészéhez.</string>
@@ -143,9 +138,6 @@
     <string name="label_cup_presets">Csésze-előbeállítások</string>
     <string name="action_add_preset">Előbeállítás hozzáadása</string>
     <string name="action_reset_defaults">Visszaállítás alapértelmezettre</string>
-    <string name="label_brew_methods">Főzési módszerek</string>
-    <string name="msg_methods_hint">A kijelölt módszerek elöl jelennek meg. Koppintson a be- és kikapcsoláshoz.</string>
-    <string name="label_default_method">Alapértelmezett módszer</string>
     <string name="label_bloom_animation_settings">Bloom animációk</string>
     <string name="msg_bloom_animation_settings_subtitle">Válassza ki, milyen gyakran jelenjen meg az egyes bloom animációk</string>
     <string name="screen_bloom_animation_settings_title">Bloom animációk</string>
@@ -235,17 +227,10 @@
     <string name="format_recipe_summary">%1$sg kávé / %2$sg víz</string>
 
     <!-- Onboarding Personalize Screen -->
-    <string name="screen_personalize_title">Főzés testreszabása</string>
-    <string name="label_pulsar_filter_type">Pulsar szűrő típusa</string>
-    <string name="msg_filter_hint">Befolyásolja a csészeprofilt és az őrlési ajánlásokat</string>
     <string name="label_your_grinder">Az Ön darálója</string>
-    <string name="msg_grinder_hint">Nem kötelező — konkrét őrlési ajánlásokat tesz lehetővé. Válassza a Nincs daráló / Egyéb lehetőséget, ha az Öné nem szerepel a listában.</string>
     <string name="label_no_grinder">Nincs daráló / Egyéb</string>
 
     <!-- Onboarding Methods Screen -->
-    <string name="screen_methods_title">Mivel főz?</string>
-    <string name="msg_methods_subtitle">Válassza ki a főzési módszereit. Koppintson a ★ ikonra az alapértelmezett beállításához.</string>
-    <string name="label_set_as_default">Beállítás alapértelmezettként</string>
 
     <!-- More Screen -->
     <string name="screen_more_title">Továbbiak</string>
@@ -305,7 +290,6 @@
     <string name="cd_about_cup_volume">A csésze térfogatáról</string>
 
     <!-- Brew Visualization / Coffee Insights -->
-    <string name="label_target">Cél</string>
     <!-- Grind notes -->
     <!-- Dose notes -->
     <!-- Brew Method names -->
@@ -508,7 +492,6 @@
     <string name="action_sync_to_bag">Szinkronizálás a zacskóval</string>
 
     <!-- SettingsScreen -->
-    <string name="msg_pulsar_settings_applied">Pulsarral való főzéskor érvényes</string>
     <string name="label_quick_brew">Gyors főzés</string>
     <string name="msg_quick_brew_hint">Kihagyja az őrlés-előkészítési lépést, és a főzés indításakor egyből az időzítőre lép</string>
     <string name="label_show_brewing_instructions">Főzési utasítások megjelenítése</string>
@@ -652,7 +635,6 @@
     <string name="msg_could_not_save_changes">Nem sikerült menteni a módosításokat</string>
     <string name="msg_could_not_delete">Nem sikerült törölni. Próbáld újra.</string>
     <string name="dialog_delete_cup_preset_message">Törli ezt a csészeprofilt?</string>
-    <string name="msg_onboarding_save_failed">A beállításokat nem sikerült menteni. Próbálja újra.</string>
     <string name="msg_settings_save_failed">Ezt a beállítást nem sikerült menteni. Próbálja újra.</string>
     <string name="msg_cup_preset_reset_failed">A csészeprofilokat nem sikerült visszaállítani. Próbálja újra.</string>
     <string name="msg_reset_cup_presets">Minden csészeprofilt lecserél az alapértelmezettekre?</string>

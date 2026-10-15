@@ -50,7 +50,7 @@ fun BrewingSetsList(
     Column(verticalArrangement = Arrangement.spacedBy(2.dp), modifier = Modifier.selectableGroup()) {
         sets.forEachIndexed { index, set ->
             var menu by remember(set.id) { mutableStateOf(false) }
-            BrewingSetRow(set, set.id == selectedId, grinderData, enabled,
+            BrewingSetRow(set, set.id == selectedId, grinderData, enabled = enabled,
                 modifier = Modifier.testTag("brewing_set_${set.id}"), first = index == 0, last = index == sets.lastIndex,
                 trailingContent = {
                     Column {

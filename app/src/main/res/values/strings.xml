@@ -49,10 +49,6 @@
     <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
     <string name="format_cup_volume">🥤 ~%1$.0fg in cup</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
-<plurals name="format_selected">
-        <item quantity="one">%1$d selected</item>
-        <item quantity="other">%1$d selected</item>
-    </plurals>
 
     <!-- Method Picker Screen -->
     <string name="screen_method_picker_title">Configure your brew</string>
@@ -81,7 +77,6 @@
     <string name="action_brew_without_bag">Brew without selecting a bag</string>
     <string name="label_best_now">Best now</string>
     <string name="format_grind_generic">Grind: %1$s – %2$s</string>
-    <string name="format_grind_specific_range">Grind setting: %1$s–%2$s · Adjust by taste</string>
     <string name="format_weight_left"> · %1$.0fg left</string>
     <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
     <string name="tip_pulsar">💡 Pulsar tip: Keep slurry ~1cm above the coffee bed during pours. Most users brew 20–25g for a balanced single cup.</string>
@@ -166,9 +161,6 @@
     <string name="label_cup_presets">Cup presets</string>
     <string name="action_add_preset">Add preset</string>
     <string name="action_reset_defaults">Reset to defaults</string>
-    <string name="label_brew_methods">Brew methods</string>
-    <string name="msg_methods_hint">Selected methods appear first. Tap to toggle.</string>
-    <string name="label_default_method">Default method</string>
     <string name="label_bloom_animation_settings">Bloom animations</string>
     <string name="msg_bloom_animation_settings_subtitle">Choose how often each bloom sprite appears</string>
     <string name="screen_bloom_animation_settings_title">Bloom animations</string>
@@ -292,17 +284,10 @@
     <string name="format_recipe_summary">%1$sg coffee / %2$sg water</string>
 
     <!-- Onboarding Personalize Screen -->
-    <string name="screen_personalize_title">Personalise your brew</string>
-    <string name="label_pulsar_filter_type">Pulsar filter type</string>
-    <string name="msg_filter_hint">Affects cup profile and grind recommendations</string>
     <string name="label_your_grinder">Your grinder</string>
-    <string name="msg_grinder_hint">Optional — enables specific grind recommendations. Choose No grinder / Other if yours isn\'t listed.</string>
     <string name="label_no_grinder">No grinder / Other</string>
 
     <!-- Onboarding Methods Screen -->
-    <string name="screen_methods_title">What do you brew with?</string>
-    <string name="msg_methods_subtitle">Select your brew methods. Tap ★ to set your default.</string>
-    <string name="label_set_as_default">Set as default</string>
 
     <!-- More Screen -->
     <string name="screen_more_title">More</string>
@@ -377,7 +362,6 @@
     <string name="cd_about_cup_volume">About cup volume</string>
 
     <!-- Brew Visualization / Coffee Insights -->
-<string name="label_target">Target</string>
 <!-- Grind notes -->
 <!-- Dose notes -->
 <!-- Brew Method names -->
@@ -644,7 +628,6 @@
     <string name="action_sync_to_bag">Sync to bag</string>
 
     <!-- SettingsScreen -->
-    <string name="msg_pulsar_settings_applied">Applied when brewing with Pulsar</string>
     <string name="label_quick_brew">Quick brew</string>
     <string name="msg_quick_brew_hint">Skip the grind prep step and go straight to the timer when you start a brew</string>
     <string name="label_show_brewing_instructions">Show brewing instructions</string>
@@ -795,7 +778,6 @@
     <string name="msg_could_not_save_changes">Could not save changes</string>
     <string name="msg_could_not_delete">Could not delete. Please try again.</string>
     <string name="dialog_delete_cup_preset_message">Delete this cup preset?</string>
-    <string name="msg_onboarding_save_failed">Could not save your setup. Please try again.</string>
     <string name="msg_settings_save_failed">Could not save this setting. Please try again.</string>
     <string name="msg_cup_preset_reset_failed">Could not reset cup presets. Please try again.</string>
     <string name="msg_reset_cup_presets">Replace all cup presets with the defaults?</string>

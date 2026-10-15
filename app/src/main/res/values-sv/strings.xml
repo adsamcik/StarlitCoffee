@@ -49,10 +49,6 @@
     <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
     <string name="format_cup_volume">🥤 ~%1$.0fg i koppen</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
-<plurals name="format_selected">
-        <item quantity="one">%1$d vald</item>
-        <item quantity="other">%1$d valda</item>
-    </plurals>
 
     <!-- Method Picker Screen -->
     <string name="screen_method_picker_title">Ställ in din bryggning</string>
@@ -76,7 +72,6 @@
     <string name="action_brew_without_bag">Brygg utan att välja påse</string>
     <string name="label_best_now">Bäst nu</string>
     <string name="format_grind_generic">Malning: %1$s – %2$s</string>
-    <string name="format_grind_specific_range">Malningsgrad: %1$s–%2$s · Justera efter smak</string>
     <string name="format_weight_left"> · %1$.0fg kvar</string>
     <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
     <string name="tip_pulsar">💡 Pulsar-tips: Håll slurry cirka 1 cm över kaffebädden under hällningarna. De flesta brygger 20–25 g för en balanserad enkel kopp.</string>
@@ -143,9 +138,6 @@
     <string name="label_cup_presets">Koppförval</string>
     <string name="action_add_preset">Lägg till förval</string>
     <string name="action_reset_defaults">Återställ standard</string>
-    <string name="label_brew_methods">Bryggmetoder</string>
-    <string name="msg_methods_hint">Valda metoder visas först. Tryck för att växla.</string>
-    <string name="label_default_method">Standardmetod</string>
     <string name="label_bloom_animation_settings">Bloom-animationer</string>
     <string name="msg_bloom_animation_settings_subtitle">Välj hur ofta varje bloom-sprite visas</string>
     <string name="screen_bloom_animation_settings_title">Bloom-animationer</string>
@@ -235,17 +227,10 @@
     <string name="format_recipe_summary">%1$sg kaffe / %2$sg vatten</string>
 
     <!-- Onboarding Personalize Screen -->
-    <string name="screen_personalize_title">Anpassa din bryggning</string>
-    <string name="label_pulsar_filter_type">Pulsar-filtertyp</string>
-    <string name="msg_filter_hint">Påverkar koppens profil och malningsrekommendationer</string>
     <string name="label_your_grinder">Din kvarn</string>
-    <string name="msg_grinder_hint">Valfritt — ger specifika malningsrekommendationer. Välj Ingen kvarn / Annan om din inte finns i listan.</string>
     <string name="label_no_grinder">Ingen kvarn / Annan</string>
 
     <!-- Onboarding Methods Screen -->
-    <string name="screen_methods_title">Vad brygger du med?</string>
-    <string name="msg_methods_subtitle">Välj dina bryggmetoder. Tryck på ★ för att ange standard.</string>
-    <string name="label_set_as_default">Ange som standard</string>
 
     <!-- More Screen -->
     <string name="screen_more_title">Mer</string>
@@ -305,7 +290,6 @@
     <string name="cd_about_cup_volume">Om koppvolym</string>
 
     <!-- Brew Visualization / Coffee Insights -->
-<string name="label_target">Mål</string>
 <!-- Grind notes -->
 <!-- Dose notes -->
 <!-- Brew Method names -->
@@ -508,7 +492,6 @@
     <string name="action_sync_to_bag">Synka till påse</string>
 
     <!-- SettingsScreen -->
-    <string name="msg_pulsar_settings_applied">Tillämpas när du brygger med Pulsar</string>
     <string name="label_quick_brew">Snabbryggning</string>
     <string name="msg_quick_brew_hint">Hoppa över malningsförberedelsen och gå direkt till timern när du startar en bryggning</string>
     <string name="label_show_brewing_instructions">Visa brygginstruktioner</string>
@@ -652,7 +635,6 @@
     <string name="msg_could_not_save_changes">Det gick inte att spara ändringarna</string>
     <string name="msg_could_not_delete">Det gick inte att ta bort. Försök igen.</string>
     <string name="dialog_delete_cup_preset_message">Ta bort den här kopprofilen?</string>
-    <string name="msg_onboarding_save_failed">Inställningen kunde inte sparas. Försök igen.</string>
     <string name="msg_settings_save_failed">Den här inställningen kunde inte sparas. Försök igen.</string>
     <string name="msg_cup_preset_reset_failed">Kopprofilerna kunde inte återställas. Försök igen.</string>
     <string name="msg_reset_cup_presets">Ersätta alla kopprofiler med standardprofilerna?</string>

@@ -162,6 +162,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Quick brew ratings preserve existing notes and flavor tags.
+- Weak and strong taste feedback remain distinct from sour and bitter feedback,
+  so future coaching reflects the observation that was actually selected.
+- Choosing a new bag from a rescan preserves an editable, resumable new-bag
+  draft instead of returning past the inventory or retaining the former target.
+- Correcting a coffee's name, roaster or decaf status updates its reusable
+  identity, so later packs use the corrected details without changing history.
 - Mindlayer connection and prompt tests now guide users through installation and
   approval, enable enhanced label recognition, and continue the selected test.
   The regular Settings control identifies Mindlayer, supports enabling and

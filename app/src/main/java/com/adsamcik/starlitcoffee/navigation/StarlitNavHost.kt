@@ -1000,15 +1000,6 @@ fun StarlitNavHost() {
                             navController.navigate(GuidedScanDraft(sessionId))
                         },
                         onMissing = { navController.popBackStack() },
-                        onNewBagTransfer = { transfer ->
-                            navController.previousBackStackEntry
-                                ?.savedStateHandle
-                                ?.set(
-                                    SCAN_DRAFT_TRANSFER_RESULT_KEY,
-                                    ScanDraftTransferCodec.encode(transfer),
-                                )
-                            navController.popBackStack()
-                        },
                     )
                 }
                 composable<RescanBag> { backStackEntry ->

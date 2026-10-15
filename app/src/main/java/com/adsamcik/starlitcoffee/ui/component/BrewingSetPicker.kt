@@ -48,8 +48,9 @@ import com.adsamcik.starlitcoffee.ui.util.localizedDisplayName
 @Composable
 fun BrewingSetPicker(
     sets: List<BrewingSet>, selectedId: String?, grinderData: GrinderDataProvider,
-    onSelect: (String) -> Unit, onManage: (() -> Unit)? = null,
+    onSelect: (String) -> Unit,
     modifier: Modifier = Modifier,
+    onManage: (() -> Unit)? = null,
     showSummary: Boolean = false,
 ) {
     if (sets.isEmpty()) return

@@ -4,11 +4,16 @@ import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
+import com.adsamcik.starlitcoffee.data.db.entity.BrewLogEntity
+import com.adsamcik.starlitcoffee.data.db.entity.FlavorTagEntity
+import com.adsamcik.starlitcoffee.data.model.BrewRating
 import com.adsamcik.starlitcoffee.data.model.GrindContext
 import com.adsamcik.starlitcoffee.data.model.GrindSaveScope
 import com.adsamcik.starlitcoffee.data.model.Grinder
 import com.adsamcik.starlitcoffee.data.model.GrinderScaleType
 import com.adsamcik.starlitcoffee.data.model.RememberedGrind
+import com.adsamcik.starlitcoffee.data.model.TasteFeedback
+import com.adsamcik.starlitcoffee.data.repository.BrewLogRepository
 import com.adsamcik.starlitcoffee.data.repository.CoffeeBagRepository
 import com.adsamcik.starlitcoffee.data.repository.GrindMemoryRepository
 import com.adsamcik.starlitcoffee.data.repository.TransactionRunner
@@ -32,6 +37,32 @@ class CoffeeMemoryPersistenceTest {
         bags = CoffeeBagRepository(db.coffeeBagDao(), db.coffeeIdentityDao(), TransactionRunner.room(db))
     }
     @After fun close() = db.close()
+
+    @Test fun quickRatingPreservesLatestNotesAndFlavorTags() = runBlocking {
+        val logs = BrewLogRepository(db, db.brewLogDao(), db.flavorTagDao())
+        val logId = logs.insertLog(BrewLogEntity(
+            method = "V60", doseG = 20f, waterG = 340f, ratio = 17f,
+            freeformNotes = "Before brewing",
+        ))
+        logs.updateFeedback(
+            logId = logId,
+            rating = null,
+            notes = "Updated tasting notes",
+            tasteFeedback = null,
+            flavorTags = listOf(FlavorTagEntity(brewLogId = logId, descriptor = "Honey", intensity = 3)),
+        )
+        val before = requireNotNull(logs.getLogById(logId))
+        val tags = logs.getFlavorTagsForBrewLog(logId).first()
+        assertEquals(1, tags.size)
+
+        logs.updateRatingAndTasteFeedback(logId, BrewRating.BAD.storedValue, TasteFeedback.TOO_WEAK.name)
+
+        assertEquals(
+            before.copy(rating = BrewRating.BAD.storedValue, tasteFeedback = "TOO_WEAK"),
+            logs.getLogById(logId),
+        )
+        assertEquals(tags, logs.getFlavorTagsForBrewLog(logId).first())
+    }
 
     @Test fun newPackSharesCoffeeButHasFreshInventoryAndNoCopiedOverride() = runBlocking {
         val oldId = bags.insertBag(CoffeeBagEntity(name = "Daily", barcode = "123456789012", weightG = 42f,

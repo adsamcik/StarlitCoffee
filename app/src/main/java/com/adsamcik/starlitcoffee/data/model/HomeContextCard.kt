@@ -223,6 +223,16 @@ sealed class HomeContextCard {
                     detail = "Try grinding finer or extending brew time",
                     emoji = "💡",
                 )
+                TasteFeedback.TOO_WEAK.name -> CoachingTip(
+                    tip = if (isPattern) "Your last few cups were weak" else "Last cup was weak",
+                    detail = TasteIssue.TOO_WEAK.suggestion,
+                    emoji = "💡",
+                )
+                TasteFeedback.TOO_STRONG.name -> CoachingTip(
+                    tip = if (isPattern) "Your last few cups were strong" else "Last cup was strong",
+                    detail = TasteIssue.TOO_STRONG.suggestion,
+                    emoji = "💡",
+                )
                 TasteFeedback.ASTRINGENT.name -> CoachingTip(
                     tip = "Noticing a dry mouthfeel?",
                     detail = "Try a higher dose (20g+) for better bed depth",

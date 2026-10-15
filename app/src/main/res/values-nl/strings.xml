@@ -49,10 +49,6 @@
     <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
     <string name="format_cup_volume">🥤 ~%1$.0fg in het kopje</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
-<plurals name="format_selected">
-        <item quantity="one">%1$d geselecteerd</item>
-        <item quantity="other">%1$d geselecteerd</item>
-    </plurals>
 
     <!-- Method Picker Screen -->
     <string name="screen_method_picker_title">Stel je bereiding in</string>
@@ -76,7 +72,6 @@
     <string name="action_brew_without_bag">Zetten zonder zak te selecteren</string>
     <string name="label_best_now">Nu het best</string>
     <string name="format_grind_generic">Maling: %1$s – %2$s</string>
-    <string name="format_grind_specific_range">Maalgraad: %1$s–%2$s · Pas aan op smaak</string>
     <string name="format_weight_left"> · %1$.0fg over</string>
     <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
     <string name="tip_pulsar">💡 Pulsar-tip: Houd de slurry tijdens het schenken ~1cm boven het koffiebed. De meeste gebruikers zetten 20–25g voor een gebalanceerde enkele kop.</string>
@@ -143,9 +138,6 @@
     <string name="label_cup_presets">Kop-presets</string>
     <string name="action_add_preset">Preset toevoegen</string>
     <string name="action_reset_defaults">Standaardwaarden herstellen</string>
-    <string name="label_brew_methods">Zetmethoden</string>
-    <string name="msg_methods_hint">Geselecteerde methoden verschijnen eerst. Tik om te schakelen.</string>
-    <string name="label_default_method">Standaardmethode</string>
     <string name="label_bloom_animation_settings">Bloomanimaties</string>
     <string name="msg_bloom_animation_settings_subtitle">Kies hoe vaak elke bloom-sprite verschijnt</string>
     <string name="screen_bloom_animation_settings_title">Bloomanimaties</string>
@@ -235,17 +227,10 @@
     <string name="format_recipe_summary">%1$sg koffie / %2$sg water</string>
 
     <!-- Onboarding Personalize Screen -->
-    <string name="screen_personalize_title">Personaliseer je bereiding</string>
-    <string name="label_pulsar_filter_type">Pulsar-filtertype</string>
-    <string name="msg_filter_hint">Beïnvloedt kopprofiel en maalaanbevelingen</string>
     <string name="label_your_grinder">Je molen</string>
-    <string name="msg_grinder_hint">Optioneel — maakt specifieke maalaanbevelingen mogelijk. Kies Geen molen / Overig als die van jou niet in de lijst staat.</string>
     <string name="label_no_grinder">Geen molen / Overig</string>
 
     <!-- Onboarding Methods Screen -->
-    <string name="screen_methods_title">Waar zet je mee?</string>
-    <string name="msg_methods_subtitle">Selecteer je zetmethoden. Tik op ★ om je standaard in te stellen.</string>
-    <string name="label_set_as_default">Als standaard instellen</string>
 
     <!-- More Screen -->
     <string name="screen_more_title">Meer</string>
@@ -304,7 +289,6 @@
     <string name="cd_about_cup_volume">Over kopvolume</string>
 
     <!-- Brew Visualization / Coffee Insights -->
-<string name="label_target">Doel</string>
 <!-- Grind notes -->
 <!-- Dose notes -->
 <!-- Brew Method names -->
@@ -507,7 +491,6 @@
     <string name="action_sync_to_bag">Synchroniseren met zak</string>
 
     <!-- SettingsScreen -->
-    <string name="msg_pulsar_settings_applied">Toegepast bij zetten met Pulsar</string>
     <string name="label_quick_brew">Snel zetten</string>
     <string name="msg_quick_brew_hint">Sla de maalvoorbereiding over en ga direct naar de timer wanneer je een bereiding start</string>
     <string name="label_show_brewing_instructions">Zetinstructies tonen</string>
@@ -651,7 +634,6 @@
     <string name="msg_could_not_save_changes">Wijzigingen konden niet worden opgeslagen</string>
     <string name="msg_could_not_delete">Verwijderen mislukt. Probeer het opnieuw.</string>
     <string name="dialog_delete_cup_preset_message">Dit kopprofiel verwijderen?</string>
-    <string name="msg_onboarding_save_failed">Je instellingen konden niet worden opgeslagen. Probeer het opnieuw.</string>
     <string name="msg_settings_save_failed">Deze instelling kon niet worden opgeslagen. Probeer het opnieuw.</string>
     <string name="msg_cup_preset_reset_failed">De kopprofielen konden niet worden hersteld. Probeer het opnieuw.</string>
     <string name="msg_reset_cup_presets">Alle kopprofielen vervangen door de standaardprofielen?</string>
