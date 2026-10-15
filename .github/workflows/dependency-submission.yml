@@ -1,0 +1,46 @@
+name: Dependency submission
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/dependency-submission.yml'
+      - 'build.gradle.kts'
+      - 'settings.gradle.kts'
+      - 'app/build.gradle.kts'
+      - 'gradle/**'
+      - 'gradle.properties'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: read
+
+concurrency:
+  group: dependency-submission-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  submit:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Resolve and submit the complete dependency graph
+        uses: gradle/actions/dependency-submission@v6
+        with:
+          cache-provider: basic
+          additional-arguments: --no-daemon --no-parallel --max-workers=1
+          # Submission needs repository write access; package access may use
+          # the separate read:packages credential already used by build CI.
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.MINDLAYER_PACKAGES_TOKEN || secrets.GITHUB_TOKEN }}

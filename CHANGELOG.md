@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   advisories: Bouncy Castle `1.85`, jose4j `0.9.6`, JDOM `2.0.6.1`, Commons Lang
   `3.18.0` and HttpClient `4.5.14`. These updates apply to the build environment;
   the published `v1.6.0` APK and release tag are unchanged.
+- Dependency-file changes on `main` now refresh GitHub's resolved dependency
+  inventory automatically, including the isolated Android lint toolchain.
 
 ## [1.6.0] — 2026-10-15
 

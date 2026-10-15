@@ -35,6 +35,11 @@ Use `buildEnvironment` and `:app:dependencies --configuration androidLintTool`
 to inspect both tooling graphs, and
 `:app:dependencies --configuration releaseRuntimeClasspath` to check app scope.
 
+The dependency-submission workflow resolves and submits the complete graph on
+dependency-file changes to `main`, or on manual dispatch. This keeps Dependabot
+aligned with resolved build and lint versions rather than a stale managed scan.
+Its write-capable job runs only on `main`; it does not build or publish releases.
+
 ## Zero-baseline enforcement
 
 `config/detekt/detekt.yml` sets `maxIssues` to zero and
