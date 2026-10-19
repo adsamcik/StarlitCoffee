@@ -3,13 +3,13 @@ buildscript {
         constraints {
             // AGP's transitive tooling dependencies need security fixes. Keep
             // these constraints on the build classpath, outside the app graph.
-            add("classpath", "org.bouncycastle:bcprov-jdk18on:1.85") {
+            add("classpath", "org.bouncycastle:bcprov-jdk18on:1.86") {
                 because("Fix GHSA-9pwp-9qqc-pr26, GHSA-qp49-qgx5-5m26 and GHSA-c3fc-8qff-9hwx")
             }
-            add("classpath", "org.bouncycastle:bcpkix-jdk18on:1.85") {
+            add("classpath", "org.bouncycastle:bcpkix-jdk18on:1.86") {
                 because("Fix GHSA-wg6q-6289-32hp and align Bouncy Castle modules")
             }
-            add("classpath", "org.bouncycastle:bcutil-jdk18on:1.85") {
+            add("classpath", "org.bouncycastle:bcutil-jdk18on:1.86") {
                 because("Keep Bouncy Castle utility and provider modules at the same version")
             }
             add("classpath", "org.bitbucket.b_c:jose4j:0.9.6") {
