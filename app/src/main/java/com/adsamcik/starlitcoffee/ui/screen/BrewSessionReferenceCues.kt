@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.R
@@ -116,17 +117,27 @@ internal fun BrewSessionReferenceCues(
 }
 
 @Composable
-internal fun ReferenceCueRow(cue: BrewStageReferenceCuePresentation, prominent: Boolean = false) {
-    val content = cue.content()
+internal fun ReferenceCueRow(
+    cue: BrewStageReferenceCuePresentation,
+    prominent: Boolean = false,
+    compact: Boolean = false,
+) {
+    val content = cue.content(compact = compact)
+    val spokenLabel = if (compact) cue.content().label else content.label
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 56.dp)
-            .semantics(mergeDescendants = true) {},
+            .semantics(mergeDescendants = true) {
+                if (compact) contentDescription = "$spokenLabel ${content.value}"
+            },
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Surface(
+        if (compact) {
+            Icon(content.icon, contentDescription = null, modifier = Modifier.size(24.dp),
+                tint = MaterialTheme.colorScheme.primary)
+        } else Surface(
             modifier = Modifier.size(40.dp),
             shape = MaterialTheme.shapes.medium,
             color = MaterialTheme.colorScheme.secondaryContainer,
@@ -148,7 +159,11 @@ internal fun ReferenceCueRow(cue: BrewStageReferenceCuePresentation, prominent: 
             )
             Text(
                 text = content.value,
-                style = if (prominent) MaterialTheme.typography.headlineLarge else MaterialTheme.typography.titleMedium,
+                style = when {
+                    compact && prominent -> MaterialTheme.typography.displaySmall
+                    prominent -> MaterialTheme.typography.headlineLarge
+                    else -> MaterialTheme.typography.titleMedium
+                },
                 color = MaterialTheme.colorScheme.onSurface,
             )
         }
@@ -162,7 +177,7 @@ private data class ReferenceCueContent(
 )
 
 @Composable
-private fun BrewStageReferenceCuePresentation.content(): ReferenceCueContent = when (this) {
+private fun BrewStageReferenceCuePresentation.content(compact: Boolean = false): ReferenceCueContent = when (this) {
     is BrewStageReferenceCuePresentation.Time -> ReferenceCueContent(
         icon = Icons.Filled.Schedule,
         label = stringResource(reference.labelRes),
@@ -175,7 +190,8 @@ private fun BrewStageReferenceCuePresentation.content(): ReferenceCueContent = w
 
     is BrewStageReferenceCuePresentation.Mass -> ReferenceCueContent(
         icon = Icons.Filled.Scale,
-        label = "${stringResource(role.labelRes)} · ${stringResource(reference.labelRes)}",
+        label = if (compact && role == QuantityRole.BREW_WATER_INPUT) stringResource(reference.labelRes)
+            else "${stringResource(role.labelRes)} · ${stringResource(reference.labelRes)}",
         value = qualifier.formatValue(
             minimum = "${formatReferenceNumber(minimumGrams)} g",
             maximum = "${formatReferenceNumber(maximumGrams)} g",

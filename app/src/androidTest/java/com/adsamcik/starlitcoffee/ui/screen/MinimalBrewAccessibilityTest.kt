@@ -193,7 +193,7 @@ class MinimalBrewAccessibilityTest {
             .performScrollTo().assertIsDisplayed()
         save("minimal-guided-pour-200-light")
         rule.onNodeWithText(requireNotNull(instruction.warning)).performScrollTo().assertIsDisplayed()
-        rule.onNodeWithText(requireNotNull(instruction.completionCue)).performScrollTo().assertIsDisplayed()
+        rule.onNodeWithText(requireNotNull(instruction.completionCue)).assertDoesNotExist()
         assertTextFits()
     }
 

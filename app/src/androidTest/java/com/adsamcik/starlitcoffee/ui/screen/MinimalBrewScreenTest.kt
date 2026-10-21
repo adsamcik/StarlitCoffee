@@ -79,18 +79,33 @@ class MinimalBrewScreenTest {
 
     @Test
     fun guidedPourAtNormalSizeKeepsTargetAndWaterHeightVisible() {
-        val request = pulsarRequest()
+        val guide = ReviewedMethodGuideLibrary.decode(context.assets.open(ReviewedMethodGuideLibrary.ASSET_PATH)
+            .bufferedReader().use { it.readText() }).single { it.methodId == "pulsar" }
+        val request = ReviewedGuideStartFactory.create(guide, BrewUiState(), null)
+        val sourceStep = guide.steps[4]
         render(request, runningAt(request, 4, 130_000L), large = false, dark = false)
         rule.onNodeWithText("340 g").assertIsDisplayed()
+        val spokenTarget = context.getString(R.string.label_brew_reference_brew_water) + " · " +
+            context.getString(R.string.label_brew_reference_brew_total) + " 340 g"
+        rule.onNodeWithContentDescription(spokenTarget).assertIsDisplayed()
+        rule.onNodeWithText(sourceStep.instruction).assertDoesNotExist()
+        rule.onNodeWithText(sourceStep.why).assertDoesNotExist()
+        rule.onNodeWithText(sourceStep.completion).assertDoesNotExist()
+        rule.onNodeWithText(context.getString(R.string.msg_brew_pulsar_pour_safety)).assertIsDisplayed()
         rule.onNodeWithContentDescription(context.getString(R.string.cd_brew_water_height_target))
             .performScrollTo().assertIsDisplayed()
         save("minimal-guided-pour-light")
-    }
-
-    private fun pulsarRequest(): BrewSessionStartRequest {
-        val guide = ReviewedMethodGuideLibrary.decode(context.assets.open(ReviewedMethodGuideLibrary.ASSET_PATH)
-            .bufferedReader().use { it.readText() }).single { it.methodId == "pulsar" }
-        return ReviewedGuideStartFactory.create(guide, BrewUiState(), null)
+        rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).performScrollTo().performClick()
+        val quantities = context.getString(R.string.label_coffee) + " 20 g · " +
+            context.getString(R.string.label_brew_reference_brew_water) + " 340 g"
+        rule.onNodeWithText(quantities).assertIsDisplayed()
+        rule.onNodeWithText(sourceStep.instruction).performScrollTo().assertIsDisplayed()
+        rule.onNodeWithText(guide.safety.first(), substring = true).performScrollTo().assertIsDisplayed()
+        rule.onAllNodesWithText(context.getString(R.string.heading_guide_why))[0].performScrollTo().performClick()
+        rule.onNodeWithText(sourceStep.why).performScrollTo().assertIsDisplayed()
+        rule.onNodeWithText(sourceStep.completion).performScrollTo().assertIsDisplayed()
+        rule.onNodeWithText(context.getString(R.string.action_return_to_live_brew)).performScrollTo().performClick()
+        rule.runOnIdle { assertTrue("Help must not change the running brew", events.isEmpty()) }
     }
 
     @Test
@@ -102,8 +117,11 @@ class MinimalBrewScreenTest {
         render(request, runtime, large = true, dark = true)
         val complete = context.getString(R.string.action_complete_step)
         rule.onNodeWithText(complete).assertIsDisplayed()
+        rule.onNodeWithText("340 g").assertIsDisplayed()
+        rule.onNodeWithContentDescription(context.getString(R.string.cd_bloom_animation)).assertIsDisplayed()
         save("minimal-pulsar-200-dark")
         rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).performScrollTo().performClick()
+        save("minimal-pulsar-help-dark")
         rule.onNodeWithText(context.getString(R.string.action_return_to_live_brew)).performScrollTo().performClick()
         rule.onNodeWithText(context.getString(R.string.action_brew_recipe)).performClick()
         rule.onNodeWithText(context.getString(R.string.action_return_to_live_brew)).performClick()

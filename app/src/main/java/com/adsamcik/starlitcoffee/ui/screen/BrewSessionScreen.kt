@@ -580,6 +580,7 @@ fun BrewSessionScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 Text(stringResource(R.string.action_brew_help), style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.semantics { heading() })
+                BrewRecipeQuantities(persistedRecipe)
                 helpResolution?.let { resolution ->
                     BrewSessionGuidancePanel(
                         resolution = resolution,
@@ -744,7 +745,7 @@ private fun BrewSessionContent(
     val statusDescription = stringResource(R.string.cd_brew_session_status, actionLabel, progressLabel)
     Column(
         modifier = modifier.verticalScroll(rememberScrollState()).padding(horizontal = 20.dp, vertical = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(20.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         if (presentation.status == BrewSessionStatus.COMPLETED) {
             CompletedBrewSession(completedLogId, onBack, presentation.isTimerOnly)
@@ -773,7 +774,9 @@ private fun BrewSessionContent(
                 targetCue = primaryLiveBrewCue(stage?.referenceCues.orEmpty()))
         }
         if (guidanceResolution == null) {
-            primaryLiveBrewCue(stage?.referenceCues.orEmpty())?.let { ReferenceCueRow(it, prominent = true) }
+            primaryLiveBrewCue(stage?.referenceCues.orEmpty())?.let {
+                ReferenceCueRow(it, prominent = true, compact = true)
+            }
         }
         if (stage?.referenceCues.isNullOrEmpty()) {
             stage?.let { current ->

@@ -42,19 +42,12 @@ internal fun BrewSessionHero(
     modifier: Modifier = Modifier,
 ) {
     val bloom = brewSessionBloomState(presentation, runtime).takeIf { !bloomSpritesheetId.isNullOrEmpty() }
-    val quantityText = brewHeroQuantities(recipe).map { quantity ->
-        val amount = NumberFormat.getNumberInstance().apply { maximumFractionDigits = 1 }.format(quantity.amount)
-        stringResource(quantity.labelRes) + " " + stringResource(
-            R.string.format_brewer_profile_mass, amount, stringResource(quantity.unitRes),
-        )
-    }.joinToString(" · ")
     Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        if (quantityText.isNotEmpty()) {
-            Text(quantityText, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
+        BrewRecipeQuantities(recipe, doseOnly = true)
         BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
             val fontScale = LocalDensity.current.fontScale
-            val sideBySide = maxWidth >= 320.dp && fontScale < 1.5f
+            val sideBySide = maxWidth >= 260.dp
+            val bloomSize = if (fontScale >= 1.5f) 64.dp else 108.dp
             if (sideBySide) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -62,7 +55,7 @@ internal fun BrewSessionHero(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     BrewHeroClock(presentation, Modifier.weight(1f))
-                    bloom?.let { BrewHeroBloom(it, bloomSpritesheetId, Modifier.size(108.dp)) }
+                    bloom?.let { BrewHeroBloom(it, bloomSpritesheetId, Modifier.size(bloomSize)) }
                 }
             } else {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -71,6 +64,21 @@ internal fun BrewSessionHero(
                 }
             }
         }
+    }
+}
+
+/** The full recipe quantities live in Help; the current target has its own live row. */
+@Composable
+internal fun BrewRecipeQuantities(recipe: BrewRecipeSnapshotV1?, doseOnly: Boolean = false) {
+    val quantities = brewHeroQuantities(recipe).let { if (doseOnly) it.take(1) else it }
+    val text = quantities.map { quantity ->
+        val amount = NumberFormat.getNumberInstance().apply { maximumFractionDigits = 1 }.format(quantity.amount)
+        stringResource(quantity.labelRes) + " " + stringResource(
+            R.string.format_brewer_profile_mass, amount, stringResource(quantity.unitRes),
+        )
+    }.joinToString(" · ")
+    if (text.isNotEmpty()) {
+        Text(text, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 

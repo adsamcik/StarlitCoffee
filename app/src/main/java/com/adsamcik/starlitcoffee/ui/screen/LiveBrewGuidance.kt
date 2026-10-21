@@ -4,6 +4,7 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import androidx.compose.foundation.Canvas
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -74,6 +75,18 @@ internal fun primaryLiveBrewCue(cues: List<BrewStageReferenceCuePresentation>): 
         ?: cues.filterIsInstance<BrewStageReferenceCuePresentation.Mass>().firstOrNull()
         ?: cues.firstOrNull()
 
+/** Only the known source warnings are condensed; unfamiliar warnings stay verbatim. */
+@StringRes
+internal fun compactLiveWarning(contentId: StageContentId, equipmentProfileId: String?): Int? {
+    if (equipmentProfileId != PulsarLearnGuideCatalog.profileId.value) return null
+    return when (contentId.value) {
+        "pulsar_hot_liquid_safety" -> R.string.msg_brew_pulsar_hot_liquid
+        "pulsar_overflow_safety" -> R.string.msg_brew_pulsar_overflow
+        "reviewed_pulsar_v1_open_and_pulse" -> R.string.msg_brew_pulsar_pour_safety
+        else -> null
+    }
+}
+
 /** Compact live copy; the complete source explanations remain available through Help. */
 @Composable
 internal fun LiveBrewGuidance(
@@ -98,7 +111,7 @@ internal fun LiveBrewGuidance(
         ) {
             Column(Modifier.weight(1f)) {
                 if (targetCue != null) {
-                    ReferenceCueRow(targetCue, prominent = true)
+                    ReferenceCueRow(targetCue, prominent = true, compact = true)
                 } else if (primaryTarget == null) {
                     primary?.instruction?.takeIf(String::isNotBlank)?.let {
                         Text(it, style = MaterialTheme.typography.bodyLarge)
@@ -124,15 +137,17 @@ internal fun LiveBrewGuidance(
         }
         primary?.let { content ->
             if (primaryTarget != null || targetCue != null) {
-                val instruction = if (hasPulsarWaterHeightTarget(content.id, equipmentProfileId)) {
-                    stringResource(R.string.msg_brew_pulsar_main_pour)
-                } else content.instruction
+                val instruction = when {
+                    hasPulsarWaterHeightTarget(content.id, equipmentProfileId) ->
+                        stringResource(R.string.msg_brew_pulsar_main_pour)
+                    equipmentProfileId == PulsarLearnGuideCatalog.profileId.value &&
+                        content.id.value == "pulsar_manual_brew" -> stringResource(R.string.msg_brew_pulsar_basic_pour)
+                    else -> content.instruction
+                }
                 instruction.takeIf(String::isNotBlank)?.let {
                     Text(it, style = MaterialTheme.typography.bodyLarge)
                 }
-                if (targetCue != null) primaryTarget?.let {
-                    Text(it, style = MaterialTheme.typography.bodyMedium)
-                }
+                // A structured target already preserves its quantity role, reference and qualifier.
             }
             when {
                 hasPulsarWaterHeightTarget(content.id, equipmentProfileId) -> PulsarWaterHeightTarget()
@@ -144,30 +159,25 @@ internal fun LiveBrewGuidance(
                     )
                 }
             }
-            LiveBrewOperationalCopy(content)
         }
-        selection.supporting.forEach { content ->
-            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                content.target?.takeIf(String::isNotBlank)?.let {
-                    Text(it, style = MaterialTheme.typography.titleMedium)
-                }
-                content.instruction.takeIf(String::isNotBlank)?.let {
-                    Text(it, style = MaterialTheme.typography.bodyMedium)
-                }
-                LiveBrewOperationalCopy(content)
-            }
-        }
+        LiveBrewSafetyCopy(selection, equipmentProfileId)
     }
 }
 
 @Composable
-private fun LiveBrewOperationalCopy(content: ResolvedBrewGuidanceContent) {
-    val operations = listOfNotNull(content.nextAction) +
-        (content.controlRequirements + content.utilities).map { it.localizedLabel() }
-    operations.filter(String::isNotBlank).distinct().forEach {
-        Text(it, style = MaterialTheme.typography.bodyMedium)
-    }
-    content.warning?.takeIf(String::isNotBlank)?.let { warning ->
+private fun LiveBrewSafetyCopy(selection: LiveBrewGuidanceSelection, equipmentProfileId: String?) {
+    val content = listOfNotNull(selection.primary) + selection.supporting
+    val warnings = content.flatMap { item ->
+        val warning = item.warning?.takeIf(String::isNotBlank)
+        val summary = warning?.let { compactLiveWarning(item.id, equipmentProfileId) }
+        if (summary != null) listOf(stringResource(summary))
+        else listOfNotNull(
+            item.target?.takeIf { item.safetyCritical && item.id != selection.primary?.id && it.isNotBlank() },
+            item.instruction.takeIf { item.safetyCritical && item.id != selection.primary?.id && it.isNotBlank() },
+            warning,
+        )
+    }.distinct()
+    if (warnings.isNotEmpty()) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.Top,
@@ -177,25 +187,14 @@ private fun LiveBrewOperationalCopy(content: ResolvedBrewGuidanceContent) {
                 Icons.Outlined.WarningAmber,
                 contentDescription = null,
                 modifier = Modifier.size(20.dp),
-                tint = if (content.safetyCritical) MaterialTheme.colorScheme.error
+                tint = if (content.any { it.safetyCritical }) MaterialTheme.colorScheme.error
                     else MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Text(
-                warning,
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = if (content.safetyCritical) FontWeight.SemiBold else FontWeight.Normal,
+                warnings.joinToString("\n"),
+                style = MaterialTheme.typography.bodySmall,
+                fontWeight = FontWeight.Medium,
             )
-        }
-    }
-    content.completionCue?.takeIf(String::isNotBlank)?.let { cue ->
-        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            Text(stringResource(R.string.label_guide_done_when), style = MaterialTheme.typography.labelMedium)
-            Text(cue, style = MaterialTheme.typography.bodyMedium)
-        }
-    }
-    if (content.safetyCritical) {
-        listOfNotNull(content.explanation, content.tip).filter(String::isNotBlank).distinct().forEach {
-            Text(it, style = MaterialTheme.typography.bodyMedium)
         }
     }
 }
@@ -214,7 +213,7 @@ private fun PulsarWaterHeightTarget() {
     ) {
         Text(caption, style = MaterialTheme.typography.labelLarge)
         Canvas(
-            modifier = Modifier.fillMaxWidth().height(96.dp).semantics { contentDescription = description },
+            modifier = Modifier.fillMaxWidth().height(80.dp).semantics { contentDescription = description },
         ) {
             val left = size.width * 0.08f
             val right = size.width * 0.74f
@@ -232,6 +231,10 @@ private fun PulsarWaterHeightTarget() {
             listOf(waterline, bedTop).forEach { y ->
                 drawLine(line, Offset(bracket - tick, y), Offset(bracket + tick, y), stroke)
             }
+            drawLine(line, Offset(left, 0f), Offset(left, bedBottom), stroke)
+            drawLine(line, Offset(right, 0f), Offset(right, bedBottom), stroke)
+            drawLine(line, Offset(left, bedBottom), Offset(right, bedBottom), stroke)
         }
+        Text(stringResource(R.string.msg_brew_pulsar_pause_high), style = MaterialTheme.typography.bodySmall)
     }
 }

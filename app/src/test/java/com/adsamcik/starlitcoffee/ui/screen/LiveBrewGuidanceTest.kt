@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import com.adsamcik.starlitcoffee.domain.brewing.QuantityRole
+import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageMassReference
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageTargetQualifier
@@ -13,12 +14,13 @@ import com.adsamcik.starlitcoffee.ui.guidance.ResolvedBrewGuidanceContent
 import com.adsamcik.starlitcoffee.ui.session.BrewStageReferenceCuePresentation
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class LiveBrewGuidanceTest {
     @Test
-    fun `current operation stays primary while all safety and supporting cues remain live`() {
+    fun `current operation stays primary while safety and supporting content stay available`() {
         val utility = content("valve", BuiltInGuidancePlacement.UTILITY)
         val pour = content("pour", BuiltInGuidancePlacement.LIVE_STAGE)
         val safety = content("hot", BuiltInGuidancePlacement.GLOBAL_SAFETY, critical = true)
@@ -27,6 +29,20 @@ class LiveBrewGuidanceTest {
 
         assertEquals(pour, selected.primary)
         assertEquals(listOf(safety, utility), selected.supporting)
+    }
+
+    @Test
+    fun `only the reviewed Pulsar safety bindings receive concise live copy`() {
+        val profile = PulsarLearnGuideCatalog.profileId.value
+        assertEquals(R.string.msg_brew_pulsar_hot_liquid,
+            compactLiveWarning(StageContentId("pulsar_hot_liquid_safety"), profile))
+        assertEquals(R.string.msg_brew_pulsar_overflow,
+            compactLiveWarning(StageContentId("pulsar_overflow_safety"), profile))
+        assertEquals(R.string.msg_brew_pulsar_pour_safety,
+            compactLiveWarning(StageContentId("reviewed_pulsar_v1_open_and_pulse"), profile))
+        assertNull(compactLiveWarning(StageContentId("unfamiliar_safety"), profile))
+        assertNull(compactLiveWarning(StageContentId("pulsar_hot_liquid_safety"), "v60_02"))
+        assertNull(compactLiveWarning(StageContentId("pulsar_hot_liquid_safety"), null))
     }
 
     @Test
