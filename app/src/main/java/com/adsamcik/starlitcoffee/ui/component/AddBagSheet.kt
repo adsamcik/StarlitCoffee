@@ -2,9 +2,11 @@ package com.adsamcik.starlitcoffee.ui.component
 
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.DateRange
+import androidx.compose.material.icons.outlined.AddAPhoto
 import androidx.compose.material.icons.outlined.WarningAmber
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -22,6 +24,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,7 +32,6 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -37,8 +39,8 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
@@ -47,8 +49,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -56,7 +61,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -66,9 +70,12 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.stringResource
 import com.adsamcik.starlitcoffee.R
@@ -76,11 +83,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -660,7 +667,9 @@ fun AddBagSheet(
             dismissOnClickOutside = false, decorFitsSystemWindows = false)) {
         val dialogView = LocalView.current
         val darkSystemBarIcons = MaterialTheme.colorScheme.surface.luminance() > 0.5f
-        SideEffect {
+        LaunchedEffect(dialogView, darkSystemBarIcons) {
+            // Apply after the host and dialog window have committed a theme change.
+            withFrameNanos { }
             (dialogView.parent as? DialogWindowProvider)?.window?.let { window ->
                 WindowCompat.getInsetsController(window, dialogView).apply {
                     isAppearanceLightStatusBars = darkSystemBarIcons
@@ -703,18 +712,14 @@ fun AddBagSheet(
                         }
                     }
                 })
-                LazyColumn(Modifier.fillMaxWidth().weight(1f).padding(horizontal = 20.dp).testTag("label-review-list"), state = listState,
-                    verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                LazyColumn(Modifier.fillMaxWidth().weight(1f).padding(horizontal = 16.dp).testTag("label-review-list"), state = listState,
+                    verticalArrangement = Arrangement.spacedBy(2.dp)) {
                     item(key = "photos") {
-                        CapturedPhotoReviewStrip(capturedPhotoUris)
-                        if (onScanMorePhotos != null) {
-                            TextButton(enabled = !isSaving, onClick = {
-                                if (preserveDraftOnDismiss) onScanMorePhotos() else requestPotentiallyDestructiveAction(onScanMorePhotos)
-                            }) {
-                                Icon(Icons.Filled.CameraAlt, null, Modifier.size(20.dp))
-                                Text(stringResource(R.string.action_review_add_photo))
+                        CapturedPhotoReviewStrip(capturedPhotoUris, !isSaving, onAddPhoto = onScanMorePhotos?.let { addPhoto ->
+                            {
+                                if (preserveDraftOnDismiss) addPhoto() else requestPotentiallyDestructiveAction(addPhoto)
                             }
-                        }
+                        })
                         RecognitionStatusCard(
                             recognition.copy(status = when {
                                 isProcessing && recognition.status == null ->
@@ -726,18 +731,23 @@ fun AddBagSheet(
                                 onSetupAi, onDisableLabelRecognition, onScanMorePhotos, setupLaunchState), enabled = !isSaving)
                     }
                     items(fields, key = { it.key }) { field ->
-                        LabelReviewField(field.key, stringResource(field.labelRes), field.value,
-                            expanded = field.key in expandedFields, onExpandedChange = { expand(field.key, it) }, enabled = !isSaving,
-                            evidence = fieldEvidence[field.key], capturedPhotoUris = capturedPhotoUris,
-                            suggestion = pendingSuggestions[field.key], onAcceptSuggestion = { accept(field.key) },
-                            onKeepMine = { changeField(field.key, field.value) },
-                            onClear = { changeField(field.key, "") }.takeIf { field.value.isNotBlank() || pendingSuggestions[field.key] != null },
-                            needsReview = needsCheck(field.key, field.value), alwaysEditable = field.key in setOf("name", "roaster"),
-                            error = stringResource(R.string.msg_review_name_required).takeIf { field.key == "name" && saveAttempted && name.isBlank() }) {
-                            SuggestingTextField(field.value, { changeField(field.key, it) }, stringResource(field.labelRes), field.suggestions,
-                                enabled = !isSaving, modifier = if (field.key == "name") Modifier.focusRequester(nameFocus) else Modifier,
-                                isError = field.key == "name" && saveAttempted && name.isBlank(),
-                                onFocusChanged = { reportFocus(field.key, it) })
+                        Box(Modifier.padding(top = if (field.key == "origin") 16.dp else 0.dp)) {
+                            LabelReviewField(field.key, stringResource(field.labelRes), field.value,
+                                expanded = field.key in expandedFields, onExpandedChange = { expand(field.key, it) }, enabled = !isSaving,
+                                evidence = fieldEvidence[field.key], capturedPhotoUris = capturedPhotoUris,
+                                suggestion = pendingSuggestions[field.key], onAcceptSuggestion = { accept(field.key) },
+                                onKeepMine = { changeField(field.key, field.value) },
+                                onClear = { changeField(field.key, "") }.takeIf { field.value.isNotBlank() || pendingSuggestions[field.key] != null },
+                                needsReview = needsCheck(field.key, field.value), alwaysEditable = field.key in setOf("name", "roaster"),
+                                shape = labelReviewGroupShape(first = field.key in setOf("name", "origin"), last = field.key == "roaster"),
+                                error = stringResource(R.string.msg_review_name_required).takeIf { field.key == "name" && saveAttempted && name.isBlank() }) {
+                                SuggestingTextField(field.value, { changeField(field.key, it) }, stringResource(field.labelRes), field.suggestions,
+                                    enabled = !isSaving, modifier = if (field.key == "name") Modifier.focusRequester(nameFocus) else Modifier,
+                                    isError = field.key == "name" && saveAttempted && name.isBlank(),
+                                    filled = true, showLabel = field.key in setOf("name", "roaster"),
+                                    textStyle = if (field.key == "name") MaterialTheme.typography.titleLarge else MaterialTheme.typography.bodyLarge,
+                                    onFocusChanged = { reportFocus(field.key, it) })
+                            }
                         }
                     }
                     item(key = "weight") {
@@ -747,12 +757,19 @@ fun AddBagSheet(
                             suggestion = pendingSuggestions["weight"], onAcceptSuggestion = { accept("weight") },
                             onKeepMine = { changeField("weight", weight) }, onClear = { changeField("weight", "") },
                             needsReview = needsCheck("weight", weight),
+                            shape = labelReviewGroupShape(),
                             error = stringResource(R.string.msg_invalid_weight).takeUnless { weightValidation.isValid }) {
-                            OutlinedTextField(weight, { changeField("weight", it) }, singleLine = true, enabled = !isSaving,
-                                label = { Text(stringResource(R.string.label_weight_grams)) }, isError = !weightValidation.isValid,
+                            val weightLabel = stringResource(R.string.label_weight_grams)
+                            TextField(weight, { changeField("weight", it) }, singleLine = true, enabled = !isSaving,
+                                isError = !weightValidation.isValid,
                                 trailingIcon = if (!weightValidation.isValid) ({ Icon(Icons.Outlined.WarningAmber, null) }) else null,
+                                colors = TextFieldDefaults.colors(
+                                    focusedContainerColor = Color.Transparent, unfocusedContainerColor = Color.Transparent,
+                                    disabledContainerColor = Color.Transparent, errorContainerColor = Color.Transparent,
+                                ),
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal), suffix = { Text("g") },
-                                modifier = Modifier.fillMaxWidth().focusRequester(weightFocus).onFocusChanged { reportFocus("weight", it.isFocused) })
+                                modifier = Modifier.fillMaxWidth().focusRequester(weightFocus)
+                                    .semantics { contentDescription = weightLabel }.onFocusChanged { reportFocus("weight", it.isFocused) })
                             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                 listOf("250", "500", "1000").forEach { preset ->
                                     FilterChip(weight == preset, { changeField("weight", preset) }, enabled = !isSaving,
@@ -766,11 +783,11 @@ fun AddBagSheet(
                             { expand("roastDate", it) }, !isSaving, fieldEvidence["roastDate"], capturedPhotoUris,
                             pendingSuggestions["roastDate"], { accept("roastDate") },
                             { changeField("roastDate", roastDateMillis?.toString()) }, { changeField("roastDate", it?.toString()) },
-                            needsCheck("roastDate", roastDateMillis?.let(DateParser::format).orEmpty()))
+                            needsCheck("roastDate", roastDateMillis?.let(DateParser::format).orEmpty()), labelReviewGroupShape(last = true))
                     }
                     item(key = "more") {
                         TextButton(onClick = { focusManager.clearFocus(); showMoreDetails = !showMoreDetails }, enabled = !isSaving,
-                            modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
+                            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp).heightIn(min = 48.dp)) {
                             if (optionalChecks > 0) Icon(Icons.Outlined.WarningAmber, null, Modifier.size(20.dp))
                             Text(if (optionalChecks > 0) stringResource(R.string.format_review_more_details, optionalChecks)
                                 else stringResource(if (showMoreDetails) R.string.action_hide_optional_details else R.string.action_show_optional_details))
@@ -783,9 +800,11 @@ fun AddBagSheet(
                                 evidence = fieldEvidence[field.key], capturedPhotoUris = capturedPhotoUris,
                                 suggestion = pendingSuggestions[field.key], onAcceptSuggestion = { accept(field.key) },
                                 onKeepMine = { changeField(field.key, field.value) }, onClear = { changeField(field.key, "") },
+                                shape = labelReviewGroupShape(first = field.key == optionalFields.first().key),
                                 needsReview = needsCheck(field.key, field.value)) {
                                 SuggestingTextField(field.value, { changeField(field.key, it) }, stringResource(field.labelRes),
                                     field.suggestions, multiValue = field.multiValue, singleLine = field.key != "notes", enabled = !isSaving,
+                                    filled = true, showLabel = false,
                                     onFocusChanged = { reportFocus(field.key, it) })
                                 if (field.key == "barcode" && onScanBarcode != null) {
                                     TextButton(onClick = { requestPotentiallyDestructiveAction(onScanBarcode) }, enabled = !isSaving) {
@@ -811,13 +830,24 @@ fun AddBagSheet(
                                 evidence = fieldEvidence["isDecaf"], capturedPhotoUris = capturedPhotoUris,
                                 suggestion = pendingSuggestions["isDecaf"], onAcceptSuggestion = { accept("isDecaf") },
                                 onKeepMine = { changeField("isDecaf", isDecaf.toString().takeIf { isDecaf || decafIsKnown }) },
-                                onClear = { changeField("isDecaf", null) },
+                                shape = labelReviewGroupShape(last = true),
                                 needsReview = needsCheck("isDecaf", if (isDecaf) "true" else "")) {
-                                Row(verticalAlignment = Alignment.CenterVertically,
-                                    modifier = Modifier.fillMaxWidth().toggleable(isDecaf, enabled = !isSaving, role = Role.Checkbox,
-                                        onValueChange = { changeField("isDecaf", it.toString()) }).heightIn(min = 48.dp)) {
-                                    Checkbox(isDecaf, null, enabled = !isSaving)
-                                    Text(stringResource(R.string.label_decaf_coffee))
+                                FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    listOf(null, "false", "true").forEach { choice ->
+                                        val selected = when (choice) {
+                                            "true" -> isDecaf
+                                            "false" -> !isDecaf && decafIsKnown
+                                            else -> !isDecaf && !decafIsKnown
+                                        }
+                                        FilterChip(selected, { changeField("isDecaf", choice) }, enabled = !isSaving,
+                                            modifier = Modifier.testTag("label-review-decaf-${choice ?: "unknown"}"),
+                                            leadingIcon = if (selected) ({ Icon(Icons.Filled.Check, null, Modifier.size(18.dp)) }) else null,
+                                            label = { Text(stringResource(when (choice) {
+                                                "true" -> R.string.label_decaf
+                                                "false" -> R.string.label_review_not_decaf
+                                                else -> R.string.label_review_not_set
+                                            })) })
+                                    }
                                 }
                                 if (isDecaf) FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                                     DecafProcess.entries.forEach { process ->
@@ -867,7 +897,7 @@ fun AddBagSheet(
                 }
                 saveErrorResId?.let { error ->
                     Row(
-                        Modifier.fillMaxWidth().padding(horizontal = 24.dp)
+                        Modifier.fillMaxWidth().padding(horizontal = 16.dp)
                             .background(MaterialTheme.colorScheme.errorContainer, MaterialTheme.shapes.small)
                             .padding(12.dp).semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Assertive },
                         horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically,
@@ -978,13 +1008,12 @@ fun AddBagSheet(
                             }
                         }
                     },
-                    colors = primaryActionButtonColors(),
                     shape = MaterialTheme.shapes.large,
                     enabled = !isSaving,
                     modifier = Modifier
                         .fillMaxWidth()
                         .testTag("label-review-save")
-                        .padding(horizontal = 24.dp)
+                        .padding(horizontal = 16.dp)
                         .padding(vertical = 12.dp)
                         .heightIn(min = 56.dp),
                 ) {
@@ -1009,19 +1038,29 @@ private data class LabelFormField(
     val multiValue: Boolean = false,
 )
 
+private fun labelReviewGroupShape(first: Boolean = false, last: Boolean = false): Shape = RoundedCornerShape(
+    topStart = if (first) 28.dp else 4.dp,
+    topEnd = if (first) 28.dp else 4.dp,
+    bottomStart = if (last) 28.dp else 4.dp,
+    bottomEnd = if (last) 28.dp else 4.dp,
+)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ReviewDateField(
     key: String, labelRes: Int, millis: Long?, expanded: Boolean, onExpandedChange: (Boolean) -> Unit,
     enabled: Boolean, evidence: BagFieldEvidence?, photoUris: String?, suggestion: String?, onAccept: () -> Boolean,
-    onKeep: () -> Unit, onChange: (Long?) -> Unit, needsReview: Boolean,
+    onKeep: () -> Unit, onChange: (Long?) -> Unit, needsReview: Boolean, shape: Shape = labelReviewGroupShape(),
 ) {
     var picking by rememberSaveable { mutableStateOf(false) }
     LabelReviewField(key, stringResource(labelRes), millis?.let(DateParser::format).orEmpty(), expanded, onExpandedChange,
-        enabled, evidence, photoUris, suggestion, onAccept, onKeep, { onChange(null) }, needsReview = needsReview) {
-        TextButton(onClick = { picking = true }, enabled = enabled, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
-            Icon(Icons.Outlined.DateRange, null)
-            Text(stringResource(labelRes))
+        enabled, evidence, photoUris, suggestion, onAccept, onKeep, { onChange(null) }, needsReview = needsReview, shape = shape) {
+        TextButton(onClick = { picking = true }, enabled = enabled, contentPadding = PaddingValues(0.dp),
+            modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Outlined.DateRange, null)
+                Text(millis?.let(DateParser::format) ?: stringResource(R.string.action_review_choose_date))
+            }
         }
     }
     if (picking) {
@@ -1036,33 +1075,47 @@ private fun ReviewDateField(
 }
 
 @Composable
-private fun CapturedPhotoReviewStrip(capturedPhotoUris: String?) {
+private fun CapturedPhotoReviewStrip(capturedPhotoUris: String?, enabled: Boolean, onAddPhoto: (() -> Unit)?) {
     val photoUris = remember(capturedPhotoUris) {
         BagPhotoReviewUris.parse(capturedPhotoUris)
     }
-    if (photoUris.isEmpty()) return
+    if (photoUris.isEmpty()) {
+        onAddPhoto?.let { addPhoto ->
+            TextButton(enabled = enabled, onClick = addPhoto) {
+                Icon(Icons.Filled.CameraAlt, null, Modifier.padding(end = 8.dp).size(20.dp))
+                Text(stringResource(R.string.action_review_add_photo))
+            }
+        }
+        return
+    }
 
     var fullScreenPhotoUri by remember(capturedPhotoUris) { mutableStateOf<String?>(null) }
-    LazyRow(
+    Row(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 16.dp),
+        modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
     ) {
-        itemsIndexed(items = photoUris, key = { _, uri -> uri }) { index, uri ->
-            BagThumbnail(
-                uri = uri,
-                modifier = Modifier
-                    .size(88.dp)
-                    .clickable { fullScreenPhotoUri = uri },
-                downsampleTarget = 88.dp,
-                shape = MaterialTheme.shapes.medium,
-                contentDescription = when (index) {
-                    0 -> stringResource(R.string.cd_front_label_photo)
-                    1 -> stringResource(R.string.cd_back_label_photo)
-                    else -> stringResource(R.string.format_cd_additional_label_photo, index - 1)
-                },
-            )
+        LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.weight(1f)) {
+            itemsIndexed(items = photoUris, key = { _, uri -> uri }) { index, uri ->
+                BagThumbnail(
+                    uri = uri,
+                    modifier = Modifier
+                        .size(88.dp)
+                        .clickable { fullScreenPhotoUri = uri },
+                    downsampleTarget = 88.dp,
+                    shape = MaterialTheme.shapes.medium,
+                    contentDescription = when (index) {
+                        0 -> stringResource(R.string.cd_front_label_photo)
+                        1 -> stringResource(R.string.cd_back_label_photo)
+                        else -> stringResource(R.string.format_cd_additional_label_photo, index - 1)
+                    },
+                )
+            }
+        }
+        onAddPhoto?.let { addPhoto ->
+            OutlinedIconButton(onClick = addPhoto, enabled = enabled, shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.size(88.dp)) {
+                Icon(Icons.Outlined.AddAPhoto, stringResource(R.string.action_review_add_photo))
+            }
         }
     }
     fullScreenPhotoUri?.let { uri ->

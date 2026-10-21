@@ -457,7 +457,6 @@
     <string name="label_remaining_weight_grams">Likęs svoris (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_from_photo">Iš nuotraukos</string>
     <string name="action_scan_label">Nuskaityti etiketę</string>
     <string name="action_add_bag_barcode">Nuskaityti brūkšninį kodą</string>
     <string name="action_add_bag_manual">Pridėti rankiniu būdu</string>

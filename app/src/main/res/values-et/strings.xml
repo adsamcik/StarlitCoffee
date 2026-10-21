@@ -455,7 +455,6 @@
     <string name="label_remaining_weight_grams">Järelejäänud kaal (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_from_photo">Fotolt</string>
     <string name="action_scan_label">Skanni etikett</string>
     <string name="action_add_bag_barcode">Skanni vöötkood</string>
     <string name="action_add_bag_manual">Lisa käsitsi</string>

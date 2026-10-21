@@ -456,7 +456,6 @@
     <string name="label_remaining_weight_grams">Zostávajúca hmotnosť (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_from_photo">Z fotografie</string>
     <string name="action_scan_label">Naskenovať etiketu</string>
     <string name="action_add_bag_barcode">Naskenovať čiarový kód</string>
     <string name="action_add_bag_manual">Pridať ručne</string>

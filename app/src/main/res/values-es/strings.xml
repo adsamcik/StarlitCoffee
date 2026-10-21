@@ -456,7 +456,6 @@
     <string name="label_remaining_weight_grams">Peso restante (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_from_photo">Desde foto</string>
     <string name="action_scan_label">Escanear etiqueta</string>
     <string name="action_add_bag_barcode">Escanear código de barras</string>
     <string name="action_add_bag_manual">Añadir manualmente</string>

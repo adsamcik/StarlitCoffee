@@ -6,7 +6,6 @@
     <string name="action_review_keep_mine">Meine Angabe behalten</string>
     <string name="action_review_leave_blank">Leer lassen</string>
     <string name="msg_review_source_unavailable">Quellfoto nicht verfügbar. Bearbeite die Angabe oder füge ein weiteres Foto hinzu.</string>
-    <string name="msg_review_check_label">Gleiche diese Angabe mit dem Etikett ab.</string>
     <string name="action_review_use_reading">Erkannten Wert übernehmen</string>
     <string name="label_review_source">Quelle</string>
     <string name="msg_review_name_required">Gib einen Namen für den Kaffee ein.</string>
@@ -20,4 +19,6 @@
     <string name="label_review_saving">Wird gespeichert…</string>
     <string name="label_review_not_decaf">Mit Koffein</string>
     <string name="msg_review_qr_approval">Kaffeedetails von dieser Website abrufen?</string>
+    <string name="label_review_reading">Erkannter Wert</string>
+    <string name="action_review_choose_date">Datum auswählen</string>
 </resources>

@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.SystemClock
+import android.view.inputmethod.InputMethodManager
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsProperties
@@ -16,6 +17,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertContentDescriptionEquals
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsFocused
+import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasClickAction
@@ -35,6 +37,7 @@ import androidx.compose.ui.text.TextLayoutResult
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
 import com.adsamcik.starlitcoffee.data.network.QrCoffeeMetadata
 import com.adsamcik.starlitcoffee.data.work.BagDraftReviewLocation
 import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
@@ -63,6 +66,23 @@ class LabelReviewFlowTest {
     private val context get() = InstrumentationRegistry.getInstrumentation().targetContext
 
     @Test
+    fun rapidTypingWithHistoryKeepsKeyboardFocusAndSavesExactName() {
+        val harness = ReviewHarness(BagFormSnapshot()).apply {
+            existingBags = listOf(CoffeeBagEntity(id = 77L, name = "LasFlores", roaster = "April Coffee"))
+        }
+        show(harness)
+        editor("name").performClick()
+        editor("name").assertIsFocused()
+        val inputMethod = requireNotNull(context.getSystemService(InputMethodManager::class.java))
+        rule.waitUntil(10_000) { inputMethod.isAcceptingText }
+        InstrumentationRegistry.getInstrumentation().sendStringSync("Las Flores")
+        editor("name").assertIsFocused()
+        editor("name").assertTextContains("Las Flores")
+        save()
+        rule.runOnIdle { assertEquals("Las Flores", harness.saved.single().name) }
+    }
+
+    @Test
     fun compactManualReviewLeavesMissingOptionalDetailsQuietAndSavesExactValues() {
         val harness = ReviewHarness(BagFormSnapshot(name = "Las Flores", roaster = "April Coffee"))
         show(harness)
@@ -72,12 +92,21 @@ class LabelReviewFlowTest {
         rule.onNodeWithTag("label-review-editor-origin").assertDoesNotExist()
         rule.onNodeWithText(label(R.string.label_review_check)).assertDoesNotExist()
         rule.onNodeWithTag("label-review-save").assertIsDisplayed().assertIsEnabled()
-        capture("label-review-manual-320-light")
+        capture("label-review-manual-light")
         save()
 
         rule.runOnIdle {
             assertEquals(listOf(SavedValues("Las Flores", "April Coffee", null, null, null)), harness.saved)
+            harness.form.value = harness.form.value.copy(originCountry = "Colombia", originRegion = "Huila", weight = "250",
+                roastDateMillis = DateParser.parse("2026-10-01"))
         }
+        rule.onNodeWithText("Colombia").assertIsDisplayed()
+        rule.onNodeWithText("Huila").assertIsDisplayed()
+        capture("label-review-populated-light")
+        rule.runOnIdle { harness.dark.value = true }
+        capture("label-review-populated-dark")
+        rule.runOnIdle { harness.dynamicColor.value = true }
+        capture("label-review-populated-dynamic-dark")
     }
 
     @Test
@@ -85,13 +114,16 @@ class LabelReviewFlowTest {
         val photo = labelPhoto()
         val harness = ReviewHarness(BagFormSnapshot(name = "Las Flores", roaster = "April Coffee",
             originCountry = "Colombia", originRegion = "Huila", weight = "250"), dark = true)
-        harness.photoUris = photo
+        harness.photoUris = listOf(photo, labelPhoto("label-review-back.jpg"), labelPhoto("label-review-extra.jpg")).joinToString(",")
         harness.evidence = mapOf(
             "origin" to evidence("origin", "Ethiopia", photo, "Origin: Ethiopia", BagPhotoRect(0.04f, 0.20f, 0.96f, 0.30f)),
             "region" to evidence("region", "Sidama", photo, "Region: Sidama", BagPhotoRect(0.04f, 0.29f, 0.96f, 0.36f)),
         )
         harness.suggestions.value = mapOf("origin" to "Ethiopia", "region" to "Sidama")
         show(harness)
+        rule.onNodeWithContentDescription(label(R.string.action_review_add_photo)).performClick()
+        rule.runOnIdle { assertEquals(1, harness.photoRequests) }
+        capture("label-review-gallery-dark")
 
         rule.onNodeWithTag("label-review-correction-origin").assertDoesNotExist()
         open("origin")
@@ -102,7 +134,7 @@ class LabelReviewFlowTest {
         rule.waitUntil(10_000) {
             !rule.onNodeWithTag("label-evidence-photo").fetchSemanticsNode().config.contains(SemanticsProperties.Disabled)
         }
-        capture("label-review-source-320-dark")
+        capture("label-review-source-dark")
         rule.onNodeWithTag("label-evidence-photo").performClick()
         rule.onNodeWithContentDescription(label(R.string.action_close)).performClick()
         scrollTo(hasText(label(R.string.action_review_keep_mine)))
@@ -170,6 +202,7 @@ class LabelReviewFlowTest {
         harness.traceabilityUrl = "https://example.com/coffee/las-flores"
         harness.suggestions.value = mapOf("origin" to "Ethiopia")
         show(harness)
+        capture("label-review-processing")
 
         scrollTo(hasText(label(R.string.action_show_optional_details)))
         rule.onNodeWithText(label(R.string.action_show_optional_details)).performClick()
@@ -264,6 +297,7 @@ class LabelReviewFlowTest {
         rule.onNodeWithTag("label-review-focus-roastDate").assertIsFocused()
         rule.onNodeWithTag("label-review-correction-roastDate")
             .assertContentDescriptionEquals("${label(R.string.label_roast_date)}: ${DateParser.format(roastDate)}")
+        rule.onNodeWithText(DateParser.format(roastDate)).assertIsDisplayed()
 
         val moreLabel = context.getString(R.string.format_review_more_details, 1)
         scrollTo(hasText(moreLabel))
@@ -282,12 +316,18 @@ class LabelReviewFlowTest {
             assertTrue(harness.changes.contains("isDecaf" to null))
         }
         rule.runOnIdle { harness.form.value = harness.form.value.copy(isDecaf = true) }
-        rule.onNodeWithTag("label-review-focus-isDecaf").assertTextContains(label(R.string.label_review_not_set))
+        rule.onNodeWithTag("label-review-decaf-unknown").assertIsSelected()
         rule.runOnIdle { harness.form.value = harness.form.value.copy(roastDateMillis = roastDate, isDecaf = false) }
         rule.onNodeWithContentDescription(label(R.string.action_back)).performClick()
         rule.runOnIdle { harness.visible.value = true }
-        rule.onNodeWithTag("label-review-focus-isDecaf").assertTextContains(label(R.string.label_review_not_set))
+        rule.onNodeWithTag("label-review-decaf-unknown").assertIsSelected()
         rule.onNodeWithTag("label-review-correction-isDecaf").assertDoesNotExist()
+        rule.onNodeWithTag("label-review-decaf-false").performClick().assertIsSelected()
+        save()
+        rule.runOnIdle {
+            assertTrue(harness.changes.contains("isDecaf" to "false"))
+            assertFalse(harness.saved.last().isDecaf)
+        }
     }
 
     @Test
@@ -316,6 +356,7 @@ class LabelReviewFlowTest {
         show(harness)
         save()
         rule.onNodeWithText(label(R.string.msg_review_save_failed)).assertIsDisplayed()
+        capture("label-review-save-error")
         rule.onNodeWithText(label(R.string.action_review_retry_save)).assertIsDisplayed().assertIsEnabled()
         scrollTo(hasTestTag("label-review-name"))
         editor("name").assertTextContains("Las Flores")
@@ -337,6 +378,10 @@ class LabelReviewFlowTest {
         )
         val harness = ReviewHarness(BagFormSnapshot(name = "Las Flores", roaster = "April Coffee",
             originCountry = "Colombia", originRegion = "Huila", weight = "250"))
+        val photo = labelPhoto()
+        harness.photoUris = photo
+        harness.evidence = mapOf("origin" to evidence("origin", "Ethiopia", photo, "Origin: Ethiopia",
+            BagPhotoRect(0.04f, 0.20f, 0.96f, 0.30f)))
         harness.suggestions.value = mapOf("origin" to "Ethiopia")
         show(harness)
         rule.onNodeWithTag("label-review-save").assertIsDisplayed().assertIsEnabled()
@@ -344,6 +389,7 @@ class LabelReviewFlowTest {
         assertTextFits()
 
         open("origin")
+        capture("label-review-200-editor-light")
         scrollTo(hasText(label(R.string.action_review_use_reading)))
         rule.onNodeWithText(label(R.string.action_review_use_reading)).assertIsDisplayed().assertIsEnabled()
         scrollTo(hasText(label(R.string.action_review_keep_mine)))
@@ -351,13 +397,15 @@ class LabelReviewFlowTest {
         rule.runOnIdle { harness.dark.value = true }
         capture("label-review-200-dark")
         assertTextFits()
+        rule.runOnIdle { harness.dark.value = false }
+        capture("label-review-200-return-light")
         save()
         rule.runOnIdle { assertEquals("Colombia", harness.saved.single().origin) }
     }
 
     private fun show(harness: ReviewHarness) {
         rule.setContent {
-            StarlitCoffeeTheme(dynamicColor = false, darkTheme = harness.dark.value) {
+            StarlitCoffeeTheme(dynamicColor = harness.dynamicColor.value, darkTheme = harness.dark.value) {
                 if (harness.visible.value) {
                     AddBagSheet(
                         initialFormOverride = harness.form.value,
@@ -368,6 +416,7 @@ class LabelReviewFlowTest {
                             else RecognitionPresentation(),
                         isProcessing = harness.processing,
                         isSaving = harness.isSaving.value,
+                        existingBags = harness.existingBags,
                         traceabilityUrl = harness.traceabilityUrl,
                         pendingSuggestions = harness.suggestions.value,
                         reviewedFields = harness.reviewed.value,
@@ -389,6 +438,7 @@ class LabelReviewFlowTest {
                             harness.unknown.value = if (value.isNullOrBlank()) harness.unknown.value + key else harness.unknown.value - key
                         },
                         onExploreQrUrl = { _, result -> harness.qrResult = result },
+                        onScanMorePhotos = ({ harness.photoRequests += 1 }).takeIf { harness.photoUris != null },
                         onDismiss = { harness.visible.value = false },
                         initialReviewLocation = harness.location.value,
                         onReviewLocationChange = { harness.location.value = it },
@@ -445,7 +495,9 @@ class LabelReviewFlowTest {
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         instrumentation.waitForIdleSync()
         SystemClock.sleep(250)
-        val output = File(context.getExternalFilesDir(null), "label-review-review/$name.png")
+        val configuration = context.resources.configuration
+        val output = File(context.getExternalFilesDir(null),
+            "label-review-polish/$name-${configuration.screenWidthDp}dp-${(configuration.fontScale * 100).toInt()}pct.png")
         output.parentFile?.mkdirs()
         output.outputStream().use {
             val screenshot = requireNotNull(instrumentation.uiAutomation.takeScreenshot())
@@ -472,8 +524,8 @@ class LabelReviewFlowTest {
         }
     }
 
-    private fun labelPhoto(): String {
-        val output = File(context.cacheDir, "label-review-test-source.jpg")
+    private fun labelPhoto(fileName: String = "label-review-test-source.jpg"): String {
+        val output = File(context.cacheDir, fileName)
         val bitmap = Bitmap.createBitmap(600, 800, Bitmap.Config.ARGB_8888)
         try {
             val canvas = Canvas(bitmap)
@@ -512,6 +564,7 @@ class LabelReviewFlowTest {
         val form = mutableStateOf(initial)
         val ocr = mutableStateOf<OcrFieldExtractor.OcrExtractionResult?>(null)
         val dark = mutableStateOf(dark)
+        val dynamicColor = mutableStateOf(false)
         val suggestions = mutableStateOf<Map<String, String>>(emptyMap())
         val reviewed = mutableStateOf<Set<String>>(emptySet())
         val unknown = mutableStateOf<Set<String>>(emptySet())
@@ -523,7 +576,9 @@ class LabelReviewFlowTest {
         val changes = mutableListOf<Pair<String, String?>>()
         val saved = mutableListOf<SavedValues>()
         var evidence: Map<String, BagFieldEvidence> = emptyMap()
+        var existingBags: List<CoffeeBagEntity> = emptyList()
         var photoUris: String? = null
+        var photoRequests = 0
         var processing = false
         var traceabilityUrl: String? = null
         var qrResult: ((QrCoffeeMetadata?) -> Unit)? = null

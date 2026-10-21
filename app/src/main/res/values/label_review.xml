@@ -6,7 +6,6 @@
     <string name="action_review_keep_mine">Keep mine</string>
     <string name="action_review_leave_blank">Leave blank</string>
     <string name="msg_review_source_unavailable">Source photo unavailable. Edit the detail or add another photo.</string>
-    <string name="msg_review_check_label">Check this detail against the label.</string>
     <string name="action_review_use_reading">Use this reading</string>
     <string name="label_review_source">Source</string>
     <string name="msg_review_name_required">Enter a coffee name.</string>
@@ -20,4 +19,6 @@
     <string name="label_review_saving">Saving…</string>
     <string name="label_review_not_decaf">Not decaf</string>
     <string name="msg_review_qr_approval">Fetch coffee details from this website?</string>
+    <string name="label_review_reading">Reading</string>
+    <string name="action_review_choose_date">Choose date</string>
 </resources>

@@ -457,7 +457,6 @@
     <string name="label_remaining_weight_grams">Preostala teža (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_from_photo">Iz fotografije</string>
     <string name="action_scan_label">Skenirajte etiketo</string>
     <string name="action_add_bag_barcode">Skenirajte črtno kodo</string>
     <string name="action_add_bag_manual">Dodajte ročno</string>

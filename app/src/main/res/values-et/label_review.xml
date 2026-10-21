@@ -6,7 +6,6 @@
     <string name="action_review_keep_mine">Säilita minu väärtus</string>
     <string name="action_review_leave_blank">Jäta tühjaks</string>
     <string name="msg_review_source_unavailable">Algfoto pole saadaval. Muuda andmeid või lisa teine foto.</string>
-    <string name="msg_review_check_label">Kontrolli neid andmeid etiketilt.</string>
     <string name="action_review_use_reading">Kasuta tuvastatud andmeid</string>
     <string name="label_review_source">Allikas</string>
     <string name="msg_review_name_required">Sisesta kohvi nimi.</string>
@@ -20,4 +19,6 @@
     <string name="label_review_saving">Salvestamine…</string>
     <string name="label_review_not_decaf">Kofeiiniga</string>
     <string name="msg_review_qr_approval">Kas laadida kohvi andmed sellelt veebisaidilt?</string>
+    <string name="label_review_reading">Tuvastatud andmed</string>
+    <string name="action_review_choose_date">Vali kuupäev</string>
 </resources>

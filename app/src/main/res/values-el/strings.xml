@@ -455,7 +455,6 @@
     <string name="label_remaining_weight_grams">Βάρος που απομένει (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_from_photo">Από φωτογραφία</string>
     <string name="action_scan_label">Σάρωση ετικέτας</string>
     <string name="action_add_bag_barcode">Σάρωση barcode</string>
     <string name="action_add_bag_manual">Χειροκίνητη προσθήκη</string>

@@ -6,7 +6,6 @@
     <string name="action_review_keep_mine">Palikti mano reikšmę</string>
     <string name="action_review_leave_blank">Palikti tuščią</string>
     <string name="msg_review_source_unavailable">Pradinė nuotrauka nepasiekiama. Redaguokite duomenis arba pridėkite kitą nuotrauką.</string>
-    <string name="msg_review_check_label">Patikrinkite šiuos duomenis etiketėje.</string>
     <string name="action_review_use_reading">Naudoti šiuos nuskaitytus duomenis</string>
     <string name="label_review_source">Šaltinis</string>
     <string name="msg_review_name_required">Įveskite kavos pavadinimą.</string>
@@ -20,4 +19,6 @@
     <string name="label_review_saving">Išsaugoma…</string>
     <string name="label_review_not_decaf">Su kofeinu</string>
     <string name="msg_review_qr_approval">Gauti kavos informaciją iš šios svetainės?</string>
+    <string name="label_review_reading">Nuskaityta reikšmė</string>
+    <string name="action_review_choose_date">Pasirinkti datą</string>
 </resources>

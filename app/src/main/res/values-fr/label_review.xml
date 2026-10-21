@@ -6,7 +6,6 @@
     <string name="action_review_keep_mine">Garder ma valeur</string>
     <string name="action_review_leave_blank">Laisser vide</string>
     <string name="msg_review_source_unavailable">La photo source est indisponible. Modifiez le détail ou ajoutez une autre photo.</string>
-    <string name="msg_review_check_label">Vérifiez ce détail sur l\'étiquette.</string>
     <string name="action_review_use_reading">Utiliser la valeur lue</string>
     <string name="label_review_source">Source</string>
     <string name="msg_review_name_required">Saisissez un nom de café.</string>
@@ -20,4 +19,6 @@
     <string name="label_review_saving">Enregistrement…</string>
     <string name="label_review_not_decaf">Avec caféine</string>
     <string name="msg_review_qr_approval">Récupérer les informations sur le café depuis ce site web ?</string>
+    <string name="label_review_reading">Valeur lue</string>
+    <string name="action_review_choose_date">Choisir une date</string>
 </resources>

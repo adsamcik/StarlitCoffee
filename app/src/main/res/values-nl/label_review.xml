@@ -6,7 +6,6 @@
     <string name="action_review_keep_mine">Mijn invoer behouden</string>
     <string name="action_review_leave_blank">Leeg laten</string>
     <string name="msg_review_source_unavailable">Bronfoto niet beschikbaar. Bewerk het gegeven of voeg een andere foto toe.</string>
-    <string name="msg_review_check_label">Controleer dit gegeven op het etiket.</string>
     <string name="action_review_use_reading">Herkende waarde gebruiken</string>
     <string name="label_review_source">Bron</string>
     <string name="msg_review_name_required">Voer een koffienaam in.</string>
@@ -20,4 +19,6 @@
     <string name="label_review_saving">Opslaan…</string>
     <string name="label_review_not_decaf">Met cafeïne</string>
     <string name="msg_review_qr_approval">Koffiegegevens ophalen van deze website?</string>
+    <string name="label_review_reading">Herkende waarde</string>
+    <string name="action_review_choose_date">Datum kiezen</string>
 </resources>

@@ -6,7 +6,6 @@
     <string name="action_review_keep_mine">Behåll mitt värde</string>
     <string name="action_review_leave_blank">Lämna tomt</string>
     <string name="msg_review_source_unavailable">Källfotot är inte tillgängligt. Redigera uppgiften eller lägg till ett annat foto.</string>
-    <string name="msg_review_check_label">Kontrollera denna uppgift mot etiketten.</string>
     <string name="action_review_use_reading">Använd denna avläsning</string>
     <string name="label_review_source">Källa</string>
     <string name="msg_review_name_required">Ange ett namn på kaffet.</string>
@@ -20,4 +19,6 @@
     <string name="label_review_saving">Sparar…</string>
     <string name="label_review_not_decaf">Med koffein</string>
     <string name="msg_review_qr_approval">Hämta kaffeuppgifter från den här webbplatsen?</string>
+    <string name="label_review_reading">Avläsning</string>
+    <string name="action_review_choose_date">Välj datum</string>
 </resources>

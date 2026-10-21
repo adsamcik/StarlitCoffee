@@ -456,7 +456,6 @@
     <string name="label_remaining_weight_grams">Greutate rămasă (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_from_photo">Din fotografie</string>
     <string name="action_scan_label">Scanați eticheta</string>
     <string name="action_add_bag_barcode">Scanați codul de bare</string>
     <string name="action_add_bag_manual">Adăugați manual</string>

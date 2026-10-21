@@ -8,12 +8,17 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ZoomIn
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,7 +50,7 @@ import com.adsamcik.starlitcoffee.util.BagPhotoRect
 import com.adsamcik.starlitcoffee.util.BagPhotoReviewUris
 import com.adsamcik.starlitcoffee.util.ThumbnailLoader
 
-/** The source is independent of the editable value and never substitutes a different photo. */
+/** Provenance stays distinct from the editable value and never substitutes a different photo. */
 @Composable
 fun LabelEvidencePreview(
     evidence: BagFieldEvidence,
@@ -53,72 +58,75 @@ fun LabelEvidencePreview(
     modifier: Modifier = Modifier,
 ) {
     val source = remember(evidence, capturedPhotoUris) { resolveLabelEvidencePhoto(evidence, capturedPhotoUris) }
+    val supportingText = evidence.supportingText?.takeIf(String::isNotBlank)
     Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(
-            stringResource(R.string.label_review_source),
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-        Text(
-            stringResource(evidenceSourceLabel(evidence.sourceType)),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-        source.uri?.let { uri ->
-            key(uri) { LabelEvidencePhoto(uri = uri, region = source.region) }
+        Text(stringResource(evidenceSourceLabel(evidence.sourceType)), style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant)
+        val sourceUri = source.uri
+        if (sourceUri != null) {
+            key(sourceUri) { LabelEvidenceBoundSource(sourceUri, source.region, supportingText) }
+        } else {
+            supportingText?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
         }
         if (source.sourceUnavailable) {
-            Text(
-                stringResource(R.string.msg_review_source_unavailable),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-        evidence.supportingText?.takeIf(String::isNotBlank)?.let { text ->
-            Text(text, style = MaterialTheme.typography.bodyMedium)
+            Text(stringResource(R.string.msg_review_source_unavailable), style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }
 
 @Composable
-private fun LabelEvidencePhoto(uri: String, region: BagPhotoRect?) {
-    val targetSizePx = with(LocalDensity.current) { 320.dp.roundToPx() }
+private fun LabelEvidenceBoundSource(uri: String, region: BagPhotoRect?, supportingText: String?) {
+    val density = LocalDensity.current
+    val targetSizePx = with(density) { 320.dp.roundToPx() }
     val loaded by produceState(initialValue = EvidencePhotoLoad(), key1 = uri, key2 = targetSizePx) {
         value = EvidencePhotoLoad()
         value = EvidencePhotoLoad(bitmap = ThumbnailLoader.loadThumbnailFromUri(uri, targetSizePx), loading = false)
     }
     var viewingPhoto by rememberSaveable(uri) { mutableStateOf(false) }
     val bitmap = loaded.bitmap
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(160.dp)
-            .clip(MaterialTheme.shapes.small)
-            .background(MaterialTheme.colorScheme.surfaceContainer)
-            .clickable(enabled = bitmap != null, role = Role.Button) { viewingPhoto = true }
-            .testTag("label-evidence-photo"),
-        contentAlignment = Alignment.Center,
-    ) {
-        if (bitmap != null) {
-            Image(
-                bitmap = bitmap.asImageBitmap(),
-                contentDescription = stringResource(R.string.cd_bag_photo),
-                contentScale = ContentScale.Fit,
-                modifier = Modifier.fillMaxSize(),
-            )
-            region?.let { LabelEvidenceOutline(bitmap = bitmap, region = it) }
-        } else if (loaded.loading) {
-            CircularProgressIndicator(modifier = Modifier.size(24.dp))
-        } else {
-            Text(
-                stringResource(R.string.msg_review_source_unavailable),
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(12.dp),
-            )
+    val sourceUnavailable = !loaded.loading && bitmap == null
+    val showBesidePhoto = density.fontScale < 1.5f && supportingText != null && !sourceUnavailable
+    if (showBesidePhoto) {
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
+            LabelEvidencePhoto(bitmap, region, onOpen = { viewingPhoto = true }, modifier = Modifier.width(84.dp).height(112.dp))
+            Text(requireNotNull(supportingText), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
         }
+    } else {
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            supportingText?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
+            if (!sourceUnavailable) {
+                LabelEvidencePhoto(bitmap, region, onOpen = { viewingPhoto = true },
+                    modifier = Modifier.fillMaxWidth().height(128.dp))
+            }
+        }
+    }
+    if (sourceUnavailable) {
+        Text(stringResource(R.string.msg_review_source_unavailable), style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
     if (viewingPhoto && bitmap != null) {
         FullScreenImageViewer(uri = uri, onDismiss = { viewingPhoto = false })
+    }
+}
+
+@Composable
+private fun LabelEvidencePhoto(bitmap: Bitmap?, region: BagPhotoRect?, onOpen: () -> Unit, modifier: Modifier) {
+    Box(
+        modifier = modifier.clip(MaterialTheme.shapes.small).background(MaterialTheme.colorScheme.surfaceVariant)
+            .clickable(enabled = bitmap != null, role = Role.Button, onClick = onOpen).testTag("label-evidence-photo"),
+        contentAlignment = Alignment.Center,
+    ) {
+        if (bitmap == null) {
+            CircularProgressIndicator(modifier = Modifier.size(24.dp))
+        } else {
+            Image(bitmap = bitmap.asImageBitmap(), contentDescription = stringResource(R.string.cd_bag_photo),
+                contentScale = ContentScale.Fit, modifier = Modifier.fillMaxSize())
+            region?.let { LabelEvidenceOutline(bitmap = bitmap, region = it) }
+            Icon(Icons.Filled.ZoomIn, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.align(Alignment.BottomEnd).padding(4.dp)
+                    .background(MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.shapes.extraSmall).padding(3.dp).size(16.dp))
+        }
     }
 }
 

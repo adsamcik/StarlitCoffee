@@ -578,7 +578,6 @@
 
     <!-- BagInventoryScreen -->
     <string name="action_add_coffee">Add coffee</string>
-    <string name="action_from_photo">From photo</string>
     <string name="action_scan_label">Scan label</string>
     <string name="action_add_bag_barcode">Scan barcode</string>
     <string name="action_read_bag_photos">Read bag photos</string>

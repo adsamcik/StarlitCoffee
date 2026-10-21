@@ -6,7 +6,6 @@
     <string name="action_review_keep_mine">Paturēt manu vērtību</string>
     <string name="action_review_leave_blank">Atstāt tukšu</string>
     <string name="msg_review_source_unavailable">Sākotnējais fotoattēls nav pieejams. Rediģējiet datus vai pievienojiet citu fotoattēlu.</string>
-    <string name="msg_review_check_label">Pārbaudiet šos datus uz etiķetes.</string>
     <string name="action_review_use_reading">Izmantot šo nolasījumu</string>
     <string name="label_review_source">Avots</string>
     <string name="msg_review_name_required">Ievadiet kafijas nosaukumu.</string>
@@ -20,4 +19,6 @@
     <string name="label_review_saving">Saglabā…</string>
     <string name="label_review_not_decaf">Ar kofeīnu</string>
     <string name="msg_review_qr_approval">Iegūt kafijas informāciju no šīs vietnes?</string>
+    <string name="label_review_reading">Nolasītā vērtība</string>
+    <string name="action_review_choose_date">Izvēlēties datumu</string>
 </resources>

@@ -455,7 +455,6 @@
     <string name="label_remaining_weight_grams">Jäljellä oleva paino (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_from_photo">Kuvasta</string>
     <string name="action_scan_label">Skannaa etiketti</string>
     <string name="action_add_bag_barcode">Skannaa viivakoodi</string>
     <string name="action_add_bag_manual">Lisää käsin</string>

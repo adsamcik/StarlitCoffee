@@ -6,7 +6,6 @@
     <string name="action_review_keep_mine">Behold min værdi</string>
     <string name="action_review_leave_blank">Lad stå tomt</string>
     <string name="msg_review_source_unavailable">Kildefotoet er ikke tilgængeligt. Rediger oplysningen, eller tilføj et andet foto.</string>
-    <string name="msg_review_check_label">Tjek denne oplysning på etiketten.</string>
     <string name="action_review_use_reading">Brug denne aflæsning</string>
     <string name="label_review_source">Kilde</string>
     <string name="msg_review_name_required">Angiv et navn på kaffen.</string>
@@ -20,4 +19,6 @@
     <string name="label_review_saving">Gemmer…</string>
     <string name="label_review_not_decaf">Med koffein</string>
     <string name="msg_review_qr_approval">Hent kaffeoplysninger fra dette websted?</string>
+    <string name="label_review_reading">Aflæsning</string>
+    <string name="action_review_choose_date">Vælg dato</string>
 </resources>

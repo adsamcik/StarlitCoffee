@@ -456,7 +456,6 @@
     <string name="label_remaining_weight_grams">Atlikušais svars (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_from_photo">No fotoattēla</string>
     <string name="action_scan_label">Skenēt etiķeti</string>
     <string name="action_add_bag_barcode">Skenēt svītrkodu</string>
     <string name="action_add_bag_manual">Pievienot manuāli</string>

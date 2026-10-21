@@ -6,7 +6,6 @@
     <string name="action_review_keep_mine">Säilytä oma arvo</string>
     <string name="action_review_leave_blank">Jätä tyhjäksi</string>
     <string name="msg_review_source_unavailable">Alkuperäinen kuva ei ole käytettävissä. Muokkaa tietoa tai lisää toinen kuva.</string>
-    <string name="msg_review_check_label">Tarkista tämä tieto etiketistä.</string>
     <string name="action_review_use_reading">Käytä tätä lukutulosta</string>
     <string name="label_review_source">Lähde</string>
     <string name="msg_review_name_required">Anna kahvin nimi.</string>
@@ -20,4 +19,6 @@
     <string name="label_review_saving">Tallennetaan…</string>
     <string name="label_review_not_decaf">Kofeiinillinen</string>
     <string name="msg_review_qr_approval">Haetaanko kahvin tiedot tältä verkkosivustolta?</string>
+    <string name="label_review_reading">Lukutulos</string>
+    <string name="action_review_choose_date">Valitse päivämäärä</string>
 </resources>

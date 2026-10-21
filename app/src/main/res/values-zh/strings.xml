@@ -452,7 +452,6 @@
     <string name="label_remaining_weight_grams">剩余重量（g）</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_from_photo">从照片</string>
     <string name="action_scan_label">扫描标签</string>
     <string name="action_add_bag_barcode">扫描条形码</string>
     <string name="action_add_bag_manual">手动添加</string>

@@ -12,10 +12,10 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -30,11 +30,9 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -53,7 +51,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -550,109 +550,73 @@ fun BagInventoryScreen(
                     enter = fadeIn() + scaleIn(),
                     exit = fadeOut() + scaleOut(),
                 ) {
+                    val windowWidth = LocalWindowInfo.current.containerSize.width
+                    val actionMaxWidth = (with(LocalDensity.current) { windowWidth.toDp() } - 32.dp).coerceAtLeast(0.dp)
                     Column(
                         horizontalAlignment = Alignment.End,
-                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        ) {
-                            Surface(
-                                color = MaterialTheme.colorScheme.secondaryContainer,
-                                shape = MaterialTheme.shapes.small,
-                            ) {
+                        // Extended FAB labels are decorative in semantics; their icons name the actions.
+                        ExtendedFloatingActionButton(
+                            onClick = { launchAiScanAction(AiScanAction.GALLERY) },
+                            icon = { Icon(Icons.Filled.PhotoLibrary, contentDescription = stringResource(R.string.action_read_bag_photos)) },
+                            text = {
                                 Text(
                                     text = stringResource(R.string.action_read_bag_photos),
                                     style = MaterialTheme.typography.labelLarge,
-                                    color = MaterialTheme.colorScheme.onSecondaryContainer,
-                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                                    modifier = Modifier.padding(vertical = 8.dp),
                                 )
-                            }
-                            SmallFloatingActionButton(
-                                onClick = { launchAiScanAction(AiScanAction.GALLERY) },
-                                containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                                modifier = Modifier.testTag("fab_from_photo"),
-                            ) {
-                                Icon(Icons.Filled.PhotoLibrary, contentDescription = stringResource(R.string.action_from_photo))
-                            }
-                        }
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        ) {
-                            Surface(
-                                color = MaterialTheme.colorScheme.secondaryContainer,
-                                shape = MaterialTheme.shapes.small,
-                            ) {
+                            },
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                            modifier = Modifier.widthIn(max = actionMaxWidth).testTag("fab_from_photo"),
+                        )
+                        ExtendedFloatingActionButton(
+                            onClick = { launchAiScanAction(AiScanAction.CAMERA) },
+                            icon = { Icon(Icons.Filled.CameraAlt, contentDescription = stringResource(R.string.action_scan_label)) },
+                            text = {
                                 Text(
                                     text = stringResource(R.string.action_scan_label),
                                     style = MaterialTheme.typography.labelLarge,
-                                    color = MaterialTheme.colorScheme.onSecondaryContainer,
-                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                                    modifier = Modifier.padding(vertical = 8.dp),
                                 )
-                            }
-                            SmallFloatingActionButton(
-                                onClick = { launchAiScanAction(AiScanAction.CAMERA) },
-                                containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                                modifier = Modifier.testTag("fab_scan_label"),
-                            ) {
-                                Icon(Icons.Filled.CameraAlt, contentDescription = stringResource(R.string.action_scan_label))
-                            }
-                        }
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        ) {
-                            Surface(
-                                color = MaterialTheme.colorScheme.secondaryContainer,
-                                shape = MaterialTheme.shapes.small,
-                            ) {
+                            },
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                            modifier = Modifier.widthIn(max = actionMaxWidth).testTag("fab_scan_label"),
+                        )
+                        ExtendedFloatingActionButton(
+                            onClick = {
+                                fabExpanded = false
+                                bagDraftSessionId = UUID.randomUUID().toString()
+                                onNavigateToBarcode()
+                            },
+                            icon = { Icon(Icons.Filled.QrCodeScanner, contentDescription = stringResource(R.string.action_add_bag_barcode)) },
+                            text = {
                                 Text(
                                     text = stringResource(R.string.action_add_bag_barcode),
                                     style = MaterialTheme.typography.labelLarge,
-                                    color = MaterialTheme.colorScheme.onSecondaryContainer,
-                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                                    modifier = Modifier.padding(vertical = 8.dp),
                                 )
-                            }
-                            SmallFloatingActionButton(
-                                onClick = {
-                                    fabExpanded = false
-                                    bagDraftSessionId = UUID.randomUUID().toString()
-                                    onNavigateToBarcode()
-                                },
-                                containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                                modifier = Modifier.testTag("fab_scan_barcode"),
-                            ) {
-                                Icon(Icons.Filled.QrCodeScanner, contentDescription = stringResource(R.string.action_scan_barcode))
-                            }
-                        }
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        ) {
-                            Surface(
-                                color = MaterialTheme.colorScheme.secondaryContainer,
-                                shape = MaterialTheme.shapes.small,
-                            ) {
+                            },
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                            modifier = Modifier.widthIn(max = actionMaxWidth).testTag("fab_scan_barcode"),
+                        )
+                        ExtendedFloatingActionButton(
+                            onClick = ::openManualBagEntry,
+                            icon = { Icon(Icons.Filled.Edit, contentDescription = stringResource(R.string.action_add_bag_manual)) },
+                            text = {
                                 Text(
                                     text = stringResource(R.string.action_add_bag_manual),
                                     style = MaterialTheme.typography.labelLarge,
-                                    color = MaterialTheme.colorScheme.onSecondaryContainer,
-                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                                    modifier = Modifier.padding(vertical = 8.dp),
                                 )
-                            }
-                            SmallFloatingActionButton(
-                                onClick = ::openManualBagEntry,
-                                containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                                modifier = Modifier.testTag("fab_add_manual"),
-                            ) {
-                                Icon(
-                                    Icons.Filled.Edit,
-                                    contentDescription = stringResource(R.string.action_add_bag_manual),
-                                )
-                            }
-                        }
+                            },
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                            modifier = Modifier.widthIn(max = actionMaxWidth).testTag("fab_add_manual"),
+                        )
                     }
                 }
                 ExtendedFloatingActionButton(

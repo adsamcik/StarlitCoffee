@@ -2,7 +2,6 @@ package com.adsamcik.starlitcoffee.ui.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenu
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -10,12 +9,14 @@ import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.WarningAmber
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,7 +24,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import com.adsamcik.starlitcoffee.util.CoffeeInputSuggestion
 import com.adsamcik.starlitcoffee.util.CoffeeInputSuggestionEngine
@@ -47,15 +52,21 @@ fun SuggestingTextField(
     enabled: Boolean = true,
     onFocusChanged: (Boolean) -> Unit = {},
     isError: Boolean = false,
+    filled: Boolean = false,
+    showLabel: Boolean = true,
+    textStyle: TextStyle? = null,
 ) {
     var hasFocus by remember { mutableStateOf(false) }
     var menuExpanded by remember { mutableStateOf(false) }
-    var fieldValue by remember {
+    var fieldValueState by remember {
         mutableStateOf(TextFieldValue(value, selection = TextRange(value.length)))
     }
-    LaunchedEffect(value) {
-        if (value != fieldValue.text) {
-            fieldValue = TextFieldValue(value, selection = TextRange(value.length))
+    // The parent owns text; the local value retains cursor and IME composition.
+    val fieldValue = if (fieldValueState.text == value) fieldValueState
+        else TextFieldValue(value, selection = TextRange(value.length))
+    SideEffect {
+        if (fieldValue.selection != fieldValueState.selection || fieldValue.composition != fieldValueState.composition) {
+            fieldValueState = fieldValue
         }
     }
     val rankedSuggestions by remember(
@@ -91,33 +102,64 @@ fun SuggestingTextField(
         },
         modifier = modifier.fillMaxWidth(),
     ) {
-        OutlinedTextField(
+        val fieldModifier = Modifier
+            .fillMaxWidth()
+            .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryEditable, enabled && rankedSuggestions.isNotEmpty())
+            .onFocusChanged {
+                hasFocus = it.isFocused
+                if (it.isFocused) menuExpanded = true
+                onFocusChanged(it.isFocused)
+            }
+            .then(if (showLabel) Modifier else Modifier.semantics { contentDescription = label })
+        val fieldLabel: (@Composable () -> Unit)? = if (showLabel) ({ Text(label) }) else null
+        val fieldTrailingIcon: (@Composable () -> Unit)? = when {
+            isError -> ({ Icon(Icons.Outlined.WarningAmber, contentDescription = null) })
+            rankedSuggestions.isNotEmpty() -> ({ ExposedDropdownMenuDefaults.TrailingIcon(expanded = showSuggestions) })
+            else -> null
+        }
+        if (filled) TextField(
             value = fieldValue,
             onValueChange = { updated ->
-                fieldValue = updated
+                fieldValueState = updated
                 menuExpanded = true
                 onValueChange(updated.text)
             },
-            label = { Text(label) },
+            label = fieldLabel,
+            textStyle = textStyle ?: MaterialTheme.typography.bodyLarge,
             shape = MaterialTheme.shapes.small,
             singleLine = singleLine,
             enabled = enabled,
             isError = isError,
-            trailingIcon = {
-                if (isError) Icon(Icons.Outlined.WarningAmber, contentDescription = null)
-                else ExposedDropdownMenuDefaults.TrailingIcon(expanded = showSuggestions)
+            trailingIcon = fieldTrailingIcon,
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color.Transparent,
+                unfocusedContainerColor = Color.Transparent,
+                disabledContainerColor = Color.Transparent,
+                errorContainerColor = Color.Transparent,
+                focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
+                errorIndicatorColor = MaterialTheme.colorScheme.error,
+            ),
+            modifier = fieldModifier,
+        ) else OutlinedTextField(
+            value = fieldValue,
+            onValueChange = { updated ->
+                fieldValueState = updated
+                menuExpanded = true
+                onValueChange(updated.text)
             },
-            modifier = Modifier
-                .fillMaxWidth()
-                .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryEditable, enabled)
-                .onFocusChanged {
-                    hasFocus = it.isFocused
-                    if (it.isFocused) menuExpanded = true
-                    onFocusChanged(it.isFocused)
-                },
+            label = fieldLabel,
+            textStyle = textStyle ?: MaterialTheme.typography.bodyLarge,
+            shape = MaterialTheme.shapes.small,
+            singleLine = singleLine,
+            enabled = enabled,
+            isError = isError,
+            trailingIcon = fieldTrailingIcon,
+            modifier = fieldModifier,
         )
 
-        DropdownMenu(
+        ExposedDropdownMenu(
             expanded = showSuggestions,
             onDismissRequest = { menuExpanded = false },
         ) {
@@ -137,7 +179,7 @@ fun SuggestingTextField(
                             multiValue = multiValue,
                             cursorIndex = fieldValue.selection.end,
                         )
-                        fieldValue = TextFieldValue(
+                        fieldValueState = TextFieldValue(
                             text = accepted.value,
                             selection = TextRange(accepted.cursorIndex),
                         )

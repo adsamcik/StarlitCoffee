@@ -173,11 +173,13 @@ fun BagCard(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                Row(
+                FlowRow(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    itemVerticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Column(modifier = Modifier.weight(1f)) {
+                    Column(modifier = Modifier.padding(end = 12.dp)) {
                         Text(
                             text = summary.stockLabel,
                             style = MaterialTheme.typography.titleSmall,
@@ -188,7 +190,6 @@ fun BagCard(
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
-                    Spacer(modifier = Modifier.width(12.dp))
                     FilledTonalButton(onClick = onTap) {
                         Text(summary.primaryActionLabel)
                     }

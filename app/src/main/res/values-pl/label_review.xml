@@ -6,7 +6,6 @@
     <string name="action_review_keep_mine">Zachowaj moją wartość</string>
     <string name="action_review_leave_blank">Pozostaw puste</string>
     <string name="msg_review_source_unavailable">Zdjęcie źródłowe jest niedostępne. Edytuj dane lub dodaj inne zdjęcie.</string>
-    <string name="msg_review_check_label">Sprawdź te dane na etykiecie.</string>
     <string name="action_review_use_reading">Użyj tego odczytu</string>
     <string name="label_review_source">Źródło</string>
     <string name="msg_review_name_required">Wpisz nazwę kawy.</string>
@@ -20,4 +19,6 @@
     <string name="label_review_saving">Zapisywanie…</string>
     <string name="label_review_not_decaf">Z kofeiną</string>
     <string name="msg_review_qr_approval">Pobrać szczegóły kawy z tej witryny?</string>
+    <string name="label_review_reading">Odczyt</string>
+    <string name="action_review_choose_date">Wybierz datę</string>
 </resources>

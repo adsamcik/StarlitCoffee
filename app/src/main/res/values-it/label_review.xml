@@ -6,7 +6,6 @@
     <string name="action_review_keep_mine">Mantieni il mio valore</string>
     <string name="action_review_leave_blank">Lascia vuoto</string>
     <string name="msg_review_source_unavailable">La foto originale non è disponibile. Modifica il dato o aggiungi un\'altra foto.</string>
-    <string name="msg_review_check_label">Verifica questo dato sull\'etichetta.</string>
     <string name="action_review_use_reading">Usa questa lettura</string>
     <string name="label_review_source">Fonte</string>
     <string name="msg_review_name_required">Inserisci un nome per il caffè.</string>
@@ -20,4 +19,6 @@
     <string name="label_review_saving">Salvataggio…</string>
     <string name="label_review_not_decaf">Con caffeina</string>
     <string name="msg_review_qr_approval">Recuperare i dettagli del caffè da questo sito web?</string>
+    <string name="label_review_reading">Dato letto</string>
+    <string name="action_review_choose_date">Scegli data</string>
 </resources>

@@ -6,7 +6,6 @@
     <string name="action_review_keep_mine">Păstrează valoarea mea</string>
     <string name="action_review_leave_blank">Lasă necompletat</string>
     <string name="msg_review_source_unavailable">Fotografia sursă nu este disponibilă. Editează detaliul sau adaugă altă fotografie.</string>
-    <string name="msg_review_check_label">Verifică acest detaliu pe etichetă.</string>
     <string name="action_review_use_reading">Folosește această citire</string>
     <string name="label_review_source">Sursă</string>
     <string name="msg_review_name_required">Introdu un nume pentru cafea.</string>
@@ -20,4 +19,6 @@
     <string name="label_review_saving">Se salvează…</string>
     <string name="label_review_not_decaf">Cu cofeină</string>
     <string name="msg_review_qr_approval">Preluați detaliile cafelei de pe acest site?</string>
+    <string name="label_review_reading">Valoare citită</string>
+    <string name="action_review_choose_date">Alege data</string>
 </resources>

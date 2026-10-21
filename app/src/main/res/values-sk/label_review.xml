@@ -6,7 +6,6 @@
     <string name="action_review_keep_mine">Ponechať vlastný údaj</string>
     <string name="action_review_leave_blank">Ponechať prázdne</string>
     <string name="msg_review_source_unavailable">Zdrojová fotografia nie je dostupná. Upravte údaj alebo pridajte ďalšiu fotografiu.</string>
-    <string name="msg_review_check_label">Skontrolujte tento údaj podľa štítku.</string>
     <string name="action_review_use_reading">Použiť prečítaný údaj</string>
     <string name="label_review_source">Zdroj</string>
     <string name="msg_review_name_required">Zadajte názov kávy.</string>
@@ -20,4 +19,6 @@
     <string name="label_review_saving">Ukladanie…</string>
     <string name="label_review_not_decaf">S kofeínom</string>
     <string name="msg_review_qr_approval">Načítať údaje o káve z tohto webu?</string>
+    <string name="label_review_reading">Rozpoznaný údaj</string>
+    <string name="action_review_choose_date">Vybrať dátum</string>
 </resources>

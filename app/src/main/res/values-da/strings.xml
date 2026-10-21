@@ -454,7 +454,6 @@
     <string name="label_remaining_weight_grams">Resterende vægt (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_from_photo">Fra foto</string>
     <string name="action_scan_label">Scan label</string>
     <string name="action_add_bag_barcode">Scan stregkode</string>
     <string name="action_add_bag_manual">Tilføj manuelt</string>

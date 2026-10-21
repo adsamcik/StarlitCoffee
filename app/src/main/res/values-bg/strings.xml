@@ -455,7 +455,6 @@
     <string name="label_remaining_weight_grams">Оставащо тегло (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_from_photo">От снимка</string>
     <string name="action_scan_label">Сканирайте етикет</string>
     <string name="action_add_bag_barcode">Сканирайте баркод</string>
     <string name="action_add_bag_manual">Добавете ръчно</string>

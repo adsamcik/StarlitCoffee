@@ -6,7 +6,6 @@
     <string name="action_review_keep_mine">Ohrani mojo vrednost</string>
     <string name="action_review_leave_blank">Pusti prazno</string>
     <string name="msg_review_source_unavailable">Izvorna fotografija ni na voljo. Uredite podatek ali dodajte drugo fotografijo.</string>
-    <string name="msg_review_check_label">Preverite ta podatek na etiketi.</string>
     <string name="action_review_use_reading">Uporabi ta prebrani podatek</string>
     <string name="label_review_source">Vir</string>
     <string name="msg_review_name_required">Vnesite ime kave.</string>
@@ -20,4 +19,6 @@
     <string name="label_review_saving">Shranjevanje…</string>
     <string name="label_review_not_decaf">S kofeinom</string>
     <string name="msg_review_qr_approval">Pridobim podatke o kavi s tega spletnega mesta?</string>
+    <string name="label_review_reading">Prebrani podatek</string>
+    <string name="action_review_choose_date">Izberi datum</string>
 </resources>

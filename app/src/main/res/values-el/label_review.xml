@@ -6,7 +6,6 @@
     <string name="action_review_keep_mine">Διατήρηση της τιμής μου</string>
     <string name="action_review_leave_blank">Να μείνει κενό</string>
     <string name="msg_review_source_unavailable">Η αρχική φωτογραφία δεν είναι διαθέσιμη. Επεξεργαστείτε το στοιχείο ή προσθέστε άλλη φωτογραφία.</string>
-    <string name="msg_review_check_label">Ελέγξτε αυτό το στοιχείο στην ετικέτα.</string>
     <string name="action_review_use_reading">Χρήση αναγνωρισμένου στοιχείου</string>
     <string name="label_review_source">Πηγή</string>
     <string name="msg_review_name_required">Εισαγάγετε όνομα καφέ.</string>
@@ -20,4 +19,6 @@
     <string name="label_review_saving">Αποθήκευση…</string>
     <string name="label_review_not_decaf">Με καφεΐνη</string>
     <string name="msg_review_qr_approval">Ανάκτηση στοιχείων καφέ από αυτόν τον ιστότοπο;</string>
+    <string name="label_review_reading">Αναγνωρισμένο στοιχείο</string>
+    <string name="action_review_choose_date">Επιλογή ημερομηνίας</string>
 </resources>
