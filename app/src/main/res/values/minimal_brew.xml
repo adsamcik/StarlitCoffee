@@ -3,6 +3,9 @@
     <string name="action_brew_help">Help with this step</string>
     <string name="action_brew_controls">Brew controls</string>
     <string name="action_brew_recipe">Recipe</string>
+    <string name="label_live_brew_total">total</string>
+    <string name="label_live_step_added">this step</string>
+    <string name="label_live_recipe_total">recipe total</string>
     <!-- Technical captions follow the explicitly English reviewed Pulsar guide. -->
     <string name="msg_brew_pulsar_main_pour" translatable="false">Open valve fully · Pulse through cap</string>
     <string name="msg_brew_pulsar_basic_pour" translatable="false">Open valve · Pour through cap</string>
@@ -10,6 +13,8 @@
     <string name="msg_brew_pulsar_hot_liquid" translatable="false">Hot liquid: hands clear; keep brewer and server stable.</string>
     <string name="msg_brew_pulsar_overflow" translatable="false">Stop pouring near the rim or if the server is unstable.</string>
     <string name="msg_brew_pulsar_pour_safety" translatable="false">Hot liquid: lift only by the base. Keep level, below the rim, with room in the server.</string>
-    <string name="label_brew_water_height_target" translatable="false">Target · ~1 cm above bed</string>
+    <string name="label_brew_water_height_target" translatable="false">Target</string>
+    <string name="label_brew_water_height_value" translatable="false">~1 cm</string>
+    <string name="label_brew_water_height_reference" translatable="false">above bed</string>
     <string name="cd_brew_water_height_target" translatable="false">Target water height, not a measurement. The bracket runs from the top of the coffee bed to the target waterline, about 1 cm above it. Pause pouring if higher.</string>
 </resources>

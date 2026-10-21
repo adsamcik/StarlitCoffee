@@ -29,6 +29,14 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.domain.brewing.StageId
+import com.adsamcik.starlitcoffee.domain.brewing.StagePlanId
+import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStageDefinition
+import com.adsamcik.starlitcoffee.domain.brewing.session.CompiledBrewStage
+import com.adsamcik.starlitcoffee.domain.brewing.session.CompiledStagePlan
+import com.adsamcik.starlitcoffee.domain.brewing.session.SessionId
+import com.adsamcik.starlitcoffee.domain.brewing.session.SessionRuntimeState
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageCompletionMode
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageRuntimeProgress
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageInstanceId
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageRunStatus
 import com.adsamcik.starlitcoffee.domain.brewing.session.UserBrewTimer
@@ -65,17 +73,26 @@ class MinimalBrewAccessibilityTest {
     private val context get() = InstrumentationRegistry.getInstrumentation().targetContext
 
     @Test
-    fun sourceCountdownAndCustomReminderKeepSeparateLabels() {
+    fun sourceCountdownAndCustomReminderKeepSeparateLabelsWithBloomAt200Percent() {
         val stageId = StageInstanceId(StageId("countdown"), 1)
-        val stage = CurrentBrewStagePresentation(stageId, BrewStageAction.STEEP, StageContentId("countdown_copy"),
+        val stage = CurrentBrewStagePresentation(stageId, BrewStageAction.BLOOM, StageContentId("countdown_copy"),
             null, false, StageRunStatus.ACTIVE, 60_000L, BrewStageCompletionPresentation.Countdown(90_000L, 30_000L),
             safetyMessages = emptyList())
+        val runtime = SessionRuntimeState.create(SessionId("bloom-timers"), CompiledStagePlan(StagePlanId("bloom_timers"), 1,
+            listOf(CompiledBrewStage(stageId, BrewStageDefinition(StageId("countdown"), BrewStageAction.BLOOM,
+                StageContentId("countdown_copy"), completionMode = StageCompletionMode.Countdown(90_000L)))))).copy(
+            status = BrewSessionStatus.RUNNING, currentStageIndex = 0, totalActiveElapsedMillis = (12L * 60L + 37L) * 60_000L,
+            stageProgress = listOf(StageRuntimeProgress(StageRunStatus.ACTIVE, elapsedActiveMillis = 60_000L)))
         rule.setContent {
-            StarlitCoffeeTheme(dynamicColor = false) {
-                Surface {
-                    BrewSessionHero(presentation().copy(currentStage = stage, userTimerRemainingMillis = 60_000L,
-                        userTimer = UserBrewTimer(stageId, 1L, 120_000L, 0L, null, null)),
-                        recipe = null, runtime = null, bloomSpritesheetId = null)
+            val density = LocalDensity.current
+            CompositionLocalProvider(LocalDensity provides Density(density.density, fontScale = 2f)) {
+                StarlitCoffeeTheme(dynamicColor = false) {
+                    Surface(Modifier.width(320.dp)) {
+                        BrewSessionHero(presentation().copy(currentStage = stage,
+                            userTimerRemainingMillis = 60_000L,
+                            userTimer = UserBrewTimer(stageId, 1L, 120_000L, 0L, null, null)),
+                            recipe = null, runtime = runtime, bloomSpritesheetId = "coffee_plant")
+                    }
                 }
             }
         }
@@ -85,6 +102,14 @@ class MinimalBrewAccessibilityTest {
             context.getString(R.string.format_brew_activity_minutes, 1L, 0L)
         rule.onNodeWithText(source).assertIsDisplayed()
         rule.onNodeWithText(reminder).assertIsDisplayed()
+        rule.onNodeWithContentDescription(context.getString(R.string.cd_bloom_animation)).assertIsDisplayed()
+        val clockBounds = rule.onNodeWithText(context.getString(R.string.format_brew_activity_hours, 12L, 37L))
+            .fetchSemanticsNode().boundsInRoot
+        val bloomBounds = rule.onNodeWithContentDescription(context.getString(R.string.cd_bloom_animation))
+            .fetchSemanticsNode().boundsInRoot
+        assertTrue("Clock labels overlap bloom artwork", clockBounds.right <= bloomBounds.left)
+        save("minimal-bloom-clocks-200")
+        assertTextFits()
     }
 
     @Test

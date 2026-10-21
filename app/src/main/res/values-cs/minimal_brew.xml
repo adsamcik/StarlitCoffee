@@ -3,4 +3,7 @@
     <string name="action_brew_help">Pomoc s tímto krokem</string>
     <string name="action_brew_controls">Ovládání přípravy</string>
     <string name="action_brew_recipe">Recept</string>
+    <string name="label_live_brew_total">celkem</string>
+    <string name="label_live_step_added">v tomto kroku</string>
+    <string name="label_live_recipe_total">celkem v receptu</string>
 </resources>

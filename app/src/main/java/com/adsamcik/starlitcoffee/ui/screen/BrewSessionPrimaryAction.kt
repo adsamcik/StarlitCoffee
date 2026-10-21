@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
@@ -21,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.domain.brewing.session.SessionEvent
 import com.adsamcik.starlitcoffee.domain.brewing.session.SessionEventId
-import com.adsamcik.starlitcoffee.ui.component.primaryActionButtonColors
 import com.adsamcik.starlitcoffee.ui.session.ActiveBrewSessionPresentation
 import com.adsamcik.starlitcoffee.ui.session.BrewSessionActionAvailability
 import java.util.UUID
@@ -82,7 +83,7 @@ internal fun BrewSessionPrimaryActionBar(
     Surface(color = MaterialTheme.colorScheme.surface) {
         Column(Modifier.navigationBarsPadding()) {
             Column(
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp),
+                modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
@@ -91,7 +92,7 @@ internal fun BrewSessionPrimaryActionBar(
                         enabled = !isDispatching,
                         onClick = onClick,
                         modifier = buttonModifier,
-                        shape = MaterialTheme.shapes.extraLarge,
+                        shape = RoundedCornerShape(16.dp),
                     ) {
                         ActionLabel(labelRes)
                     }
@@ -105,8 +106,8 @@ internal fun BrewSessionPrimaryActionBar(
                         enabled = !isDispatching,
                         onClick = onClick,
                         modifier = buttonModifier,
-                        shape = MaterialTheme.shapes.extraLarge,
-                        colors = primaryActionButtonColors(),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = ButtonDefaults.buttonColors(),
                     ) {
                         ActionLabel(labelRes)
                     }

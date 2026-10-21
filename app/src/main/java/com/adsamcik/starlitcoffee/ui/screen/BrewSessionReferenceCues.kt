@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -15,6 +16,7 @@ import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Scale
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Thermostat
+import androidx.compose.material.icons.filled.WaterDrop
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -33,6 +35,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.domain.brewing.QuantityRole
@@ -124,20 +127,31 @@ internal fun ReferenceCueRow(
 ) {
     val content = cue.content(compact = compact)
     val spokenLabel = if (compact) cue.content().label else content.label
+    if (compact) {
+        Row(Modifier.fillMaxWidth().semantics(mergeDescendants = true) {
+            contentDescription = "$spokenLabel ${content.value}"
+        }, horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
+            Icon(content.icon, contentDescription = null, modifier = Modifier.size(28.dp),
+                tint = MaterialTheme.colorScheme.primary)
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp),
+                itemVerticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f)) {
+                Text(content.value, style = MaterialTheme.typography.displaySmall, fontWeight = FontWeight.Normal,
+                    modifier = Modifier.alignByBaseline())
+                Text(content.label, style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.alignByBaseline())
+            }
+        }
+        return
+    }
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 56.dp)
-            .semantics(mergeDescendants = true) {
-                if (compact) contentDescription = "$spokenLabel ${content.value}"
-            },
+            .semantics(mergeDescendants = true) {},
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        if (compact) {
-            Icon(content.icon, contentDescription = null, modifier = Modifier.size(24.dp),
-                tint = MaterialTheme.colorScheme.primary)
-        } else Surface(
+        Surface(
             modifier = Modifier.size(40.dp),
             shape = MaterialTheme.shapes.medium,
             color = MaterialTheme.colorScheme.secondaryContainer,
@@ -159,11 +173,7 @@ internal fun ReferenceCueRow(
             )
             Text(
                 text = content.value,
-                style = when {
-                    compact && prominent -> MaterialTheme.typography.displaySmall
-                    prominent -> MaterialTheme.typography.headlineLarge
-                    else -> MaterialTheme.typography.titleMedium
-                },
+                style = if (prominent) MaterialTheme.typography.headlineLarge else MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
         }
@@ -189,8 +199,12 @@ private fun BrewStageReferenceCuePresentation.content(compact: Boolean = false):
     )
 
     is BrewStageReferenceCuePresentation.Mass -> ReferenceCueContent(
-        icon = Icons.Filled.Scale,
-        label = if (compact && role == QuantityRole.BREW_WATER_INPUT) stringResource(reference.labelRes)
+        icon = if (compact && role == QuantityRole.BREW_WATER_INPUT) Icons.Filled.WaterDrop else Icons.Filled.Scale,
+        label = if (compact && role == QuantityRole.BREW_WATER_INPUT) stringResource(when (reference) {
+            StageMassReference.BREW_CUMULATIVE -> R.string.label_live_brew_total
+            StageMassReference.STAGE_ADDED -> R.string.label_live_step_added
+            StageMassReference.RECIPE_TOTAL -> R.string.label_live_recipe_total
+        })
             else "${stringResource(role.labelRes)} · ${stringResource(reference.labelRes)}",
         value = qualifier.formatValue(
             minimum = "${formatReferenceNumber(minimumGrams)} g",

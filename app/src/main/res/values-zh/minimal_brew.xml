@@ -3,4 +3,7 @@
     <string name="action_brew_help">此步骤的帮助</string>
     <string name="action_brew_controls">冲煮控制</string>
     <string name="action_brew_recipe">配方</string>
+    <string name="label_live_brew_total">@string/label_brew_reference_brew_total</string>
+    <string name="label_live_step_added">@string/label_brew_reference_added_this_step</string>
+    <string name="label_live_recipe_total">@string/label_brew_reference_recipe_total</string>
 </resources>
