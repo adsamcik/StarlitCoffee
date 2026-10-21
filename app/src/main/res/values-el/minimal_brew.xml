@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_brew_help">Βοήθεια για αυτό το βήμα</string>
+    <string name="action_brew_controls">Έλεγχοι εκχύλισης</string>
+    <string name="action_brew_recipe">Συνταγή</string>
+</resources>

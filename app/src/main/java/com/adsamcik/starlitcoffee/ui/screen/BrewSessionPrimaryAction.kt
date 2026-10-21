@@ -59,6 +59,8 @@ internal fun BrewSessionPrimaryActionBar(
     startsBloom: Boolean,
     isDispatching: Boolean,
     onDispatch: (SessionEvent) -> Unit,
+    showGuideToggle: Boolean = true,
+    backgroundBrews: @Composable () -> Unit = {},
 ) {
     val isGuidanceAction = action == BrewSessionPrimaryAction.PAUSE_GUIDANCE ||
         action == BrewSessionPrimaryAction.RESUME_GUIDANCE
@@ -77,55 +79,58 @@ internal fun BrewSessionPrimaryActionBar(
     }
     val onClick = { onDispatch(action.event()) }
     val buttonModifier = Modifier.fillMaxWidth().heightIn(min = 56.dp)
-    Surface(color = MaterialTheme.colorScheme.surface, tonalElevation = 3.dp) {
-        Column(
-            modifier = Modifier.navigationBarsPadding().padding(horizontal = 20.dp, vertical = 12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(4.dp),
-        ) {
-            if (isGuidanceAction) {
-                OutlinedButton(
-                    enabled = !isDispatching,
-                    onClick = onClick,
-                    modifier = buttonModifier,
-                    shape = MaterialTheme.shapes.extraLarge,
-                ) {
-                    ActionLabel(labelRes)
-                }
-                Text(
-                    stringResource(R.string.msg_brew_clock_keeps_running),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            } else {
-                Button(
-                    enabled = !isDispatching,
-                    onClick = onClick,
-                    modifier = buttonModifier,
-                    shape = MaterialTheme.shapes.extraLarge,
-                    colors = primaryActionButtonColors(),
-                ) {
-                    ActionLabel(labelRes)
-                }
-                if (presentation.actions.canPause) {
-                    val guideAction = if (presentation.isGuidancePaused) {
-                        BrewSessionPrimaryAction.RESUME_GUIDANCE
-                    } else {
-                        BrewSessionPrimaryAction.PAUSE_GUIDANCE
-                    }
-                    TextButton(
+    Surface(color = MaterialTheme.colorScheme.surface) {
+        Column(Modifier.navigationBarsPadding()) {
+            Column(
+                modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                if (isGuidanceAction) {
+                    OutlinedButton(
                         enabled = !isDispatching,
-                        onClick = { onDispatch(guideAction.event()) },
-                        modifier = Modifier.heightIn(min = 48.dp),
+                        onClick = onClick,
+                        modifier = buttonModifier,
+                        shape = MaterialTheme.shapes.extraLarge,
                     ) {
-                        Text(stringResource(if (presentation.isGuidancePaused) {
-                            R.string.action_resume_brew_guide
+                        ActionLabel(labelRes)
+                    }
+                    Text(
+                        stringResource(R.string.msg_brew_clock_keeps_running),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                } else {
+                    Button(
+                        enabled = !isDispatching,
+                        onClick = onClick,
+                        modifier = buttonModifier,
+                        shape = MaterialTheme.shapes.extraLarge,
+                        colors = primaryActionButtonColors(),
+                    ) {
+                        ActionLabel(labelRes)
+                    }
+                    if (showGuideToggle && presentation.actions.canPause) {
+                        val guideAction = if (presentation.isGuidancePaused) {
+                            BrewSessionPrimaryAction.RESUME_GUIDANCE
                         } else {
-                            R.string.action_pause_brew_guide
-                        }))
+                            BrewSessionPrimaryAction.PAUSE_GUIDANCE
+                        }
+                        TextButton(
+                            enabled = !isDispatching,
+                            onClick = { onDispatch(guideAction.event()) },
+                            modifier = Modifier.heightIn(min = 48.dp),
+                        ) {
+                            Text(stringResource(if (presentation.isGuidancePaused) {
+                                R.string.action_resume_brew_guide
+                            } else {
+                                R.string.action_pause_brew_guide
+                            }))
+                        }
                     }
                 }
             }
+            backgroundBrews()
         }
     }
 }

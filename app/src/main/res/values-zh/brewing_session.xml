@@ -5,7 +5,6 @@
     <string name="format_brew_stage_progress">第 %1$d 步，共 %2$d 步</string>
     <string name="label_elapsed">已用时间</string>
     <string name="label_remaining">剩余时间</string>
-    <string name="format_brew_stage_remaining_time">还剩 %1$s</string>
     <string name="label_measured_amount">测得量（g）</string>
     <string name="action_brew_prepare">准备</string>
     <string name="action_brew_rinse">冲洗</string>
@@ -33,7 +32,6 @@
     <string name="msg_brew_session_finished">冲煮已保存。</string>
     <string name="msg_brew_session_finishing">正在保存冲煮…</string>
     <string name="msg_brew_session_paused">冲煮已暂停。</string>
-    <string name="msg_brew_stage_manual">完成实际操作后，再完成此步骤。</string>
     <string name="msg_brew_stage_observation">看到预期的物理变化时，标记此步骤。</string>
     <string name="format_brew_stage_target_grams">目标 %1$.0f 克</string>
     <string name="format_brew_stage_recorded_grams">已记录 %1$.0f 克</string>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_brew_help">Pomoć za ovaj korak</string>
+    <string name="action_brew_controls">Kontrole pripreme</string>
+    <string name="action_brew_recipe">Recept</string>
+</resources>

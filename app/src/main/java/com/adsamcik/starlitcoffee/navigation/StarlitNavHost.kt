@@ -403,8 +403,8 @@ fun StarlitNavHost() {
         snackbarHost = { SnackbarHost(snackbarHostState) },
         bottomBar = {
             val hasBottomNavigation = showBottomBar && !useNavigationRail
-            val hasOtherSessions = prefs.onboardingCompleted &&
-                activitySessions.any { it.runtime.sessionId.value != focusedSessionId }
+            val hasOtherSessions = prefs.onboardingCompleted && focusedSessionId == null &&
+                activitySessions.isNotEmpty()
             if (hasOtherSessions || hasBottomNavigation) {
                 Column(
                     modifier = if (hasBottomNavigation) Modifier else Modifier.navigationBarsPadding(),
@@ -586,6 +586,16 @@ fun StarlitNavHost() {
                     BrewSessionScreen(
                         sessionId = route.sessionId,
                         sessionFlow = sessionFlow,
+                        backgroundBrews = {
+                            BrewActivityHost(
+                                sessions = activitySessions,
+                                focusedSessionId = route.sessionId,
+                                onOpenSession = { id ->
+                                    navController.navigate(BrewSession(sessionId = id)) { launchSingleTop = true }
+                                },
+                                compact = true,
+                            )
+                        },
                         onDispatch = { event ->
                             durableSessionRuntime.coordinator.dispatch(
                                 com.adsamcik.starlitcoffee.domain.brewing.session.SessionId(
@@ -616,6 +626,7 @@ fun StarlitNavHost() {
                         dimModeFullscreen = prefs.dimModeFullscreen,
                         dimModeForceDarkInLight = prefs.dimModeForceDarkInLight,
                         vibrationTheme = prefs.brewVibrationTheme,
+                        bloomSpritesheetWeights = prefs.bloomSpritesheetWeights,
                         onScreenForegrounded = {
                             durableSessionRuntime.clearBackgroundStatus(
                                 com.adsamcik.starlitcoffee.domain.brewing.session.SessionId(

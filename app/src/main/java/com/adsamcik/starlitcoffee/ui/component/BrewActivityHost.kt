@@ -1,7 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.component
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,7 +14,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
@@ -30,6 +31,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
@@ -53,6 +55,7 @@ fun BrewActivityHost(
     focusedSessionId: String?,
     onOpenSession: (String) -> Unit,
     modifier: Modifier = Modifier,
+    compact: Boolean = false,
 ) {
     if (sessions.isEmpty()) return
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -71,7 +74,7 @@ fun BrewActivityHost(
             focusedSessionId,
         )
     }
-    BrewActivityStrip(activities, onOpenSession, modifier)
+    BrewActivityStrip(activities, onOpenSession, modifier, compact)
 }
 
 /** Kept stateless with respect to brew data so empty and multiple states share one UI. */
@@ -81,17 +84,22 @@ internal fun BrewActivityStrip(
     activities: List<BrewActivityPresentation>,
     onOpenSession: (String) -> Unit,
     modifier: Modifier = Modifier,
+    compact: Boolean = false,
 ) {
     val primary = activities.firstOrNull() ?: return
     var showChooser by rememberSaveable { mutableStateOf(false) }
-    Box(modifier = modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+    Column(modifier = modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+        if (compact) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
         BrewActivityRow(
             activity = primary,
             count = activities.size,
             onClick = {
                 if (activities.size == 1) onOpenSession(primary.sessionId) else showChooser = true
             },
-            modifier = Modifier.widthIn(max = 720.dp).fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier = Modifier.widthIn(max = 720.dp).fillMaxWidth().then(
+                if (compact) Modifier else Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            ),
+            compact = compact,
         )
     }
     if (showChooser) {
@@ -124,6 +132,7 @@ private fun BrewActivityRow(
     count: Int,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    compact: Boolean = false,
 ) {
     val status = brewActivityStatus(activity)
     val methodLabel = localizedBrewMethodLabel(activity.methodLabel)
@@ -138,23 +147,46 @@ private fun BrewActivityRow(
     Surface(
         onClick = onClick,
         modifier = modifier,
-        shape = MaterialTheme.shapes.large,
-        color = if (activity.needsAttention) {
+        shape = if (compact) RectangleShape else MaterialTheme.shapes.large,
+        color = if (compact) {
+            MaterialTheme.colorScheme.surface
+        } else if (activity.needsAttention) {
             MaterialTheme.colorScheme.tertiaryContainer
         } else {
             MaterialTheme.colorScheme.secondaryContainer
         },
     ) {
         Row(
-            modifier = Modifier.heightIn(min = 64.dp).padding(horizontal = 16.dp, vertical = 12.dp)
+            modifier = Modifier.heightIn(min = if (compact) 56.dp else 64.dp)
+                .padding(horizontal = if (compact) 20.dp else 16.dp, vertical = if (compact) 8.dp else 12.dp)
                 .clearAndSetSemantics { contentDescription = action },
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Icon(Icons.Filled.AccessTime, contentDescription = null, modifier = Modifier.size(24.dp))
+            Icon(
+                Icons.Filled.AccessTime,
+                contentDescription = null,
+                modifier = Modifier.size(if (compact) 20.dp else 24.dp),
+                tint = when {
+                    !compact -> LocalContentColor.current
+                    activity.needsAttention -> MaterialTheme.colorScheme.tertiary
+                    else -> MaterialTheme.colorScheme.onSurfaceVariant
+                },
+            )
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text(methodLabel, style = MaterialTheme.typography.titleSmall)
-                Text(description, style = MaterialTheme.typography.bodySmall)
+                Text(
+                    if (count > 1) stringResource(R.string.title_active_brews) else methodLabel,
+                    style = MaterialTheme.typography.titleSmall,
+                )
+                Text(
+                    if (count > 1) "$methodLabel · $description" else description,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = when {
+                        !compact -> LocalContentColor.current
+                        activity.needsAttention -> MaterialTheme.colorScheme.tertiary
+                        else -> MaterialTheme.colorScheme.onSurfaceVariant
+                    },
+                )
             }
             if (count > 1) {
                 Text(count.toString(), style = MaterialTheme.typography.labelLarge)

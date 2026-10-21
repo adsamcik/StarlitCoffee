@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_brew_help">Pomoc s tímto krokem</string>
+    <string name="action_brew_controls">Ovládání přípravy</string>
+    <string name="action_brew_recipe">Recept</string>
+</resources>

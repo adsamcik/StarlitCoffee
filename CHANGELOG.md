@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Simpler live brewing** — an open clock and bloom layout puts the current
+  quantity and action first. Recipe reading, step help and timer controls stay
+  close at hand, while another running brew remains accessible below the main
+  action. Source warnings and physical confirmations remain visible; reading
+  or pausing guidance does not pause extraction.
+- **Accessible brewing layouts** — clock labels retain explicit hour/minute
+  units, unknown start times remain unknown, and narrow screens and larger text
+  keep the primary action and named background-brew controls reachable.
+
 ### Security
 
 - Updated Android build-tool and lint dependencies to address eight security

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_brew_help">Помощ за тази стъпка</string>
+    <string name="action_brew_controls">Управление на приготвянето</string>
+    <string name="action_brew_recipe">Рецепта</string>
+</resources>

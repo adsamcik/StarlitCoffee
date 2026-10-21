@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_brew_help">Palīdzība šim solim</string>
+    <string name="action_brew_controls">Pagatavošanas vadība</string>
+    <string name="action_brew_recipe">Recepte</string>
+</resources>

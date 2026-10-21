@@ -5,7 +5,6 @@
     <string name="format_brew_stage_progress">Korak %1$d od %2$d</string>
     <string name="label_elapsed">Proteklo</string>
     <string name="label_remaining">Preostalo</string>
-    <string name="format_brew_stage_remaining_time">Preostalo %1$s</string>
     <string name="label_measured_amount">Izmjerena količina (g)</string>
     <string name="action_brew_prepare">Pripremi</string>
     <string name="action_brew_rinse">Isperi</string>
@@ -33,7 +32,6 @@
     <string name="msg_brew_session_finished">Priprema je spremljena.</string>
     <string name="msg_brew_session_finishing">Spremanje pripreme…</string>
     <string name="msg_brew_session_paused">Priprema je pauzirana.</string>
-    <string name="msg_brew_stage_manual">Dovršite ovaj korak kada je fizička radnja obavljena.</string>
     <string name="msg_brew_stage_observation">Označite ovaj korak kada vidite očekivanu fizičku promjenu.</string>
     <string name="format_brew_stage_target_grams">Cilj %1$.0f g</string>
     <string name="format_brew_stage_recorded_grams">Zabilježeno %1$.0f g</string>

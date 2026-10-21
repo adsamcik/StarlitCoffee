@@ -5,7 +5,6 @@
     <string name="format_brew_stage_progress">Vaihe %1$d / %2$d</string>
     <string name="label_elapsed">Kulunut</string>
     <string name="label_remaining">Jäljellä</string>
-    <string name="format_brew_stage_remaining_time">%1$s jäljellä</string>
     <string name="label_measured_amount">Mitattu määrä (g)</string>
     <string name="action_brew_prepare">Valmistele</string>
     <string name="action_brew_rinse">Huuhtele</string>
@@ -33,7 +32,6 @@
     <string name="msg_brew_session_finished">Valmistus tallennettu.</string>
     <string name="msg_brew_session_finishing">Tallennetaan valmistusta…</string>
     <string name="msg_brew_session_paused">Valmistus on keskeytetty.</string>
-    <string name="msg_brew_stage_manual">Viimeistele tämä vaihe, kun fyysinen toimenpide on tehty.</string>
     <string name="msg_brew_stage_observation">Merkitse tämä vaihe, kun näet odotetun fyysisen muutoksen.</string>
     <string name="format_brew_stage_target_grams">Tavoite %1$.0f g</string>
     <string name="format_brew_stage_recorded_grams">Tallennettu %1$.0f g</string>

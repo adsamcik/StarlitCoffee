@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_brew_help">Help with this step</string>
+    <string name="action_brew_controls">Brew controls</string>
+    <string name="action_brew_recipe">Recipe</string>
+    <!-- Technical captions follow the explicitly English reviewed Pulsar guide. -->
+    <string name="msg_brew_pulsar_main_pour" translatable="false">From 1:00, open the valve fully. Pulse through the cap to 340 g total. Keep water about 1 cm above the bed; pause pouring if higher.</string>
+    <string name="label_brew_water_height_target" translatable="false">Target: about 1 cm above the coffee bed</string>
+    <string name="cd_brew_water_height_target" translatable="false">Target water height, not a measurement. The bracket runs from the top of the coffee bed to the target waterline, about 1 cm above it. Pause pouring if higher.</string>
+</resources>

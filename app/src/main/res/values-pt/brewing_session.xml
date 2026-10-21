@@ -5,7 +5,6 @@
     <string name="format_brew_stage_progress">Etapa %1$d de %2$d</string>
     <string name="label_elapsed">Decorrido</string>
     <string name="label_remaining">Restante</string>
-    <string name="format_brew_stage_remaining_time">Restam %1$s</string>
     <string name="label_measured_amount">Quantidade medida (g)</string>
     <string name="action_brew_prepare">Preparar</string>
     <string name="action_brew_rinse">Enxaguar</string>
@@ -33,7 +32,6 @@
     <string name="msg_brew_session_finished">Preparação guardada.</string>
     <string name="msg_brew_session_finishing">A guardar a preparação…</string>
     <string name="msg_brew_session_paused">Preparação em pausa.</string>
-    <string name="msg_brew_stage_manual">Conclua esta etapa quando a ação física estiver concluída.</string>
     <string name="msg_brew_stage_observation">Marque esta etapa quando vir a alteração física esperada.</string>
     <string name="format_brew_stage_target_grams">Alvo %1$.0f g</string>
     <string name="format_brew_stage_recorded_grams">Registado %1$.0f g</string>

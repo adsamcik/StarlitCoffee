@@ -5,7 +5,6 @@
     <string name="format_brew_stage_progress">Pasul %1$d din %2$d</string>
     <string name="label_elapsed">Timp scurs</string>
     <string name="label_remaining">Rămas</string>
-    <string name="format_brew_stage_remaining_time">Au rămas %1$s</string>
     <string name="label_measured_amount">Cantitate măsurată (g)</string>
     <string name="action_brew_prepare">Pregătește</string>
     <string name="action_brew_rinse">Clătește</string>
@@ -33,7 +32,6 @@
     <string name="msg_brew_session_finished">Preparare salvată.</string>
     <string name="msg_brew_session_finishing">Se salvează prepararea…</string>
     <string name="msg_brew_session_paused">Prepararea este întreruptă.</string>
-    <string name="msg_brew_stage_manual">Finalizează acest pas când acțiunea fizică este gata.</string>
     <string name="msg_brew_stage_observation">Marchează acest pas când vezi schimbarea fizică așteptată.</string>
     <string name="format_brew_stage_target_grams">Țintă %1$.0f g</string>
     <string name="format_brew_stage_recorded_grams">Înregistrat %1$.0f g</string>

@@ -100,6 +100,7 @@ fun BrewSessionGuidancePanel(
     onShowEnglishTerminology: (Boolean) -> Unit = {},
     sourceExplanations: Map<StageContentId, String> = emptyMap(),
     equipmentProfileId: String? = null,
+    showFullExplanations: Boolean = false,
 ) {
     val approvedVisual = resolution.visualStatus as? DurableBrewGuidanceVisualStatus.Approved
     val visibleContent = remember(
@@ -138,7 +139,8 @@ fun BrewSessionGuidancePanel(
                     safetyCritical = content.safetyCritical,
                     explanation = listOfNotNull(content.explanation, content.tip,
                         sourceExplanations[content.id].takeIf {
-                            resolution.policy?.level in setOf(GuidancePresentationLevel.FULL, GuidancePresentationLevel.CUSTOM)
+                            showFullExplanations || resolution.policy?.level in
+                                setOf(GuidancePresentationLevel.FULL, GuidancePresentationLevel.CUSTOM)
                         }).filterNot { it == "None" }.distinct(),
                     altText = content.altText,
                 ),

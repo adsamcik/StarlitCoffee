@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_brew_help">此步骤的帮助</string>
+    <string name="action_brew_controls">冲煮控制</string>
+    <string name="action_brew_recipe">配方</string>
+</resources>

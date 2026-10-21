@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_brew_help">Ohje tähän vaiheeseen</string>
+    <string name="action_brew_controls">Valmistuksen hallinta</string>
+    <string name="action_brew_recipe">Resepti</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_brew_help">Ajutor pentru acest pas</string>
+    <string name="action_brew_controls">Comenzi de preparare</string>
+    <string name="action_brew_recipe">Rețetă</string>
+</resources>

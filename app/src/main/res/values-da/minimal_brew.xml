@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_brew_help">Hjælp til dette trin</string>
+    <string name="action_brew_controls">Bryggekontroller</string>
+    <string name="action_brew_recipe">Opskrift</string>
+</resources>

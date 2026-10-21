@@ -5,7 +5,6 @@
     <string name="format_brew_stage_progress">Paso %1$d de %2$d</string>
     <string name="label_elapsed">Transcurrido</string>
     <string name="label_remaining">Restante</string>
-    <string name="format_brew_stage_remaining_time">Quedan %1$s</string>
     <string name="label_measured_amount">Cantidad medida (g)</string>
     <string name="action_brew_prepare">Preparar</string>
     <string name="action_brew_rinse">Enjuagar</string>
@@ -33,7 +32,6 @@
     <string name="msg_brew_session_finished">Preparación guardada.</string>
     <string name="msg_brew_session_finishing">Guardando la preparación…</string>
     <string name="msg_brew_session_paused">Preparación en pausa.</string>
-    <string name="msg_brew_stage_manual">Complete este paso cuando haya terminado la acción física.</string>
     <string name="msg_brew_stage_observation">Marque este paso cuando vea el cambio físico esperado.</string>
     <string name="format_brew_stage_target_grams">Objetivo %1$.0f g</string>
     <string name="format_brew_stage_recorded_grams">Registrado %1$.0f g</string>
