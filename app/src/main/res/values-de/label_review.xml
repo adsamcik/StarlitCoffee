@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_review_not_set">Nicht angegeben</string>
+    <string name="label_review_check">Prüfen</string>
+    <string name="action_review_edit">Bearbeiten</string>
+    <string name="action_review_keep_mine">Meine Angabe behalten</string>
+    <string name="action_review_leave_blank">Leer lassen</string>
+    <string name="msg_review_source_unavailable">Quellfoto nicht verfügbar. Bearbeite die Angabe oder füge ein weiteres Foto hinzu.</string>
+    <string name="msg_review_check_label">Gleiche diese Angabe mit dem Etikett ab.</string>
+    <string name="action_review_use_reading">Erkannten Wert übernehmen</string>
+    <string name="label_review_source">Quelle</string>
+    <string name="msg_review_name_required">Gib einen Namen für den Kaffee ein.</string>
+    <string name="action_review_retry_save">Speichern erneut versuchen</string>
+    <string name="msg_review_save_failed">Der Kaffee wurde nicht gespeichert. Versuche es erneut.</string>
+    <string name="msg_review_photo_save_failed">Das Etikettfoto konnte nicht gespeichert werden. Versuche es erneut.</string>
+    <string name="label_review_source_notes">Angaben vom Etikett</string>
+    <string name="format_review_more_details">Weitere Angaben · %1$d zu prüfen</string>
+    <string name="msg_review_qr_details">Angaben von %1$s</string>
+    <string name="action_review_add_photo">Foto hinzufügen</string>
+    <string name="label_review_saving">Wird gespeichert…</string>
+    <string name="label_review_not_decaf">Mit Koffein</string>
+    <string name="msg_review_qr_approval">Kaffeedetails von dieser Website abrufen?</string>
+</resources>

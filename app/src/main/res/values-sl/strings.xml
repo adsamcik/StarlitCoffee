@@ -379,21 +379,11 @@
     <string name="label_tasting_notes">Okusne note</string>
     <string name="label_best_before">Uporabno do</string>
     <string name="label_decaf_coffee">Brezkofeinska kava</string>
-    <string name="msg_decaf_guidance">Uskladi navodila za pripravo z brezkofeinsko kavo in krajšimi ciljnimi časi namakanja.</string>
     <string name="msg_decaf_grind_adjustment">Izbrana je brezkofeinska kava. Spodnje priporočilo za mletje se prilagodi na bolj grobo, kadar to koristi temu načinu priprave.</string>
-    <string name="label_decaf_process_optional">Postopek dekofeinizacije (neobvezno)</string>
-    <string name="msg_decaf_process_hint">Omogoča, da pravilo priprave nekoliko prilagodi mletje: vodni postopek in CO₂ običajno potrebujeta manj grobljenja kot postopki s topili.</string>
-    <string name="label_detected_details">Zaznane podrobnosti</string>
-    <string name="msg_tap_chip_to_edit">Tapnite poljuben čip za urejanje</string>
-    <string name="label_needs_review">Potrebuje pregled</string>
-    <string name="action_edit_all_fields">Uredite vsa polja</string>
-    <string name="action_add_more_details">Dodajte več podrobnosti</string>
-    <string name="label_review_fields">Preglejte ta polja</string>
     <string name="label_qr_website">Spletna stran QR</string>
     <string name="action_open_website">Odprite spletno stran</string>
     <string name="label_qr_link_found">Najdena povezava QR</string>
     <string name="action_explore_extract">Raziščite in izluščite</string>
-    <string name="label_detected_field_evidence">Dokazi za zaznana polja</string>
 
     <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
     <string name="cd_bag_photo">Fotografija vrečke</string>
@@ -627,12 +617,10 @@
     <string name="guided_scan_auto_on">Samodejno vklopljeno</string>
     <string name="guided_scan_auto_off">Samodejno izklopljeno</string>
     <string name="guided_scan_capture">Zajemite fotografijo</string>
-    <string name="guided_scan_scan_more">Skenirajte več fotografij</string>
     <string name="scan_warn_glare">Zmanjšajte bleščanje</string>
     <string name="scan_warn_lighting">Izboljšajte osvetlitev</string>
     <string name="cd_remove_photo">Odstranite fotografijo</string>
     <string name="msg_bag_saved">Vrečka shranjena</string>
-    <string name="msg_could_not_save_bag">Vrečke ni bilo mogoče shraniti</string>
     <string name="msg_could_not_open_app_store">Trgovine z aplikacijami ni bilo mogoče odpreti.</string>
     <string name="msg_could_not_save_changes">Sprememb ni bilo mogoče shraniti</string>
     <string name="msg_could_not_delete">Brisanje ni uspelo. Poskusite znova.</string>

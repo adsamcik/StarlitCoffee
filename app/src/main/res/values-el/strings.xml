@@ -377,21 +377,11 @@
     <string name="label_tasting_notes">Γευστικές νότες</string>
     <string name="label_best_before">Ανάλωση κατά προτίμηση πριν από</string>
     <string name="label_decaf_coffee">Καφές decaf</string>
-    <string name="msg_decaf_guidance">Διατηρεί τις οδηγίες παρασκευής συγχρονισμένες με τους decaf κόκκους και τους συντομότερους στόχους εκχύλισης.</string>
     <string name="msg_decaf_grind_adjustment">Επιλέχθηκε ντεκαφεϊνέ. Η παρακάτω πρόταση άλεσης προσαρμόζεται σε πιο χοντρή άλεση όταν αυτό ωφελεί τη μέθοδο.</string>
-    <string name="label_decaf_process_optional">Μέθοδος decaf (προαιρετικά)</string>
-    <string name="msg_decaf_process_hint">Επιτρέπει στον κανόνα παρασκευής να προσαρμόζει ήπια την άλεση: οι decaf με μέθοδο νερού και CO₂ συνήθως χρειάζονται μικρότερη μετατόπιση προς χοντρότερη άλεση από εκείνους με διαλύτη.</string>
-    <string name="label_detected_details">Εντοπισμένες λεπτομέρειες</string>
-    <string name="msg_tap_chip_to_edit">Πατήστε οποιαδήποτε ετικέτα για επεξεργασία</string>
-    <string name="label_needs_review">Χρειάζεται έλεγχο</string>
-    <string name="action_edit_all_fields">Επεξεργασία όλων των πεδίων</string>
-    <string name="action_add_more_details">Προσθήκη περισσότερων λεπτομερειών</string>
-    <string name="label_review_fields">Ελέγξτε αυτά τα πεδία</string>
     <string name="label_qr_website">Ιστότοπος QR</string>
     <string name="action_open_website">Άνοιγμα ιστοτόπου</string>
     <string name="label_qr_link_found">Βρέθηκε σύνδεσμος QR</string>
     <string name="action_explore_extract">Εξερεύνηση &amp; εξαγωγή</string>
-    <string name="label_detected_field_evidence">Ενδείξεις εντοπισμένου πεδίου</string>
 
     <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
     <string name="cd_bag_photo">Φωτογραφία συσκευασίας</string>
@@ -625,12 +615,10 @@
     <string name="guided_scan_auto_on">Αυτόματο ενεργό</string>
     <string name="guided_scan_auto_off">Αυτόματο ανενεργό</string>
     <string name="guided_scan_capture">Λήψη φωτογραφίας</string>
-    <string name="guided_scan_scan_more">Σάρωση περισσότερων φωτογραφιών</string>
     <string name="scan_warn_glare">Μειώστε την αντανάκλαση</string>
     <string name="scan_warn_lighting">Βελτιώστε τον φωτισμό</string>
     <string name="cd_remove_photo">Αφαίρεση φωτογραφίας</string>
     <string name="msg_bag_saved">Η συσκευασία αποθηκεύτηκε</string>
-    <string name="msg_could_not_save_bag">Δεν ήταν δυνατή η αποθήκευση της συσκευασίας</string>
     <string name="msg_could_not_open_app_store">Δεν ήταν δυνατό το άνοιγμα του καταστήματος εφαρμογών.</string>
     <string name="msg_could_not_save_changes">Δεν ήταν δυνατή η αποθήκευση των αλλαγών</string>
     <string name="msg_could_not_delete">Δεν ήταν δυνατή η διαγραφή. Δοκιμάστε ξανά.</string>

@@ -6,6 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
@@ -401,6 +402,7 @@ fun BagDraftReviewRoute(
             onUserFieldChange = draftViewModel::onUserEdit,
             onFieldFocusChange = draftViewModel::onFieldFocusChanged,
             onAcceptDraftSuggestion = draftViewModel::acceptSuggestion,
+            onReviewLocationChange = draftViewModel::updateReviewLocation,
         )
     }
 }
@@ -419,7 +421,8 @@ fun ScanAddBagReview(
     durableDraft: BagScanDraft? = null,
     onUserFieldChange: (BagDraftField, String?) -> Unit = { _, _ -> },
     onFieldFocusChange: (BagDraftField, Boolean) -> Unit = { _, _ -> },
-    onAcceptDraftSuggestion: (BagDraftField) -> Unit = {},
+    onAcceptDraftSuggestion: (BagDraftField, String) -> Boolean = { _, _ -> false },
+    onReviewLocationChange: ((com.adsamcik.starlitcoffee.data.work.BagDraftReviewLocation) -> Unit)? = null,
 ) {
     val sanitizedFieldEvidence = remember(data.fieldEvidence) {
         BagPhotoScanSupport.sanitizeFieldEvidence(data.fieldEvidence)
@@ -435,9 +438,8 @@ fun ScanAddBagReview(
     val mindlayerInstalled = rememberMindlayerInstalled()
     val scope = rememberCoroutineScope()
     val savedLabel = stringResource(R.string.msg_bag_saved)
-    val couldNotReadLabel = stringResource(R.string.msg_could_not_read_label)
-    val couldNotSaveBag = stringResource(R.string.msg_could_not_save_bag)
     var isSavingBag by remember { mutableStateOf(false) }
+    var saveErrorResId by rememberSaveable(data.sessionId) { mutableStateOf<Int?>(null) }
     val recovery = rememberScanRecognitionRecovery(
         brewViewModel, data, callbacks.onScanMore,
         enabled = !isSavingBag && recognitionPreference != RecognitionPreference.DISABLED,
@@ -459,7 +461,7 @@ fun ScanAddBagReview(
                 preference = recognitionPreference,
                 hasValues = durableDraft.fields.values.any { !it.value.isNullOrBlank() },
                 unresolvedCount = durableDraft.fields.values.count {
-                    it.reviewState == BagDraftReviewState.NEEDS_REVIEW
+                    it.reviewState == BagDraftReviewState.NEEDS_REVIEW || it.pendingSuggestion != null
                 },
                 mindlayerSupported = MindlayerAvailability.isSupported(),
                 mindlayerInstalled = mindlayerInstalled,
@@ -493,6 +495,9 @@ fun ScanAddBagReview(
         recognition = recognitionPresentation,
         isProcessing = data.isProcessing || isRetryingLlm,
         isSaving = isSavingBag,
+        saveErrorResId = saveErrorResId,
+        reviewedFields = durableDraft?.fields.orEmpty().filterValues { it.userRevision > 0L }.keys,
+        unknownFields = durableDraft?.fields.orEmpty().filterValues { it.value.isNullOrBlank() }.keys,
         existingBags = existingBags,
         onScanMorePhotos = callbacks.onScanMore,
         onExploreQrUrl = { url, callback -> brewViewModel.exploreApprovedQrLink(url, callback) },
@@ -504,6 +509,8 @@ fun ScanAddBagReview(
         onDisableLabelRecognition = recovery.actions.onDisable,
         onDismiss = callbacks.onExit,
         initialFormOverride = durableDraft?.toBagFormSnapshot(),
+        initialReviewLocation = durableDraft?.reviewLocation ?: com.adsamcik.starlitcoffee.data.work.BagDraftReviewLocation(),
+        onReviewLocationChange = onReviewLocationChange,
         onUserFieldChange = { fieldName, value ->
             BagDraftField.fromWireName(fieldName)?.let { onUserFieldChange(it, value) }
         },
@@ -513,8 +520,8 @@ fun ScanAddBagReview(
         pendingSuggestions = durableDraft?.fields.orEmpty().mapNotNull { (fieldName, value) ->
             value.pendingSuggestion?.value?.let { suggestion -> fieldName to suggestion }
         }.toMap(),
-        onAcceptSuggestion = { fieldName ->
-            BagDraftField.fromWireName(fieldName)?.let(onAcceptDraftSuggestion)
+        onAcceptSuggestion = { fieldName, expectedValue ->
+            BagDraftField.fromWireName(fieldName)?.let { onAcceptDraftSuggestion(it, expectedValue) } ?: false
         },
         preserveDraftOnDismiss = durableDraft != null,
         onDiscardDraft = callbacks.onDiscard.takeIf { durableDraft != null },
@@ -523,6 +530,7 @@ fun ScanAddBagReview(
             val saveSessionId = checkNotNull(data.sessionId) { "Scan review is missing its session ID" }
             if (isSavingBag || !brewViewModel.beginScannedBagSave(saveSessionId)) return@save
             isSavingBag = true
+            saveErrorResId = null
             val rawPhotoUris = data.capturedPhotoUris
             val qrUrl = data.detectedQrUrl
             val scanFocus = data.thumbnailFocus
@@ -562,11 +570,11 @@ fun ScanAddBagReview(
                         }
                     ) {
                         ScannedBagSaveResult.PhotoCopyFailed -> {
-                            Toast.makeText(context, couldNotReadLabel, Toast.LENGTH_LONG).show()
+                            saveErrorResId = R.string.msg_review_photo_save_failed
                         }
                         is ScannedBagSaveResult.Failed -> {
                             Tracebox.log.error(saveResult.error, GuidedScanFlowTraceboxTemplates.FAILED_TO_SAVE_SCANNED_COFFEE_BAG)
-                            Toast.makeText(context, couldNotSaveBag, Toast.LENGTH_LONG).show()
+                            saveErrorResId = R.string.msg_review_save_failed
                         }
                         is ScannedBagSaveResult.Saved -> {
                             brewViewModel.cancelBagPhotoRetry(data.sessionId)

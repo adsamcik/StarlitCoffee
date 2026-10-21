@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_review_not_set">Ikke angivet</string>
+    <string name="label_review_check">Tjek</string>
+    <string name="action_review_edit">Rediger</string>
+    <string name="action_review_keep_mine">Behold min værdi</string>
+    <string name="action_review_leave_blank">Lad stå tomt</string>
+    <string name="msg_review_source_unavailable">Kildefotoet er ikke tilgængeligt. Rediger oplysningen, eller tilføj et andet foto.</string>
+    <string name="msg_review_check_label">Tjek denne oplysning på etiketten.</string>
+    <string name="action_review_use_reading">Brug denne aflæsning</string>
+    <string name="label_review_source">Kilde</string>
+    <string name="msg_review_name_required">Angiv et navn på kaffen.</string>
+    <string name="action_review_retry_save">Prøv at gemme igen</string>
+    <string name="msg_review_save_failed">Kaffen blev ikke gemt. Prøv igen.</string>
+    <string name="msg_review_photo_save_failed">Fotoet af etiketten kunne ikke gemmes. Prøv igen.</string>
+    <string name="label_review_source_notes">Oplysninger fra etiketten</string>
+    <string name="format_review_more_details">Flere oplysninger · %1$d skal tjekkes</string>
+    <string name="msg_review_qr_details">Oplysninger fra %1$s</string>
+    <string name="action_review_add_photo">Tilføj foto</string>
+    <string name="label_review_saving">Gemmer…</string>
+    <string name="label_review_not_decaf">Med koffein</string>
+    <string name="msg_review_qr_approval">Hent kaffeoplysninger fra dette websted?</string>
+</resources>

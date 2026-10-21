@@ -1,6 +1,9 @@
 package com.adsamcik.starlitcoffee.data.work
 
 import com.adsamcik.starlitcoffee.util.BagPhotoProcessingResult
+import com.adsamcik.starlitcoffee.util.BagFieldConfidence
+import com.adsamcik.starlitcoffee.util.BagFieldEvidence
+import com.adsamcik.starlitcoffee.util.BagFieldSourceType
 import com.adsamcik.starlitcoffee.util.DirectorySync
 import com.adsamcik.starlitcoffee.util.FileSync
 import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
@@ -13,9 +16,154 @@ import java.util.UUID
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertSame
 import org.junit.Test
 
 class BagDraftStoreTest {
+    @Test
+    fun `review location survives reopen without changing edits revisions or recent activity`() {
+        val directory = Files.createTempDirectory("bag-draft-review-location").toFile()
+        val draft = recognizedDraft().applyUserEdit(BagDraftField.NAME, "My coffee", 3L)
+        val location = BagDraftReviewLocation(
+            scrollIndex = 8,
+            scrollOffset = 36,
+            expandedFields = listOf("origin", "weight"),
+            showMoreDetails = true,
+        )
+        try {
+            val locatedDraft = draft.withReviewLocation(location)
+            BagDraftStore.write(directory, locatedDraft, FileSync { }, DirectorySync { })
+            val restored = requireNotNull(BagDraftStore.read(directory, draft.sessionId))
+
+            assertEquals(location, restored.reviewLocation)
+            assertEquals(draft.fields, restored.fields)
+            assertEquals(draft.updatedAtMillis, restored.updatedAtMillis)
+            assertEquals(draft.generationId, restored.generationId)
+            assertSame(restored, restored.withReviewLocation(location))
+            val closed = restored.closeAsTombstone(BagDraftPhase.SAVED, 4L)
+            assertEquals(BagDraftReviewLocation(), closed.reviewLocation)
+            assertSame(closed, closed.withReviewLocation(location))
+        } finally {
+            directory.deleteRecursively()
+        }
+    }
+
+    @Test
+    fun `uncertain reading stays outside saved values until explicitly accepted`() {
+        val draft = emptyDraft().applyRecognitionResult(
+            incoming = result("Possible coffee", null, BagFieldConfidence.NEEDS_REVIEW),
+            sourceRevision = 2L,
+            generationId = "generation-1",
+            workId = null,
+            terminal = true,
+        )
+
+        assertNull(draft.field(BagDraftField.NAME).value)
+        assertEquals("Possible coffee", draft.field(BagDraftField.NAME).pendingSuggestion?.value)
+        val accepted = draft.acceptPendingSuggestion(BagDraftField.NAME, 3L, "Possible coffee")
+        assertEquals("Possible coffee", accepted.field(BagDraftField.NAME).value)
+        assertEquals(BagDraftFieldSource.USER, accepted.field(BagDraftField.NAME).source)
+        assertNull(accepted.field(BagDraftField.NAME).pendingSuggestion)
+    }
+
+    @Test
+    fun `accepted automatic reading fills an empty untouched field but material replacements are suggestions`() {
+        val first = recognizedDraft()
+        assertEquals("Recognized coffee", first.field(BagDraftField.NAME).value)
+        assertEquals(0L, first.field(BagDraftField.NAME).userRevision)
+
+        val refined = first.applyRecognitionResult(
+            incoming = result("Different coffee", null),
+            sourceRevision = 3L,
+            generationId = "generation-1",
+            workId = null,
+            terminal = true,
+        )
+        assertEquals("Recognized coffee", refined.field(BagDraftField.NAME).value)
+        assertEquals("Different coffee", refined.field(BagDraftField.NAME).pendingSuggestion?.value)
+    }
+
+    @Test
+    fun `explicitly cleared field stays blank when a later accepted reading arrives`() {
+        val cleared = recognizedDraft().applyUserEdit(BagDraftField.NAME, "", 3L)
+        val refined = cleared.applyRecognitionResult(
+            incoming = result("Recognized again", null),
+            sourceRevision = 4L,
+            generationId = "generation-1",
+            workId = null,
+            terminal = true,
+        )
+        assertEquals("", refined.field(BagDraftField.NAME).value)
+        assertEquals("Recognized again", refined.field(BagDraftField.NAME).pendingSuggestion?.value)
+    }
+
+    @Test
+    fun `keep mine resolves a pending reading and repeated passes do not restore it`() {
+        val mine = recognizedDraft().applyUserEdit(BagDraftField.NAME, "My coffee", 3L)
+        val suggested = mine.applyRecognitionResult(
+            incoming = result("Different coffee", null),
+            sourceRevision = 4L,
+            generationId = "generation-1",
+            workId = null,
+            terminal = false,
+        )
+        val kept = suggested.applyUserEdit(BagDraftField.NAME, "My coffee", 5L)
+        val repeated = kept.applyRecognitionResult(
+            incoming = result("Different coffee", null),
+            sourceRevision = 6L,
+            generationId = "generation-1",
+            workId = null,
+            terminal = true,
+        )
+
+        assertEquals("My coffee", repeated.field(BagDraftField.NAME).value)
+        assertNull(repeated.field(BagDraftField.NAME).pendingSuggestion)
+        assertEquals(2L, repeated.field(BagDraftField.NAME).userRevision)
+    }
+
+    @Test
+    fun `stale suggestion action does not accept a newer reading`() {
+        val suggested = recognizedDraft().applyRecognitionResult(
+            incoming = result("Newer reading", null),
+            sourceRevision = 3L,
+            generationId = "generation-1",
+            workId = null,
+            terminal = true,
+        )
+
+        assertEquals(suggested, suggested.acceptPendingSuggestion(BagDraftField.NAME, 4L, "Older reading"))
+    }
+
+    @Test
+    fun `restored legacy uncertain reading becomes a suggestion while user choices remain saved values`() {
+        val directory = Files.createTempDirectory("bag-draft-legacy-review").toFile()
+        val legacy = emptyDraft().copy(fields = mapOf(
+            "name" to BagDraftFieldValue(
+                value = "Uncertain coffee",
+                source = BagDraftFieldSource.RECOGNITION,
+                sourceRevision = 2L,
+                reviewState = BagDraftReviewState.NEEDS_REVIEW,
+            ),
+            "roaster" to BagDraftFieldValue(
+                value = "Chosen roaster",
+                source = BagDraftFieldSource.USER,
+                userRevision = 1L,
+                reviewState = BagDraftReviewState.ACCEPTED,
+            ),
+        ))
+        try {
+            BagDraftStore.write(directory, legacy, FileSync { }, DirectorySync { })
+            val restored = requireNotNull(BagDraftStore.read(directory, legacy.sessionId))
+
+            assertNull(restored.field(BagDraftField.NAME).value)
+            assertEquals("Uncertain coffee", restored.field(BagDraftField.NAME).pendingSuggestion?.value)
+            assertEquals("Chosen roaster", restored.field(BagDraftField.ROASTER).value)
+        } finally {
+            directory.deleteRecursively()
+        }
+    }
+
     @Test
     fun `late recognition never overwrites user or focused fields`() {
         val sessionId = UUID.randomUUID().toString()
@@ -207,7 +355,8 @@ class BagDraftStoreTest {
 
             assertEquals(RecognitionCapability.READY, recovered.recognitionCapability)
             assertEquals(RecognitionRunState.COMPLETE, recovered.recognitionRunState)
-            assertEquals("Recovered coffee", recovered.field(BagDraftField.NAME).value)
+            assertEquals("Recognized coffee", recovered.field(BagDraftField.NAME).value)
+            assertEquals("Recovered coffee", recovered.field(BagDraftField.NAME).pendingSuggestion?.value)
         }
     }
 
@@ -269,12 +418,32 @@ class BagDraftStoreTest {
         terminal = true,
     )
 
-    private fun result(name: String, roaster: String?): BagPhotoProcessingResult =
+    private fun emptyDraft(): BagScanDraft = newBagScanDraft(
+        sessionId = UUID.randomUUID().toString(),
+        photoUris = listOf("content://front"),
+        reviewContext = BagReviewContext.addNew(),
+        preference = RecognitionPreference.ENABLED,
+        nowMillis = 1L,
+    )
+
+    private fun result(
+        name: String,
+        roaster: String?,
+        confidence: BagFieldConfidence = BagFieldConfidence.HIGH,
+    ): BagPhotoProcessingResult =
         BagPhotoProcessingResult(
             ocrPrefill = OcrFieldExtractor.OcrExtractionResult(
                 name = name,
                 roaster = roaster,
             ),
+            fieldEvidence = listOfNotNull("name" to name, roaster?.let { "roaster" to it }).associate { (field, value) ->
+                field to BagFieldEvidence(
+                    fieldName = field,
+                    value = value,
+                    sourceType = BagFieldSourceType.OCR,
+                    confidence = confidence,
+                )
+            },
             llmStatus = LlmEnrichmentStatus.SUCCEEDED,
         )
 }

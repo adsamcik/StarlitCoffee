@@ -377,21 +377,11 @@
     <string name="label_tasting_notes">Makuvivahteet</string>
     <string name="label_best_before">Parasta ennen</string>
     <string name="label_decaf_coffee">Kofeiiniton kahvi</string>
-    <string name="msg_decaf_guidance">Pitää valmistusohjeet linjassa kofeiinittomien papujen ja lyhyempien haudutusaikojen kanssa.</string>
     <string name="msg_decaf_grind_adjustment">Kofeiiniton kahvi on valittu. Alla olevaa jauhatussuositusta säädetään karkeammaksi, kun siitä on hyötyä tälle valmistustavalle.</string>
-    <string name="label_decaf_process_optional">Kofeiininpoistomenetelmä (valinnainen)</string>
-    <string name="msg_decaf_process_hint">Antaa valmistussäännön hienosäätää jauhatusta: vesi- ja CO₂-menetelmän kofeiinittomat vaativat yleensä vähemmän karkeutta kuin liuotinmenetelmällä käsitellyt.</string>
-<string name="label_detected_details">Tunnistetut tiedot</string>
-    <string name="msg_tap_chip_to_edit">Napauta mitä tahansa kenttää muokataksesi</string>
-    <string name="label_needs_review">Vaatii tarkistuksen</string>
-<string name="action_edit_all_fields">Muokkaa kaikkia kenttiä</string>
-    <string name="action_add_more_details">Lisää tietoja</string>
-    <string name="label_review_fields">Tarkista nämä kentät</string>
     <string name="label_qr_website">QR-verkkosivusto</string>
     <string name="action_open_website">Avaa verkkosivusto</string>
     <string name="label_qr_link_found">QR-linkki löytyi</string>
 <string name="action_explore_extract">Tutki &amp; poimi</string>
-    <string name="label_detected_field_evidence">Tunnistettujen kenttien todisteet</string>
 
     <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
     <string name="cd_bag_photo">Kuva pussista</string>
@@ -625,12 +615,10 @@
     <string name="guided_scan_auto_on">Automaatti päällä</string>
     <string name="guided_scan_auto_off">Automaatti pois</string>
     <string name="guided_scan_capture">Ota kuva</string>
-    <string name="guided_scan_scan_more">Skannaa lisää kuvia</string>
     <string name="scan_warn_glare">Vähennä heijastusta</string>
     <string name="scan_warn_lighting">Paranna valaistusta</string>
     <string name="cd_remove_photo">Poista kuva</string>
     <string name="msg_bag_saved">Pussi tallennettu</string>
-    <string name="msg_could_not_save_bag">Pussin tallentaminen epäonnistui</string>
     <string name="msg_could_not_open_app_store">Sovelluskauppaa ei voitu avata.</string>
     <string name="msg_could_not_save_changes">Muutoksia ei voitu tallentaa</string>
     <string name="msg_could_not_delete">Poistaminen epäonnistui. Yritä uudelleen.</string>

@@ -64,6 +64,10 @@ import com.adsamcik.starlitcoffee.data.work.BagExtractionResultStore
 import com.adsamcik.starlitcoffee.data.work.BagExtractionWorker
 import com.adsamcik.starlitcoffee.data.work.BagDraftPhase
 import com.adsamcik.starlitcoffee.data.work.BagDraftStore
+import com.adsamcik.starlitcoffee.data.work.BagDraftFocusRegistry
+import com.adsamcik.starlitcoffee.data.work.BagScanDraft
+import com.adsamcik.starlitcoffee.data.work.recoverBagScanDraft
+import com.adsamcik.starlitcoffee.data.work.recoveredBagReviewSessionId
 import com.adsamcik.starlitcoffee.data.work.BagScanRunTelemetry
 import com.adsamcik.starlitcoffee.data.work.bagScanDiagnosticContext
 import com.adsamcik.starlitcoffee.data.work.recordBagScanLifecycle
@@ -142,6 +146,7 @@ private object BrewViewModelTraceboxTemplates {
     val FAILED_TO_DECODE_BAG_EXTRACTION_RESULT = LogTemplate.of("Failed to decode bag extraction result")
     val IGNORING_INVALID_BAG_ANALYSIS_WORK_ID = LogTemplate.of("Ignoring invalid bag-analysis work ID")
     val FAILED_TO_DECODE_DEEP_LINK_BAG_RESULT = LogTemplate.of("Failed to decode deep-link bag result")
+    val FAILED_TO_RESTORE_BAG_REVIEW_DRAFT = LogTemplate.of("Could not restore retained coffee review as a durable draft")
 }
 
 sealed class GrindResult {
@@ -2876,6 +2881,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             .forEach(::removePendingBagReview)
         val workId = pendingWorkIds.firstOrNull(BagExtractionScheduler::isValidWorkId) ?: return
         pendingBagReviewLoaderJob = viewModelScope.launch {
+            var recoveryFailed = false
             try {
                 val workInfo = withContext(Dispatchers.IO) {
                     if (BagExtractionResultStore.read(app, workId) != null) {
@@ -2894,32 +2900,40 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                 }
                 _completedBackgroundResult.value = null
                 val result = decodeCompletedBagExtraction(workId, workInfo)
-                val sessionId = bagExtractionSessionId(workId)
+                val originalSessionId = bagExtractionSessionId(workId)
                     ?: workInfo?.tags
                         ?.firstOrNull { it.startsWith(BagExtractionScheduler.SESSION_TAG_PREFIX) }
                         ?.removePrefix(BagExtractionScheduler.SESSION_TAG_PREFIX)
                     ?: workId
                 val generationId = bagExtractionGenerationId(workId, workInfo)
                 val reviewContext = bagExtractionReviewContext(workId, workInfo)
-                rememberLatestGenerationIfMissing(sessionId, generationId)
-                if (!isLatestBagExtractionGeneration(sessionId, generationId)) {
+                val draft = recoverRetainedBagReviewDraft(result, originalSessionId, generationId, workId, reviewContext)
+                if (draft == null) {
                     removePendingBagReview(workId)
                     markBagExtractionReviewAccepted(workId)
                     return@launch
                 }
-                rememberBagExtractionSession(workId, sessionId)
-                restoreBagPhotoRetryContext(result, sessionId, generationId, reviewContext)
+                val sessionId = draft.sessionId
+                val restoredGenerationId = draft.generationId ?: generationId
+                val restoredResult = (draft.resultJson?.let(::decodeBagExtractionResult) ?: BagPhotoProcessingResult())
+                    .copy(capturedPhotoUris = draft.photoUris.joinToString(",").takeIf(String::isNotBlank))
+                restoreBagPhotoRetryContext(restoredResult, sessionId, restoredGenerationId, draft.reviewContext)
                 _pendingScanReview.value = BagPhotoSessionResult(
                     sessionId = sessionId,
-                    result = result,
+                    result = restoredResult,
                     workId = workId,
-                    generationId = generationId,
-                    reviewContext = reviewContext,
+                    generationId = restoredGenerationId,
+                    reviewContext = draft.reviewContext,
                     requiresInventoryBackStack = true,
                 )
+            } catch (error: CancellationException) {
+                throw error
+            } catch (error: Exception) {
+                recoveryFailed = true
+                Tracebox.log.error(error, BrewViewModelTraceboxTemplates.FAILED_TO_RESTORE_BAG_REVIEW_DRAFT)
             } finally {
                 pendingBagReviewLoaderJob = null
-                if (_pendingScanReview.value == null) {
+                if (_pendingScanReview.value == null && !recoveryFailed) {
                     loadNextPendingBagReview()
                 }
             }
@@ -2950,33 +2964,72 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
                     return@launch
                 }
                 val result = decodeCompletedBagExtraction(workId, workInfo)
-                val sessionId = bagExtractionSessionId(workId)
+                val originalSessionId = bagExtractionSessionId(workId)
                     ?: workInfo?.tags
                         ?.firstOrNull { it.startsWith(BagExtractionScheduler.SESSION_TAG_PREFIX) }
                         ?.removePrefix(BagExtractionScheduler.SESSION_TAG_PREFIX)
                     ?: workId
                 val generationId = bagExtractionGenerationId(workId, workInfo)
                 val reviewContext = bagExtractionReviewContext(workId, workInfo)
-                rememberLatestGenerationIfMissing(sessionId, generationId)
-                if (!isLatestBagExtractionGeneration(sessionId, generationId)) {
+                val draft = recoverRetainedBagReviewDraft(result, originalSessionId, generationId, workId, reviewContext)
+                if (draft == null) {
                     BagReviewQueue.releaseForeground(app, workId)
                     markBagExtractionReviewAccepted(workId)
                     return@launch
                 }
-                rememberBagExtractionSession(workId, sessionId)
-                restoreBagPhotoRetryContext(result, sessionId, generationId, reviewContext)
+                val sessionId = draft.sessionId
+                val restoredGenerationId = draft.generationId ?: generationId
+                val restoredResult = (draft.resultJson?.let(::decodeBagExtractionResult) ?: BagPhotoProcessingResult())
+                    .copy(capturedPhotoUris = draft.photoUris.joinToString(",").takeIf(String::isNotBlank))
+                restoreBagPhotoRetryContext(restoredResult, sessionId, restoredGenerationId, draft.reviewContext)
                 _bagPhotoResult.value = BagPhotoSessionResult(
                     sessionId = sessionId,
-                    result = result,
+                    result = restoredResult,
                     workId = workId,
-                    generationId = generationId,
-                    reviewContext = reviewContext,
+                    generationId = restoredGenerationId,
+                    reviewContext = draft.reviewContext,
                     requiresInventoryBackStack = true,
                 )
+            } catch (error: CancellationException) {
+                throw error
+            } catch (error: Exception) {
+                Tracebox.log.error(error, BrewViewModelTraceboxTemplates.FAILED_TO_RESTORE_BAG_REVIEW_DRAFT)
             } finally {
                 retainedForegroundReviewLoaderJob = null
             }
         }
+    }
+
+    private suspend fun recoverRetainedBagReviewDraft(
+        result: BagPhotoProcessingResult,
+        originalSessionId: String,
+        generationId: String,
+        workId: String,
+        reviewContext: BagReviewContext?,
+    ): BagScanDraft? = withContext(Dispatchers.IO) {
+        val app = checkNotNull(application)
+        val sessionId = recoveredBagReviewSessionId(originalSessionId, workId)
+        val repository = checkNotNull(coffeeBagRepository) { "Coffee bag repository is unavailable" }
+        if (repository.findByScanSessionId(originalSessionId) != null ||
+            sessionId != originalSessionId && repository.findByScanSessionId(sessionId) != null
+        ) return@withContext null
+        val draft = synchronized(BagDraftStore) {
+            val current = BagDraftStore.read(app, sessionId)
+            val latestGeneration = BagExtractionScheduler.latestGenerationId(app, originalSessionId)
+            val restored = if (latestGeneration != null && latestGeneration != generationId) current else {
+                recoverBagScanDraft(
+                    current, sessionId, generationId, workId, reviewContext, latestRecognitionPreference, result,
+                    focusedFields = BagDraftFocusRegistry.fields(sessionId),
+                )
+            }
+            if (restored != null && restored !== current) BagDraftStore.write(app, restored)
+            restored
+        } ?: return@withContext null
+        if (!draft.isActive) return@withContext null
+        if (draft.generationId == generationId) rememberLatestGenerationIfMissing(originalSessionId, generationId)
+        rememberLatestGenerationIfMissing(sessionId, draft.generationId ?: generationId)
+        rememberBagExtractionSession(workId, sessionId)
+        draft
     }
 
     private fun enqueuePendingBagReview(

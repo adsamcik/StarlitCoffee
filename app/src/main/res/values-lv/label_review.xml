@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_review_not_set">Nav norādīts</string>
+    <string name="label_review_check">Pārbaudīt</string>
+    <string name="action_review_edit">Rediģēt</string>
+    <string name="action_review_keep_mine">Paturēt manu vērtību</string>
+    <string name="action_review_leave_blank">Atstāt tukšu</string>
+    <string name="msg_review_source_unavailable">Sākotnējais fotoattēls nav pieejams. Rediģējiet datus vai pievienojiet citu fotoattēlu.</string>
+    <string name="msg_review_check_label">Pārbaudiet šos datus uz etiķetes.</string>
+    <string name="action_review_use_reading">Izmantot šo nolasījumu</string>
+    <string name="label_review_source">Avots</string>
+    <string name="msg_review_name_required">Ievadiet kafijas nosaukumu.</string>
+    <string name="action_review_retry_save">Mēģināt saglabāt vēlreiz</string>
+    <string name="msg_review_save_failed">Kafija netika saglabāta. Mēģiniet vēlreiz.</string>
+    <string name="msg_review_photo_save_failed">Etiķetes fotoattēlu neizdevās saglabāt. Mēģiniet vēlreiz.</string>
+    <string name="label_review_source_notes">Etiķetes dati</string>
+    <string name="format_review_more_details">Papildu dati · jāpārbauda: %1$d</string>
+    <string name="msg_review_qr_details">Dati no %1$s</string>
+    <string name="action_review_add_photo">Pievienot fotoattēlu</string>
+    <string name="label_review_saving">Saglabā…</string>
+    <string name="label_review_not_decaf">Ar kofeīnu</string>
+    <string name="msg_review_qr_approval">Iegūt kafijas informāciju no šīs vietnes?</string>
+</resources>

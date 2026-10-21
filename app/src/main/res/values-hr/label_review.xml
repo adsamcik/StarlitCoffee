@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_review_not_set">Nije postavljeno</string>
+    <string name="label_review_check">Provjeriti</string>
+    <string name="action_review_edit">Uredi</string>
+    <string name="action_review_keep_mine">Zadrži moju vrijednost</string>
+    <string name="action_review_leave_blank">Ostavi prazno</string>
+    <string name="msg_review_source_unavailable">Izvorna fotografija nije dostupna. Uredite podatak ili dodajte drugu fotografiju.</string>
+    <string name="msg_review_check_label">Provjerite ovaj podatak na etiketi.</string>
+    <string name="action_review_use_reading">Upotrijebi ovaj očitani podatak</string>
+    <string name="label_review_source">Izvor</string>
+    <string name="msg_review_name_required">Unesite naziv kave.</string>
+    <string name="action_review_retry_save">Pokušaj ponovno spremiti</string>
+    <string name="msg_review_save_failed">Kava nije spremljena. Pokušajte ponovno.</string>
+    <string name="msg_review_photo_save_failed">Fotografiju etikete nije moguće spremiti. Pokušajte ponovno.</string>
+    <string name="label_review_source_notes">Podaci s etikete</string>
+    <string name="format_review_more_details">Više podataka · za provjeru: %1$d</string>
+    <string name="msg_review_qr_details">Podaci iz izvora %1$s</string>
+    <string name="action_review_add_photo">Dodaj fotografiju</string>
+    <string name="label_review_saving">Spremanje…</string>
+    <string name="label_review_not_decaf">S kofeinom</string>
+    <string name="msg_review_qr_approval">Dohvatiti podatke o kavi s ove web-stranice?</string>
+</resources>

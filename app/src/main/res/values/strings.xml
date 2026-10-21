@@ -455,34 +455,20 @@
     <string name="label_tasting_notes">Tasting notes</string>
     <string name="label_best_before">Best before</string>
     <string name="label_decaf_coffee">Decaf coffee</string>
-    <string name="msg_decaf_guidance">Keeps brew guidance in sync with decaf beans and shorter steep targets.</string>
     <string name="msg_decaf_grind_adjustment">Decaf selected. The grind recommendation below is adjusted coarser when this method benefits from it.</string>
-    <string name="label_decaf_process_optional">Decaf process (optional)</string>
-    <string name="msg_decaf_process_hint">Lets the brew rule soft-bias the grind: water-process and CO₂ decafs typically need less coarsening than solvent-process ones.</string>
     <string name="cd_front_label_photo">Front label photo</string>
     <string name="cd_back_label_photo">Back label photo</string>
     <string name="format_cd_additional_label_photo">Additional label photo %1$d</string>
-<string name="label_detected_details">Detected Details</string>
-    <string name="msg_tap_chip_to_edit">Tap any chip to edit</string>
-    <string name="label_needs_review">Needs Review</string>
-<string name="action_edit_all_fields">Edit all fields</string>
-    <string name="action_add_more_details">Add more details</string>
-    <string name="label_review_fields">Review these fields</string>
     <string name="label_qr_website">QR website</string>
     <string name="action_open_website">Open website</string>
     <string name="label_qr_link_found">QR link found</string>
 <string name="action_explore_extract">Explore &amp; extract</string>
-    <string name="label_detected_field_evidence">Detected field evidence</string>
-    <string name="label_label_evidence">Label evidence</string>
     <string name="evidence_from_label">From the label</string>
-    <string name="evidence_confirmed_on_label">Confirmed on the label</string>
     <string name="evidence_from_qr_website">From the QR website</string>
     <string name="evidence_from_label_code">From the label code</string>
     <string name="evidence_from_saved_bag">From a saved bag</string>
     <string name="evidence_from_barcode_lookup">From the barcode lookup</string>
     <string name="evidence_suggested_from_label_context">Suggested from label context</string>
-    <string name="evidence_front_photo">Front photo</string>
-    <string name="evidence_back_photo">Back photo</string>
 
     <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
     <string name="cd_bag_photo">Bag photo</string>
@@ -535,8 +521,6 @@
     <string name="action_use_label_recognition">Use label recognition</string>
     <string name="action_finish_label_recognition_setup">Finish setup</string>
     <string name="action_always_enter_manually">Always enter manually</string>
-    <string name="action_apply_suggestion">Apply</string>
-    <string name="format_new_label_suggestion">New suggestion for %1$s: %2$s</string>
     <string name="msg_label_recognition_offer">Optional: use Mindlayer on this device to look for more label details. Review everything before saving.</string>
     <string name="action_try_label_again">Try again</string>
     <string name="action_retake_label_photo">Retake photo</string>
@@ -574,7 +558,6 @@
     <string name="action_save_coffee">Save coffee</string>
     <string name="screen_add_coffee_title">Add coffee</string>
     <string name="screen_edit_coffee_title">Edit coffee</string>
-    <string name="screen_review_coffee_title">Review coffee</string>
 
     <!-- ScanHistoryDialog -->
     <string name="dialog_scan_history_title">Scan History</string>
@@ -656,10 +639,6 @@
     <string name="action_share_report">Share Report</string>
     <string name="action_clear">Clear</string>
     <string name="action_ok">OK</string>
-    <string name="action_set_roast_date">Set roast date</string>
-    <string name="action_change_roast_date">Change roast date</string>
-    <string name="action_set_best_before">Set best before</string>
-    <string name="action_change_best_before">Change best before</string>
     <string name="action_show_optional_details">Show optional details</string>
     <string name="action_hide_optional_details">Hide optional details</string>
 
@@ -768,12 +747,10 @@
     <string name="guided_scan_auto_on">Auto on</string>
     <string name="guided_scan_auto_off">Auto off</string>
     <string name="guided_scan_capture">Capture photo</string>
-    <string name="guided_scan_scan_more">Scan more photos</string>
     <string name="scan_warn_glare">Reduce glare</string>
     <string name="scan_warn_lighting">Improve lighting</string>
     <string name="cd_remove_photo">Remove photo</string>
     <string name="msg_bag_saved">Bag saved</string>
-    <string name="msg_could_not_save_bag">Could not save bag</string>
     <string name="msg_could_not_open_app_store">Could not open the app store.</string>
     <string name="msg_could_not_save_changes">Could not save changes</string>
     <string name="msg_could_not_delete">Could not delete. Please try again.</string>

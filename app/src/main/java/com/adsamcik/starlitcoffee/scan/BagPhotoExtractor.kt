@@ -103,6 +103,12 @@ private object BagPhotoExtractorTraceboxTemplates {
 
 data class OffLookupSummary(val name: String?, val brand: String?)
 
+/** Aligned/enhanced OCR coordinates have no inverse mapping to the retained original photo. */
+internal fun sourcePhotoEvidenceRect(
+    passLabel: String,
+    block: OcrFieldExtractor.OcrTextBlock?,
+): BagPhotoRect? = if (passLabel == "original") block?.normalizedBounds() else null
+
 /**
  * Maps pipeline stages to monotonic [ScanProgress] snapshots. The concrete
  * stage list is planned up front so the UI bar is determinate; a stage absent
@@ -840,7 +846,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                     supportingText = decafSupportingText,
                     side = photo.side,
                     previewUri = photo.uri,
-                    previewRect = decafSupportingBlock?.normalizedBounds(),
+                    previewRect = sourcePhotoEvidenceRect(pass.label, decafSupportingBlock),
                 ),
                 rawValue = decafSupportingText,
             )
@@ -872,7 +878,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                     line.contains(cleanValue, ignoreCase = true)
                 },
                 previewUri = photo.uri,
-                previewRect = supportingBlock?.normalizedBounds(),
+                previewRect = sourcePhotoEvidenceRect(pass.label, supportingBlock),
             ),
         )
         addInferredMetadataCandidates(
@@ -887,7 +893,7 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                     line.contains(cleanValue, ignoreCase = true)
                 },
                 previewUri = photo.uri,
-                previewRect = supportingBlock?.normalizedBounds(),
+                previewRect = sourcePhotoEvidenceRect(pass.label, supportingBlock),
             ),
         )
     }

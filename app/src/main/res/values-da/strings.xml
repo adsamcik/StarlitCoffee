@@ -376,21 +376,11 @@
     <string name="label_tasting_notes">Smagsnoter</string>
     <string name="label_best_before">Bedst før</string>
     <string name="label_decaf_coffee">Koffeinfri kaffe</string>
-    <string name="msg_decaf_guidance">Holder bryggevejledning synkroniseret med koffeinfri bønner og kortere trækketider.</string>
     <string name="msg_decaf_grind_adjustment">Koffeinfri er valgt. Maleanbefalingen nedenfor justeres grovere, når denne bryggemetode har gavn af det.</string>
-    <string name="label_decaf_process_optional">Koffeinfri proces (valgfrit)</string>
-    <string name="msg_decaf_process_hint">Lader brygreglen justere malingen let: vandproces- og CO₂-decaf kræver typisk mindre grov maling end solventprocesser.</string>
-    <string name="label_detected_details">Registrerede detaljer</string>
-    <string name="msg_tap_chip_to_edit">Tryk på en chip for at redigere</string>
-    <string name="label_needs_review">Kræver gennemgang</string>
-    <string name="action_edit_all_fields">Rediger alle felter</string>
-    <string name="action_add_more_details">Tilføj flere detaljer</string>
-    <string name="label_review_fields">Gennemgå disse felter</string>
     <string name="label_qr_website">QR-websted</string>
     <string name="action_open_website">Åbn websted</string>
     <string name="label_qr_link_found">QR-link fundet</string>
     <string name="action_explore_extract">Udforsk &amp; udtræk</string>
-    <string name="label_detected_field_evidence">Evidens for registrerede felter</string>
 
     <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
     <string name="cd_bag_photo">Foto af pose</string>
@@ -624,12 +614,10 @@
     <string name="guided_scan_auto_on">Auto til</string>
     <string name="guided_scan_auto_off">Auto fra</string>
     <string name="guided_scan_capture">Tag foto</string>
-    <string name="guided_scan_scan_more">Scan flere fotos</string>
     <string name="scan_warn_glare">Reducer genskin</string>
     <string name="scan_warn_lighting">Forbedr belysningen</string>
     <string name="cd_remove_photo">Fjern foto</string>
     <string name="msg_bag_saved">Pose gemt</string>
-    <string name="msg_could_not_save_bag">Posen kunne ikke gemmes</string>
     <string name="msg_could_not_open_app_store">Appbutikken kunne ikke åbnes.</string>
     <string name="msg_could_not_save_changes">Ændringerne kunne ikke gemmes</string>
     <string name="msg_could_not_delete">Kunne ikke slette. Prøv igen.</string>

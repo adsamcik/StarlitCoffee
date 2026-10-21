@@ -9,16 +9,12 @@
     <string name="cd_front_label_photo">Φωτογραφία μπροστινής ετικέτας</string>
     <string name="cd_back_label_photo">Φωτογραφία πίσω ετικέτας</string>
     <string name="format_cd_additional_label_photo">Πρόσθετη φωτογραφία ετικέτας %1$d</string>
-    <string name="label_label_evidence">Πηγές πληροφοριών από την ετικέτα</string>
     <string name="evidence_from_label">Από την ετικέτα</string>
-    <string name="evidence_confirmed_on_label">Επιβεβαιώθηκε στην ετικέτα</string>
     <string name="evidence_from_qr_website">Από τον ιστότοπο QR</string>
     <string name="evidence_from_label_code">Από τον κωδικό της ετικέτας</string>
     <string name="evidence_from_saved_bag">Από λεπτομέρειες καφέ που αποθηκεύτηκαν νωρίτερα</string>
     <string name="evidence_from_barcode_lookup">Από την αναζήτηση γραμμωτού κώδικα</string>
     <string name="evidence_suggested_from_label_context">Προτείνεται από το πλαίσιο της ετικέτας</string>
-    <string name="evidence_front_photo">Μπροστινή φωτογραφία</string>
-    <string name="evidence_back_photo">Πίσω φωτογραφία</string>
     <string name="msg_checking_label">Έλεγχος της ετικέτας…</string>
     <string name="msg_checking_more_details">Έλεγχος για περισσότερες λεπτομέρειες…</string>
     <plurals name="format_label_details_need_review">
@@ -30,8 +26,6 @@
     <string name="action_use_label_recognition">Χρησιμοποιήστε την αναγνώριση ετικετών</string>
     <string name="action_finish_label_recognition_setup">Ολοκληρώστε τη ρύθμιση</string>
     <string name="action_always_enter_manually">Πάντα να εισάγετε χειροκίνητα</string>
-    <string name="action_apply_suggestion">Εφαρμογή πρότασης</string>
-    <string name="format_new_label_suggestion">Νέα πρόταση για %1$s: %2$s</string>
     <string name="msg_label_recognition_offer">Προαιρετικά: χρησιμοποιήστε το Mindlayer σε αυτήν τη συσκευή για να βρείτε περισσότερες λεπτομέρειες από την ετικέτα της σακούλας καφέ. Ελέγξτε τα πάντα πριν αποθηκεύσετε.</string>
     <string name="action_try_label_again">Προσπαθήστε ξανά</string>
     <string name="action_retake_label_photo">Επαναλάβετε τη φωτογραφία</string>
@@ -43,15 +37,10 @@
     <string name="action_save_coffee">Αποθηκεύστε τις λεπτομέρειες του καφέ</string>
     <string name="screen_add_coffee_title">Προσθέστε καφέ</string>
     <string name="screen_edit_coffee_title">Επεξεργασία καφέ</string>
-    <string name="screen_review_coffee_title">Ελέγξτε τις λεπτομέρειες του καφέ</string>
     <string name="msg_camera_permission_alternatives">Μπορείτε να επιτρέψετε την πρόσβαση στην κάμερα, να επιλέξετε φωτογραφίες της ετικέτας της τσάντας του καφέ ή να εισαγάγετε μόνοι σας τα στοιχεία που είναι τυπωμένα στο φακελάκι του καφέ.</string>
     <string name="action_choose_photos">Επιλέξτε φωτογραφίες</string>
     <string name="action_enter_manually">Εισαγάγετε χειροκίνητα</string>
     <string name="action_ok">ΟΚ</string>
-    <string name="action_set_roast_date">Ορίστε ημερομηνία ψησίματος καφέ</string>
-    <string name="action_change_roast_date">Αλλαγή ημερομηνίας ψησίματος καφέ</string>
-    <string name="action_set_best_before">Ορίστε το καλύτερο ραντεβού πριν</string>
-    <string name="action_change_best_before">Αλλάξτε την καλύτερη ημερομηνία πριν</string>
     <string name="action_show_optional_details">Εμφάνιση προαιρετικών λεπτομερειών</string>
     <string name="action_hide_optional_details">Απόκρυψη προαιρετικών στοιχείων</string>
 </resources>

@@ -378,21 +378,11 @@
     <string name="label_tasting_notes">Notes de dégustation</string>
     <string name="label_best_before">À consommer de préférence avant</string>
     <string name="label_decaf_coffee">Café décaféiné</string>
-    <string name="msg_decaf_guidance">Garde les conseils de préparation synchronisés avec les grains déca et les cibles d\'infusion plus courtes.</string>
     <string name="msg_decaf_grind_adjustment">Le décaféiné est sélectionné. Le réglage de mouture ci-dessous est ajusté plus grossièrement lorsque cette méthode en bénéficie.</string>
-    <string name="label_decaf_process_optional">Procédé de décaféination (facultatif)</string>
-    <string name="msg_decaf_process_hint">Permet à la règle de préparation d\'orienter légèrement la mouture : les décas Swiss Water, Mountain Water et CO₂ demandent généralement moins de grossissement que ceux aux solvants.</string>
-<string name="label_detected_details">Détails détectés</string>
-    <string name="msg_tap_chip_to_edit">Touchez une puce pour modifier</string>
-    <string name="label_needs_review">À vérifier</string>
-<string name="action_edit_all_fields">Modifier tous les champs</string>
-    <string name="action_add_more_details">Ajouter plus de détails</string>
-    <string name="label_review_fields">Vérifier ces champs</string>
     <string name="label_qr_website">Site web QR</string>
     <string name="action_open_website">Ouvrir le site web</string>
     <string name="label_qr_link_found">Lien QR trouvé</string>
 <string name="action_explore_extract">Explorer &amp; extraire</string>
-    <string name="label_detected_field_evidence">Preuves de champ détectées</string>
 
     <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
     <string name="cd_bag_photo">Photo du paquet</string>
@@ -626,12 +616,10 @@
     <string name="guided_scan_auto_on">Auto activé</string>
     <string name="guided_scan_auto_off">Auto désactivé</string>
     <string name="guided_scan_capture">Prendre une photo</string>
-    <string name="guided_scan_scan_more">Scanner d\'autres photos</string>
     <string name="scan_warn_glare">Réduisez les reflets</string>
     <string name="scan_warn_lighting">Améliorez l\'éclairage</string>
     <string name="cd_remove_photo">Retirer la photo</string>
     <string name="msg_bag_saved">Sachet enregistré</string>
-    <string name="msg_could_not_save_bag">Impossible d’enregistrer le sachet</string>
     <string name="msg_could_not_open_app_store">Impossible d’ouvrir la boutique d’applications.</string>
     <string name="msg_could_not_save_changes">Impossible d’enregistrer les modifications</string>
     <string name="msg_could_not_delete">Impossible de supprimer. Réessayez.</string>

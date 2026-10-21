@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_review_not_set">Nevyplněno</string>
+    <string name="label_review_check">Zkontrolovat</string>
+    <string name="action_review_edit">Upravit</string>
+    <string name="action_review_keep_mine">Ponechat vlastní údaj</string>
+    <string name="action_review_leave_blank">Ponechat prázdné</string>
+    <string name="msg_review_source_unavailable">Zdrojová fotografie není dostupná. Upravte údaj nebo přidejte další fotografii.</string>
+    <string name="msg_review_check_label">Zkontrolujte tento údaj podle štítku.</string>
+    <string name="action_review_use_reading">Použít přečtený údaj</string>
+    <string name="label_review_source">Zdroj</string>
+    <string name="msg_review_name_required">Zadejte název kávy.</string>
+    <string name="action_review_retry_save">Zkusit znovu uložit</string>
+    <string name="msg_review_save_failed">Káva se neuložila. Zkuste to znovu.</string>
+    <string name="msg_review_photo_save_failed">Fotografii štítku se nepodařilo uložit. Zkuste to znovu.</string>
+    <string name="label_review_source_notes">Údaje ze štítku</string>
+    <string name="format_review_more_details">Další údaje · ke kontrole: %1$d</string>
+    <string name="msg_review_qr_details">Údaje z %1$s</string>
+    <string name="action_review_add_photo">Přidat fotografii</string>
+    <string name="label_review_saving">Ukládání…</string>
+    <string name="label_review_not_decaf">S kofeinem</string>
+    <string name="msg_review_qr_approval">Načíst údaje o kávě z tohoto webu?</string>
+</resources>

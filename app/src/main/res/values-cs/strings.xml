@@ -406,21 +406,11 @@
     <string name="label_tasting_notes">Chuťové poznámky</string>
     <string name="label_best_before">Minimální trvanlivost</string>
     <string name="label_decaf_coffee">Bezkofeinová káva</string>
-    <string name="msg_decaf_guidance">Synchronizuje doporučení přípravy s bezkofeinovými zrny a kratšími dobami louhování.</string>
     <string name="msg_decaf_grind_adjustment">Zvolena bezkofeinová káva. Níže uvedené doporučení mletí je nastaveno hruběji, pokud je to pro tento způsob přípravy vhodné.</string>
-    <string name="label_decaf_process_optional">Způsob dekofeinizace (volitelné)</string>
-    <string name="msg_decaf_process_hint">Umožňuje pravidlu přípravy mírně upravit mletí: vodní procesy a CO₂ dekofeinizace obvykle nevyžadují tak hrubé mletí jako solventní procesy.</string>
-<string name="label_detected_details">Zjištěné údaje</string>
-    <string name="msg_tap_chip_to_edit">Klepnutím na štítek ho upravíte</string>
-    <string name="label_needs_review">Vyžaduje kontrolu</string>
-<string name="action_edit_all_fields">Upravit všechna pole</string>
-    <string name="action_add_more_details">Přidat další podrobnosti</string>
-    <string name="label_review_fields">Zkontrolujte tato pole</string>
     <string name="label_qr_website">QR web</string>
     <string name="action_open_website">Otevřít web</string>
     <string name="label_qr_link_found">Nalezen QR odkaz</string>
 <string name="action_explore_extract">Prozkoumat &amp; extrahovat</string>
-    <string name="label_detected_field_evidence">Důkazy zjištěných polí</string>
 
     <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
     <string name="cd_bag_photo">Foto balení</string>
@@ -654,12 +644,10 @@
     <string name="guided_scan_auto_on">Auto zapnuto</string>
     <string name="guided_scan_auto_off">Auto vypnuto</string>
     <string name="guided_scan_capture">Vyfotit</string>
-    <string name="guided_scan_scan_more">Naskenovat další fotky</string>
     <string name="scan_warn_glare">Omezte odlesky</string>
     <string name="scan_warn_lighting">Zlepšete osvětlení</string>
     <string name="cd_remove_photo">Odebrat fotku</string>
     <string name="msg_bag_saved">Balení uloženo</string>
-    <string name="msg_could_not_save_bag">Balení se nepodařilo uložit</string>
     <string name="msg_could_not_open_app_store">Obchod s aplikacemi se nepodařilo otevřít.</string>
     <string name="msg_could_not_save_changes">Změny se nepodařilo uložit</string>
     <string name="msg_could_not_delete">Položku se nepodařilo odstranit. Zkuste to znovu.</string>

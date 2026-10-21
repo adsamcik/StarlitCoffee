@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_review_not_set">Not set</string>
+    <string name="label_review_check">Check</string>
+    <string name="action_review_edit">Edit</string>
+    <string name="action_review_keep_mine">Keep mine</string>
+    <string name="action_review_leave_blank">Leave blank</string>
+    <string name="msg_review_source_unavailable">Source photo unavailable. Edit the detail or add another photo.</string>
+    <string name="msg_review_check_label">Check this detail against the label.</string>
+    <string name="action_review_use_reading">Use this reading</string>
+    <string name="label_review_source">Source</string>
+    <string name="msg_review_name_required">Enter a coffee name.</string>
+    <string name="action_review_retry_save">Retry save</string>
+    <string name="msg_review_save_failed">Coffee wasn\'t saved. Try again.</string>
+    <string name="msg_review_photo_save_failed">The label photo could not be saved. Try again.</string>
+    <string name="label_review_source_notes">Label details</string>
+    <string name="format_review_more_details">More details · %1$d to check</string>
+    <string name="msg_review_qr_details">Details from %1$s</string>
+    <string name="action_review_add_photo">Add photo</string>
+    <string name="label_review_saving">Saving…</string>
+    <string name="label_review_not_decaf">Not decaf</string>
+    <string name="msg_review_qr_approval">Fetch coffee details from this website?</string>
+</resources>

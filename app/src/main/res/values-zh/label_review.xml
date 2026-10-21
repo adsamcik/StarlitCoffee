@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_review_not_set">未填写</string>
+    <string name="label_review_check">核对</string>
+    <string name="action_review_edit">编辑</string>
+    <string name="action_review_keep_mine">保留我的值</string>
+    <string name="action_review_leave_blank">留空</string>
+    <string name="msg_review_source_unavailable">原始照片不可用。请编辑此项或添加另一张照片。</string>
+    <string name="msg_review_check_label">请对照标签核对此项。</string>
+    <string name="action_review_use_reading">使用此识别结果</string>
+    <string name="label_review_source">来源</string>
+    <string name="msg_review_name_required">请输入咖啡名称。</string>
+    <string name="action_review_retry_save">重新保存</string>
+    <string name="msg_review_save_failed">咖啡未保存。请重试。</string>
+    <string name="msg_review_photo_save_failed">标签照片无法保存。请重试。</string>
+    <string name="label_review_source_notes">标签信息</string>
+    <string name="format_review_more_details">更多信息 · %1$d 项待核对</string>
+    <string name="msg_review_qr_details">信息来自 %1$s</string>
+    <string name="action_review_add_photo">添加照片</string>
+    <string name="label_review_saving">正在保存…</string>
+    <string name="label_review_not_decaf">非低因</string>
+    <string name="msg_review_qr_approval">从此网站获取咖啡详情？</string>
+</resources>

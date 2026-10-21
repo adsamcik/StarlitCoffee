@@ -11,6 +11,9 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.WarningAmber
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -43,6 +46,7 @@ fun SuggestingTextField(
     multiValue: Boolean = false,
     enabled: Boolean = true,
     onFocusChanged: (Boolean) -> Unit = {},
+    isError: Boolean = false,
 ) {
     var hasFocus by remember { mutableStateOf(false) }
     var menuExpanded by remember { mutableStateOf(false) }
@@ -98,8 +102,10 @@ fun SuggestingTextField(
             shape = MaterialTheme.shapes.small,
             singleLine = singleLine,
             enabled = enabled,
+            isError = isError,
             trailingIcon = {
-                ExposedDropdownMenuDefaults.TrailingIcon(expanded = showSuggestions)
+                if (isError) Icon(Icons.Outlined.WarningAmber, contentDescription = null)
+                else ExposedDropdownMenuDefaults.TrailingIcon(expanded = showSuggestions)
             },
             modifier = Modifier
                 .fillMaxWidth()

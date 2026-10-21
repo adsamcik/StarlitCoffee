@@ -100,6 +100,16 @@ data class BagDraftFieldValue(
     val userRevision: Long = 0L,
     val reviewState: BagDraftReviewState = BagDraftReviewState.MISSING,
     val pendingSuggestion: BagDraftSuggestion? = null,
+    // A repeated pass over the same photos must not undo Keep mine / Leave blank.
+    val rejectedSuggestionValue: String? = null,
+)
+
+@Serializable
+data class BagDraftReviewLocation(
+    val scrollIndex: Int = 0,
+    val scrollOffset: Int = 0,
+    val expandedFields: List<String> = emptyList(),
+    val showMoreDetails: Boolean = false,
 )
 
 @Serializable
@@ -119,6 +129,7 @@ data class BagScanDraft(
     val reviewContext: BagReviewContext = BagReviewContext.addNew(),
     val resultJson: String? = null,
     val pendingExternalSetupReason: String? = null,
+    val reviewLocation: BagDraftReviewLocation = BagDraftReviewLocation(),
 ) {
     val isActive: Boolean
         get() = phase != BagDraftPhase.SAVED && phase != BagDraftPhase.DISCARDED
@@ -161,6 +172,41 @@ internal fun newBagScanDraft(
     reviewContext = reviewContext,
 )
 
+internal fun recoveredBagReviewSessionId(sessionId: String, workId: String): String =
+    runCatching { UUID.fromString(sessionId).toString() }
+        .getOrElse { UUID.fromString(workId).toString() }
+
+/** Adopt retained completed work without restarting recognition or replacing an existing owner. */
+internal fun recoverBagScanDraft(
+    existing: BagScanDraft?,
+    sessionId: String,
+    generationId: String,
+    workId: String,
+    reviewContext: BagReviewContext?,
+    preference: RecognitionPreference,
+    result: BagPhotoProcessingResult,
+    nowMillis: Long = System.currentTimeMillis(),
+    focusedFields: Set<BagDraftField> = emptySet(),
+): BagScanDraft {
+    if (existing != null) {
+        if (!existing.isActive || existing.generationId != null && existing.generationId != generationId) return existing
+        val isRunning = existing.recognitionRunState == RecognitionRunState.RUNNING ||
+            existing.recognitionRunState == RecognitionRunState.PARTIAL
+        if (!isRunning && existing.resultJson == result.encodeToStoredJson()) return existing
+    }
+    val draft = existing ?: newBagScanDraft(
+        sessionId = recoveredBagReviewSessionId(sessionId, workId),
+        photoUris = result.capturedPhotoUris?.split(',')?.map(String::trim)?.filter(String::isNotBlank).orEmpty(),
+        reviewContext = reviewContext ?: BagReviewContext.addNew(),
+        preference = preference,
+        nowMillis = nowMillis,
+    )
+    return draft.applyRecognitionResult(
+        result, nowMillis.coerceAtLeast(draft.updatedAtMillis + 1L), generationId, workId,
+        focusedFields = focusedFields, terminal = true,
+    )
+}
+
 internal fun BagScanDraft.applyRecognitionResult(
     incoming: BagPhotoProcessingResult,
     sourceRevision: Long,
@@ -170,13 +216,14 @@ internal fun BagScanDraft.applyRecognitionResult(
     terminal: Boolean,
 ): BagScanDraft {
     if (!isActive || this.generationId != null && this.generationId != generationId) return this
+    val reviewableDraft = withReviewSafeFields()
     val incomingFields = incoming.toDraftFieldValues()
-    return copy(
+    return reviewableDraft.copy(
         generationId = generationId,
         updatedAtMillis = sourceRevision,
         phase = if (phase == BagDraftPhase.CAPTURING) BagDraftPhase.REVIEWING else phase,
         photoUris = incoming.updatedPhotoUrisOr(photoUris),
-        fields = mergeRecognitionFields(incomingFields, sourceRevision, focusedFields),
+        fields = reviewableDraft.mergeRecognitionFields(incomingFields, sourceRevision, focusedFields),
         recognitionRunState = incoming.resolveRecognitionRunState(incomingFields, terminal, recognitionPreference),
         recognitionCapability = incoming.updatedRecognitionCapabilityOr(recognitionCapability),
         workId = workId ?: this.workId,
@@ -191,21 +238,24 @@ private fun BagScanDraft.mergeRecognitionFields(
 ): Map<String, BagDraftFieldValue> = fields.toMutableMap().also { merged ->
     incomingFields.forEach { (draftField, candidate) ->
         val current = field(draftField)
-        val mayReplace = current.userRevision == 0L &&
-            draftField !in focusedFields &&
-            sourceRevision > current.sourceRevision
         merged[draftField.wireName] = when {
-            mayReplace -> current.copy(
+            draftField in focusedFields || sourceRevision <= current.sourceRevision -> current
+            candidate.value == current.value || candidate.value == current.rejectedSuggestionValue -> current
+            current.userRevision == 0L && current.value.isNullOrBlank() &&
+                candidate.reviewState == BagDraftReviewState.ACCEPTED -> current.copy(
                 value = candidate.value,
                 source = BagDraftFieldSource.RECOGNITION,
                 sourceRevision = sourceRevision,
                 reviewState = candidate.reviewState,
                 pendingSuggestion = null,
             )
-            draftField !in focusedFields &&
-                candidate.value != null &&
-                candidate.value != current.value -> current.copy(
+            candidate.value != null -> current.copy(
                 pendingSuggestion = BagDraftSuggestion(candidate.value, sourceRevision),
+                reviewState = if (current.value.isNullOrBlank()) {
+                    BagDraftReviewState.NEEDS_REVIEW
+                } else {
+                    current.reviewState
+                },
             )
             else -> current
         }
@@ -266,7 +316,7 @@ internal fun BagScanDraft.applyUserEdit(
 ): BagScanDraft {
     if (!isActive) return this
     val current = this.field(field)
-    if (current.value == value && current.source == BagDraftFieldSource.USER) return this
+    if (current.value == value && current.source == BagDraftFieldSource.USER && current.pendingSuggestion == null) return this
     return copy(
         updatedAtMillis = nowMillis,
         fields = fields + (
@@ -279,7 +329,9 @@ internal fun BagScanDraft.applyUserEdit(
                 } else {
                     BagDraftReviewState.ACCEPTED
                 },
-                pendingSuggestion = current.pendingSuggestion?.takeUnless { it.value == value },
+                pendingSuggestion = null,
+                rejectedSuggestionValue = current.pendingSuggestion?.value?.takeUnless { it == value }
+                    ?: current.rejectedSuggestionValue,
             )
         ),
     )
@@ -288,22 +340,59 @@ internal fun BagScanDraft.applyUserEdit(
 internal fun BagScanDraft.acceptPendingSuggestion(
     field: BagDraftField,
     nowMillis: Long,
+    expectedSuggestionValue: String? = null,
 ): BagScanDraft {
     if (!isActive) return this
     val current = this.field(field)
     val suggestion = current.pendingSuggestion ?: return this
+    if (expectedSuggestionValue != null && suggestion.value != expectedSuggestionValue) return this
     return copy(
         updatedAtMillis = nowMillis,
         fields = fields + (
             field.wireName to current.copy(
                 value = suggestion.value,
                 source = BagDraftFieldSource.USER,
+                sourceRevision = suggestion.sourceRevision,
                 userRevision = current.userRevision + 1L,
                 reviewState = BagDraftReviewState.ACCEPTED,
                 pendingSuggestion = null,
+                rejectedSuggestionValue = null,
             )
         ),
     )
+}
+
+/** Older active drafts stored uncertain machine readings directly in their saved values. */
+internal fun BagScanDraft.withReviewSafeFields(): BagScanDraft {
+    if (!isActive) return this
+    return copy(fields = fields.mapValues { (_, field) ->
+        val value = field.value?.takeIf(String::isNotBlank)
+        val unacceptedRecognition = field.source == BagDraftFieldSource.RECOGNITION &&
+            field.userRevision == 0L && field.reviewState == BagDraftReviewState.NEEDS_REVIEW
+        if (unacceptedRecognition && value != null) {
+            field.copy(
+                value = null,
+                source = BagDraftFieldSource.EMPTY,
+                pendingSuggestion = field.pendingSuggestion ?: BagDraftSuggestion(value, field.sourceRevision),
+            )
+        } else {
+            field
+        }
+    })
+}
+
+internal fun BagScanDraft.withReviewLocation(location: BagDraftReviewLocation): BagScanDraft =
+    if (!isActive || reviewLocation == location) this else copy(reviewLocation = location)
+
+fun BagDraftStore.updateReviewLocation(
+    context: Context,
+    sessionId: String,
+    location: BagDraftReviewLocation,
+): BagScanDraft? = synchronized(this) {
+    val current = read(context, sessionId) ?: return@synchronized null
+    val next = current.withReviewLocation(location)
+    if (next !== current) write(context, next)
+    next
 }
 
 internal fun BagScanDraft.closeAsTombstone(
@@ -321,6 +410,7 @@ internal fun BagScanDraft.closeAsTombstone(
         reviewContext = BagReviewContext.addNew(),
         resultJson = null,
         pendingExternalSetupReason = null,
+        reviewLocation = BagDraftReviewLocation(),
     )
 }
 
@@ -388,6 +478,9 @@ object BagDraftStore {
                 photoUris = photoUris.distinct(),
                 reviewContext = reviewContext,
                 recognitionPreference = preference,
+                fields = if (current.photoUris == photoUris.distinct()) current.fields else {
+                    current.fields.mapValues { (_, field) -> field.copy(rejectedSuggestionValue = null) }
+                },
             )
         }
         if (next != current) write(context, next)
@@ -469,8 +562,13 @@ object BagDraftStore {
         sessionId: String,
         field: BagDraftField,
         nowMillis: Long = System.currentTimeMillis(),
+        expectedSuggestionValue: String? = null,
     ): BagScanDraft? = update(context, sessionId) { draft ->
-        draft.acceptPendingSuggestion(field, nowMillis.coerceAtLeast(draft.updatedAtMillis + 1L))
+        draft.acceptPendingSuggestion(
+            field,
+            nowMillis.coerceAtLeast(draft.updatedAtMillis + 1L),
+            expectedSuggestionValue,
+        )
     }
 
     @Synchronized
@@ -590,6 +688,7 @@ object BagDraftStore {
             .onFailure { error -> Tracebox.log.error(error, BagDraftStoreTraceboxTemplates.FAILED_TO_READ_BAG_DRAFT) }
             .getOrNull()
             ?.takeIf { it.schemaVersion <= BAG_DRAFT_SCHEMA_VERSION }
+            ?.withReviewSafeFields()
     }
 
     internal fun readAll(directory: File): List<BagScanDraft> {

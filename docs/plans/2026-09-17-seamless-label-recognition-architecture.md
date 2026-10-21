@@ -1,11 +1,17 @@
 # Seamless coffee-label recognition
 
-**Status:** implementation-ready design; application changes are not implemented.
+**Status:** review UI and draft acceptance safeguards implemented; the wider
+recognition execution and measurement proposals below remain a design.
 **Date:** 2026-09-17. **Reviewed baseline:** `399fe1e`.
 
 This design consolidates the [integration audit](../evaluations/2026-09-17-ai-integration.md)
 and [user-flow recommendation](../evaluations/2026-09-17-label-recognition-user-experience.md).
 It extends [ADR 0004](../adr/0004-user-owned-label-recognition-drafts.md).
+
+The Android review now uses compact inline fields, field-local source evidence,
+explicit pending-reading choices, retained review location and local save retry.
+This does not establish the proposed provider budgets, physical-device quality,
+recognition caching/planning changes or caffeine-domain migration below.
 
 ## Product contract
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_review_not_set">Не е зададено</string>
+    <string name="label_review_check">Проверка</string>
+    <string name="action_review_edit">Редактиране</string>
+    <string name="action_review_keep_mine">Запазване на моята стойност</string>
+    <string name="action_review_leave_blank">Оставяне празно</string>
+    <string name="msg_review_source_unavailable">Оригиналната снимка не е налична. Редактирайте данните или добавете друга снимка.</string>
+    <string name="msg_review_check_label">Сверете тези данни с етикета.</string>
+    <string name="action_review_use_reading">Използване на прочетеното</string>
+    <string name="label_review_source">Източник</string>
+    <string name="msg_review_name_required">Въведете име на кафето.</string>
+    <string name="action_review_retry_save">Повторно запазване</string>
+    <string name="msg_review_save_failed">Кафето не е запазено. Опитайте отново.</string>
+    <string name="msg_review_photo_save_failed">Снимката на етикета не можа да бъде запазена. Опитайте отново.</string>
+    <string name="label_review_source_notes">Данни от етикета</string>
+    <string name="format_review_more_details">Още данни · за проверка: %1$d</string>
+    <string name="msg_review_qr_details">Данни от %1$s</string>
+    <string name="action_review_add_photo">Добавяне на снимка</string>
+    <string name="label_review_saving">Запазване…</string>
+    <string name="label_review_not_decaf">С кофеин</string>
+    <string name="msg_review_qr_approval">Да се извлекат ли данни за кафето от този уебсайт?</string>
+</resources>

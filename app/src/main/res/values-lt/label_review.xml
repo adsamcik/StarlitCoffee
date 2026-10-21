@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_review_not_set">Nenurodyta</string>
+    <string name="label_review_check">Patikrinti</string>
+    <string name="action_review_edit">Redaguoti</string>
+    <string name="action_review_keep_mine">Palikti mano reikšmę</string>
+    <string name="action_review_leave_blank">Palikti tuščią</string>
+    <string name="msg_review_source_unavailable">Pradinė nuotrauka nepasiekiama. Redaguokite duomenis arba pridėkite kitą nuotrauką.</string>
+    <string name="msg_review_check_label">Patikrinkite šiuos duomenis etiketėje.</string>
+    <string name="action_review_use_reading">Naudoti šiuos nuskaitytus duomenis</string>
+    <string name="label_review_source">Šaltinis</string>
+    <string name="msg_review_name_required">Įveskite kavos pavadinimą.</string>
+    <string name="action_review_retry_save">Bandyti išsaugoti dar kartą</string>
+    <string name="msg_review_save_failed">Kava neišsaugota. Bandykite dar kartą.</string>
+    <string name="msg_review_photo_save_failed">Nepavyko išsaugoti etiketės nuotraukos. Bandykite dar kartą.</string>
+    <string name="label_review_source_notes">Etiketės duomenys</string>
+    <string name="format_review_more_details">Daugiau duomenų · tikrintina: %1$d</string>
+    <string name="msg_review_qr_details">Duomenys iš %1$s</string>
+    <string name="action_review_add_photo">Pridėti nuotrauką</string>
+    <string name="label_review_saving">Išsaugoma…</string>
+    <string name="label_review_not_decaf">Su kofeinu</string>
+    <string name="msg_review_qr_approval">Gauti kavos informaciją iš šios svetainės?</string>
+</resources>

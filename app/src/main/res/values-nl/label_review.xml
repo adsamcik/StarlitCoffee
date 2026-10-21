@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_review_not_set">Niet ingevuld</string>
+    <string name="label_review_check">Controleren</string>
+    <string name="action_review_edit">Bewerken</string>
+    <string name="action_review_keep_mine">Mijn invoer behouden</string>
+    <string name="action_review_leave_blank">Leeg laten</string>
+    <string name="msg_review_source_unavailable">Bronfoto niet beschikbaar. Bewerk het gegeven of voeg een andere foto toe.</string>
+    <string name="msg_review_check_label">Controleer dit gegeven op het etiket.</string>
+    <string name="action_review_use_reading">Herkende waarde gebruiken</string>
+    <string name="label_review_source">Bron</string>
+    <string name="msg_review_name_required">Voer een koffienaam in.</string>
+    <string name="action_review_retry_save">Opnieuw opslaan</string>
+    <string name="msg_review_save_failed">De koffie is niet opgeslagen. Probeer het opnieuw.</string>
+    <string name="msg_review_photo_save_failed">De etiketfoto kon niet worden opgeslagen. Probeer het opnieuw.</string>
+    <string name="label_review_source_notes">Etiketgegevens</string>
+    <string name="format_review_more_details">Meer gegevens · %1$d te controleren</string>
+    <string name="msg_review_qr_details">Gegevens van %1$s</string>
+    <string name="action_review_add_photo">Foto toevoegen</string>
+    <string name="label_review_saving">Opslaan…</string>
+    <string name="label_review_not_decaf">Met cafeïne</string>
+    <string name="msg_review_qr_approval">Koffiegegevens ophalen van deze website?</string>
+</resources>

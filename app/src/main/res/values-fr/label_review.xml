@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_review_not_set">Non renseigné</string>
+    <string name="label_review_check">Vérifier</string>
+    <string name="action_review_edit">Modifier</string>
+    <string name="action_review_keep_mine">Garder ma valeur</string>
+    <string name="action_review_leave_blank">Laisser vide</string>
+    <string name="msg_review_source_unavailable">La photo source est indisponible. Modifiez le détail ou ajoutez une autre photo.</string>
+    <string name="msg_review_check_label">Vérifiez ce détail sur l\'étiquette.</string>
+    <string name="action_review_use_reading">Utiliser la valeur lue</string>
+    <string name="label_review_source">Source</string>
+    <string name="msg_review_name_required">Saisissez un nom de café.</string>
+    <string name="action_review_retry_save">Réessayer l\'enregistrement</string>
+    <string name="msg_review_save_failed">Le café n\'a pas été enregistré. Réessayez.</string>
+    <string name="msg_review_photo_save_failed">La photo de l\'étiquette n\'a pas pu être enregistrée. Réessayez.</string>
+    <string name="label_review_source_notes">Détails de l\'étiquette</string>
+    <string name="format_review_more_details">Autres détails · %1$d à vérifier</string>
+    <string name="msg_review_qr_details">Détails provenant de %1$s</string>
+    <string name="action_review_add_photo">Ajouter une photo</string>
+    <string name="label_review_saving">Enregistrement…</string>
+    <string name="label_review_not_decaf">Avec caféine</string>
+    <string name="msg_review_qr_approval">Récupérer les informations sur le café depuis ce site web ?</string>
+</resources>

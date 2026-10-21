@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_review_not_set">Nespecificat</string>
+    <string name="label_review_check">Verifică</string>
+    <string name="action_review_edit">Editează</string>
+    <string name="action_review_keep_mine">Păstrează valoarea mea</string>
+    <string name="action_review_leave_blank">Lasă necompletat</string>
+    <string name="msg_review_source_unavailable">Fotografia sursă nu este disponibilă. Editează detaliul sau adaugă altă fotografie.</string>
+    <string name="msg_review_check_label">Verifică acest detaliu pe etichetă.</string>
+    <string name="action_review_use_reading">Folosește această citire</string>
+    <string name="label_review_source">Sursă</string>
+    <string name="msg_review_name_required">Introdu un nume pentru cafea.</string>
+    <string name="action_review_retry_save">Reîncearcă salvarea</string>
+    <string name="msg_review_save_failed">Cafeaua nu a fost salvată. Încearcă din nou.</string>
+    <string name="msg_review_photo_save_failed">Fotografia etichetei nu a putut fi salvată. Încearcă din nou.</string>
+    <string name="label_review_source_notes">Detalii de pe etichetă</string>
+    <string name="format_review_more_details">Alte detalii · %1$d de verificat</string>
+    <string name="msg_review_qr_details">Detalii din %1$s</string>
+    <string name="action_review_add_photo">Adaugă fotografie</string>
+    <string name="label_review_saving">Se salvează…</string>
+    <string name="label_review_not_decaf">Cu cofeină</string>
+    <string name="msg_review_qr_approval">Preluați detaliile cafelei de pe acest site?</string>
+</resources>

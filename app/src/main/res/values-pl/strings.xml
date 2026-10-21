@@ -378,21 +378,11 @@
     <string name="label_tasting_notes">Nuty smakowe</string>
     <string name="label_best_before">Najlepiej spożyć przed</string>
     <string name="label_decaf_coffee">Kawa bezkofeinowa</string>
-    <string name="msg_decaf_guidance">Utrzymuje wskazówki parzenia zgodne z ziarnami decaf i krótszymi celami parzenia.</string>
     <string name="msg_decaf_grind_adjustment">Wybrano kawę bezkofeinową. Poniższe zalecenie mielenia jest dostosowywane na grubsze, gdy ta metoda na tym korzysta.</string>
-    <string name="label_decaf_process_optional">Proces dekofeinizacji (opcjonalnie)</string>
-    <string name="msg_decaf_process_hint">Pozwala regule parzenia lekko skorygować mielenie: decafy wodne i CO₂ zwykle wymagają mniejszego pogrubienia niż te z procesów rozpuszczalnikowych.</string>
-<string name="label_detected_details">Wykryte szczegóły</string>
-    <string name="msg_tap_chip_to_edit">Dotknij dowolnego chipa, aby edytować</string>
-    <string name="label_needs_review">Wymaga sprawdzenia</string>
-<string name="action_edit_all_fields">Edytuj wszystkie pola</string>
-    <string name="action_add_more_details">Dodaj więcej szczegółów</string>
-    <string name="label_review_fields">Sprawdź te pola</string>
     <string name="label_qr_website">Strona z QR</string>
     <string name="action_open_website">Otwórz stronę</string>
     <string name="label_qr_link_found">Znaleziono link QR</string>
 <string name="action_explore_extract">Przejrzyj &amp; wyodrębnij</string>
-    <string name="label_detected_field_evidence">Dowody dla wykrytych pól</string>
 
     <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
     <string name="cd_bag_photo">Zdjęcie opakowania</string>
@@ -626,12 +616,10 @@
     <string name="guided_scan_auto_on">Auto wł.</string>
     <string name="guided_scan_auto_off">Auto wył.</string>
     <string name="guided_scan_capture">Zrób zdjęcie</string>
-    <string name="guided_scan_scan_more">Zeskanuj więcej zdjęć</string>
     <string name="scan_warn_glare">Ogranicz odblaski</string>
     <string name="scan_warn_lighting">Popraw oświetlenie</string>
     <string name="cd_remove_photo">Usuń zdjęcie</string>
     <string name="msg_bag_saved">Opakowanie zapisane</string>
-    <string name="msg_could_not_save_bag">Nie udało się zapisać opakowania</string>
     <string name="msg_could_not_open_app_store">Nie udało się otworzyć sklepu z aplikacjami.</string>
     <string name="msg_could_not_save_changes">Nie udało się zapisać zmian</string>
     <string name="msg_could_not_delete">Nie udało się usunąć. Spróbuj ponownie.</string>

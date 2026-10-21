@@ -23,8 +23,11 @@ LLM passes are optional on-device enrichment selected through one preference
 and contextual setup actions. Provider state maps through a provider-neutral UI
 model before reaching Compose.
 
-Recognition may replace only fields that have no user revision and are not
-currently focused. A conflicting late value becomes a pending suggestion.
+Recognition may fill only empty fields that have no user revision and are not
+currently focused, using accepted evidence. Uncertain readings and replacements
+of a displayed nonempty value remain pending suggestions outside the save value.
+Keep mine and explicit clears suppress the same rejected reading until the photo
+set changes. Returning to a draft restores its scroll position and expanded fields.
 Generation IDs reject stale work. Save and Discard persist terminal tombstones;
 workers, recovery, and notification delivery must check them before publishing.
 Closed tombstones retain only ownership identifiers and redact label fields,

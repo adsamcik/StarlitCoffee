@@ -10,9 +10,11 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.adsamcik.starlitcoffee.data.work.BagDraftField
 import com.adsamcik.starlitcoffee.data.work.BagDraftFocusRegistry
 import com.adsamcik.starlitcoffee.data.work.BagDraftPhase
+import com.adsamcik.starlitcoffee.data.work.BagDraftReviewLocation
 import com.adsamcik.starlitcoffee.data.work.BagDraftStore
 import com.adsamcik.starlitcoffee.data.work.BagReviewMode
 import com.adsamcik.starlitcoffee.data.work.BagScanDraft
+import com.adsamcik.starlitcoffee.data.work.updateReviewLocation
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -48,12 +50,22 @@ class BagScanDraftViewModel(
         _draft.value = BagDraftStore.applyUserEdit(application, sessionId, field, value)
     }
 
-    fun acceptSuggestion(field: BagDraftField) {
-        _draft.value = BagDraftStore.acceptSuggestion(application, sessionId, field)
+    fun acceptSuggestion(field: BagDraftField, expectedValue: String): Boolean {
+        val pending = _draft.value?.field(field)?.pendingSuggestion?.value
+        val updated = BagDraftStore.acceptSuggestion(application, sessionId, field,
+            expectedSuggestionValue = expectedValue)
+        _draft.value = updated
+        return pending == expectedValue && updated?.field(field)?.let {
+            it.value == expectedValue && it.pendingSuggestion == null
+        } == true
     }
 
     fun onFieldFocusChanged(field: BagDraftField, focused: Boolean) {
         BagDraftFocusRegistry.update(sessionId, field, focused)
+    }
+
+    fun updateReviewLocation(location: BagDraftReviewLocation) {
+        _draft.value = BagDraftStore.updateReviewLocation(application, sessionId, location)
     }
 
     fun markReviewing() {

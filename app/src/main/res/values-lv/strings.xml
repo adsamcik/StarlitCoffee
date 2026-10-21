@@ -378,21 +378,11 @@
     <string name="label_tasting_notes">Garšas piezīmes</string>
     <string name="label_best_before">Ieteicams līdz</string>
     <string name="label_decaf_coffee">Bezkofeīna kafija</string>
-    <string name="msg_decaf_guidance">Sinhronizē gatavošanas ieteikumus ar bezkofeīna pupiņām un īsākiem ievilkšanas mērķiem.</string>
     <string name="msg_decaf_grind_adjustment">Izvēlēta bezkofeīna kafija. Tālāk norādītais maluma ieteikums tiek pielāgots rupjākam malumam, ja tas ir piemērots šai pagatavošanas metodei.</string>
-    <string name="label_decaf_process_optional">Dekofeinizācijas process (neobligāti)</string>
-    <string name="msg_decaf_process_hint">Ļauj gatavošanas noteikumam maigi koriģēt malumu: ūdens procesa un CO₂ decaf parasti nepieciešama mazāka maluma rupjināšana nekā šķīdinātāju procesa decaf.</string>
-<string name="label_detected_details">Atrasta informācija</string>
-    <string name="msg_tap_chip_to_edit">Pieskarieties jebkuram čipam, lai rediģētu</string>
-    <string name="label_needs_review">Jāpārskata</string>
-<string name="action_edit_all_fields">Rediģēt visus laukus</string>
-    <string name="action_add_more_details">Pievienot vairāk informācijas</string>
-    <string name="label_review_fields">Pārskatiet šos laukus</string>
     <string name="label_qr_website">QR tīmekļa vietne</string>
     <string name="action_open_website">Atvērt tīmekļa vietni</string>
     <string name="label_qr_link_found">Atrasta QR saite</string>
 <string name="action_explore_extract">Izpētīt un izvilkt</string>
-    <string name="label_detected_field_evidence">Atrasto lauku pierādījumi</string>
 
     <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
     <string name="cd_bag_photo">Iepakojuma fotoattēls</string>
@@ -626,12 +616,10 @@
     <string name="guided_scan_auto_on">Automātiski ieslēgts</string>
     <string name="guided_scan_auto_off">Automātiski izslēgts</string>
     <string name="guided_scan_capture">Uzņemt fotoattēlu</string>
-    <string name="guided_scan_scan_more">Skenēt vairāk fotoattēlu</string>
     <string name="scan_warn_glare">Samaziniet atspīdumu</string>
     <string name="scan_warn_lighting">Uzlabojiet apgaismojumu</string>
     <string name="cd_remove_photo">Noņemt fotoattēlu</string>
     <string name="msg_bag_saved">Iepakojums saglabāts</string>
-    <string name="msg_could_not_save_bag">Neizdevās saglabāt iepakojumu</string>
     <string name="msg_could_not_open_app_store">Neizdevās atvērt lietotņu veikalu.</string>
     <string name="msg_could_not_save_changes">Neizdevās saglabāt izmaiņas</string>
     <string name="msg_could_not_delete">Neizdevās izdzēst. Mēģiniet vēlreiz.</string>

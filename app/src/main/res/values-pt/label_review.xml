@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_review_not_set">Não definido</string>
+    <string name="label_review_check">Verificar</string>
+    <string name="action_review_edit">Editar</string>
+    <string name="action_review_keep_mine">Manter o meu valor</string>
+    <string name="action_review_leave_blank">Deixar em branco</string>
+    <string name="msg_review_source_unavailable">A foto de origem não está disponível. Edite o dado ou adicione outra foto.</string>
+    <string name="msg_review_check_label">Confirme este dado no rótulo.</string>
+    <string name="action_review_use_reading">Usar esta leitura</string>
+    <string name="label_review_source">Fonte</string>
+    <string name="msg_review_name_required">Introduza um nome para o café.</string>
+    <string name="action_review_retry_save">Tentar guardar novamente</string>
+    <string name="msg_review_save_failed">O café não foi guardado. Tente novamente.</string>
+    <string name="msg_review_photo_save_failed">Não foi possível guardar a foto do rótulo. Tente novamente.</string>
+    <string name="label_review_source_notes">Dados do rótulo</string>
+    <string name="format_review_more_details">Mais dados · %1$d por verificar</string>
+    <string name="msg_review_qr_details">Dados de %1$s</string>
+    <string name="action_review_add_photo">Adicionar foto</string>
+    <string name="label_review_saving">A guardar…</string>
+    <string name="label_review_not_decaf">Com cafeína</string>
+    <string name="msg_review_qr_approval">Obter os detalhes do café deste site?</string>
+</resources>

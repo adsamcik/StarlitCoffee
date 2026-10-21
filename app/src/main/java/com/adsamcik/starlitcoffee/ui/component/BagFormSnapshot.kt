@@ -23,6 +23,16 @@ data class BagFormSnapshot(
     val expiryDateMillis: Long? = null,
 )
 
+internal fun BagFormSnapshot.reviewValue(field: String): String? = when (field) {
+    "name" -> name
+    "roaster" -> roaster
+    "origin" -> originCountry
+    "region" -> originRegion
+    "processType" -> processType
+    "tastingNotes" -> tastingNotes
+    else -> null
+}
+
 internal fun shouldConfirmBagDismiss(
     isEditMode: Boolean,
     initial: BagFormSnapshot,
@@ -39,62 +49,54 @@ internal fun mergeBagFormEnrichment(
     current: BagFormSnapshot,
     previousEnrichment: BagFormSnapshot,
     incomingEnrichment: BagFormSnapshot,
+    protectedFields: Set<String> = emptySet(),
 ): BagFormSnapshot = current.copy(
-    name = mergeIfUnchanged(current.name, previousEnrichment.name, incomingEnrichment.name),
-    roaster = mergeIfUnchanged(current.roaster, previousEnrichment.roaster, incomingEnrichment.roaster),
-    originCountry = mergeIfUnchanged(
-        current.originCountry,
+    name = mergeIfUnchanged("name", protectedFields, current.name, previousEnrichment.name, incomingEnrichment.name),
+    roaster = mergeIfUnchanged("roaster", protectedFields, current.roaster, previousEnrichment.roaster, incomingEnrichment.roaster),
+    originCountry = mergeIfUnchanged("origin", protectedFields, current.originCountry,
         previousEnrichment.originCountry,
         incomingEnrichment.originCountry,
     ),
-    originRegion = mergeIfUnchanged(
-        current.originRegion,
+    originRegion = mergeIfUnchanged("region", protectedFields, current.originRegion,
         previousEnrichment.originRegion,
         incomingEnrichment.originRegion,
     ),
-    farm = mergeIfUnchanged(current.farm, previousEnrichment.farm, incomingEnrichment.farm),
-    altitude = mergeIfUnchanged(
-        current.altitude,
+    farm = mergeIfUnchanged("farm", protectedFields, current.farm, previousEnrichment.farm, incomingEnrichment.farm),
+    altitude = mergeIfUnchanged("altitude", protectedFields, current.altitude,
         previousEnrichment.altitude,
         incomingEnrichment.altitude,
     ),
-    roastLevel = mergeIfUnchanged(
-        current.roastLevel,
+    roastLevel = mergeIfUnchanged("roastLevel", protectedFields, current.roastLevel,
         previousEnrichment.roastLevel,
         incomingEnrichment.roastLevel,
     ),
-    variety = mergeIfUnchanged(current.variety, previousEnrichment.variety, incomingEnrichment.variety),
-    processType = mergeIfUnchanged(
-        current.processType,
+    variety = mergeIfUnchanged("variety", protectedFields, current.variety, previousEnrichment.variety, incomingEnrichment.variety),
+    processType = mergeIfUnchanged("processType", protectedFields, current.processType,
         previousEnrichment.processType,
         incomingEnrichment.processType,
     ),
-    tastingNotes = mergeIfUnchanged(
-        current.tastingNotes,
+    tastingNotes = mergeIfUnchanged("tastingNotes", protectedFields, current.tastingNotes,
         previousEnrichment.tastingNotes,
         incomingEnrichment.tastingNotes,
     ),
-    barcode = mergeIfUnchanged(
-        current.barcode,
+    barcode = mergeIfUnchanged("barcode", protectedFields, current.barcode,
         previousEnrichment.barcode,
         incomingEnrichment.barcode,
     ),
-    weight = mergeIfUnchanged(current.weight, previousEnrichment.weight, incomingEnrichment.weight),
-    isDecaf = mergeIfUnchanged(current.isDecaf, previousEnrichment.isDecaf, incomingEnrichment.isDecaf),
-    roastDateMillis = mergeIfUnchanged(
-        current.roastDateMillis,
+    weight = mergeIfUnchanged("weight", protectedFields, current.weight, previousEnrichment.weight, incomingEnrichment.weight),
+    isDecaf = mergeIfUnchanged("isDecaf", protectedFields, current.isDecaf, previousEnrichment.isDecaf, incomingEnrichment.isDecaf),
+    roastDateMillis = mergeIfUnchanged("roastDate", protectedFields, current.roastDateMillis,
         previousEnrichment.roastDateMillis,
         incomingEnrichment.roastDateMillis,
     ),
-    expiryDateMillis = mergeIfUnchanged(
-        current.expiryDateMillis,
+    expiryDateMillis = mergeIfUnchanged("expiryDate", protectedFields, current.expiryDateMillis,
         previousEnrichment.expiryDateMillis,
         incomingEnrichment.expiryDateMillis,
     ),
 )
 
-private fun <T> mergeIfUnchanged(current: T, previous: T, incoming: T): T =
-    if (current == previous) incoming else current
+private fun <T> mergeIfUnchanged(field: String, protectedFields: Set<String>, current: T, previous: T, incoming: T): T =
+    if (field !in protectedFields && current == previous) incoming else current
 
 internal fun shouldApplyBagResultToDraft(
     isDraftOpen: Boolean,

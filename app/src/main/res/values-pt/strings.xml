@@ -378,21 +378,11 @@
     <string name="label_tasting_notes">Notas de prova</string>
     <string name="label_best_before">Consumir de preferência antes de</string>
     <string name="label_decaf_coffee">Café descafeinado</string>
-    <string name="msg_decaf_guidance">Mantém as orientações de preparação alinhadas com grãos descafeinados e tempos de infusão mais curtos.</string>
     <string name="msg_decaf_grind_adjustment">Foi selecionado café descafeinado. A recomendação de moagem abaixo é ajustada para mais grossa quando este método beneficia disso.</string>
-    <string name="label_decaf_process_optional">Processo de descafeinação (opcional)</string>
-    <string name="msg_decaf_process_hint">Permite que a regra de preparação ajuste suavemente a moagem: descafeinados por água e CO₂ costumam precisar de menos ajuste para mais grosso do que os de solvente.</string>
-<string name="label_detected_details">Detalhes detetados</string>
-    <string name="msg_tap_chip_to_edit">Toque em qualquer chip para editar</string>
-    <string name="label_needs_review">Precisa de revisão</string>
-<string name="action_edit_all_fields">Editar todos os campos</string>
-    <string name="action_add_more_details">Adicionar mais detalhes</string>
-    <string name="label_review_fields">Rever estes campos</string>
     <string name="label_qr_website">Site do QR</string>
     <string name="action_open_website">Abrir site</string>
     <string name="label_qr_link_found">Ligação QR encontrada</string>
 <string name="action_explore_extract">Explorar &amp; extrair</string>
-    <string name="label_detected_field_evidence">Evidência de campos detetada</string>
 
     <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
     <string name="cd_bag_photo">Foto da embalagem</string>
@@ -626,12 +616,10 @@
     <string name="guided_scan_auto_on">Auto ligado</string>
     <string name="guided_scan_auto_off">Auto desligado</string>
     <string name="guided_scan_capture">Captar foto</string>
-    <string name="guided_scan_scan_more">Ler mais fotos</string>
     <string name="scan_warn_glare">Reduza os reflexos</string>
     <string name="scan_warn_lighting">Melhore a iluminação</string>
     <string name="cd_remove_photo">Remover foto</string>
     <string name="msg_bag_saved">Embalagem guardada</string>
-    <string name="msg_could_not_save_bag">Não foi possível guardar a embalagem</string>
     <string name="msg_could_not_open_app_store">Não foi possível abrir a loja de aplicações.</string>
     <string name="msg_could_not_save_changes">Não foi possível guardar as alterações</string>
     <string name="msg_could_not_delete">Não foi possível excluir. Tente novamente.</string>

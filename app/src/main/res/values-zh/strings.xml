@@ -374,21 +374,11 @@
     <string name="label_tasting_notes">风味描述</string>
     <string name="label_best_before">最佳赏味期</string>
     <string name="label_decaf_coffee">低因咖啡</string>
-    <string name="msg_decaf_guidance">让冲煮指引与低因豆和更短浸泡目标保持同步。</string>
     <string name="msg_decaf_grind_adjustment">已选择低因咖啡。若此冲煮方式适合较粗研磨，下方的研磨建议会相应调粗。</string>
-    <string name="label_decaf_process_optional">脱咖啡因处理法（可选）</string>
-    <string name="msg_decaf_process_hint">让冲煮规则对研磨做轻微偏置：水处理和CO₂低因通常比溶剂处理低因需要更少调粗。</string>
-<string name="label_detected_details">识别到的详情</string>
-    <string name="msg_tap_chip_to_edit">点按任意标签进行编辑</string>
-    <string name="label_needs_review">需要检查</string>
-<string name="action_edit_all_fields">编辑所有字段</string>
-    <string name="action_add_more_details">添加更多详情</string>
-    <string name="label_review_fields">检查这些字段</string>
     <string name="label_qr_website">二维码网站</string>
     <string name="action_open_website">打开网站</string>
     <string name="label_qr_link_found">找到二维码链接</string>
 <string name="action_explore_extract">探索并提取</string>
-    <string name="label_detected_field_evidence">识别字段证据</string>
 
     <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
     <string name="cd_bag_photo">咖啡袋照片</string>
@@ -622,12 +612,10 @@
     <string name="guided_scan_auto_on">自动开</string>
     <string name="guided_scan_auto_off">自动关</string>
     <string name="guided_scan_capture">拍照</string>
-    <string name="guided_scan_scan_more">扫描更多照片</string>
     <string name="scan_warn_glare">减少反光</string>
     <string name="scan_warn_lighting">改善光线</string>
     <string name="cd_remove_photo">移除照片</string>
     <string name="msg_bag_saved">已保存咖啡袋</string>
-    <string name="msg_could_not_save_bag">无法保存咖啡袋</string>
     <string name="msg_could_not_open_app_store">无法打开应用商店。</string>
     <string name="msg_could_not_save_changes">无法保存更改</string>
     <string name="msg_could_not_delete">无法删除，请重试。</string>

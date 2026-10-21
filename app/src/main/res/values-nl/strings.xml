@@ -376,21 +376,11 @@
     <string name="label_tasting_notes">Smaaknotities</string>
     <string name="label_best_before">Ten minste houdbaar tot</string>
     <string name="label_decaf_coffee">Cafeïnevrije koffie</string>
-    <string name="msg_decaf_guidance">Zetadvies blijft afgestemd op cafeïnevrije bonen en kortere trektijden.</string>
     <string name="msg_decaf_grind_adjustment">Cafeïnevrij is geselecteerd. Het maaladvies hieronder wordt grover afgesteld wanneer deze zetmethode daar baat bij heeft.</string>
-    <string name="label_decaf_process_optional">Decaf-proces (optioneel)</string>
-    <string name="msg_decaf_process_hint">Laat de zetregels de maling subtiel bijsturen: decafs met waterproces en CO₂ hoeven meestal minder grof gemalen te worden dan decafs met oplosmiddel.</string>
-<string name="label_detected_details">Gedetecteerde details</string>
-    <string name="msg_tap_chip_to_edit">Tik op een chip om te bewerken</string>
-    <string name="label_needs_review">Moet worden gecontroleerd</string>
-<string name="action_edit_all_fields">Alle velden bewerken</string>
-    <string name="action_add_more_details">Meer details toevoegen</string>
-    <string name="label_review_fields">Controleer deze velden</string>
     <string name="label_qr_website">QR-website</string>
     <string name="action_open_website">Website openen</string>
     <string name="label_qr_link_found">QR-link gevonden</string>
 <string name="action_explore_extract">Verkennen &amp; extraheren</string>
-    <string name="label_detected_field_evidence">Bewijs voor gedetecteerde velden</string>
 
     <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
     <string name="cd_bag_photo">Zakfoto</string>
@@ -624,12 +614,10 @@
     <string name="guided_scan_auto_on">Auto aan</string>
     <string name="guided_scan_auto_off">Auto uit</string>
     <string name="guided_scan_capture">Foto maken</string>
-    <string name="guided_scan_scan_more">Meer foto\'s scannen</string>
     <string name="scan_warn_glare">Verminder schittering</string>
     <string name="scan_warn_lighting">Verbeter de belichting</string>
     <string name="cd_remove_photo">Foto verwijderen</string>
     <string name="msg_bag_saved">Zak opgeslagen</string>
-    <string name="msg_could_not_save_bag">De zak kon niet worden opgeslagen</string>
     <string name="msg_could_not_open_app_store">De appwinkel kon niet worden geopend.</string>
     <string name="msg_could_not_save_changes">Wijzigingen konden niet worden opgeslagen</string>
     <string name="msg_could_not_delete">Verwijderen mislukt. Probeer het opnieuw.</string>

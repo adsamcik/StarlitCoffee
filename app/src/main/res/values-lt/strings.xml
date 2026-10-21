@@ -379,21 +379,11 @@
     <string name="label_tasting_notes">Skonio natos</string>
     <string name="label_best_before">Tinka iki</string>
     <string name="label_decaf_coffee">Kava be kofeino</string>
-    <string name="msg_decaf_guidance">Suderina plikymo patarimus su kava be kofeino ir trumpesniu plikymo laiku.</string>
     <string name="msg_decaf_grind_adjustment">Pasirinkta kava be kofeino. Toliau pateikta malimo rekomendacija koreguojama į stambesnę, kai tai naudinga šiam ruošimo būdui.</string>
-    <string name="label_decaf_process_optional">Kofeino šalinimo būdas (nebūtina)</string>
-    <string name="msg_decaf_process_hint">Leidžia plikymo taisyklei švelniai koreguoti malimą: vandeniu ir CO₂ apdorotai kavai be kofeino paprastai reikia mažiau stambinti nei apdorotai tirpikliais.</string>
-    <string name="label_detected_details">Aptikta informacija</string>
-    <string name="msg_tap_chip_to_edit">Bakstelėkite bet kurį elementą, kad redaguotumėte</string>
-    <string name="label_needs_review">Reikia peržiūrėti</string>
-    <string name="action_edit_all_fields">Redaguoti visus laukus</string>
-    <string name="action_add_more_details">Pridėti daugiau informacijos</string>
-    <string name="label_review_fields">Peržiūrėkite šiuos laukus</string>
     <string name="label_qr_website">QR svetainė</string>
     <string name="action_open_website">Atverti svetainę</string>
     <string name="label_qr_link_found">Rasta QR nuoroda</string>
     <string name="action_explore_extract">Naršyti ir išgauti</string>
-    <string name="label_detected_field_evidence">Aptiktų laukų įrodymai</string>
 
     <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
     <string name="cd_bag_photo">Pakuotės nuotrauka</string>
@@ -627,12 +617,10 @@
     <string name="guided_scan_auto_on">Auto įjungta</string>
     <string name="guided_scan_auto_off">Auto išjungta</string>
     <string name="guided_scan_capture">Fotografuoti</string>
-    <string name="guided_scan_scan_more">Nuskaityti daugiau nuotraukų</string>
     <string name="scan_warn_glare">Sumažinkite blizgesį</string>
     <string name="scan_warn_lighting">Pagerinkite apšvietimą</string>
     <string name="cd_remove_photo">Pašalinti nuotrauką</string>
     <string name="msg_bag_saved">Pakuotė išsaugota</string>
-    <string name="msg_could_not_save_bag">Nepavyko išsaugoti pakuotės</string>
     <string name="msg_could_not_open_app_store">Nepavyko atidaryti programėlių parduotuvės.</string>
     <string name="msg_could_not_save_changes">Nepavyko išsaugoti pakeitimų</string>
     <string name="msg_could_not_delete">Nepavyko ištrinti. Bandykite dar kartą.</string>

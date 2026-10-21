@@ -377,21 +377,11 @@
     <string name="label_tasting_notes">Geschmacksnoten</string>
     <string name="label_best_before">Mindestens haltbar bis</string>
     <string name="label_decaf_coffee">Entkoffeinierter Kaffee</string>
-    <string name="msg_decaf_guidance">Hält Brühhinweise mit entkoffeinierten Bohnen und kürzeren Ziehzielen synchron.</string>
     <string name="msg_decaf_grind_adjustment">Entkoffeiniert ist ausgewählt. Die Mahlgradeinstellung unten wird gröber angepasst, wenn diese Brühmethode davon profitiert.</string>
-    <string name="label_decaf_process_optional">Entkoffeinierungsverfahren (optional)</string>
-    <string name="msg_decaf_process_hint">Erlaubt der Brühregel, den Mahlgrad sanft zu beeinflussen: Wasserprozess- und CO₂-Decafs brauchen typischerweise weniger Vergröberung als lösungsmittelbasierte Verfahren.</string>
-<string name="label_detected_details">Erkannte Details</string>
-    <string name="msg_tap_chip_to_edit">Tippen Sie auf einen Chip, um ihn zu bearbeiten</string>
-    <string name="label_needs_review">Prüfung nötig</string>
-<string name="action_edit_all_fields">Alle Felder bearbeiten</string>
-    <string name="action_add_more_details">Weitere Details hinzufügen</string>
-    <string name="label_review_fields">Diese Felder prüfen</string>
     <string name="label_qr_website">QR-Website</string>
     <string name="action_open_website">Website öffnen</string>
     <string name="label_qr_link_found">QR-Link gefunden</string>
 <string name="action_explore_extract">Erkunden &amp; extrahieren</string>
-    <string name="label_detected_field_evidence">Erkannte Feldbelege</string>
 
     <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
     <string name="cd_bag_photo">Foto der Packung</string>
@@ -625,12 +615,10 @@
     <string name="guided_scan_auto_on">Auto an</string>
     <string name="guided_scan_auto_off">Auto aus</string>
     <string name="guided_scan_capture">Foto aufnehmen</string>
-    <string name="guided_scan_scan_more">Weitere Fotos scannen</string>
     <string name="scan_warn_glare">Reflexionen reduzieren</string>
     <string name="scan_warn_lighting">Beleuchtung verbessern</string>
     <string name="cd_remove_photo">Foto entfernen</string>
     <string name="msg_bag_saved">Packung gespeichert</string>
-    <string name="msg_could_not_save_bag">Packung konnte nicht gespeichert werden</string>
     <string name="msg_could_not_open_app_store">Der App-Store konnte nicht geöffnet werden.</string>
     <string name="msg_could_not_save_changes">Änderungen konnten nicht gespeichert werden</string>
     <string name="msg_could_not_delete">Löschen fehlgeschlagen. Bitte versuche es erneut.</string>

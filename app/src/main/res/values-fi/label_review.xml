@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_review_not_set">Ei asetettu</string>
+    <string name="label_review_check">Tarkista</string>
+    <string name="action_review_edit">Muokkaa</string>
+    <string name="action_review_keep_mine">Säilytä oma arvo</string>
+    <string name="action_review_leave_blank">Jätä tyhjäksi</string>
+    <string name="msg_review_source_unavailable">Alkuperäinen kuva ei ole käytettävissä. Muokkaa tietoa tai lisää toinen kuva.</string>
+    <string name="msg_review_check_label">Tarkista tämä tieto etiketistä.</string>
+    <string name="action_review_use_reading">Käytä tätä lukutulosta</string>
+    <string name="label_review_source">Lähde</string>
+    <string name="msg_review_name_required">Anna kahvin nimi.</string>
+    <string name="action_review_retry_save">Yritä tallentaa uudelleen</string>
+    <string name="msg_review_save_failed">Kahvia ei tallennettu. Yritä uudelleen.</string>
+    <string name="msg_review_photo_save_failed">Etiketin kuvaa ei voitu tallentaa. Yritä uudelleen.</string>
+    <string name="label_review_source_notes">Etiketin tiedot</string>
+    <string name="format_review_more_details">Lisätiedot · tarkistettavia: %1$d</string>
+    <string name="msg_review_qr_details">Tiedot lähteestä %1$s</string>
+    <string name="action_review_add_photo">Lisää kuva</string>
+    <string name="label_review_saving">Tallennetaan…</string>
+    <string name="label_review_not_decaf">Kofeiinillinen</string>
+    <string name="msg_review_qr_approval">Haetaanko kahvin tiedot tältä verkkosivustolta?</string>
+</resources>

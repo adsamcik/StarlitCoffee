@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_review_not_set">Nincs megadva</string>
+    <string name="label_review_check">Ellenőrzés</string>
+    <string name="action_review_edit">Szerkesztés</string>
+    <string name="action_review_keep_mine">Saját érték megtartása</string>
+    <string name="action_review_leave_blank">Üresen hagyás</string>
+    <string name="msg_review_source_unavailable">A forrásfotó nem érhető el. Módosítsa az adatot, vagy adjon hozzá másik fotót.</string>
+    <string name="msg_review_check_label">Ellenőrizze ezt az adatot a címkén.</string>
+    <string name="action_review_use_reading">Felismert adat használata</string>
+    <string name="label_review_source">Forrás</string>
+    <string name="msg_review_name_required">Adja meg a kávé nevét.</string>
+    <string name="action_review_retry_save">Mentés újra</string>
+    <string name="msg_review_save_failed">A kávé mentése nem sikerült. Próbálja újra.</string>
+    <string name="msg_review_photo_save_failed">A címkefotó mentése nem sikerült. Próbálja újra.</string>
+    <string name="label_review_source_notes">Címkeadatok</string>
+    <string name="format_review_more_details">További adatok · ellenőrizendő: %1$d</string>
+    <string name="msg_review_qr_details">Adatok innen: %1$s</string>
+    <string name="action_review_add_photo">Fotó hozzáadása</string>
+    <string name="label_review_saving">Mentés…</string>
+    <string name="label_review_not_decaf">Koffeines</string>
+    <string name="msg_review_qr_approval">Lekéri a kávé adatait erről a webhelyről?</string>
+</resources>

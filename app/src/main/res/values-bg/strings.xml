@@ -377,21 +377,11 @@
     <string name="label_tasting_notes">Вкусови нотки</string>
     <string name="label_best_before">Най-добър до</string>
     <string name="label_decaf_coffee">Безкофеиново кафе</string>
-    <string name="msg_decaf_guidance">Поддържа насоките за приготвяне синхронизирани с декаф зърна и по-кратки цели за запарване.</string>
     <string name="msg_decaf_grind_adjustment">Избрано е безкофеиново кафе. Препоръката за смилане по-долу е коригирана към по-едро, когато този метод има полза от това.</string>
-    <string name="label_decaf_process_optional">Процес на декофеинизиране (по избор)</string>
-    <string name="msg_decaf_process_hint">Позволява на правилото за приготвяне леко да насочи смилането: декафите с воден процес и CO₂ обикновено имат нужда от по-малко поедряване от тези с разтворител.</string>
-<string name="label_detected_details">Открити подробности</string>
-    <string name="msg_tap_chip_to_edit">Докоснете който и да е чип, за да редактирате</string>
-    <string name="label_needs_review">Нуждае се от преглед</string>
-<string name="action_edit_all_fields">Редактирайте всички полета</string>
-    <string name="action_add_more_details">Добавете още подробности</string>
-    <string name="label_review_fields">Прегледайте тези полета</string>
     <string name="label_qr_website">QR уебсайт</string>
     <string name="action_open_website">Отворете уебсайта</string>
     <string name="label_qr_link_found">Намерена е QR връзка</string>
 <string name="action_explore_extract">Изследвайте &amp; извлечете</string>
-    <string name="label_detected_field_evidence">Открити доказателства за поле</string>
 
     <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
     <string name="cd_bag_photo">Снимка на пакета</string>
@@ -625,12 +615,10 @@
     <string name="guided_scan_auto_on">Автоматично включено</string>
     <string name="guided_scan_auto_off">Автоматично изключено</string>
     <string name="guided_scan_capture">Заснемете снимка</string>
-    <string name="guided_scan_scan_more">Сканирайте още снимки</string>
     <string name="scan_warn_glare">Намалете отблясъците</string>
     <string name="scan_warn_lighting">Подобрете осветлението</string>
     <string name="cd_remove_photo">Премахнете снимката</string>
     <string name="msg_bag_saved">Пакетът е запазен</string>
-    <string name="msg_could_not_save_bag">Пакетът не можа да бъде запазен</string>
     <string name="msg_could_not_open_app_store">Магазинът за приложения не можа да бъде отворен.</string>
     <string name="msg_could_not_save_changes">Промените не можаха да бъдат запазени</string>
     <string name="msg_could_not_delete">Изтриването не бе успешно. Опитайте отново.</string>

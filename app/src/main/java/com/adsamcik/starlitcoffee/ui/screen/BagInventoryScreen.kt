@@ -230,6 +230,8 @@ fun BagInventoryScreen(
     var showRetakeDialog by remember { mutableStateOf(false) }
     var fabExpanded by remember { mutableStateOf(false) }
     var bagDraftSessionId by rememberSaveable { mutableStateOf(UUID.randomUUID().toString()) }
+    var saveErrorResId by rememberSaveable(bagDraftSessionId) { mutableStateOf<Int?>(null) }
+    var editSaveErrorResId by rememberSaveable(editBagId) { mutableStateOf<Int?>(null) }
     var bagDraftGenerationId by rememberSaveable { mutableStateOf<String?>(null) }
     val context = LocalContext.current
     val activeDrafts by remember(context) {
@@ -238,7 +240,6 @@ fun BagInventoryScreen(
     val resources = LocalResources.current
     val mindlayerInstalled = rememberMindlayerInstalled()
     val couldNotReadLabel = stringResource(R.string.msg_could_not_read_label)
-    val couldNotSaveBag = stringResource(R.string.msg_could_not_save_bag)
     val bagSaved = stringResource(R.string.msg_bag_saved)
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
@@ -359,7 +360,7 @@ fun BagInventoryScreen(
     LaunchedEffect(bagPhotoResult, showAddSheet, bagDraftSessionId) {
         val sessionResult = bagPhotoResult ?: return@LaunchedEffect
         if (!isAddNewBagReview(sessionResult.reviewContext)) return@LaunchedEffect
-        if (activeDrafts.any { it.sessionId == sessionResult.sessionId }) return@LaunchedEffect
+        if (withContext(Dispatchers.IO) { BagDraftStore.read(context, sessionResult.sessionId) } != null) return@LaunchedEffect
         if (!shouldApplyBagResultToDraft(showAddSheet, bagDraftSessionId, sessionResult.sessionId)) {
             return@LaunchedEffect
         }
@@ -388,7 +389,7 @@ fun BagInventoryScreen(
     LaunchedEffect(bagPhotoRetryResult, bagDraftSessionId) {
         val sessionResult = bagPhotoRetryResult ?: return@LaunchedEffect
         if (!isAddNewBagReview(sessionResult.reviewContext)) return@LaunchedEffect
-        if (activeDrafts.any { it.sessionId == sessionResult.sessionId }) return@LaunchedEffect
+        if (withContext(Dispatchers.IO) { BagDraftStore.read(context, sessionResult.sessionId) } != null) return@LaunchedEffect
         if (sessionResult.sessionId != bagDraftSessionId) return@LaunchedEffect
         bagDraftGenerationId = sessionResult.generationId.takeIf(String::isNotBlank)
             ?: bagDraftGenerationId
@@ -414,7 +415,7 @@ fun BagInventoryScreen(
     LaunchedEffect(pendingScanReview, showAddSheet, bagDraftSessionId) {
         val sessionResult = pendingScanReview ?: return@LaunchedEffect
         if (!isAddNewBagReview(sessionResult.reviewContext)) return@LaunchedEffect
-        if (activeDrafts.any { it.sessionId == sessionResult.sessionId }) return@LaunchedEffect
+        if (withContext(Dispatchers.IO) { BagDraftStore.read(context, sessionResult.sessionId) } != null) return@LaunchedEffect
         if (!shouldApplyBagResultToDraft(showAddSheet, bagDraftSessionId, sessionResult.sessionId)) {
             return@LaunchedEffect
         }
@@ -862,6 +863,7 @@ fun BagInventoryScreen(
             recognition = recognitionPresentation,
             isProcessing = isRecognizing,
             isSaving = isSavingBag,
+            saveErrorResId = saveErrorResId,
             existingBags = bags,
             onScanBarcode = {
                 val discardedPhotoUris = capturedPhotoUris
@@ -932,6 +934,7 @@ fun BagInventoryScreen(
                 val saveSessionId = bagDraftSessionId
                 if (isSavingBag || !brewViewModel.beginScannedBagSave(saveSessionId)) return@save
                 isSavingBag = true
+                saveErrorResId = null
                 val rawPhotoUris = capturedPhotoUris
                 val qrUrl = detectedQrUrl
                 val scanFocus = thumbnailFocus
@@ -973,11 +976,11 @@ fun BagInventoryScreen(
                             }
                         ) {
                         ScannedBagSaveResult.PhotoCopyFailed -> {
-                            Toast.makeText(context, couldNotReadLabel, Toast.LENGTH_LONG).show()
+                            saveErrorResId = R.string.msg_review_photo_save_failed
                         }
                         is ScannedBagSaveResult.Failed -> {
                             Tracebox.log.error(saveResult.error, BagInventoryScreenTraceboxTemplates.FAILED_TO_SAVE_COFFEE_BAG)
-                            Toast.makeText(context, couldNotSaveBag, Toast.LENGTH_LONG).show()
+                            saveErrorResId = R.string.msg_review_save_failed
                         }
                         is ScannedBagSaveResult.Saved -> {
                             brewViewModel.completeBagPhotoReview(saveSessionId)
@@ -1149,11 +1152,13 @@ fun BagInventoryScreen(
             bagToEdit = bag,
             existingBags = bags,
             isSaving = isUpdatingBag,
+            saveErrorResId = editSaveErrorResId,
             onDismiss = { editBagId = null },
             onSave = { _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ -> },
             onEdit = { updatedBag ->
                 if (isUpdatingBag) return@AddBagSheet
                 isUpdatingBag = true
+                editSaveErrorResId = null
                 coroutineScope.launch {
                     try {
                         check(brewViewModel.updateCoffeeBagAndWait(updatedBag)) {
@@ -1164,7 +1169,7 @@ fun BagInventoryScreen(
                         throw error
                     } catch (error: Exception) {
                         Tracebox.log.error(error, BagInventoryScreenTraceboxTemplates.FAILED_TO_UPDATE_COFFEE_BAG)
-                        Toast.makeText(context, R.string.msg_could_not_save_changes, Toast.LENGTH_LONG).show()
+                        editSaveErrorResId = R.string.msg_review_save_failed
                     } finally {
                         isUpdatingBag = false
                     }

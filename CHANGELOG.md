@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Coffee-label review** — edit the coffee name and roaster directly, expand
+  individual details beside their source photo, and choose uncertain readings
+  explicitly. Missing optional details stay quiet, returning to a draft keeps
+  its place, and save failures offer a retry without losing edits.
+
 - **Simpler live brewing** — an open clock and bloom layout puts the current
   quantity and action first. Recipe reading, step help and timer controls stay
   close at hand, while another running brew remains accessible below the main

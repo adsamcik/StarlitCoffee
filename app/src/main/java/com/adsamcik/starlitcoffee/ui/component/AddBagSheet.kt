@@ -1,12 +1,21 @@
 package com.adsamcik.starlitcoffee.ui.component
 
-import android.graphics.Bitmap
-import androidx.core.net.toUri
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.outlined.DateRange
+import androidx.compose.material.icons.outlined.WarningAmber
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.platform.testTag
+
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,10 +23,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -30,11 +37,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.DeleteOutline
-import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.DatePicker
@@ -42,51 +45,38 @@ import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SnackbarResult
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.stringResource
 import com.adsamcik.starlitcoffee.R
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.clearAndSetSemantics
-import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.platform.LocalUriHandler
@@ -95,10 +85,11 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.adsamcik.starlitcoffee.util.BagFieldConfidence
-import com.adsamcik.starlitcoffee.util.BagCaptureSide
+import androidx.compose.ui.window.DialogWindowProvider
+import androidx.core.view.WindowCompat
 import com.adsamcik.starlitcoffee.scan.observability.ScanCorrectionLog
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
+import com.adsamcik.starlitcoffee.data.work.BagDraftReviewLocation
 import com.adsamcik.starlitcoffee.data.model.CoffeeOrigin
 import com.adsamcik.starlitcoffee.data.model.CoffeeProcessType
 import com.adsamcik.starlitcoffee.data.model.CoffeeRegion
@@ -107,10 +98,9 @@ import com.adsamcik.starlitcoffee.data.model.CoffeeVariety
 import com.adsamcik.starlitcoffee.data.model.DecafProcess
 import com.adsamcik.starlitcoffee.data.network.QrCoffeeMetadata
 import com.adsamcik.starlitcoffee.util.BagFieldEvidence
-import com.adsamcik.starlitcoffee.util.BagFieldSourceType
+import com.adsamcik.starlitcoffee.util.BagFieldConfidence
 import com.adsamcik.starlitcoffee.util.BagPhotoReviewHint
 import com.adsamcik.starlitcoffee.util.BagPhotoReviewUris
-import com.adsamcik.starlitcoffee.util.BagReviewSeverity
 import com.adsamcik.starlitcoffee.util.CoffeeFilterVocabularyLoader
 import com.adsamcik.starlitcoffee.util.CoffeeInputSuggestion
 import com.adsamcik.starlitcoffee.util.CoffeeInputSuggestionEngine
@@ -119,10 +109,10 @@ import com.adsamcik.starlitcoffee.util.CoffeeVocabularyEntry
 import com.adsamcik.starlitcoffee.util.DateParser
 import com.adsamcik.starlitcoffee.util.RecognitionPresentation
 import com.adsamcik.starlitcoffee.util.OcrFieldExtractor
-import com.adsamcik.starlitcoffee.util.ThumbnailLoader
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.distinctUntilChanged
+import androidx.compose.runtime.snapshotFlow
 import java.net.URL
 
 private const val QR_METADATA_FIELD_COUNT = 13
@@ -228,14 +218,18 @@ fun AddBagSheet(
     onUserFieldChange: ((fieldName: String, value: String?) -> Unit)? = null,
     onFieldFocusChange: ((fieldName: String, focused: Boolean) -> Unit)? = null,
     pendingSuggestions: Map<String, String> = emptyMap(),
-    onAcceptSuggestion: ((fieldName: String) -> Unit)? = null,
+    onAcceptSuggestion: ((fieldName: String, expectedValue: String) -> Boolean)? = null,
+    reviewedFields: Set<String> = emptySet(),
+    unknownFields: Set<String> = emptySet(),
+    saveErrorResId: Int? = null,
     preserveDraftOnDismiss: Boolean = false,
     onDiscardDraft: (() -> Unit)? = null,
+    initialReviewLocation: BagDraftReviewLocation = BagDraftReviewLocation(),
+    onReviewLocationChange: ((BagDraftReviewLocation) -> Unit)? = null,
 ) {
     val uriHandler = LocalUriHandler.current
     val focusManager = LocalFocusManager.current
     val correctionContext = LocalContext.current
-    val suggestionSnackbarHostState = remember { SnackbarHostState() }
     val locale = LocalLocale.current.platformLocale
     val vocabulary = remember(correctionContext) {
         CoffeeFilterVocabularyLoader.getInstance(correctionContext)
@@ -501,49 +495,33 @@ fun AddBagSheet(
             } + vocabularyRegions.map { it.toInputSuggestion() },
         )
     }
-    var showMoreDetails by rememberSaveable(bagToEdit) { mutableStateOf(isEditMode || !isProcessing) }
-    var selectedEvidenceField by rememberSaveable(fieldEvidence) { mutableStateOf(fieldEvidence.keys.firstOrNull()) }
-    var snapApproveMode by rememberSaveable(bagToEdit) {
-        mutableStateOf(false)
-    }
-    var pendingScrollField by rememberSaveable { mutableStateOf<String?>(null) }
-    // Transient: tracks an in-flight async QR exploration. Intentionally not saved across
-    // config changes — the explore callback closure would still target the disposed composable's
-    // setters, so persisting `true` could leave the loading indicator stuck. Re-trigger on
-    // rotation if needed.
+    var showMoreDetails by rememberSaveable(bagToEdit) { mutableStateOf(initialReviewLocation.showMoreDetails) }
+    var expandedFields by rememberSaveable(bagToEdit) { mutableStateOf(initialReviewLocation.expandedFields) }
+    var editedFields by rememberSaveable(bagToEdit) { mutableStateOf(emptyList<String>()) }
+    var decafWasCleared by rememberSaveable(bagToEdit) { mutableStateOf("isDecaf" in unknownFields) }
+    var saveAttempted by rememberSaveable(bagToEdit) { mutableStateOf(false) }
+    var showMenu by remember { mutableStateOf(false) }
+    var showSourceNotes by rememberSaveable { mutableStateOf(false) }
     var isExploringQr by remember { mutableStateOf(false) }
-    var qrExploredMetadata by rememberSaveable(stateSaver = QrCoffeeMetadataSaver) {
-        mutableStateOf<QrCoffeeMetadata?>(null)
-    }
+    var reviewActive by remember { mutableStateOf(true) }
+    DisposableEffect(Unit) { onDispose { reviewActive = false } }
+    var qrExploredMetadata by rememberSaveable(stateSaver = QrCoffeeMetadataSaver) { mutableStateOf<QrCoffeeMetadata?>(null) }
     var pendingDiscardAction by remember { mutableStateOf<(() -> Unit)?>(null) }
     var showDiscardDraftDialog by remember { mutableStateOf(false) }
-    val listState = rememberLazyListState()
-    val pendingSuggestion = pendingSuggestions.entries.firstOrNull()
-    val pendingSuggestionFieldLabel = pendingSuggestion?.key?.let { fieldName ->
-        localizedBagFieldLabel(fieldName)
-    }
-    val pendingSuggestionMessage = pendingSuggestion?.let { suggestion ->
-        pendingSuggestionFieldLabel?.let { fieldLabel ->
-            stringResource(
-                R.string.format_new_label_suggestion,
-                fieldLabel,
-                suggestion.value,
-            )
+    val listState = rememberLazyListState(initialReviewLocation.scrollIndex, initialReviewLocation.scrollOffset)
+    val latestLocationChange by rememberUpdatedState(onReviewLocationChange)
+    LaunchedEffect(listState) {
+        if (onReviewLocationChange != null) {
+            snapshotFlow {
+                if (listState.isScrollInProgress) null else BagDraftReviewLocation(
+                    listState.firstVisibleItemIndex, listState.firstVisibleItemScrollOffset,
+                    expandedFields, showMoreDetails,
+                )
+            }.filterNotNull().distinctUntilChanged().collect { latestLocationChange?.invoke(it) }
         }
     }
-    val applySuggestionLabel = stringResource(R.string.action_apply_suggestion)
-    LaunchedEffect(pendingSuggestion, pendingSuggestionMessage) {
-        val suggestion = pendingSuggestion ?: return@LaunchedEffect
-        val message = pendingSuggestionMessage ?: return@LaunchedEffect
-        val result = suggestionSnackbarHostState.showSnackbar(
-            message = message,
-            actionLabel = applySuggestionLabel,
-            duration = SnackbarDuration.Indefinite,
-        )
-        if (result == SnackbarResult.ActionPerformed) {
-            onAcceptSuggestion?.invoke(suggestion.key)
-        }
-    }
+    val nameFocus = remember { FocusRequester() }
+    val weightFocus = remember { FocusRequester() }
     val weightValidation = remember(weight) { validateBagWeightInput(weight) }
     val currentForm = BagFormSnapshot(
         name = name,
@@ -564,6 +542,8 @@ fun AddBagSheet(
         roastDateMillis = roastDateMillis,
         expiryDateMillis = expiryDateMillis,
     )
+    val latestForm by rememberUpdatedState(currentForm)
+    val latestSaving by rememberUpdatedState(isSaving)
     var previousEnrichmentForm by remember(bagToEdit) { mutableStateOf(initialForm) }
     LaunchedEffect(initialForm, isEditMode, isSaving) {
         if (isEditMode || isSaving) return@LaunchedEffect
@@ -571,6 +551,7 @@ fun AddBagSheet(
             current = currentForm,
             previousEnrichment = previousEnrichmentForm,
             incomingEnrichment = initialForm,
+            protectedFields = (editedFields + reviewedFields).toSet(),
         )
         name = merged.name
         roaster = merged.roaster
@@ -589,1198 +570,469 @@ fun AddBagSheet(
         expiryDateMillis = merged.expiryDateMillis
         previousEnrichmentForm = initialForm
     }
-    val confirmDismiss = shouldConfirmBagDismiss(
-        isEditMode = isEditMode,
-        initial = initialForm,
-        current = currentForm,
-        hasCapturedPhotos = !capturedPhotoUris.isNullOrBlank(),
-        hasTraceabilityData = !traceabilityUrl.isNullOrBlank() || qrExploredMetadata != null,
-    )
+    val confirmDismiss = shouldConfirmBagDismiss(isEditMode, initialForm, currentForm,
+        !capturedPhotoUris.isNullOrBlank(), !traceabilityUrl.isNullOrBlank() || qrExploredMetadata != null)
     fun requestPotentiallyDestructiveAction(action: () -> Unit) {
         if (confirmDismiss) pendingDiscardAction = action else action()
     }
     fun requestDismiss() {
-        if (preserveDraftOnDismiss) onDismiss() else requestPotentiallyDestructiveAction(onDismiss)
+        if (preserveDraftOnDismiss) {
+            onReviewLocationChange?.invoke(BagDraftReviewLocation(
+                listState.firstVisibleItemIndex, listState.firstVisibleItemScrollOffset, expandedFields, showMoreDetails,
+            ))
+            reviewActive = false
+            onDismiss()
+        } else requestPotentiallyDestructiveAction(onDismiss)
     }
-    fun reportUserEdit(fieldName: String, value: String?) {
+    fun reportFocus(fieldName: String, focused: Boolean) { onFieldFocusChange?.invoke(fieldName, focused) }
+    fun changeField(fieldName: String, value: String?) {
+        when (fieldName) {
+            "name" -> name = value.orEmpty()
+            "roaster" -> roaster = value.orEmpty()
+            "origin" -> originCountry = value.orEmpty()
+            "region" -> originRegion = value.orEmpty()
+            "farm" -> farm = value.orEmpty()
+            "altitude" -> altitude = value.orEmpty()
+            "roastLevel" -> roastLevel = value.orEmpty()
+            "variety" -> variety = value.orEmpty()
+            "processType" -> processType = value.orEmpty()
+            "tastingNotes" -> tastingNotes = value.orEmpty()
+            "barcode" -> barcode = value.orEmpty()
+            "weight" -> weight = value.orEmpty()
+            "notes" -> notes = value.orEmpty()
+            "isDecaf" -> {
+                isDecaf = value == "true"
+                decafWasCleared = value.isNullOrBlank()
+            }
+            "decafProcess" -> decafProcess = value
+            "roastDate" -> roastDateMillis = value?.toLongOrNull() ?: value?.let(DateParser::parse)
+            "expiryDate" -> expiryDateMillis = value?.toLongOrNull() ?: value?.let(DateParser::parse)
+        }
+        if (fieldName !in editedFields) editedFields = editedFields + fieldName
         onUserFieldChange?.invoke(fieldName, value)
     }
-    fun reportFocus(fieldName: String, focused: Boolean) {
-        onFieldFocusChange?.invoke(fieldName, focused)
-        if (focused) selectedEvidenceField = fieldName
-    }
-
-    LaunchedEffect(isSaving) {
-        if (isSaving) {
-            focusManager.clearFocus(force = true)
-            pendingDiscardAction = null
-        }
-    }
-
-    LaunchedEffect(fieldEvidence) {
-        if (selectedEvidenceField == null || selectedEvidenceField !in fieldEvidence) {
-            selectedEvidenceField = fieldEvidence.keys.firstOrNull()
-        }
-    }
-    val selectedEvidence = selectedEvidenceField?.let(fieldEvidence::get)
-    val snapDetectedFields = buildSnapApproveFieldItems(
-        form = SnapApproveFormState(
-            origin = originCountry,
-            region = originRegion,
-            farm = farm,
-            altitude = altitude,
-            roastLevel = roastLevel,
-            variety = variety,
-            processType = processType,
-            tastingNotes = tastingNotes,
-            roastDateMillis = roastDateMillis,
-            expiryDateMillis = expiryDateMillis,
-            isDecaf = isDecaf,
-            weight = weight,
-        ),
-        fieldEvidence = fieldEvidence,
-        fieldConfidence = ocrPrefill?.fieldConfidence.orEmpty(),
+    fun needsCheck(key: String, value: String): Boolean = labelReviewNeedsCheck(
+        value, fieldEvidence[key], pendingSuggestions[key],
+        if (key in editedFields || key in reviewedFields) false else null,
     )
-    val confidentDetectedFields = snapDetectedFields.filter { it.confidence == BagFieldConfidence.HIGH }
-    val reviewDetectedFields = snapDetectedFields.filter { it.confidence != BagFieldConfidence.HIGH }
-    val hasMissingDetails = listOf(
-        originCountry,
-        originRegion,
-        roastLevel,
-        variety,
-        processType,
-        tastingNotes,
-        weight,
-    ).any { it.isBlank() } || roastDateMillis == null || expiryDateMillis == null
-    val saveButtonLabel = stringResource(
-        if (isEditMode) R.string.action_save else R.string.action_save_coffee,
+    val decafIsKnown = when {
+        "isDecaf" in editedFields -> !decafWasCleared
+        "isDecaf" in reviewedFields -> "isDecaf" !in unknownFields
+        else -> fieldEvidence["isDecaf"]?.let { it.confidence == BagFieldConfidence.HIGH && it.value == "false" } == true
+    }
+    fun accept(key: String): Boolean {
+        val proposed = pendingSuggestions[key] ?: return false
+        if (onAcceptSuggestion?.invoke(key, proposed) != true) return false
+        changeField(key, proposed)
+        return true
+    }
+    fun expand(key: String, expanded: Boolean) {
+        focusManager.clearFocus()
+        expandedFields = if (expanded) expandedFields + key else expandedFields - key
+    }
+    LaunchedEffect(isSaving) { if (isSaving) { focusManager.clearFocus(force = true); pendingDiscardAction = null } }
+    val fields = listOf(
+        LabelFormField("name", R.string.label_name_required, name, nameSuggestions),
+        LabelFormField("roaster", R.string.label_roaster, roaster, roasterSuggestions),
+        LabelFormField("origin", R.string.label_origin, originCountry, originSuggestions),
+        LabelFormField("region", R.string.label_region, originRegion, regionSuggestions),
     )
-    val saveButtonColors = if (snapApproveMode && reviewDetectedFields.isEmpty() && snapDetectedFields.isNotEmpty()) {
-        ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.tertiary,
-            contentColor = MaterialTheme.colorScheme.onTertiary,
-        )
-    } else {
-        primaryActionButtonColors()
-    }
+    val optionalFields = listOf(
+        LabelFormField("roastLevel", R.string.label_roast_level, roastLevel, roastLevelSuggestions, true),
+        LabelFormField("variety", R.string.label_variety, variety, varietySuggestions, true),
+        LabelFormField("farm", R.string.label_farm, farm, farmSuggestions),
+        LabelFormField("altitude", R.string.label_altitude, altitude, altitudeSuggestions),
+        LabelFormField("processType", R.string.label_process, processType, processSuggestions),
+        LabelFormField("tastingNotes", R.string.label_tasting_notes, tastingNotes, tastingNoteSuggestions, true),
+        LabelFormField("barcode", R.string.label_barcode_ean, barcode),
+        LabelFormField("notes", R.string.label_notes, notes),
+    )
+    val optionalChecks = optionalFields.count { needsCheck(it.key, it.value) } +
+        listOf("expiryDate", "isDecaf").count { key ->
+            needsCheck(key, if (key == "expiryDate") expiryDateMillis?.let(DateParser::format).orEmpty()
+                else if (isDecaf) "true" else "")
+        }
+    val visibleKeys = listOf("photos") + fields.map { it.key } + listOf("weight", "roastDate", "more") +
+        (if (showMoreDetails) optionalFields.map { it.key } + listOf("expiryDate", "isDecaf", "sourceNotes") else emptyList())
 
-    LaunchedEffect(snapApproveMode, pendingScrollField, showMoreDetails, initialBarcode) {
-        val targetField = pendingScrollField ?: return@LaunchedEffect
-        if (snapApproveMode) return@LaunchedEffect
-        val targetIndex = fullFormIndexForField(
-            fieldName = targetField,
-            hasBarcode = initialBarcode != null || onScanBarcode != null,
-            showMoreDetails = showMoreDetails,
-        ) ?: return@LaunchedEffect
-        listState.animateScrollToItem(targetIndex)
-        pendingScrollField = null
-    }
-
-    Dialog(
-        onDismissRequest = {
-            if (!isSaving) requestDismiss()
-        },
-        // Full-screen create/edit task (Material full-screen dialog). Unlike the
-        // previous bottom sheet it cannot be swipe- or tap-outside-dismissed; an
-        // intentional back press still closes it via the BackHandler below.
-        properties = DialogProperties(
-            usePlatformDefaultWidth = false,
-            dismissOnBackPress = false,
-            dismissOnClickOutside = false,
-            decorFitsSystemWindows = false,
-        ),
-    ) {
+    Dialog(onDismissRequest = { if (!isSaving) requestDismiss() },
+        properties = DialogProperties(usePlatformDefaultWidth = false, dismissOnBackPress = false,
+            dismissOnClickOutside = false, decorFitsSystemWindows = false)) {
+        val dialogView = LocalView.current
+        val darkSystemBarIcons = MaterialTheme.colorScheme.surface.luminance() > 0.5f
+        SideEffect {
+            (dialogView.parent as? DialogWindowProvider)?.window?.let { window ->
+                WindowCompat.getInsetsController(window, dialogView).apply {
+                    isAppearanceLightStatusBars = darkSystemBarIcons
+                    isAppearanceLightNavigationBars = darkSystemBarIcons
+                }
+            }
+        }
+        BackHandler { if (!isSaving) requestDismiss() }
         if (pendingDiscardAction != null) {
-            DestructiveActionDialog(
-                titleRes = R.string.dialog_discard_changes_title,
+            DestructiveActionDialog(R.string.dialog_discard_changes_title, R.string.action_discard,
                 messageRes = R.string.msg_discard_changes_body,
-                confirmLabelRes = R.string.action_discard,
-                onConfirm = {
-                    val action = pendingDiscardAction
-                    pendingDiscardAction = null
-                    action?.invoke()
-                },
-                onDismiss = { pendingDiscardAction = null },
-            )
+                onConfirm = { val action = pendingDiscardAction; pendingDiscardAction = null; action?.invoke() },
+                onDismiss = { pendingDiscardAction = null })
         }
         if (showDiscardDraftDialog && onDiscardDraft != null) {
-            DestructiveActionDialog(
-                titleRes = R.string.dialog_discard_scan_title,
+            DestructiveActionDialog(R.string.dialog_discard_scan_title, R.string.action_discard,
                 messageRes = R.string.msg_discard_scan_body,
-                confirmLabelRes = R.string.action_discard,
-                onConfirm = {
-                    showDiscardDraftDialog = false
-                    onDiscardDraft()
-                },
-                onDismiss = { showDiscardDraftDialog = false },
-            )
+                onConfirm = { showDiscardDraftDialog = false; onDiscardDraft() },
+                onDismiss = { showDiscardDraftDialog = false })
         }
-        BackHandler {
-            if (!isSaving) requestDismiss()
-        }
-        Box(modifier = Modifier.fillMaxSize()) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.surface)
-                    .navigationBarsPadding()
-                    .imePadding()
-                    .focusProperties { canFocus = !isSaving }
-                    .then(
-                        if (isSaving) {
-                            Modifier.clearAndSetSemantics { disabled() }
-                        } else {
-                            Modifier
-                        },
-                    ),
-            ) {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(
-                            when {
-                                isEditMode -> R.string.screen_edit_coffee_title
-                                preserveDraftOnDismiss || capturedPhotoUris != null || ocrPrefill != null ->
-                                    R.string.screen_review_coffee_title
-                                else -> R.string.screen_add_coffee_title
-                            },
-                        ),
-                        modifier = Modifier.semantics { heading() },
-                    )
-                },
-                navigationIcon = {
+        Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surface) {
+            Column(Modifier.fillMaxSize().navigationBarsPadding().imePadding()) {
+                TopAppBar(title = {
+                    Text(stringResource(if (isEditMode) R.string.screen_edit_coffee_title else R.string.screen_add_coffee_title),
+                        modifier = Modifier.semantics { heading() })
+                }, navigationIcon = {
                     IconButton(onClick = ::requestDismiss, enabled = !isSaving) {
-                        Icon(
-                            Icons.Default.Close,
-                            contentDescription = stringResource(R.string.action_close),
-                        )
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.action_back))
                     }
-                },
-                actions = {
+                }, actions = {
                     if (onDiscardDraft != null) {
-                        IconButton(
-                            onClick = { showDiscardDraftDialog = true },
-                            enabled = !isSaving,
-                        ) {
-                            Icon(
-                                Icons.Filled.DeleteOutline,
-                                contentDescription = stringResource(R.string.action_discard),
-                            )
-                        }
-                    }
-                    if (onScanMorePhotos != null) {
-                        IconButton(
-                            onClick = {
-                                if (preserveDraftOnDismiss) {
-                                    onScanMorePhotos()
-                                } else {
-                                    requestPotentiallyDestructiveAction(onScanMorePhotos)
-                                }
-                            },
-                            enabled = !isSaving,
-                        ) {
-                            Icon(
-                                Icons.Filled.CameraAlt,
-                                contentDescription = stringResource(R.string.guided_scan_scan_more),
-                            )
-                        }
-                    }
-                },
-            )
-
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .padding(horizontal = 24.dp),
-                state = listState,
-            ) {
-                item {
-                    CapturedPhotoReviewStrip(capturedPhotoUris)
-                    RecognitionStatusCard(
-                        presentation = recognition,
-                        actions = RecognitionActions(
-                            onRetry = onRetryLlmEnrichment,
-                            onEnable = onEnableAi,
-                            onInstall = onInstallLabelRecognition,
-                            onSetup = onSetupAi,
-                            onDisable = onDisableLabelRecognition,
-                            onRetake = onScanMorePhotos,
-                            setupState = setupLaunchState,
-                        ),
-                        enabled = !isSaving,
-                    )
-                    if (reviewHints.isNotEmpty()) {
-                        ReviewHintsCard(reviewHints = reviewHints)
-                    }
-                    if (!snapApproveMode) {
-                            selectedEvidence?.let { evidence ->
-                                FieldEvidencePreviewCard(
-                                    evidence = evidence,
-                                    capturedPhotoUris = capturedPhotoUris,
-                                )
+                        Box {
+                            IconButton(onClick = { showMenu = true }, enabled = !isSaving) {
+                                Icon(Icons.Filled.MoreVert, stringResource(R.string.nav_more))
                             }
-                            traceabilityUrl?.let { qrUrl ->
-                                if (qrExploredMetadata != null) {
-                                    QrLinkCard(
-                                        url = qrUrl,
-                                        onOpen = { uriHandler.openUri(qrUrl) },
-                                        exploredLabel = "✓ Coffee details extracted from ${URL(qrUrl).host}",
-                                    )
-                                } else {
-                                    QrApprovalCard(
-                                        url = qrUrl,
-                                        isExploring = isExploringQr,
-                                        onExplore = {
-                                            if (onExploreQrUrl != null) {
-                                                isExploringQr = true
-                                                onExploreQrUrl(qrUrl) { metadata ->
-                                                    isExploringQr = false
-                                                    qrExploredMetadata = metadata
-                                                    if (metadata != null) {
-                                                        if (name.isBlank() && metadata.name != null) {
-                                                            name = metadata.name
-                                                            reportUserEdit("name", metadata.name)
-                                                        }
-                                                        if (roaster.isBlank() && metadata.roaster != null) {
-                                                            roaster = metadata.roaster
-                                                            reportUserEdit("roaster", metadata.roaster)
-                                                        }
-                                                        if (originCountry.isBlank() && metadata.origin != null) {
-                                                            originCountry = metadata.origin
-                                                            reportUserEdit("origin", metadata.origin)
-                                                        }
-                                                        if (originRegion.isBlank() && metadata.region != null) {
-                                                            originRegion = metadata.region
-                                                            reportUserEdit("region", metadata.region)
-                                                        }
-                                                        if (processType.isBlank() && metadata.processType != null) {
-                                                            processType = metadata.processType
-                                                            reportUserEdit("processType", metadata.processType)
-                                                        }
-                                                        if (tastingNotes.isBlank() && metadata.tastingNotes != null) {
-                                                            tastingNotes = metadata.tastingNotes
-                                                            reportUserEdit("tastingNotes", metadata.tastingNotes)
-                                                        }
+                            DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
+                                DropdownMenuItem(text = { Text(stringResource(R.string.action_discard)) },
+                                    onClick = { showMenu = false; showDiscardDraftDialog = true })
+                            }
+                        }
+                    }
+                })
+                LazyColumn(Modifier.fillMaxWidth().weight(1f).padding(horizontal = 20.dp).testTag("label-review-list"), state = listState,
+                    verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    item(key = "photos") {
+                        CapturedPhotoReviewStrip(capturedPhotoUris)
+                        if (onScanMorePhotos != null) {
+                            TextButton(enabled = !isSaving, onClick = {
+                                if (preserveDraftOnDismiss) onScanMorePhotos() else requestPotentiallyDestructiveAction(onScanMorePhotos)
+                            }) {
+                                Icon(Icons.Filled.CameraAlt, null, Modifier.size(20.dp))
+                                Text(stringResource(R.string.action_review_add_photo))
+                            }
+                        }
+                        RecognitionStatusCard(
+                            recognition.copy(status = when {
+                                isProcessing && recognition.status == null ->
+                                    com.adsamcik.starlitcoffee.util.RecognitionStatusText.CHECKING_LABEL
+                                recognition.status == com.adsamcik.starlitcoffee.util.RecognitionStatusText.DETAILS_NEED_REVIEW -> null
+                                else -> recognition.status
+                            }, unresolvedCount = 0),
+                            actions = RecognitionActions(onRetryLlmEnrichment, onEnableAi, onInstallLabelRecognition,
+                                onSetupAi, onDisableLabelRecognition, onScanMorePhotos, setupLaunchState), enabled = !isSaving)
+                    }
+                    items(fields, key = { it.key }) { field ->
+                        LabelReviewField(field.key, stringResource(field.labelRes), field.value,
+                            expanded = field.key in expandedFields, onExpandedChange = { expand(field.key, it) }, enabled = !isSaving,
+                            evidence = fieldEvidence[field.key], capturedPhotoUris = capturedPhotoUris,
+                            suggestion = pendingSuggestions[field.key], onAcceptSuggestion = { accept(field.key) },
+                            onKeepMine = { changeField(field.key, field.value) },
+                            onClear = { changeField(field.key, "") }.takeIf { field.value.isNotBlank() || pendingSuggestions[field.key] != null },
+                            needsReview = needsCheck(field.key, field.value), alwaysEditable = field.key in setOf("name", "roaster"),
+                            error = stringResource(R.string.msg_review_name_required).takeIf { field.key == "name" && saveAttempted && name.isBlank() }) {
+                            SuggestingTextField(field.value, { changeField(field.key, it) }, stringResource(field.labelRes), field.suggestions,
+                                enabled = !isSaving, modifier = if (field.key == "name") Modifier.focusRequester(nameFocus) else Modifier,
+                                isError = field.key == "name" && saveAttempted && name.isBlank(),
+                                onFocusChanged = { reportFocus(field.key, it) })
+                        }
+                    }
+                    item(key = "weight") {
+                        LabelReviewField("weight", stringResource(R.string.label_weight_grams), weight,
+                            expanded = "weight" in expandedFields, onExpandedChange = { expand("weight", it) }, enabled = !isSaving,
+                            evidence = fieldEvidence["weight"], capturedPhotoUris = capturedPhotoUris,
+                            suggestion = pendingSuggestions["weight"], onAcceptSuggestion = { accept("weight") },
+                            onKeepMine = { changeField("weight", weight) }, onClear = { changeField("weight", "") },
+                            needsReview = needsCheck("weight", weight),
+                            error = stringResource(R.string.msg_invalid_weight).takeUnless { weightValidation.isValid }) {
+                            OutlinedTextField(weight, { changeField("weight", it) }, singleLine = true, enabled = !isSaving,
+                                label = { Text(stringResource(R.string.label_weight_grams)) }, isError = !weightValidation.isValid,
+                                trailingIcon = if (!weightValidation.isValid) ({ Icon(Icons.Outlined.WarningAmber, null) }) else null,
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal), suffix = { Text("g") },
+                                modifier = Modifier.fillMaxWidth().focusRequester(weightFocus).onFocusChanged { reportFocus("weight", it.isFocused) })
+                            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                listOf("250", "500", "1000").forEach { preset ->
+                                    FilterChip(weight == preset, { changeField("weight", preset) }, enabled = !isSaving,
+                                        label = { Text("$preset g") })
+                                }
+                            }
+                        }
+                    }
+                    item(key = "roastDate") {
+                        ReviewDateField("roastDate", R.string.label_roast_date, roastDateMillis, "roastDate" in expandedFields,
+                            { expand("roastDate", it) }, !isSaving, fieldEvidence["roastDate"], capturedPhotoUris,
+                            pendingSuggestions["roastDate"], { accept("roastDate") },
+                            { changeField("roastDate", roastDateMillis?.toString()) }, { changeField("roastDate", it?.toString()) },
+                            needsCheck("roastDate", roastDateMillis?.let(DateParser::format).orEmpty()))
+                    }
+                    item(key = "more") {
+                        TextButton(onClick = { focusManager.clearFocus(); showMoreDetails = !showMoreDetails }, enabled = !isSaving,
+                            modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
+                            if (optionalChecks > 0) Icon(Icons.Outlined.WarningAmber, null, Modifier.size(20.dp))
+                            Text(if (optionalChecks > 0) stringResource(R.string.format_review_more_details, optionalChecks)
+                                else stringResource(if (showMoreDetails) R.string.action_hide_optional_details else R.string.action_show_optional_details))
+                        }
+                    }
+                    if (showMoreDetails) {
+                        items(optionalFields, key = { it.key }) { field ->
+                            LabelReviewField(field.key, stringResource(field.labelRes), field.value,
+                                expanded = field.key in expandedFields, onExpandedChange = { expand(field.key, it) }, enabled = !isSaving,
+                                evidence = fieldEvidence[field.key], capturedPhotoUris = capturedPhotoUris,
+                                suggestion = pendingSuggestions[field.key], onAcceptSuggestion = { accept(field.key) },
+                                onKeepMine = { changeField(field.key, field.value) }, onClear = { changeField(field.key, "") },
+                                needsReview = needsCheck(field.key, field.value)) {
+                                SuggestingTextField(field.value, { changeField(field.key, it) }, stringResource(field.labelRes),
+                                    field.suggestions, multiValue = field.multiValue, singleLine = field.key != "notes", enabled = !isSaving,
+                                    onFocusChanged = { reportFocus(field.key, it) })
+                                if (field.key == "barcode" && onScanBarcode != null) {
+                                    TextButton(onClick = { requestPotentiallyDestructiveAction(onScanBarcode) }, enabled = !isSaving) {
+                                        Text(stringResource(R.string.action_scan_barcode))
+                                    }
+                                }
+                            }
+                        }
+                        item(key = "expiryDate") {
+                            ReviewDateField("expiryDate", R.string.label_best_before, expiryDateMillis, "expiryDate" in expandedFields,
+                                { expand("expiryDate", it) }, !isSaving, fieldEvidence["expiryDate"], capturedPhotoUris,
+                                pendingSuggestions["expiryDate"], { accept("expiryDate") },
+                                { changeField("expiryDate", expiryDateMillis?.toString()) }, { changeField("expiryDate", it?.toString()) },
+                                needsCheck("expiryDate", expiryDateMillis?.let(DateParser::format).orEmpty()))
+                        }
+                        item(key = "isDecaf") {
+                            LabelReviewField("isDecaf", stringResource(R.string.label_decaf_coffee), when {
+                                isDecaf -> stringResource(R.string.label_decaf)
+                                decafIsKnown -> stringResource(R.string.label_review_not_decaf)
+                                else -> ""
+                            },
+                                expanded = "isDecaf" in expandedFields, onExpandedChange = { expand("isDecaf", it) }, enabled = !isSaving,
+                                evidence = fieldEvidence["isDecaf"], capturedPhotoUris = capturedPhotoUris,
+                                suggestion = pendingSuggestions["isDecaf"], onAcceptSuggestion = { accept("isDecaf") },
+                                onKeepMine = { changeField("isDecaf", isDecaf.toString().takeIf { isDecaf || decafIsKnown }) },
+                                onClear = { changeField("isDecaf", null) },
+                                needsReview = needsCheck("isDecaf", if (isDecaf) "true" else "")) {
+                                Row(verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier.fillMaxWidth().toggleable(isDecaf, enabled = !isSaving, role = Role.Checkbox,
+                                        onValueChange = { changeField("isDecaf", it.toString()) }).heightIn(min = 48.dp)) {
+                                    Checkbox(isDecaf, null, enabled = !isSaving)
+                                    Text(stringResource(R.string.label_decaf_coffee))
+                                }
+                                if (isDecaf) FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                    DecafProcess.entries.forEach { process ->
+                                        FilterChip(decafProcess == process.name || decafProcess == null && process == DecafProcess.UNKNOWN,
+                                            { changeField("decafProcess", process.name.takeUnless { process == DecafProcess.UNKNOWN }) },
+                                            enabled = !isSaving, label = { Text(process.shortLabel) })
+                                    }
+                                }
+                            }
+                        }
+                        item(key = "sourceNotes") {
+                            if (reviewHints.isNotEmpty() || traceabilityUrl != null) {
+                                TextButton(onClick = { showSourceNotes = !showSourceNotes }, enabled = !isSaving) {
+                                    Text(stringResource(R.string.label_review_source_notes))
+                                }
+                            }
+                            if (showSourceNotes) {
+                                reviewHints.forEach { Text(it.message, style = MaterialTheme.typography.bodySmall) }
+                                traceabilityUrl?.let { url ->
+                                    if (qrExploredMetadata == null) QrApprovalCard(url, isExploringQr, onExplore = {
+                                        val explore = onExploreQrUrl ?: return@QrApprovalCard
+                                        isExploringQr = true
+                                        explore(url) qrResult@{ metadata ->
+                                            if (!reviewActive) return@qrResult
+                                            isExploringQr = false
+                                            qrExploredMetadata = metadata
+                                            // Optional lookup cannot replace a displayed or explicitly cleared field.
+                                            if (metadata != null && !latestSaving) {
+                                                val values = mapOf("name" to metadata.name, "roaster" to metadata.roaster,
+                                                    "origin" to metadata.origin, "region" to metadata.region,
+                                                    "processType" to metadata.processType, "tastingNotes" to metadata.tastingNotes)
+                                                values.forEach { (key, value) ->
+                                                    val untouched = key !in editedFields && key !in reviewedFields
+                                                    if (value != null && untouched && latestForm.reviewValue(key).isNullOrBlank()) {
+                                                        changeField(key, value)
                                                     }
                                                 }
                                             }
-                                        },
-                                        onSkip = { /* URL is still saved as traceabilityUrl */ },
-                                    )
+                                        }
+                                    }, onSkip = { showSourceNotes = false })
+                                    else QrLinkCard(url, onOpen = { uriHandler.openUri(url) },
+                                        exploredLabel = stringResource(R.string.msg_review_qr_details, URL(url).host))
                                 }
                             }
+                        }
                     }
                 }
-
-                if (snapApproveMode) {
-                    item {
-                        SnapApproveSection(
-                            name = name,
-                            onNameChange = {
-                                name = it
-                                reportUserEdit("name", it)
-                            },
-                            nameSuggestions = nameSuggestions,
-                            roaster = roaster,
-                            onRoasterChange = {
-                                roaster = it
-                                reportUserEdit("roaster", it)
-                            },
-                            roasterSuggestions = roasterSuggestions,
-                            confidentFields = confidentDetectedFields,
-                            reviewFields = reviewDetectedFields,
-                            hasMissingDetails = hasMissingDetails,
-                            onFieldClick = { fieldName ->
-                                selectedEvidenceField = fieldName
-                                if (fieldNeedsOptionalSection(fieldName)) {
-                                    showMoreDetails = true
-                                }
-                                pendingScrollField = fieldName
-                                snapApproveMode = false
-                            },
-                            onEditAllFields = {
-                                pendingScrollField = "name"
-                                snapApproveMode = false
-                            },
-                            onAddMoreDetails = {
-                                showMoreDetails = true
-                                pendingScrollField = "roastLevel"
-                                snapApproveMode = false
-                            },
-                        )
+                saveErrorResId?.let { error ->
+                    Row(
+                        Modifier.fillMaxWidth().padding(horizontal = 24.dp)
+                            .background(MaterialTheme.colorScheme.errorContainer, MaterialTheme.shapes.small)
+                            .padding(12.dp).semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Assertive },
+                        horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(Icons.Outlined.WarningAmber, null, tint = MaterialTheme.colorScheme.onErrorContainer)
+                        Text(stringResource(error), color = MaterialTheme.colorScheme.onErrorContainer)
                     }
-                } else {
-                    if (initialBarcode != null) {
-                        item {
-                            OutlinedTextField(
-                                value = barcode,
-                                onValueChange = {
-                                    barcode = it
-                                    reportUserEdit("barcode", it)
-                                },
-                                label = { Text(stringResource(R.string.label_barcode_ean)) },
-                                shape = MaterialTheme.shapes.small,
-                                singleLine = true,
-                                trailingIcon = if (onScanBarcode != null) {
-                                    {
-                                        IconButton(
-                                            onClick = { requestPotentiallyDestructiveAction(onScanBarcode) },
-                                            enabled = !isSaving,
-                                        ) {
-                                            Icon(
-                                                Icons.Filled.CameraAlt,
-                                                contentDescription = stringResource(R.string.action_scan_barcode),
-                                            )
-                                        }
-                                    }
-                                } else null,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(bottom = 8.dp),
-                            )
+                }
+                    Button(
+                    onClick = {
+                        saveAttempted = true
+                        val invalidField = when {
+                            name.isBlank() -> "name"
+                            !weightValidation.isValid -> "weight"
+                            else -> null
                         }
-                    } else if (onScanBarcode != null) {
-                        item {
-                            OutlinedTextField(
-                                value = barcode,
-                                onValueChange = {
-                                    barcode = it
-                                    reportUserEdit("barcode", it)
-                                },
-                                label = { Text(stringResource(R.string.label_barcode_ean)) },
-                                shape = MaterialTheme.shapes.small,
-                                singleLine = true,
-                                trailingIcon = {
-                                    IconButton(
-                                        onClick = { requestPotentiallyDestructiveAction(onScanBarcode) },
-                                        enabled = !isSaving,
-                                    ) {
-                                        Icon(
-                                            Icons.Filled.CameraAlt,
-                                            contentDescription = stringResource(R.string.action_scan_barcode),
-                                        )
-                                    }
-                                },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(bottom = 8.dp),
-                            )
+                        if (invalidField != null) {
+                            if (invalidField !in expandedFields) expandedFields = expandedFields + invalidField
+                            correctionScope.launch {
+                                listState.animateScrollToItem(visibleKeys.indexOf(invalidField).coerceAtLeast(0))
+                                if (invalidField == "name") nameFocus.requestFocus() else weightFocus.requestFocus()
+                            }
+                            return@Button
                         }
-                    }
-                    item {
-                        SuggestingTextField(
-                            value = name,
-                            onValueChange = {
-                                name = it
-                                reportUserEdit("name", it)
-                            },
-                            label = stringResource(R.string.label_name_required),
-                            suggestions = nameSuggestions,
-                            enabled = !isSaving,
-                            modifier = Modifier.padding(bottom = 4.dp),
-                            onFocusChanged = { focused ->
-                                reportFocus("name", focused)
-                            },
-                        )
-                        FieldEvidenceAssist(
-                            evidence = fieldEvidence["name"],
-                            onClick = { selectedEvidenceField = "name" },
-                        )
-                    }
-                    item {
-                        SuggestingTextField(
-                            value = roaster,
-                            onValueChange = {
-                                roaster = it
-                                reportUserEdit("roaster", it)
-                            },
-                            label = stringResource(R.string.label_roaster),
-                            suggestions = roasterSuggestions,
-                            enabled = !isSaving,
-                            modifier = Modifier.padding(bottom = 4.dp),
-                            onFocusChanged = { focused ->
-                                reportFocus("roaster", focused)
-                            },
-                        )
-                        FieldEvidenceAssist(
-                            evidence = fieldEvidence["roaster"],
-                            onClick = { selectedEvidenceField = "roaster" },
-                        )
-                    }
-                    item {
-                        SuggestingTextField(
-                            value = originCountry,
-                            onValueChange = {
-                                originCountry = it
-                                reportUserEdit("origin", it)
-                            },
-                            label = stringResource(R.string.label_origin),
-                            suggestions = originSuggestions,
-                            enabled = !isSaving,
-                            modifier = Modifier.padding(bottom = 4.dp),
-                            onFocusChanged = { focused ->
-                                reportFocus("origin", focused)
-                            },
-                        )
-                        FieldEvidenceAssist(
-                            evidence = fieldEvidence["origin"],
-                            onClick = { selectedEvidenceField = "origin" },
-                        )
-                    }
-                    item {
-                        SuggestingTextField(
-                            value = originRegion,
-                            onValueChange = {
-                                originRegion = it
-                                reportUserEdit("region", it)
-                            },
-                            label = stringResource(R.string.label_region),
-                            suggestions = regionSuggestions,
-                            enabled = !isSaving,
-                            modifier = Modifier.padding(bottom = 4.dp),
-                            onFocusChanged = { focused ->
-                                reportFocus("region", focused)
-                            },
-                        )
-                        FieldEvidenceAssist(
-                            evidence = fieldEvidence["region"],
-                            onClick = { selectedEvidenceField = "region" },
-                        )
-                    }
-                    item {
-                        OutlinedTextField(
-                            value = weight,
-                            onValueChange = {
-                                weight = it
-                                reportUserEdit("weight", it)
-                            },
-                            label = { Text(stringResource(R.string.label_weight_grams)) },
-                            shape = MaterialTheme.shapes.small,
-                            singleLine = true,
-                            enabled = !isSaving,
-                            isError = !weightValidation.isValid,
-                            supportingText = if (!weightValidation.isValid) {
-                                {
-                                    Text(stringResource(R.string.msg_invalid_weight))
-                                }
-                            } else {
-                                null
-                            },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            suffix = { Text("g") },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 4.dp)
-                                .onFocusChanged {
-                                    reportFocus("weight", it.isFocused)
-                                },
-                        )
-                        FlowRow(
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            modifier = Modifier.padding(bottom = 4.dp),
-                        ) {
-                            listOf("250", "500", "1000").forEach { preset ->
-                                FilterChip(
-                                    selected = weight == preset,
-                                    enabled = !isSaving,
-                                    onClick = {
-                                        selectedEvidenceField = "weight"
-                                        weight = preset
-                                        reportUserEdit("weight", preset)
-                                    },
-                                    label = { Text("${preset}g") },
+                        if (name.isNotBlank()) {
+                            if (ocrPrefill != null) {
+                                // Phase 3 — capture a real-world model-vs-user diff for
+                                // this scanned bag. Opt-in + on-device; the recorder is
+                                // a no-op unless the user enabled correction logging.
+                                val prefill = ocrPrefill
+                                val modelValues = mapOf(
+                                    "name" to prefill.name,
+                                    "roaster" to prefill.roaster,
+                                    "origin" to prefill.origin,
+                                    "region" to prefill.region,
+                                    "farm" to prefill.farm,
+                                    "altitude" to prefill.altitude,
+                                    "variety" to prefill.variety,
+                                    "processType" to prefill.processType,
+                                    "roastLevel" to prefill.roastLevel,
+                                    "tastingNotes" to prefill.tastingNotes,
                                 )
+                                val finalValues = mapOf(
+                                    "name" to name,
+                                    "roaster" to roaster,
+                                    "origin" to originCountry,
+                                    "region" to originRegion,
+                                    "farm" to farm,
+                                    "altitude" to altitude,
+                                    "variety" to variety,
+                                    "processType" to processType,
+                                    "roastLevel" to roastLevel,
+                                    "tastingNotes" to tastingNotes,
+                                )
+                                val corrections = ScanCorrectionLog.buildCorrections(
+                                    modelValues = modelValues,
+                                    finalValues = finalValues,
+                                    confidence = prefill.fieldConfidence,
+                                )
+                                val appContext = correctionContext.applicationContext
+                                correctionScope.launch { ScanCorrectionLog.record(appContext, corrections) }
                             }
-                        }
-                        FieldEvidenceAssist(
-                            evidence = fieldEvidence["weight"],
-                            onClick = { selectedEvidenceField = "weight" },
-                        )
-                    }
-                    item {
-                        var showRoastDatePicker by rememberSaveable { mutableStateOf(false) }
-
-                        OutlinedTextField(
-                            value = roastDateMillis?.let { DateParser.format(it) } ?: "",
-                            onValueChange = {},
-                            label = { Text(stringResource(R.string.label_roast_date)) },
-                            shape = MaterialTheme.shapes.small,
-                            readOnly = true,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 8.dp),
-                            trailingIcon = {
-                                if (roastDateMillis != null) {
-                                    IconButton(onClick = {
-                                        roastDateMillis = null
-                                        reportUserEdit("roastDate", null)
-                                    }) {
-                                        Icon(
-                                            Icons.Filled.Close,
-                                            stringResource(R.string.action_clear),
-                                        )
-                                    }
-                                }
-                            },
-                            enabled = false,
-                            colors = OutlinedTextFieldDefaults.colors(
-                                disabledTextColor = MaterialTheme.colorScheme.onSurface,
-                                disabledBorderColor = MaterialTheme.colorScheme.outline,
-                                disabledLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                            ),
-                        )
-                        OutlinedButton(
-                            onClick = {
-                                selectedEvidenceField = "roastDate"
-                                showRoastDatePicker = true
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 4.dp),
-                        ) {
-                            Text(
-                                stringResource(
-                                    if (roastDateMillis != null) {
-                                        R.string.action_change_roast_date
-                                    } else {
-                                        R.string.action_set_roast_date
-                                    },
-                                ),
-                            )
-                        }
-                        FieldEvidenceAssist(
-                            evidence = fieldEvidence["roastDate"],
-                            onClick = { selectedEvidenceField = "roastDate" },
-                        )
-
-                        if (showRoastDatePicker) {
-                            val datePickerState = rememberDatePickerState(initialSelectedDateMillis = roastDateMillis)
-                            DatePickerDialog(
-                                onDismissRequest = { showRoastDatePicker = false },
-                                confirmButton = {
-                                    TextButton(onClick = {
-                                        roastDateMillis = datePickerState.selectedDateMillis
-                                        reportUserEdit("roastDate", roastDateMillis?.toString())
-                                        showRoastDatePicker = false
-                                    }) { Text(stringResource(R.string.action_ok)) }
-                                },
-                                dismissButton = {
-                                    TextButton(onClick = { showRoastDatePicker = false }) { Text(stringResource(R.string.action_cancel)) }
-                                },
-                            ) {
-                                DatePicker(state = datePickerState)
-                            }
-                        }
-                    }
-                    item {
-                        OutlinedButton(
-                            onClick = { showMoreDetails = !showMoreDetails },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 12.dp),
-                        ) {
-                            Text(
-                                stringResource(
-                                    if (showMoreDetails) {
-                                        R.string.action_hide_optional_details
-                                    } else {
-                                        R.string.action_show_optional_details
-                                    },
-                                ),
-                            )
-                        }
-                    }
-
-                    if (showMoreDetails) {
-                        item {
-                            SuggestingTextField(
-                                value = roastLevel,
-                                onValueChange = {
-                                    roastLevel = it
-                                    reportUserEdit("roastLevel", it)
-                                },
-                                label = stringResource(R.string.label_roast_level),
-                                suggestions = roastLevelSuggestions,
-                                enabled = !isSaving,
-                                multiValue = true,
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                onFocusChanged = { focused ->
-                                    reportFocus("roastLevel", focused)
-                                },
-                            )
-                            FieldEvidenceAssist(
-                                evidence = fieldEvidence["roastLevel"],
-                                onClick = { selectedEvidenceField = "roastLevel" },
-                            )
-                        }
-                        item {
-                            SuggestingTextField(
-                                value = variety,
-                                onValueChange = {
-                                    variety = it
-                                    reportUserEdit("variety", it)
-                                },
-                                label = stringResource(R.string.label_variety),
-                                suggestions = varietySuggestions,
-                                multiValue = true,
-                                enabled = !isSaving,
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                onFocusChanged = { focused ->
-                                    reportFocus("variety", focused)
-                                },
-                            )
-                            FieldEvidenceAssist(
-                                evidence = fieldEvidence["variety"],
-                                onClick = { selectedEvidenceField = "variety" },
-                            )
-                        }
-                        item {
-                            SuggestingTextField(
-                                value = farm,
-                                onValueChange = {
-                                    farm = it
-                                    reportUserEdit("farm", it)
-                                },
-                                label = stringResource(R.string.label_farm),
-                                suggestions = farmSuggestions,
-                                enabled = !isSaving,
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                onFocusChanged = { focused ->
-                                    reportFocus("farm", focused)
-                                },
-                            )
-                            FieldEvidenceAssist(
-                                evidence = fieldEvidence["farm"],
-                                onClick = { selectedEvidenceField = "farm" },
-                            )
-                        }
-                        item {
-                            SuggestingTextField(
-                                value = altitude,
-                                onValueChange = {
-                                    altitude = it
-                                    reportUserEdit("altitude", it)
-                                },
-                                label = stringResource(R.string.label_altitude),
-                                suggestions = altitudeSuggestions,
-                                enabled = !isSaving,
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                onFocusChanged = { focused ->
-                                    reportFocus("altitude", focused)
-                                },
-                            )
-                            FieldEvidenceAssist(
-                                evidence = fieldEvidence["altitude"],
-                                onClick = { selectedEvidenceField = "altitude" },
-                            )
-                        }
-                        item {
-                            SuggestingTextField(
-                                value = processType,
-                                onValueChange = {
-                                    processType = it
-                                    reportUserEdit("processType", it)
-                                },
-                                label = stringResource(R.string.label_process),
-                                suggestions = processSuggestions,
-                                enabled = !isSaving,
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                onFocusChanged = { focused ->
-                                    reportFocus("processType", focused)
-                                },
-                            )
-                            FieldEvidenceAssist(
-                                evidence = fieldEvidence["processType"],
-                                onClick = { selectedEvidenceField = "processType" },
-                            )
-                        }
-                        item {
-                            SuggestingTextField(
-                                value = tastingNotes,
-                                onValueChange = {
-                                    tastingNotes = it
-                                    reportUserEdit("tastingNotes", it)
-                                },
-                                label = stringResource(R.string.label_tasting_notes),
-                                suggestions = tastingNoteSuggestions,
-                                multiValue = true,
-                                enabled = !isSaving,
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                onFocusChanged = { focused ->
-                                    reportFocus("tastingNotes", focused)
-                                },
-                            )
-                            FieldEvidenceAssist(
-                                evidence = fieldEvidence["tastingNotes"],
-                                onClick = { selectedEvidenceField = "tastingNotes" },
-                            )
-                        }
-                        item {
-                            var showExpiryDatePicker by rememberSaveable { mutableStateOf(false) }
-
-                            OutlinedTextField(
-                                value = expiryDateMillis?.let { DateParser.format(it) } ?: "",
-                                onValueChange = {},
-                                label = { Text(stringResource(R.string.label_best_before)) },
-                                shape = MaterialTheme.shapes.small,
-                                readOnly = true,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(bottom = 8.dp),
-                                trailingIcon = {
-                                    if (expiryDateMillis != null) {
-                                        IconButton(onClick = {
-                                            expiryDateMillis = null
-                                            reportUserEdit("expiryDate", null)
-                                        }) {
-                                            Icon(
-                                                Icons.Filled.Close,
-                                                stringResource(R.string.action_clear),
-                                            )
-                                        }
-                                    }
-                                },
-                                enabled = false,
-                                colors = OutlinedTextFieldDefaults.colors(
-                                    disabledTextColor = MaterialTheme.colorScheme.onSurface,
-                                    disabledBorderColor = MaterialTheme.colorScheme.outline,
-                                    disabledLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                                ),
-                            )
-                            OutlinedButton(
-                                onClick = {
-                                    selectedEvidenceField = "expiryDate"
-                                    showExpiryDatePicker = true
-                                },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(bottom = 4.dp),
-                            ) {
-                                Text(
-                                    stringResource(
-                                        if (expiryDateMillis != null) {
-                                            R.string.action_change_best_before
-                                        } else {
-                                            R.string.action_set_best_before
-                                        },
+                            if (bagToEdit != null && onEdit != null) {
+                                val editedBag = applyValidatedBagWeight(
+                                    bag = bagToEdit.copy(
+                                        name = name,
+                                        roaster = roaster.takeIf { it.isNotBlank() },
+                                        origin = originCountry.takeIf { it.isNotBlank() },
+                                        region = originRegion.takeIf { it.isNotBlank() },
+                                        farm = farm.takeIf { it.isNotBlank() },
+                                        altitude = altitude.takeIf { it.isNotBlank() },
+                                        roastLevel = roastLevel.takeIf { it.isNotBlank() },
+                                        barcode = barcode.takeIf { it.isNotBlank() },
+                                        notes = notes.takeIf { it.isNotBlank() },
+                                        variety = variety.takeIf { it.isNotBlank() },
+                                        processType = processType.takeIf { it.isNotBlank() },
+                                        tastingNotes = tastingNotes.takeIf { it.isNotBlank() },
+                                        isDecaf = isDecaf,
+                                        decafProcess = decafProcess?.takeIf { isDecaf },
+                                        roastDate = roastDateMillis,
+                                        expiryDate = expiryDateMillis,
                                     ),
+                                    validation = weightValidation,
+                                ) ?: return@Button
+                                onEdit(
+                                    editedBag,
+                                )
+                            } else {
+                                onSave(
+                                    name,
+                                    roaster.takeIf { it.isNotBlank() },
+                                    originCountry.takeIf { it.isNotBlank() },
+                                    originRegion.takeIf { it.isNotBlank() },
+                                    farm.takeIf { it.isNotBlank() },
+                                    altitude.takeIf { it.isNotBlank() },
+                                    roastLevel.takeIf { it.isNotBlank() },
+                                    barcode.takeIf { it.isNotBlank() },
+                                    weightValidation.valueGrams,
+                                    notes.takeIf { it.isNotBlank() },
+                                    variety.takeIf { it.isNotBlank() },
+                                    processType.takeIf { it.isNotBlank() },
+                                    tastingNotes.takeIf { it.isNotBlank() },
+                                    isDecaf,
+                                    decafProcess?.takeIf { isDecaf },
+                                    roastDateMillis,
+                                    expiryDateMillis,
                                 )
                             }
-                            FieldEvidenceAssist(
-                                evidence = fieldEvidence["expiryDate"],
-                                onClick = { selectedEvidenceField = "expiryDate" },
-                            )
-
-                            if (showExpiryDatePicker) {
-                                val datePickerState = rememberDatePickerState(initialSelectedDateMillis = expiryDateMillis)
-                                DatePickerDialog(
-                                    onDismissRequest = { showExpiryDatePicker = false },
-                                    confirmButton = {
-                                        TextButton(onClick = {
-                                            expiryDateMillis = datePickerState.selectedDateMillis
-                                            reportUserEdit("expiryDate", expiryDateMillis?.toString())
-                                            showExpiryDatePicker = false
-                                        }) { Text(stringResource(R.string.action_ok)) }
-                                    },
-                                    dismissButton = {
-                                        TextButton(onClick = { showExpiryDatePicker = false }) { Text(stringResource(R.string.action_cancel)) }
-                                    },
-                                ) {
-                                    DatePicker(state = datePickerState)
-                                }
-                            }
                         }
-                        item {
-                            ElevatedCard(
-                                shape = MaterialTheme.shapes.medium,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(bottom = 8.dp),
-                            ) {
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .toggleable(
-                                            value = isDecaf,
-                                            role = Role.Checkbox,
-                                            onValueChange = {
-                                                isDecaf = it
-                                                reportUserEdit("isDecaf", it.toString())
-                                            },
-                                        )
-                                        .padding(horizontal = 16.dp, vertical = 12.dp),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                ) {
-                                    Checkbox(
-                                        checked = isDecaf,
-                                        onCheckedChange = null,
-                                    )
-                                    Column(
-                                        modifier = Modifier.padding(start = 12.dp),
-                                        verticalArrangement = Arrangement.spacedBy(2.dp),
-                                    ) {
-                                        Text(
-                                            text = stringResource(R.string.label_decaf_coffee),
-                                            style = MaterialTheme.typography.titleSmall,
-                                        )
-                                        Text(
-                                            text = stringResource(R.string.msg_decaf_guidance),
-                                            style = MaterialTheme.typography.bodySmall,
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                        )
-                                    }
-                                }
-                                AnimatedVisibility(visible = isDecaf) {
-                                    Column(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(start = 16.dp, end = 16.dp, bottom = 12.dp),
-                                        verticalArrangement = Arrangement.spacedBy(6.dp),
-                                    ) {
-                                        Text(
-                                            text = stringResource(R.string.label_decaf_process_optional),
-                                            style = MaterialTheme.typography.labelMedium,
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                        )
-                                        Text(
-                                            text = stringResource(R.string.msg_decaf_process_hint),
-                                            style = MaterialTheme.typography.bodySmall,
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                        )
-                                        FlowRow(
-                                            horizontalArrangement = Arrangement.spacedBy(6.dp),
-                                            verticalArrangement = Arrangement.spacedBy(4.dp),
-                                        ) {
-                                            DecafProcess.entries.forEach { process ->
-                                                val key = process.name
-                                                val selected = decafProcess == key ||
-                                                    (decafProcess == null && process == DecafProcess.UNKNOWN)
-                                                FilterChip(
-                                                    selected = selected,
-                                                    onClick = {
-                                                        decafProcess = if (process == DecafProcess.UNKNOWN) null else key
-                                                        reportUserEdit("decafProcess", decafProcess)
-                                                    },
-                                                    label = { Text(process.shortLabel) },
-                                                )
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        item {
-                            OutlinedTextField(
-                                value = notes,
-                                onValueChange = {
-                                    notes = it
-                                    reportUserEdit("notes", it)
-                                },
-                                label = { Text(stringResource(R.string.label_notes)) },
-                                shape = MaterialTheme.shapes.small,
-                                minLines = 2,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(bottom = 8.dp),
-                            )
-                        }
-                    }
-                }
-            }
-
-                Button(
-                onClick = {
-                    if (name.isNotBlank()) {
-                        if (ocrPrefill != null) {
-                            // Phase 3 — capture a real-world model-vs-user diff for
-                            // this scanned bag. Opt-in + on-device; the recorder is
-                            // a no-op unless the user enabled correction logging.
-                            val prefill = ocrPrefill
-                            val modelValues = mapOf(
-                                "name" to prefill.name,
-                                "roaster" to prefill.roaster,
-                                "origin" to prefill.origin,
-                                "region" to prefill.region,
-                                "farm" to prefill.farm,
-                                "altitude" to prefill.altitude,
-                                "variety" to prefill.variety,
-                                "processType" to prefill.processType,
-                                "roastLevel" to prefill.roastLevel,
-                                "tastingNotes" to prefill.tastingNotes,
-                            )
-                            val finalValues = mapOf(
-                                "name" to name,
-                                "roaster" to roaster,
-                                "origin" to originCountry,
-                                "region" to originRegion,
-                                "farm" to farm,
-                                "altitude" to altitude,
-                                "variety" to variety,
-                                "processType" to processType,
-                                "roastLevel" to roastLevel,
-                                "tastingNotes" to tastingNotes,
-                            )
-                            val corrections = ScanCorrectionLog.buildCorrections(
-                                modelValues = modelValues,
-                                finalValues = finalValues,
-                                confidence = prefill.fieldConfidence,
-                            )
-                            val appContext = correctionContext.applicationContext
-                            correctionScope.launch { ScanCorrectionLog.record(appContext, corrections) }
-                        }
-                        if (bagToEdit != null && onEdit != null) {
-                            val editedBag = applyValidatedBagWeight(
-                                bag = bagToEdit.copy(
-                                    name = name,
-                                    roaster = roaster.takeIf { it.isNotBlank() },
-                                    origin = originCountry.takeIf { it.isNotBlank() },
-                                    region = originRegion.takeIf { it.isNotBlank() },
-                                    farm = farm.takeIf { it.isNotBlank() },
-                                    altitude = altitude.takeIf { it.isNotBlank() },
-                                    roastLevel = roastLevel.takeIf { it.isNotBlank() },
-                                    barcode = barcode.takeIf { it.isNotBlank() },
-                                    notes = notes.takeIf { it.isNotBlank() },
-                                    variety = variety.takeIf { it.isNotBlank() },
-                                    processType = processType.takeIf { it.isNotBlank() },
-                                    tastingNotes = tastingNotes.takeIf { it.isNotBlank() },
-                                    isDecaf = isDecaf,
-                                    decafProcess = decafProcess?.takeIf { isDecaf },
-                                    roastDate = roastDateMillis,
-                                    expiryDate = expiryDateMillis,
-                                ),
-                                validation = weightValidation,
-                            ) ?: return@Button
-                            onEdit(
-                                editedBag,
-                            )
-                        } else {
-                            onSave(
-                                name,
-                                roaster.takeIf { it.isNotBlank() },
-                                originCountry.takeIf { it.isNotBlank() },
-                                originRegion.takeIf { it.isNotBlank() },
-                                farm.takeIf { it.isNotBlank() },
-                                altitude.takeIf { it.isNotBlank() },
-                                roastLevel.takeIf { it.isNotBlank() },
-                                barcode.takeIf { it.isNotBlank() },
-                                weightValidation.valueGrams,
-                                notes.takeIf { it.isNotBlank() },
-                                variety.takeIf { it.isNotBlank() },
-                                processType.takeIf { it.isNotBlank() },
-                                tastingNotes.takeIf { it.isNotBlank() },
-                                isDecaf,
-                                decafProcess?.takeIf { isDecaf },
-                                roastDateMillis,
-                                expiryDateMillis,
-                            )
-                        }
-                    }
-                },
-                colors = saveButtonColors,
-                shape = MaterialTheme.shapes.large,
-                enabled = name.isNotBlank() &&
-                    weightValidation.isValid &&
-                    !isExploringQr &&
-                    !isSaving,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 24.dp)
-                    .padding(vertical = 12.dp)
-                    .height(56.dp),
-            ) {
-                Text(saveButtonLabel, style = MaterialTheme.typography.labelLarge)
-            }
-            }
-            if (isSaving) {
-                Box(
+                    },
+                    colors = primaryActionButtonColors(),
+                    shape = MaterialTheme.shapes.large,
+                    enabled = !isSaving,
                     modifier = Modifier
-                        .fillMaxSize()
-                        .pointerInput(Unit) {
-                            awaitPointerEventScope {
-                                while (true) {
-                                    awaitPointerEvent().changes.forEach { it.consume() }
-                                }
-                            }
-                        }
-                        .clearAndSetSemantics { disabled() },
-                )
+                        .fillMaxWidth()
+                        .testTag("label-review-save")
+                        .padding(horizontal = 24.dp)
+                        .padding(vertical = 12.dp)
+                        .heightIn(min = 56.dp),
+                ) {
+                    Text(stringResource(when {
+                        isSaving -> R.string.label_review_saving
+                        saveErrorResId != null -> R.string.action_review_retry_save
+                        isEditMode -> R.string.action_save
+                        else -> R.string.action_save_coffee
+                    }), style = MaterialTheme.typography.labelLarge)
+                }
+
             }
-            SnackbarHost(
-                hostState = suggestionSnackbarHostState,
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(horizontal = 16.dp, vertical = 84.dp),
-            )
         }
     }
 }
 
-@Composable
-private fun localizedBagFieldLabel(fieldName: String): String = stringResource(
-    when (fieldName) {
-        "name" -> R.string.label_name_required
-        "roaster" -> R.string.label_roaster
-        "origin" -> R.string.label_origin
-        "region" -> R.string.label_region
-        "farm" -> R.string.label_farm
-        "altitude" -> R.string.label_altitude
-        "roastLevel" -> R.string.label_roast_level
-        "barcode" -> R.string.label_barcode_ean
-        "weight" -> R.string.label_weight_grams
-        "notes" -> R.string.label_notes
-        "variety" -> R.string.label_variety
-        "processType" -> R.string.label_process
-        "tastingNotes" -> R.string.label_tasting_notes
-        "isDecaf" -> R.string.label_decaf_coffee
-        "roastDate" -> R.string.label_roast_date
-        "expiryDate" -> R.string.label_best_before
-        else -> R.string.label_coffee
-    },
-)
-
-private data class SnapApproveFieldItem(
-    val fieldName: String,
-    val emoji: String,
+private data class LabelFormField(
+    val key: String,
+    val labelRes: Int,
     val value: String,
-    val confidence: BagFieldConfidence,
+    val suggestions: List<CoffeeInputSuggestion> = emptyList(),
+    val multiValue: Boolean = false,
 )
 
-private val SNAP_APPROVE_EMOJI_MAP = mapOf(
-    "origin" to "🌍",
-    "region" to "🗺️",
-    "processType" to "☕",
-    "variety" to "🫘",
-    "roaster" to "🔥",
-    "name" to "🏷️",
-    "altitude" to "⛰️",
-    "tastingNotes" to "🍓",
-    "roastLevel" to "🌗",
-    "roastDate" to "📅",
-    "expiryDate" to "⏳",
-    "isDecaf" to "🌙",
-    "weight" to "⚖️",
-    "farm" to "🚜",
-)
-
-/**
- * Plain bundle of the form field values that drive the snap-approve summary.
- * Grouping here keeps [buildSnapApproveFieldItems] under detekt's parameter
- * threshold while still surfacing the inputs explicitly at the call site.
- */
-private data class SnapApproveFormState(
-    val origin: String,
-    val region: String,
-    val farm: String,
-    val altitude: String,
-    val roastLevel: String,
-    val variety: String,
-    val processType: String,
-    val tastingNotes: String,
-    val roastDateMillis: Long?,
-    val expiryDateMillis: Long?,
-    val isDecaf: Boolean,
-    val weight: String,
-)
-
-private fun buildSnapApproveFieldItems(
-    form: SnapApproveFormState,
-    fieldEvidence: Map<String, BagFieldEvidence>,
-    fieldConfidence: Map<String, BagFieldConfidence>,
-): List<SnapApproveFieldItem> = listOfNotNull(
-    snapApproveFieldItem("origin", form.origin, fieldEvidence, fieldConfidence),
-    snapApproveFieldItem("region", form.region, fieldEvidence, fieldConfidence),
-    snapApproveFieldItem("farm", form.farm, fieldEvidence, fieldConfidence),
-    snapApproveFieldItem("altitude", form.altitude, fieldEvidence, fieldConfidence),
-    snapApproveFieldItem("processType", form.processType, fieldEvidence, fieldConfidence),
-    snapApproveFieldItem("variety", form.variety, fieldEvidence, fieldConfidence),
-    snapApproveFieldItem("roastLevel", form.roastLevel, fieldEvidence, fieldConfidence),
-    snapApproveFieldItem("weight", form.weight, fieldEvidence, fieldConfidence),
-    form.roastDateMillis?.let {
-        snapApproveFieldItem("roastDate", DateParser.format(it), fieldEvidence, fieldConfidence)
-    },
-    form.expiryDateMillis?.let {
-        snapApproveFieldItem("expiryDate", DateParser.format(it), fieldEvidence, fieldConfidence)
-    },
-    if (form.isDecaf) {
-        snapApproveFieldItem("isDecaf", "Decaf", fieldEvidence, fieldConfidence)
-    } else {
-        null
-    },
-    snapApproveFieldItem("tastingNotes", form.tastingNotes, fieldEvidence, fieldConfidence),
-)
-
-private fun snapApproveFieldItem(
-    fieldName: String,
-    value: String,
-    fieldEvidence: Map<String, BagFieldEvidence>,
-    fieldConfidence: Map<String, BagFieldConfidence>,
-): SnapApproveFieldItem? {
-    val trimmed = value.trim()
-    if (trimmed.isBlank()) return null
-    val emoji = SNAP_APPROVE_EMOJI_MAP[fieldName] ?: return null
-    return SnapApproveFieldItem(
-        fieldName = fieldName,
-        emoji = emoji,
-        value = trimmed,
-        confidence = resolvedFieldConfidence(
-            evidenceConfidence = fieldEvidence[fieldName]?.confidence,
-            extractedConfidence = fieldConfidence[fieldName],
-        ),
-    )
-}
-
-private fun resolvedFieldConfidence(
-    evidenceConfidence: BagFieldConfidence?,
-    extractedConfidence: BagFieldConfidence?,
-): BagFieldConfidence {
-    val confidences = listOfNotNull(evidenceConfidence, extractedConfidence)
-    return when {
-        BagFieldConfidence.HIGH in confidences -> BagFieldConfidence.HIGH
-        BagFieldConfidence.MEDIUM in confidences -> BagFieldConfidence.MEDIUM
-        BagFieldConfidence.LOW in confidences -> BagFieldConfidence.LOW
-        else -> BagFieldConfidence.NEEDS_REVIEW
-    }
-}
-
-private fun fieldNeedsOptionalSection(fieldName: String): Boolean = fieldName in setOf(
-    "roastLevel",
-    "variety",
-    "farm",
-    "altitude",
-    "processType",
-    "tastingNotes",
-    "expiryDate",
-    "isDecaf",
-)
-
-private fun fullFormIndexForField(
-    fieldName: String,
-    hasBarcode: Boolean,
-    showMoreDetails: Boolean,
-): Int? {
-    val orderedFields = buildList {
-        if (hasBarcode) add("barcode")
-        addAll(listOf("name", "roaster", "origin", "region", "weight", "roastDate"))
-        add("toggleOptional")
-        if (showMoreDetails) {
-            addAll(
-                listOf(
-                    "roastLevel",
-                    "variety",
-                    "farm",
-                    "altitude",
-                    "processType",
-                    "tastingNotes",
-                    "expiryDate",
-                    "isDecaf",
-                    "notes",
-                ),
-            )
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ReviewDateField(
+    key: String, labelRes: Int, millis: Long?, expanded: Boolean, onExpandedChange: (Boolean) -> Unit,
+    enabled: Boolean, evidence: BagFieldEvidence?, photoUris: String?, suggestion: String?, onAccept: () -> Boolean,
+    onKeep: () -> Unit, onChange: (Long?) -> Unit, needsReview: Boolean,
+) {
+    var picking by rememberSaveable { mutableStateOf(false) }
+    LabelReviewField(key, stringResource(labelRes), millis?.let(DateParser::format).orEmpty(), expanded, onExpandedChange,
+        enabled, evidence, photoUris, suggestion, onAccept, onKeep, { onChange(null) }, needsReview = needsReview) {
+        TextButton(onClick = { picking = true }, enabled = enabled, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
+            Icon(Icons.Outlined.DateRange, null)
+            Text(stringResource(labelRes))
         }
     }
-    val position = orderedFields.indexOf(fieldName)
-    return if (position >= 0) position + 1 else null
+    if (picking) {
+        val date = rememberDatePickerState(initialSelectedDateMillis = millis)
+        DatePickerDialog(onDismissRequest = { picking = false },
+            confirmButton = { TextButton(onClick = { onChange(date.selectedDateMillis); picking = false }) {
+                Text(stringResource(R.string.action_ok))
+            } }, dismissButton = { TextButton(onClick = { picking = false }) { Text(stringResource(R.string.action_cancel)) } }) {
+            DatePicker(date)
+        }
+    }
 }
 
 @Composable
@@ -1801,9 +1053,9 @@ private fun CapturedPhotoReviewStrip(capturedPhotoUris: String?) {
             BagThumbnail(
                 uri = uri,
                 modifier = Modifier
-                    .size(168.dp)
+                    .size(88.dp)
                     .clickable { fullScreenPhotoUri = uri },
-                downsampleTarget = 168.dp,
+                downsampleTarget = 88.dp,
                 shape = MaterialTheme.shapes.medium,
                 contentDescription = when (index) {
                     0 -> stringResource(R.string.cd_front_label_photo)
@@ -1816,202 +1068,6 @@ private fun CapturedPhotoReviewStrip(capturedPhotoUris: String?) {
     fullScreenPhotoUri?.let { uri ->
         FullScreenImageViewer(uri = uri) {
             fullScreenPhotoUri = null
-        }
-    }
-}
-
-@Composable
-private fun SnapApproveSection(
-    name: String,
-    onNameChange: (String) -> Unit,
-    nameSuggestions: List<CoffeeInputSuggestion>,
-    roaster: String,
-    onRoasterChange: (String) -> Unit,
-    roasterSuggestions: List<CoffeeInputSuggestion>,
-    confidentFields: List<SnapApproveFieldItem>,
-    reviewFields: List<SnapApproveFieldItem>,
-    hasMissingDetails: Boolean,
-    onFieldClick: (String) -> Unit,
-    onEditAllFields: () -> Unit,
-    onAddMoreDetails: () -> Unit,
-) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-        modifier = Modifier.padding(bottom = 12.dp),
-    ) {
-        ElevatedCard(modifier = Modifier.fillMaxWidth()) {
-            Column(
-                modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
-                SuggestingTextField(
-                    value = name,
-                    onValueChange = onNameChange,
-                    label = stringResource(R.string.label_name_required),
-                    suggestions = nameSuggestions,
-                )
-                SuggestingTextField(
-                    value = roaster,
-                    onValueChange = onRoasterChange,
-                    label = stringResource(R.string.label_roaster),
-                    suggestions = roasterSuggestions,
-                )
-            }
-        }
-
-        if (confidentFields.isNotEmpty()) {
-            ElevatedCard(modifier = Modifier.fillMaxWidth()) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    Text(
-                        text = stringResource(R.string.label_detected_details),
-                        style = MaterialTheme.typography.titleMedium,
-                    )
-                    FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                    ) {
-                        confidentFields.forEach { item ->
-                            SnapApproveChip(
-                                item = item,
-                                review = false,
-                                onClick = { onFieldClick(item.fieldName) },
-                            )
-                        }
-                    }
-                    Text(
-                        text = stringResource(R.string.msg_tap_chip_to_edit),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-            }
-        }
-
-        if (reviewFields.isNotEmpty()) {
-            ElevatedCard(modifier = Modifier.fillMaxWidth()) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    Text(
-                        text = stringResource(R.string.label_needs_review),
-                        style = MaterialTheme.typography.titleMedium,
-                    )
-                    FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                    ) {
-                        reviewFields.forEach { item ->
-                            SnapApproveChip(
-                                item = item,
-                                review = true,
-                                onClick = { onFieldClick(item.fieldName) },
-                            )
-                        }
-                    }
-                    Text(
-                        text = "Tap to confirm or change these details",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-            }
-        }
-
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            TextButton(onClick = onEditAllFields) {
-                Text(stringResource(R.string.action_edit_all_fields))
-            }
-            if (hasMissingDetails) {
-                TextButton(onClick = onAddMoreDetails) {
-                    Text(stringResource(R.string.action_add_more_details))
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun SnapApproveChip(
-    item: SnapApproveFieldItem,
-    review: Boolean,
-    onClick: () -> Unit,
-) {
-    Surface(
-        shape = MaterialTheme.shapes.small,
-        color = if (review) {
-            MaterialTheme.colorScheme.surface
-        } else {
-            MaterialTheme.colorScheme.secondaryContainer
-        },
-        contentColor = if (review) {
-            MaterialTheme.colorScheme.onSurface
-        } else {
-            MaterialTheme.colorScheme.onSecondaryContainer
-        },
-        border = if (review) BorderStroke(1.dp, MaterialTheme.colorScheme.outline) else null,
-        modifier = Modifier.clickable(onClick = onClick),
-    ) {
-        Text(
-            text = buildString {
-                append(item.emoji)
-                append(' ')
-                append(item.value)
-                if (review) append('?')
-            },
-            style = MaterialTheme.typography.labelLarge,
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
-        )
-    }
-}
-
-@Composable
-private fun FieldEvidenceAssist(
-    evidence: BagFieldEvidence?,
-    onClick: () -> Unit,
-) {
-    if (evidence == null) return
-    AssistChip(
-        onClick = onClick,
-        label = { Text(evidence.localizedSummaryLabel()) },
-        modifier = Modifier.padding(bottom = 8.dp),
-    )
-}
-
-@Composable
-private fun ReviewHintsCard(reviewHints: List<BagPhotoReviewHint>) {
-    ElevatedCard(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 12.dp),
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.label_review_fields),
-                style = MaterialTheme.typography.titleMedium,
-            )
-            reviewHints.forEachIndexed { index, hint ->
-                Text(
-                    text = hint.message,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = if (hint.severity == BagReviewSeverity.WARNING) {
-                        MaterialTheme.colorScheme.error
-                    } else {
-                        MaterialTheme.colorScheme.onSurfaceVariant
-                    },
-                )
-                if (index != reviewHints.lastIndex) {
-                    HorizontalDivider()
-                }
-            }
         }
     }
 }
@@ -2079,8 +1135,7 @@ private fun QrApprovalCard(
                 overflow = TextOverflow.Ellipsis,
             )
             Text(
-                text = "This website may contain coffee details (roaster, origin, tasting notes). " +
-                    "Approve to fetch and extract them.",
+                text = stringResource(R.string.msg_review_qr_approval),
                 style = MaterialTheme.typography.bodyMedium,
             )
             if (isExploring) {
@@ -2099,138 +1154,4 @@ private fun QrApprovalCard(
             }
         }
     }
-}
-
-@Composable
-private fun FieldEvidencePreviewCard(
-    evidence: BagFieldEvidence,
-    capturedPhotoUris: String?,
-) {
-    // Decode + (optionally) crop off the main thread. The card reserves a
-    // 120dp-tall slot up front so the surrounding layout doesn't reflow when
-    // the bitmap arrives.
-    val evidenceTargetPx = with(LocalDensity.current) { 120.dp.roundToPx() }
-    val evidenceBitmap by produceState<Bitmap?>(
-        initialValue = null,
-        key1 = evidence.previewUri,
-        key2 = evidence.previewRect,
-        key3 = capturedPhotoUris,
-    ) {
-        value = withContext(Dispatchers.IO) {
-            loadEvidenceBitmap(
-                previewUri = evidence.previewUri,
-                previewRect = evidence.previewRect,
-                capturedPhotoUris = capturedPhotoUris,
-                targetSizePx = evidenceTargetPx,
-            )
-        }
-    }
-
-    ElevatedCard(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 12.dp),
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.label_label_evidence),
-                style = MaterialTheme.typography.titleMedium,
-            )
-            Text(
-                text = evidence.localizedSummaryLabel(),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            // Reserve 120dp height while the bitmap decodes asynchronously so
-            // the card doesn't pop into a different size when it arrives.
-            val previewModifier = Modifier
-                .fillMaxWidth()
-                .height(120.dp)
-                .clip(MaterialTheme.shapes.medium)
-            val hasPreviewSource = evidence.previewUri != null ||
-                !capturedPhotoUris.isNullOrBlank()
-            if (hasPreviewSource) {
-                evidenceBitmap?.let { bitmap ->
-                    Image(
-                        bitmap = bitmap.asImageBitmap(),
-                        contentDescription = stringResource(R.string.label_detected_field_evidence),
-                        modifier = previewModifier,
-                        contentScale = ContentScale.Crop,
-                    )
-                } ?: Spacer(modifier = previewModifier)
-            }
-            evidence.supportingText?.let { text ->
-                Text(
-                    text = text,
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun BagFieldEvidence.localizedSummaryLabel(): String {
-    val sourceLabel = stringResource(
-        when (sourceType) {
-            BagFieldSourceType.OCR -> R.string.evidence_from_label
-            BagFieldSourceType.CONSENSUS -> R.string.evidence_confirmed_on_label
-            BagFieldSourceType.QR_LINK_LOOKUP -> R.string.evidence_from_qr_website
-            BagFieldSourceType.OBSERVED_BARCODE_STEM -> R.string.evidence_from_label_code
-            BagFieldSourceType.LOCAL_BARCODE_MATCH -> R.string.evidence_from_saved_bag
-            BagFieldSourceType.BARCODE_LOOKUP -> R.string.evidence_from_barcode_lookup
-            BagFieldSourceType.LLM -> R.string.evidence_suggested_from_label_context
-        },
-    )
-    val sideLabel = side?.let { side ->
-        stringResource(
-            if (side == BagCaptureSide.FRONT) {
-                R.string.evidence_front_photo
-            } else {
-                R.string.evidence_back_photo
-            },
-        )
-    }
-    val reviewLabel = if (confidence == BagFieldConfidence.HIGH) {
-        null
-    } else {
-        stringResource(R.string.label_needs_review)
-    }
-    return listOfNotNull(sourceLabel, sideLabel, reviewLabel).joinToString(" · ")
-}
-
-private fun loadEvidenceBitmap(
-    previewUri: String?,
-    previewRect: com.adsamcik.starlitcoffee.util.BagPhotoRect?,
-    capturedPhotoUris: String?,
-    targetSizePx: Int,
-): Bitmap? {
-    val candidateUri = previewUri ?: capturedPhotoUris?.split(",")?.firstOrNull()?.trim()
-    val path = candidateUri?.let { it.toUri().path } ?: return null
-
-    // Estimate the source resolution we need to decode so the cropped result
-    // still has at least targetSizePx on its longest side. If we always picked
-    // targetSizePx for downsampling, a 25%-area crop would render at quarter
-    // resolution. ThumbnailLoader's inSampleSize is a power of two, so a 2x
-    // safety factor is plenty for typical bag-label crops.
-    val cropScale = previewRect?.let {
-        val w = (it.rightFraction - it.leftFraction).coerceAtLeast(0.05f)
-        val h = (it.bottomFraction - it.topFraction).coerceAtLeast(0.05f)
-        1f / maxOf(w, h)
-    } ?: 1f
-    val decodeTargetPx = (targetSizePx * cropScale).toInt().coerceAtLeast(1)
-
-    val rotated = ThumbnailLoader.loadThumbnail(path, decodeTargetPx) ?: return null
-    if (previewRect == null) return rotated
-
-    val left = (rotated.width * previewRect.leftFraction).toInt().coerceIn(0, rotated.width - 1)
-    val top = (rotated.height * previewRect.topFraction).toInt().coerceIn(0, rotated.height - 1)
-    val right = (rotated.width * previewRect.rightFraction).toInt().coerceIn(left + 1, rotated.width)
-    val bottom = (rotated.height * previewRect.bottomFraction).toInt().coerceIn(top + 1, rotated.height)
-    val cropWidth = (right - left).coerceAtLeast(1)
-    val cropHeight = (bottom - top).coerceAtLeast(1)
-    return Bitmap.createBitmap(rotated, left, top, cropWidth, cropHeight)
 }

@@ -378,21 +378,11 @@
     <string name="label_tasting_notes">Notas de cata</string>
     <string name="label_best_before">Consumir preferentemente antes de</string>
     <string name="label_decaf_coffee">Café descafeinado</string>
-    <string name="msg_decaf_guidance">Mantiene la guía de preparación sincronizada con granos descafeinados y objetivos de infusión más cortos.</string>
     <string name="msg_decaf_grind_adjustment">Se ha seleccionado descafeinado. La recomendación de molienda de abajo se ajusta a un punto más grueso cuando este método se beneficia de ello.</string>
-    <string name="label_decaf_process_optional">Proceso de descafeinado (opcional)</string>
-    <string name="msg_decaf_process_hint">Permite que la regla de preparación ajuste suavemente la molienda: los descafeinados por proceso de agua y CO₂ suelen necesitar menos ajuste hacia grueso que los de proceso con solvente.</string>
-<string name="label_detected_details">Detalles detectados</string>
-    <string name="msg_tap_chip_to_edit">Toca cualquier chip para editar</string>
-    <string name="label_needs_review">Requiere revisión</string>
-<string name="action_edit_all_fields">Editar todos los campos</string>
-    <string name="action_add_more_details">Añadir más detalles</string>
-    <string name="label_review_fields">Revisa estos campos</string>
     <string name="label_qr_website">Web del QR</string>
     <string name="action_open_website">Abrir sitio web</string>
     <string name="label_qr_link_found">Enlace QR encontrado</string>
 <string name="action_explore_extract">Explorar &amp; extraer</string>
-    <string name="label_detected_field_evidence">Evidencia de campo detectada</string>
 
     <!-- BagCard / BagDetailSheet / ShareableBrewCard -->
     <string name="cd_bag_photo">Foto de bolsa</string>
@@ -626,12 +616,10 @@
     <string name="guided_scan_auto_on">Auto activado</string>
     <string name="guided_scan_auto_off">Auto desactivado</string>
     <string name="guided_scan_capture">Tomar foto</string>
-    <string name="guided_scan_scan_more">Escanear más fotos</string>
     <string name="scan_warn_glare">Reduce el reflejo</string>
     <string name="scan_warn_lighting">Mejora la iluminación</string>
     <string name="cd_remove_photo">Quitar foto</string>
     <string name="msg_bag_saved">Bolsa guardada</string>
-    <string name="msg_could_not_save_bag">No se pudo guardar la bolsa</string>
     <string name="msg_could_not_open_app_store">No se pudo abrir la tienda de aplicaciones.</string>
     <string name="msg_could_not_save_changes">No se pudieron guardar los cambios</string>
     <string name="msg_could_not_delete">No se pudo eliminar. Inténtalo de nuevo.</string>

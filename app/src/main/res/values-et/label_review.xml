@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_review_not_set">Määramata</string>
+    <string name="label_review_check">Kontrolli</string>
+    <string name="action_review_edit">Muuda</string>
+    <string name="action_review_keep_mine">Säilita minu väärtus</string>
+    <string name="action_review_leave_blank">Jäta tühjaks</string>
+    <string name="msg_review_source_unavailable">Algfoto pole saadaval. Muuda andmeid või lisa teine foto.</string>
+    <string name="msg_review_check_label">Kontrolli neid andmeid etiketilt.</string>
+    <string name="action_review_use_reading">Kasuta tuvastatud andmeid</string>
+    <string name="label_review_source">Allikas</string>
+    <string name="msg_review_name_required">Sisesta kohvi nimi.</string>
+    <string name="action_review_retry_save">Proovi uuesti salvestada</string>
+    <string name="msg_review_save_failed">Kohvi ei salvestatud. Proovi uuesti.</string>
+    <string name="msg_review_photo_save_failed">Etiketi fotot ei saanud salvestada. Proovi uuesti.</string>
+    <string name="label_review_source_notes">Etiketi andmed</string>
+    <string name="format_review_more_details">Veel andmeid · kontrollida: %1$d</string>
+    <string name="msg_review_qr_details">Andmed allikast %1$s</string>
+    <string name="action_review_add_photo">Lisa foto</string>
+    <string name="label_review_saving">Salvestamine…</string>
+    <string name="label_review_not_decaf">Kofeiiniga</string>
+    <string name="msg_review_qr_approval">Kas laadida kohvi andmed sellelt veebisaidilt?</string>
+</resources>
