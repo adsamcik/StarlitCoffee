@@ -114,10 +114,12 @@ internal fun LiveBrewGuidance(
     equipmentProfileId: String? = null,
     targetCue: BrewStageReferenceCuePresentation? = null,
     minimal: Boolean = false,
+    showSupportingCopy: Boolean = true,
 ) {
     val selection = selectLiveBrewGuidance(resolution, equipmentProfileId, minimal)
     val primary = selection.primary
-    val showInstruction = !minimal || primary?.safetyCritical == true
+    val showInstruction = showSupportingCopy && (!minimal || primary?.safetyCritical == true)
+    val showAvailability = showSupportingCopy && !minimal
     val primaryTarget = primary?.target?.takeIf(String::isNotBlank)
     val approvedAsset = (resolution.visualStatus as? DurableBrewGuidanceVisualStatus.Approved)?.asset
     Column(
@@ -148,7 +150,7 @@ internal fun LiveBrewGuidance(
                 Icon(Icons.AutoMirrored.Outlined.HelpOutline, contentDescription = stringResource(R.string.action_brew_help))
             }
         }
-        if (!minimal && primary == null && resolution.availability !is DurableBrewGuidanceAvailability.Available) {
+        if (showAvailability && primary == null && resolution.availability !is DurableBrewGuidanceAvailability.Available) {
             Text(
                 stringResource(R.string.msg_brew_guidance_unavailable),
                 style = MaterialTheme.typography.bodyMedium,
@@ -181,7 +183,7 @@ internal fun LiveBrewGuidance(
                 }
             }
         }
-        LiveBrewSafetyCopy(selection, equipmentProfileId)
+        if (showSupportingCopy) LiveBrewSafetyCopy(selection, equipmentProfileId)
     }
 }
 
@@ -284,7 +286,5 @@ private fun PulsarWaterHeightTarget(modifier: Modifier = Modifier) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
-        Text(stringResource(R.string.msg_brew_pulsar_pause_high), style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.align(Alignment.CenterHorizontally))
     }
 }

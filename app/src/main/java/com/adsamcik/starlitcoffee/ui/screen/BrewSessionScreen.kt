@@ -613,6 +613,9 @@ fun BrewSessionScreen(
                     )
                 }
                 availablePresentation.currentStage?.let { stage ->
+                    if (stage.isFocusedPour(persistedRecipe?.brewerProfileId)) {
+                        BrewSessionSafety(availablePresentation.safetyMessages)
+                    }
                     BrewSessionReferenceCues(sessionId, stage.referenceCues)
                 }
                 TextButton(onClick = { showHelp = false }) { Text(stringResource(R.string.action_return_to_live_brew)) }
@@ -740,6 +743,7 @@ private fun BrewSessionContent(
     equipmentProfileId: String? = null,
 ) {
     val stage = presentation.currentStage
+    val pourFocus = stage.isFocusedPour(equipmentProfileId)
     val actionLabel = stage?.let { guideFacts[it.contentId]?.title ?: it.action.label() }.orEmpty()
     val progressLabel = presentation.stageProgress.currentStageNumber?.let { number ->
         stringResource(R.string.format_brew_stage_progress, number, presentation.stageProgress.totalStageCount)
@@ -780,7 +784,8 @@ private fun BrewSessionContent(
                         targetCue = primaryLiveBrewCue(stage?.referenceCues.orEmpty()),
                         minimal = presentation.isTimerOnly ||
                             (recipe?.calculatorSetup != null && runtime?.physicalClock == null) ||
-                            guidanceResolution.policy?.level == GuidancePresentationLevel.UTILITIES_ONLY)
+                            guidanceResolution.policy?.level == GuidancePresentationLevel.UTILITIES_ONLY,
+                        showSupportingCopy = !pourFocus)
                 }
                 if (guidanceResolution == null) {
                     primaryLiveBrewCue(stage?.referenceCues.orEmpty())?.let {
@@ -794,8 +799,10 @@ private fun BrewSessionContent(
                         }
                     }
                 }
-                // Structured safety and the source's physical completion controls never move into Help.
-                BrewSessionSafety(presentation.safetyMessages)
+                // Pour details are in Help; critical safety and physical completion controls stay live.
+                BrewSessionSafety(presentation.safetyMessages.filter {
+                    !pourFocus || it.severity == StageSafetySeverity.CRITICAL
+                })
             }
             stage?.let { current -> BrewSessionStageCard(current, isDispatching, onDispatch) }
             if (presentation.userTimerRemainingMillis == 0L) {
@@ -807,6 +814,11 @@ private fun BrewSessionContent(
             }
         }
     }
+}
+
+private fun CurrentBrewStagePresentation?.isFocusedPour(equipmentProfileId: String?): Boolean {
+    if (this == null) return false
+    return action == BrewStageAction.POUR || hasPulsarWaterHeightTarget(contentId, equipmentProfileId)
 }
 
 @Composable
