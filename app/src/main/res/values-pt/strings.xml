@@ -242,8 +242,7 @@
     <string name="msg_settings_subtitle">Métodos, moinho e preferências</string>
 
     <!-- Barcode Scanner Screen -->
-    <string name="msg_camera_permission">É necessária permissão da câmara para ler códigos de barras</string>
-    <string name="msg_point_camera">Aponte a câmara ao código de barras</string>
+    <string name="msg_point_camera">Código de barras ou código QR</string>
 
     <!-- Snackbar / notifications -->
     <string name="snackbar_brew_saved">Preparação guardada! Avalie-a depois de provar.</string>
@@ -456,8 +455,6 @@
     <string name="label_remaining_weight_grams">Peso restante (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_scan_label">Ler rótulo</string>
-    <string name="action_add_bag_barcode">Ler código de barras</string>
     <string name="action_add_bag_manual">Adicionar manualmente</string>
     <string name="msg_no_beans_yet">Ainda sem grãos</string>
     <string name="action_brew_now">Preparar agora</string>
@@ -475,8 +472,6 @@
     <string name="msg_discard_changes_body">As alterações não guardadas serão perdidas.</string>
     <string name="action_discard">Descartar</string>
     <string name="action_keep_scanning">Continuar a ler</string>
-    <string name="msg_camera_permission_required">Permissão da câmara necessária</string>
-    <string name="screen_scan_bag_title">Ler embalagem de café</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Sincronizar com a embalagem</string>
@@ -606,12 +601,8 @@
     <string name="process_double_fermented">Dupla fermentação</string>
     <string name="process_thermal_shock">Choque térmico</string>
     <!-- Guided bag scan -->
-    <string name="guided_scan_aim_front">Centre a frente da embalagem no enquadramento</string>
-    <string name="guided_scan_aim_back">Agora leia o verso da embalagem</string>
     <string name="guided_scan_aim_more">Adicionar outra foto (opcional)</string>
     <string name="guided_scan_hold_steady">Mantenha firme…</string>
-    <string name="guided_scan_skip_photos">Ignorar fotos</string>
-    <string name="guided_scan_finished">Concluído</string>
     <string name="guided_scan_auto_on">Auto ligado</string>
     <string name="guided_scan_auto_off">Auto desligado</string>
     <string name="guided_scan_capture">Captar foto</string>

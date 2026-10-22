@@ -766,8 +766,7 @@ fun StarlitNavHost() {
                     }
                     BagInventoryScreen(
                         brewViewModel = brewViewModel,
-                        onNavigateToCamera = { navController.navigate(GuidedScan) },
-                        onNavigateToBarcode = { navController.navigate(BarcodeScanner) },
+                        onNavigateToScan = { navController.navigate(GuidedScan) },
                         onBack = { navController.popBackStack() },
                         onNavigateToBrewWithBag = { bagId ->
                             brewViewModel.selectBagForBrewing(bagId)

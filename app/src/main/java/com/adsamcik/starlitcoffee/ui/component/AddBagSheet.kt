@@ -212,7 +212,6 @@ fun AddBagSheet(
         expiryDate: Long?,
     ) -> Unit,
     onEdit: ((CoffeeBagEntity) -> Unit)? = null,
-    onScanBarcode: (() -> Unit)? = null,
     onExploreQrUrl: ((String, (QrCoffeeMetadata?) -> Unit) -> Unit)? = null,
     onRetryLlmEnrichment: (() -> Unit)? = null,
     onEnableAi: (() -> Unit)? = null,
@@ -806,11 +805,6 @@ fun AddBagSheet(
                                     field.suggestions, multiValue = field.multiValue, singleLine = field.key != "notes", enabled = !isSaving,
                                     filled = true, showLabel = false,
                                     onFocusChanged = { reportFocus(field.key, it) })
-                                if (field.key == "barcode" && onScanBarcode != null) {
-                                    TextButton(onClick = { requestPotentiallyDestructiveAction(onScanBarcode) }, enabled = !isSaving) {
-                                        Text(stringResource(R.string.action_scan_barcode))
-                                    }
-                                }
                             }
                         }
                         item(key = "expiryDate") {

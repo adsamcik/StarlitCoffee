@@ -241,8 +241,7 @@
     <string name="msg_settings_subtitle">Μέθοδοι, μύλος και προτιμήσεις</string>
 
     <!-- Barcode Scanner Screen -->
-    <string name="msg_camera_permission">Απαιτείται άδεια κάμερας για σάρωση barcode</string>
-    <string name="msg_point_camera">Στρέψτε την κάμερα στο barcode</string>
+    <string name="msg_point_camera">Γραμμωτός κώδικας ή κωδικός QR</string>
 
     <!-- Snackbar / notifications -->
     <string name="snackbar_brew_saved">Η παρασκευή αποθηκεύτηκε! Αξιολογήστε τη αφού τη δοκιμάσετε.</string>
@@ -455,8 +454,6 @@
     <string name="label_remaining_weight_grams">Βάρος που απομένει (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_scan_label">Σάρωση ετικέτας</string>
-    <string name="action_add_bag_barcode">Σάρωση barcode</string>
     <string name="action_add_bag_manual">Χειροκίνητη προσθήκη</string>
     <string name="msg_no_beans_yet">Δεν υπάρχουν ακόμα κόκκοι</string>
     <string name="action_brew_now">Παρασκευή τώρα</string>
@@ -474,8 +471,6 @@
     <string name="msg_discard_changes_body">Οι μη αποθηκευμένες αλλαγές σας θα χαθούν.</string>
     <string name="action_discard">Απόρριψη</string>
     <string name="action_keep_scanning">Συνέχιση σάρωσης</string>
-    <string name="msg_camera_permission_required">Απαιτείται άδεια κάμερας</string>
-    <string name="screen_scan_bag_title">Σάρωση συσκευασίας καφέ</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Συγχρονισμός με συσκευασία</string>
@@ -605,12 +600,8 @@
     <string name="process_double_fermented">Double Fermented</string>
     <string name="process_thermal_shock">Thermal Shock</string>
     <!-- Guided bag scan -->
-    <string name="guided_scan_aim_front">Κεντράρετε την μπροστινή πλευρά της συσκευασίας στο κάδρο</string>
-    <string name="guided_scan_aim_back">Τώρα σαρώστε την πίσω πλευρά της συσκευασίας</string>
     <string name="guided_scan_aim_more">Προσθέστε άλλη μία φωτογραφία (προαιρετικά)</string>
     <string name="guided_scan_hold_steady">Κρατήστε σταθερά…</string>
-    <string name="guided_scan_skip_photos">Παράλειψη φωτογραφιών</string>
-    <string name="guided_scan_finished">Ολοκληρώθηκε</string>
     <string name="guided_scan_auto_on">Αυτόματο ενεργό</string>
     <string name="guided_scan_auto_off">Αυτόματο ανενεργό</string>
     <string name="guided_scan_capture">Λήψη φωτογραφίας</string>

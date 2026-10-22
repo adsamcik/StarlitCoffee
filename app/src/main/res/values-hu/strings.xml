@@ -241,8 +241,7 @@
     <string name="msg_settings_subtitle">Módszerek, daráló és beállítások</string>
 
     <!-- Barcode Scanner Screen -->
-    <string name="msg_camera_permission">A vonalkódok beolvasásához kameraengedély szükséges</string>
-    <string name="msg_point_camera">Irányítsa a kamerát a vonalkódra</string>
+    <string name="msg_point_camera">Vonalkód vagy QR-kód</string>
 
     <!-- Snackbar / notifications -->
     <string name="snackbar_brew_saved">Főzés mentve! Értékelje, miután megkóstolta.</string>
@@ -455,8 +454,6 @@
     <string name="label_remaining_weight_grams">Megmaradt tömeg (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_scan_label">Címke beolvasása</string>
-    <string name="action_add_bag_barcode">Vonalkód beolvasása</string>
     <string name="action_add_bag_manual">Kézi hozzáadás</string>
     <string name="msg_no_beans_yet">Még nincs kávé</string>
     <string name="action_brew_now">Főzés most</string>
@@ -474,8 +471,6 @@
     <string name="msg_discard_changes_body">A nem mentett módosítások elvesznek.</string>
     <string name="action_discard">Elvetés</string>
     <string name="action_keep_scanning">Beolvasás folytatása</string>
-    <string name="msg_camera_permission_required">Kameraengedély szükséges</string>
-    <string name="screen_scan_bag_title">Kávézacskó beolvasása</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Szinkronizálás a zacskóval</string>
@@ -605,12 +600,8 @@
     <string name="process_double_fermented">Kétszer erjesztett</string>
     <string name="process_thermal_shock">Hősokk</string>
     <!-- Guided bag scan -->
-    <string name="guided_scan_aim_front">Igazítsa a zacskó elejét a keret közepére</string>
-    <string name="guided_scan_aim_back">Most olvassa be a zacskó hátoldalát</string>
     <string name="guided_scan_aim_more">Adjon hozzá egy újabb fotót (nem kötelező)</string>
     <string name="guided_scan_hold_steady">Tartsa stabilan…</string>
-    <string name="guided_scan_skip_photos">Fotók kihagyása</string>
-    <string name="guided_scan_finished">Kész</string>
     <string name="guided_scan_auto_on">Automatikus be</string>
     <string name="guided_scan_auto_off">Automatikus ki</string>
     <string name="guided_scan_capture">Fotó készítése</string>

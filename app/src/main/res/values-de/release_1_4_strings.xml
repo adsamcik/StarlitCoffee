@@ -57,6 +57,5 @@
     <string name="format_notif_brew_target_reached_body">Das %1$s-Ziel Ihres Rezepts wurde erreicht. Tippen Sie, um den Sud zu überprüfen.</string>
     <string name="action_add_coffee">Kaffee hinzufügen</string>
     <string name="action_read_bag_photos">Taschenfotos lesen</string>
-    <string name="action_scan_first_bag">Scannen Sie meine erste Tasche</string>
     <string name="msg_scan_first_coffee_hint">Scannen Sie die Vorder- und Rückseite, um die Details automatisch einzugeben. Fotos bleiben auf Ihrem Gerät.</string>
 </resources>

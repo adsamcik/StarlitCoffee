@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_coffee">Digitalizar café</string>
+    <string name="msg_scan_coffee_aim">Rótulo, código de barras ou código QR</string>
+    <string name="msg_scan_capture_failed">Não foi possível tirar a foto. Tente novamente.</string>
+    <string name="msg_scan_code_not_found">Não foi encontrado nenhum código de café. Experimente outra foto.</string>
+    <string name="msg_scan_camera_unavailable">A câmara não está disponível. Escolha fotos para continuar.</string>
+    <string name="msg_scan_camera_permission">Permita o acesso à câmara para digitalizar café.</string>
+    <string name="action_allow_camera">Permitir câmara</string>
+    <string name="action_retry_camera">Tentar câmara novamente</string>
+    <string name="format_cd_scan_photo">Foto do café %1$d</string>
+    <string name="action_review_scan">Rever</string>
+</resources>

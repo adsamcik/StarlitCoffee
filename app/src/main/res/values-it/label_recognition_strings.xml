@@ -38,7 +38,6 @@
     <string name="action_save_coffee">Salva i dettagli del caffè</string>
     <string name="screen_add_coffee_title">Aggiungi il caffè</string>
     <string name="screen_edit_coffee_title">Modifica il caffè</string>
-    <string name="msg_camera_permission_alternatives">Puoi consentire l\'accesso alla fotocamera, scegliere le foto dell\'etichetta del sacchetto di caffè o inserire tu stesso i dettagli stampati sul sacchetto di caffè.</string>
     <string name="action_choose_photos">Scegli le foto</string>
     <string name="action_enter_manually">Inserisci manualmente</string>
     <string name="action_ok">Va bene</string>

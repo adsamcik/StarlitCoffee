@@ -57,6 +57,5 @@
     <string name="format_notif_brew_target_reached_body">Ο στόχος %1$s της συνταγής σας έχει επιτευχθεί. Πατήστε για να ελέγξετε την παρασκευή.</string>
     <string name="action_add_coffee">Προσθέστε καφέ</string>
     <string name="action_read_bag_photos">Διαβάστε φωτογραφίες της τσάντας</string>
-    <string name="action_scan_first_bag">Σαρώστε την πρώτη μου τσάντα</string>
     <string name="msg_scan_first_coffee_hint">Σαρώστε το μπροστινό και το πίσω μέρος για να συμπληρώσετε αυτόματα τις λεπτομέρειες. Οι φωτογραφίες παραμένουν στη συσκευή σας.</string>
 </resources>

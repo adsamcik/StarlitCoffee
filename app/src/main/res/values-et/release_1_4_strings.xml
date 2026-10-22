@@ -57,6 +57,5 @@
     <string name="format_notif_brew_target_reached_body">Teie retsepti %1$s eesmärk on saavutatud. Joogi kontrollimiseks puudutage.</string>
     <string name="action_add_coffee">Lisa kohv</string>
     <string name="action_read_bag_photos">Lugege koti fotosid</string>
-    <string name="action_scan_first_bag">Skaneeri mu esimene kott</string>
     <string name="msg_scan_first_coffee_hint">Skannige esi- ja tagakülg, et andmed automaatselt täita. Fotod jäävad teie seadmesse.</string>
 </resources>

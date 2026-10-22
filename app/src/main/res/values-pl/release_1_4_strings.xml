@@ -57,6 +57,5 @@
     <string name="format_notif_brew_target_reached_body">Cel %1$s Twojego przepisu został osiągnięty. Stuknij, aby sprawdzić napar.</string>
     <string name="action_add_coffee">Dodaj kawę</string>
     <string name="action_read_bag_photos">Przeczytaj zdjęcia toreb</string>
-    <string name="action_scan_first_bag">Zeskanuj moją pierwszą torbę</string>
     <string name="msg_scan_first_coffee_hint">Zeskanuj przód i tył, aby automatycznie uzupełnić szczegóły. Zdjęcia pozostają na Twoim urządzeniu.</string>
 </resources>

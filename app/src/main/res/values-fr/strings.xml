@@ -242,8 +242,7 @@
     <string name="msg_settings_subtitle">Méthodes, moulin et préférences</string>
 
     <!-- Barcode Scanner Screen -->
-    <string name="msg_camera_permission">L\'autorisation de la caméra est nécessaire pour scanner les codes-barres</string>
-    <string name="msg_point_camera">Pointez la caméra vers le code-barres</string>
+    <string name="msg_point_camera">Code-barres ou code QR</string>
 
     <!-- Snackbar / notifications -->
     <string name="snackbar_brew_saved">Préparation enregistrée ! Notez-la après dégustation.</string>
@@ -456,8 +455,6 @@
     <string name="label_remaining_weight_grams">Poids restant (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_scan_label">Scanner l\'étiquette</string>
-    <string name="action_add_bag_barcode">Scanner le code-barres</string>
     <string name="action_add_bag_manual">Ajouter manuellement</string>
     <string name="msg_no_beans_yet">Aucun grain pour le moment</string>
     <string name="action_brew_now">Préparer maintenant</string>
@@ -475,8 +472,6 @@
     <string name="msg_discard_changes_body">Vos modifications non enregistrées seront perdues.</string>
     <string name="action_discard">Abandonner</string>
     <string name="action_keep_scanning">Continuer le scan</string>
-    <string name="msg_camera_permission_required">Autorisation de la caméra requise</string>
-    <string name="screen_scan_bag_title">Scanner un paquet de café</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Synchroniser avec le paquet</string>
@@ -606,12 +601,8 @@
     <string name="process_double_fermented">Double fermentation</string>
     <string name="process_thermal_shock">Choc thermique</string>
     <!-- Guided bag scan -->
-    <string name="guided_scan_aim_front">Centrez l\'avant du sachet dans le cadre</string>
-    <string name="guided_scan_aim_back">Scannez maintenant l\'arrière du sachet</string>
     <string name="guided_scan_aim_more">Ajouter une autre photo (facultatif)</string>
     <string name="guided_scan_hold_steady">Restez stable…</string>
-    <string name="guided_scan_skip_photos">Ignorer les photos</string>
-    <string name="guided_scan_finished">Terminé</string>
     <string name="guided_scan_auto_on">Auto activé</string>
     <string name="guided_scan_auto_off">Auto désactivé</string>
     <string name="guided_scan_capture">Prendre une photo</string>

@@ -37,7 +37,6 @@
     <string name="action_save_coffee">Gem kaffedetaljer</string>
     <string name="screen_add_coffee_title">Tilsæt kaffe</string>
     <string name="screen_edit_coffee_title">Rediger kaffe</string>
-    <string name="msg_camera_permission_alternatives">Du kan tillade kameraadgang, vælge fotos af kaffeposens etiket eller selv indtaste detaljerne trykt på kaffeposen.</string>
     <string name="action_choose_photos">Vælg fotos</string>
     <string name="action_enter_manually">Indtast manuelt</string>
     <string name="action_ok">OK</string>

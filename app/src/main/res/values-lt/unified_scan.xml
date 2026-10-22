@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_coffee">Nuskaityti kavą</string>
+    <string name="msg_scan_coffee_aim">Etiketė, brūkšninis arba QR kodas</string>
+    <string name="msg_scan_capture_failed">Nepavyko nufotografuoti. Bandykite dar kartą.</string>
+    <string name="msg_scan_code_not_found">Kavos kodas nerastas. Išbandykite kitą nuotrauką.</string>
+    <string name="msg_scan_camera_unavailable">Kamera nepasiekiama. Norėdami tęsti, pasirinkite nuotraukas.</string>
+    <string name="msg_scan_camera_permission">Leiskite naudoti kamerą, kad galėtumėte nuskaityti kavą.</string>
+    <string name="action_allow_camera">Leisti naudoti kamerą</string>
+    <string name="action_retry_camera">Bandyti kamerą dar kartą</string>
+    <string name="format_cd_scan_photo">Kavos nuotrauka %1$d</string>
+    <string name="action_review_scan">Peržiūrėti</string>
+</resources>

@@ -57,6 +57,5 @@
     <string name="format_notif_brew_target_reached_body">ținta %1$s a rețetei dvs. a fost atinsă. Atingeți pentru a verifica prepararea.</string>
     <string name="action_add_coffee">Adăugați cafea</string>
     <string name="action_read_bag_photos">Citiți fotografiile din geantă</string>
-    <string name="action_scan_first_bag">Scanează-mi prima geantă</string>
     <string name="msg_scan_first_coffee_hint">Scanați partea din față și din spate pentru a completa automat detaliile. Fotografiile rămân pe dispozitivul dvs.</string>
 </resources>

@@ -242,8 +242,7 @@
     <string name="msg_settings_subtitle">Métodos, molinillo y preferencias</string>
 
     <!-- Barcode Scanner Screen -->
-    <string name="msg_camera_permission">Se requiere permiso de cámara para escanear códigos de barras</string>
-    <string name="msg_point_camera">Apunta la cámara al código de barras</string>
+    <string name="msg_point_camera">Código de barras o código QR</string>
 
     <!-- Snackbar / notifications -->
     <string name="snackbar_brew_saved">¡Preparación guardada! Valórala cuando la pruebes.</string>
@@ -456,8 +455,6 @@
     <string name="label_remaining_weight_grams">Peso restante (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_scan_label">Escanear etiqueta</string>
-    <string name="action_add_bag_barcode">Escanear código de barras</string>
     <string name="action_add_bag_manual">Añadir manualmente</string>
     <string name="msg_no_beans_yet">Aún no hay granos</string>
     <string name="action_brew_now">Preparar ahora</string>
@@ -475,8 +472,6 @@
     <string name="msg_discard_changes_body">Se perderán los cambios no guardados.</string>
     <string name="action_discard">Descartar</string>
     <string name="action_keep_scanning">Seguir escaneando</string>
-    <string name="msg_camera_permission_required">Permiso de cámara requerido</string>
-    <string name="screen_scan_bag_title">Escanear bolsa de café</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Sincronizar con bolsa</string>
@@ -606,12 +601,8 @@
     <string name="process_double_fermented">Doble fermentación</string>
     <string name="process_thermal_shock">Choque térmico</string>
     <!-- Guided bag scan -->
-    <string name="guided_scan_aim_front">Centra el frente de la bolsa en el marco</string>
-    <string name="guided_scan_aim_back">Ahora escanea el reverso de la bolsa</string>
     <string name="guided_scan_aim_more">Añadir otra foto (opcional)</string>
     <string name="guided_scan_hold_steady">Mantén firme…</string>
-    <string name="guided_scan_skip_photos">Omitir fotos</string>
-    <string name="guided_scan_finished">Listo</string>
     <string name="guided_scan_auto_on">Auto activado</string>
     <string name="guided_scan_auto_off">Auto desactivado</string>
     <string name="guided_scan_capture">Tomar foto</string>

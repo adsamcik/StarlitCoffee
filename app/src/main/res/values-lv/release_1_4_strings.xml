@@ -57,6 +57,5 @@
     <string name="format_notif_brew_target_reached_body">Jūsu receptes %1$s mērķis ir sasniegts. Pieskarieties, lai pārbaudītu dzērienu.</string>
     <string name="action_add_coffee">Pievieno kafiju</string>
     <string name="action_read_bag_photos">Lasīt somas fotogrāfijas</string>
-    <string name="action_scan_first_bag">Noskenējiet manu pirmo somu</string>
     <string name="msg_scan_first_coffee_hint">Skenējiet priekšpusi un aizmuguri, lai automātiski aizpildītu informāciju. Fotoattēli paliek jūsu ierīcē.</string>
 </resources>

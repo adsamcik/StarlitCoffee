@@ -57,6 +57,5 @@
     <string name="format_notif_brew_target_reached_body">Целта на вашата рецепта %1$s е достигната. Докоснете, за да проверите напитката.</string>
     <string name="action_add_coffee">Добавете кафе</string>
     <string name="action_read_bag_photos">Прочетете снимки на чанти</string>
-    <string name="action_scan_first_bag">Сканирайте първата ми чанта</string>
     <string name="msg_scan_first_coffee_hint">Сканирайте предната и задната страна, за да попълните автоматично подробностите. Снимките остават на вашето устройство.</string>
 </resources>

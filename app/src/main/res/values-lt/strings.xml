@@ -243,8 +243,7 @@
     <string name="msg_settings_subtitle">Būdai, malūnėlis ir nuostatos</string>
 
     <!-- Barcode Scanner Screen -->
-    <string name="msg_camera_permission">Norint nuskaityti brūkšninius kodus, reikalingas kameros leidimas</string>
-    <string name="msg_point_camera">Nukreipkite kamerą į brūkšninį kodą</string>
+    <string name="msg_point_camera">Brūkšninis arba QR kodas</string>
 
     <!-- Snackbar / notifications -->
     <string name="snackbar_brew_saved">Plikymas išsaugotas! Įvertinkite jį paragavę.</string>
@@ -457,8 +456,6 @@
     <string name="label_remaining_weight_grams">Likęs svoris (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_scan_label">Nuskaityti etiketę</string>
-    <string name="action_add_bag_barcode">Nuskaityti brūkšninį kodą</string>
     <string name="action_add_bag_manual">Pridėti rankiniu būdu</string>
     <string name="msg_no_beans_yet">Kol kas nėra pupelių</string>
     <string name="action_brew_now">Plikyti dabar</string>
@@ -476,8 +473,6 @@
     <string name="msg_discard_changes_body">Neišsaugoti pakeitimai bus prarasti.</string>
     <string name="action_discard">Atmesti</string>
     <string name="action_keep_scanning">Tęsti nuskaitymą</string>
-    <string name="msg_camera_permission_required">Reikalingas kameros leidimas</string>
-    <string name="screen_scan_bag_title">Nuskaityti kavos pakuotę</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Sinchronizuoti su pakuote</string>
@@ -607,12 +602,8 @@
     <string name="process_double_fermented">Dvigubai fermentuotas</string>
     <string name="process_thermal_shock">Terminis šokas</string>
     <!-- Guided bag scan -->
-    <string name="guided_scan_aim_front">Laikykite priekinę pakuotės pusę kadro centre</string>
-    <string name="guided_scan_aim_back">Dabar nuskaitykite galinę pakuotės pusę</string>
     <string name="guided_scan_aim_more">Pridėkite dar vieną nuotrauką (nebūtina)</string>
     <string name="guided_scan_hold_steady">Laikykite ramiai…</string>
-    <string name="guided_scan_skip_photos">Praleisti nuotraukas</string>
-    <string name="guided_scan_finished">Baigta</string>
     <string name="guided_scan_auto_on">Auto įjungta</string>
     <string name="guided_scan_auto_off">Auto išjungta</string>
     <string name="guided_scan_capture">Fotografuoti</string>

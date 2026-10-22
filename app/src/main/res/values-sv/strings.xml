@@ -241,8 +241,7 @@
     <string name="msg_settings_subtitle">Metoder, kvarn och preferenser</string>
 
     <!-- Barcode Scanner Screen -->
-    <string name="msg_camera_permission">Kamerabehörighet krävs för att skanna streckkoder</string>
-    <string name="msg_point_camera">Rikta kameran mot streckkoden</string>
+    <string name="msg_point_camera">Streckkod eller QR-kod</string>
 
     <!-- Snackbar / notifications -->
     <string name="snackbar_brew_saved">Bryggningen sparad! Betygsätt den när du har smakat.</string>
@@ -455,8 +454,6 @@
     <string name="label_remaining_weight_grams">Återstående vikt (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_scan_label">Skanna etikett</string>
-    <string name="action_add_bag_barcode">Skanna streckkod</string>
     <string name="action_add_bag_manual">Lägg till manuellt</string>
     <string name="msg_no_beans_yet">Inga bönor än</string>
     <string name="action_brew_now">Brygg nu</string>
@@ -474,8 +471,6 @@
     <string name="msg_discard_changes_body">Dina osparade ändringar går förlorade.</string>
     <string name="action_discard">Kasta</string>
     <string name="action_keep_scanning">Fortsätt skanna</string>
-    <string name="msg_camera_permission_required">Kamerabehörighet krävs</string>
-    <string name="screen_scan_bag_title">Skanna kaffepåse</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Synka till påse</string>
@@ -605,12 +600,8 @@
     <string name="process_double_fermented">Dubbeljäst</string>
     <string name="process_thermal_shock">Thermal shock</string>
     <!-- Guided bag scan -->
-    <string name="guided_scan_aim_front">Centrera påsens framsida i bilden</string>
-    <string name="guided_scan_aim_back">Skanna nu påsens baksida</string>
     <string name="guided_scan_aim_more">Lägg till ett foto till (valfritt)</string>
     <string name="guided_scan_hold_steady">Håll stilla…</string>
-    <string name="guided_scan_skip_photos">Hoppa över foton</string>
-    <string name="guided_scan_finished">Klar</string>
     <string name="guided_scan_auto_on">Auto på</string>
     <string name="guided_scan_auto_off">Auto av</string>
     <string name="guided_scan_capture">Ta foto</string>

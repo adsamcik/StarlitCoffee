@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_coffee">Scansiona caffè</string>
+    <string name="msg_scan_coffee_aim">Etichetta, codice a barre o codice QR</string>
+    <string name="msg_scan_capture_failed">Impossibile scattare la foto. Riprova.</string>
+    <string name="msg_scan_code_not_found">Nessun codice del caffè trovato. Prova un\'altra foto.</string>
+    <string name="msg_scan_camera_unavailable">Fotocamera non disponibile. Scegli delle foto per continuare.</string>
+    <string name="msg_scan_camera_permission">Consenti l\'accesso alla fotocamera per scansionare il caffè.</string>
+    <string name="action_allow_camera">Consenti fotocamera</string>
+    <string name="action_retry_camera">Riprova la fotocamera</string>
+    <string name="format_cd_scan_photo">Foto del caffè %1$d</string>
+    <string name="action_review_scan">Rivedi</string>
+</resources>

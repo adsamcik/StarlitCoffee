@@ -39,7 +39,6 @@
     <string name="action_save_coffee">Išsaugokite kavos informaciją</string>
     <string name="screen_add_coffee_title">Įpilkite kavos</string>
     <string name="screen_edit_coffee_title">Redaguoti kavą</string>
-    <string name="msg_camera_permission_alternatives">Galite leisti prieiti prie kameros, pasirinkti kavos maišelio etiketės nuotraukas arba patys įvesti ant kavos maišelio atspausdintus duomenis.</string>
     <string name="action_choose_photos">Pasirinkite nuotraukas</string>
     <string name="action_enter_manually">Įveskite rankiniu būdu</string>
     <string name="action_ok">Gerai</string>

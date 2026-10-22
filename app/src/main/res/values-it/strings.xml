@@ -242,8 +242,7 @@
     <string name="msg_settings_subtitle">Metodi, macinacaffè e preferenze</string>
 
     <!-- Barcode Scanner Screen -->
-    <string name="msg_camera_permission">È necessaria l\'autorizzazione della fotocamera per scansionare codici a barre</string>
-    <string name="msg_point_camera">Punta la fotocamera sul codice a barre</string>
+    <string name="msg_point_camera">Codice a barre o codice QR</string>
 
     <!-- Snackbar / notifications -->
     <string name="snackbar_brew_saved">Preparazione salvata! Valutala dopo l\'assaggio.</string>
@@ -456,8 +455,6 @@
     <string name="label_remaining_weight_grams">Peso rimanente (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_scan_label">Scansiona etichetta</string>
-    <string name="action_add_bag_barcode">Scansiona codice a barre</string>
     <string name="action_add_bag_manual">Aggiungi manualmente</string>
     <string name="msg_no_beans_yet">Ancora nessun chicco</string>
     <string name="action_brew_now">Prepara ora</string>
@@ -475,8 +472,6 @@
     <string name="msg_discard_changes_body">Le modifiche non salvate andranno perse.</string>
     <string name="action_discard">Scarta</string>
     <string name="action_keep_scanning">Continua scansione</string>
-    <string name="msg_camera_permission_required">Autorizzazione fotocamera richiesta</string>
-    <string name="screen_scan_bag_title">Scansiona confezione di caffè</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Sincronizza con confezione</string>
@@ -606,12 +601,8 @@
     <string name="process_double_fermented">Doppia fermentazione</string>
     <string name="process_thermal_shock">Shock termico</string>
     <!-- Guided bag scan -->
-    <string name="guided_scan_aim_front">Centra il fronte del sacchetto nel riquadro</string>
-    <string name="guided_scan_aim_back">Ora scansiona il retro del sacchetto</string>
     <string name="guided_scan_aim_more">Aggiungi un\'altra foto (facoltativo)</string>
     <string name="guided_scan_hold_steady">Tieni fermo…</string>
-    <string name="guided_scan_skip_photos">Salta le foto</string>
-    <string name="guided_scan_finished">Fatto</string>
     <string name="guided_scan_auto_on">Auto attivo</string>
     <string name="guided_scan_auto_off">Auto disattivo</string>
     <string name="guided_scan_capture">Scatta foto</string>

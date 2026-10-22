@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Unified coffee scan** — one camera reads labels, barcodes and QR codes, with
+  photo import available from the same scan screen and manual entry close at hand.
 - **Coffee-label review** — edit the coffee name and roaster directly, expand
   individual details beside their source photo, and choose uncertain readings
   explicitly. Connected warm field groups, readable source excerpts and localized

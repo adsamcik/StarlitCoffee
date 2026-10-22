@@ -57,6 +57,5 @@
     <string name="format_notif_brew_target_reached_body">Jūsų recepto %1$s tikslas pasiektas. Palieskite, kad patikrintumėte virimą.</string>
     <string name="action_add_coffee">Įpilkite kavos</string>
     <string name="action_read_bag_photos">Skaitykite krepšio nuotraukas</string>
-    <string name="action_scan_first_bag">Nuskaitykite mano pirmąjį krepšį</string>
     <string name="msg_scan_first_coffee_hint">Nuskaitykite priekinę ir galinę dalį, kad automatiškai užpildytumėte išsamią informaciją. Nuotraukos lieka jūsų įrenginyje.</string>
 </resources>

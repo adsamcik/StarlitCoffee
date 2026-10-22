@@ -37,7 +37,6 @@
     <string name="action_save_coffee">Αποθηκεύστε τις λεπτομέρειες του καφέ</string>
     <string name="screen_add_coffee_title">Προσθέστε καφέ</string>
     <string name="screen_edit_coffee_title">Επεξεργασία καφέ</string>
-    <string name="msg_camera_permission_alternatives">Μπορείτε να επιτρέψετε την πρόσβαση στην κάμερα, να επιλέξετε φωτογραφίες της ετικέτας της τσάντας του καφέ ή να εισαγάγετε μόνοι σας τα στοιχεία που είναι τυπωμένα στο φακελάκι του καφέ.</string>
     <string name="action_choose_photos">Επιλέξτε φωτογραφίες</string>
     <string name="action_enter_manually">Εισαγάγετε χειροκίνητα</string>
     <string name="action_ok">ΟΚ</string>

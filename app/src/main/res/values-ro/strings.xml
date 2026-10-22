@@ -242,8 +242,7 @@
     <string name="msg_settings_subtitle">Metode, râșniță și preferințe</string>
 
     <!-- Barcode Scanner Screen -->
-    <string name="msg_camera_permission">Permisiunea pentru cameră este necesară pentru scanarea codurilor de bare</string>
-    <string name="msg_point_camera">Îndreptați camera spre codul de bare</string>
+    <string name="msg_point_camera">Cod de bare sau cod QR</string>
 
     <!-- Snackbar / notifications -->
     <string name="snackbar_brew_saved">Preparare salvată! Evaluați-o după degustare.</string>
@@ -456,8 +455,6 @@
     <string name="label_remaining_weight_grams">Greutate rămasă (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_scan_label">Scanați eticheta</string>
-    <string name="action_add_bag_barcode">Scanați codul de bare</string>
     <string name="action_add_bag_manual">Adăugați manual</string>
     <string name="msg_no_beans_yet">Încă nu aveți boabe</string>
     <string name="action_brew_now">Preparați acum</string>
@@ -475,8 +472,6 @@
     <string name="msg_discard_changes_body">Modificările nesalvate se vor pierde.</string>
     <string name="action_discard">Renunțați</string>
     <string name="action_keep_scanning">Continuați scanarea</string>
-    <string name="msg_camera_permission_required">Permisiunea pentru cameră este necesară</string>
-    <string name="screen_scan_bag_title">Scanați pachetul de cafea</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Sincronizați cu pachetul</string>
@@ -606,12 +601,8 @@
     <string name="process_double_fermented">Dublu fermentată</string>
     <string name="process_thermal_shock">Șoc termic</string>
     <!-- Guided bag scan -->
-    <string name="guided_scan_aim_front">Centrați partea din față a pachetului în cadru</string>
-    <string name="guided_scan_aim_back">Acum scanați spatele pachetului</string>
     <string name="guided_scan_aim_more">Adăugați încă o fotografie (opțional)</string>
     <string name="guided_scan_hold_steady">Țineți nemișcat…</string>
-    <string name="guided_scan_skip_photos">Omiteți fotografiile</string>
-    <string name="guided_scan_finished">Finalizat</string>
     <string name="guided_scan_auto_on">Auto pornit</string>
     <string name="guided_scan_auto_off">Auto oprit</string>
     <string name="guided_scan_capture">Capturați fotografia</string>

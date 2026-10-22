@@ -37,7 +37,6 @@
     <string name="action_save_coffee">Tallenna kahvin tiedot</string>
     <string name="screen_add_coffee_title">Lisää kahvi</string>
     <string name="screen_edit_coffee_title">Muokkaa kahvia</string>
-    <string name="msg_camera_permission_alternatives">Voit sallia kameran käytön, valita kuvia kahvipussin etiketistä tai syöttää itse kahvipussiin painetut tiedot.</string>
     <string name="action_choose_photos">Valitse valokuvat</string>
     <string name="action_enter_manually">Syötä manuaalisesti</string>
     <string name="action_ok">OK</string>

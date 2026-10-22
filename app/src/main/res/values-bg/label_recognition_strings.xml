@@ -37,7 +37,6 @@
     <string name="action_save_coffee">Запазете подробности за кафето</string>
     <string name="screen_add_coffee_title">Добавете кафе</string>
     <string name="screen_edit_coffee_title">Редактиране на кафе</string>
-    <string name="msg_camera_permission_alternatives">Можете да разрешите достъп до камерата, да изберете снимки на етикета на чантата за кафе или сами да въведете данните, отпечатани на чантата за кафе.</string>
     <string name="action_choose_photos">Изберете снимки</string>
     <string name="action_enter_manually">Въведете ръчно</string>
     <string name="action_ok">добре</string>

@@ -242,8 +242,7 @@
     <string name="msg_settings_subtitle">Metode, mlinac i postavke</string>
 
     <!-- Barcode Scanner Screen -->
-    <string name="msg_camera_permission">Za skeniranje crtičnih kodova potrebno je dopuštenje za kameru</string>
-    <string name="msg_point_camera">Usmjerite kameru prema crtičnom kodu</string>
+    <string name="msg_point_camera">Crtični kod ili QR kod</string>
 
     <!-- Snackbar / notifications -->
     <string name="snackbar_brew_saved">Priprema spremljena! Ocijenite je nakon kušanja.</string>
@@ -456,8 +455,6 @@
     <string name="label_remaining_weight_grams">Preostala težina (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_scan_label">Skenirajte etiketu</string>
-    <string name="action_add_bag_barcode">Skenirajte crtični kod</string>
     <string name="action_add_bag_manual">Dodajte ručno</string>
     <string name="msg_no_beans_yet">Još nema zrna</string>
     <string name="action_brew_now">Pripremite sada</string>
@@ -475,8 +472,6 @@
     <string name="msg_discard_changes_body">Nespremljene promjene bit će izgubljene.</string>
     <string name="action_discard">Odbacite</string>
     <string name="action_keep_scanning">Nastavite skeniranje</string>
-    <string name="msg_camera_permission_required">Potrebno je dopuštenje za kameru</string>
-    <string name="screen_scan_bag_title">Skeniranje vrećice kave</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Uskladite s vrećicom</string>
@@ -606,12 +601,8 @@
     <string name="process_double_fermented">Dvostruko fermentirana</string>
     <string name="process_thermal_shock">Termalni šok</string>
     <!-- Guided bag scan -->
-    <string name="guided_scan_aim_front">Centrirajte prednju stranu vrećice u okvir</string>
-    <string name="guided_scan_aim_back">Sada skenirajte stražnju stranu vrećice</string>
     <string name="guided_scan_aim_more">Dodajte još jednu fotografiju (neobavezno)</string>
     <string name="guided_scan_hold_steady">Držite mirno…</string>
-    <string name="guided_scan_skip_photos">Preskočite fotografije</string>
-    <string name="guided_scan_finished">Gotovo</string>
     <string name="guided_scan_auto_on">Auto uključeno</string>
     <string name="guided_scan_auto_off">Auto isključeno</string>
     <string name="guided_scan_capture">Snimite fotografiju</string>

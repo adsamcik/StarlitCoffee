@@ -236,8 +236,7 @@
     <string name="msg_settings_subtitle">Metody, mlýnek a předvolby</string>
 
     <!-- Barcode Scanner Screen -->
-    <string name="msg_camera_permission">Pro skenování čárových kódů je nutné povolení fotoaparátu</string>
-    <string name="msg_point_camera">Namiřte fotoaparát na čárový kód</string>
+    <string name="msg_point_camera">Čárový nebo QR kód</string>
 
     <!-- Snackbar / notifications -->
     <string name="snackbar_brew_saved">Příprava uložena! Ohodnoťte ji po ochutnání.</string>
@@ -484,8 +483,6 @@
     <string name="label_remaining_weight_grams">Zbývající hmotnost (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_scan_label">Naskenovat štítek</string>
-    <string name="action_add_bag_barcode">Naskenovat čárový kód</string>
     <string name="action_add_bag_manual">Přidat ručně</string>
     <string name="msg_no_beans_yet">Zatím žádná zrna</string>
     <string name="action_brew_now">Připravit nyní</string>
@@ -503,8 +500,6 @@
     <string name="msg_discard_changes_body">Neuložené změny budou ztraceny.</string>
     <string name="action_discard">Zahodit</string>
     <string name="action_keep_scanning">Pokračovat ve skenování</string>
-    <string name="msg_camera_permission_required">Vyžadováno oprávnění kamery</string>
-    <string name="screen_scan_bag_title">Skenovat balení kávy</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Synchronizovat s balením</string>
@@ -634,12 +629,8 @@
     <string name="process_double_fermented">Dvojitá fermentace</string>
     <string name="process_thermal_shock">Teplotní šok</string>
     <!-- Guided bag scan -->
-    <string name="guided_scan_aim_front">Vycentrujte přední stranu balení do rámečku</string>
-    <string name="guided_scan_aim_back">Nyní naskenujte zadní stranu balení</string>
     <string name="guided_scan_aim_more">Přidat další fotku (volitelné)</string>
     <string name="guided_scan_hold_steady">Držte v klidu…</string>
-    <string name="guided_scan_skip_photos">Přeskočit fotky</string>
-    <string name="guided_scan_finished">Hotovo</string>
     <string name="guided_scan_auto_on">Auto zapnuto</string>
     <string name="guided_scan_auto_off">Auto vypnuto</string>
     <string name="guided_scan_capture">Vyfotit</string>

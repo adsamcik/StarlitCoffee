@@ -38,7 +38,6 @@
     <string name="action_save_coffee">Saglabājiet informāciju par kafiju</string>
     <string name="screen_add_coffee_title">Pievieno kafiju</string>
     <string name="screen_edit_coffee_title">Rediģēt kafiju</string>
-    <string name="msg_camera_permission_alternatives">Varat atļaut piekļuvi kamerai, izvēlēties kafijas maisiņa etiķetes fotoattēlus vai pats ievadīt informāciju, kas uzdrukāta uz kafijas maisiņa.</string>
     <string name="action_choose_photos">Izvēlieties fotoattēlus</string>
     <string name="action_enter_manually">Ievadiet manuāli</string>
     <string name="action_ok">Labi</string>

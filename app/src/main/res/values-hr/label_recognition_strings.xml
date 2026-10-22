@@ -38,7 +38,6 @@
     <string name="action_save_coffee">Sačuvajte detalje kave</string>
     <string name="screen_add_coffee_title">Dodajte kavu</string>
     <string name="screen_edit_coffee_title">Uredi kavu</string>
-    <string name="msg_camera_permission_alternatives">Možete dopustiti pristup kameri, odabrati fotografije naljepnice vrećice za kavu ili sami unijeti detalje otisnute na vrećici za kavu.</string>
     <string name="action_choose_photos">Odaberite fotografije</string>
     <string name="action_enter_manually">Unesite ručno</string>
     <string name="action_ok">OK</string>

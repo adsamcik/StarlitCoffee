@@ -243,8 +243,7 @@
     <string name="msg_settings_subtitle">Metody, młynek i preferencje</string>
 
     <!-- Barcode Scanner Screen -->
-    <string name="msg_camera_permission">Do skanowania kodów kreskowych wymagane jest uprawnienie aparatu</string>
-    <string name="msg_point_camera">Skieruj aparat na kod kreskowy</string>
+    <string name="msg_point_camera">Kod kreskowy lub kod QR</string>
 
     <!-- Snackbar / notifications -->
     <string name="snackbar_brew_saved">Parzenie zapisane! Oceń je po spróbowaniu.</string>
@@ -456,8 +455,6 @@
     <string name="label_remaining_weight_grams">Pozostała masa (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_scan_label">Zeskanuj etykietę</string>
-    <string name="action_add_bag_barcode">Zeskanuj kod kreskowy</string>
     <string name="action_add_bag_manual">Dodaj ręcznie</string>
     <string name="msg_no_beans_yet">Nie masz jeszcze ziaren</string>
     <string name="action_brew_now">Zaparz teraz</string>
@@ -475,8 +472,6 @@
     <string name="msg_discard_changes_body">Niezapisane zmiany zostaną utracone.</string>
     <string name="action_discard">Odrzuć</string>
     <string name="action_keep_scanning">Skanuj dalej</string>
-    <string name="msg_camera_permission_required">Wymagane uprawnienie aparatu</string>
-    <string name="screen_scan_bag_title">Skanuj opakowanie kawy</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Zsynchronizuj z opakowaniem</string>
@@ -606,12 +601,8 @@
     <string name="process_double_fermented">Podwójna fermentacja</string>
     <string name="process_thermal_shock">Szok termiczny</string>
     <!-- Guided bag scan -->
-    <string name="guided_scan_aim_front">Wyśrodkuj przód opakowania w ramce</string>
-    <string name="guided_scan_aim_back">Teraz zeskanuj tył opakowania</string>
     <string name="guided_scan_aim_more">Dodaj kolejne zdjęcie (opcjonalnie)</string>
     <string name="guided_scan_hold_steady">Trzymaj stabilnie…</string>
-    <string name="guided_scan_skip_photos">Pomiń zdjęcia</string>
-    <string name="guided_scan_finished">Gotowe</string>
     <string name="guided_scan_auto_on">Auto wł.</string>
     <string name="guided_scan_auto_off">Auto wył.</string>
     <string name="guided_scan_capture">Zrób zdjęcie</string>

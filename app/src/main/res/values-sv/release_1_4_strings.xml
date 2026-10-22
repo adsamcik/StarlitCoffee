@@ -57,6 +57,5 @@
     <string name="format_notif_brew_target_reached_body">Ditt recepts %1$s-mål har uppnåtts. Tryck för att kontrollera bryggningen.</string>
     <string name="action_add_coffee">Tillsätt kaffe</string>
     <string name="action_read_bag_photos">Läs påsbilder</string>
-    <string name="action_scan_first_bag">Skanna min första väska</string>
     <string name="msg_scan_first_coffee_hint">Skanna fram- och baksidan för att fylla i detaljerna automatiskt. Foton stannar på din enhet.</string>
 </resources>

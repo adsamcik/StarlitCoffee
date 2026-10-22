@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_coffee">Skenēt kafiju</string>
+    <string name="msg_scan_coffee_aim">Etiķete, svītrkods vai QR kods</string>
+    <string name="msg_scan_capture_failed">Neizdevās uzņemt fotoattēlu. Mēģiniet vēlreiz.</string>
+    <string name="msg_scan_code_not_found">Kafijas kods nav atrasts. Izmēģiniet citu fotoattēlu.</string>
+    <string name="msg_scan_camera_unavailable">Kamera nav pieejama. Lai turpinātu, izvēlieties fotoattēlus.</string>
+    <string name="msg_scan_camera_permission">Atļaujiet piekļuvi kamerai, lai skenētu kafiju.</string>
+    <string name="action_allow_camera">Atļaut kameru</string>
+    <string name="action_retry_camera">Mēģināt kameru vēlreiz</string>
+    <string name="format_cd_scan_photo">Kafijas fotoattēls %1$d</string>
+    <string name="action_review_scan">Pārskatīt</string>
+</resources>

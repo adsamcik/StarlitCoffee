@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_coffee">Koffie scannen</string>
+    <string name="msg_scan_coffee_aim">Etiket, streepjescode of QR-code</string>
+    <string name="msg_scan_capture_failed">De foto kon niet worden gemaakt. Probeer het opnieuw.</string>
+    <string name="msg_scan_code_not_found">Geen koffiecode gevonden. Probeer een andere foto.</string>
+    <string name="msg_scan_camera_unavailable">Camera niet beschikbaar. Kies foto\'s om door te gaan.</string>
+    <string name="msg_scan_camera_permission">Geef toegang tot de camera om koffie te scannen.</string>
+    <string name="action_allow_camera">Camera toestaan</string>
+    <string name="action_retry_camera">Camera opnieuw proberen</string>
+    <string name="format_cd_scan_photo">Koffiefoto %1$d</string>
+    <string name="action_review_scan">Controleren</string>
+</resources>

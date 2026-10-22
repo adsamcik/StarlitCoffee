@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_coffee">Scanează cafeaua</string>
+    <string name="msg_scan_coffee_aim">Etichetă, cod de bare sau cod QR</string>
+    <string name="msg_scan_capture_failed">Fotografia nu a putut fi realizată. Încearcă din nou.</string>
+    <string name="msg_scan_code_not_found">Nu s-a găsit niciun cod de cafea. Încearcă altă fotografie.</string>
+    <string name="msg_scan_camera_unavailable">Camera nu este disponibilă. Alege fotografii pentru a continua.</string>
+    <string name="msg_scan_camera_permission">Permite accesul la cameră pentru a scana cafeaua.</string>
+    <string name="action_allow_camera">Permite camera</string>
+    <string name="action_retry_camera">Reîncearcă camera</string>
+    <string name="format_cd_scan_photo">Fotografie a cafelei %1$d</string>
+    <string name="action_review_scan">Verifică</string>
+</resources>

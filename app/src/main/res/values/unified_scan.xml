@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_coffee">Scan coffee</string>
+    <string name="msg_scan_coffee_aim">Label, barcode or QR code</string>
+    <string name="msg_scan_capture_failed">Couldn\'t take the photo. Try again.</string>
+    <string name="msg_scan_code_not_found">No coffee code found. Try another photo.</string>
+    <string name="msg_scan_camera_unavailable">Camera unavailable. Choose photos to continue.</string>
+    <string name="msg_scan_camera_permission">Allow camera access to scan coffee.</string>
+    <string name="action_allow_camera">Allow camera</string>
+    <string name="action_retry_camera">Retry camera</string>
+    <string name="format_cd_scan_photo">Coffee photo %1$d</string>
+    <string name="action_review_scan">Review</string>
+</resources>

@@ -241,8 +241,7 @@
     <string name="msg_settings_subtitle">Tavat, mylly ja asetukset</string>
 
     <!-- Barcode Scanner Screen -->
-    <string name="msg_camera_permission">Viivakoodien skannaus vaatii kameran käyttöoikeuden</string>
-    <string name="msg_point_camera">Suuntaa kamera viivakoodiin</string>
+    <string name="msg_point_camera">Viivakoodi tai QR-koodi</string>
 
     <!-- Snackbar / notifications -->
     <string name="snackbar_brew_saved">Valmistus tallennettu! Arvioi se maistamisen jälkeen.</string>
@@ -455,8 +454,6 @@
     <string name="label_remaining_weight_grams">Jäljellä oleva paino (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_scan_label">Skannaa etiketti</string>
-    <string name="action_add_bag_barcode">Skannaa viivakoodi</string>
     <string name="action_add_bag_manual">Lisää käsin</string>
     <string name="msg_no_beans_yet">Ei vielä papuja</string>
     <string name="action_brew_now">Valmista nyt</string>
@@ -474,8 +471,6 @@
     <string name="msg_discard_changes_body">Tallentamattomat muutokset menetetään.</string>
     <string name="action_discard">Hylkää</string>
     <string name="action_keep_scanning">Jatka skannausta</string>
-    <string name="msg_camera_permission_required">Kameran käyttöoikeus vaaditaan</string>
-    <string name="screen_scan_bag_title">Skannaa kahvipussi</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Synkronoi pussiin</string>
@@ -605,12 +600,8 @@
     <string name="process_double_fermented">Kaksoisfermentoitu</string>
     <string name="process_thermal_shock">Lämpöshokki</string>
     <!-- Guided bag scan -->
-    <string name="guided_scan_aim_front">Keskitä pussin etupuoli ruutuun</string>
-    <string name="guided_scan_aim_back">Skannaa nyt pussin takapuoli</string>
     <string name="guided_scan_aim_more">Lisää toinen kuva (valinnainen)</string>
     <string name="guided_scan_hold_steady">Pidä vakaana…</string>
-    <string name="guided_scan_skip_photos">Ohita kuvat</string>
-    <string name="guided_scan_finished">Valmis</string>
     <string name="guided_scan_auto_on">Automaatti päällä</string>
     <string name="guided_scan_auto_off">Automaatti pois</string>
     <string name="guided_scan_capture">Ota kuva</string>

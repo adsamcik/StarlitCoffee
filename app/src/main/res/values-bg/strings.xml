@@ -241,8 +241,7 @@
     <string name="msg_settings_subtitle">Методи, мелачка и предпочитания</string>
 
     <!-- Barcode Scanner Screen -->
-    <string name="msg_camera_permission">Необходимо е разрешение за камерата, за да сканирате баркодове</string>
-    <string name="msg_point_camera">Насочете камерата към баркода</string>
+    <string name="msg_point_camera">Баркод или QR код</string>
 
     <!-- Snackbar / notifications -->
     <string name="snackbar_brew_saved">Приготвянето е запазено! Оценете го, след като го опитате.</string>
@@ -455,8 +454,6 @@
     <string name="label_remaining_weight_grams">Оставащо тегло (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_scan_label">Сканирайте етикет</string>
-    <string name="action_add_bag_barcode">Сканирайте баркод</string>
     <string name="action_add_bag_manual">Добавете ръчно</string>
     <string name="msg_no_beans_yet">Все още няма зърна</string>
     <string name="action_brew_now">Пригответе сега</string>
@@ -474,8 +471,6 @@
     <string name="msg_discard_changes_body">Незапазените промени ще бъдат загубени.</string>
     <string name="action_discard">Отхвърлете</string>
     <string name="action_keep_scanning">Продължете сканирането</string>
-    <string name="msg_camera_permission_required">Необходимо е разрешение за камерата</string>
-    <string name="screen_scan_bag_title">Сканирайте пакет кафе</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Синхронизирайте с пакета</string>
@@ -605,12 +600,8 @@
     <string name="process_double_fermented">Двойно ферментирала</string>
     <string name="process_thermal_shock">Термичен шок</string>
     <!-- Guided bag scan -->
-    <string name="guided_scan_aim_front">Центрирайте предната страна на пакета в кадъра</string>
-    <string name="guided_scan_aim_back">Сега сканирайте задната страна на пакета</string>
     <string name="guided_scan_aim_more">Добавете още една снимка (по избор)</string>
     <string name="guided_scan_hold_steady">Дръжте стабилно…</string>
-    <string name="guided_scan_skip_photos">Пропуснете снимките</string>
-    <string name="guided_scan_finished">Готово</string>
     <string name="guided_scan_auto_on">Автоматично включено</string>
     <string name="guided_scan_auto_off">Автоматично изключено</string>
     <string name="guided_scan_capture">Заснемете снимка</string>

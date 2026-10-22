@@ -39,7 +39,6 @@
     <string name="action_save_coffee">Uložte podrobnosti o kávě</string>
     <string name="screen_add_coffee_title">Přidejte kávu</string>
     <string name="screen_edit_coffee_title">Upravit kávu</string>
-    <string name="msg_camera_permission_alternatives">Můžete povolit přístup k fotoaparátu, vybrat fotografie štítku kávového sáčku nebo sami zadat údaje vytištěné na kávovém sáčku.</string>
     <string name="action_choose_photos">Vyberte fotografie</string>
     <string name="action_enter_manually">Zadejte ručně</string>
     <string name="action_ok">OK</string>

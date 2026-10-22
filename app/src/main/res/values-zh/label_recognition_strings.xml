@@ -36,7 +36,6 @@
     <string name="action_save_coffee">保存咖啡详细信息</string>
     <string name="screen_add_coffee_title">添加咖啡</string>
     <string name="screen_edit_coffee_title">编辑咖啡</string>
-    <string name="msg_camera_permission_alternatives">您可以允许相机访问、选择咖啡袋标签的照片或自行输入咖啡袋上打印的详细信息。</string>
     <string name="action_choose_photos">选择照片</string>
     <string name="action_enter_manually">手动输入</string>
     <string name="action_ok">好的</string>

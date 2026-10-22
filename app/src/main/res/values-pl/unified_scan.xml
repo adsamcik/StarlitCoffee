@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_coffee">Skanuj kawę</string>
+    <string name="msg_scan_coffee_aim">Etykieta, kod kreskowy lub kod QR</string>
+    <string name="msg_scan_capture_failed">Nie udało się zrobić zdjęcia. Spróbuj ponownie.</string>
+    <string name="msg_scan_code_not_found">Nie znaleziono kodu kawy. Spróbuj innego zdjęcia.</string>
+    <string name="msg_scan_camera_unavailable">Aparat jest niedostępny. Wybierz zdjęcia, aby kontynuować.</string>
+    <string name="msg_scan_camera_permission">Zezwól na dostęp do aparatu, aby skanować kawę.</string>
+    <string name="action_allow_camera">Zezwól na aparat</string>
+    <string name="action_retry_camera">Ponów uruchomienie aparatu</string>
+    <string name="format_cd_scan_photo">Zdjęcie kawy %1$d</string>
+    <string name="action_review_scan">Sprawdź</string>
+</resources>

@@ -38,7 +38,6 @@
     <string name="action_save_coffee">Salvar detalhes do café</string>
     <string name="screen_add_coffee_title">Adicionar café</string>
     <string name="screen_edit_coffee_title">Editar café</string>
-    <string name="msg_camera_permission_alternatives">Você pode permitir o acesso à câmera, escolher fotos do rótulo da sacola de café ou inserir você mesmo os detalhes impressos na sacola de café.</string>
     <string name="action_choose_photos">Escolha fotos</string>
     <string name="action_enter_manually">Insira manualmente</string>
     <string name="action_ok">OK</string>

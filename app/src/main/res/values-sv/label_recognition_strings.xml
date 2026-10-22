@@ -37,7 +37,6 @@
     <string name="action_save_coffee">Spara kaffedetaljer</string>
     <string name="screen_add_coffee_title">Tillsätt kaffe</string>
     <string name="screen_edit_coffee_title">Redigera kaffe</string>
-    <string name="msg_camera_permission_alternatives">Du kan tillåta kameraåtkomst, välja foton av kaffepåsens etikett eller själv ange detaljerna som är tryckta på kaffepåsen.</string>
     <string name="action_choose_photos">Välj foton</string>
     <string name="action_enter_manually">Ange manuellt</string>
     <string name="action_ok">OK</string>

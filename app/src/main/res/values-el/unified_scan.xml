@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_coffee">Σάρωση καφέ</string>
+    <string name="msg_scan_coffee_aim">Ετικέτα, γραμμωτός κώδικας ή κωδικός QR</string>
+    <string name="msg_scan_capture_failed">Δεν ήταν δυνατή η λήψη της φωτογραφίας. Δοκιμάστε ξανά.</string>
+    <string name="msg_scan_code_not_found">Δεν βρέθηκε κωδικός καφέ. Δοκιμάστε άλλη φωτογραφία.</string>
+    <string name="msg_scan_camera_unavailable">Η κάμερα δεν είναι διαθέσιμη. Επιλέξτε φωτογραφίες για να συνεχίσετε.</string>
+    <string name="msg_scan_camera_permission">Επιτρέψτε την πρόσβαση στην κάμερα για σάρωση καφέ.</string>
+    <string name="action_allow_camera">Να επιτρέπεται η κάμερα</string>
+    <string name="action_retry_camera">Άνοιγμα κάμερας ξανά</string>
+    <string name="format_cd_scan_photo">Φωτογραφία καφέ %1$d</string>
+    <string name="action_review_scan">Έλεγχος</string>
+</resources>

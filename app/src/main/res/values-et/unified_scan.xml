@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_coffee">Skanni kohvi</string>
+    <string name="msg_scan_coffee_aim">Etikett, vöötkood või QR-kood</string>
+    <string name="msg_scan_capture_failed">Fotot ei saanud teha. Proovi uuesti.</string>
+    <string name="msg_scan_code_not_found">Kohvikoodi ei leitud. Proovi teist fotot.</string>
+    <string name="msg_scan_camera_unavailable">Kaamera pole saadaval. Jätkamiseks vali fotod.</string>
+    <string name="msg_scan_camera_permission">Kohvi skannimiseks luba juurdepääs kaamerale.</string>
+    <string name="action_allow_camera">Luba kaamera</string>
+    <string name="action_retry_camera">Proovi kaamerat uuesti</string>
+    <string name="format_cd_scan_photo">Kohvifoto %1$d</string>
+    <string name="action_review_scan">Vaata üle</string>
+</resources>

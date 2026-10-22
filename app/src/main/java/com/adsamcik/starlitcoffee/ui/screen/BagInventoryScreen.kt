@@ -2,9 +2,6 @@ package com.adsamcik.starlitcoffee.ui.screen
 
 import android.content.res.Resources
 import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -23,8 +20,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.PhotoLibrary
-import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material.icons.filled.ShoppingBag
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -112,8 +107,6 @@ private object BagInventoryScreenTraceboxTemplates {
 // Comfortably covers the 68.dp list-card slot on high-density screens.
 private const val THUMBNAIL_TARGET_PX = 512
 
-private enum class AiScanAction { CAMERA, GALLERY }
-
 private val bagPhotoRectSaver: Saver<BagPhotoRect?, ArrayList<Float>> = Saver(
     save = { focus ->
         focus?.let {
@@ -139,8 +132,7 @@ private val bagPhotoRectSaver: Saver<BagPhotoRect?, ArrayList<Float>> = Saver(
 @Composable
 fun BagInventoryScreen(
     brewViewModel: BrewViewModel,
-    onNavigateToCamera: () -> Unit,
-    onNavigateToBarcode: () -> Unit = {},
+    onNavigateToScan: () -> Unit,
     onNavigateToBrewWithBag: (Long) -> Unit,
     onNavigateToRescan: (Long) -> Unit = {},
     onOpenDraft: (String) -> Unit = {},
@@ -239,7 +231,6 @@ fun BagInventoryScreen(
     }.collectAsStateWithLifecycle(initialValue = emptyList())
     val resources = LocalResources.current
     val mindlayerInstalled = rememberMindlayerInstalled()
-    val couldNotReadLabel = stringResource(R.string.msg_could_not_read_label)
     val bagSaved = stringResource(R.string.msg_bag_saved)
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
@@ -266,66 +257,6 @@ fun BagInventoryScreen(
         )
     }
 
-    // Photo picker launcher for "From photo" option. Uses
-    // PickMultipleVisualMedia(maxItems = 2) so the user can pick front + back
-    // in one flow — the bag scan pipeline already merges OCR text across
-    // multiple photos (see BrewViewModel.processNewBagPhotos +
-    // emitBagPhotoResult.combinedOcrText), it just needs the consumer UI to
-    // surface that capability. Index 0 of the returned list is treated as
-    // the FRONT photo, index 1 as the BACK; the pipeline tags them that
-    // way and the LLM prompt knows the OCR text may span both sides. Picker
-    // access is temporary, so import the images before scheduling the durable
-    // WorkManager pipeline.
-    //
-    // maxItems is the documented mechanism (Android 13+). Lower API levels
-    // see the system picker's own default cap; on those devices the user
-    // selects up to the system limit and the pipeline handles any list
-    // length correctly.
-    val photoPickerLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.PickMultipleVisualMedia(maxItems = 2),
-    ) { uris ->
-        if (uris.isNotEmpty()) {
-            fabExpanded = false
-            coroutineScope.launch {
-                val cachedUris = withContext(Dispatchers.IO) {
-                    ScanPhotoStorage.copyPhotosToCache(
-                        context = context.applicationContext,
-                        sourceUris = uris.map { it.toString() },
-                    )
-                }
-                if (cachedUris == null) {
-                    Toast.makeText(
-                        context,
-                        couldNotReadLabel,
-                        Toast.LENGTH_LONG,
-                    ).show()
-                    return@launch
-                }
-
-                val photosCsv = cachedUris.joinToString(",")
-                showAddSheet = false
-                isProcessingScan = false
-                capturedPhotoUris = photosCsv
-                ocrPrefill = null
-                detectedBarcode = null
-                detectedQrUrl = null
-                offLookupName = null
-                offLookupRoaster = null
-                fieldEvidence = emptyMap()
-                reviewHints = emptyList()
-                llmStatus = LlmEnrichmentStatus.NOT_RUN
-                thumbnailFocus = null
-                brewViewModel.processNewBagPhotos(
-                    photosCsv = photosCsv,
-                    knownFieldValues = knownFieldValues,
-                    deliverInBackground = false,
-                    sessionId = bagDraftSessionId,
-                )
-                onOpenDraft(bagDraftSessionId)
-            }
-        }
-    }
-
     fun openManualBagEntry() {
         fabExpanded = false
         bagDraftSessionId = UUID.randomUUID().toString()
@@ -342,14 +273,10 @@ fun BagInventoryScreen(
         showAddSheet = true
     }
 
-    fun launchAiScanAction(action: AiScanAction) {
+    fun openScan() {
+        fabExpanded = false
         bagDraftSessionId = UUID.randomUUID().toString()
-        when (action) {
-            AiScanAction.CAMERA -> onNavigateToCamera()
-            AiScanAction.GALLERY -> photoPickerLauncher.launch(
-                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),
-            )
-        }
+        onNavigateToScan()
     }
 
     // Handle captured photos result (from CameraCaptureScreen)
@@ -558,50 +485,18 @@ fun BagInventoryScreen(
                     ) {
                         // Extended FAB labels are decorative in semantics; their icons name the actions.
                         ExtendedFloatingActionButton(
-                            onClick = { launchAiScanAction(AiScanAction.GALLERY) },
-                            icon = { Icon(Icons.Filled.PhotoLibrary, contentDescription = stringResource(R.string.action_read_bag_photos)) },
+                            onClick = ::openScan,
+                            icon = { Icon(Icons.Filled.CameraAlt, contentDescription = stringResource(R.string.action_scan_coffee)) },
                             text = {
                                 Text(
-                                    text = stringResource(R.string.action_read_bag_photos),
+                                    text = stringResource(R.string.action_scan_coffee),
                                     style = MaterialTheme.typography.labelLarge,
                                     modifier = Modifier.padding(vertical = 8.dp),
                                 )
                             },
                             containerColor = MaterialTheme.colorScheme.secondaryContainer,
                             contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                            modifier = Modifier.widthIn(max = actionMaxWidth).testTag("fab_from_photo"),
-                        )
-                        ExtendedFloatingActionButton(
-                            onClick = { launchAiScanAction(AiScanAction.CAMERA) },
-                            icon = { Icon(Icons.Filled.CameraAlt, contentDescription = stringResource(R.string.action_scan_label)) },
-                            text = {
-                                Text(
-                                    text = stringResource(R.string.action_scan_label),
-                                    style = MaterialTheme.typography.labelLarge,
-                                    modifier = Modifier.padding(vertical = 8.dp),
-                                )
-                            },
-                            containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                            modifier = Modifier.widthIn(max = actionMaxWidth).testTag("fab_scan_label"),
-                        )
-                        ExtendedFloatingActionButton(
-                            onClick = {
-                                fabExpanded = false
-                                bagDraftSessionId = UUID.randomUUID().toString()
-                                onNavigateToBarcode()
-                            },
-                            icon = { Icon(Icons.Filled.QrCodeScanner, contentDescription = stringResource(R.string.action_add_bag_barcode)) },
-                            text = {
-                                Text(
-                                    text = stringResource(R.string.action_add_bag_barcode),
-                                    style = MaterialTheme.typography.labelLarge,
-                                    modifier = Modifier.padding(vertical = 8.dp),
-                                )
-                            },
-                            containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                            modifier = Modifier.widthIn(max = actionMaxWidth).testTag("fab_scan_barcode"),
+                            modifier = Modifier.widthIn(max = actionMaxWidth).testTag("fab_scan_coffee"),
                         )
                         ExtendedFloatingActionButton(
                             onClick = ::openManualBagEntry,
@@ -657,7 +552,7 @@ fun BagInventoryScreen(
                     action = {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Button(
-                                onClick = { launchAiScanAction(AiScanAction.CAMERA) },
+                                onClick = ::openScan,
                                 modifier = Modifier.testTag("empty_scan_bag"),
                             ) {
                                 Icon(
@@ -665,7 +560,7 @@ fun BagInventoryScreen(
                                     contentDescription = null,
                                     modifier = Modifier.padding(end = 8.dp),
                                 )
-                                Text(stringResource(R.string.action_scan_first_bag))
+                                Text(stringResource(R.string.action_scan_coffee))
                             }
                             TextButton(onClick = ::openManualBagEntry) {
                                 Text(stringResource(R.string.action_add_bag_manual))
@@ -829,19 +724,6 @@ fun BagInventoryScreen(
             isSaving = isSavingBag,
             saveErrorResId = saveErrorResId,
             existingBags = bags,
-            onScanBarcode = {
-                val discardedPhotoUris = capturedPhotoUris
-                showAddSheet = false
-                brewViewModel.completeBagPhotoReview(bagDraftSessionId)
-                brewViewModel.cancelBagPhotoProcessing(bagDraftSessionId)
-                coroutineScope.launch(Dispatchers.IO) {
-                    ScanPhotoStorage.deleteStagedCaptures(
-                        context.applicationContext,
-                        discardedPhotoUris,
-                    )
-                }
-                onNavigateToBarcode()
-            },
             onExploreQrUrl = { url, callback ->
                 brewViewModel.exploreApprovedQrLink(url, callback)
             },
@@ -1016,7 +898,7 @@ fun BagInventoryScreen(
                                 discardedPhotoUris,
                             )
                         }
-                        onNavigateToCamera()
+                        onNavigateToScan()
                     },
                 ) {
                     Text(stringResource(R.string.action_retake_photo))

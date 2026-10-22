@@ -57,6 +57,5 @@
     <string name="format_notif_brew_target_reached_body">您的食谱的 %1$s 目标已达到。点击以检查冲泡情况。</string>
     <string name="action_add_coffee">添加咖啡</string>
     <string name="action_read_bag_photos">阅读包包照片</string>
-    <string name="action_scan_first_bag">扫描我的第一个包</string>
     <string name="msg_scan_first_coffee_hint">扫描正面和背面以自动填写详细信息。照片保留在您的设备上。</string>
 </resources>

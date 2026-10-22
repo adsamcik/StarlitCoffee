@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_coffee">Skanna kaffe</string>
+    <string name="msg_scan_coffee_aim">Etikett, streckkod eller QR-kod</string>
+    <string name="msg_scan_capture_failed">Det gick inte att ta fotot. Försök igen.</string>
+    <string name="msg_scan_code_not_found">Ingen kaffekod hittades. Prova ett annat foto.</string>
+    <string name="msg_scan_camera_unavailable">Kameran är inte tillgänglig. Välj foton för att fortsätta.</string>
+    <string name="msg_scan_camera_permission">Tillåt kameraåtkomst för att skanna kaffe.</string>
+    <string name="action_allow_camera">Tillåt kamera</string>
+    <string name="action_retry_camera">Försök med kameran igen</string>
+    <string name="format_cd_scan_photo">Kaffefoto %1$d</string>
+    <string name="action_review_scan">Granska</string>
+</resources>

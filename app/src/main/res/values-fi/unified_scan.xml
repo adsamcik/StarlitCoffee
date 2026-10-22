@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_coffee">Skannaa kahvi</string>
+    <string name="msg_scan_coffee_aim">Etiketti, viivakoodi tai QR-koodi</string>
+    <string name="msg_scan_capture_failed">Kuvaa ei voitu ottaa. Yritä uudelleen.</string>
+    <string name="msg_scan_code_not_found">Kahvikoodia ei löytynyt. Kokeile toista kuvaa.</string>
+    <string name="msg_scan_camera_unavailable">Kamera ei ole käytettävissä. Jatka valitsemalla kuvia.</string>
+    <string name="msg_scan_camera_permission">Salli kameran käyttö, jotta voit skannata kahvin.</string>
+    <string name="action_allow_camera">Salli kamera</string>
+    <string name="action_retry_camera">Kokeile kameraa uudelleen</string>
+    <string name="format_cd_scan_photo">Kahvikuva %1$d</string>
+    <string name="action_review_scan">Tarkista</string>
+</resources>

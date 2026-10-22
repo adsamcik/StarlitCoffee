@@ -57,6 +57,5 @@
     <string name="format_notif_brew_target_reached_body">A recepted %1$s célját elérte. Érintse meg a főzet ellenőrzéséhez.</string>
     <string name="action_add_coffee">Adjunk hozzá kávét</string>
     <string name="action_read_bag_photos">Olvassa el a táska fotóit</string>
-    <string name="action_scan_first_bag">Vizsgálja át az első táskámat</string>
     <string name="msg_scan_first_coffee_hint">Olvassa be az elejét és a hátulját, hogy automatikusan kitöltse az adatokat. A fotók az eszközön maradnak.</string>
 </resources>

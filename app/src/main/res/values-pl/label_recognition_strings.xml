@@ -39,7 +39,6 @@
     <string name="action_save_coffee">Zapisz szczegóły kawy</string>
     <string name="screen_add_coffee_title">Dodaj kawę</string>
     <string name="screen_edit_coffee_title">Edytuj kawę</string>
-    <string name="msg_camera_permission_alternatives">Możesz zezwolić na dostęp aparatu, wybrać zdjęcia etykiety torebki z kawą lub samodzielnie wprowadzić szczegóły wydrukowane na torebce z kawą.</string>
     <string name="action_choose_photos">Wybierz zdjęcia</string>
     <string name="action_enter_manually">Wprowadź ręcznie</string>
     <string name="action_ok">OK</string>

@@ -1,6 +1,7 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
+import com.google.mlkit.vision.barcode.common.Barcode
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -62,6 +63,16 @@ class BarcodeBrewMatchTest {
         assertEquals(listOf(saved), inStockBagsForBarcode("ROASTER-LOT-42", listOf(saved)))
         assertTrue(inStockBagsForBarcode("ROASTER-LOT-43", listOf(saved)).isEmpty())
         assertFalse(hasInStockBarcodeBags(listOf(saved.copy(barcode = "  "))))
+    }
+
+    @Test
+    fun `a saved public URL QR identifier still matches with its original case and fragment`() {
+        val identifier = "HTTPS://EXAMPLE.COM/coffee#LOT-42"
+        val saved = bag(1).copy(barcode = identifier)
+        val scanned = selectCoffeeCode(listOfNotNull(classifyCoffeeCode(identifier, Barcode.TYPE_URL)))
+
+        assertEquals(listOf(saved), inStockBagsForBarcode(requireNotNull(scanned).value, listOf(saved)))
+        assertTrue(inStockBagsForBarcode("HTTPS://EXAMPLE.COM/coffee#LOT-43", listOf(saved)).isEmpty())
     }
 
     private fun bag(id: Long, status: String = "OPEN", weight: Float? = 250f) = CoffeeBagEntity(

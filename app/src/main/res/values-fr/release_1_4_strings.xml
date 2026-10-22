@@ -57,6 +57,5 @@
     <string name="format_notif_brew_target_reached_body">L\'objectif %1$s de votre recette a été atteint. Appuyez pour vérifier l\'infusion.</string>
     <string name="action_add_coffee">Ajouter du café</string>
     <string name="action_read_bag_photos">Lire les photos du sac</string>
-    <string name="action_scan_first_bag">Scanner mon premier sac</string>
     <string name="msg_scan_first_coffee_hint">Scannez le recto et le verso pour remplir automatiquement les détails. Les photos restent sur votre appareil.</string>
 </resources>

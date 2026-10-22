@@ -241,8 +241,7 @@
     <string name="msg_settings_subtitle">Methoden, Mühle und Präferenzen</string>
 
     <!-- Barcode Scanner Screen -->
-    <string name="msg_camera_permission">Kameraberechtigung ist erforderlich, um Barcodes zu scannen</string>
-    <string name="msg_point_camera">Kamera auf den Barcode richten</string>
+    <string name="msg_point_camera">Barcode oder QR-Code</string>
 
     <!-- Snackbar / notifications -->
     <string name="snackbar_brew_saved">Zubereitung gespeichert! Bewerten Sie sie nach dem Probieren.</string>
@@ -455,8 +454,6 @@
     <string name="label_remaining_weight_grams">Verbleibendes Gewicht (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_scan_label">Etikett scannen</string>
-    <string name="action_add_bag_barcode">Barcode scannen</string>
     <string name="action_add_bag_manual">Manuell hinzufügen</string>
     <string name="msg_no_beans_yet">Noch keine Bohnen</string>
     <string name="action_brew_now">Jetzt brühen</string>
@@ -474,8 +471,6 @@
     <string name="msg_discard_changes_body">Ihre nicht gespeicherten Änderungen gehen verloren.</string>
     <string name="action_discard">Verwerfen</string>
     <string name="action_keep_scanning">Weiterscannen</string>
-    <string name="msg_camera_permission_required">Kameraberechtigung erforderlich</string>
-    <string name="screen_scan_bag_title">Kaffeepackung scannen</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Mit Packung synchronisieren</string>
@@ -605,12 +600,8 @@
     <string name="process_double_fermented">Doppelt fermentiert</string>
     <string name="process_thermal_shock">Thermoschock</string>
     <!-- Guided bag scan -->
-    <string name="guided_scan_aim_front">Vorderseite der Packung im Rahmen zentrieren</string>
-    <string name="guided_scan_aim_back">Jetzt die Rückseite scannen</string>
     <string name="guided_scan_aim_more">Weiteres Foto hinzufügen (optional)</string>
     <string name="guided_scan_hold_steady">Ruhig halten…</string>
-    <string name="guided_scan_skip_photos">Fotos überspringen</string>
-    <string name="guided_scan_finished">Fertig</string>
     <string name="guided_scan_auto_on">Auto an</string>
     <string name="guided_scan_auto_off">Auto aus</string>
     <string name="guided_scan_capture">Foto aufnehmen</string>

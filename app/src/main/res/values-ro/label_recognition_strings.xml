@@ -38,7 +38,6 @@
     <string name="action_save_coffee">Salvează detaliile cafelei</string>
     <string name="screen_add_coffee_title">Adăugați cafea</string>
     <string name="screen_edit_coffee_title">Editează cafeaua</string>
-    <string name="msg_camera_permission_alternatives">Puteți permite accesul camerei, puteți alege fotografiile etichetei pungii de cafea sau puteți introduce personal detaliile imprimate pe punga de cafea.</string>
     <string name="action_choose_photos">Alege fotografii</string>
     <string name="action_enter_manually">Introduceți manual</string>
     <string name="action_ok">OK</string>

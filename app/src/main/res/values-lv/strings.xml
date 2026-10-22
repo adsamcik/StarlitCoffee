@@ -242,8 +242,7 @@
     <string name="msg_settings_subtitle">Metodes, dzirnaviņas un preferences</string>
 
     <!-- Barcode Scanner Screen -->
-    <string name="msg_camera_permission">Kameras atļauja ir nepieciešama svītrkodu skenēšanai</string>
-    <string name="msg_point_camera">Pavērsiet kameru pret svītrkodu</string>
+    <string name="msg_point_camera">Svītrkods vai QR kods</string>
 
     <!-- Snackbar / notifications -->
     <string name="snackbar_brew_saved">Gatavošana saglabāta! Novērtējiet to pēc nogaršošanas.</string>
@@ -456,8 +455,6 @@
     <string name="label_remaining_weight_grams">Atlikušais svars (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_scan_label">Skenēt etiķeti</string>
-    <string name="action_add_bag_barcode">Skenēt svītrkodu</string>
     <string name="action_add_bag_manual">Pievienot manuāli</string>
     <string name="msg_no_beans_yet">Pupiņu vēl nav</string>
     <string name="action_brew_now">Gatavot tagad</string>
@@ -475,8 +472,6 @@
     <string name="msg_discard_changes_body">Nesaglabātās izmaiņas tiks zaudētas.</string>
     <string name="action_discard">Atmest</string>
     <string name="action_keep_scanning">Turpināt skenēšanu</string>
-    <string name="msg_camera_permission_required">Nepieciešama kameras atļauja</string>
-    <string name="screen_scan_bag_title">Skenēt kafijas iepakojumu</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Sinhronizēt ar iepakojumu</string>
@@ -606,12 +601,8 @@
     <string name="process_double_fermented">Dubulti fermentēta</string>
     <string name="process_thermal_shock">Termiskais šoks</string>
     <!-- Guided bag scan -->
-    <string name="guided_scan_aim_front">Iecentrējiet iepakojuma priekšpusi kadrā</string>
-    <string name="guided_scan_aim_back">Tagad skenējiet iepakojuma aizmuguri</string>
     <string name="guided_scan_aim_more">Pievienojiet vēl vienu fotoattēlu (neobligāti)</string>
     <string name="guided_scan_hold_steady">Turiet nekustīgi…</string>
-    <string name="guided_scan_skip_photos">Izlaist fotoattēlus</string>
-    <string name="guided_scan_finished">Pabeigts</string>
     <string name="guided_scan_auto_on">Automātiski ieslēgts</string>
     <string name="guided_scan_auto_off">Automātiski izslēgts</string>
     <string name="guided_scan_capture">Uzņemt fotoattēlu</string>

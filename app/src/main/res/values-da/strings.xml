@@ -241,8 +241,7 @@
     <string name="msg_settings_subtitle">Metoder, kværn og præferencer</string>
 
     <!-- Barcode Scanner Screen -->
-    <string name="msg_camera_permission">Kameratilladelse kræves for at scanne stregkoder</string>
-    <string name="msg_point_camera">Ret kameraet mod stregkoden</string>
+    <string name="msg_point_camera">Stregkode eller QR-kode</string>
 
     <!-- Snackbar / notifications -->
     <string name="snackbar_brew_saved">Bryg gemt! Bedøm det, når du har smagt det.</string>
@@ -454,8 +453,6 @@
     <string name="label_remaining_weight_grams">Resterende vægt (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_scan_label">Scan label</string>
-    <string name="action_add_bag_barcode">Scan stregkode</string>
     <string name="action_add_bag_manual">Tilføj manuelt</string>
     <string name="msg_no_beans_yet">Ingen bønner endnu</string>
     <string name="action_brew_now">Bryg nu</string>
@@ -473,8 +470,6 @@
     <string name="msg_discard_changes_body">Dine ikke-gemte ændringer går tabt.</string>
     <string name="action_discard">Kassér</string>
     <string name="action_keep_scanning">Fortsæt scanning</string>
-    <string name="msg_camera_permission_required">Kameratilladelse kræves</string>
-    <string name="screen_scan_bag_title">Scan kaffepose</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Synkroniser med pose</string>
@@ -604,12 +599,8 @@
     <string name="process_double_fermented">Dobbeltfermenteret</string>
     <string name="process_thermal_shock">Thermal shock</string>
     <!-- Guided bag scan -->
-    <string name="guided_scan_aim_front">Centrer posens forside i rammen</string>
-    <string name="guided_scan_aim_back">Scan nu posens bagside</string>
     <string name="guided_scan_aim_more">Tilføj endnu et foto (valgfrit)</string>
     <string name="guided_scan_hold_steady">Hold stille…</string>
-    <string name="guided_scan_skip_photos">Spring fotos over</string>
-    <string name="guided_scan_finished">Færdig</string>
     <string name="guided_scan_auto_on">Auto til</string>
     <string name="guided_scan_auto_off">Auto fra</string>
     <string name="guided_scan_capture">Tag foto</string>

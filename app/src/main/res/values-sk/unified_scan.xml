@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_coffee">Naskenovať kávu</string>
+    <string name="msg_scan_coffee_aim">Štítok, čiarový alebo QR kód</string>
+    <string name="msg_scan_capture_failed">Fotografiu sa nepodarilo urobiť. Skúste to znova.</string>
+    <string name="msg_scan_code_not_found">Kód kávy sa nenašiel. Skúste inú fotografiu.</string>
+    <string name="msg_scan_camera_unavailable">Fotoaparát nie je dostupný. Pokračujte výberom fotografií.</string>
+    <string name="msg_scan_camera_permission">Povoľte prístup k fotoaparátu na skenovanie kávy.</string>
+    <string name="action_allow_camera">Povoliť fotoaparát</string>
+    <string name="action_retry_camera">Skúsiť fotoaparát znova</string>
+    <string name="format_cd_scan_photo">Fotografia kávy %1$d</string>
+    <string name="action_review_scan">Skontrolovať</string>
+</resources>

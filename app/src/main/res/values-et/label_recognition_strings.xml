@@ -37,7 +37,6 @@
     <string name="action_save_coffee">Salvestage kohvi üksikasjad</string>
     <string name="screen_add_coffee_title">Lisa kohv</string>
     <string name="screen_edit_coffee_title">Muuda kohvi</string>
-    <string name="msg_camera_permission_alternatives">Saate lubada kaamerale juurdepääsu, valida kohvikoti sildilt fotod või sisestada ise kohvikotile prinditud andmed.</string>
     <string name="action_choose_photos">Valige fotod</string>
     <string name="action_enter_manually">Sisestage käsitsi</string>
     <string name="action_ok">OK</string>

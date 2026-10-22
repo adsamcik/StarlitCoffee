@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_coffee">Skeniraj kavu</string>
+    <string name="msg_scan_coffee_aim">Etiketa, crtični kod ili QR kod</string>
+    <string name="msg_scan_capture_failed">Fotografiju nije moguće snimiti. Pokušajte ponovno.</string>
+    <string name="msg_scan_code_not_found">Nije pronađen kod kave. Pokušajte s drugom fotografijom.</string>
+    <string name="msg_scan_camera_unavailable">Kamera nije dostupna. Odaberite fotografije za nastavak.</string>
+    <string name="msg_scan_camera_permission">Dopustite pristup kameri za skeniranje kave.</string>
+    <string name="action_allow_camera">Dopusti kameru</string>
+    <string name="action_retry_camera">Pokušaj ponovno s kamerom</string>
+    <string name="format_cd_scan_photo">Fotografija kave %1$d</string>
+    <string name="action_review_scan">Pregledaj</string>
+</resources>

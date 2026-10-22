@@ -37,7 +37,6 @@
     <string name="action_save_coffee">Kaffeedetails speichern</string>
     <string name="screen_add_coffee_title">Kaffee hinzufügen</string>
     <string name="screen_edit_coffee_title">Kaffee bearbeiten</string>
-    <string name="msg_camera_permission_alternatives">Sie können den Zugriff auf die Kamera zulassen, Fotos des Kaffeebeuteletiketts auswählen oder die auf dem Kaffeebeutel aufgedruckten Daten selbst eingeben.</string>
     <string name="action_choose_photos">Wählen Sie Fotos aus</string>
     <string name="action_enter_manually">Geben Sie manuell ein</string>
     <string name="action_ok">Okay</string>

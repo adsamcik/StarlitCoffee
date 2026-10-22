@@ -37,7 +37,6 @@
     <string name="action_save_coffee">Bewaar koffiegegevens</string>
     <string name="screen_add_coffee_title">Voeg koffie toe</string>
     <string name="screen_edit_coffee_title">Koffie bewerken</string>
-    <string name="msg_camera_permission_alternatives">U kunt cameratoegang verlenen, foto\'s van het koffiezaklabel kiezen of zelf de gegevens invoeren die op de koffiezak zijn afgedrukt.</string>
     <string name="action_choose_photos">Kies foto\'s</string>
     <string name="action_enter_manually">Handmatig invoeren</string>
     <string name="action_ok">Oké</string>

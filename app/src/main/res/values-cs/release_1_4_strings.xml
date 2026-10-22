@@ -57,6 +57,5 @@
     <string name="format_notif_brew_target_reached_body">Cíl %1$s vašeho receptu byl dosažen. Klepnutím zkontrolujte vaření.</string>
     <string name="action_add_coffee">Přidejte kávu</string>
     <string name="action_read_bag_photos">Přečtěte si fotografie tašky</string>
-    <string name="action_scan_first_bag">Naskenujte mou první tašku</string>
     <string name="msg_scan_first_coffee_hint">Naskenujte přední a zadní stranu a vyplňte podrobnosti automaticky. Fotografie zůstanou ve vašem zařízení.</string>
 </resources>

@@ -241,8 +241,7 @@
     <string name="msg_settings_subtitle">Methoden, molen en voorkeuren</string>
 
     <!-- Barcode Scanner Screen -->
-    <string name="msg_camera_permission">Cameratoestemming is vereist om barcodes te scannen</string>
-    <string name="msg_point_camera">Richt de camera op de barcode</string>
+    <string name="msg_point_camera">Streepjescode of QR-code</string>
 
     <!-- Snackbar / notifications -->
     <string name="snackbar_brew_saved">Bereiding opgeslagen! Beoordeel hem nadat je hebt geproefd.</string>
@@ -454,8 +453,6 @@
     <string name="label_remaining_weight_grams">Resterend gewicht (g)</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_scan_label">Label scannen</string>
-    <string name="action_add_bag_barcode">Barcode scannen</string>
     <string name="action_add_bag_manual">Handmatig toevoegen</string>
     <string name="msg_no_beans_yet">Nog geen bonen</string>
     <string name="action_brew_now">Nu zetten</string>
@@ -473,8 +470,6 @@
     <string name="msg_discard_changes_body">Niet-opgeslagen wijzigingen gaan verloren.</string>
     <string name="action_discard">Weggooien</string>
     <string name="action_keep_scanning">Doorgaan met scannen</string>
-    <string name="msg_camera_permission_required">Cameratoestemming vereist</string>
-    <string name="screen_scan_bag_title">Koffiezak scannen</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Synchroniseren met zak</string>
@@ -604,12 +599,8 @@
     <string name="process_double_fermented">Dubbel gefermenteerd</string>
     <string name="process_thermal_shock">Thermal shock</string>
     <!-- Guided bag scan -->
-    <string name="guided_scan_aim_front">Centreer de voorkant van de zak in het kader</string>
-    <string name="guided_scan_aim_back">Scan nu de achterkant van de zak</string>
     <string name="guided_scan_aim_more">Nog een foto toevoegen (optioneel)</string>
     <string name="guided_scan_hold_steady">Stilhouden…</string>
-    <string name="guided_scan_skip_photos">Foto\'s overslaan</string>
-    <string name="guided_scan_finished">Klaar</string>
     <string name="guided_scan_auto_on">Auto aan</string>
     <string name="guided_scan_auto_off">Auto uit</string>
     <string name="guided_scan_capture">Foto maken</string>

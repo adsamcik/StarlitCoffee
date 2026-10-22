@@ -57,6 +57,5 @@
     <string name="format_notif_brew_target_reached_body">Reseptisi %1$s tavoite on saavutettu. Tarkista keitto napauttamalla.</string>
     <string name="action_add_coffee">Lisää kahvi</string>
     <string name="action_read_bag_photos">Lue laukkukuvia</string>
-    <string name="action_scan_first_bag">Skannaa ensimmäinen laukkuni</string>
     <string name="msg_scan_first_coffee_hint">Skannaa etu- ja takapuoli täyttääksesi tiedot automaattisesti. Valokuvat pysyvät laitteessasi.</string>
 </resources>

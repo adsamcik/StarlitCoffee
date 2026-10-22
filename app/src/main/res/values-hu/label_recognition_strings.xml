@@ -37,7 +37,6 @@
     <string name="action_save_coffee">Mentse el a kávé részleteit</string>
     <string name="screen_add_coffee_title">Adjunk hozzá kávét</string>
     <string name="screen_edit_coffee_title">Kávé szerkesztése</string>
-    <string name="msg_camera_permission_alternatives">Engedélyezheti a kamera hozzáférését, kiválaszthat fényképeket a kávézacskó címkéjéről, vagy saját maga is megadhatja a kávézacskóra nyomtatott adatokat.</string>
     <string name="action_choose_photos">Válasszon fényképeket</string>
     <string name="action_enter_manually">Írja be kézzel</string>
     <string name="action_ok">OK</string>

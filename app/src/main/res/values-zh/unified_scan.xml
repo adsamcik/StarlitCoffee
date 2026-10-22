@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_coffee">扫描咖啡</string>
+    <string name="msg_scan_coffee_aim">标签、条形码或二维码</string>
+    <string name="msg_scan_capture_failed">无法拍照。请重试。</string>
+    <string name="msg_scan_code_not_found">未找到咖啡代码。请尝试其他照片。</string>
+    <string name="msg_scan_camera_unavailable">相机不可用。请选择照片以继续。</string>
+    <string name="msg_scan_camera_permission">请允许访问相机以扫描咖啡。</string>
+    <string name="action_allow_camera">允许使用相机</string>
+    <string name="action_retry_camera">重试相机</string>
+    <string name="format_cd_scan_photo">咖啡照片 %1$d</string>
+    <string name="action_review_scan">核对</string>
+</resources>

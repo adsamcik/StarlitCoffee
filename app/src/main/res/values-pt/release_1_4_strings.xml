@@ -57,6 +57,5 @@
     <string name="format_notif_brew_target_reached_body">A meta %1$s da sua receita foi atingida. Toque para verificar a bebida.</string>
     <string name="action_add_coffee">Adicionar café</string>
     <string name="action_read_bag_photos">Leia fotos da bolsa</string>
-    <string name="action_scan_first_bag">Digitalize minha primeira bolsa</string>
     <string name="msg_scan_first_coffee_hint">Digitalize a frente e o verso para preencher os detalhes automaticamente. As fotos permanecem no seu dispositivo.</string>
 </resources>

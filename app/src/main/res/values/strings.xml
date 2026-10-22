@@ -298,8 +298,7 @@
     <string name="msg_settings_subtitle">Methods, grinder and preferences</string>
 
     <!-- Barcode Scanner Screen -->
-    <string name="msg_camera_permission">Camera permission is required to scan barcodes</string>
-    <string name="msg_point_camera">Point camera at barcode</string>
+    <string name="msg_point_camera">Barcode or QR code</string>
 
     <!-- Snackbar / notifications -->
     <string name="snackbar_brew_saved">Brew saved! Rate it after you taste it.</string>
@@ -578,10 +577,7 @@
 
     <!-- BagInventoryScreen -->
     <string name="action_add_coffee">Add coffee</string>
-    <string name="action_scan_label">Scan label</string>
-    <string name="action_add_bag_barcode">Scan barcode</string>
     <string name="action_read_bag_photos">Read bag photos</string>
-    <string name="action_scan_first_bag">Scan my first bag</string>
     <string name="action_add_bag_manual">Add manually</string>
     <string name="msg_no_beans_yet">No beans yet</string>
     <string name="msg_scan_first_coffee_hint">Scan the front and back to fill in the details automatically. Photos stay on your device.</string>
@@ -600,11 +596,8 @@
     <string name="msg_discard_changes_body">Your unsaved changes will be lost.</string>
     <string name="action_discard">Discard</string>
     <string name="action_keep_scanning">Keep Scanning</string>
-    <string name="msg_camera_permission_required">Camera permission required</string>
-    <string name="msg_camera_permission_alternatives">You can allow camera access, choose label photos, or enter the bag details yourself.</string>
     <string name="action_choose_photos">Choose photos</string>
     <string name="action_enter_manually">Enter manually</string>
-    <string name="screen_scan_bag_title">Scan Coffee Bag</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">Sync to bag</string>
@@ -737,12 +730,8 @@
     <string name="process_double_fermented">Double Fermented</string>
     <string name="process_thermal_shock">Thermal Shock</string>
     <!-- Guided bag scan -->
-    <string name="guided_scan_aim_front">Center the front of the bag in the frame</string>
-    <string name="guided_scan_aim_back">Now scan the back of the bag</string>
     <string name="guided_scan_aim_more">Add another photo (optional)</string>
     <string name="guided_scan_hold_steady">Hold steady…</string>
-    <string name="guided_scan_skip_photos">Skip photos</string>
-    <string name="guided_scan_finished">Finished</string>
     <string name="guided_scan_auto_on">Auto on</string>
     <string name="guided_scan_auto_off">Auto off</string>
     <string name="guided_scan_capture">Capture photo</string>

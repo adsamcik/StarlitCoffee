@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_coffee">Scan kaffe</string>
+    <string name="msg_scan_coffee_aim">Etiket, stregkode eller QR-kode</string>
+    <string name="msg_scan_capture_failed">Billedet kunne ikke tages. Prøv igen.</string>
+    <string name="msg_scan_code_not_found">Ingen kaffekode fundet. Prøv et andet foto.</string>
+    <string name="msg_scan_camera_unavailable">Kameraet er ikke tilgængeligt. Vælg fotos for at fortsætte.</string>
+    <string name="msg_scan_camera_permission">Tillad kameraadgang for at scanne kaffe.</string>
+    <string name="action_allow_camera">Tillad kamera</string>
+    <string name="action_retry_camera">Prøv kamera igen</string>
+    <string name="format_cd_scan_photo">Kaffefoto %1$d</string>
+    <string name="action_review_scan">Gennemgå</string>
+</resources>

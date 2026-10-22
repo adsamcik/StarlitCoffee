@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_scan_coffee">Сканиране на кафе</string>
+    <string name="msg_scan_coffee_aim">Етикет, баркод или QR код</string>
+    <string name="msg_scan_capture_failed">Снимката не можа да бъде направена. Опитайте отново.</string>
+    <string name="msg_scan_code_not_found">Не е открит код за кафе. Опитайте с друга снимка.</string>
+    <string name="msg_scan_camera_unavailable">Камерата не е достъпна. Изберете снимки, за да продължите.</string>
+    <string name="msg_scan_camera_permission">Разрешете достъп до камерата, за да сканирате кафе.</string>
+    <string name="action_allow_camera">Разрешаване на камерата</string>
+    <string name="action_retry_camera">Повторен опит с камерата</string>
+    <string name="format_cd_scan_photo">Снимка на кафе %1$d</string>
+    <string name="action_review_scan">Преглед</string>
+</resources>

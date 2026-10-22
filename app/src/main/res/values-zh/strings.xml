@@ -239,8 +239,7 @@
     <string name="msg_settings_subtitle">方式、磨豆机和偏好</string>
 
     <!-- Barcode Scanner Screen -->
-    <string name="msg_camera_permission">需要相机权限才能扫描条形码</string>
-    <string name="msg_point_camera">将相机对准条形码</string>
+    <string name="msg_point_camera">条形码或二维码</string>
 
     <!-- Snackbar / notifications -->
     <string name="snackbar_brew_saved">冲煮已保存！品尝后给它评分。</string>
@@ -452,8 +451,6 @@
     <string name="label_remaining_weight_grams">剩余重量（g）</string>
 
     <!-- BagInventoryScreen -->
-    <string name="action_scan_label">扫描标签</string>
-    <string name="action_add_bag_barcode">扫描条形码</string>
     <string name="action_add_bag_manual">手动添加</string>
     <string name="msg_no_beans_yet">还没有咖啡豆</string>
     <string name="action_brew_now">现在冲煮</string>
@@ -471,8 +468,6 @@
     <string name="msg_discard_changes_body">未保存的更改将丢失。</string>
     <string name="action_discard">放弃</string>
     <string name="action_keep_scanning">继续扫描</string>
-    <string name="msg_camera_permission_required">需要相机权限</string>
-    <string name="screen_scan_bag_title">扫描咖啡袋</string>
 
     <!-- MethodPickerScreen -->
     <string name="action_sync_to_bag">同步到咖啡袋</string>
@@ -602,12 +597,8 @@
     <string name="process_double_fermented">双重发酵</string>
     <string name="process_thermal_shock">热冲击</string>
     <!-- Guided bag scan -->
-    <string name="guided_scan_aim_front">将咖啡袋正面对准取景框中央</string>
-    <string name="guided_scan_aim_back">现在扫描咖啡袋背面</string>
     <string name="guided_scan_aim_more">再拍一张（可选）</string>
     <string name="guided_scan_hold_steady">保持稳定…</string>
-    <string name="guided_scan_skip_photos">跳过拍照</string>
-    <string name="guided_scan_finished">完成</string>
     <string name="guided_scan_auto_on">自动开</string>
     <string name="guided_scan_auto_off">自动关</string>
     <string name="guided_scan_capture">拍照</string>

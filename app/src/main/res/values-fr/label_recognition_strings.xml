@@ -38,7 +38,6 @@
     <string name="action_save_coffee">Enregistrer les détails du café</string>
     <string name="screen_add_coffee_title">Ajouter du café</string>
     <string name="screen_edit_coffee_title">Modifier le café</string>
-    <string name="msg_camera_permission_alternatives">Vous pouvez autoriser l\'accès à l\'appareil photo, choisir des photos de l\'étiquette du sac de café ou saisir vous-même les détails imprimés sur le sac de café.</string>
     <string name="action_choose_photos">Choisissez des photos</string>
     <string name="action_enter_manually">Entrez manuellement</string>
     <string name="action_ok">D\'accord</string>

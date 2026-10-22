@@ -57,6 +57,5 @@
     <string name="format_notif_brew_target_reached_body">L\'obiettivo %1$s della tua ricetta è stato raggiunto. Tocca per controllare la birra.</string>
     <string name="action_add_coffee">Aggiungi il caffè</string>
     <string name="action_read_bag_photos">Leggi le foto della borsa</string>
-    <string name="action_scan_first_bag">Scansiona la mia prima borsa</string>
     <string name="msg_scan_first_coffee_hint">Scansione fronte e retro per inserire automaticamente i dettagli. Le foto rimangono sul tuo dispositivo.</string>
 </resources>
