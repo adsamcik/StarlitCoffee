@@ -49,18 +49,32 @@ internal data class LiveBrewGuidanceSelection(
     val supporting: List<ResolvedBrewGuidanceContent>,
 )
 
-/** Selects the current operation without filtering safety or operational content. */
+/** Selects the current operation, with familiar basic-timer advice available in Help. */
 internal fun selectLiveBrewGuidance(
     resolution: DurableBrewSessionGuidanceResolution,
+    equipmentProfileId: String? = null,
+    minimal: Boolean = false,
 ): LiveBrewGuidanceSelection {
+    // Basic timers keep familiar handling advice in Help. Preserve unfamiliar warnings
+    // and every structured stage-safety message; neither is classified as routine here.
+    val helpOnlyIds = when {
+        !minimal -> emptySet()
+        equipmentProfileId == PulsarLearnGuideCatalog.profileId.value ->
+            setOf("pulsar_hot_liquid_safety", "pulsar_overflow_safety")
+        equipmentProfileId == "cold_immersion_generic" && resolution.stageSafetyMessages.any {
+            it.code == "food_refrigerate_4c_during_steep"
+        } -> setOf("cold_immersion_generic_global_safety")
+        else -> emptySet()
+    }
     val illustratedContentId = (resolution.visualStatus as? DurableBrewGuidanceVisualStatus.Approved)
         ?.asset?.contentId
     val routineStages = resolution.routineContent.filter { it.placement == BuiltInGuidancePlacement.LIVE_STAGE }
     val primaryCandidate = routineStages.firstOrNull { it.id == illustratedContentId }
         ?: routineStages.firstOrNull()
         ?: resolution.criticalContent.firstOrNull { it.placement == BuiltInGuidancePlacement.LIVE_STAGE }
-    val content = (resolution.criticalContent + resolution.routineContent).distinctBy { it.id }
-    val primary = primaryCandidate?.let { candidate -> content.first { it.id == candidate.id } }
+    val content = (resolution.criticalContent + resolution.routineContent)
+        .filterNot { it.id.value in helpOnlyIds }.distinctBy { it.id }
+    val primary = primaryCandidate?.let { candidate -> content.firstOrNull { it.id == candidate.id } }
     return LiveBrewGuidanceSelection(
         primary = primary,
         supporting = content.filterNot { it.id == primary?.id },
@@ -99,9 +113,11 @@ internal fun LiveBrewGuidance(
     modifier: Modifier = Modifier,
     equipmentProfileId: String? = null,
     targetCue: BrewStageReferenceCuePresentation? = null,
+    minimal: Boolean = false,
 ) {
-    val selection = selectLiveBrewGuidance(resolution)
+    val selection = selectLiveBrewGuidance(resolution, equipmentProfileId, minimal)
     val primary = selection.primary
+    val showInstruction = !minimal || primary?.safetyCritical == true
     val primaryTarget = primary?.target?.takeIf(String::isNotBlank)
     val approvedAsset = (resolution.visualStatus as? DurableBrewGuidanceVisualStatus.Approved)?.asset
     Column(
@@ -116,11 +132,11 @@ internal fun LiveBrewGuidance(
             Column(Modifier.weight(1f)) {
                 if (targetCue != null) {
                     ReferenceCueRow(targetCue, prominent = true, compact = true)
-                } else if (primaryTarget == null) {
+                } else if (primaryTarget == null && showInstruction) {
                     primary?.instruction?.takeIf(String::isNotBlank)?.let {
                         Text(it, style = MaterialTheme.typography.bodyMedium)
                     }
-                } else {
+                } else if (primaryTarget != null) {
                     Text(
                         primaryTarget,
                         style = MaterialTheme.typography.headlineMedium,
@@ -132,7 +148,7 @@ internal fun LiveBrewGuidance(
                 Icon(Icons.AutoMirrored.Outlined.HelpOutline, contentDescription = stringResource(R.string.action_brew_help))
             }
         }
-        if (primary == null && resolution.availability !is DurableBrewGuidanceAvailability.Available) {
+        if (!minimal && primary == null && resolution.availability !is DurableBrewGuidanceAvailability.Available) {
             Text(
                 stringResource(R.string.msg_brew_guidance_unavailable),
                 style = MaterialTheme.typography.bodyMedium,
@@ -140,7 +156,7 @@ internal fun LiveBrewGuidance(
             )
         }
         primary?.let { content ->
-            if (primaryTarget != null || targetCue != null) {
+            if (showInstruction && (primaryTarget != null || targetCue != null)) {
                 val instruction = when {
                     hasPulsarWaterHeightTarget(content.id, equipmentProfileId) ->
                         stringResource(R.string.msg_brew_pulsar_main_pour)

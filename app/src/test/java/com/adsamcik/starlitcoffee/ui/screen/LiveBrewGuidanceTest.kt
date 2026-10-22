@@ -5,6 +5,8 @@ import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageMassReference
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageTargetQualifier
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetyMessage
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetySeverity
 import com.adsamcik.starlitcoffee.ui.guidance.BuiltInGuidancePlacement
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewGuidanceAvailability
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewGuidanceVisualStatus
@@ -29,6 +31,39 @@ class LiveBrewGuidanceTest {
 
         assertEquals(pour, selected.primary)
         assertEquals(listOf(safety, utility), selected.supporting)
+    }
+
+    @Test
+    fun `basic timer moves only familiar Pulsar handling advice to Help`() {
+        val pour = content("pulsar_manual_brew", BuiltInGuidancePlacement.LIVE_STAGE)
+        val hot = content("pulsar_hot_liquid_safety", BuiltInGuidancePlacement.GLOBAL_SAFETY, critical = true)
+        val overflow = content("pulsar_overflow_safety", BuiltInGuidancePlacement.LIVE_STAGE, critical = true)
+        val unfamiliar = content("equipment_fault", BuiltInGuidancePlacement.GLOBAL_SAFETY, critical = true)
+        val source = resolution(listOf(pour), listOf(hot, overflow, unfamiliar))
+        val profile = PulsarLearnGuideCatalog.profileId.value
+
+        val timer = selectLiveBrewGuidance(source, profile, minimal = true)
+        assertEquals(pour, timer.primary)
+        assertEquals(listOf(unfamiliar), timer.supporting)
+        assertEquals(listOf(hot, overflow, unfamiliar), selectLiveBrewGuidance(source, profile).supporting)
+        assertEquals(listOf(hot, overflow, unfamiliar),
+            selectLiveBrewGuidance(source, "another_profile", minimal = true).supporting)
+        assertEquals(listOf(hot, overflow, unfamiliar), source.criticalContent)
+    }
+
+    @Test
+    fun `cold timer consolidates safety only when refrigeration is already visible`() {
+        val safety = content("cold_immersion_generic_global_safety", BuiltInGuidancePlacement.GLOBAL_SAFETY, critical = true)
+        val source = resolution(emptyList(), listOf(safety))
+        val withRefrigeration = source.copy(stageSafetyMessages = listOf(
+            StageSafetyMessage("food_refrigerate_4c_during_steep", StageSafetySeverity.WARNING)))
+
+        assertEquals(listOf(safety),
+            selectLiveBrewGuidance(source, "cold_immersion_generic", minimal = true).supporting)
+        assertTrue(selectLiveBrewGuidance(withRefrigeration, "cold_immersion_generic", minimal = true)
+            .supporting.isEmpty())
+        assertEquals(listOf(safety), selectLiveBrewGuidance(withRefrigeration, "cold_immersion_generic").supporting)
+        assertEquals(source.criticalContent, withRefrigeration.criticalContent)
     }
 
     @Test

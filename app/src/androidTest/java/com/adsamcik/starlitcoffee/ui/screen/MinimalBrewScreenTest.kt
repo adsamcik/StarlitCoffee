@@ -57,6 +57,15 @@ class MinimalBrewScreenTest {
 
     @Test
     fun hotBasicTimerKeepsFinishedBloomAndCumulativeTargetWithoutCompletingOnRead() {
+        checkBasicTimer(large = false)
+    }
+
+    @Test
+    fun hotBasicTimerKeepsEssentialsAt200Percent() {
+        checkBasicTimer(large = true)
+    }
+
+    private fun checkBasicTimer(large: Boolean) {
         val request = requireNotNull(CalculatorBrewSessionStartFactory().create(
             CalcUiState(brewMethod = BrewMethod.PULSAR, previewDoseG = 20f, previewWaterMl = 340f,
                 previewBeverageG = 300f, ratio = 17f, hasValidExpression = true),
@@ -64,17 +73,25 @@ class MinimalBrewScreenTest {
         val pour = request.stagePlan.stages.indexOfFirst { it.definition.action == BrewStageAction.POUR }
         assertTrue("Fixture needs a real post-bloom pour", pour > 0)
         val runtime = runningAt(request, pour, totalElapsed = 82_000L)
-        render(request, runtime, large = false, dark = true, minimal = true)
+        render(request, runtime, large = large, dark = true)
         rule.onNodeWithContentDescription(context.getString(R.string.cd_bloom_animation)).assertIsDisplayed()
         rule.onNodeWithText(context.getString(R.string.label_elapsed)).assertIsDisplayed()
         rule.onNodeWithText("340 g").assertIsDisplayed()
-        save("minimal-hot-basic-dark")
+        rule.onNodeWithText(context.getString(R.string.action_finish)).assertIsDisplayed()
+        rule.onNodeWithText(context.getString(R.string.msg_brew_pulsar_basic_pour)).assertDoesNotExist()
+        rule.onNodeWithText(context.getString(R.string.msg_brew_pulsar_hot_liquid), substring = true).assertDoesNotExist()
+        rule.onNodeWithText(context.getString(R.string.msg_brew_pulsar_overflow), substring = true).assertDoesNotExist()
+        save(if (large) "minimal-hot-basic-200-dark" else "minimal-hot-basic-dark")
         rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).performScrollTo().performClick()
         save("minimal-hot-help-dark")
+        rule.onNodeWithText("Hot water and brewed coffee can burn.", substring = true)
+            .performScrollTo().assertIsDisplayed()
         rule.onAllNodesWithText(context.getString(R.string.heading_guide_why))[0]
             .performScrollTo().assertIsDisplayed().performClick()
         rule.onNodeWithText(context.getString(R.string.action_return_to_live_brew)).performScrollTo().performClick()
         rule.runOnIdle { assertTrue(events.isEmpty()) }
+        rule.onNodeWithText(context.getString(R.string.action_finish)).assertIsDisplayed().performClick()
+        rule.runOnIdle { assertTrue(events.single() is SessionEvent.Finish) }
     }
 
     @Test
@@ -145,7 +162,12 @@ class MinimalBrewScreenTest {
         rule.onNodeWithText(context.getString(R.string.label_elapsed)).assertIsDisplayed()
         rule.onNodeWithText(context.getString(R.string.msg_cold_brew_refrigerated)).assertIsDisplayed()
         rule.onNodeWithContentDescription(context.getString(R.string.label_brew_safety_warning)).assertIsDisplayed()
+        rule.onNodeWithText("Use clean, food-safe equipment", substring = true).assertDoesNotExist()
         save("minimal-basic-timer-light")
+        rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).performScrollTo().performClick()
+        rule.onNodeWithText("Refrigerate promptly at 4 °C or colder.", substring = true)
+            .performScrollTo().assertIsDisplayed()
+        rule.onNodeWithText(context.getString(R.string.action_return_to_live_brew)).performScrollTo().performClick()
         rule.onNodeWithContentDescription(context.getString(R.string.action_brew_controls)).performClick()
         rule.onNodeWithText(context.getString(R.string.action_pause_brew_guide)).performScrollTo().performClick()
         rule.runOnIdle {

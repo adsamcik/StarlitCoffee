@@ -777,7 +777,10 @@ private fun BrewSessionContent(
                 }
                 if (guidanceResolution != null) {
                     LiveBrewGuidance(guidanceResolution, onHelp, equipmentProfileId = equipmentProfileId,
-                        targetCue = primaryLiveBrewCue(stage?.referenceCues.orEmpty()))
+                        targetCue = primaryLiveBrewCue(stage?.referenceCues.orEmpty()),
+                        minimal = presentation.isTimerOnly ||
+                            (recipe?.calculatorSetup != null && runtime?.physicalClock == null) ||
+                            guidanceResolution.policy?.level == GuidancePresentationLevel.UTILITIES_ONLY)
                 }
                 if (guidanceResolution == null) {
                     primaryLiveBrewCue(stage?.referenceCues.orEmpty())?.let {
