@@ -22,6 +22,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.outlined.HelpOutline
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Info
@@ -65,6 +66,7 @@ import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -440,6 +442,9 @@ fun BrewSessionScreen(
                             ?.let { com.adsamcik.starlitcoffee.ui.util.localizedBrewMethodLabel(it) }
                             ?: stringResource(R.string.screen_brew_session_title),
                         modifier = Modifier.semantics { heading() },
+                        style = MaterialTheme.typography.titleMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
                 },
                 navigationIcon = {
@@ -451,9 +456,11 @@ fun BrewSessionScreen(
                     }
                 },
                 actions = {
-                    if (readerResolution?.availability is LearnGuidanceCatalogAvailability.Available) {
-                        TextButton(onClick = { showReadAhead = true }) {
-                            Text(stringResource(R.string.action_brew_recipe))
+                    if (availablePresentation?.status == BrewSessionStatus.COMPLETED &&
+                        readerResolution?.availability is LearnGuidanceCatalogAvailability.Available) {
+                        IconButton(onClick = { showHelp = true }) {
+                            Icon(Icons.AutoMirrored.Outlined.HelpOutline,
+                                contentDescription = stringResource(R.string.action_brew_help))
                         }
                     }
                     if (availablePresentation != null && availablePresentation.status != BrewSessionStatus.COMPLETED) {
@@ -583,6 +590,14 @@ fun BrewSessionScreen(
                 Text(stringResource(R.string.action_brew_help), style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.semantics { heading() })
                 BrewRecipeQuantities(persistedRecipe)
+                if (readerResolution?.availability is LearnGuidanceCatalogAvailability.Available) {
+                    TextButton(onClick = {
+                        showHelp = false
+                        showReadAhead = true
+                    }, modifier = Modifier.fillMaxWidth()) {
+                        Text(stringResource(R.string.action_brew_recipe))
+                    }
+                }
                 helpResolution?.let { resolution ->
                     BrewSessionGuidancePanel(
                         resolution = resolution,

@@ -77,6 +77,7 @@ class MinimalBrewScreenTest {
         rule.onNodeWithContentDescription(context.getString(R.string.cd_bloom_animation)).assertIsDisplayed()
         rule.onNodeWithText(context.getString(R.string.label_elapsed)).assertIsDisplayed()
         rule.onNodeWithText("340 g").assertIsDisplayed()
+        rule.onNodeWithText(context.getString(R.string.action_brew_recipe)).assertDoesNotExist()
         rule.onNodeWithText(context.getString(R.string.action_finish)).assertIsDisplayed()
         rule.onNodeWithText(context.getString(R.string.msg_brew_pulsar_basic_pour)).assertDoesNotExist()
         rule.onNodeWithText(context.getString(R.string.msg_brew_pulsar_hot_liquid), substring = true).assertDoesNotExist()
@@ -121,6 +122,7 @@ class MinimalBrewScreenTest {
         val quantities = context.getString(R.string.label_coffee) + " 20 g · " +
             context.getString(R.string.label_brew_reference_brew_water) + " 340 g"
         rule.onNodeWithText(quantities).assertIsDisplayed()
+        rule.onNodeWithText(context.getString(R.string.action_brew_recipe)).assertIsDisplayed()
         rule.onNodeWithText(sourceStep.instruction).performScrollTo().assertIsDisplayed()
         rule.onNodeWithText(guide.safety.first(), substring = true).performScrollTo().assertIsDisplayed()
         rule.onAllNodesWithText(context.getString(R.string.heading_guide_why))[0].performScrollTo().performClick()
@@ -139,6 +141,7 @@ class MinimalBrewScreenTest {
         render(request, runtime, large = true, dark = true)
         val complete = context.getString(R.string.action_complete_step)
         rule.onNodeWithText(complete).assertIsDisplayed()
+        rule.onNodeWithText(context.getString(R.string.action_brew_recipe)).assertDoesNotExist()
         rule.onNodeWithText("340 g").assertIsDisplayed()
         rule.onNodeWithContentDescription(context.getString(R.string.cd_bloom_animation)).assertIsDisplayed()
         rule.onNodeWithText(context.getString(R.string.msg_brew_pulsar_main_pour)).assertDoesNotExist()
@@ -153,11 +156,32 @@ class MinimalBrewScreenTest {
         rule.onNodeWithText(guide.steps[4].instruction).performScrollTo().assertIsDisplayed()
         rule.onNodeWithText(guide.safety.first(), substring = true).performScrollTo().assertIsDisplayed()
         rule.onNodeWithText(context.getString(R.string.action_return_to_live_brew)).performScrollTo().performClick()
-        rule.onNodeWithText(context.getString(R.string.action_brew_recipe)).performClick()
+        rule.onNodeWithText(context.getString(R.string.action_brew_recipe)).assertDoesNotExist()
+        rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).performScrollTo().performClick()
+        rule.onNodeWithText(context.getString(R.string.action_brew_recipe)).assertIsDisplayed().performClick()
+        save("minimal-recipe-200-dark")
         rule.onNodeWithText(context.getString(R.string.action_return_to_live_brew)).performClick()
         rule.runOnIdle { assertTrue("Reading must not advance or pause the brew", events.isEmpty()) }
         rule.onNodeWithText(complete).assertIsDisplayed().performClick()
         rule.runOnIdle { assertTrue(events.single() is SessionEvent.ManualAdvance) }
+    }
+
+    @Test
+    fun completedBrewKeepsRecipeAvailableThroughHelp() {
+        val guide = ReviewedMethodGuideLibrary.decode(context.assets.open(ReviewedMethodGuideLibrary.ASSET_PATH)
+            .bufferedReader().use { it.readText() }).single { it.methodId == "pulsar" }
+        val request = ReviewedGuideStartFactory.create(guide, BrewUiState(), null)
+        val endIndex = guide.steps.indexOfFirst { it.id == guide.endStepId }
+        val completed = SessionReducer.reduce(runningAt(request, endIndex, 190_000L), SessionEvent.Finish(),
+            SessionClockReading(190_000L, System.currentTimeMillis())).state
+        assertTrue(completed.status == BrewSessionStatus.COMPLETED)
+        render(request, completed, large = false, dark = true)
+        rule.onNodeWithText(context.getString(R.string.action_brew_recipe)).assertDoesNotExist()
+        rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).assertIsDisplayed().performClick()
+        rule.onNodeWithText(context.getString(R.string.action_brew_recipe)).assertIsDisplayed().performClick()
+        rule.onNodeWithText(context.getString(R.string.action_return_to_live_brew)).performClick()
+        rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).assertIsDisplayed()
+        rule.runOnIdle { assertTrue(events.isEmpty()) }
     }
 
     @Test
