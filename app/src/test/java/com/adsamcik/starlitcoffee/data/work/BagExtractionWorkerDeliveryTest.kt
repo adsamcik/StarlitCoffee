@@ -1,14 +1,158 @@
 package com.adsamcik.starlitcoffee.data.work
 
 import androidx.work.workDataOf
+import com.adsamcik.starlitcoffee.util.BagCaptureQuality
+import com.adsamcik.starlitcoffee.util.BagCaptureSide
+import com.adsamcik.starlitcoffee.util.BagFieldConfidence
+import com.adsamcik.starlitcoffee.util.BagFieldEvidence
+import com.adsamcik.starlitcoffee.util.BagFieldSourceType
+import com.adsamcik.starlitcoffee.util.BagPhotoProcessingResult
+import com.adsamcik.starlitcoffee.util.BagPhotoAnalysis
+import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
 import java.util.UUID
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class BagExtractionWorkerDeliveryTest {
+
+    @Test
+    fun `expired restart retains checkpoint evidence through OCR-only preview and interrupted terminal replay`() {
+        val checkpoint = BagPhotoProcessingResult(fieldEvidence = mapOf(
+            "name" to BagFieldEvidence(
+                fieldName = "name",
+                value = "Retained coffee",
+                sourceType = BagFieldSourceType.OCR,
+                confidence = BagFieldConfidence.HIGH,
+                previewUri = "content://front",
+            ),
+        ))
+        val restored = decodeBagExtractionResult(checkpoint.encodeToStoredJson())
+        val ocrOnly = BagPhotoProcessingResult(
+            capturedPhotoUris = "content://front",
+            photoAnalyses = listOf(BagPhotoAnalysis(
+                uri = "content://front",
+                side = BagCaptureSide.FRONT,
+                quality = BagCaptureQuality(20f, 0f, 0f, 0f, 1, true),
+                extractedText = "Fresh OCR text",
+            )),
+        )
+        val preview = retainBagExtractionPreview(ocrOnly, restored)
+        val checkpointAfterPreview = decodeBagExtractionResult(preview.encodeToStoredJson())
+        assertEquals(checkpoint.fieldEvidence, preview.fieldEvidence)
+        listOf(
+            LlmEnrichmentStatus.TIMED_OUT, LlmEnrichmentStatus.SETUP_REQUIRED,
+            LlmEnrichmentStatus.AUTHORIZATION_REQUIRED, LlmEnrichmentStatus.UNAVAILABLE, LlmEnrichmentStatus.FAILED,
+        ).forEach { status ->
+            val result = retainBagExtractionPartial(
+                terminalResult = ocrOnly.copy(llmStatus = status),
+                latestPartialResult = checkpointAfterPreview,
+            )
+            val replay = StoredBagExtractionResult(
+                successful = true,
+                resultJson = result.encodeToStoredJson(),
+                createdAtMillis = 42L,
+            ).toTerminalReplay(null)
+
+            assertEquals("Retained coffee", replay.result?.ocrPrefill?.name)
+            assertEquals(checkpoint.fieldEvidence, replay.result?.fieldEvidence)
+            assertEquals(status, replay.result?.llmStatus)
+            assertEquals("content://front", replay.result?.capturedPhotoUris)
+        }
+    }
+
+    @Test
+    fun `barcode-only restart preview and timeout retain previous fields alongside fresh barcode`() {
+        val checkpoint = BagPhotoProcessingResult(fieldEvidence = mapOf(
+            "name" to BagFieldEvidence(
+                fieldName = "name",
+                value = "Retained coffee",
+                sourceType = BagFieldSourceType.OCR,
+                confidence = BagFieldConfidence.HIGH,
+            ),
+        ))
+        val barcodeOnly = BagPhotoProcessingResult(
+            capturedPhotoUris = "content://front",
+            detectedBarcode = "12345678",
+        )
+        val preview = retainBagExtractionPreview(barcodeOnly, decodeBagExtractionResult(checkpoint.encodeToStoredJson()))
+        val terminal = retainBagExtractionPartial(
+            barcodeOnly.copy(llmStatus = LlmEnrichmentStatus.TIMED_OUT),
+            decodeBagExtractionResult(preview.encodeToStoredJson()),
+        )
+        val replay = StoredBagExtractionResult(true, terminal.encodeToStoredJson(), 42L).toTerminalReplay(null)
+
+        assertEquals(checkpoint.fieldEvidence, preview.fieldEvidence)
+        assertEquals("12345678", preview.detectedBarcode)
+        assertEquals("Retained coffee", replay.result?.ocrPrefill?.name)
+        assertEquals("12345678", replay.result?.detectedBarcode)
+        assertEquals(LlmEnrichmentStatus.TIMED_OUT, replay.result?.llmStatus)
+    }
+
+    @Test
+    fun `successful empty extraction does not revive checkpoint values`() {
+        val checkpoint = BagPhotoProcessingResult(detectedBarcode = "12345678")
+        val successful = BagPhotoProcessingResult(
+            capturedPhotoUris = "content://front",
+            llmStatus = LlmEnrichmentStatus.SUCCEEDED,
+        )
+
+        assertSame(successful, retainBagExtractionPartial(successful, checkpoint))
+    }
+
+    @Test
+    fun `later failure retains the latest partial fields through terminal result replay`() {
+        val partial = BagPhotoProcessingResult(fieldEvidence = mapOf(
+            "name" to BagFieldEvidence(
+                fieldName = "name",
+                value = "My coffee",
+                sourceType = BagFieldSourceType.OCR,
+                confidence = BagFieldConfidence.HIGH,
+            ),
+        ))
+        val failure = bagExtractionFailureResult(partial, null, "content://front")
+        val replay = StoredBagExtractionResult(
+            successful = false,
+            resultJson = failure.encodeToStoredJson(),
+            createdAtMillis = 42L,
+        ).toTerminalReplay(null)
+
+        assertFalse(replay.successful)
+        assertEquals("My coffee", replay.result?.ocrPrefill?.name)
+        assertEquals(partial.fieldEvidence, replay.result?.fieldEvidence)
+        assertEquals(LlmEnrichmentStatus.UNAVAILABLE, replay.result?.llmStatus)
+        assertEquals("content://front", replay.result?.capturedPhotoUris)
+    }
+
+    @Test
+    fun `failure before a fresh partial retains the persisted checkpoint`() {
+        val checkpoint = BagPhotoProcessingResult(
+            capturedPhotoUris = "content://front",
+            detectedBarcode = "12345678",
+        )
+
+        val failure = bagExtractionFailureResult(
+            latestPartialResult = BagPhotoProcessingResult(capturedPhotoUris = "content://front"),
+            checkpointJson = checkpoint.encodeToStoredJson(),
+            capturedPhotoUris = "",
+        )
+
+        assertEquals("12345678", failure.detectedBarcode)
+        assertEquals("content://front", failure.capturedPhotoUris)
+        assertEquals(LlmEnrichmentStatus.UNAVAILABLE, failure.llmStatus)
+    }
+
+    @Test
+    fun `corrupt checkpoint still yields a terminal failure without fabricating fields`() {
+        val failure = bagExtractionFailureResult(null, "invalid json", "content://front")
+
+        assertTrue(failure.fieldEvidence.isEmpty())
+        assertEquals("content://front", failure.capturedPhotoUris)
+        assertEquals(LlmEnrichmentStatus.UNAVAILABLE, failure.llmStatus)
+    }
 
     @Test
     fun `background scan input requests a completion notification`() {

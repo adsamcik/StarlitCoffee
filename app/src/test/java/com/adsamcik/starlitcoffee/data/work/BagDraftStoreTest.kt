@@ -18,9 +18,99 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class BagDraftStoreTest {
+    @Test
+    fun `remaining photo preserves normalized decaf values and suggestions`() {
+        fun scanned(confidence: BagFieldConfidence): BagScanDraft {
+            val result = BagPhotoProcessingResult(
+                ocrPrefill = OcrFieldExtractor.OcrExtractionResult(isDecaf = true),
+                fieldEvidence = mapOf("isDecaf" to BagFieldEvidence(
+                    fieldName = "isDecaf",
+                    value = "Decaf",
+                    sourceType = BagFieldSourceType.OCR,
+                    confidence = confidence,
+                    previewUri = "content://front",
+                )),
+            )
+            return emptyDraft().copy(photoUris = listOf("content://front", "content://back"))
+                .applyRecognitionResult(result, 2L, "generation-1", "work-1", terminal = true)
+                .withPhotoUris(listOf("content://front"))
+        }
+
+        val accepted = scanned(BagFieldConfidence.HIGH)
+        val suggested = scanned(BagFieldConfidence.MEDIUM)
+
+        assertEquals("true", accepted.field(BagDraftField.IS_DECAF).value)
+        assertEquals("true", suggested.field(BagDraftField.IS_DECAF).pendingSuggestion?.value)
+        assertNull(suggested.field(BagDraftField.IS_DECAF).value)
+        assertEquals("Decaf", decodeBagExtractionResult(requireNotNull(accepted.resultJson)).fieldEvidence["isDecaf"]?.value)
+    }
+
+    @Test
+    fun `removing a source drops its readings while preserving evidence from the remaining photo`() {
+        val original = result("Front coffee", "Back roaster").let { result ->
+            result.copy(fieldEvidence = result.fieldEvidence.mapValues { (name, evidence) ->
+                evidence.copy(previewUri = if (name == "name") "content://front" else "content://back")
+            })
+        }
+        val draft = emptyDraft().copy(photoUris = listOf("content://front", "content://back"))
+            .applyRecognitionResult(original, 2L, "generation-1", "work-1", terminal = true)
+
+        val removed = draft.withPhotoUris(listOf("content://front"))
+
+        assertEquals("Front coffee", removed.field(BagDraftField.NAME).value)
+        assertNull(removed.field(BagDraftField.ROASTER).value)
+        assertNull(removed.field(BagDraftField.ROASTER).pendingSuggestion)
+        assertEquals(setOf("name"), decodeBagExtractionResult(requireNotNull(removed.resultJson)).fieldEvidence.keys)
+        assertEquals(RecognitionRunState.IDLE, removed.recognitionRunState)
+        assertNull(removed.workId)
+        assertFalse(draft.generationId == removed.generationId)
+        assertSame(removed, removed.applyRecognitionResult(original, 3L, "generation-1", "work-1", terminal = true))
+    }
+
+    @Test
+    fun `removing every photo preserves user edits clears and existing bag data without stale suggestions`() {
+        val edited = recognizedDraft()
+            .applyUserEdit(BagDraftField.NAME, "", 3L)
+            .applyUserEdit(BagDraftField.ROASTER, "My roaster", 4L)
+        val draft = edited.copy(fields = edited.fields + mapOf(
+                "origin" to BagDraftFieldValue(value = "Ethiopia", source = BagDraftFieldSource.EXISTING_BAG),
+                "region" to BagDraftFieldValue(pendingSuggestion = BagDraftSuggestion("Old region", 4L)),
+        ))
+
+        val removed = draft.withPhotoUris(emptyList())
+        val completed = removed.copy(recognitionRunState = RecognitionRunState.RUNNING).applyRecognitionResult(
+            incoming = BagPhotoProcessingResult(capturedPhotoUris = ""),
+            sourceRevision = 5L,
+            generationId = requireNotNull(removed.generationId),
+            workId = null,
+            terminal = true,
+        )
+
+        assertEquals("", completed.field(BagDraftField.NAME).value)
+        assertEquals("My roaster", completed.field(BagDraftField.ROASTER).value)
+        assertEquals("Ethiopia", completed.field(BagDraftField.ORIGIN).value)
+        assertNull(completed.field(BagDraftField.REGION).pendingSuggestion)
+        assertEquals(RecognitionRunState.IDLE, completed.recognitionRunState)
+        assertTrue(completed.photoUris.isEmpty())
+        assertNull(removed.resultJson)
+        assertNull(completed.workId)
+    }
+
+    @Test
+    fun `adding photos preserves recognized values and their result payload`() {
+        val draft = recognizedDraft()
+
+        val expanded = draft.withPhotoUris(listOf("content://front", "content://back"))
+
+        assertEquals(draft.fields, expanded.fields)
+        assertEquals(draft.resultJson, expanded.resultJson)
+        assertEquals(draft.generationId, expanded.generationId)
+    }
+
     @Test
     fun `review location survives reopen without changing edits revisions or recent activity`() {
         val directory = Files.createTempDirectory("bag-draft-review-location").toFile()

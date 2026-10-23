@@ -18,6 +18,29 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class MindlayerLlmInferenceProviderTest {
+    @Test
+    fun `malformed optional evidence does not discard usable fields`() {
+        val result = MindlayerLlmInferenceProvider.parseResponse(
+            """{"name":{"value":"Coffee","status":"found","evidence":[]},"origin":"Colombia"}""",
+            setOf("name", "origin"),
+        ) as LlmExtractionResult.Success
+
+        assertEquals(setOf("Coffee", "Colombia"), result.fieldCandidates.map { it.value }.toSet())
+        assertNull(result.fieldCandidates.first { it.fieldName == "name" }.supportingText)
+    }
+
+    @Test
+    fun `field evidence survives parsing and final resolution`() {
+        val result = MindlayerLlmInferenceProvider.parseResponse(
+            """{"origin":{"value":"Colombia","status":"found","evidence":"  ORIGIN: COLOMBIA  "}}""",
+            setOf("origin"),
+        ) as LlmExtractionResult.Success
+
+        val evidence = com.adsamcik.starlitcoffee.util.BagPhotoScanSupport.resolveField("origin", result.fieldCandidates)
+        assertEquals("ORIGIN: COLOMBIA", evidence?.supportingText)
+        assertEquals("Colombia", evidence?.value)
+    }
+
 
     @Test
     fun `vision uses single-pass tool routing for structured output`() {

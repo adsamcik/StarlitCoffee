@@ -32,8 +32,8 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 
 /**
- * One serialized full-pipeline record per corpus bag: the text-only score and
- * the combined (text -> vision -> combine) score, side by side. Appended one
+ * One serialized diagnostic record per corpus bag: the text-only score and
+ * the experimental combined (text -> vision -> combine) score, side by side. Appended one
  * line at a time by [FullPipelineBenchmarkTest] and read back by
  * [FullPipelineAggregateTest].
  */
@@ -46,8 +46,10 @@ data class FullPipelineBagRecord(
 )
 
 /**
- * Full-pipeline (text -> vision -> combine) quality benchmark for ONE corpus
- * bag per test process.
+ * Report-only model experiment (text -> vision -> combine) for ONE corpus bag per test process.
+ * It deliberately compares independent passes and experimental overlays, rather than calling the
+ * production extractor. Its scores do not establish production quality or pass the acceptance
+ * gate. [BagScanBestCaseGateTest] scores the actual extractor's final sanitized prefill.
  *
  * # Why one bag per process
  *
@@ -71,7 +73,7 @@ data class FullPipelineBagRecord(
  *  3. COMBINE pass — `combineBagFields` reconciling the text + vision values.
  *
  * It then scores TWO extractions against ground truth: text-only, and the
- * pipeline's final merged output (text, overlaid by vision, overlaid by
+ * experiment's merged output (text, overlaid by vision, overlaid by
  * combine). Both land in one [FullPipelineBagRecord] appended to the JSONL.
  *
  * # Running
@@ -103,6 +105,10 @@ class FullPipelineBenchmarkTest {
         assumeTrue("Bag '$bagId' not in the automation-ready corpus.", bag != null)
 
         val context = InstrumentationRegistry.getInstrumentation().targetContext
+        Log.i(
+            CorpusFixture.BENCHMARK_TAG,
+            "REPORT ONLY: independent model passes and overlays; production acceptance uses BagScanBestCaseGateTest.",
+        )
         val llm = MindlayerLlmInferenceProvider(context)
         assumeTrue(
             "Mindlayer LLM not available — start the service and approve the app, then retry.",
@@ -198,20 +204,15 @@ class FullPipelineBenchmarkTest {
             emptyMap()
         }
 
-        // Final pipeline output: text, overlaid by CONFIDENT vision, overlaid by combine.
+        // Experimental overlay, not the production candidate resolver's output.
         val combinedExtraction = buildMap<String, String?> {
             putAll(textFields)
             putAll(visionFound)
             putAll(combineFields)
         }
 
-        // Apply the SAME deterministic sanitization every real save/prefill
-        // goes through (BagPhotoScanSupport.buildPrefill) before scoring, so
-        // this benchmark measures what a user actually sees, not the raw
-        // pre-sanitization model output. Skipping this step was itself a real
-        // gap: it made the benchmark measure hallucinations (e.g. a country
-        // duplicated into region) that production already silently corrects,
-        // while understating others production doesn't sanitize (dates).
+        // Share scalar sanitization with production, but do not treat this independent overlay
+        // experiment as a substitute for the extractor's deadline, arbitration, or refinement.
         val sanitized = CoffeeMetadataNormalizer.sanitizeExtraction(
             origin = combinedExtraction["origin"],
             region = combinedExtraction["region"],

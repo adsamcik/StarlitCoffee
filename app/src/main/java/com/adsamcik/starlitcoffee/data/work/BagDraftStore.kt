@@ -8,6 +8,7 @@ import com.adsamcik.starlitcoffee.util.AndroidFileSync
 import com.adsamcik.starlitcoffee.util.BagFieldConfidence
 import com.adsamcik.starlitcoffee.util.BagFieldEvidence
 import com.adsamcik.starlitcoffee.util.BagPhotoProcessingResult
+import com.adsamcik.starlitcoffee.util.BagPhotoScanSupport
 import com.adsamcik.starlitcoffee.util.DirectorySync
 import com.adsamcik.starlitcoffee.util.FileSync
 import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
@@ -226,8 +227,62 @@ internal fun BagScanDraft.applyRecognitionResult(
         fields = reviewableDraft.mergeRecognitionFields(incomingFields, sourceRevision, focusedFields),
         recognitionRunState = incoming.resolveRecognitionRunState(incomingFields, terminal, recognitionPreference),
         recognitionCapability = incoming.updatedRecognitionCapabilityOr(recognitionCapability),
-        workId = workId ?: this.workId,
+        workId = if (terminal && incoming.capturedPhotoUris?.isBlank() == true) null else workId ?: this.workId,
         resultJson = incoming.encodeToStoredJson(),
+    )
+}
+
+/** Removing a source invalidates only machine values that cannot be traced to a retained photo. */
+internal fun BagScanDraft.withPhotoUris(photoUris: List<String>): BagScanDraft {
+    val distinctUris = photoUris.distinct()
+    if (!isActive || this.photoUris == distinctUris) return this
+    val removedSource = this.photoUris.any { it !in distinctUris }
+    if (!removedSource) {
+        return copy(
+            photoUris = distinctUris,
+            fields = fields.mapValues { (_, field) -> field.copy(rejectedSuggestionValue = null) },
+        )
+    }
+    val previousResult = resultJson?.let { runCatching { decodeBagExtractionResult(it) }.getOrNull() }
+    val retainedEvidence = previousResult?.fieldEvidence.orEmpty().filterValues { evidence ->
+        evidence.previewUri != null && evidence.previewUri in distinctUris
+    }
+    val retainedResult = previousResult?.takeIf { retainedEvidence.isNotEmpty() }?.copy(
+        capturedPhotoUris = distinctUris.joinToString(","),
+        ocrPrefill = BagPhotoScanSupport.buildPrefill(retainedEvidence),
+        fieldEvidence = retainedEvidence,
+        detectedBarcode = retainedEvidence["barcode"]?.value,
+        detectedQrUrl = null,
+        offLookupName = null,
+        offLookupRoaster = null,
+        thumbnailFocus = null,
+        reviewHints = emptyList(),
+    )
+    val retainedFields = retainedResult?.toDraftFieldValues().orEmpty().mapKeys { it.key.wireName }
+    return copy(
+        photoUris = distinctUris,
+        // Reject late results from the former source set even before another scan is queued.
+        generationId = UUID.randomUUID().toString(),
+        workId = null,
+        recognitionRunState = RecognitionRunState.IDLE,
+        resultJson = retainedResult?.encodeToStoredJson(),
+        fields = fields.mapValues { (name, field) ->
+            val candidate = retainedFields[name]
+            val retainedValue = candidate != null && candidate.value == field.value
+            val protectedValue = field.source == BagDraftFieldSource.USER ||
+                field.source == BagDraftFieldSource.EXISTING_BAG || field.userRevision > 0L
+            if (protectedValue || retainedValue) {
+                field.copy(
+                    pendingSuggestion = field.pendingSuggestion?.takeIf { it.value == candidate?.value },
+                    rejectedSuggestionValue = null,
+                )
+            } else {
+                BagDraftFieldValue(
+                    pendingSuggestion = field.pendingSuggestion?.takeIf { it.value == candidate?.value },
+                    reviewState = if (candidate != null) BagDraftReviewState.NEEDS_REVIEW else BagDraftReviewState.MISSING,
+                )
+            }
+        },
     )
 }
 
@@ -269,7 +324,6 @@ private fun BagPhotoProcessingResult.updatedPhotoUrisOr(
     ?.map(String::trim)
     ?.filter(String::isNotBlank)
     ?.distinct()
-    ?.takeIf { it.isNotEmpty() }
     ?: currentPhotoUris
 
 private fun BagPhotoProcessingResult.resolveRecognitionRunState(
@@ -277,6 +331,7 @@ private fun BagPhotoProcessingResult.resolveRecognitionRunState(
     terminal: Boolean,
     preference: RecognitionPreference,
 ): RecognitionRunState = when {
+    terminal && capturedPhotoUris?.isBlank() == true -> RecognitionRunState.IDLE
     terminal && (
         llmStatus == LlmEnrichmentStatus.AUTHORIZATION_REQUIRED ||
             llmStatus == LlmEnrichmentStatus.SETUP_REQUIRED
@@ -473,14 +528,10 @@ object BagDraftStore {
         val next = when {
             current == null -> newBagScanDraft(sessionId, photoUris, reviewContext, preference, nowMillis)
             !current.isActive -> current
-            else -> current.copy(
+            else -> current.withPhotoUris(photoUris).copy(
                 updatedAtMillis = nowMillis,
-                photoUris = photoUris.distinct(),
                 reviewContext = reviewContext,
                 recognitionPreference = preference,
-                fields = if (current.photoUris == photoUris.distinct()) current.fields else {
-                    current.fields.mapValues { (_, field) -> field.copy(rejectedSuggestionValue = null) }
-                },
             )
         }
         if (next != current) write(context, next)

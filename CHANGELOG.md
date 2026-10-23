@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Optional coffee-label recognition now uses Mindlayer `1.0.0-alpha.10`, including
+  its responsive OCR timeout handling.
+
 - **Unified coffee scan** — one camera reads labels, barcodes and QR codes, with
   photo import available from the same scan screen and manual entry close at hand.
 - **Coffee-label review** — edit the coffee name and roaster directly, expand
@@ -27,6 +30,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Accessible brewing layouts** — clock labels retain explicit hour/minute
   units, unknown start times remain unknown, and narrow screens and larger text
   keep the primary action and named background-brew controls reachable.
+
+### Fixed
+
+- Coffee-label scans no longer infer bean origin from countries where a product
+  is sold. Confident vocabulary refinements affect the selected field, model
+  evidence remains available for review, and refined OCR regions keep the
+  correct photo coordinates.
+- Interrupted scans retain usable partial results. Removing photos clears
+  unsupported automatic readings while preserving edits, empty captures stop
+  processing, and restored rescans wait for the saved coffee list to load.
+- The best-case label-quality gate now scores the production extraction result;
+  experimental model-pass comparisons are explicitly report-only.
 
 ### Security
 

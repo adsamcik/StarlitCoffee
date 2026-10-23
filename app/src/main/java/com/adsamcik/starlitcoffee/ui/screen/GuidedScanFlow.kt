@@ -312,6 +312,7 @@ fun BagDraftReviewRoute(
     draftViewModel: BagScanDraftViewModel,
     brewViewModel: BrewViewModel,
     existingBags: List<CoffeeBagEntity>,
+    inventoryLoaded: Boolean,
     onExit: () -> Unit,
     onScanMore: (String) -> Unit,
     onMissing: () -> Unit,
@@ -371,7 +372,9 @@ fun BagDraftReviewRoute(
     if (current.reviewContext.mode == BagReviewMode.RESCAN) {
         val target = existingBags.firstOrNull { it.id == current.reviewContext.targetBagId }
         if (target == null) {
-            LaunchedEffect(current.reviewContext.targetBagId) { onMissing() }
+            if (inventoryLoaded) {
+                LaunchedEffect(current.reviewContext.targetBagId) { onMissing() }
+            }
             return
         }
         ScanRescanReview(

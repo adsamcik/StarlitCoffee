@@ -4,6 +4,7 @@ import com.adsamcik.starlitcoffee.data.network.ProductResult
 import com.adsamcik.starlitcoffee.util.BagFieldCandidate
 import com.adsamcik.starlitcoffee.util.BagFieldConfidence
 import com.adsamcik.starlitcoffee.util.BagFieldSourceType
+import com.adsamcik.starlitcoffee.util.BagPhotoScanSupport
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -84,6 +85,36 @@ class BrewBagScanTest {
         val origin = candidates.first { it.fieldName == "origin" }
         assertEquals("Ethiopia Yirgacheffe", origin.value)
         assertEquals(BagFieldConfidence.MEDIUM, origin.confidenceHint)
+    }
+
+    @Test
+    fun `sales market cannot replace a label origin or invent one`() = runTest {
+        val vm = BrewViewModel(openFoodFactsLookup = { productResult(countriesTags = listOf("en:brazil")) })
+        val candidates = mutableListOf<BagFieldCandidate>()
+
+        vm.addOpenFoodFactsCandidates(candidates, "1234567890")
+
+        assertNull(BagPhotoScanSupport.resolveField("origin", candidates))
+        candidates += BagFieldCandidate(
+            fieldName = "origin",
+            value = "Colombia",
+            sourceType = BagFieldSourceType.LLM,
+            confidenceHint = BagFieldConfidence.HIGH,
+        )
+        assertEquals("Colombia", BagPhotoScanSupport.resolveField("origin", candidates)?.value)
+    }
+
+    @Test
+    fun `explicit origin remains usable when a sales market is also present`() = runTest {
+        val vm = BrewViewModel(openFoodFactsLookup = {
+            productResult(origins = "Colombia", countriesTags = listOf("en:brazil"))
+        })
+        val candidates = mutableListOf<BagFieldCandidate>()
+
+        vm.addOpenFoodFactsCandidates(candidates, "1234567890")
+
+        assertEquals("Colombia", BagPhotoScanSupport.resolveField("origin", candidates)?.value)
+        assertEquals(1, candidates.count { it.fieldName == "origin" })
     }
 
     @Test

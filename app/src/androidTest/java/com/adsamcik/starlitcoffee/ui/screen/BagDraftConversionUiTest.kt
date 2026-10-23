@@ -1,6 +1,9 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import android.app.Application
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -36,7 +39,7 @@ class BagDraftConversionUiTest {
     @get:Rule val composeRule = createComposeRule()
 
     @Test
-    fun newBagConvertsTheCurrentRouteWithoutPoppingAndReopensAsAddNew() {
+    fun rescanWaitsForInventoryThenConvertsWithoutPoppingAndReopensAsAddNew() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val directory = File(context.cacheDir, "draft-conversion-${UUID.randomUUID()}")
         val application = object : Application() {
@@ -46,6 +49,8 @@ class BagDraftConversionUiTest {
         val store = ViewModelStore()
         var exits = 0
         var missing = 0
+        var inventoryLoaded by mutableStateOf(false)
+        var existingBags by mutableStateOf(emptyList<CoffeeBagEntity>())
         lateinit var draft: BagScanDraftViewModel
         lateinit var brew: BrewViewModel
         try {
@@ -74,10 +79,16 @@ class BagDraftConversionUiTest {
                 StarlitCoffeeTheme(dynamicColor = false) {
                     BagDraftReviewRoute(
                         draftViewModel = draft, brewViewModel = brew,
-                        existingBags = listOf(CoffeeBagEntity(id = 42L, name = "Former target")),
+                        existingBags = existingBags,
+                        inventoryLoaded = inventoryLoaded,
                         onExit = { exits++ }, onScanMore = {}, onMissing = { missing++ },
                     )
                 }
+            }
+            composeRule.runOnIdle {
+                assertEquals(0, missing)
+                existingBags = listOf(CoffeeBagEntity(id = 42L, name = "Former target"))
+                inventoryLoaded = true
             }
             composeRule.onNodeWithText(context.getString(R.string.action_new_bag)).performClick()
             composeRule.onNodeWithText(context.getString(R.string.action_save_coffee)).assertIsDisplayed()

@@ -1282,7 +1282,13 @@ class MindlayerLlmInferenceProvider(
             }
             if (value.isNullOrBlank() || status == "not_visible") return null
             if (value.trim().lowercase() in SENTINEL_NON_VALUES) return null
-            if (requireEvidence && !hasSubstantiveEvidence(fieldEntry)) return null
+            val evidence = if (requireEvidence) {
+                substantiveEvidence(fieldEntry)
+            } else {
+                // Optional malformed metadata must not discard otherwise usable fields.
+                runCatching { substantiveEvidence(fieldEntry) }.getOrNull()
+            }
+            if (requireEvidence && evidence == null) return null
             val normalized = when (fieldName) {
                 "isDecaf" -> normalizeDecafBoolean(value).orEmpty()
                 else -> normalizeControlledValue(fieldName, value.trim())
@@ -1292,6 +1298,7 @@ class MindlayerLlmInferenceProvider(
                 fieldName = fieldName,
                 value = normalized,
                 sourceType = BagFieldSourceType.LLM,
+                supportingText = evidence,
                 confidenceHint = when (status) {
                     "found" -> BagFieldConfidence.HIGH
                     "uncertain" -> BagFieldConfidence.LOW
@@ -1314,12 +1321,12 @@ class MindlayerLlmInferenceProvider(
          * of surfacing a confident hallucination. A structural presence check on
          * the model's OWN stated justification, not a value dictionary.
          */
-        private fun hasSubstantiveEvidence(fieldEntry: kotlinx.serialization.json.JsonElement?): Boolean {
+        private fun substantiveEvidence(fieldEntry: kotlinx.serialization.json.JsonElement?): String? {
             val evidence = (fieldEntry as? JsonObject)
                 ?.get("evidence")
                 ?.let { e -> if (e is JsonNull) null else e.jsonPrimitive.contentOrNull }
                 ?.trim()
-            return !evidence.isNullOrBlank() && evidence.lowercase() !in SENTINEL_NON_VALUES
+            return evidence?.takeIf { it.isNotBlank() && it.lowercase() !in SENTINEL_NON_VALUES }
         }
 
         /**

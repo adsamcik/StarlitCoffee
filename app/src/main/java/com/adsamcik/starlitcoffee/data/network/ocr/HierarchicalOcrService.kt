@@ -1,10 +1,14 @@
 package com.adsamcik.starlitcoffee.data.network.ocr
 
 import android.graphics.Bitmap
+import android.graphics.Point
 import android.graphics.Rect
 import androidx.core.graphics.scale
+import kotlin.math.ceil
+import kotlin.math.floor
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.math.roundToInt
 import dev.tracebox.Tracebox
 import dev.tracebox.api.LogTemplate
 import dev.tracebox.api.argument
@@ -144,11 +148,13 @@ class HierarchicalOcrService(
         block: RecognizedTextBlock,
     ): RecognizedText? {
         val bbox = block.boundingBox ?: return null
-        val crop = cropAndMaybeUpscale(bitmap, bbox) ?: return null
+        val crop = cropWithGeometry(bitmap, bbox) ?: return null
         return try {
-            delegate.recognize(crop)
+            delegate.recognize(crop.bitmap)?.let { result ->
+                result.copy(blocks = result.blocks.map(crop::toSourceCoordinates))
+            }
         } finally {
-            crop.recycleIfOwned(bitmap)
+            crop.bitmap.recycleIfOwned(bitmap)
         }
     }
 
@@ -162,7 +168,10 @@ class HierarchicalOcrService(
      * input itself for a full-frame crop, so callers must use identity rather
      * than assuming every successful crop is owned.
      */
-    internal fun cropAndMaybeUpscale(bitmap: Bitmap, bbox: Rect): Bitmap? {
+    internal fun cropAndMaybeUpscale(bitmap: Bitmap, bbox: Rect): Bitmap? =
+        cropWithGeometry(bitmap, bbox)?.bitmap
+
+    private fun cropWithGeometry(bitmap: Bitmap, bbox: Rect): RegionCrop? {
         val padX = max(1, (bbox.width() * CROP_PADDING_FRACTION).toInt())
         val padY = max(1, (bbox.height() * CROP_PADDING_FRACTION).toInt())
         val cropLeft = max(0, bbox.left - padX)
@@ -184,7 +193,8 @@ class HierarchicalOcrService(
         }
 
         val smallerDim = min(cropW, cropH)
-        if (smallerDim >= TARGET_MIN_DIMENSION_PX) return baseCrop
+        val sourceBounds = Rect(cropLeft, cropTop, cropRight, cropBottom)
+        if (smallerDim >= TARGET_MIN_DIMENSION_PX) return RegionCrop(baseCrop, sourceBounds)
 
         val scale = min(
             MAX_UPSCALE_FACTOR.toFloat(),
@@ -194,7 +204,7 @@ class HierarchicalOcrService(
         val newH = (cropH * scale).toInt().coerceAtLeast(MIN_CROP_DIMENSION_PX)
         var scaledCrop: Bitmap? = null
         var returningBaseCrop = false
-        return try {
+        val result = try {
             baseCrop.scale(newW, newH).also {
                 scaledCrop = it
             }
@@ -209,6 +219,41 @@ class HierarchicalOcrService(
                 baseCrop.recycleIfOwned(bitmap)
             }
         }
+        return RegionCrop(result, sourceBounds)
+    }
+
+    /** Uses actual output dimensions, including integer rounding and upscale allocation fallback. */
+    private class RegionCrop(val bitmap: Bitmap, private val sourceBounds: Rect) {
+        private val scaleX = sourceBounds.width().toDouble() / bitmap.width
+        private val scaleY = sourceBounds.height().toDouble() / bitmap.height
+
+        fun toSourceCoordinates(block: RecognizedTextBlock): RecognizedTextBlock = block.copy(
+            boundingBox = block.boundingBox?.let(::toSourceRect),
+            lines = block.lines.map { line ->
+                line.copy(
+                    boundingBox = line.boundingBox?.let(::toSourceRect),
+                    cornerPoints = line.cornerPoints?.map { point ->
+                        Point(
+                            (sourceBounds.left + point.x * scaleX).roundToInt()
+                                .coerceIn(sourceBounds.left, sourceBounds.right),
+                            (sourceBounds.top + point.y * scaleY).roundToInt()
+                                .coerceIn(sourceBounds.top, sourceBounds.bottom),
+                        )
+                    }?.toTypedArray(),
+                )
+            },
+        )
+
+        private fun toSourceRect(rect: Rect): Rect = Rect(
+            floor(sourceBounds.left + rect.left * scaleX).toInt()
+                .coerceIn(sourceBounds.left, sourceBounds.right),
+            floor(sourceBounds.top + rect.top * scaleY).toInt()
+                .coerceIn(sourceBounds.top, sourceBounds.bottom),
+            ceil(sourceBounds.left + rect.right * scaleX).toInt()
+                .coerceIn(sourceBounds.left, sourceBounds.right),
+            ceil(sourceBounds.top + rect.bottom * scaleY).toInt()
+                .coerceIn(sourceBounds.top, sourceBounds.bottom),
+        )
     }
 
     private fun Bitmap.recycleIfOwned(source: Bitmap) {

@@ -1001,10 +1001,13 @@ fun StarlitNavHost() {
                         },
                     )
                     val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
+                    val inventoryLoaded by brewViewModel.isCoffeeBagInventoryLoaded
+                        .collectAsStateWithLifecycle()
                     BagDraftReviewRoute(
                         draftViewModel = draftViewModel,
                         brewViewModel = brewViewModel,
                         existingBags = bags,
+                        inventoryLoaded = inventoryLoaded,
                         onExit = { navController.popBackStack() },
                         onScanMore = { sessionId ->
                             navController.navigate(GuidedScanDraft(sessionId))

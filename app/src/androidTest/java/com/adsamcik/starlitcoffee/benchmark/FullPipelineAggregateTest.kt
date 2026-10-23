@@ -13,7 +13,7 @@ import org.junit.runner.RunWith
 /**
  * Reduces the per-bag [FullPipelineBagRecord]s written by
  * [FullPipelineBenchmarkTest] (one process per bag) into two comparable
- * [QualityReport]s — text-only vs the full text->vision->combine pipeline — plus
+ * report-only [QualityReport]s — text-only vs the experimental text->vision->combine overlay — plus
  * a delta summary so the vision/combine contribution is visible at a glance.
  *
  * Run last, after the per-bag loop, in its own process:
@@ -57,7 +57,8 @@ class FullPipelineAggregateTest {
         text: QualityReport,
         combined: QualityReport,
     ): String = buildString {
-        appendLine("===== FULL-PIPELINE DELTA (text-only -> text+vision+combine) =====")
+        appendLine("===== REPORT-ONLY MODEL EXPERIMENT (text-only -> text+vision+combine overlay) =====")
+        appendLine("Production acceptance: BagScanBestCaseGateTest; these overlays do not use the production resolver.")
         appendLine("Bags: $bagCount")
         appendLine(
             "Overall exactAcc:    ${pct(text.overall.exactAccuracy)} -> ${pct(combined.overall.exactAccuracy)}  " +

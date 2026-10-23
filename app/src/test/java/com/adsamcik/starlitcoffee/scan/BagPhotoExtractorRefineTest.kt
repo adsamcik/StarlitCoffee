@@ -7,6 +7,7 @@ import com.adsamcik.starlitcoffee.data.network.llm.LlmRefineRequest
 import com.adsamcik.starlitcoffee.util.BagFieldCandidate
 import com.adsamcik.starlitcoffee.util.BagFieldConfidence
 import com.adsamcik.starlitcoffee.util.BagFieldSourceType
+import com.adsamcik.starlitcoffee.util.BagPhotoScanSupport
 import com.adsamcik.starlitcoffee.util.CoffeeFilterVocabulary
 import com.adsamcik.starlitcoffee.util.CoffeeVocabularyEntry
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -87,6 +88,34 @@ class BagPhotoExtractorRefineTest {
         assertEquals(setOf("origin"), provider.lastRequest?.fieldsNeeded)
         assertEquals(listOf("Colombia"), provider.lastRequest?.suggestionsByField?.get("origin"))
         assertEquals(listOf("Colombia"), result.map { it.value })
+    }
+
+    @Test
+    fun `canonicalization wins final field resolution including repeated model readings`() = runTest {
+        val provider = RefineProvider(response = listOf(llmCandidate("origin", "Colombia")))
+        val candidates = mutableListOf(
+            llmCandidate("origin", "Columbia").copy(supportingText = "Origin: Columbia"),
+            llmCandidate("origin", "Columbia"),
+        )
+
+        extractor(provider).applyRefineEnrichmentIfNeeded(candidates)
+
+        assertEquals(1, provider.refineCalls)
+        assertEquals("Colombia", BagPhotoScanSupport.resolveField("origin", candidates)?.value)
+        assertEquals("Origin: Columbia", BagPhotoScanSupport.resolveField("origin", candidates)?.supportingText)
+        assertTrue(candidates.none { it.value == "Columbia" })
+    }
+
+    @Test
+    fun `uncertain refinement preserves the previous resolved value`() = runTest {
+        val provider = RefineProvider(response = listOf(
+            llmCandidate("origin", "Colombia").copy(confidenceHint = BagFieldConfidence.LOW),
+        ))
+        val candidates = mutableListOf(llmCandidate("origin", "Columbia"))
+
+        extractor(provider).applyRefineEnrichmentIfNeeded(candidates)
+
+        assertEquals("Columbia", BagPhotoScanSupport.resolveField("origin", candidates)?.value)
     }
 
     @Test

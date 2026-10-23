@@ -8,7 +8,6 @@ import androidx.core.net.toUri
 import androidx.exifinterface.media.ExifInterface
 import com.adsamcik.starlitcoffee.data.db.dao.UserBarcodeStemDao
 import com.adsamcik.starlitcoffee.data.db.entity.CoffeeBagEntity
-import com.adsamcik.starlitcoffee.data.model.CoffeeOrigin
 import com.adsamcik.starlitcoffee.data.network.OpenFoodFactsClient
 import com.adsamcik.starlitcoffee.data.network.ProductResult
 import com.adsamcik.starlitcoffee.data.network.QrLinkMetadataExplorer
@@ -602,18 +601,11 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
                     supportingText = "OFF origins field",
                 )
             }
-            lookup.countriesTags
-                ?.firstNotNullOfOrNull(::coffeeProducingCountryFromTag)
-                ?.let { originName ->
-                    candidates += BagFieldCandidate(
-                        fieldName = "origin",
-                        value = originName,
-                        sourceType = BagFieldSourceType.BARCODE_LOOKUP,
-                        confidenceHint = BagFieldConfidence.LOW,
-                        supportingText = "OFF countries_tags (may be country of sale)",
-                    )
-                }
+            // countries_tags describes sales markets, not where the beans grew.
+            // Only the explicit origins field may supply an origin candidate.
             OffLookupSummary(name = lookup.name, brand = lookup.brand)
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Tracebox.log.error(e, BagPhotoExtractorTraceboxTemplates.FAILED_TO_FETCH_PRODUCT_INFO_FROM_OPENFOODFACTS)
             OffLookupSummary(name = null, brand = null)
@@ -1027,16 +1019,6 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
     private fun isDegradedForLlm(quality: BagCaptureQuality): Boolean =
         !quality.sharpEnough || !quality.glareOkay || !quality.exposureOkay
 
-    private fun coffeeProducingCountryFromTag(tag: String): String? {
-        val countryPart = tag.substringAfter(":", tag)
-            .replace("-", " ")
-            .trim()
-            .lowercase()
-        return CoffeeOrigin.Known.entries.firstOrNull { origin ->
-            origin.displayName.lowercase() == countryPart
-        }?.displayName
-    }
-
     private suspend fun findLocalBagByBarcode(barcode: String?): CoffeeBagEntity? {
         val repository = coffeeBagRepository ?: return null
         val rawBarcode = barcode?.trim()?.takeIf { it.isNotBlank() } ?: return null
@@ -1331,11 +1313,10 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         onStageResult(llmOutcome.status)
         // Post-translation refinement: offer the LLM close vocabulary candidates
         // for the now-English concept fields and let it keep or canonicalize.
-        val refineOutcome = runRefineEnrichmentOutcomeIfNeeded(
-            allCandidates = allCandidates.toList(),
+        val refineOutcome = applyRefineEnrichmentIfNeeded(
+            allCandidates = allCandidates,
             combinedOcrText = combinedOcrText,
         )
-        allCandidates += refineOutcome.candidates
         return if (publishBlockingOutcome(refineOutcome, onStageResult)) {
             refineOutcome
         } else {
@@ -1512,6 +1493,25 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         combinedOcrText: String? = null,
     ): List<BagFieldCandidate> = runRefineEnrichmentOutcomeIfNeeded(allCandidates, combinedOcrText).candidates
 
+    /** A confident canonicalization replaces earlier model readings rather than voting against them. */
+    @VisibleForTesting
+    internal suspend fun applyRefineEnrichmentIfNeeded(
+        allCandidates: MutableList<BagFieldCandidate>,
+        combinedOcrText: String? = null,
+    ): LlmEnrichmentOutcome {
+        val outcome = runRefineEnrichmentOutcomeIfNeeded(allCandidates, combinedOcrText)
+        val previousEvidence = resolveBagPhotoFieldEvidence(allCandidates)
+        val accepted = outcome.candidates.filter {
+            it.confidenceHint == BagFieldConfidence.HIGH || it.confidenceHint == BagFieldConfidence.MEDIUM
+        }.map { candidate ->
+            candidate.copy(supportingText = candidate.supportingText ?: previousEvidence[candidate.fieldName]?.supportingText)
+        }
+        val refinedFields = accepted.map { it.fieldName }.toSet()
+        allCandidates.removeAll { it.sourceType == BagFieldSourceType.LLM && it.fieldName in refinedFields }
+        allCandidates += accepted
+        return outcome.copy(candidates = accepted)
+    }
+
     @VisibleForTesting
     internal suspend fun runRefineEnrichmentOutcomeIfNeeded(
         allCandidates: List<BagFieldCandidate>,
@@ -1521,12 +1521,14 @@ class BagPhotoExtractor @Suppress("LongParameterList") constructor(
         if (!llmProvider.isAvailable()) return unavailableEnrichmentOutcome(llmProvider.unavailableCapability())
         val vocabulary = vocabularyProvider() ?: return LlmEnrichmentOutcome()
 
-        val bestValues = bestValuesByField(allCandidates)
         val settled = resolveBagPhotoFieldEvidence(allCandidates)
+        // Repeated model readings are not an independent authority. Preserve real
+        // lookup/OCR consensus while allowing model-only consensus to be refined.
+        val nonModelEvidence = resolveBagPhotoFieldEvidence(allCandidates.filter { it.sourceType != BagFieldSourceType.LLM })
         val currentFields = LinkedHashMap<String, String>()
         val suggestionsByField = LinkedHashMap<String, List<String>>()
         REFINE_FIELDS.forEach { field ->
-            refineSuggestionsForField(field, bestValues[field], settled[field], vocabulary)
+            refineSuggestionsForField(field, settled[field]?.value, nonModelEvidence[field], vocabulary)
                 ?.let { (value, suggestions) ->
                     currentFields[field] = value
                     suggestionsByField[field] = suggestions

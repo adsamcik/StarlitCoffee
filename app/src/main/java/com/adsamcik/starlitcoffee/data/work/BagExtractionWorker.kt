@@ -23,6 +23,7 @@ import com.adsamcik.starlitcoffee.notification.withStarlitSmallIcon
 import com.adsamcik.starlitcoffee.scan.BagPhotoExtractor
 import com.adsamcik.starlitcoffee.scan.ScanDeadline
 import com.adsamcik.starlitcoffee.util.BagPhotoProcessingResult
+import com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus
 import com.adsamcik.starlitcoffee.util.ScanProgress
 import com.adsamcik.starlitcoffee.util.ScanStage
 import kotlinx.coroutines.CancellationException
@@ -49,6 +50,7 @@ class BagExtractionWorker(
 
     private var latestProgress: ScanProgress? = null
     private var latestPreviewJson: String? = null
+    private var latestPartialResult: BagPhotoProcessingResult? = null
     private var activeSessionId: String? = null
     private var activeGenerationId: String? = null
     private var scanTelemetry: BagScanRunTelemetry? = null
@@ -102,7 +104,7 @@ class BagExtractionWorker(
             if (photoUris.isEmpty()) {
                 return completeEmptyExtraction(workId, photosCsv, reviewContext)
             }
-            publishPreview(BagPhotoProcessingResult(capturedPhotoUris = photosCsv))
+            restoreCheckpointPreview(workId, photosCsv)
 
             // Real work ahead (OCR + on-device LLM passes, potentially minutes on
             // a slow device). Promote to a foreground service so the OS keeps this
@@ -121,7 +123,7 @@ class BagExtractionWorker(
                     onProgress = ::publishProgress,
                     onPartialResult = ::publishPreview,
                 ).copy(capturedPhotoUris = photosCsv)
-            }
+            }.let { retainBagExtractionPartial(it, latestPartialResult) }
             if (!draftAcceptsResult()) {
                 scanTelemetry?.cancel()
                 return Result.success()
@@ -140,9 +142,10 @@ class BagExtractionWorker(
             throw error
         } catch (error: Exception) {
             Tracebox.log.error(error, BagExtractionWorkerTraceboxTemplates.BAG_EXTRACTION_WORKER_FAILED)
-            val failureResult = BagPhotoProcessingResult(
+            val failureResult = bagExtractionFailureResult(
+                latestPartialResult = latestPartialResult,
+                checkpointJson = BagExtractionCheckpointStore.read(applicationContext, workId),
                 capturedPhotoUris = photosCsv,
-                llmStatus = com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus.UNAVAILABLE,
             )
             try {
                 if (!draftAcceptsResult()) {
@@ -158,6 +161,9 @@ class BagExtractionWorker(
                     reviewContext = reviewContext,
                 )
                 completeTerminalResult(workId, storedResult.toTerminalReplay(reviewContext))
+            } catch (persistenceError: CancellationException) {
+                scanTelemetry?.cancel()
+                throw persistenceError
             } catch (persistenceError: Exception) {
                 Tracebox.log.error(persistenceError, BagExtractionWorkerTraceboxTemplates.COULD_NOT_PERSIST_FAILED_BAG_EXTRACTION_RESULT)
                 scanTelemetry?.finish(failureResult, successful = false)
@@ -245,6 +251,8 @@ class BagExtractionWorker(
     private suspend fun enterForeground() {
         try {
             setForeground(getForegroundInfo())
+        } catch (error: CancellationException) {
+            throw error
         } catch (error: Exception) {
             Tracebox.log.error(
                 error,
@@ -277,24 +285,33 @@ class BagExtractionWorker(
 
     private fun publishPreview(result: BagPhotoProcessingResult) {
         if (!draftAcceptsResult()) return
-        persistDraftResult(result, id.toString(), terminal = false)
-        scanTelemetry?.partial(result)
-        if (result.hasDeterministicScanData()) {
+        val preview = retainBagExtractionPreview(result, latestPartialResult)
+        if (preview.hasDeterministicScanData()) latestPartialResult = preview
+        persistDraftResult(preview, id.toString(), terminal = false)
+        scanTelemetry?.partial(preview)
+        if (preview.hasDeterministicScanData()) {
             runCatching {
                 BagExtractionCheckpointStore.write(
                     applicationContext,
                     id.toString(),
-                    result.encodeToStoredJson(),
+                    preview.encodeToStoredJson(),
                 )
             }.onFailure { error ->
                 Tracebox.log.error(error, BagExtractionWorkerTraceboxTemplates.COULD_NOT_PERSIST_BAG_ANALYSIS_CHECKPOINT)
             }
         }
-        latestPreviewJson = result.encodeForProgressJson()
+        latestPreviewJson = preview.encodeForProgressJson()
         if (latestPreviewJson == null) {
             Tracebox.log.warn(BagExtractionWorkerTraceboxTemplates.BAG_ANALYSIS_PREVIEW_IS_TOO_LARGE_FOR)
         }
         latestProgress?.let(::publishWorkProgress)
+    }
+
+    private fun restoreCheckpointPreview(workId: String, photosCsv: String) {
+        latestPartialResult = BagExtractionCheckpointStore.read(applicationContext, workId)
+            ?.let { runCatching { decodeBagExtractionResult(it) }.getOrNull() }
+            ?.takeIf { it.hasDeterministicScanData() }
+        publishPreview(latestPartialResult ?: BagPhotoProcessingResult(capturedPhotoUris = photosCsv))
     }
 
     private fun draftAcceptsResult(): Boolean {
@@ -426,6 +443,56 @@ class BagExtractionWorker(
         internal fun foregroundNotificationId(workId: java.util.UUID): Int =
             (workId.hashCode() and FOREGROUND_NOTIFICATION_ID_MASK) or FOREGROUND_NOTIFICATION_ID_NAMESPACE
     }
+}
+
+/** A failed later stage must not replace already recognized fields with an empty result. */
+internal fun bagExtractionFailureResult(
+    latestPartialResult: BagPhotoProcessingResult?,
+    checkpointJson: String?,
+    capturedPhotoUris: String,
+): BagPhotoProcessingResult {
+    val partial = latestPartialResult?.takeIf { it.hasDeterministicScanData() }
+        ?: checkpointJson?.let { runCatching { decodeBagExtractionResult(it) }.getOrNull() }
+        ?: BagPhotoProcessingResult()
+    return partial.copy(
+        capturedPhotoUris = capturedPhotoUris.takeIf(String::isNotBlank) ?: partial.capturedPhotoUris,
+        llmStatus = com.adsamcik.starlitcoffee.util.LlmEnrichmentStatus.UNAVAILABLE,
+    )
+}
+
+/** An interrupted restart can finish before producing a new partial; retain only this work's data. */
+internal fun retainBagExtractionPartial(
+    terminalResult: BagPhotoProcessingResult,
+    latestPartialResult: BagPhotoProcessingResult?,
+): BagPhotoProcessingResult {
+    return when (terminalResult.llmStatus) {
+        LlmEnrichmentStatus.FAILED,
+        LlmEnrichmentStatus.UNAVAILABLE,
+        LlmEnrichmentStatus.AUTHORIZATION_REQUIRED,
+        LlmEnrichmentStatus.SETUP_REQUIRED,
+        LlmEnrichmentStatus.TIMED_OUT -> retainBagExtractionPreview(terminalResult, latestPartialResult)
+        LlmEnrichmentStatus.SUCCEEDED,
+        LlmEnrichmentStatus.NOT_RUN -> terminalResult
+    }
+}
+
+/** Early OCR metadata from the same immutable work must not erase recovered field evidence. */
+internal fun retainBagExtractionPreview(
+    incoming: BagPhotoProcessingResult,
+    latestPartialResult: BagPhotoProcessingResult?,
+): BagPhotoProcessingResult {
+    if (incoming.fieldEvidence.isNotEmpty() || latestPartialResult == null) return incoming
+    return latestPartialResult.copy(
+        capturedPhotoUris = incoming.capturedPhotoUris ?: latestPartialResult.capturedPhotoUris,
+        llmStatus = incoming.llmStatus,
+        photoAnalyses = incoming.photoAnalyses.ifEmpty { latestPartialResult.photoAnalyses },
+        detectedBarcode = incoming.detectedBarcode ?: latestPartialResult.detectedBarcode,
+        detectedQrUrl = incoming.detectedQrUrl ?: latestPartialResult.detectedQrUrl,
+        offLookupName = incoming.offLookupName ?: latestPartialResult.offLookupName,
+        offLookupRoaster = incoming.offLookupRoaster ?: latestPartialResult.offLookupRoaster,
+        thumbnailFocus = incoming.thumbnailFocus ?: latestPartialResult.thumbnailFocus,
+        reviewHints = incoming.reviewHints,
+    )
 }
 
 internal fun bagExtractionTerminalOutput(reviewContext: BagReviewContext?): androidx.work.Data =

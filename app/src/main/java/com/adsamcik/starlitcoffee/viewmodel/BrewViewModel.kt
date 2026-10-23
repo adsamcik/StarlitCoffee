@@ -1779,7 +1779,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             _bagPhotoRetryResult.value = null
         }
         if (photoUriList.isEmpty()) {
-            bagPhotoLlmRetryContexts.remove(sessionId)
+            val emptyResult = completeEmptyBagPhotoDraft(sessionId, generationId)
             recordBagScanLifecycle(
                 ScanLifecycleDiagnostic(
                     context = bagScanDiagnosticContext(sessionId, generationId, null, photosCsv, reviewContext),
@@ -1790,7 +1790,7 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
             )
             _bagPhotoResult.value = BagPhotoSessionResult(
                 sessionId = sessionId,
-                result = BagPhotoProcessingResult(capturedPhotoUris = photosCsv),
+                result = emptyResult,
                 generationId = generationId,
                 reviewContext = reviewContext,
                 requiresInventoryBackStack = deliverInBackground,
@@ -1823,6 +1823,23 @@ class BrewViewModel @Suppress("LongParameterList") constructor(
         activeBagExtractionGenerationId = generationId
         activeBagExtractionReviewContext = reviewContext
         runBagPhotoProcessingInViewModel(retryContext, runLlm = !bagPhotoSkipRequested)
+    }
+
+    private fun completeEmptyBagPhotoDraft(sessionId: String, generationId: String): BagPhotoProcessingResult {
+        bagPhotoLlmRetryContexts.remove(sessionId)
+        val emptyResult = BagPhotoProcessingResult(capturedPhotoUris = "")
+        application?.let { app ->
+            BagDraftStore.applyResult(
+                context = app,
+                sessionId = sessionId,
+                generationId = generationId,
+                workId = null,
+                result = emptyResult,
+                terminal = true,
+            )
+        }
+        _bagAnalysisPreview.value = null
+        return emptyResult
     }
 
     fun ensureBagDraft(

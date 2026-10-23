@@ -4,8 +4,10 @@ import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.adsamcik.starlitcoffee.data.network.llm.MindlayerLlmInferenceProvider
+import com.adsamcik.starlitcoffee.data.network.ocr.FallbackOcrService
 import com.adsamcik.starlitcoffee.data.network.ocr.HierarchicalOcrService
 import com.adsamcik.starlitcoffee.data.network.ocr.MindlayerOcrService
+import com.adsamcik.starlitcoffee.data.network.ocr.MlKitOcrService
 import com.adsamcik.starlitcoffee.data.network.ocr.OcrService
 import com.adsamcik.starlitcoffee.test.corpus.BagFieldScorer
 import com.adsamcik.starlitcoffee.test.corpus.BagScore
@@ -20,7 +22,8 @@ import org.junit.runner.RunWith
  * Q0 BEST-CASE GATE — the integration check that must pass 100%.
  *
  * For every studio-perfect (`Q0`) bag in the corpus this runs the FULL
- * production pipeline (3-pass OCR -> front/back fusion -> text-only LLM) and
+ * [com.adsamcik.starlitcoffee.scan.BagPhotoExtractor] and scores its final sanitized prefill,
+ * including the production deadline, translation, optional vision, combine/refine, and resolver. It
  * asserts that every VISIBLE gate field
  * ([com.adsamcik.starlitcoffee.test.corpus.CorpusFields.gateFields]: name,
  * roaster, origin, process, roastLevel, weight) is extracted EXACTLY (after
@@ -28,6 +31,8 @@ import org.junit.runner.RunWith
  * notes, producer, dates, ...) are scored into the report but never fail the
  * gate — those carry formatting/ordering variance that would make a 100% gate
  * flaky without adding signal.
+ * This cold-start label gate excludes collection matches and external barcode metadata, plus the
+ * worker, review UI, and save lifecycle. Those require separate integration checks.
  *
  * Unlike [LlmCorpusBenchmarkTest] (numbers, never fails on accuracy), THIS one
  * is pass/fail and is the contract the team commits to keeping green.
@@ -62,11 +67,11 @@ class BagScanBestCaseGateTest {
         assertTrue("Corpus must contain at least one Q0 best-case bag", q0Bags.isNotEmpty())
 
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        val ocr: OcrService = HierarchicalOcrService(MindlayerOcrService(context))
+        val mindlayerOcr = HierarchicalOcrService(MindlayerOcrService(context))
+        val ocr: OcrService = FallbackOcrService(mindlayerOcr, MlKitOcrService())
         try {
             QualityTestSupport.requireOrAssume(
-                "Mindlayer OCR not available — start the service and approve com.adsamcik.starlitcoffee " +
-                    "in the Mindlayer dashboard, then retry.",
+                "Text recognition is not available.",
                 QualityTestSupport.awaitTrueSuspending { ocr.isAvailable() },
             )
             val llm = MindlayerLlmInferenceProvider(context)
@@ -81,13 +86,14 @@ class BagScanBestCaseGateTest {
 
             for (bag in q0Bags) {
                 Log.i(CorpusFixture.BENCHMARK_TAG, "----- GATE ${bag.id} -----")
-                val pipeline = BagPipelineRunner.run(ocr, llm, bag)
+                val pipeline = BagPipelineRunner.run(context, ocr, llm, bag)
                 assertTrue(
                     "Q0 bag '${bag.id}' produced no OCR text — the pipeline must read a " +
                         "studio-perfect label. Check the pushed corpus images.",
-                    pipeline.ocrText != null,
+                    pipeline.photoAnalyses.any { !it.extractedText.isNullOrBlank() },
                 )
-                val score = BagFieldScorer.scoreBag(bag, BagPipelineRunner.extractedByField(pipeline.llmResult))
+                Log.i(CorpusFixture.BENCHMARK_TAG, "  Production extractor status: ${pipeline.llmStatus}")
+                val score = BagFieldScorer.scoreBag(bag, BagPipelineRunner.prefillByField(pipeline.ocrPrefill))
                 val gate = BagFieldScorer.evaluateGate(score)
                 scores.add(score)
                 gateResults.add(gate)
