@@ -13,9 +13,9 @@ plugins {
 // only this tool configuration; application dependency versions stay untouched.
 configurations.matching { it.name == "androidLintTool" }.configureEach {
     listOf(
-        "org.bouncycastle:bcprov-jdk18on:1.85",
-        "org.bouncycastle:bcpkix-jdk18on:1.85",
-        "org.bouncycastle:bcutil-jdk18on:1.85",
+        "org.bouncycastle:bcprov-jdk18on:1.86",
+        "org.bouncycastle:bcpkix-jdk18on:1.86",
+        "org.bouncycastle:bcutil-jdk18on:1.86",
         "org.apache.commons:commons-lang3:3.18.0",
         "org.apache.httpcomponents:httpclient:4.5.14",
     ).forEach { coordinate ->
