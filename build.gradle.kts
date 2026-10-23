@@ -12,7 +12,7 @@ buildscript {
             add("classpath", "org.bouncycastle:bcutil-jdk18on:1.85") {
                 because("Keep Bouncy Castle utility and provider modules at the same version")
             }
-            add("classpath", "org.bitbucket.b_c:jose4j:0.9.6") {
+            add("classpath", "org.bitbucket.b_c:jose4j:0.9.7") {
                 because("Fix compressed JWE denial of service, GHSA-3677-xxcr-wjqv")
             }
             add("classpath", "org.jdom:jdom2:2.0.6.1") {
