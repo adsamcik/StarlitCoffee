@@ -91,7 +91,7 @@ class MinimalBrewAccessibilityTest {
                         BrewSessionHero(presentation().copy(currentStage = stage,
                             userTimerRemainingMillis = 60_000L,
                             userTimer = UserBrewTimer(stageId, 1L, 120_000L, 0L, null, null)),
-                            recipe = null, runtime = runtime, bloomSpritesheetId = "coffee_plant")
+                            runtime = runtime, bloomSpritesheetId = "coffee_plant")
                     }
                 }
             }
@@ -119,7 +119,7 @@ class MinimalBrewAccessibilityTest {
             CompositionLocalProvider(LocalDensity provides Density(density.density, fontScale = 2f)) {
                 StarlitCoffeeTheme(dynamicColor = false, darkTheme = true) {
                     Surface(Modifier.width(320.dp)) {
-                        BrewSessionHero(presentation(), recipe = null, runtime = null, bloomSpritesheetId = null)
+                        BrewSessionHero(presentation(), runtime = null, bloomSpritesheetId = null)
                     }
                 }
             }
@@ -137,7 +137,6 @@ class MinimalBrewAccessibilityTest {
                 Surface(Modifier.width(320.dp)) {
                     BrewSessionHero(
                         presentation().copy(isPhysicalOriginKnown = false, userTimerRemainingMillis = 60_000L),
-                        recipe = null,
                         runtime = null,
                         bloomSpritesheetId = null,
                     )

@@ -4,12 +4,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -120,7 +118,7 @@ fun BrewSessionGuidancePanel(
         distinctTerminologyReferences(visibleContent)
     }
 
-    Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(20.dp)) {
         visibleContent.forEach { content ->
             var expanded by rememberSaveable(content.id.value) { mutableStateOf(false) }
             val visual = approvedVisual?.takeIf { it.targetContentId == content.id }
@@ -167,27 +165,21 @@ private fun TerminologyReferenceControl(
         )
     }
     if (expanded) {
-        Surface(
-            color = MaterialTheme.colorScheme.surface,
-            shape = MaterialTheme.shapes.large,
+        Column(
             modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
-            Column(
-                modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
-                verticalArrangement = Arrangement.spacedBy(6.dp),
-            ) {
+            Text(
+                text = uiCopy.heading,
+                style = MaterialTheme.typography.labelLarge,
+                modifier = Modifier.semantics { heading() },
+            )
+            references.forEach { reference ->
                 Text(
-                    text = uiCopy.heading,
-                    style = MaterialTheme.typography.labelLarge,
-                    modifier = Modifier.semantics { heading() },
+                    text = "${reference.preferredLocal} — ${reference.canonicalEnglish}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                references.forEach { reference ->
-                    Text(
-                        text = "${reference.preferredLocal} — ${reference.canonicalEnglish}",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
             }
         }
     }

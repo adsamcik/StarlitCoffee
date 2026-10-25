@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -175,7 +176,7 @@ internal fun LiveBrewStep(
         else if (illustration != null) ApprovedInstructionAssetImage(
             asset = illustration.asset,
             contentDescription = illustration.description,
-            modifier = Modifier.widthIn(max = 260.dp).align(Alignment.CenterHorizontally),
+            modifier = Modifier.widthIn(max = 320.dp).height(168.dp).align(Alignment.CenterHorizontally),
         )
         if (content.warnings.isNotEmpty()) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.Top,
@@ -193,11 +194,12 @@ internal fun LiveBrewStep(
 
 @Composable
 private fun LiveBrewVisualCue(cue: BrewLiveVisualCue, modifier: Modifier = Modifier) {
-    Column(modifier.widthIn(max = 340.dp).fillMaxWidth().padding(top = 12.dp, bottom = 4.dp),
+    val largeText = LocalDensity.current.fontScale >= 1.5f
+    Column(modifier.widthIn(max = 340.dp).fillMaxWidth().padding(top = 16.dp, bottom = 4.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             ApprovedInstructionAssetImage(cue.asset, stringResource(cue.description),
-                modifier = Modifier.weight(1.2f).height(108.dp))
+                modifier = Modifier.weight(1f).height(if (largeText) 132.dp else 156.dp))
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 Text(stringResource(cue.label), style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant)

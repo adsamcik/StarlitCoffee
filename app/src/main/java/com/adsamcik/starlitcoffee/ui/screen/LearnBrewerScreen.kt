@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,7 +24,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.AutoStories
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -45,6 +43,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.LocalDensity
@@ -126,7 +125,7 @@ fun LearnBrewerScreen(
         topBar = {
             TopAppBar(title = {
                 Text(title, Modifier.semantics { heading() }, maxLines = 1, overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
+                    style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
             }, navigationIcon = {
                 IconButton(onClick = if (isReading) returnToOverview else onBack) {
                     Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.action_back))
@@ -147,8 +146,8 @@ fun LearnBrewerScreen(
             scrollStates.SaveableStateProvider("${content.key}:${if (isReading) currentStep?.id?.value else "overview"}") {
                 LazyColumn(modifier = Modifier.align(Alignment.TopCenter).widthIn(max = LearnStepContentMaxWidth)
                     .fillMaxWidth().fillMaxHeight(),
-                    contentPadding = PaddingValues(horizontal = 20.dp, vertical = 16.dp),
-                    verticalArrangement = Arrangement.spacedBy(20.dp)) {
+                    contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)) {
                     if (isReading) {
                         item { LearningStepProgress(safeStepIndex + 1, steps.size) }
                         item {
@@ -156,20 +155,22 @@ fun LearnBrewerScreen(
                         }
                     } else {
                         if (steps.isNotEmpty()) item {
-                            Text(stringResource(R.string.label_guide_untimed), style = MaterialTheme.typography.labelLarge,
-                                color = MaterialTheme.colorScheme.primary)
+                            Text(stringResource(R.string.label_guide_untimed), style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         steps.firstOrNull()?.illustration?.let { illustration -> item {
                             ApprovedInstructionAssetImage(illustration.asset, illustration.description)
                         } }
                         content.overview?.let { overview -> item { BrewRecipeOverview(overview) } }
                         if (steps.isNotEmpty()) item {
-                            Button(onClick = { reading = true }, modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp)) {
+                            Button(onClick = { reading = true }, shape = MaterialTheme.shapes.large,
+                                modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
                                 Text(stringResource(if (safeStepIndex > 0) R.string.action_continue_reading else R.string.action_read_guide))
                             }
                         }
                         onBrewGuide?.let { start -> item {
-                            FilledTonalButton(onClick = start, modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp)) {
+                            FilledTonalButton(onClick = start, shape = MaterialTheme.shapes.large,
+                                modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
                                 Text(stringResource(R.string.action_brew_this_guide))
                             }
                         } }
@@ -211,10 +212,11 @@ private fun CommonLearningContent(content: BrewStepContent) {
 @Composable
 private fun GuideStepListItem(index: Int, total: Int, step: BrewStepContent, selected: Boolean, onClick: () -> Unit) {
     Surface(onClick = onClick, modifier = Modifier.fillMaxWidth().heightIn(min = 64.dp).semantics { this.selected = selected },
-        shape = MaterialTheme.shapes.large,
-        color = if (selected) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainerLow) {
-        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            Text(stringResource(R.string.format_scan_stage_step, index + 1, total), style = MaterialTheme.typography.labelMedium)
+        shape = MaterialTheme.shapes.medium,
+        color = if (selected) MaterialTheme.colorScheme.surfaceContainerHigh else Color.Transparent) {
+        Column(Modifier.padding(horizontal = 12.dp, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Text(stringResource(R.string.format_scan_stage_step, index + 1, total),
+                style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             val label = step.title ?: step.action?.label() ?: step.instruction ?: step.target ?: step.completionCue
                 ?: step.warning ?: step.illustration?.description ?: step.details.firstOrNull() ?: step.operations.firstOrNull()
             label?.let { Text(it, style = MaterialTheme.typography.titleMedium) }
@@ -229,13 +231,9 @@ private fun GuideStepListItem(index: Int, total: Int, step: BrewStepContent, sel
 
 @Composable
 internal fun GuideQuantity(label: String, value: String, modifier: Modifier = Modifier) {
-    Surface(modifier, shape = MaterialTheme.shapes.extraLarge,
-        color = MaterialTheme.colorScheme.primaryContainer,
-        contentColor = MaterialTheme.colorScheme.onPrimaryContainer) {
-        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-            Text(value, style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold)
-            Text(label, style = MaterialTheme.typography.labelLarge)
-        }
+    Column(modifier.padding(vertical = 4.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Text(value, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.SemiBold)
+        Text(label, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 
@@ -271,58 +269,13 @@ private fun LearningStepProgress(
         ),
         label = "learning_step_progress",
     )
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .semantics(mergeDescendants = true) {},
-        shape = MaterialTheme.shapes.extraLarge,
-        color = MaterialTheme.colorScheme.secondaryContainer,
-        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-    ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Surface(
-                modifier = Modifier.size(32.dp),
-                shape = CircleShape,
-                color = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary,
-            ) {
-                Box(contentAlignment = Alignment.Center) {
-                    Icon(
-                        imageVector = Icons.Filled.AutoStories,
-                        contentDescription = null,
-                        modifier = Modifier.size(17.dp),
-                    )
-                }
-            }
-            Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(6.dp),
-            ) {
-                Text(
-                    text = stringResource(
-                        R.string.format_scan_stage_step,
-                        stepNumber,
-                        totalSteps,
-                    ),
-                    modifier = Modifier.semantics { heading() },
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold,
-                )
-                LinearProgressIndicator(
-                    progress = { animatedProgress },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(6.dp)
-                        .clip(CircleShape),
-                    color = MaterialTheme.colorScheme.primary,
-                    trackColor = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.12f),
-                )
-            }
-        }
+    Column(Modifier.fillMaxWidth().semantics(mergeDescendants = true) {},
+        verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Text(stringResource(R.string.format_scan_stage_step, stepNumber, totalSteps),
+            style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        LinearProgressIndicator(progress = { animatedProgress },
+            modifier = Modifier.fillMaxWidth().height(2.dp).clip(CircleShape),
+            color = MaterialTheme.colorScheme.primary, trackColor = MaterialTheme.colorScheme.outlineVariant)
     }
 }
 
@@ -334,63 +287,27 @@ private fun LearningStepControls(
     onPrevious: () -> Unit,
     onNext: () -> Unit,
 ) {
-    Surface(
-        color = MaterialTheme.colorScheme.surfaceContainerLow,
-        tonalElevation = 3.dp,
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 14.dp),
-            contentAlignment = Alignment.Center,
-        ) {
-            FlowRow(
-                modifier = Modifier
-                    .widthIn(max = LearnStepContentMaxWidth)
-                    .fillMaxWidth(),
+    Surface(color = MaterialTheme.colorScheme.surface) {
+        Box(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 8.dp),
+            contentAlignment = Alignment.Center) {
+            FlowRow(modifier = Modifier.widthIn(max = LearnStepContentMaxWidth).fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                maxItemsInEachRow = if (LocalDensity.current.fontScale > 1.3f) 1 else 2,
-            ) {
-                FilledTonalButton(
-                    onClick = onPrevious,
-                    enabled = stepIndex > 0,
-                    modifier = Modifier
-                        .weight(0.9f)
-                        .heightIn(min = 56.dp),
-                ) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = null,
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(stringResource(R.string.action_back))
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+                maxItemsInEachRow = if (LocalDensity.current.fontScale > 1.3f) 1 else 2) {
+                if (stepIndex > 0) {
+                    TextButton(onClick = onPrevious, modifier = Modifier.weight(0.9f).heightIn(min = 48.dp)) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+                        Spacer(Modifier.width(8.dp))
+                        Text(stringResource(R.string.action_back))
+                    }
                 }
-                Button(
-                    onClick = onNext,
-                    modifier = Modifier
-                        .weight(1.1f)
-                        .heightIn(min = 56.dp),
-                ) {
+                Button(onClick = onNext, shape = MaterialTheme.shapes.large,
+                    modifier = Modifier.weight(1.1f).heightIn(min = 48.dp)) {
                     val isLastStep = stepIndex == totalSteps - 1
-                    Text(
-                        stringResource(
-                            if (isLastStep) {
-                                R.string.action_guide_overview
-                            } else {
-                                R.string.action_next
-                            },
-                        ),
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Icon(
-                        imageVector = if (isLastStep) {
-                            Icons.Filled.Check
-                        } else {
-                            Icons.AutoMirrored.Filled.ArrowForward
-                        },
-                        contentDescription = null,
-                    )
+                    Text(stringResource(if (isLastStep) R.string.action_guide_overview else R.string.action_next))
+                    Spacer(Modifier.width(8.dp))
+                    Icon(if (isLastStep) Icons.Filled.Check else Icons.AutoMirrored.Filled.ArrowForward,
+                        contentDescription = null)
                 }
             }
         }

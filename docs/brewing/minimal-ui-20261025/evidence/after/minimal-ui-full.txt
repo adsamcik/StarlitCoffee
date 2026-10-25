@@ -1,0 +1,1 @@
+widthPx=1080 heightPx=2424 widthDp=411.42856 heightDp=923.4286 fontScale=1.0
