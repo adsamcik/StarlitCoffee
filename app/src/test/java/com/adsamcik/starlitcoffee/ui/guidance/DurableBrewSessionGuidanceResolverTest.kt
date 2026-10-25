@@ -45,7 +45,7 @@ class DurableBrewSessionGuidanceResolverTest {
         assertTrue(resolution.criticalContent.any { content ->
             content.id == StageContentId("pulsar_hot_liquid_safety")
         })
-        assertEquals(listOf(criticalStageSafety), resolution.criticalStageSafetyMessages)
+        assertEquals(listOf(criticalStageSafety), resolution.stageSafetyMessages)
     }
 
     @Test
@@ -218,7 +218,7 @@ class DurableBrewSessionGuidanceResolverTest {
         )
         assertTrue(resolution.routineContent.isEmpty())
         assertTrue(resolution.criticalContent.isEmpty())
-        assertEquals(listOf(criticalStageSafety), resolution.criticalStageSafetyMessages)
+        assertEquals(listOf(criticalStageSafety), resolution.stageSafetyMessages)
     }
 
     @Test
@@ -247,7 +247,7 @@ class DurableBrewSessionGuidanceResolverTest {
         assertTrue(resolution.criticalContent.any { content ->
             content.id == StageContentId("pulsar_hot_liquid_safety")
         })
-        assertEquals(listOf(criticalStageSafety), resolution.criticalStageSafetyMessages)
+        assertEquals(listOf(criticalStageSafety), resolution.stageSafetyMessages)
     }
 
     @Test
@@ -271,7 +271,7 @@ class DurableBrewSessionGuidanceResolverTest {
         )
         assertNull(resolution.policy)
         assertTrue(resolution.routineContent.isEmpty())
-        assertEquals(listOf(criticalStageSafety), resolution.criticalStageSafetyMessages)
+        assertEquals(listOf(criticalStageSafety), resolution.stageSafetyMessages)
     }
 
     @Test

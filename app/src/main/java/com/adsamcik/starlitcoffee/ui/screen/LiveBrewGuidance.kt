@@ -3,7 +3,6 @@
 
 package com.adsamcik.starlitcoffee.ui.screen
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -69,10 +68,6 @@ internal fun hasPulsarWaterHeightTarget(contentId: StageContentId, equipmentProf
 
 internal fun primaryLiveBrewCue(cues: List<BrewStageReferenceCuePresentation>): BrewStageReferenceCuePresentation? =
     cues.primaryBrewReferenceCue()
-
-@StringRes
-internal fun compactLiveWarning(contentId: StageContentId, equipmentProfileId: String?): Int? =
-    liveSourceMetadata(contentId, equipmentProfileId).warningSummary
 
 /** Missing guidance never removes a supplied target or a required operational warning. */
 internal fun projectLiveBrewContent(

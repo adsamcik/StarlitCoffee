@@ -13,6 +13,7 @@ import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewGuidanceVisualStatus
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidanceResolution
 import com.adsamcik.starlitcoffee.ui.guidance.PulsarLearnGuideCatalog
 import com.adsamcik.starlitcoffee.ui.guidance.ResolvedBrewGuidanceContent
+import com.adsamcik.starlitcoffee.ui.guidance.liveSourceMetadata
 import com.adsamcik.starlitcoffee.ui.session.BrewStageReferenceCuePresentation
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -73,14 +74,14 @@ class LiveBrewGuidanceTest {
     fun `only the reviewed Pulsar safety bindings receive concise live copy`() {
         val profile = PulsarLearnGuideCatalog.profileId.value
         assertEquals(R.string.msg_brew_pulsar_hot_liquid,
-            compactLiveWarning(StageContentId("pulsar_hot_liquid_safety"), profile))
+            liveSourceMetadata(StageContentId("pulsar_hot_liquid_safety"), profile).warningSummary)
         assertEquals(R.string.msg_brew_pulsar_overflow,
-            compactLiveWarning(StageContentId("pulsar_overflow_safety"), profile))
+            liveSourceMetadata(StageContentId("pulsar_overflow_safety"), profile).warningSummary)
         assertEquals(R.string.msg_brew_pulsar_pour_safety,
-            compactLiveWarning(StageContentId("reviewed_pulsar_v1_open_and_pulse"), profile))
-        assertNull(compactLiveWarning(StageContentId("unfamiliar_safety"), profile))
-        assertNull(compactLiveWarning(StageContentId("pulsar_hot_liquid_safety"), "v60_02"))
-        assertNull(compactLiveWarning(StageContentId("pulsar_hot_liquid_safety"), null))
+            liveSourceMetadata(StageContentId("reviewed_pulsar_v1_open_and_pulse"), profile).warningSummary)
+        assertNull(liveSourceMetadata(StageContentId("unfamiliar_safety"), profile).warningSummary)
+        assertNull(liveSourceMetadata(StageContentId("pulsar_hot_liquid_safety"), "v60_02").warningSummary)
+        assertNull(liveSourceMetadata(StageContentId("pulsar_hot_liquid_safety"), null).warningSummary)
     }
 
     @Test

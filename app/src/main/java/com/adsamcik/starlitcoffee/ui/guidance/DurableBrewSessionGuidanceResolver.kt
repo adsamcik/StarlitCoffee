@@ -7,7 +7,6 @@ import com.adsamcik.starlitcoffee.domain.brewing.MethodFamilyId
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.domain.brewing.StageId
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetyMessage
-import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetySeverity
 import com.adsamcik.starlitcoffee.ui.session.CurrentBrewStagePresentation
 
 /**
@@ -141,12 +140,7 @@ data class DurableBrewSessionGuidanceResolution(
     val criticalContent: List<ResolvedBrewGuidanceContent>,
     val stageSafetyMessages: List<StageSafetyMessage>,
     val visualStatus: DurableBrewGuidanceVisualStatus,
-) {
-    val criticalStageSafetyMessages: List<StageSafetyMessage>
-        get() = stageSafetyMessages.filter { message ->
-            message.severity == StageSafetySeverity.CRITICAL
-        }
-}
+)
 
 /**
  * Resolves a durable session's current stage from a profile-scoped content
