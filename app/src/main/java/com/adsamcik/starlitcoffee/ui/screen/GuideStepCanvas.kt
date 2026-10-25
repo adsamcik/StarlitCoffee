@@ -28,40 +28,39 @@ import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.R
-import com.adsamcik.starlitcoffee.ui.guidance.InstructionAssetRecord
-import com.adsamcik.starlitcoffee.ui.component.EquipmentVisual
-import com.adsamcik.starlitcoffee.ui.component.EquipmentVisualBadge
+import com.adsamcik.starlitcoffee.ui.brewing.BrewStepContent
 
 @Composable
 internal fun GuideStepCanvas(
-    copy: GuideStepCopy,
-    visualAsset: InstructionAssetRecord?,
+    content: BrewStepContent,
     expanded: Boolean,
     onExpandedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
-    title: String? = null,
-    targets: (@Composable () -> Unit)? = null,
-    equipmentProfileId: String? = null,
 ) {
     Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        title?.takeIf(String::isNotBlank)?.let {
+        (content.title ?: content.action?.label())?.let {
             Text(it, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold,
                 modifier = Modifier.semantics { heading() })
         }
-        targets?.invoke()
-        if (visualAsset == null && equipmentProfileId != null) {
-            EquipmentVisualBadge(EquipmentVisual.profile(equipmentProfileId), size = 64.dp)
-        }
-        visualAsset?.takeIf { it.review.isApproved && copy.altText.isNotBlank() }?.let { asset ->
-            Surface(shape = MaterialTheme.shapes.extraLarge,
-                color = MaterialTheme.colorScheme.surfaceContainerHighest) {
-                ApprovedInstructionAssetImage(asset, copy.altText, Modifier.padding(8.dp))
+        if (content.referenceCues.isNotEmpty() || content.facts.isNotEmpty()) {
+            Surface(shape = MaterialTheme.shapes.extraLarge, modifier = Modifier.fillMaxWidth(),
+                color = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer) {
+                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    content.primaryReferenceCue?.let { ReferenceCueRow(it, prominent = true) }
+                    content.referenceCues.filterNot { it == content.primaryReferenceCue }.forEach { ReferenceCueRow(it) }
+                    content.facts.forEach { DetailsRow(stringResource(it.labelRes), it.value) }
+                }
             }
         }
-        copy.instruction.takeIf(String::isNotBlank)?.let {
-            Text(it, style = MaterialTheme.typography.bodyLarge)
+        content.illustration?.let { illustration ->
+            Surface(shape = MaterialTheme.shapes.extraLarge,
+                color = MaterialTheme.colorScheme.surfaceContainerHighest) {
+                ApprovedInstructionAssetImage(illustration.asset, illustration.description, Modifier.padding(8.dp))
+            }
         }
-        copy.target?.takeIf(String::isNotBlank)?.let {
+        content.instruction?.let { Text(it, style = MaterialTheme.typography.bodyLarge) }
+        content.target?.let {
             Surface(shape = MaterialTheme.shapes.large,
                 color = MaterialTheme.colorScheme.primaryContainer,
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -69,24 +68,18 @@ internal fun GuideStepCanvas(
                 Text(it, Modifier.padding(16.dp), style = MaterialTheme.typography.titleLarge)
             }
         }
-        copy.essentialOperations.filter(String::isNotBlank).forEach {
-            Text(it, style = MaterialTheme.typography.bodyLarge)
+        content.operations.forEach { Text(it, style = MaterialTheme.typography.bodyLarge) }
+        (content.controlRequirements + content.utilities).distinct().forEach {
+            Text(it.localizedLabel(), style = MaterialTheme.typography.bodyMedium)
         }
-        copy.warning?.takeIf(String::isNotBlank)?.let {
-            GuideCue(it, critical = copy.safetyCritical, completion = false)
-        }
-        copy.completionCue?.takeIf(String::isNotBlank)?.let {
-            GuideCue(it, critical = false, completion = true)
-        }
-        if (copy.explanation.isNotEmpty()) {
+        content.warning?.let { GuideCue(it, critical = content.safetyCritical, completion = false) }
+        content.completionCue?.let { GuideCue(it, critical = false, completion = true) }
+        if (content.details.isNotEmpty()) {
             ConnectedGuideDisclosure(
-                title = stringResource(R.string.heading_guide_why),
-                expanded = expanded,
+                title = stringResource(R.string.heading_guide_why), expanded = expanded,
                 onExpandedChange = onExpandedChange,
             ) {
-                copy.explanation.filter(String::isNotBlank).forEach {
-                    Text(it, style = MaterialTheme.typography.bodyMedium)
-                }
+                content.details.forEach { Text(it, style = MaterialTheme.typography.bodyMedium) }
             }
         }
     }

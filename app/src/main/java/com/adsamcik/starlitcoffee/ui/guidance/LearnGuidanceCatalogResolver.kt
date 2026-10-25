@@ -20,6 +20,12 @@ data class LearnGuidanceCatalogRequest(
 sealed interface LearnGuidanceCatalogAvailability {
     data object Available : LearnGuidanceCatalogAvailability
 
+    /** Compatible siblings remain readable; absence never changes the executable stage list. */
+    data class Partial(
+        val profileId: BrewerProfileId,
+        val missingStageIds: List<StageId>,
+    ) : LearnGuidanceCatalogAvailability
+
     data class InvalidMethodFamilyId(
         val rawId: String,
     ) : LearnGuidanceCatalogAvailability
@@ -134,6 +140,12 @@ class LearnGuidanceCatalogResolver(
                 content.filter { it.id.value.startsWith("cold_refrigerated_") }
             } else content
         }
+        val exactStageOrder = request.exactStageOrder
+        if (exactStageOrder != null &&
+            (exactStageOrder.isEmpty() || exactStageOrder.distinct().size != exactStageOrder.size)
+        ) {
+            return unavailable(LearnGuidanceCatalogAvailability.ExactStageOrderMismatch(brewerProfileId))
+        }
         if (scopedContent.isEmpty()) {
             return LearnGuidanceCatalogResolution(
                 policy = policy,
@@ -144,25 +156,29 @@ class LearnGuidanceCatalogResolver(
                 content = emptyList(),
             )
         }
-        val exactStageOrder = request.exactStageOrder
-        val planSelection = if (exactStageOrder == null) {
+        val exactSelection = exactStageOrder?.let { order ->
+            selectExactContent(scopedContent, order)
+                ?: return unavailable(
+                    LearnGuidanceCatalogAvailability.ExactStageOrderMismatch(brewerProfileId),
+                )
+        }
+        val planSelection = if (exactSelection == null) {
             P1LearnContentSelector.select(
                 content = scopedContent,
                 profileId = brewerProfileId,
                 harioSwitchWorkflow = request.harioSwitchWorkflow,
             )
         } else {
-            selectExactContent(scopedContent, exactStageOrder)
-                ?: return unavailable(
-                    LearnGuidanceCatalogAvailability.ExactStageOrderMismatch(brewerProfileId),
-                )
+            exactSelection.selection
         }
         return LearnGuidanceCatalogResolution(
             policy = policy,
-            availability = if (planSelection.requiresHarioSwitchWorkflow) {
-                LearnGuidanceCatalogAvailability.HarioSwitchWorkflowRequired(brewerProfileId)
-            } else {
-                LearnGuidanceCatalogAvailability.Available
+            availability = when {
+                planSelection.requiresHarioSwitchWorkflow ->
+                    LearnGuidanceCatalogAvailability.HarioSwitchWorkflowRequired(brewerProfileId)
+                exactSelection != null && exactSelection.missingStageIds.isNotEmpty() ->
+                    LearnGuidanceCatalogAvailability.Partial(brewerProfileId, exactSelection.missingStageIds)
+                else -> LearnGuidanceCatalogAvailability.Available
             },
             content = planSelection.content
                 .filter { content -> policy.isVisible(content.visibility, content.safetyCritical) }
@@ -195,30 +211,29 @@ class LearnGuidanceCatalogResolver(
         }
     }
 
+    private data class ExactContentSelection(
+        val selection: P1LearnContentSelection,
+        val missingStageIds: List<StageId>,
+    )
+
     private fun selectExactContent(
         scopedContent: List<BuiltInGuidanceContent>,
         exactStageOrder: List<StageId>,
-    ): P1LearnContentSelection? {
-        val orderByStage = exactStageOrder.withIndex().associate { (index, stageId) ->
-            stageId to index
-        }
+    ): ExactContentSelection? {
+        val orderByStage = exactStageOrder.withIndex().associate { (index, stageId) -> stageId to index }
         val liveContent = scopedContent.filter { content ->
             content.placement == BuiltInGuidancePlacement.LIVE_STAGE && content.stageId in orderByStage
         }
-        val hasExactStageSet = listOf(
-            exactStageOrder.isNotEmpty(),
-            orderByStage.size == exactStageOrder.size,
-            liveContent.size == exactStageOrder.size,
-            liveContent.all { content -> content.stageId in orderByStage },
-        ).all { requirement -> requirement }
-        if (!hasExactStageSet) return null
-
-        return P1LearnContentSelection(
-            content = (scopedContent.filter { it.placement != BuiltInGuidancePlacement.LIVE_STAGE } +
-                liveContent).sortedBy { content ->
-                content.stageId?.let(orderByStage::get)
-            },
-            requiresHarioSwitchWorkflow = false,
+        // Two records for one requested stage are ambiguous; never arbitrarily choose one.
+        val contentByStage = liveContent.groupBy { it.stageId }
+        if (contentByStage.values.any { it.size != 1 }) return null
+        return ExactContentSelection(
+            selection = P1LearnContentSelection(
+                content = (scopedContent.filter { it.placement != BuiltInGuidancePlacement.LIVE_STAGE } +
+                    liveContent).sortedBy { content -> content.stageId?.let(orderByStage::get) },
+                requiresHarioSwitchWorkflow = false,
+            ),
+            missingStageIds = exactStageOrder.filterNot(contentByStage::containsKey),
         )
     }
 
@@ -247,51 +262,20 @@ class LearnGuidanceCatalogResolver(
     private fun BuiltInGuidanceContent.toLearnContent(
         level: GuidancePresentationLevel,
     ): ResolvedLearnGuidanceContent {
-        authoredPresentations[level]?.let { authored ->
-            return ResolvedLearnGuidanceContent(
-                id = id,
-                placement = placement,
-                instruction = authored.instruction.orEmpty(),
-                target = authored.target,
-                completionCue = authored.completionCue,
-                explanation = authored.explanation,
-                tip = authored.practicalTip,
-                nextAction = authored.nextAction,
-                controlRequirements = authored.controlRequirements,
-                warning = authored.warning ?: text.warning,
-                utilities = authored.utilities,
-                altText = authored.accessibleAltText,
-                safetyCritical = safetyCritical,
-                visualContentRevision = visualContentRevision,
-                visualInstruction = text.primaryInstruction,
-            )
-        }
-        val showSupportingCopy = level in setOf(
-            GuidancePresentationLevel.FULL,
-            GuidancePresentationLevel.CUSTOM,
-        )
-        val compactInstruction = level in setOf(
-            GuidancePresentationLevel.CONCISE,
-            GuidancePresentationLevel.FOCUSED,
-            GuidancePresentationLevel.UTILITIES_ONLY,
-        )
+        val projected = projectGuidanceContent(level)
         return ResolvedLearnGuidanceContent(
             id = id,
             placement = placement,
-            instruction = if (compactInstruction) {
-                text.conciseInstruction ?: text.primaryInstruction
-            } else {
-                text.primaryInstruction
-            },
-            target = null,
-            completionCue = null,
-            explanation = text.explanation.takeIf { showSupportingCopy },
-            tip = text.tip.takeIf { showSupportingCopy },
-            nextAction = null,
-            controlRequirements = emptyList(),
-            warning = text.warning,
-            utilities = emptyList(),
-            altText = text.altText,
+            instruction = projected.instruction.orEmpty(),
+            target = projected.target,
+            completionCue = projected.completionCue,
+            explanation = projected.explanation,
+            tip = projected.practicalTip,
+            nextAction = projected.nextAction,
+            controlRequirements = projected.controlRequirements,
+            warning = projected.warning,
+            utilities = projected.utilities,
+            altText = projected.accessibleAltText,
             safetyCritical = safetyCritical,
             visualContentRevision = visualContentRevision,
             visualInstruction = text.primaryInstruction,

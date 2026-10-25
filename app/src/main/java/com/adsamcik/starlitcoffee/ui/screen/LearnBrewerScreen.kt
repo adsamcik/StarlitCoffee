@@ -41,7 +41,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -57,34 +56,25 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.domain.brewing.P1CompletionSemantics
-import com.adsamcik.starlitcoffee.domain.brewing.session.StageTargetQualifier
-import com.adsamcik.starlitcoffee.domain.brewing.session.StageTemperatureTarget
 import com.adsamcik.starlitcoffee.ui.guidance.InstructionAssetCatalog
-import com.adsamcik.starlitcoffee.ui.guidance.InstructionAssetRecord
-import com.adsamcik.starlitcoffee.ui.guidance.LearnGuidanceCatalogAvailability
 import com.adsamcik.starlitcoffee.ui.guidance.LearnGuidanceCatalogResolution
 import com.adsamcik.starlitcoffee.ui.guidance.P1ExactLearnGuide
-import com.adsamcik.starlitcoffee.ui.guidance.P1ExactLearnStageFacts
-import com.adsamcik.starlitcoffee.ui.guidance.ResolvedLearnGuidanceContent
-import com.adsamcik.starlitcoffee.ui.guidance.findApprovedAssetForContent
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.TextButton
-import androidx.compose.runtime.key
-import com.adsamcik.starlitcoffee.ui.session.ActiveBrewSessionPresentationMapper
-import com.adsamcik.starlitcoffee.ui.session.BrewStageReferenceCuePresentation
 import com.adsamcik.starlitcoffee.data.brewing.guides.ReviewedMethodGuide
-import com.adsamcik.starlitcoffee.ui.guidance.learnFacts
+
+import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
+import com.adsamcik.starlitcoffee.ui.brewing.BrewReaderContent
+import com.adsamcik.starlitcoffee.ui.brewing.BrewStepContent
+import com.adsamcik.starlitcoffee.ui.brewing.toBrewReaderContent
 
 private val LearnStepContentMaxWidth = 720.dp
 
-/**
- * Timer-free illustrated curriculum. It reads the same exact profile-scoped
- * guidance as durable sessions but never creates, resumes, or mutates a brew.
- */
-@OptIn(ExperimentalMaterial3Api::class)
+/** Existing catalogue entry point; source matching and start validation stay outside the reader. */
 @Composable
 fun LearnBrewerScreen(
     title: String,
@@ -98,87 +88,83 @@ fun LearnBrewerScreen(
     reviewedGuide: ReviewedMethodGuide? = null,
     onBrewGuide: (() -> Unit)? = null,
 ) {
-    val steps = resolution.content
-    val stageFacts = exactGuide?.stageFactsByContentId ?: reviewedGuide?.learnFacts().orEmpty()
-    val guideKey = steps.firstOrNull()?.id?.value
-    var currentStepIndex by rememberSaveable(guideKey) { mutableIntStateOf(initialStepIndex) }
-    var reading by rememberSaveable(guideKey) { mutableStateOf(initiallyReading) }
-    var showSteps by rememberSaveable(guideKey) { mutableStateOf(false) }
-    val safeStepIndex = currentStepIndex.coerceIn(0, (steps.size - 1).coerceAtLeast(0))
-    val currentStep = steps.getOrNull(safeStepIndex)
-    var detailsExpanded by rememberSaveable(currentStep?.id?.value) { mutableStateOf(false) }
-    val available = resolution.availability is LearnGuidanceCatalogAvailability.Available && currentStep != null
-    val returnToOverview = { reading = false }
-    BackHandler(enabled = reading && !showSteps, onBack = returnToOverview)
+    val content = resolution.toBrewReaderContent(
+        key = exactGuide?.recipe?.id?.value ?: reviewedGuide?.id ?: title,
+        instructionAssets = instructionAssets, exactGuide = exactGuide, reviewedGuide = reviewedGuide)
+    val initialContentId = resolution.content.getOrNull(initialStepIndex)?.id
+    LearnBrewerScreen(title, content, onBack, modifier, content.readableStepIndexFor(initialContentId),
+        initiallyReading, onBrewGuide)
+}
 
-    Scaffold(
-        modifier = modifier,
+/** Timer-free, data-driven reader. Any independently useful step can be read without sibling prose or artwork. */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun LearnBrewerScreen(
+    title: String,
+    content: BrewReaderContent,
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    initialStepIndex: Int = 0,
+    initiallyReading: Boolean = false,
+    onBrewGuide: (() -> Unit)? = null,
+) {
+    val steps = content.readableSteps
+    var selectedStepId by rememberSaveable(content.key) {
+        mutableStateOf(steps.getOrNull(initialStepIndex.coerceIn(0, (steps.size - 1).coerceAtLeast(0)))?.id?.value)
+    }
+    var reading by rememberSaveable(content.key) { mutableStateOf(initiallyReading) }
+    var showSteps by rememberSaveable(content.key) { mutableStateOf(false) }
+    val safeStepIndex = steps.indexOfFirst { it.id.value == selectedStepId }.coerceAtLeast(0)
+    val currentStep = steps.getOrNull(safeStepIndex)
+    val isReading = reading && currentStep != null
+    var detailsExpanded by rememberSaveable(currentStep?.id?.value) { mutableStateOf(false) }
+    val scrollStates = rememberSaveableStateHolder()
+    val returnToOverview = { reading = false }
+    BackHandler(enabled = isReading && !showSteps, onBack = returnToOverview)
+
+    Scaffold(modifier = modifier, containerColor = MaterialTheme.colorScheme.surface,
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(if (reading && exactGuide != null) title.substringBefore(" · ") else title,
-                        Modifier.semantics { heading() }, maxLines = 1, overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
-                },
-                navigationIcon = {
-                    IconButton(onClick = if (reading) returnToOverview else onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.action_back))
-                    }
-                },
-                actions = {
-                    if (available && reading) {
-                        TextButton(onClick = { showSteps = true }) {
-                            Text(stringResource(R.string.action_guide_steps))
-                        }
-                    }
-                },
-            )
-        },
-        containerColor = MaterialTheme.colorScheme.surface,
-        bottomBar = {
-            if (available && reading) {
-                LearningStepControls(
-                    stepIndex = safeStepIndex,
-                    totalSteps = steps.size,
-                    onPrevious = { currentStepIndex = (safeStepIndex - 1).coerceAtLeast(0) },
-                    onNext = {
-                        if (safeStepIndex == steps.lastIndex) reading = false
-                        else currentStepIndex = safeStepIndex + 1
-                    },
-                )
-            }
-        },
-    ) { innerPadding ->
+            TopAppBar(title = {
+                Text(title, Modifier.semantics { heading() }, maxLines = 1, overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
+            }, navigationIcon = {
+                IconButton(onClick = if (isReading) returnToOverview else onBack) {
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.action_back))
+                }
+            }, actions = {
+                if (isReading) TextButton(onClick = { showSteps = true }) {
+                    Text(stringResource(R.string.action_guide_steps))
+                }
+            })
+        }, bottomBar = {
+            if (isReading) LearningStepControls(safeStepIndex, steps.size,
+                onPrevious = { selectedStepId = steps[(safeStepIndex - 1).coerceAtLeast(0)].id.value },
+                onNext = {
+                    if (safeStepIndex == steps.lastIndex) reading = false else selectedStepId = steps[safeStepIndex + 1].id.value
+                })
+        }) { innerPadding ->
         Box(Modifier.fillMaxSize().padding(innerPadding)) {
-            // Each reading position owns its scroll state; a new step starts at its action.
-            key(reading, safeStepIndex) {
-                LazyColumn(
-                    modifier = Modifier.align(Alignment.TopCenter).widthIn(max = LearnStepContentMaxWidth)
-                        .fillMaxWidth().fillMaxHeight(),
+            scrollStates.SaveableStateProvider("${content.key}:${if (isReading) currentStep?.id?.value else "overview"}") {
+                LazyColumn(modifier = Modifier.align(Alignment.TopCenter).widthIn(max = LearnStepContentMaxWidth)
+                    .fillMaxWidth().fillMaxHeight(),
                     contentPadding = PaddingValues(horizontal = 20.dp, vertical = 16.dp),
-                    verticalArrangement = Arrangement.spacedBy(20.dp),
-                ) {
-                    if (!available) {
-                        item { Text(stringResource(R.string.msg_brew_guidance_unavailable)) }
-                    } else if (!reading) {
+                    verticalArrangement = Arrangement.spacedBy(20.dp)) {
+                    if (isReading) {
+                        item { LearningStepProgress(safeStepIndex + 1, steps.size) }
                         item {
-                            Text(stringResource(R.string.label_guide_untimed),
-                                style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                            currentStep?.let { GuideStepCanvas(it, detailsExpanded, { expanded -> detailsExpanded = expanded }) }
                         }
-                        steps.firstOrNull()?.let { introduction ->
-                            instructionAssets?.findApprovedAssetForContent(introduction.id,
-                                introduction.visualContentRevision)?.let { asset ->
-                                val alt = instructionAssets?.approvedAltTextForContent(introduction.id,
-                                    introduction.visualContentRevision, asset.id,
-                                    currentInstruction = introduction.visualInstruction) ?: introduction.altText
-                                item { ApprovedInstructionAssetImage(asset, alt) }
-                            }
+                    } else {
+                        if (steps.isNotEmpty()) item {
+                            Text(stringResource(R.string.label_guide_untimed), style = MaterialTheme.typography.labelLarge,
+                                color = MaterialTheme.colorScheme.primary)
                         }
-                        exactGuide?.let { guide -> item { ExactLearnRecipeOverview(guide) } }
-                        reviewedGuide?.let { guide -> item { ReviewedGuideOverview(guide) } }
-                        item {
-                            Button(onClick = { reading = true },
-                                modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp)) {
+                        steps.firstOrNull()?.illustration?.let { illustration -> item {
+                            ApprovedInstructionAssetImage(illustration.asset, illustration.description)
+                        } }
+                        content.overview?.let { overview -> item { BrewRecipeOverview(overview) } }
+                        if (steps.isNotEmpty()) item {
+                            Button(onClick = { reading = true }, modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp)) {
                                 Text(stringResource(if (safeStepIndex > 0) R.string.action_continue_reading else R.string.action_read_guide))
                             }
                         }
@@ -187,38 +173,27 @@ fun LearnBrewerScreen(
                                 Text(stringResource(R.string.action_brew_this_guide))
                             }
                         } }
+                        items(content.commonContent.filter { it.isReadable }, key = { "common:${it.id.value}" }) { step ->
+                            CommonLearningContent(step)
+                        }
                         itemsIndexed(steps, key = { _, step -> step.id.value }) { index, step ->
-                            GuideStepListItem(index, steps.size, step, stageFacts[step.id], index == safeStepIndex) {
-                                currentStepIndex = index
+                            GuideStepListItem(index, steps.size, step, index == safeStepIndex) {
+                                selectedStepId = step.id.value
                                 reading = true
                             }
-                        }
-                    } else {
-                        item {
-                            LearningStepProgress(safeStepIndex + 1, steps.size)
-                        }
-                        item {
-                            val step = requireNotNull(currentStep)
-                            val asset = instructionAssets?.findApprovedAssetForContent(step.id, step.visualContentRevision)
-                            val admittedAlt = asset?.let { instructionAssets?.approvedAltTextForContent(step.id,
-                                step.visualContentRevision, it.id, currentInstruction = step.visualInstruction) }
-                            LearningStepContent(step.copy(altText = admittedAlt ?: step.altText), stageFacts[step.id],
-                                asset, detailsExpanded,
-                                onToggleDetails = { detailsExpanded = !detailsExpanded },
-                                equipmentProfileId = reviewedGuide?.profileId)
                         }
                     }
                 }
             }
         }
     }
-    if (showSteps && available) {
+    if (showSteps && steps.isNotEmpty()) {
         ModalBottomSheet(onDismissRequest = { showSteps = false }) {
-            LazyColumn(Modifier.fillMaxWidth().heightIn(max = 600.dp),
-                contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            LazyColumn(Modifier.fillMaxWidth().heightIn(max = 600.dp), contentPadding = PaddingValues(20.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 itemsIndexed(steps, key = { _, step -> step.id.value }) { index, step ->
-                    GuideStepListItem(index, steps.size, step, stageFacts[step.id], index == safeStepIndex) {
-                        currentStepIndex = index
+                    GuideStepListItem(index, steps.size, step, index == safeStepIndex) {
+                        selectedStepId = step.id.value
                         showSteps = false
                     }
                 }
@@ -228,122 +203,26 @@ fun LearnBrewerScreen(
 }
 
 @Composable
-private fun GuideStepListItem(
-    index: Int,
-    total: Int,
-    step: ResolvedLearnGuidanceContent,
-    facts: P1ExactLearnStageFacts?,
-    selected: Boolean,
-    onClick: () -> Unit,
-) {
+private fun CommonLearningContent(content: BrewStepContent) {
+    var expanded by rememberSaveable(content.id.value) { mutableStateOf(false) }
+    GuideStepCanvas(content, expanded, { expanded = it })
+}
+
+@Composable
+private fun GuideStepListItem(index: Int, total: Int, step: BrewStepContent, selected: Boolean, onClick: () -> Unit) {
     Surface(onClick = onClick, modifier = Modifier.fillMaxWidth().heightIn(min = 64.dp).semantics { this.selected = selected },
         shape = MaterialTheme.shapes.large,
         color = if (selected) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainerLow) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            Text(stringResource(R.string.format_scan_stage_step, index + 1, total),
-                style = MaterialTheme.typography.labelMedium)
-            val action = facts?.title ?: facts?.action?.label()
-            Text(action ?: step.instruction.ifBlank { step.warning.orEmpty() },
-                style = MaterialTheme.typography.titleMedium)
-        }
-    }
-}
-
-@Composable
-private fun LearningStepContent(
-    content: ResolvedLearnGuidanceContent,
-    exactFacts: P1ExactLearnStageFacts?,
-    visualAsset: InstructionAssetRecord?,
-    detailsExpanded: Boolean,
-    onToggleDetails: () -> Unit,
-    equipmentProfileId: String? = null,
-) {
-    GuideStepCanvas(
-        copy = GuideStepCopy(
-            instruction = content.instruction,
-            target = content.target.takeIf { exactFacts?.startCondition == null },
-            completionCue = content.completionCue,
-            essentialOperations = listOfNotNull(
-                exactFacts?.equipmentState?.takeUnless { it == "As specified" }?.let {
-                    "${stringResource(R.string.label_exact_learn_equipment_state)}: $it"
-                },
-                content.nextAction,
-            ),
-            warning = content.warning,
-            safetyCritical = content.safetyCritical,
-            explanation = listOfNotNull(exactFacts?.explanation, content.explanation, content.tip)
-                .filterNot { it == "None" }.distinct(),
-            altText = content.altText,
-        ),
-        visualAsset = visualAsset,
-        title = exactFacts?.title ?: exactFacts?.action?.label(),
-        expanded = detailsExpanded,
-        onExpandedChange = { onToggleDetails() },
-        targets = exactFacts?.takeIf { facts ->
-            listOf(facts.startCondition, facts.timing, facts.addedWater, facts.cumulativeWater,
-                facts.beverageYield, facts.temperatureTarget).any { it != null } ||
-                ActiveBrewSessionPresentationMapper.referenceCuePresentations(facts.referenceTargets).isNotEmpty()
-        }?.let { facts -> { ExactLearnStageTargets(facts) } },
-        equipmentProfileId = equipmentProfileId,
-    )
-}
-
-@Composable
-private fun ExactLearnRecipeOverview(guide: P1ExactLearnGuide) {
-    var expanded by rememberSaveable(guide.recipe.id.value) { mutableStateOf(false) }
-    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            GuideQuantity(stringResource(R.string.label_coffee),
-                formatMass(guide.recipe.quantities.dryCoffeeDoseG), Modifier.weight(1f))
-            val water = guide.recipe.quantities.brewWaterInputG ?: guide.recipe.quantities.reservoirInputG
-            water?.let { grams ->
-                GuideQuantity(stringResource(if (guide.recipe.quantities.brewWaterInputG != null)
-                    R.string.label_brewer_profile_input_water else R.string.label_brewer_profile_input_reservoir_water),
-                    formatMass(grams), Modifier.weight(1f))
+            Text(stringResource(R.string.format_scan_stage_step, index + 1, total), style = MaterialTheme.typography.labelMedium)
+            val label = step.title ?: step.action?.label() ?: step.instruction ?: step.target ?: step.completionCue
+                ?: step.warning ?: step.illustration?.description ?: step.details.firstOrNull() ?: step.operations.firstOrNull()
+            label?.let { Text(it, style = MaterialTheme.typography.titleMedium) }
+            if (label == null) {
+                step.primaryReferenceCue?.let { ReferenceCueRow(it) }
+                step.facts.firstOrNull()?.let { DetailsRow(stringResource(it.labelRes), it.value) }
+                (step.controlRequirements + step.utilities).distinct().forEach { Text(it.localizedLabel()) }
             }
-        }
-        ConnectedGuideDisclosure(stringResource(R.string.heading_exact_learn_recipe_summary), expanded,
-            onExpandedChange = { expanded = it }) {
-            guide.recipe.quantities.iceG.takeIf { grams -> grams > 0.0 }?.let { grams ->
-                DetailsRow(stringResource(R.string.label_exact_recipe_brew_ice), formatMass(grams))
-            }
-            guide.recipe.ratios.forEachIndexed { index, ratio ->
-                DetailsRow(
-                    if (index == 0) stringResource(R.string.label_ratio)
-                    else stringResource(R.string.label_exact_recipe_combined_ratio),
-                    stringResource(
-                        R.string.format_exact_recipe_ratio,
-                        ratio.ratioValue?.let(::formatNumber)
-                            ?: stringResource(R.string.label_exact_recipe_unresolved),
-                        ratioDenominatorLabel(ratio.includedDenominatorRoles),
-                    ),
-                )
-            }
-            DetailsRow(stringResource(R.string.label_temperature), temperatureLabel(guide.recipe.temperature))
-            DetailsRow(stringResource(R.string.label_brew_time), timeLabel(guide.recipe.expectedTime))
-            DetailsRow(
-                stringResource(R.string.label_exact_learn_grind),
-                stringResource(R.string.msg_exact_learn_grind_source_scoped),
-            )
-            val equipmentLabels = mutableListOf<String>()
-            for (option in guide.recipe.equipmentOptions) {
-                equipmentLabels += equipmentOptionLabel(option)
-            }
-            DetailsRow(
-                stringResource(R.string.heading_exact_recipe_equipment),
-                equipmentLabels.joinToString(
-                    stringResource(R.string.separator_exact_recipe_equipment_alternatives),
-                ),
-            )
-            DetailsRow(
-                stringResource(R.string.label_exact_learn_completion),
-                exactCompletionLabel(guide.recipe.completion),
-            )
-            DetailsRow(
-                stringResource(R.string.label_exact_learn_provenance),
-                "${guide.guidance.evidenceStatus} · ${guide.guidance.originalSourceOrProvenance}",
-            )
-
         }
     }
 }
@@ -361,71 +240,7 @@ internal fun GuideQuantity(label: String, value: String, modifier: Modifier = Mo
 }
 
 @Composable
-private fun ExactLearnStageTargets(facts: P1ExactLearnStageFacts) {
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.extraLarge,
-        color = MaterialTheme.colorScheme.primaryContainer,
-        contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            val cues = ActiveBrewSessionPresentationMapper.referenceCuePresentations(facts.referenceTargets)
-            val primaryCue = cues.firstOrNull { it is BrewStageReferenceCuePresentation.Mass } ?: cues.firstOrNull()
-            primaryCue?.let { ReferenceCueRow(it, prominent = true) }
-            facts.startCondition?.let {
-                DetailsRow(stringResource(R.string.label_exact_learn_start), it)
-            }
-            facts.timing?.let {
-                DetailsRow(stringResource(R.string.label_exact_learn_timing), it)
-            }
-            facts.addedWater?.let {
-                DetailsRow(stringResource(R.string.label_exact_learn_added_water), it)
-            }
-            facts.cumulativeWater?.let {
-                DetailsRow(stringResource(R.string.label_exact_learn_cumulative_water), it)
-            }
-            facts.beverageYield?.let {
-                DetailsRow(stringResource(R.string.label_exact_learn_beverage_yield), it)
-            }
-            facts.temperatureTarget?.let { target ->
-                DetailsRow(stringResource(R.string.label_temperature), stageTemperatureLabel(target))
-            }
-        }
-    }
-}
-
-@Composable
-private fun stageTemperatureLabel(target: StageTemperatureTarget): String {
-    val minimum = formatNumber(target.minimumC)
-    val maximum = formatNumber(target.maximumC)
-    return when (target.qualifier) {
-        StageTargetQualifier.EXACT -> stringResource(R.string.format_exact_recipe_temperature, minimum)
-        StageTargetQualifier.APPROXIMATE -> stringResource(
-            R.string.format_exact_recipe_temperature_approximate_range,
-            minimum,
-            maximum,
-        )
-        StageTargetQualifier.RANGE -> stringResource(
-            R.string.format_exact_recipe_temperature_range,
-            minimum,
-            maximum,
-        )
-        StageTargetQualifier.STARTING_POINT -> stringResource(
-            R.string.format_exact_recipe_temperature_starting_range,
-            minimum,
-            maximum,
-        )
-        StageTargetQualifier.NO_EARLIER_THAN,
-        StageTargetQualifier.NO_LATER_THAN,
-        -> stringResource(R.string.format_exact_recipe_temperature_range, minimum, maximum)
-    }
-}
-
-@Composable
-private fun exactCompletionLabel(completion: P1CompletionSemantics): String = stringResource(
+internal fun exactCompletionLabel(completion: P1CompletionSemantics): String = stringResource(
     when (completion) {
         P1CompletionSemantics.DRAWDOWN -> R.string.exact_completion_drawdown
         P1CompletionSemantics.DRAWDOWN_AND_BREW_ICE_MELT -> R.string.exact_completion_ice_drawdown

@@ -82,8 +82,6 @@ import com.adsamcik.starlitcoffee.data.brewing.session.BrewSessionOperationResul
 import com.adsamcik.starlitcoffee.data.db.entity.ActiveBrewSessionEntity
 import com.adsamcik.starlitcoffee.data.brewing.snapshot.BrewRecipeSnapshotV1
 import com.adsamcik.starlitcoffee.domain.pickWeightedBloomSpritesheetId
-import com.adsamcik.starlitcoffee.domain.brewing.BuiltInP1RecipeCatalog
-import com.adsamcik.starlitcoffee.domain.brewing.BuiltInRecipeId
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.domain.brewing.session.BrewSessionStatus
 import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStageAction
@@ -107,18 +105,12 @@ import com.adsamcik.starlitcoffee.ui.guidance.BuiltInInstructionAssetCatalog
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidancePreferences
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidanceRequest
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidanceResolution
-import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidanceResolver
 import com.adsamcik.starlitcoffee.ui.guidance.GuidancePresentationLevel
-import com.adsamcik.starlitcoffee.ui.guidance.P1BuiltInGuidanceCatalog
 import com.adsamcik.starlitcoffee.ui.guidance.P1ExactRecipeReleaseGate
 import com.adsamcik.starlitcoffee.ui.guidance.P1ExactLearnStageFacts
-import com.adsamcik.starlitcoffee.ui.guidance.LegacyBuiltInGuidanceCatalog
-import com.adsamcik.starlitcoffee.ui.guidance.ColdBrewGuidanceCatalog
-import com.adsamcik.starlitcoffee.ui.guidance.resolveBrewReadAheadGuide
-import com.adsamcik.starlitcoffee.ui.guidance.shouldGateSession
-import com.adsamcik.starlitcoffee.ui.guidance.guidanceCatalog
+import com.adsamcik.starlitcoffee.ui.guidance.resolveBrewSessionContentSource
 import com.adsamcik.starlitcoffee.ui.guidance.learnFacts
-import com.adsamcik.starlitcoffee.ui.guidance.LearnGuidanceCatalogAvailability
+import com.adsamcik.starlitcoffee.ui.brewing.toBrewReaderContent
 import com.adsamcik.starlitcoffee.ui.util.DimModeScaffold
 import com.adsamcik.starlitcoffee.ui.util.KeepScreenOn
 import com.adsamcik.starlitcoffee.ui.util.keepScreenOnTimeoutMillis
@@ -192,29 +184,29 @@ fun BrewSessionScreen(
     }
     val restoredSession = (restored as? ActiveBrewSessionRestoreResult.Restored)?.value
     val persistedRecipe = restoredSession?.recipe
-    val exactRecipeId = remember(persistedRecipe?.builtInRecipeId) {
-        persistedRecipe?.builtInRecipeId?.let { rawRecipeId ->
-            runCatching { BuiltInRecipeId(rawRecipeId) }
-                .getOrNull()
-                ?.takeIf { recipeId -> BuiltInP1RecipeCatalog.find(recipeId) != null }
-        }
-    }
-    val terminologyUiCopy = exactRecipeId?.let(exactRecipeReleaseGate::terminologyUiCopyFor)
-    val reader = remember(restoredSession?.recipe, restoredSession?.runtime?.stagePlan,
+    val contentSource = remember(restoredSession?.recipe, restoredSession?.runtime?.stagePlan,
         exactRecipeReleaseGate, guidancePreferences) {
         restoredSession?.let {
-            resolveBrewReadAheadGuide(it.recipe, it.runtime.stagePlan.stages.map { stage -> stage.definition },
+            resolveBrewSessionContentSource(it.recipe, it.runtime.stagePlan.stages.map { stage -> stage.definition },
                 exactRecipeReleaseGate, guidancePreferences)
         }
     }
+    val terminologyUiCopy = contentSource?.terminology
+    val reader = contentSource?.reader
     val readerGuide = reader?.exactGuide
-    val readerResolution = reader?.resolution
+    val readerContent = remember(reader) {
+        reader?.resolution?.toBrewReaderContent(
+            key = persistedRecipe?.builtInRecipeId ?: sessionId,
+            instructionAssets = BuiltInInstructionAssetCatalog.catalog,
+            exactGuide = reader.exactGuide,
+            reviewedGuide = reader.reviewedGuide,
+        )
+    }
+    val canReadAhead = readerContent?.let {
+        it.readableSteps.isNotEmpty() || it.commonContent.isNotEmpty() || it.overview != null
+    } == true
     val showEnglishTerminology = sessionTerminologyOverride ?: showEnglishBrewingTerms
-    val isReleaseGatedExactSession = persistedRecipe?.let { recipe ->
-        exactRecipeReleaseGate.shouldGateSession(recipe,
-            restoredSession.runtime.stagePlan.stages.map { it.definition })
-    } ?: false
-    if (isReleaseGatedExactSession) {
+    if (contentSource?.executionBlocked == true) {
         BackHandler(onBack = onBack)
         Column(Modifier.fillMaxSize()) {
             BrewSessionUnavailable(hasSession = true, onBack = onBack, modifier = Modifier.weight(1f))
@@ -222,23 +214,10 @@ fun BrewSessionScreen(
         }
         return
     }
-    val guidanceResolver = remember(persistedRecipe?.reviewedGuide, exactRecipeId, exactRecipeReleaseGate) {
-        val guidanceCatalogs = persistedRecipe?.reviewedGuide?.guidanceCatalog()?.let(::listOf) ?: exactRecipeId
-            ?.let(exactRecipeReleaseGate::catalogFor)
-            ?.let(::listOf)
-            ?: if (Locale.getDefault().language == Locale.ENGLISH.language) {
-                listOf(LegacyBuiltInGuidanceCatalog.catalog, P1BuiltInGuidanceCatalog.catalog, ColdBrewGuidanceCatalog.catalog)
-            } else {
-                // Legacy/generic technical brewing copy has not received locale-specific review.
-                emptyList()
-            }
-        DurableBrewSessionGuidanceResolver(
-            guidanceCatalogs = guidanceCatalogs,
-            instructionAssets = BuiltInInstructionAssetCatalog.catalog,
-        )
-    }
+    val guidanceResolver = contentSource?.resolver
 
     val guidanceResolution = remember(
+        guidanceResolver,
         restoredSession?.recipe,
         presentation,
         guidancePreferences,
@@ -246,7 +225,7 @@ fun BrewSessionScreen(
     ) {
         val availablePresentation = presentation as? ActiveBrewSessionPresentation.Available
         if (restoredSession != null && availablePresentation != null) {
-            guidanceResolver.resolve(
+            guidanceResolver?.resolve(
                 DurableBrewSessionGuidanceRequest(
                     methodFamilyId = restoredSession.recipe.methodFamilyId,
                     brewerProfileId = restoredSession.recipe.brewerProfileId,
@@ -457,7 +436,7 @@ fun BrewSessionScreen(
                 },
                 actions = {
                     if (availablePresentation?.status == BrewSessionStatus.COMPLETED &&
-                        readerResolution?.availability is LearnGuidanceCatalogAvailability.Available) {
+                        canReadAhead) {
                         IconButton(onClick = { showHelp = true }) {
                             Icon(Icons.AutoMirrored.Outlined.HelpOutline,
                                 contentDescription = stringResource(R.string.action_brew_help))
@@ -494,6 +473,7 @@ fun BrewSessionScreen(
                 onDispatch = dispatch,
                 onBack = onBack,
                 guidanceResolution = guidanceResolution,
+                requiredWarnings = contentSource?.requiredWarnings.orEmpty(),
                 recipe = persistedRecipe,
                 runtime = restoredSession?.runtime,
                 bloomSpritesheetId = bloomSpritesheetId,
@@ -508,7 +488,7 @@ fun BrewSessionScreen(
     }
 
     }
-    if (showReadAhead && readerResolution != null) {
+    if (showReadAhead && readerContent != null) {
         ModalBottomSheet(onDismissRequest = { showReadAhead = false }) {
             Column(Modifier.fillMaxWidth().fillMaxHeight(0.95f)) {
                 TextButton(onClick = { showReadAhead = false }, modifier = Modifier.fillMaxWidth()) {
@@ -529,15 +509,10 @@ fun BrewSessionScreen(
                 readerState.SaveableStateProvider("reader_$sessionId") {
                     LearnBrewerScreen(
                         title = stringResource(R.string.action_read_ahead),
-                        resolution = readerResolution,
+                        content = readerContent,
                         onBack = { showReadAhead = false },
-                        instructionAssets = BuiltInInstructionAssetCatalog.catalog,
-                        exactGuide = readerGuide,
-                        reviewedGuide = reader?.reviewedGuide,
                         initiallyReading = true,
-                        initialStepIndex = readerResolution.content.indexOfFirst {
-                            it.id == availablePresentation?.currentStage?.contentId
-                        }.coerceAtLeast(0),
+                        initialStepIndex = readerContent.readableStepIndexFor(availablePresentation?.currentStage?.contentId),
                         modifier = Modifier.fillMaxSize(),
                     )
                 }
@@ -577,10 +552,10 @@ fun BrewSessionScreen(
         val helpResolution = remember(guidanceResolver, persistedRecipe, availablePresentation.currentStage,
             guidanceResolution?.policy) {
             persistedRecipe?.let { recipe ->
-                guidanceResolver.resolve(DurableBrewSessionGuidanceRequest(
+                guidanceResolver?.resolve(DurableBrewSessionGuidanceRequest(
                     recipe.methodFamilyId, recipe.brewerProfileId, availablePresentation.currentStage,
                     guidancePreferences.copy(sessionOverride = GuidancePresentationLevel.FULL),
-                )).copy(policy = guidanceResolution?.policy)
+                ))?.copy(policy = guidanceResolution?.policy)
             }
         }
         ModalBottomSheet(onDismissRequest = { showHelp = false },
@@ -590,7 +565,7 @@ fun BrewSessionScreen(
                 Text(stringResource(R.string.action_brew_help), style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.semantics { heading() })
                 BrewRecipeQuantities(persistedRecipe)
-                if (readerResolution?.availability is LearnGuidanceCatalogAvailability.Available) {
+                if (canReadAhead) {
                     TextButton(onClick = {
                         showHelp = false
                         showReadAhead = true
@@ -623,7 +598,6 @@ fun BrewSessionScreen(
                         },
                         sourceExplanations = (readerGuide?.stageFactsByContentId ?: reader?.reviewedGuide?.learnFacts().orEmpty())
                             .mapNotNull { (id, facts) -> facts.explanation?.let { id to it } }.toMap(),
-                        equipmentProfileId = persistedRecipe?.reviewedGuide?.profileId ?: persistedRecipe?.brewerProfileId,
                         showFullExplanations = true,
                     )
                 }
@@ -749,6 +723,7 @@ private fun BrewSessionContent(
     onDispatch: (SessionEvent) -> Unit,
     onBack: () -> Unit,
     guidanceResolution: DurableBrewSessionGuidanceResolution?,
+    requiredWarnings: Map<StageContentId, List<String>>,
     recipe: BrewRecipeSnapshotV1?,
     runtime: SessionRuntimeState?,
     bloomSpritesheetId: String?,
@@ -800,7 +775,8 @@ private fun BrewSessionContent(
                         minimal = presentation.isTimerOnly ||
                             (recipe?.calculatorSetup != null && runtime?.physicalClock == null) ||
                             guidanceResolution.policy?.level == GuidancePresentationLevel.UTILITIES_ONLY,
-                        showSupportingCopy = !pourFocus)
+                        showSupportingCopy = !pourFocus,
+                        requiredWarnings = requiredWarnings[stage?.contentId].orEmpty())
                 }
                 if (guidanceResolution == null) {
                     primaryLiveBrewCue(stage?.referenceCues.orEmpty())?.let {

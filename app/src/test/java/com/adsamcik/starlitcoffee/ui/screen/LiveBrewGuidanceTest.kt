@@ -37,7 +37,9 @@ class LiveBrewGuidanceTest {
     fun `basic timer moves only familiar Pulsar handling advice to Help`() {
         val pour = content("pulsar_manual_brew", BuiltInGuidancePlacement.LIVE_STAGE)
         val hot = content("pulsar_hot_liquid_safety", BuiltInGuidancePlacement.GLOBAL_SAFETY, critical = true)
+            .copy(warning = canonicalWarning("pulsar_hot_liquid_safety"))
         val overflow = content("pulsar_overflow_safety", BuiltInGuidancePlacement.LIVE_STAGE, critical = true)
+            .copy(warning = canonicalWarning("pulsar_overflow_safety"))
         val unfamiliar = content("equipment_fault", BuiltInGuidancePlacement.GLOBAL_SAFETY, critical = true)
         val source = resolution(listOf(pour), listOf(hot, overflow, unfamiliar))
         val profile = PulsarLearnGuideCatalog.profileId.value
@@ -54,6 +56,7 @@ class LiveBrewGuidanceTest {
     @Test
     fun `cold timer consolidates safety only when refrigeration is already visible`() {
         val safety = content("cold_immersion_generic_global_safety", BuiltInGuidancePlacement.GLOBAL_SAFETY, critical = true)
+            .copy(warning = canonicalWarning("cold_immersion_generic_global_safety"))
         val source = resolution(emptyList(), listOf(safety))
         val withRefrigeration = source.copy(stageSafetyMessages = listOf(
             StageSafetyMessage("food_refrigerate_4c_during_steep", StageSafetySeverity.WARNING)))
@@ -118,6 +121,64 @@ class LiveBrewGuidanceTest {
         assertEquals(cumulative, primaryLiveBrewCue(listOf(added, cumulative)))
         assertEquals(yield, primaryLiveBrewCue(listOf(yield)))
     }
+
+    @Test
+    fun `omitted guidance preserves the physical target and required safety at minimal density`() {
+        val target = BrewStageReferenceCuePresentation.Mass(QuantityRole.BREW_WATER_INPUT,
+            StageMassReference.BREW_CUMULATIVE, StageTargetQualifier.EXACT, 340.0, 340.0)
+        val projected = projectLiveBrewContent(resolution(emptyList(), emptyList()), targetCue = target,
+            minimal = true, showSupportingCopy = false, requiredWarnings = listOf("Disconnect power before opening."))
+
+        assertNull(projected.step)
+        assertNull(projected.visualCue)
+        assertNull(projected.instruction)
+        assertEquals(target, projected.target)
+        assertEquals(listOf("Disconnect power before opening."), projected.warnings.map { it.text })
+        assertTrue(projected.warnings.single().critical)
+    }
+
+    @Test
+    fun `focused layout retains unfamiliar warnings while known routine advice stays in Help`() {
+        val unknown = content("new_pressure_step", BuiltInGuidancePlacement.LIVE_STAGE, critical = true)
+            .copy(warning = "Release pressure before opening.")
+        val projected = projectLiveBrewContent(resolution(emptyList(), listOf(unknown)),
+            showSupportingCopy = false)
+        assertNull(projected.instruction)
+        assertEquals(listOf("Release pressure before opening."), projected.warnings.map { it.text })
+    }
+
+    @Test
+    fun `target-only content has no instruction or reserved illustration`() {
+        val targetOnly = content("pour", BuiltInGuidancePlacement.LIVE_STAGE)
+            .copy(instruction = "", altText = "", target = "Maintain the source water line")
+        val projected = projectLiveBrewContent(resolution(listOf(targetOnly), emptyList()))
+        assertEquals(targetOnly.target, projected.step?.target)
+        assertNull(projected.step?.instruction)
+        assertNull(projected.step?.illustration)
+        assertNull(projected.instruction)
+        assertTrue(projected.warnings.isEmpty())
+    }
+
+    @Test
+    fun `known focused pour never hides a newly supplied required warning`() {
+        val pour = content("reviewed_pulsar_v1_open_and_pulse", BuiltInGuidancePlacement.LIVE_STAGE, critical = true)
+            .copy(warning = "Familiar reviewed handling advice")
+        val projected = projectLiveBrewContent(resolution(emptyList(), listOf(pour)),
+            equipmentProfileId = PulsarLearnGuideCatalog.profileId.value, showSupportingCopy = false,
+            requiredWarnings = listOf("Familiar reviewed handling advice", "Disconnect power before opening."))
+        assertEquals(listOf("Familiar reviewed handling advice", "Disconnect power before opening."), projected.warnings.map { it.text })
+        assertTrue(projected.warnings.all { it.summaryResource == null })
+    }
+
+    @Test
+    fun `direct live packets display supplied instruction unless explicitly omitted`() {
+        val step = com.adsamcik.starlitcoffee.ui.brewing.BrewStepContent(StageContentId("heat"), instruction = "Turn off heat")
+        assertEquals("Turn off heat", com.adsamcik.starlitcoffee.ui.brewing.LiveBrewContent(step = step).instruction)
+        assertNull(com.adsamcik.starlitcoffee.ui.brewing.LiveBrewContent(step = step, instruction = null).instruction)
+    }
+
+    private fun canonicalWarning(id: String): String? =
+        com.adsamcik.starlitcoffee.ui.guidance.LegacyBuiltInGuidanceCatalog.catalog.find(StageContentId(id))?.text?.warning
 
     private fun resolution(
         routine: List<ResolvedBrewGuidanceContent>,

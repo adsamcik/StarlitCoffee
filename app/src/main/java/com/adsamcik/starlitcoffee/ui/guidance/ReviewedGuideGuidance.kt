@@ -42,7 +42,7 @@ fun ReviewedMethodGuide.guidanceCatalog(
 fun ReviewedMethodGuide.learnResolution(): LearnGuidanceCatalogResolution = LearnGuidanceCatalogResolution(
     policy = null, availability = LearnGuidanceCatalogAvailability.Available,
     content = guidanceCatalog().content.map { content ->
-        val presentation = content.authoredPresentations.getValue(GuidancePresentationLevel.FULL)
+        val presentation = content.projectGuidanceContent(GuidancePresentationLevel.FULL)
         ResolvedLearnGuidanceContent(content.id, content.placement, presentation.instruction.orEmpty(),
             presentation.target, presentation.completionCue, presentation.explanation, null, null, emptyList(),
             presentation.warning, emptyList(), presentation.accessibleAltText, content.safetyCritical,

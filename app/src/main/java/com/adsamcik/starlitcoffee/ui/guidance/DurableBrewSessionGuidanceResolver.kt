@@ -438,51 +438,20 @@ class DurableBrewSessionGuidanceResolver(
     private fun BuiltInGuidanceContent.toResolvedContent(
         level: GuidancePresentationLevel,
     ): ResolvedBrewGuidanceContent {
-        authoredPresentations[level]?.let { authored ->
-            return ResolvedBrewGuidanceContent(
-                id = id,
-                placement = placement,
-                instruction = authored.instruction.orEmpty(),
-                target = authored.target,
-                completionCue = authored.completionCue,
-                explanation = authored.explanation,
-                tip = authored.practicalTip,
-                nextAction = authored.nextAction,
-                controlRequirements = authored.controlRequirements,
-                warning = authored.warning ?: text.warning,
-                utilities = authored.utilities,
-                altText = authored.accessibleAltText,
-                safetyCritical = safetyCritical,
-                terminologyReferences = terminologyReferences,
-                visualContentRevision = visualContentRevision,
-            )
-        }
-        val showSupportingCopy = level in setOf(
-            GuidancePresentationLevel.FULL,
-            GuidancePresentationLevel.CUSTOM,
-        )
-        val compactInstruction = level in setOf(
-            GuidancePresentationLevel.CONCISE,
-            GuidancePresentationLevel.FOCUSED,
-            GuidancePresentationLevel.UTILITIES_ONLY,
-        )
+        val projected = projectGuidanceContent(level)
         return ResolvedBrewGuidanceContent(
             id = id,
             placement = placement,
-            instruction = if (compactInstruction) {
-                text.conciseInstruction ?: text.primaryInstruction
-            } else {
-                text.primaryInstruction
-            },
-            target = null,
-            completionCue = null,
-            explanation = text.explanation.takeIf { showSupportingCopy },
-            tip = text.tip.takeIf { showSupportingCopy },
-            nextAction = null,
-            controlRequirements = emptyList(),
-            warning = text.warning,
-            utilities = emptyList(),
-            altText = text.altText,
+            instruction = projected.instruction.orEmpty(),
+            target = projected.target,
+            completionCue = projected.completionCue,
+            explanation = projected.explanation,
+            tip = projected.practicalTip,
+            nextAction = projected.nextAction,
+            controlRequirements = projected.controlRequirements,
+            warning = projected.warning,
+            utilities = projected.utilities,
+            altText = projected.accessibleAltText,
             safetyCritical = safetyCritical,
             terminologyReferences = terminologyReferences,
             visualContentRevision = visualContentRevision,

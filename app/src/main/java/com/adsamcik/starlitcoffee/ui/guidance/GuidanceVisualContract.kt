@@ -29,7 +29,17 @@ internal fun BuiltInGuidanceContent.withVisualContract(catalog: String): BuiltIn
 internal fun BuiltInGuidanceContent.visualContractParts(catalog: String): List<String> =
     listOf(catalog, familyId.value, profileId?.value.orEmpty(), id.value, placement.name,
         text.primaryInstruction, text.conciseInstruction.orEmpty(), text.explanation.orEmpty(),
-        text.tip.orEmpty(), text.warning.orEmpty(), text.altText)
+        text.tip.orEmpty(), text.warning.orEmpty(), text.altText) + optionalOperationContractParts()
+
+/** Preserve shipped contracts while binding newly authored operational slots to their artwork. */
+private fun BuiltInGuidanceContent.optionalOperationContractParts(): List<String> {
+    val hasText = listOf(text.target, text.completionCue, text.nextAction).any { it != null }
+    val hasControls = text.controlRequirements.isNotEmpty() || text.utilities.isNotEmpty()
+    if (!hasText && !hasControls) return emptyList()
+    return listOf("optional_operations_v1", text.target.orEmpty(), text.completionCue.orEmpty(),
+        text.nextAction.orEmpty(), text.controlRequirements.joinToString(",") { it.stableId },
+        text.utilities.joinToString(",") { it.stableId })
+}
 
 internal fun ReviewedMethodGuide.visualContractRevision(step: ReviewedGuideStep): String =
     visualContractRevision(listOf(id, profileId, scope, step.id, step.instruction, step.why, step.completion))

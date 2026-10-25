@@ -26,20 +26,19 @@ enum class BuiltInGuidancePlacement {
  * while Learn and live Brew continue to consume this one semantic record.
  */
 data class GuidanceTextMetadata(
-    val primaryInstruction: String,
+    val primaryInstruction: String = "",
     val conciseInstruction: String? = null,
     val explanation: String? = null,
     val tip: String? = null,
     val warning: String? = null,
-    val altText: String,
+    val altText: String = "",
+    val target: String? = null,
+    val completionCue: String? = null,
+    val nextAction: String? = null,
+    val controlRequirements: List<GuidanceOperationalCue> = emptyList(),
+    val utilities: List<GuidanceOperationalCue> = emptyList(),
 ) {
     init {
-        require(primaryInstruction.isNotBlank()) {
-            "Built-in guidance needs a primary instruction"
-        }
-        require(altText.isNotBlank()) {
-            "Built-in guidance needs meaningful alt text"
-        }
         require(conciseInstruction == null || conciseInstruction.isNotBlank()) {
             "Concise guidance cannot be blank"
         }
@@ -83,28 +82,26 @@ enum class GuidanceOperationalCue(
 }
 
 /**
- * One fully authored guidance density.
+ * An explicitly authored guidance density; omitted slots stay omitted.
  *
- * Exact recipes use this instead of deriving focused and utilities-only views
- * from the full paragraph. Legacy catalogues leave the map empty and retain
- * their established compact-copy behavior.
+ * A missing density derives from base metadata. A present record is authoritative,
+ * except that a base warning cannot be removed by omitting its authored warning.
+ * Accessibility descriptions are required when an illustration is admitted, not
+ * for content with no illustration.
  */
 data class AuthoredGuidancePresentation(
-    val instruction: String?,
-    val target: String?,
-    val completionCue: String?,
-    val explanation: String?,
-    val practicalTip: String?,
-    val nextAction: String?,
-    val controlRequirements: List<GuidanceOperationalCue>,
-    val warning: String?,
-    val utilities: List<GuidanceOperationalCue>,
-    val accessibleAltText: String,
+    val instruction: String? = null,
+    val target: String? = null,
+    val completionCue: String? = null,
+    val explanation: String? = null,
+    val practicalTip: String? = null,
+    val nextAction: String? = null,
+    val controlRequirements: List<GuidanceOperationalCue> = emptyList(),
+    val warning: String? = null,
+    val utilities: List<GuidanceOperationalCue> = emptyList(),
+    val accessibleAltText: String = "",
 ) {
     init {
-        require(accessibleAltText.isNotBlank()) {
-            "Authored guidance needs meaningful alt text"
-        }
         val controlsAreUnique = controlRequirements.distinct().size == controlRequirements.size
         val utilitiesAreUnique = utilities.distinct().size == utilities.size
         require(controlsAreUnique && utilitiesAreUnique) {
@@ -144,12 +141,6 @@ data class BuiltInGuidanceContent(
         }
         require(!safetyCritical || visibility.alwaysVisible) {
             "Safety-critical guidance must remain visible at every guidance level"
-        }
-        require(
-            authoredPresentations.isEmpty() ||
-                authoredPresentations.keys == GuidancePresentationLevel.entries.toSet(),
-        ) {
-            "Authored guidance must cover every presentation level"
         }
         require(
             terminologyReferences.map(BrewingTerminologyReference::conceptId).distinct().size ==

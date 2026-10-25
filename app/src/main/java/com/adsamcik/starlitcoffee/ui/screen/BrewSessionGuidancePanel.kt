@@ -24,11 +24,12 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.ui.brewing.approvedBrewStepIllustration
+import com.adsamcik.starlitcoffee.ui.brewing.toBrewStepContent
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.ui.guidance.BrewingTerminologyReference
 import com.adsamcik.starlitcoffee.ui.guidance.BrewingTerminologyUiCopy
 import com.adsamcik.starlitcoffee.ui.guidance.BuiltInGuidancePlacement
-import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewGuidanceAvailability
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewGuidanceVisualStatus
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidanceResolution
 import com.adsamcik.starlitcoffee.ui.guidance.GuidancePresentationLevel
@@ -99,7 +100,6 @@ fun BrewSessionGuidancePanel(
     showEnglishTerminology: Boolean = false,
     onShowEnglishTerminology: (Boolean) -> Unit = {},
     sourceExplanations: Map<StageContentId, String> = emptyMap(),
-    equipmentProfileId: String? = null,
     showFullExplanations: Boolean = false,
 ) {
     val approvedVisual = resolution.visualStatus as? DurableBrewGuidanceVisualStatus.Approved
@@ -114,41 +114,28 @@ fun BrewSessionGuidancePanel(
             illustratedContentId = approvedVisual?.targetContentId,
         )
     }
-    val shouldRender = resolution.policy != null ||
-        visibleContent.isNotEmpty() ||
-        approvedVisual != null
+    val shouldRender = visibleContent.isNotEmpty() || approvedVisual != null
     if (!shouldRender) return
     val terminologyReferences = remember(visibleContent) {
         distinctTerminologyReferences(visibleContent)
     }
 
     Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        if (resolution.availability !is DurableBrewGuidanceAvailability.Available && visibleContent.isEmpty()) {
-            Text(stringResource(R.string.msg_brew_guidance_unavailable), style = MaterialTheme.typography.bodyMedium)
-        }
         visibleContent.forEach { content ->
             var expanded by rememberSaveable(content.id.value) { mutableStateOf(false) }
-            GuideStepCanvas(
-                copy = GuideStepCopy(
-                    instruction = content.instruction,
-                    target = content.target,
-                    completionCue = content.completionCue,
-                    essentialOperations = listOfNotNull(content.nextAction) +
-                        content.controlRequirements.map { it.localizedLabel() } + content.utilities.map { it.localizedLabel() },
-                    warning = content.warning,
-                    safetyCritical = content.safetyCritical,
-                    explanation = listOfNotNull(content.explanation, content.tip,
-                        sourceExplanations[content.id].takeIf {
-                            showFullExplanations || resolution.policy?.level in
-                                setOf(GuidancePresentationLevel.FULL, GuidancePresentationLevel.CUSTOM)
-                        }).filterNot { it == "None" }.distinct(),
-                    altText = approvedVisual?.takeIf { it.targetContentId == content.id }?.altText
-                        ?: content.altText,
-                ),
-                visualAsset = approvedVisual?.takeIf { it.targetContentId == content.id }?.asset,
+            val visual = approvedVisual?.takeIf { it.targetContentId == content.id }
+            val sourceDetails = sourceExplanations[content.id].takeIf {
+                showFullExplanations || resolution.policy?.level in
+                    setOf(GuidancePresentationLevel.FULL, GuidancePresentationLevel.CUSTOM)
+            }
+            val step = content.toBrewStepContent(
+                illustration = approvedBrewStepIllustration(visual?.asset, visual?.altText ?: content.altText),
+                extraDetails = listOfNotNull(sourceDetails),
+            )
+            if (step.isReadable) GuideStepCanvas(
+                content = step,
                 expanded = expanded,
                 onExpandedChange = { expanded = it },
-                equipmentProfileId = equipmentProfileId,
             )
         }
         if (resolution.policy != null || terminologyReferences.isNotEmpty()) {

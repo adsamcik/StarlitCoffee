@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.test.platform.app.InstrumentationRegistry
 import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.ui.brewing.BrewStepContent
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.ui.guidance.BuiltInGuidancePlacement
 import com.adsamcik.starlitcoffee.ui.guidance.GuidanceOperationalCue
@@ -45,16 +46,16 @@ class VisualGuideReaderTest {
                     var expanded by remember { mutableStateOf(false) }
                     Column(Modifier.verticalScroll(rememberScrollState()).padding(16.dp)) {
                         GuideStepCanvas(
-                            copy = GuideStepCopy(
+                            content = BrewStepContent(
+                                id = StageContentId("release"),
                                 instruction = "Release the valve",
                                 target = "300 g total water",
                                 completionCue = "Wait for drainage",
-                                essentialOperations = listOf("Open the valve yourself"),
+                                operations = listOf("Open the valve yourself"),
                                 warning = "Keep hot glass stable",
                                 safetyCritical = true,
-                                explanation = listOf("Water flows through the coffee bed"),
+                                details = listOf("Water flows through the coffee bed"),
                             ),
-                            visualAsset = null,
                             expanded = expanded,
                             onExpandedChange = { expanded = it },
                         )

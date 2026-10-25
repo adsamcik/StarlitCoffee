@@ -2,6 +2,7 @@ package com.adsamcik.starlitcoffee.ui.guidance
 
 import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileId
 import com.adsamcik.starlitcoffee.domain.brewing.MethodFamilyId
+import com.adsamcik.starlitcoffee.domain.brewing.StageId
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -136,6 +137,66 @@ class LearnGuidanceCatalogResolverTest {
             content.id.value.startsWith("pulsar_")
         })
     }
+
+    @Test
+    fun missingExactSiblingPreservesPresentOrderAndCommonSafety() {
+        val first = partialStage("first")
+        val last = partialStage("last")
+        val safety = first.copy(
+            id = StageContentId("common_safety"),
+            stageId = null,
+            placement = BuiltInGuidancePlacement.GLOBAL_SAFETY,
+            text = GuidanceTextMetadata(warning = "Handle hot glass only when safe."),
+            visibility = GuidanceVisibilityPolicy(alwaysVisible = true),
+            safetyCritical = true,
+        )
+        val wrongProfile = partialStage("middle").copy(profileId = BrewerProfileId("v60_01"))
+        val resolution = LearnGuidanceCatalogResolver(
+            guidanceCatalogs = listOf(BuiltInGuidanceCatalog(listOf(last, safety, wrongProfile, first))),
+        ).resolve(partialRequest(listOf("first", "middle", "last")))
+
+        assertEquals(
+            LearnGuidanceCatalogAvailability.Partial(BrewerProfileId("v60_02"), listOf(StageId("middle"))),
+            resolution.availability,
+        )
+        assertEquals(listOf(safety.id, first.id, last.id), resolution.content.map { it.id })
+        assertEquals("Handle hot glass only when safe.", resolution.content.first().warning)
+        assertEquals("first", resolution.content[1].instruction)
+        assertEquals("last", resolution.content[2].instruction)
+    }
+
+    @Test
+    fun duplicateOrderAndAmbiguousMatchingContentRemainRejected() {
+        val first = partialStage("first")
+        val duplicate = first.copy(id = StageContentId("second_copy"))
+        val resolver = LearnGuidanceCatalogResolver(
+            guidanceCatalogs = listOf(BuiltInGuidanceCatalog(listOf(first, duplicate))),
+        )
+        for (order in listOf(listOf("first"), listOf("first", "first"), emptyList())) {
+            val resolution = resolver.resolve(partialRequest(order))
+            assertEquals(
+                LearnGuidanceCatalogAvailability.ExactStageOrderMismatch(BrewerProfileId("v60_02")),
+                resolution.availability,
+            )
+            assertTrue(resolution.content.isEmpty())
+        }
+    }
+
+    private fun partialStage(stage: String) = BuiltInGuidanceContent(
+        id = StageContentId("content_$stage"),
+        familyId = MethodFamilyId("manual_gravity"),
+        profileId = BrewerProfileId("v60_02"),
+        stageId = StageId(stage),
+        placement = BuiltInGuidancePlacement.LIVE_STAGE,
+        text = GuidanceTextMetadata(primaryInstruction = stage),
+    )
+
+    private fun partialRequest(stages: List<String>) = LearnGuidanceCatalogRequest(
+        methodFamilyId = "manual_gravity",
+        brewerProfileId = "v60_02",
+        exactStageOrder = stages.map(::StageId),
+        preferences = DurableBrewSessionGuidancePreferences(sessionOverride = GuidancePresentationLevel.FULL),
+    )
 
     private fun request(
         methodFamilyId: String,
