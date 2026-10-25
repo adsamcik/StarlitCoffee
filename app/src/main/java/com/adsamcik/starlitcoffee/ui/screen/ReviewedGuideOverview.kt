@@ -26,8 +26,6 @@ import com.adsamcik.starlitcoffee.ui.brewing.BrewOverviewDetails
 import com.adsamcik.starlitcoffee.ui.brewing.BrewOverviewTemperature
 import com.adsamcik.starlitcoffee.ui.brewing.BrewQuantityUnit
 import com.adsamcik.starlitcoffee.ui.brewing.toBrewOverviewContent
-import com.adsamcik.starlitcoffee.ui.component.EquipmentVisual
-import com.adsamcik.starlitcoffee.ui.component.EquipmentVisualBadge
 
 /** Compatibility adapter: all source interpretation belongs to the presentation adapter. */
 @Composable
@@ -40,12 +38,12 @@ internal fun BrewRecipeOverview(content: BrewOverviewContent) {
     var evidenceExpanded by rememberSaveable(content.id) { mutableStateOf(false) }
     val uriHandler = LocalUriHandler.current
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        content.profileId?.let { EquipmentVisualBadge(EquipmentVisual.profile(it), size = 80.dp) }
         if (content.sourceLanguage == "en" && LocalConfiguration.current.locales[0].language != "en") {
-            Text(stringResource(R.string.label_reviewed_guide_english), style = MaterialTheme.typography.labelLarge)
+            Text(stringResource(R.string.label_reviewed_guide_english), style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         if (content.quantities.isNotEmpty()) {
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalArrangement = Arrangement.spacedBy(12.dp),
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp),
                 maxItemsInEachRow = if (LocalDensity.current.fontScale > 1.3f) 1 else 3,
                 modifier = Modifier.fillMaxWidth()) {
                 content.quantities.forEach { quantity ->
@@ -59,8 +57,8 @@ internal fun BrewRecipeOverview(content: BrewOverviewContent) {
         }
         if (content.requiresMeasuredDose) Text(stringResource(R.string.msg_reviewed_fill_quantities))
         content.introduction.forEach { Text(it, style = MaterialTheme.typography.bodyMedium) }
-        content.temperature?.let { Text(overviewTemperatureLabel(it), style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.primary) }
+        content.temperature?.let { Text(overviewTemperatureLabel(it), style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSurface) }
         if (content.details.isPresent) {
             ConnectedGuideDisclosure(stringResource(R.string.heading_exact_learn_recipe_summary), expanded,
                 onExpandedChange = { expanded = it }) { BrewOverviewDetailsContent(content.details) }

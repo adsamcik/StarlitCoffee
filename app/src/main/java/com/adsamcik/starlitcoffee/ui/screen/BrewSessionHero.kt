@@ -2,14 +2,11 @@ package com.adsamcik.starlitcoffee.ui.screen
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,7 +19,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.sp
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.brewing.snapshot.BrewRecipeSnapshotV1
@@ -42,39 +38,21 @@ import java.text.NumberFormat
 @Composable
 internal fun BrewSessionHero(
     presentation: ActiveBrewSessionPresentation.Available,
-    recipe: BrewRecipeSnapshotV1?,
     runtime: SessionRuntimeState?,
     bloomSpritesheetId: String?,
     modifier: Modifier = Modifier,
-    visualHeight: Dp = 224.dp,
 ) {
     val bloom = brewSessionBloomState(presentation, runtime).takeIf { !bloomSpritesheetId.isNullOrEmpty() }
-    Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        BrewRecipeQuantities(recipe, doseOnly = true)
-        BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
-            val fontScale = LocalDensity.current.fontScale
-            val sideBySide = maxWidth >= 260.dp
-            if (sideBySide && bloom != null) {
-                val largeText = fontScale >= 1.5f
-                val bloomSize = if (largeText) (maxWidth * 0.4f).coerceAtMost(128.dp)
-                    else (maxWidth * 0.54f).coerceAtMost(216.dp)
-                val clockWidth = maxWidth - bloomSize
-                Box(Modifier.fillMaxWidth().heightIn(min = if (largeText) 132.dp else visualHeight)) {
-                    BrewHeroClock(presentation, Modifier.width(clockWidth).align(Alignment.CenterStart))
-                    // Reserve the full atlas frame so wider artwork cannot overlap timing labels.
-                    BrewHeroBloom(bloom, bloomSpritesheetId, Modifier.size(bloomSize)
-                        .align(Alignment.CenterEnd).offset(x = 12.dp))
-                }
-            } else if (bloom == null) {
-                Box(Modifier.fillMaxWidth().heightIn(min = if (fontScale >= 1.5f) 132.dp else visualHeight)) {
-                    BrewHeroClock(presentation, Modifier.fillMaxWidth().align(Alignment.CenterStart))
-                }
-            } else {
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    BrewHeroClock(presentation, Modifier.fillMaxWidth())
-                    bloom?.let { BrewHeroBloom(it, bloomSpritesheetId, Modifier.size(88.dp).align(Alignment.End)) }
-                }
-            }
+    val largeText = LocalDensity.current.fontScale >= 1.5f
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        BrewHeroClock(presentation, Modifier.weight(1f))
+        if (bloom != null) {
+            // Keep the whole atlas frame clear of the clock, as a quiet companion.
+            BrewHeroBloom(bloom, bloomSpritesheetId, Modifier.size(if (largeText) 64.dp else 96.dp))
         }
     }
 }
@@ -108,13 +86,14 @@ private fun BrewHeroClock(presentation: ActiveBrewSessionPresentation.Available,
         BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
             val measurer = rememberTextMeasurer()
             val availablePixels = with(LocalDensity.current) { maxWidth.roundToPx() }.coerceAtLeast(1)
+            val maximumFontSize = if (LocalDensity.current.fontScale >= 1.5f) 56f else 88f
             val clockStyle = MaterialTheme.typography.displayLarge.copy(fontWeight = FontWeight.Light,
                 fontFeatureSettings = "tnum", letterSpacing = (-0.5).sp)
             // Measure the actual glyphs, including Android's non-linear large-font scaling.
-            val fontSize = remember(clock, clockIsKnown, availablePixels, clockStyle, measurer) {
+            val fontSize = remember(clock, clockIsKnown, availablePixels, maximumFontSize, clockStyle, measurer) {
                 if (!clockIsKnown) 26.sp else {
                     var minimum = 1f
-                    var maximum = 88f
+                    var maximum = maximumFontSize
                     repeat(8) {
                         val candidate = (minimum + maximum) / 2f
                         val width = measurer.measure(clock, style = clockStyle.copy(fontSize = candidate.sp),

@@ -21,10 +21,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.HelpOutline
 import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.WarningAmber
 import androidx.compose.material3.Button
@@ -41,7 +39,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -66,7 +63,6 @@ import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -104,13 +100,13 @@ import com.adsamcik.starlitcoffee.ui.session.StageActualInputKind
 import com.adsamcik.starlitcoffee.ui.guidance.BuiltInInstructionAssetCatalog
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidancePreferences
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidanceRequest
-import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidanceResolution
 import com.adsamcik.starlitcoffee.ui.guidance.GuidancePresentationLevel
 import com.adsamcik.starlitcoffee.ui.guidance.P1ExactRecipeReleaseGate
 import com.adsamcik.starlitcoffee.ui.guidance.P1ExactLearnStageFacts
 import com.adsamcik.starlitcoffee.ui.guidance.resolveBrewSessionContentSource
 import com.adsamcik.starlitcoffee.ui.guidance.learnFacts
 import com.adsamcik.starlitcoffee.ui.brewing.toBrewReaderContent
+import com.adsamcik.starlitcoffee.ui.brewing.LiveBrewContent
 import com.adsamcik.starlitcoffee.ui.util.DimModeScaffold
 import com.adsamcik.starlitcoffee.ui.util.KeepScreenOn
 import com.adsamcik.starlitcoffee.ui.util.keepScreenOnTimeoutMillis
@@ -414,40 +410,17 @@ fun BrewSessionScreen(
             }
         },
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = restoredSession?.executionContext?.logPresentation?.methodLabel
-                            ?.let { com.adsamcik.starlitcoffee.ui.util.localizedBrewMethodLabel(it) }
-                            ?: stringResource(R.string.screen_brew_session_title),
-                        modifier = Modifier.semantics { heading() },
-                        style = MaterialTheme.typography.titleMedium,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.action_back),
-                        )
-                    }
-                },
-                actions = {
-                    if (availablePresentation?.status == BrewSessionStatus.COMPLETED &&
-                        canReadAhead) {
-                        IconButton(onClick = { showHelp = true }) {
-                            Icon(Icons.AutoMirrored.Outlined.HelpOutline,
-                                contentDescription = stringResource(R.string.action_brew_help))
-                        }
-                    }
-                    if (availablePresentation != null && availablePresentation.status != BrewSessionStatus.COMPLETED) {
-                        IconButton(onClick = { showControls = true }) {
-                            Icon(Icons.Filled.MoreVert, contentDescription = stringResource(R.string.action_brew_controls))
-                        }
-                    }
-                },
+            BrewSessionHeader(
+                title = restoredSession?.executionContext?.logPresentation?.methodLabel
+                    ?.let { com.adsamcik.starlitcoffee.ui.util.localizedBrewMethodLabel(it) }
+                    ?: stringResource(R.string.screen_brew_session_title),
+                onBack = onBack,
+                onHelp = if (availablePresentation?.status == BrewSessionStatus.COMPLETED && canReadAhead) {
+                    { showHelp = true }
+                } else null,
+                onControls = if (availablePresentation != null && availablePresentation.status != BrewSessionStatus.COMPLETED) {
+                    { showControls = true }
+                } else null,
             )
         },
     ) { innerPadding ->
@@ -472,9 +445,17 @@ fun BrewSessionScreen(
                 isDispatching = dispatching,
                 onDispatch = dispatch,
                 onBack = onBack,
-                guidanceResolution = guidanceResolution,
-                requiredWarnings = contentSource?.requiredWarnings.orEmpty(),
-                recipe = persistedRecipe,
+                liveContent = guidanceResolution?.let { resolution ->
+                    projectLiveBrewContent(
+                        resolution, persistedRecipe?.brewerProfileId,
+                        primaryLiveBrewCue(presentation.currentStage?.referenceCues.orEmpty()),
+                        minimal = presentation.isTimerOnly ||
+                            (persistedRecipe?.calculatorSetup != null && restoredSession?.runtime?.physicalClock == null) ||
+                            resolution.policy?.level == GuidancePresentationLevel.UTILITIES_ONLY,
+                        showSupportingCopy = !presentation.currentStage.isFocusedPour(persistedRecipe?.brewerProfileId),
+                        requiredWarnings = contentSource?.requiredWarnings?.get(presentation.currentStage?.contentId).orEmpty(),
+                    )
+                } ?: LiveBrewContent(target = primaryLiveBrewCue(presentation.currentStage?.referenceCues.orEmpty())),
                 runtime = restoredSession?.runtime,
                 bloomSpritesheetId = bloomSpritesheetId,
                 onHelp = { showHelp = true },
@@ -716,15 +697,13 @@ private fun BrewSessionUnavailable(
 }
 
 @Composable
-private fun BrewSessionContent(
+internal fun BrewSessionContent(
     presentation: ActiveBrewSessionPresentation.Available,
     completedLogId: Long?,
     isDispatching: Boolean,
     onDispatch: (SessionEvent) -> Unit,
     onBack: () -> Unit,
-    guidanceResolution: DurableBrewSessionGuidanceResolution?,
-    requiredWarnings: Map<StageContentId, List<String>>,
-    recipe: BrewRecipeSnapshotV1?,
+    liveContent: LiveBrewContent,
     runtime: SessionRuntimeState?,
     bloomSpritesheetId: String?,
     onHelp: () -> Unit,
@@ -741,48 +720,41 @@ private fun BrewSessionContent(
     val statusDescription = stringResource(R.string.cd_brew_session_status, actionLabel, progressLabel)
     BoxWithConstraints(modifier) {
         val largeText = LocalDensity.current.fontScale >= 1.5f
-        val visualHeight = (maxHeight * 0.38f).coerceIn(176.dp, 280.dp)
         Column(
             modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 24.dp, vertical = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(if (largeText) 16.dp else 24.dp),
+            verticalArrangement = Arrangement.spacedBy(if (largeText) 20.dp else 32.dp),
         ) {
             if (presentation.status == BrewSessionStatus.COMPLETED) {
                 CompletedBrewSession(completedLogId, onBack, presentation.isTimerOnly)
                 return@Column
             }
-            BrewSessionHero(presentation, recipe, runtime, bloomSpritesheetId, visualHeight = visualHeight)
+            BrewSessionHero(presentation, runtime, bloomSpritesheetId)
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text(
-                    actionLabel,
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.semantics {
-                        heading()
-                        contentDescription = statusDescription
-                        // Announce stage changes rather than the ticking clock.
-                        liveRegion = if (presentation.accessibility.liveRegion == BrewSessionLiveRegion.ASSERTIVE) {
-                            LiveRegionMode.Assertive
-                        } else LiveRegionMode.Polite
-                    },
-                )
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(
+                        actionLabel,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.weight(1f).semantics {
+                            heading()
+                            contentDescription = statusDescription
+                            // Announce stage changes rather than the ticking clock.
+                            liveRegion = if (presentation.accessibility.liveRegion == BrewSessionLiveRegion.ASSERTIVE) {
+                                LiveRegionMode.Assertive
+                            } else LiveRegionMode.Polite
+                        },
+                    )
+                    IconButton(onClick = onHelp, modifier = Modifier.size(48.dp)) {
+                        Icon(Icons.AutoMirrored.Outlined.HelpOutline,
+                            contentDescription = stringResource(R.string.action_brew_help))
+                    }
+                }
                 if (presentation.isGuidancePaused && presentation.status == BrewSessionStatus.RUNNING) {
                     Text(stringResource(R.string.msg_brew_guide_paused), style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite })
                 }
-                if (guidanceResolution != null) {
-                    LiveBrewGuidance(guidanceResolution, onHelp, equipmentProfileId = equipmentProfileId,
-                        targetCue = primaryLiveBrewCue(stage?.referenceCues.orEmpty()),
-                        minimal = presentation.isTimerOnly ||
-                            (recipe?.calculatorSetup != null && runtime?.physicalClock == null) ||
-                            guidanceResolution.policy?.level == GuidancePresentationLevel.UTILITIES_ONLY,
-                        showSupportingCopy = !pourFocus,
-                        requiredWarnings = requiredWarnings[stage?.contentId].orEmpty())
-                }
-                if (guidanceResolution == null) {
-                    primaryLiveBrewCue(stage?.referenceCues.orEmpty())?.let {
-                        ReferenceCueRow(it, prominent = true, compact = true)
-                    }
-                }
+                LiveBrewStep(liveContent)
                 if (stage?.referenceCues.isNullOrEmpty()) {
                     stage?.let { current ->
                         guideFacts[current.contentId]?.cumulativeWater?.let { volume ->

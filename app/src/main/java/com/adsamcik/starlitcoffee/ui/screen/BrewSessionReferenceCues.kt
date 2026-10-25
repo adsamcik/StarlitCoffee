@@ -32,11 +32,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.domain.brewing.QuantityRole
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageMassReference
@@ -128,18 +130,18 @@ internal fun ReferenceCueRow(
     val content = cue.content(compact = compact)
     val spokenLabel = if (compact) cue.content().label else content.label
     if (compact) {
-        Row(Modifier.fillMaxWidth().semantics(mergeDescendants = true) {
-            contentDescription = "$spokenLabel ${content.value}"
-        }, horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
-            Icon(content.icon, contentDescription = null, modifier = Modifier.size(28.dp),
-                tint = MaterialTheme.colorScheme.primary)
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp),
-                itemVerticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f)) {
-                Text(content.value, style = MaterialTheme.typography.displaySmall, fontWeight = FontWeight.Normal,
-                    modifier = Modifier.alignByBaseline())
-                Text(content.label, style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.alignByBaseline())
-            }
+        FlowRow(
+            modifier = Modifier.fillMaxWidth().semantics(mergeDescendants = true) {
+                contentDescription = "$spokenLabel ${content.value}"
+            },
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            itemVerticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(content.value, style = MaterialTheme.typography.displaySmall,
+                fontSize = if (LocalDensity.current.fontScale >= 1.5f) 32.sp else 48.sp,
+                fontWeight = FontWeight.Normal, modifier = Modifier.alignByBaseline())
+            Text(content.label, style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.alignByBaseline())
         }
         return
     }
