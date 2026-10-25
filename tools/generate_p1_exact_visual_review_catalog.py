@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 import sys
+from datetime import date
 from pathlib import Path
 
 
@@ -65,6 +66,17 @@ def require_text(record: dict, key: str) -> str:
     return value
 
 
+def require_iso_date(record: dict, key: str) -> str:
+    value = require_text(record, key)
+    try:
+        parsed = date.fromisoformat(value)
+    except ValueError as error:
+        raise ReviewError(f"Expected ISO calendar date '{key}': {value}") from error
+    if parsed.isoformat() != value:
+        raise ReviewError(f"Expected YYYY-MM-DD date '{key}': {value}")
+    return value
+
+
 def expected_assets(guidance: dict) -> dict[str, tuple[str, str, str]]:
     expected: dict[str, tuple[str, str, str]] = {}
     for recipe in guidance.get("recipes", []):
@@ -101,14 +113,14 @@ def validate_review(
         raise ReviewError("Independent visual review requires reviewer metadata")
     require_text(reviewer, "name")
     require_text(reviewer, "independence_basis")
-    require_text(review, "reviewed_on")
+    require_iso_date(review, "reviewed_on")
     context = review.get("review_context")
     if not isinstance(context, dict):
         raise ReviewError("Independent visual review requires review_context")
     if context.get("native_resolution_px") != [1024, 768]:
         raise ReviewError("Native review must cover the packaged 1024x768 resources")
-    if context.get("phone_card_px") != [360, 280]:
-        raise ReviewError("Phone review must use the documented 360x280 card")
+    if context.get("phone_card_px") not in ([360, 280], [320, 240]):
+        raise ReviewError("Phone review must document a 360x280 or 320x240 card")
 
     records = review.get("assets")
     if not isinstance(records, list):
@@ -131,6 +143,10 @@ def validate_review(
         )
 
     for asset_id, record in by_id.items():
+        if "reviewer" in record:
+            require_text(record, "reviewer")
+        if "reviewed_on" in record:
+            require_iso_date(record, "reviewed_on")
         recipe_id, stage_id, accessible_alt_text = expected[asset_id]
         if record.get("recipe_id") != recipe_id or record.get("stage_id") != stage_id:
             raise ReviewError(f"Recipe/stage identity mismatch for {asset_id}")
@@ -201,9 +217,15 @@ def render(review: dict, records: list[dict]) -> str:
                 "    P1ExactInstructionVisualReview(",
                 f"        assetId = InstructionAssetId({kotlin_string(record['asset_id'])}),",
                 f"        resourceSha256 = {kotlin_string(record['resource_sha256'])},",
-                "        reviewer = P1ExactIndependentVisualReviewCatalog.REVIEWER,",
+                "        reviewer = " + (
+                    kotlin_string(record["reviewer"]) if "reviewer" in record
+                    else "P1ExactIndependentVisualReviewCatalog.REVIEWER"
+                ) + ",",
                 "        reviewedOn = LocalDate.parse(",
-                "            P1ExactIndependentVisualReviewCatalog.REVIEWED_ON,",
+                "            " + (
+                    kotlin_string(record["reviewed_on"]) if "reviewed_on" in record
+                    else "P1ExactIndependentVisualReviewCatalog.REVIEWED_ON"
+                ) + ",",
                 "        ),",
                 f"        fullResolutionReviewed = {str(checks['full_resolution'] == 'pass').lower()},",
                 "        phoneScaleReviewed = "

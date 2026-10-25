@@ -1,0 +1,381 @@
+{
+  "candidateCount": 25,
+  "coveredStepCount": 26,
+  "candidates": [
+    {
+      "sceneId": "aero_cleanup",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 45150,
+      "alphaBounds": [
+        138,
+        137,
+        902,
+        700
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "aero_pour",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 58670,
+      "alphaBounds": [
+        124,
+        58,
+        933,
+        706
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "aero_prepare",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 41646,
+      "alphaBounds": [
+        114,
+        73,
+        723,
+        703
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "aero_press",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 44770,
+      "alphaBounds": [
+        200,
+        48,
+        862,
+        712
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "aero_seal",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 32972,
+      "alphaBounds": [
+        88,
+        48,
+        843,
+        710
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "aero_stir",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 45186,
+      "alphaBounds": [
+        89,
+        59,
+        932,
+        709
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "cold_clean",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 69582,
+      "alphaBounds": [
+        64,
+        71,
+        946,
+        669
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "cold_combine",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 107452,
+      "alphaBounds": [
+        84,
+        58,
+        939,
+        682
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "cold_dilute",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 61356,
+      "alphaBounds": [
+        294,
+        65,
+        917,
+        683
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "cold_filter",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 78778,
+      "alphaBounds": [
+        104,
+        65,
+        923,
+        703
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "cold_prepare",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 91960,
+      "alphaBounds": [
+        64,
+        65,
+        935,
+        695
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "cold_steep",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 66944,
+      "alphaBounds": [
+        64,
+        96,
+        894,
+        720
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "espresso_basket",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 87380,
+      "alphaBounds": [
+        112,
+        104,
+        924,
+        720
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "espresso_clean",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 80750,
+      "alphaBounds": [
+        124,
+        78,
+        939,
+        703
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "espresso_fit",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 88472,
+      "alphaBounds": [
+        64,
+        48,
+        960,
+        720
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "espresso_ready",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 63462,
+      "alphaBounds": [
+        64,
+        68,
+        948,
+        710
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "espresso_start",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 63594,
+      "alphaBounds": [
+        117,
+        76,
+        775,
+        701
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "espresso_stop",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 63664,
+      "alphaBounds": [
+        64,
+        71,
+        789,
+        704
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "espresso_tamp",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 53914,
+      "alphaBounds": [
+        135,
+        48,
+        960,
+        680
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "french_decant",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 84968,
+      "alphaBounds": [
+        83,
+        67,
+        959,
+        699
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "french_plunge",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 67000,
+      "alphaBounds": [
+        64,
+        48,
+        960,
+        720
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "french_pour",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 59338,
+      "alphaBounds": [
+        124,
+        78,
+        873,
+        720
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "french_prepare",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 62020,
+      "alphaBounds": [
+        64,
+        63,
+        949,
+        720
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "french_steep",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 57864,
+      "alphaBounds": [
+        74,
+        63,
+        897,
+        695
+      ],
+      "hashesMatch": true
+    },
+    {
+      "sceneId": "french_stir",
+      "dimensions": [
+        1024,
+        768
+      ],
+      "bytes": 84888,
+      "alphaBounds": [
+        109,
+        81,
+        898,
+        720
+      ],
+      "hashesMatch": true
+    }
+  ]
+}

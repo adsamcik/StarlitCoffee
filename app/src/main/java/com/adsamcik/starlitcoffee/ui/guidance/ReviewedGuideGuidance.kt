@@ -12,10 +12,14 @@ import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileId
 import com.adsamcik.starlitcoffee.domain.brewing.StageId
 
 /** Reviewed English text is independent of mechanical instruction-scene approval. */
-fun ReviewedMethodGuide.guidanceCatalog(): BuiltInGuidanceCatalog = BuiltInGuidanceCatalog(
+fun ReviewedMethodGuide.guidanceCatalog(
+    instructionAssets: InstructionAssetCatalog = BuiltInInstructionAssetCatalog.catalog,
+): BuiltInGuidanceCatalog = BuiltInGuidanceCatalog(
     steps.map { step ->
         val warning = safetyForStep(step.id).joinToString("\n").takeIf(String::isNotBlank)
-        val alt = "$methodName equipment. ${step.instruction}"
+        val revision = visualContractRevision(step)
+        val alt = instructionAssets.approvedAliasForContent(contentId(step), revision)?.altText
+            ?: "$methodName equipment. ${step.instruction}"
         val authored = GuidancePresentationLevel.entries.associateWith { level ->
             AuthoredGuidancePresentation(
                 instruction = step.instruction.takeUnless { level == GuidancePresentationLevel.UTILITIES_ONLY &&
@@ -31,7 +35,7 @@ fun ReviewedMethodGuide.guidanceCatalog(): BuiltInGuidanceCatalog = BuiltInGuida
             GuidanceTextMetadata(step.instruction, explanation = step.why.takeIf(String::isNotBlank),
                 warning = warning, altText = alt),
             visibility = GuidanceVisibilityPolicy(alwaysVisible = warning != null),
-            safetyCritical = warning != null, authoredPresentations = authored)
+            safetyCritical = warning != null, authoredPresentations = authored, visualContentRevision = revision)
     },
 )
 
@@ -41,7 +45,8 @@ fun ReviewedMethodGuide.learnResolution(): LearnGuidanceCatalogResolution = Lear
         val presentation = content.authoredPresentations.getValue(GuidancePresentationLevel.FULL)
         ResolvedLearnGuidanceContent(content.id, content.placement, presentation.instruction.orEmpty(),
             presentation.target, presentation.completionCue, presentation.explanation, null, null, emptyList(),
-            presentation.warning, emptyList(), presentation.accessibleAltText, content.safetyCritical)
+            presentation.warning, emptyList(), presentation.accessibleAltText, content.safetyCritical,
+            visualContentRevision = content.visualContentRevision)
     },
 )
 

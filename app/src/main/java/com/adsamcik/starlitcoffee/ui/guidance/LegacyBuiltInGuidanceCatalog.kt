@@ -56,9 +56,7 @@ object LegacyBuiltInGuidanceCatalog {
         val profileEntries = profileCopyById.flatMap(::profileContent)
         return BuiltInGuidanceCatalog(
             PulsarBuiltInGuidanceCatalog.catalog.content +
-                stageEntries +
-                stageSafetyEntries +
-                profileEntries,
+                (stageEntries + stageSafetyEntries + profileEntries).map { it.withVisualContract("legacy") },
         )
     }
 

@@ -1,0 +1,456 @@
+{
+  "schema_version": 1,
+  "reviews": [
+    {
+      "scene_id": "concept_filter_options",
+      "version": 1,
+      "resource_sha256": "8cd4b628964f0006321265ca03607370c56cb13ac5f25ceb11f34774523844cc",
+      "raw_sha256": "d413b173ec7ed0444fc5240cd8f924fe296fe32f690475db0d82510570c76257",
+      "prompt_sha256": "7ed20ff8ce109d9a1b68eda53c0225aba7784e81dc15ca84b42beb90948b65f7",
+      "verdict": "approved",
+      "reviewer": "Codex independent visual review /root",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "alt_text": "Conceptual alternatives: separate paper and reusable mesh filters; use the filter specified for the brewer.",
+      "reviewed_target_content_ids": [],
+      "notes": [
+        "Separate paper/mesh examples for unknown filter configuration; not both installed and not exhaustive compatibility guidance.",
+        "Original generated artwork and actual delivered 320px light/dark composites inspected; no text, quantities, timing, logos or unnecessary scenery embedded."
+      ]
+    },
+    {
+      "scene_id": "concept_coffee_level",
+      "version": 1,
+      "resource_sha256": "ccf408afcd41f53828896682afd27155dd6f51715f43d0a94eaf215fb9b6a206",
+      "raw_sha256": "ab77ea24201e9b604772ba9e64b73a5dc73946912a81360a2820c544a0cbd111",
+      "prompt_sha256": "acfa1ceea95b904306109fd43dc3b82ea29fbeb76800a0f5c84a48468c717d63",
+      "verdict": "approved",
+      "reviewer": "Codex independent visual review /root",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "alt_text": "Conceptual level bed: loose grounds lie evenly below the rim, without compression.",
+      "reviewed_target_content_ids": [
+        "valve_release_generic_add_coffee",
+        "automatic_single_cup_generic_add_coffee",
+        "automatic_single_cup_generic_level_coffee_bed",
+        "automatic_batch_generic_add_coffee",
+        "automatic_batch_generic_level_coffee_bed",
+        "reviewed_automatic_drip_v1_coffee"
+      ],
+      "notes": [
+        "Loose level bed is a common loading/level end-state only; no receptacle fit, filter or amount claimed.",
+        "Original generated artwork and actual delivered 320px light/dark composites inspected; no text, quantities, timing, logos or unnecessary scenery embedded."
+      ]
+    },
+    {
+      "scene_id": "concept_retained_liquid",
+      "version": 1,
+      "resource_sha256": "8cf5687d732667e70719c6061e1540ba68e61a331249b91e2aa88a20259533a0",
+      "raw_sha256": "318f63d3c97ee03ca4f47f10191edd2e1e85c73812c4e2b34b7cafab83131a50",
+      "prompt_sha256": "661594bd640ff60f943725e23c2add514c83b89ce06a156308071005a0e235d2",
+      "verdict": "approved",
+      "reviewer": "Codex independent visual review /root",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "alt_text": "Conceptual retention: liquid stays in a chamber with no outflow into the cup below; controls are omitted.",
+      "reviewed_target_content_ids": [
+        "valve_release_generic_close_valve",
+        "valve_release_generic_steep"
+      ],
+      "notes": [
+        "Functional retention diagram, not floating real hardware: no outflow, controls and actual support deliberately omitted. No actuator-location claim.",
+        "Original generated artwork and actual delivered 320px light/dark composites inspected; no text, quantities, timing, logos or unnecessary scenery embedded."
+      ]
+    },
+    {
+      "scene_id": "concept_water_to_coffee",
+      "version": 1,
+      "resource_sha256": "b2ed588bd723cb403233ea5bb7f83bdfb9a6e33649240143b8d89b2c0f8545cc",
+      "raw_sha256": "1408cbe417fd79e94ac0cb49a13953e766d7401e1c4871069e4b1ecc122036f9",
+      "prompt_sha256": "31ac44731739c565113fd73a0e8a1b4b1626ef579bf3b7cfddc12fd8bfb372d6",
+      "verdict": "approved",
+      "reviewer": "Codex independent visual review /root",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "alt_text": "Conceptual water addition: a gentle stream wets coffee while leaving generous headroom.",
+      "reviewed_target_content_ids": [
+        "valve_release_generic_add_water"
+      ],
+      "notes": [
+        "Common gentle water-addition action with headroom; generic base is conceptual, not actual valve hardware.",
+        "Original generated artwork and actual delivered 320px light/dark composites inspected; no text, quantities, timing, logos or unnecessary scenery embedded."
+      ]
+    },
+    {
+      "scene_id": "concept_reservoir_fill",
+      "version": 1,
+      "resource_sha256": "53083f7d71067bc6c142d9d719c528dde54516ffc584a59e6f54cbd24503391c",
+      "raw_sha256": "2db6f4ad478f6b487370143b271d66df56b9059d80faa3d99e16cf52321cbc7e",
+      "prompt_sha256": "24861e2ad24d2d106a66b5fc3777adcb434db7a50ae6fdef26023a6579bcc65d",
+      "verdict": "approved",
+      "reviewer": "Codex independent visual review /root",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "alt_text": "Conceptual reservoir filling: clean water enters an isolated tank with headroom; machine location and capacity are unspecified.",
+      "reviewed_target_content_ids": [
+        "automatic_single_cup_generic_add_reservoir_water",
+        "automatic_batch_generic_add_reservoir_water",
+        "reviewed_automatic_drip_v1_water"
+      ],
+      "notes": [
+        "Isolated tank means cool reservoir input only, not a basket; no location, capacity or numeric fill claimed.",
+        "Original generated artwork and actual delivered 320px light/dark composites inspected; no text, quantities, timing, logos or unnecessary scenery embedded."
+      ]
+    },
+    {
+      "scene_id": "concept_active_flow",
+      "version": 1,
+      "resource_sha256": "1c54560eacc46317f706752c432344cfaf983452466bdc65b2f4870bbee1e2f0",
+      "raw_sha256": "457e011b3e4d2643ffd605e640a303099469fe69989580fbb1974c4ba01464e3",
+      "prompt_sha256": "801aa4d9f387738bc9e5d59f47b01a449118334930a4d5dad1f7a5c06cdf2f7e",
+      "verdict": "approved",
+      "reviewer": "Codex independent visual review /root",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "alt_text": "Conceptual active flow: coffee runs from an unspecified outlet into a stable cup.",
+      "reviewed_target_content_ids": [
+        "valve_release_generic_open_valve",
+        "automatic_single_cup_generic_start_machine"
+      ],
+      "notes": [
+        "Connected outlet-to-cup stream illustrates active flow only; source text remains necessary for actual controls.",
+        "Original generated artwork and actual delivered 320px light/dark composites inspected; no text, quantities, timing, logos or unnecessary scenery embedded."
+      ]
+    },
+    {
+      "scene_id": "concept_no_flow",
+      "version": 1,
+      "resource_sha256": "ca7df0dc466b685d05d0fdafec4296099961b593fe5b10fd860eaec7ef9aa8af",
+      "raw_sha256": "fc33a658da805bed2b3a87ec31378a08138598b08abd889ce75d07923ddb5878",
+      "prompt_sha256": "a25888886d978d49e0753884138923f4ad8969c8ef8e02e4f6c3677d49dcbf55",
+      "verdict": "approved",
+      "reviewer": "Codex independent visual review /root",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "alt_text": "Conceptual flow check: coffee is collected in a cup and no outflow is visible; the machine's completion rules still apply.",
+      "reviewed_target_content_ids": [
+        "valve_release_generic_observe_drawdown",
+        "automatic_single_cup_generic_observe_machine_completion"
+      ],
+      "notes": [
+        "No visible flow with collected coffee; does not alone establish automatic completion or timer expiry.",
+        "Original generated artwork and actual delivered 320px light/dark composites inspected; no text, quantities, timing, logos or unnecessary scenery embedded."
+      ]
+    },
+    {
+      "scene_id": "concept_ready_cup",
+      "version": 1,
+      "resource_sha256": "39409dc1557c7a1ffdb48dd35ac0a10a6367458a1f4e175025164fbf724def14",
+      "raw_sha256": "3bad843136abf4b8902852c06d04bb677b185c579ada090c39b8fb6a5fbfa7c6",
+      "prompt_sha256": "b1e5c67b7de1ddeaf10811d0f0043b33dd66e879ebd1b2a939cbc2faa1ec8e15",
+      "verdict": "approved",
+      "reviewer": "Codex independent visual review /root",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "alt_text": "Conceptual serving: a hand holds the filled cup by its handle, clear of the coffee.",
+      "reviewed_target_content_ids": [
+        "valve_release_generic_remove_and_serve",
+        "automatic_single_cup_generic_serve"
+      ],
+      "notes": [
+        "Grip uses handle and fingers avoid hot body/liquid; illustrates serving after safe brewer removal, not a universal brewer grip.",
+        "Original generated artwork and actual delivered 320px light/dark composites inspected; no text, quantities, timing, logos or unnecessary scenery embedded."
+      ]
+    },
+    {
+      "scene_id": "concept_batch_active_flow",
+      "version": 1,
+      "resource_sha256": "ebc02e16e9f6a6b28951b48799197c4a7f0e5a26cbada6399698d504c6b39cda",
+      "raw_sha256": "04fbcf50470722ae7d53385530db4a5e82ab05b5025d2c3a2855e521179448f3",
+      "prompt_sha256": "cbcb39f2fd4e49498d21815512f746b86614e3cb4bfffadeb3afec656bfb9f4b",
+      "verdict": "approved",
+      "reviewer": "Codex independent visual review /root",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "alt_text": "Conceptual batch flow: coffee runs from an unspecified outlet into a stable carafe.",
+      "reviewed_target_content_ids": [
+        "automatic_batch_generic_start_machine",
+        "reviewed_automatic_drip_v1_start"
+      ],
+      "notes": [
+        "Connected stream into stable carafe demonstrates flow only, no machine model, lid requirement or control inferred.",
+        "Original generated artwork and actual delivered 320px light/dark composites inspected; no text, quantities, timing, logos or unnecessary scenery embedded."
+      ]
+    },
+    {
+      "scene_id": "concept_batch_no_flow",
+      "version": 1,
+      "resource_sha256": "3f252f8d8c3ef960b933d4de52e9323bafbfc02e4a29115057d71da47acac84d",
+      "raw_sha256": "bda109ff8953fe1e2671596f763b8ca198768bf9521d37ce3dbcccf3d0d8838c",
+      "prompt_sha256": "8a2dfcffcc1ef23d450f95c48aca9da9a64a10c0d319c383e38c30a236a5c64d",
+      "verdict": "approved",
+      "reviewer": "Codex independent visual review /root",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "alt_text": "Conceptual batch flow check: coffee is collected in a carafe with no visible outflow; completion follows the machine's instructions.",
+      "reviewed_target_content_ids": [
+        "automatic_batch_generic_observe_machine_completion",
+        "reviewed_automatic_drip_v1_finish"
+      ],
+      "notes": [
+        "No-flow carafe state only; actual documented machine completion remains text.",
+        "Original generated artwork and actual delivered 320px light/dark composites inspected; no text, quantities, timing, logos or unnecessary scenery embedded."
+      ]
+    },
+    {
+      "scene_id": "concept_safe_carafe",
+      "version": 1,
+      "resource_sha256": "4c8f436e155119467e84659866e031157848ed272d974080fb494b143c8ba8c1",
+      "raw_sha256": "87511a38202cb0fcecbdc9446ef2a768d04a0ccbf0d03040c9e128b4370b5235",
+      "prompt_sha256": "986d446a8200450c3e9227a2a77e8e897cb08e8d994512bb3107f2d5e451643d",
+      "verdict": "approved",
+      "reviewer": "Codex independent visual review /root",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "alt_text": "Conceptual carafe handling: a hand grips only the handle while collected coffee remains safely below the rim.",
+      "reviewed_target_content_ids": [
+        "automatic_batch_generic_stir_or_swirl_carafe",
+        "automatic_batch_generic_serve",
+        "reviewed_automatic_drip_v1_serve"
+      ],
+      "notes": [
+        "Handle-only grip and headroom, liquid ripples support gentle mixing subaction; no active pouring or model-specific fit claim.",
+        "Original generated artwork and actual delivered 320px light/dark composites inspected; no text, quantities, timing, logos or unnecessary scenery embedded."
+      ]
+    },
+    {
+      "scene_id": "concept_filter_rinse",
+      "version": 2,
+      "resource_sha256": "7377e8542b6a9bfe3b05956096a502fdc228d9c09d7120b899dae49002d5ba59",
+      "raw_sha256": "101964efb2b9fba870ae00cbdec540ee49a8c3a6be849a9eadaaf3fe8db59e13",
+      "prompt_sha256": "37f3eea7fdf23986c3f026d118e88f6b5dcab50151bc95a94c9a64199e9f99a6",
+      "verdict": "approved",
+      "reviewer": "Codex independent visual review /root",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "alt_text": "Conceptual conditional rinse alternatives: separate paper and mesh filters drain into separate bowls; follow the selected filter's instructions.",
+      "reviewed_target_content_ids": [
+        "valve_release_generic_insert_and_rinse_filter"
+      ],
+      "notes": [
+        "Two separate conceptual paper/mesh alternatives, each drains to separate bowl; never depicts both installed or infers a filter size.",
+        "Original generated artwork and actual delivered 320px light/dark composites inspected; no text, quantities, timing, logos or unnecessary scenery embedded."
+      ]
+    },
+    {
+      "scene_id": "concept_gentle_stir",
+      "version": 2,
+      "resource_sha256": "28fbf9d1b96e38d434006b2591c33ba5a00d213e7f3bd3f2d2650bd99f7385b3",
+      "raw_sha256": "f55d86210fed71b1a35f6604b113c1d9d9ca16e7c560f1b615d7e2434d536f91",
+      "prompt_sha256": "6bd91a779cd805f89ca3f7f95bb67095618d6e3969e1f42db8ba49e5e53f6278",
+      "verdict": "approved",
+      "reviewer": "Codex independent visual review /root",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "alt_text": "Conceptual agitation: a spoon gently stirs coffee below the rim, with fingers clear of the liquid.",
+      "reviewed_target_content_ids": [
+        "valve_release_generic_agitate"
+      ],
+      "notes": [
+        "Submerged stirring utensil, restrained surface ripples, fingers safely above liquid; no scooping or pressure implied.",
+        "Original generated artwork and actual delivered 320px light/dark composites inspected; no text, quantities, timing, logos or unnecessary scenery embedded."
+      ]
+    },
+    {
+      "scene_id": "concept_paper_options",
+      "version": 1,
+      "resource_sha256": "b21760c9837fbb3db8a5b4a90192000df3e97efed1cfc46bf6afe8c24bd01777",
+      "raw_sha256": "2e27f078e60188aea8b4c9f3c2b3043398e89eeef9811a0b75c132b68b200b24",
+      "prompt_sha256": "1d88c2a3c44fc8112e14b3d6fd3c645095a2db1ce86c82b1460a4fa23f8886c5",
+      "verdict": "approved",
+      "reviewer": "Codex independent visual review /root",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "alt_text": "Conceptual paper alternatives: separate cone and flat-basket papers; use only the shape and size specified for the machine.",
+      "reviewed_target_content_ids": [
+        "automatic_single_cup_generic_select_and_insert_filter",
+        "automatic_batch_generic_select_filter_and_basket",
+        "reviewed_automatic_drip_v1_prepare"
+      ],
+      "notes": [
+        "Separate paper shape examples only for paper-filter scope; no compatibility or exhaustive-option claim.",
+        "Original generated artwork and actual delivered 320px light/dark composites inspected; no text, quantities, timing, logos or unnecessary scenery embedded."
+      ]
+    },
+    {
+      "scene_id": "concept_paper_rinse",
+      "version": 1,
+      "resource_sha256": "753cd1da49746502fdc6c9af02998e5389baa19fda61abe0d230fc6ed58697eb",
+      "raw_sha256": "11a1fab4daafba81790d74cde2c072a294f9a5b5acfbce3fc540ffb3a1dede2e",
+      "prompt_sha256": "4277ce4d4b23e4b71375a3ab0a849efaa935b463059dd859c4ffc8a920ab559b",
+      "verdict": "approved",
+      "reviewer": "Codex independent visual review /root",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "alt_text": "Conceptual conditional rinsing: cone and flat-basket papers are shown separately, each draining to its own bowl; rinse only as the machine directs.",
+      "reviewed_target_content_ids": [
+        "automatic_single_cup_generic_rinse_filter",
+        "automatic_batch_generic_rinse_filter"
+      ],
+      "notes": [
+        "Separate conditional paper rinse examples, each with receiving bowl; source documentation determines whether to rinse.",
+        "Original generated artwork and actual delivered 320px light/dark composites inspected; no text, quantities, timing, logos or unnecessary scenery embedded."
+      ]
+    }
+  ]
+}

@@ -17,6 +17,7 @@ import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.brewing.guides.ReviewedMethodGuideLibrary
 import com.adsamcik.starlitcoffee.navigation.reviewedLearningProfiles
 import com.adsamcik.starlitcoffee.ui.guidance.learnResolution
+import com.adsamcik.starlitcoffee.ui.guidance.BuiltInInstructionAssetCatalog
 import com.adsamcik.starlitcoffee.ui.theme.StarlitCoffeeTheme
 import java.io.File
 import org.junit.Assert.*
@@ -53,6 +54,7 @@ class ReviewedGuideNativeUiTest {
                 StarlitCoffeeTheme(dynamicColor = false, darkTheme = true) {
                     Box(Modifier.width(320.dp)) {
                         LearnBrewerScreen(guide.methodName, guide.learnResolution(), onBack = {}, reviewedGuide = guide,
+                            instructionAssets = BuiltInInstructionAssetCatalog.catalog,
                             initiallyReading = true, initialStepIndex = 2)
                     }
                 }
@@ -60,6 +62,8 @@ class ReviewedGuideNativeUiTest {
         }
         rule.onAllNodesWithText("240.0 mL")[0].performScrollTo().assertIsDisplayed()
         rule.onNodeWithText(guide.steps[2].instruction).performScrollTo().assertIsDisplayed()
+        rule.onNodeWithContentDescription(guide.learnResolution().content[2].altText)
+            .performScrollTo().assertIsDisplayed()
         save("reviewed-native-switch-200-dark")
         rule.onNodeWithText(context.getString(R.string.action_next)).performClick()
         restoration.emulateSavedInstanceStateRestore()
@@ -74,14 +78,19 @@ class ReviewedGuideNativeUiTest {
         var starts = 0
         rule.setContent { StarlitCoffeeTheme(dynamicColor = true) {
             LearnBrewerScreen(guide.methodName, guide.learnResolution(), onBack = {}, reviewedGuide = guide,
+                instructionAssets = BuiltInInstructionAssetCatalog.catalog,
                 onBrewGuide = { starts++ })
         } }
         rule.onNodeWithText("30 g").assertIsDisplayed()
         rule.onNodeWithText("480 g").assertIsDisplayed()
-        rule.onNodeWithText(context.getString(R.string.action_brew_this_guide)).performScrollTo().performClick()
+        rule.onNode(hasScrollToIndexAction()).performScrollToNode(hasText(context.getString(R.string.action_brew_this_guide)))
+        rule.onNodeWithText(context.getString(R.string.action_brew_this_guide)).assertIsDisplayed().performClick()
         rule.runOnIdle { assertEquals(1, starts) }
-        rule.onNodeWithText(context.getString(R.string.action_read_guide)).performScrollTo().performClick()
+        rule.onNode(hasScrollToIndexAction()).performScrollToNode(hasText(context.getString(R.string.action_read_guide)))
+        rule.onNodeWithText(context.getString(R.string.action_read_guide)).assertIsDisplayed().performClick()
         rule.onNodeWithText(guide.steps.first().instruction).performScrollTo().assertIsDisplayed()
+        rule.onNodeWithContentDescription(guide.learnResolution().content.first().altText)
+            .performScrollTo().assertIsDisplayed()
         save("reviewed-native-chemex-reader")
     }
 

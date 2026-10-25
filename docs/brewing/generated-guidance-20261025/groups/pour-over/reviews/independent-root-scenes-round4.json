@@ -1,0 +1,418 @@
+{
+  "schema_version": 1,
+  "purpose": "Independent pixel QC of seven latest selected root-generated Switch revisions only, plus explicit supersession of retained v2. No pixel/code edits. Each raw, delivered1024x768 and actual320x240 light/dark composite independently inspected. All previous reports are preserved; approval binds exact bytes, alt and limited physical action/state, not any unrestricted target mapping.",
+  "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+  "reviewed_on": "2026-10-25",
+  "source_context": {
+    "source_guide_id": "reviewed_hario_switch_v1",
+    "source_guide_revision": "b376a00df135a6a2210848e2b9dd97bd33150616f9b97cd4a0655c73043f289c",
+    "profile_id": "hario_switch",
+    "guide_file": {
+      "path": "app/src/main/assets/brewing/reviewed-method-guides.json",
+      "sha256": "507d7557e4db40c8f58e331ee715e04279b01713f2f4c974df7a090e27f58b25"
+    },
+    "manual_url": "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+    "manufacturer_product_url": "https://www.hario-usa.com/products/switch-immersion-dripper",
+    "manual_evidence": {
+      "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/source-checks/hario-switch-manual.pdf",
+      "sha256": "48cc87e1135f00d003b23d1ce99f32633e7328cb364aa5febee15d088ab620ed"
+    },
+    "manual_page_inspected": {
+      "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/source-checks/hario-switch-manual-1.png",
+      "sha256": "9f9a8895c22b639bbb11f32338bff6570c93705a9aa7a15bb3e536b6e6cf0802"
+    },
+    "product_photo_inspected": {
+      "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/source-checks/hario-switch-product.jpg",
+      "sha256": "32ed016eae8e86312376a35cfa03f48ca231bc4193fb77f51edd470d93cc0552"
+    },
+    "facts": [
+      "Original SSD-200-B manual explicitly distinguishes raised CLOSE from flush OPEN; approximate illustration angle is not a calibrated manufacturer specification.",
+      "Lower cylindrical silicone outlet housing is physically present below support flange.",
+      "Official manual allows optional stirring; unchanged reviewed first-brew steep path omits it. Reviewed fill is closed, release is open and brewer remains on server."
+    ],
+    "primary_urls_from_candidates": [
+      "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+      "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+      "https://www.hario-usa.com/products/switch-immersion-dripper",
+      "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+      "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch",
+      "https://www.hario.co.uk/pages/brew-guides-v60-intermediate"
+    ]
+  },
+  "reviews": [
+    {
+      "scene_id": "switch_retained",
+      "version": 3,
+      "verdict": "approved",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_and_heat_safety": "pass",
+        "crop_and_liquid_path": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "raw_to_delivery_integrity": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_retained_v3.png",
+          "sha256": "6cb2757559a6030c02afe270ed510de4243eadc0504fbe4b80c21cf59a4ebdd0"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_retained_v3.webp",
+          "sha256": "a704109c7d9344c47fbe6e847b11eda2833a413b0620fc60c4bab40440b32a52"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_retained_v3.txt",
+          "sha256": "acdfb662cfdf8407ce5d4fe1183f1e82a8da75c0e864bb9f15dbd9fe07fa48f4"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_retained_v3_light.png",
+          "sha256": "fda4165166546e793f7df686df455dd10d2df063bd04e4013bf4c49eca2befe4"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_retained_v3_dark.png",
+          "sha256": "99d22dc9e61f1466172f3c4bd7ba809a85fe8001cacf776f51bdae2c4a2a987c"
+        }
+      },
+      "reviewed_alt_text": "Coffee and water remain inside the Switch with its clear paddle visibly raised and no flow into the empty server.",
+      "reviewed_step_ids": [
+        "fill",
+        "steep"
+      ],
+      "scope_limit": "Retained brew with visibly raised closed paddle and no flow into empty stable server. Compatible with filled/closed immersion state for reviewed fill completion and steep; no pouring action, exact240mL,20g, temperature, stopwatch origin or elapsed two-minute proof.",
+      "notes": [
+        "Thin clear paddle is raised relative to silicone rim, matching actual CLOSED reference rather than inferring closure only from no flow.",
+        "Retained coffee is continuously filled to the lower cone, remains below fitted paper top; outlet cylinder and stable empty receiver are intact.",
+        "Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content."
+      ]
+    },
+    {
+      "scene_id": "switch_closed_empty",
+      "version": 2,
+      "verdict": "approved",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_and_heat_safety": "pass",
+        "crop_and_liquid_path": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "raw_to_delivery_integrity": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_closed_empty_v2.png",
+          "sha256": "e4267b22305f9c4b45f2b48874a2e808707d23b19a37e6238f422d6c902d120e"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_closed_empty_v2.webp",
+          "sha256": "fcbb4f0abfc4b789cf110c9c5d5844bd08860e75f95da13a8ae3fc200054668a"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_closed_empty_v2.txt",
+          "sha256": "846264265f19765379880ed825f8d50cffcd2470ad4c690fc218e46f4794a433"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_closed_empty_v2_light.png",
+          "sha256": "dfcc748ee18fc4d02646af099c91644a358204fe6b47e943097c8e3ca5de0af4"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_closed_empty_v2_dark.png",
+          "sha256": "7021067b8b5281524f122023ec961ef8b3a821e55d13ae21a2a1cc66b9201ec0"
+        }
+      },
+      "reviewed_alt_text": "Empty fitted cone paper sits in the Switch; its clear paddle is visibly raised in the retained-water position.",
+      "reviewed_step_ids": [],
+      "scope_limit": "Empty fitted paper and raised closed paddle only. Suitable only for actual empty/closed setup contexts. It does not show open rinsing, rinse disposal, coffee loading, wetting, preheating or water retention having occurred. Not the reviewed prepare instruction, which specifies open rinse.",
+      "notes": [
+        "Empty paper, empty server and lower outlet housing are coherent.",
+        "Raised clear paddle teaches the closed hardware position; the alt phrase retained-water position names the control state, not an assertion that water is currently present.",
+        "Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content."
+      ]
+    },
+    {
+      "scene_id": "switch_closed_coffee",
+      "version": 3,
+      "verdict": "approved",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_and_heat_safety": "pass",
+        "crop_and_liquid_path": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "raw_to_delivery_integrity": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_closed_coffee_v3.png",
+          "sha256": "419e415b131d3d1f9f8c3a84054f8476bbd6a98ef20416a7494255a737dad9d0"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_closed_coffee_v3.webp",
+          "sha256": "b7e53718a0dd6a68c4a6270aec6ef12d612578c2286e64468422c745a93a1cdf"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_closed_coffee_v3.txt",
+          "sha256": "9a820686ee88952fa14019edf9071c74eaea160405745073116b871bd6fefba5"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_closed_coffee_v3_light.png",
+          "sha256": "42db711e2d3185ef0d69c9be6e8cb911d756b63f3cf520c6a18760ad5fdb7b7b"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_closed_coffee_v3_dark.png",
+          "sha256": "d5281c49f80e47dad451a4a35ca2a36f41f6db304b4551690d77708bfe63c6af"
+        }
+      },
+      "reviewed_alt_text": "Loose dry coffee fills the pointed bottom of the Switch paper, with the clear paddle visibly raised and the server empty.",
+      "reviewed_step_ids": [
+        "close_and_add_coffee"
+      ],
+      "scope_limit": "Dry loose bed loaded in fitted paper with raised closed paddle and empty server. Compatible with completed close_and_add_coffee physical state; does not prove20g, grind measurement, actual addition motion or numeric capacity.",
+      "notes": [
+        "Dry grounds form a single continuous tapered bed toward the cone tip; floating/disconnected prior patches are removed.",
+        "The raised paddle, intact cylinder and empty stable server agree with closed pre-water state.",
+        "Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content."
+      ]
+    },
+    {
+      "scene_id": "switch_closed_stir",
+      "version": 2,
+      "verdict": "approved",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_and_heat_safety": "pass",
+        "crop_and_liquid_path": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "raw_to_delivery_integrity": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_closed_stir_v2.png",
+          "sha256": "ddd297a1012cee7d81fed16cee5de7120a1453afaab1fc6a1441abcd5a2f68cc"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_closed_stir_v2.webp",
+          "sha256": "6bc30331ba7e6080662f33e39c568d3a552d90e70ca085b5174f9b9a703f7471"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_closed_stir_v2.txt",
+          "sha256": "cf7b54835dfa26f9756bb7dd90fa44847558294fa763878a372eddf10f4e7447"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_closed_stir_v2_light.png",
+          "sha256": "f041363b648b4b9a80ed179b72833c836855b17eaa16ee441896a6c383bea73e"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_closed_stir_v2_dark.png",
+          "sha256": "f961196b0884aca3b08094b09db3e627ab6659763ea442c6ac910d984be0cea2"
+        }
+      },
+      "reviewed_alt_text": "A spoon gently stirs retained coffee in the Switch; its clear paddle remains visibly raised and no coffee drains below.",
+      "reviewed_step_ids": [],
+      "scope_limit": "Optional gentle spoon stirring of retained closed-valve brew only, as permitted by Hario manual or a separately compatible canonical variant. Not admitted for the reviewed steep step, whose first-brew path explicitly omits optional stirring. Does not show numeric duration, dose, exact water input or completion of stirring.",
+      "notes": [
+        "Coherent spoon and hand contact only the spoon; no unsafe grip on hot glass or lifted brewer.",
+        "Retained brew remains contained, clear paddle is raised, lower cylinder intact and empty server has no outflow.",
+        "Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content."
+      ]
+    },
+    {
+      "scene_id": "switch_open_drained",
+      "version": 2,
+      "verdict": "approved",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_and_heat_safety": "pass",
+        "crop_and_liquid_path": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "raw_to_delivery_integrity": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_drained_v2.png",
+          "sha256": "b9f40e801c256f6a7c9fd9ebffa1a385bd837716b3d6412e6052cbfcefbf65a3"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_drained_v2.webp",
+          "sha256": "99e1f305f971b037cfe9abbb608bd1e43212808696dbd9f7581641176e77fc1c"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_open_drained_v2.txt",
+          "sha256": "06adc1be73d500e5f4b63f19d3273312713cfbf4c2b3ba9080793a8402b41784"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_open_drained_v2_light.png",
+          "sha256": "6793d5f4759400fee7f74f885ce183685b9b81561c92d6c1dad12abcec4c1dc2"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_open_drained_v2_dark.png",
+          "sha256": "e93a4cdf3d357163a0e1c396f102a5b5e327f2d02f99b9c3b84e469bcb03a105"
+        }
+      },
+      "reviewed_alt_text": "The Switch has a shallow drained coffee bed, an open valve and coffee collected in the server; no continuous flow remains.",
+      "reviewed_step_ids": [
+        "finish"
+      ],
+      "scope_limit": "Open, stationary brewer at visually drained/no-continuous-flow state with coffee collected in server. Compatible with reviewed finish observation; does not establish handling temperature, safe removal already completed, fixed elapsed duration, beverage output or serving.",
+      "notes": [
+        "Paddle lies flat/open; lower cylinder remains present.",
+        "A single shallow tapered bed has no standing water or separated floating upper ellipse; no stream or drops are shown below the outlet.",
+        "Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content."
+      ]
+    },
+    {
+      "scene_id": "switch_open_pour",
+      "version": 1,
+      "verdict": "approved",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_and_heat_safety": "pass",
+        "crop_and_liquid_path": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "raw_to_delivery_integrity": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_pour_v1.png",
+          "sha256": "9bf5898e84c1c7f951829b458084bf6a294fd62c89712485ece501c13c564d4a"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_pour_v1.webp",
+          "sha256": "8ccdc90e179d1fc48fa35d2315e20185b03cdb4859bad05ca66ee4eb7004a89c"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_open_pour_v1.txt",
+          "sha256": "91c85c3145a42d61514fcd08fdb41113bdd870f681ce71e3c0ec8e535a63b6b9"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_open_pour_v1_light.png",
+          "sha256": "b7ffd8c3e2613fe1a47c520b473e67c577661e0399ce24ce0dac95a2a6c28761"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_open_pour_v1_dark.png",
+          "sha256": "83ad85bf05bf92d2fee0b3122ed59326893f7d15c03ed84be2e3ad3e632bdce3"
+        }
+      },
+      "reviewed_alt_text": "Water is poured gently onto coffee in the open Switch while brewed coffee drains into the server.",
+      "reviewed_step_ids": [],
+      "scope_limit": "Open-valve pour-through action only, for continuously open/gravity or compatible open phase of hybrid variant. Not the reviewed closed-valve fill step. Does not encode exact dose, water quantity, timing, complete circular pattern, closed steep or finished drainage.",
+      "notes": [
+        "Kettle stream reaches the actual coffee surface while a continuous coffee stream exits intact lower cylinder into stable server.",
+        "Paddle is flat/open, water below paper top, server has headroom, no exposed fictitious ball or invented side hinge.",
+        "Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content."
+      ]
+    },
+    {
+      "scene_id": "switch_open_coffee",
+      "version": 1,
+      "verdict": "approved",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_and_heat_safety": "pass",
+        "crop_and_liquid_path": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "raw_to_delivery_integrity": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_coffee_v1.png",
+          "sha256": "e5259dd509c2e65eeb0f7e71f2dec8b1d2ef3eb297ef6116f4a5fe906cc48479"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_coffee_v1.webp",
+          "sha256": "b17016d45c6156bae0252c0119ffb1b001f7d87a86a34716b29c0ff44cff45a8"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_open_coffee_v1.txt",
+          "sha256": "09f9cb210c5dc373337d90dbfdd98d29f145fd7ccd44a079f7a05199803b43fb"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_open_coffee_v1_light.png",
+          "sha256": "e233673fd6d1f3da204c1bc8bcd621f883ac484828c79d225643b006f6f9c1f4"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_open_coffee_v1_dark.png",
+          "sha256": "733d2bb9f94cba17bb44174dcafd405f32b667efc3d6f3ca26357e25db8e1460"
+        }
+      },
+      "reviewed_alt_text": "Loose dry coffee fills the fitted cone paper in the Switch; its clear paddle lies flat in the open position.",
+      "reviewed_step_ids": [],
+      "scope_limit": "Dry loose coffee already loaded in fitted paper with flat open paddle and empty server. Suitable only for actual open-valve dry-load/start contexts; not reviewed close_and_add_coffee, which requires raised/closed lever. Does not show actual adding motion, dose, grind measurement or rinsing.",
+      "notes": [
+        "Dry coffee forms one continuous tapered bed and empty server is coherent before water.",
+        "Thin paddle lies flat/open; lower black cylinder remains intact and recognizable.",
+        "Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content."
+      ]
+    }
+  ],
+  "supersessions": [
+    {
+      "scene_id": "switch_retained",
+      "version": 2,
+      "verdict": "rejected",
+      "supersedes": "Any earlier scoped approval for closed retention, fill or steep contexts, including metadata approval in prior independent reviews. Prior artifacts retained as history.",
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_retained_v2.png",
+          "sha256": "54fc72da9c924099180ea66b2b8b75f10b46a8324a6595ce4ca5bc57be5c6300"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_retained_v2.webp",
+          "sha256": "1960e63e7142c6ecfba37eb79c349d5312424f296188df40644b629c6c3d2809"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_retained_v2.txt",
+          "sha256": "da28b8302fc9cb128de7484f72495b51d442db4055ddd63e51a7c784b3a0ba83"
+        }
+      },
+      "reviewed_alt_text": "Coffee and water remain inside the paper-lined Switch with its clear paddle unpressed and no flow into the server.",
+      "reason": "The delivered translucent paddle lies flat/flush, which the manufacturer identifies as OPEN. No outflow and an empty server do not establish a closed valve. This contradicts retained-water closed state. Use independently reviewed retained v3 instead.",
+      "replacement_scene_id": "switch_retained",
+      "replacement_version": 3
+    }
+  ],
+  "counts": {
+    "selected_candidates_approved": 7,
+    "selected_candidates_rejected": 0,
+    "prior_approval_superseded_as_rejected": 1
+  }
+}

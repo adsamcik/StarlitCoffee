@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/heated_brewer_art",
+  "reviewedOn": "2026-10-25",
+  "independentOfProducer": true,
+  "inspection": "Each of eight full raw PNG and delivered WebP inspected individually, plus each 320px phone light and dark image. Actual raw and delivery SHA256 independently recomputed and match listed hashes.",
+  "sourceChecks": [
+    "https://crema-coffee.com/pages/clever-dripper-brewing-guide",
+    "https://www.melitta-international.com/accessories/Manual-Coffee-Preparation/Coffeefilters-pots/Coffee-Filter-1x4",
+    "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+    "https://www.hario-usa.com/products/switch-immersion-dripper",
+    "https://kalitausa.com/products/kalita-wave-155-stainless-steel-coffee-dripper",
+    "docs/brewing/illustration-candidates/instruction_p1_phin_screw_18_120_stage_01_instruction_default/starlit_tactile_v2.webp"
+  ],
+  "entries": [
+    {
+      "sceneId": "clever_large_remove",
+      "version": 2,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/clever_large_remove_v2.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/clever_large_remove_v2.webp",
+      "rawSha256": "9831f4080f3d2bf2b8afb97d2532b8bcc59328f624a09f4a647f5db01780641b",
+      "candidateSha256": "1c3c188bd2a4b70b135d8aa9547fc6c8905034bd486580bdb048998b8c087043",
+      "altTextReviewed": "The drained large Clever rests on its coaster, with only a shallow spent coffee bed, beside a server of brewed coffee.",
+      "verdict": "approved",
+      "checks": {
+        "rawAndDelivery": true,
+        "phoneLightDark": true,
+        "actionState": true,
+        "handlingSafety": true,
+        "flowAndCrop": true,
+        "minimalism": true,
+        "equipmentGeometry": true,
+        "altAgreement": true
+      },
+      "notes": [
+        "Shallow exposed spent bed replaces rejected full slurry. Coaster is visible and server separate with coffee."
+      ]
+    },
+    {
+      "sceneId": "melitta_coffee",
+      "version": 1,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/melitta_coffee_v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/melitta_coffee_v1.webp",
+      "rawSha256": "345390f40213211b7f5628567337c20f5c27c0ff2c993caee4b1fc2b0004b692",
+      "candidateSha256": "647a9795a5d5382b7fd35b05050f7bbb255d61f9c765a35738b36de5d1b7eea5",
+      "altTextReviewed": "A shallow level bed of loose coffee rests inside the matching Melitta1x4 wedge paper.",
+      "verdict": "approved",
+      "checks": {
+        "rawAndDelivery": true,
+        "phoneLightDark": true,
+        "actionState": true,
+        "handlingSafety": true,
+        "flowAndCrop": true,
+        "minimalism": true,
+        "equipmentGeometry": true,
+        "altAgreement": true
+      },
+      "notes": [
+        "Matches broad Melitta1x4 flange and wedge-paper family. Scope is loose level dry bed only; no visible dosing or tare."
+      ]
+    },
+    {
+      "sceneId": "melitta_drain_remove",
+      "version": 1,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/melitta_drain_remove_v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/melitta_drain_remove_v1.webp",
+      "rawSha256": "e71135ff4157664ac019e16fb6ba6a303e08a778a51c87eed3b803c0648098cb",
+      "candidateSha256": "bf3f6af5fcbe1099605a1c18e4575c603a15ffb8ecb4027e77cf3eb82f5fd30c",
+      "altTextReviewed": "The Melitta1x4 with drained grounds rests on a heat-safe dish beside the server of coffee.",
+      "verdict": "approved",
+      "checks": {
+        "rawAndDelivery": true,
+        "phoneLightDark": true,
+        "actionState": true,
+        "handlingSafety": true,
+        "flowAndCrop": true,
+        "minimalism": true,
+        "equipmentGeometry": true,
+        "altAgreement": true
+      },
+      "notes": [
+        "Drained bed and dripper resting on heat-safe dish beside finished coffee. Does not depict lift or confirm no-drip timing."
+      ]
+    },
+    {
+      "sceneId": "melitta_pour",
+      "version": 3,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/melitta_pour_v3.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/melitta_pour_v3.webp",
+      "rawSha256": "cfb935717dada35157c814af7a4e7b8d4c0ed00278bcc1e702f8f88d3e8196e9",
+      "candidateSha256": "3dc71bd166e16630693cc36483ec0b8108e2702c2a31d6280dd788c080924828",
+      "altTextReviewed": "A gentle stream wets coffee within the Melitta1x4 wedge paper, with clear headroom while coffee drains into the server.",
+      "verdict": "approved",
+      "checks": {
+        "rawAndDelivery": true,
+        "phoneLightDark": true,
+        "actionState": true,
+        "handlingSafety": true,
+        "flowAndCrop": true,
+        "minimalism": true,
+        "equipmentGeometry": true,
+        "altAgreement": true
+      },
+      "notes": [
+        "Correct broad flange replaces prior narrow hardware. Thin stream lands within low coffee surface with headroom; two outlet flows enter stable server."
+      ]
+    },
+    {
+      "sceneId": "melitta_rinse",
+      "version": 3,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/melitta_rinse_v3.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/melitta_rinse_v3.webp",
+      "rawSha256": "9f1e11a4555fc8b7aa088077ad43ec074e8009dc5b8c5e7e8a6c35d691d436a1",
+      "candidateSha256": "2674901f9fa9cb07c56288231a9e833f4847b1bf3ccd9191904eae483a4ad3e1",
+      "altTextReviewed": "Clear water rinses empty wedge paper in a Melitta1x4 supported securely on a server; rinse water collects below.",
+      "verdict": "approved",
+      "checks": {
+        "rawAndDelivery": true,
+        "phoneLightDark": true,
+        "actionState": true,
+        "handlingSafety": true,
+        "flowAndCrop": true,
+        "minimalism": true,
+        "equipmentGeometry": true,
+        "altAgreement": true
+      },
+      "notes": [
+        "Water-only rinse, no coffee; two flows and collected rinse visible. Does not depict subsequent rinse disposal."
+      ]
+    },
+    {
+      "sceneId": "phin_screw_light",
+      "version": 2,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/phin_screw_light_v2.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/phin_screw_light_v2.webp",
+      "rawSha256": "908ce9e6d414849a7113c0b5cea99eb9311d391eaed8e9b4956072b668362a35",
+      "candidateSha256": "cac54d673111231b574e4dfec8c51141dcea85544f2e95e37da9e373fa4fdaae",
+      "altTextReviewed": "A perforated screw insert is lightly engaged on the central threaded stem of the phin, just touching the loose dry coffee.",
+      "verdict": "approved",
+      "checks": {
+        "rawAndDelivery": true,
+        "phoneLightDark": true,
+        "actionState": true,
+        "handlingSafety": true,
+        "flowAndCrop": true,
+        "minimalism": true,
+        "equipmentGeometry": true,
+        "altAgreement": true
+      },
+      "notes": [
+        "Threaded central post and perforated threaded insert agree with existing screw-phin geometry reference. No hand force or tamping. Replace corrupted apostrophe in alt with ASCII wording supplied to root.",
+        "2026-10-25 caption recheck: literal ASCII caption now agrees with the unchanged hash-bound pixels; previous conditional caption finding retained in captionHistory."
+      ],
+      "captionHistory": [
+        {
+          "altTextReviewed": "A perforated screw insert is lightly engaged on the phinÃ¢â‚¬â„¢s threaded central stem, just touching the loose dry coffee.",
+          "verdict": "approved_after_alt_correction",
+          "altAgreement": false
+        }
+      ]
+    },
+    {
+      "sceneId": "switch_retained",
+      "version": 2,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_retained_v2.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_retained_v2.webp",
+      "rawSha256": "54fc72da9c924099180ea66b2b8b75f10b46a8324a6595ce4ca5bc57be5c6300",
+      "candidateSha256": "1960e63e7142c6ecfba37eb79c349d5312424f296188df40644b629c6c3d2809",
+      "altTextReviewed": "Coffee and water remain inside the paper-lined Switch with its clear paddle unpressed and no flow into the server.",
+      "verdict": "approved",
+      "checks": {
+        "rawAndDelivery": true,
+        "phoneLightDark": true,
+        "actionState": true,
+        "handlingSafety": true,
+        "flowAndCrop": true,
+        "minimalism": true,
+        "equipmentGeometry": true,
+        "altAgreement": true
+      },
+      "notes": [
+        "Retained slurry and no outflow, intact silicone base and flat transparent paddle agree with Hario primary product/manual. Scope is retained state, not detailed press/release handling."
+      ]
+    },
+    {
+      "sceneId": "wave155_drain_remove",
+      "version": 1,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/wave155_drain_remove_v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/wave155_drain_remove_v1.webp",
+      "rawSha256": "dbb1501fa0e60ec99a9aecf562490303e0da80a4f40cb23fe89223c476f4f724",
+      "candidateSha256": "df4ef6aa77078e81a534639170c99721ae5cf729583416a78bd28cd7e25d52b4",
+      "altTextReviewed": "After drainage, the short steel Wave155 rests on a heat-safe dish beside a server of brewed coffee.",
+      "verdict": "rejected",
+      "checks": {
+        "rawAndDelivery": true,
+        "phoneLightDark": true,
+        "actionState": true,
+        "handlingSafety": true,
+        "flowAndCrop": true,
+        "minimalism": true,
+        "equipmentGeometry": false,
+        "altAgreement": true
+      },
+      "notes": [
+        "REJECT: missing broad stainless support flange beneath Wave155 bowl. A cream dish is not the actual support flange. Manufacturer Kalita155 photo confirms broad circular metal plate. Regenerate only missing hardware while preserving drained bed and dish."
+      ]
+    }
+  ]
+}

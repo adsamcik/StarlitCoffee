@@ -1,0 +1,162 @@
+[
+  {
+    "sceneId": "chemex_sixcup_dose",
+    "methodId": "chemex",
+    "stepIds": [
+      "dose"
+    ],
+    "bindingSourceIds": [
+      "chemex_sixcup_dose"
+    ],
+    "targetContentIds": [
+      "chemex_30_480_dose"
+    ],
+    "altText": "Ground coffee is poured from a small cup into the bonded paper of a six-cup Classic Chemex resting on a scale.",
+    "sources": [
+      "https://chemexcoffeemaker.com/products/six-cup-classic-chemex",
+      "https://chemexcoffeemaker.com/pages/how-to-brew-with-chemex"
+    ],
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/chemex/scenes/chemex_sixcup_dose-v1/raw.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/chemex/scenes/chemex_sixcup_dose-v1/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/chemex/scenes/chemex_sixcup_dose-v1/prompt.txt",
+    "rawSha256": "90654499d4b0de11a55b5ab857b75b247351c71b253e7d42ef3ba8a93e137a68",
+    "candidateSha256": "3a9f95f2d1873100110679585ed7c91497a6bec474943ab1ed76e8f1582d944e",
+    "promptSha256": "ff843cb5f5392c700a0a12d9e2643d53b688425133c68b81f6ffd89dec84ac49",
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected full raw; delivery and 320px light/dark inspection recorded after conversion. Independent admission pending.",
+        "Six-cup Classic geometry; recipe numbers remain outside illustration."
+      ]
+    }
+  },
+  {
+    "sceneId": "chemex_unspecified_prepare",
+    "methodId": "chemex-unspecified",
+    "stepIds": [
+      "prepare"
+    ],
+    "bindingSourceIds": [
+      "chemex_unspecified_prepare"
+    ],
+    "targetContentIds": [
+      "chemex_unspecified_prepare"
+    ],
+    "altText": "Close-up of three layers of bonded paper facing the Chemex spout, with the open glass air channel visible beneath them.",
+    "sources": [
+      "https://chemexcoffeemaker.com/pages/how-to-brew-with-chemex",
+      "https://chemexcoffeemaker.com/pages/faq",
+      "https://chemexcoffeemaker.com/products/three-cup-classic-chemex"
+    ],
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/chemex/scenes/chemex_unspecified_prepare-v1/raw.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/chemex/scenes/chemex_unspecified_prepare-v1/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/chemex/scenes/chemex_unspecified_prepare-v1/prompt.txt",
+    "rawSha256": "15ecb1fe85aeb8f0f030d41d11e0baf6518bd2356ad69b50a4a6638b2871da95",
+    "candidateSha256": "2e6f10e65a5a49a13c085c88d5bb864bd7726917c154df281b302080df20d01c",
+    "promptSha256": "d1f8c810e42582b13de77ae56df977e3dcf8e12a10ed6eca65512ccaf20bd945",
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected full raw; delivery and 320px light/dark inspection recorded after conversion. Independent admission pending.",
+        "Conceptual closeup does not assert overall dimensions or capacity."
+      ]
+    }
+  },
+  {
+    "sceneId": "chemex_unspecified_pour",
+    "methodId": "chemex-unspecified",
+    "stepIds": [
+      "bloom",
+      "pour"
+    ],
+    "bindingSourceIds": [
+      "chemex_unspecified_pour"
+    ],
+    "targetContentIds": [
+      "chemex_bloom",
+      "chemex_pour"
+    ],
+    "altText": "Close-up of a thin kettle stream wetting coffee evenly inside bonded Chemex paper, with generous space below the paper rim.",
+    "sources": [
+      "https://chemexcoffeemaker.com/products/three-cup-classic-chemex",
+      "https://chemexcoffeemaker.com/pages/how-to-brew-with-chemex"
+    ],
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/chemex/scenes/chemex_unspecified_pour-v1/raw.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/chemex/scenes/chemex_unspecified_pour-v1/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/chemex/scenes/chemex_unspecified_pour-v1/prompt.txt",
+    "rawSha256": "fa95bf743f1a11c2a9a950e03d269d13aebb07b64012968972e5693fc1b04456",
+    "candidateSha256": "5b2a841bfad0967a854b4c7c95033a1ab2f58735a3366ba74eb9bb6c796b8ea5",
+    "promptSha256": "84feddaff9ab41d63759108375d18d96bec2ee22b7c277c4b5b8c33cb7df1bcf",
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected full raw; delivery and 320px light/dark inspection recorded after conversion. Independent admission pending.",
+        "Conceptual closeup does not assert overall dimensions or capacity."
+      ]
+    }
+  },
+  {
+    "sceneId": "chemex_unspecified_drain",
+    "methodId": "chemex-unspecified",
+    "stepIds": [
+      "drawdown"
+    ],
+    "bindingSourceIds": [
+      "chemex_unspecified_drain"
+    ],
+    "targetContentIds": [
+      "chemex_drawdown"
+    ],
+    "altText": "Close-up of the drained coffee bed in Chemex bonded paper; no standing water remains and only an occasional drop falls from the filter tip inside the glass neck.",
+    "sources": [
+      "https://chemexcoffeemaker.com/products/three-cup-classic-chemex",
+      "https://chemexcoffeemaker.com/products/six-cup-classic-chemex"
+    ],
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/chemex/scenes/chemex_unspecified_drain-v1/raw.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/chemex/scenes/chemex_unspecified_drain-v1/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/chemex/scenes/chemex_unspecified_drain-v1/prompt.txt",
+    "rawSha256": "c69bdb7fb6f125fd191d90f7e08623f146af9339ad969cecb3e1b1d404c8adee",
+    "candidateSha256": "80253981c3e1007c6960a36d3378780e5730bb86362eed3efb8a614ff68d227c",
+    "promptSha256": "5989018eb3bd60025de58dda3ea9d337f4d236e0b99566ce53f91864abfec972",
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected full raw; delivery and 320px light/dark inspection recorded after conversion. Independent admission pending.",
+        "Conceptual closeup does not assert overall dimensions or capacity."
+      ]
+    }
+  },
+  {
+    "sceneId": "chemex_unspecified_serve",
+    "methodId": "chemex-unspecified",
+    "stepIds": [
+      "serve",
+      "finish"
+    ],
+    "bindingSourceIds": [
+      "chemex_unspecified_serve"
+    ],
+    "targetContentIds": [
+      "chemex_serve",
+      "chemex_unspecified_finish"
+    ],
+    "altText": "Close-up of a hand holding the wooden Chemex collar while coffee pours from its clear, filter-free spout into a cup.",
+    "sources": [
+      "https://chemexcoffeemaker.com/products/three-cup-classic-chemex",
+      "https://chemexcoffeemaker.com/products/six-cup-classic-chemex"
+    ],
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/chemex/scenes/chemex_unspecified_serve-v2/raw.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/chemex/scenes/chemex_unspecified_serve-v2/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/chemex/scenes/chemex_unspecified_serve-v2/prompt.txt",
+    "rawSha256": "5cd1553e0f9b9ac6b12f118bf6e2db4b2d5d5695f689c2783ea30cdd4dfa42a0",
+    "candidateSha256": "5397e7f6879cc70b2110351af9fa1e804575bcbb3510ed354bec94549017049b",
+    "promptSha256": "72b7a4e0fd44fb3beac0d6cb8f07a1d00f08df5ce46b6d4440b58aaece94ca6b",
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected full raw; delivery and 320px light/dark inspection recorded after conversion. Independent admission pending.",
+        "Conceptual closeup does not assert overall dimensions or capacity."
+      ]
+    }
+  }
+]

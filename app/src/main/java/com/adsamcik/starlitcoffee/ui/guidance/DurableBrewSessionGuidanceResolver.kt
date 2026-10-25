@@ -53,6 +53,7 @@ data class ResolvedBrewGuidanceContent(
     val altText: String,
     val safetyCritical: Boolean,
     val terminologyReferences: List<BrewingTerminologyReference> = emptyList(),
+    val visualContentRevision: String? = null,
 )
 
 /**
@@ -121,6 +122,8 @@ sealed interface DurableBrewGuidanceVisualStatus {
 
     data class Approved(
         val asset: InstructionAssetRecord,
+        val targetContentId: StageContentId = asset.contentId,
+        val altText: String? = null,
     ) : DurableBrewGuidanceVisualStatus
 }
 
@@ -363,6 +366,9 @@ class DurableBrewSessionGuidanceResolver(
     ): DurableBrewGuidanceVisualStatus {
         if (currentStage == null) return DurableBrewGuidanceVisualStatus.NotRequested
         val assetId = currentStage.instructionAssetId
+        if (assetId == null) {
+            aliasVisualStatus(currentStage, scope)?.let { return it }
+        }
         return when {
             assetId == null && currentStage.requiresIllustration ->
                 DurableBrewGuidanceVisualStatus.RequiredAssetIdMissing
@@ -378,6 +384,19 @@ class DurableBrewSessionGuidanceResolver(
         }
     }
 
+    private fun aliasVisualStatus(
+        stage: CurrentBrewStagePresentation,
+        scope: ProfileScope?,
+    ): DurableBrewGuidanceVisualStatus.Approved? {
+        if (scope == null) return null
+        val content = allContent.firstOrNull { it.id == stage.contentId && it.belongsTo(scope) } ?: return null
+        val alias = instructionAssets?.approvedAliasForContent(content.id, content.visualContentRevision) ?: return null
+        if (alias.familyId != scope.methodFamilyId || alias.profileId != scope.brewerProfileId) return null
+        return instructionAssets.find(alias.sourceAssetId)?.let { asset ->
+            DurableBrewGuidanceVisualStatus.Approved(asset, stage.contentId, alias.altText)
+        }
+    }
+
     private fun InstructionAssetRecord.toVisualStatus(
         scope: ProfileScope?,
         currentStage: CurrentBrewStagePresentation,
@@ -385,7 +404,12 @@ class DurableBrewSessionGuidanceResolver(
         scope == null || !matches(scope, currentStage) ->
             DurableBrewGuidanceVisualStatus.ManifestScopeMismatch(id.value)
 
-        review.isApproved -> DurableBrewGuidanceVisualStatus.Approved(this)
+        review.isApproved -> {
+            val content = allContent.firstOrNull { it.id == currentStage.contentId && it.belongsTo(scope) }
+            DurableBrewGuidanceVisualStatus.Approved(asset = this, targetContentId = currentStage.contentId,
+                altText = instructionAssets?.approvedAltTextForContent(currentStage.contentId,
+                    content?.visualContentRevision, id, currentInstruction = content?.text?.primaryInstruction))
+        }
         else -> DurableBrewGuidanceVisualStatus.NotApproved(this)
     }
 
@@ -430,6 +454,7 @@ class DurableBrewSessionGuidanceResolver(
                 altText = authored.accessibleAltText,
                 safetyCritical = safetyCritical,
                 terminologyReferences = terminologyReferences,
+                visualContentRevision = visualContentRevision,
             )
         }
         val showSupportingCopy = level in setOf(
@@ -460,6 +485,7 @@ class DurableBrewSessionGuidanceResolver(
             altText = text.altText,
             safetyCritical = safetyCritical,
             terminologyReferences = terminologyReferences,
+            visualContentRevision = visualContentRevision,
         )
     }
 

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "reviewedOn": "2026-10-25",
+  "reviewer": "Codex independent renewed legacy review /root/guidance_art_audit",
+  "purpose": "Supplemental qualitative QC statement only. Original per-image check dictionaries, verdicts and ledger schema are unchanged; this does not retrospectively add a ninth scored check.",
+  "scope": {
+    "ledgerPath": "docs/brewing/generated-guidance-20261025/reviews/legacy-renewal/independent-p1-renewed-review.json",
+    "ledgerSha256": "57f93b8c9286d031a4a34a8e0ffd1bdb02e802ffd5426940b4859b1e18fead4f",
+    "originalImagesIndividuallyInspected": 114,
+    "retainedCount": 83,
+    "rejectedCount": 31,
+    "retainedAssetSetSha256": "eb95ba75391072e8c93b287845279e17620c32dc5f1091c75780f36b241f1868",
+    "retainedDeliveredHashesRechecked": 83
+  },
+  "evidenceBasis": "The renewal individually inspected all114 actual full-resolution delivered WebPs and all114 actual320x240 light/dark examples against their canonical action/state. This statement applies that actual inspection to the83 retained exact bytes, rather than deriving visual quality from a prior approval label. Four representative contact sheets were refreshed while writing this statement; this is not claimed as another full114-image inspection.",
+  "judgment": "The83 retained examples satisfy the functional minimal explanatory-art requirement within their existing bounded canonical scopes: the equipment and relevant action/state dominate; no competing unrelated props, embedded instruction paragraphs or scenic narrative distract from the task; critical equipment geometry and relevant contact/liquid paths remain legible at phone size. No additional concrete failure of action focus or critical-geometry legibility was identified among those83.",
+  "styleQualification": "Many retained images use richer tactile shading and a dark organic backing shape. They are not uniformly flat, decoration-free transparent editorial illustrations, and this statement does not certify identical style to the replacements or compliance with a later production prompt that prohibits backing islands. The retained backing shapes frame rather than obscure the teaching content; stylistic difference alone was not treated as a correctness rejection.",
+  "limits": [
+    "The83 approvals remain limited to the exact canonical physical profiles and depicted state/subaction recorded per image; this statement does not expand any binding.",
+    "This is not a renewed generation-provenance audit, native app layout/accessibility inspection or physical brewing validation.",
+    "The31 rejected images remain rejected; focused composition does not excuse their mechanical/action failures."
+  ],
+  "refreshedContactSheets": [
+    "v60_official_15_250.png",
+    "cezve_turkish_single_rise_6_65.png",
+    "phin_gravity_14_118.png",
+    "chemex_42_700.png"
+  ]
+}

@@ -133,6 +133,7 @@ data class BuiltInGuidanceContent(
     val authoredPresentations: Map<GuidancePresentationLevel, AuthoredGuidancePresentation> =
         emptyMap(),
     val terminologyReferences: List<BrewingTerminologyReference> = emptyList(),
+    val visualContentRevision: String? = null,
 ) : GuidanceVisibilityItem {
     init {
         require(placement != BuiltInGuidancePlacement.LIVE_STAGE || stageId != null) {
@@ -331,7 +332,7 @@ object PulsarBuiltInGuidanceCatalog {
                 visibility = alwaysVisibleSafety(),
                 safetyCritical = true,
             ),
-        ),
+        ).map { it.withVisualContract("pulsar_legacy") },
     )
 
     private fun visibilityAt(

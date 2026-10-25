@@ -1,0 +1,87 @@
+{
+  "reviewedOn": "2026-10-25",
+  "contracts": [
+    "app/src/main/res/raw/pulsar_learn_guidance.json",
+    "app/src/main/assets/brewing/reviewed-method-guides.json#reviewed_pulsar_v1"
+  ],
+  "sequenceDecision": "Preserve exact eight Gagne Learn states and six reviewed Gagne steps. No Rao WWDT image is needed for these target instructions; no stirring added to rest. Manufacturer hardware and safety reference is not used to transfer its generic closed-start recipe.",
+  "legacyAssessment": "Individually inspected all eight selected legacy raw images. They retain baked checkerboard and brown background islands and use detailed realistic rendering. No legacy pixel reuse selected.",
+  "mappings": [
+    {
+      "reviewedStep": "prime_paper",
+      "scenes": [
+        "pulsar_prime"
+      ],
+      "learnStages": [
+        1
+      ],
+      "scope": "Open drainage phase, flat paper, barrel removed, supported base. Does not depict full closed-open-closed priming cycle."
+    },
+    {
+      "reviewedStep": "dose_level_tare",
+      "scenes": [
+        "pulsar_dose"
+      ],
+      "learnStages": [
+        2
+      ],
+      "scope": "Coffee addition and separate actual dispersion cap on server/scale. Does not depict final leveling, cap seating or scale tare confirmation."
+    },
+    {
+      "reviewedStep": "open_start_bloom",
+      "scenes": [
+        "pulsar_open_bloom",
+        "pulsar_close"
+      ],
+      "learnStages": [
+        3,
+        4
+      ],
+      "scope": "Initial open cap pour with first drainage; separate closure while base stabilized. Closure image does not visually assert a completed gentle swirl."
+    },
+    {
+      "reviewedStep": "retained_bloom",
+      "scenes": [
+        "pulsar_retained"
+      ],
+      "learnStages": [
+        5
+      ],
+      "scope": "Still closed shallow wet bloom with no outflow. Exact elapsed minute remains authored text."
+    },
+    {
+      "reviewedStep": "open_and_pulse",
+      "scenes": [
+        "pulsar_open_pulse"
+      ],
+      "learnStages": [
+        6
+      ],
+      "scope": "Open cap pouring with established shallow pool over bed and ongoing drainage. No exact pulse count, water mass or measured pool height asserted."
+    },
+    {
+      "reviewedStep": "drain_and_serve",
+      "scenes": [
+        "pulsar_drain",
+        "pulsar_lift_base"
+      ],
+      "learnStages": [
+        7,
+        8
+      ],
+      "scope": "Open final drawdown with no standing pool, then closed base-only lift from stationary receiver. No active serving pour depicted."
+    }
+  ],
+  "producerQC": {
+    "status": "candidate",
+    "fullRawAllViewed": true,
+    "deliveredWebPAllViewed": true,
+    "phone320LightDarkAllViewed": true,
+    "mechanicalChecks": "Eight 1024x768 alpha WebP with transparent corners;55-82KB each. See mechanical-qc.json for exact sizes and hashes.",
+    "rejectedIterations": [
+      "pulsar_dose-v1: invented cap perforations under bed, corrected v2 to plain paper",
+      "pulsar_open_bloom-v1: raised paper basket sidewall, corrected v2 to flat paper hidden beneath bed"
+    ],
+    "independentAdmission": "Pending root-coordinated independent reviewer"
+  }
+}

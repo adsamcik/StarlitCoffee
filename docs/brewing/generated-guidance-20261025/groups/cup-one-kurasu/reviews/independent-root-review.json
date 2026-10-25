@@ -1,0 +1,208 @@
+{
+  "schemaVersion": 1,
+  "entries": [
+    {
+      "sceneId": "cupone_paper_outlet",
+      "version": 1,
+      "candidateSha256": "a1e95e352c989a7c14a9dea94be64a7076c6499dda1cbb2b3384866252b2a9e4",
+      "rawSha256": "d9a5898246a8229b97ff7a12d65074cf6a479b6aaed2ca3e6b5773fb9370bae8",
+      "promptSha256": "b2ee4200367fce85ce7d1428cf02ad3a97f30599173a5e21f08ac07b3d75775e",
+      "reviewer": "Codex independent artwork and binding QC /root",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "altTextReviewed": "Matching small paper is fitted inside the detached Cup-One basket, which is held by its wire handle.",
+      "p1Targets": [
+        "p1_auto_cupone_20_300_stage_01_instruction"
+      ],
+      "notes": [
+        "Approved for matching fitted-paper subaction and handle-only cold basket handling. Outlet exists at the correct location but is too small to establish clear-hole inspection at320px; that check remains explicit source text. Alt corrected to omit a visible-open-hole claim.",
+        "Original raw, actual delivered phone composites on both themes, primary actual Cup-One product/basket photograph and source safety context inspected; intentional macro crops retain critical action."
+      ]
+    },
+    {
+      "sceneId": "cupone_load",
+      "version": 1,
+      "candidateSha256": "5896ff27405aeee12454a4faba5896260eef6a058f35d7018b8c1954e6a0c7c9",
+      "rawSha256": "33f6c3e0447b55bbc75bc693484d9b9da60ebf9554976a35b5bb7d413557d5f2",
+      "promptSha256": "c1e3dcd7ffad84958b9149469e6dc3012dfa67f5c7ef9e5dca7b5a3f4cbd78a1",
+      "reviewer": "Codex independent artwork and binding QC /root",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "altTextReviewed": "Ground coffee enters the fitted paper in a cool Cup-One basket held upright by its wire handle.",
+      "p1Targets": [
+        "p1_auto_cupone_20_300_stage_02_instruction"
+      ],
+      "notes": [
+        "Active loading into matching paper and correct wire-handle basket. Does not prove completed leveling or a numeric coffee dose.",
+        "Original raw, actual delivered phone composites on both themes, primary actual Cup-One product/basket photograph and source safety context inspected; intentional macro crops retain critical action."
+      ]
+    },
+    {
+      "sceneId": "cupone_fill",
+      "version": 1,
+      "candidateSha256": "16936453751f1b8df33a097b04a2db5e0e696bf86bddeb3149ff4c58c4b49c9c",
+      "rawSha256": "bfe999851dd584a9e0291a2b955dacba0907a308742fdb4261b3a538c454a8bd",
+      "promptSha256": "ab9a5a36fb69f0a4d8652044a6e0ba9a3232859e785bacde065a9800b1da5b68",
+      "reviewer": "Codex independent artwork and binding QC /root",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "altTextReviewed": "Fresh cold water pours from a clean jug into the Cup-One reservoir on top of its tower, below its physical fill mark.",
+      "p1Targets": [
+        "p1_auto_cupone_20_300_stage_03_instruction"
+      ],
+      "notes": [
+        "Correct actual shallow top reservoir; active cool-water transfer below physical fill mark. Omits arm positioning and does not establish final exact300mL.",
+        "Original raw, actual delivered phone composites on both themes, primary actual Cup-One product/basket photograph and source safety context inspected; intentional macro crops retain critical action."
+      ]
+    },
+    {
+      "sceneId": "cupone_active",
+      "version": 1,
+      "candidateSha256": "7b1ff144d91837c740ed511672197339ef43a6934ddb4105e75676cb2b76294d",
+      "rawSha256": "b1906bada9ddf32678c6fb99578eacf137c21834ec2a836906c71552edf37d12",
+      "promptSha256": "02ede2b9630cd1c7ec9c2c5b971e681ed3bb3c05b575560152113c1f5ec98e09",
+      "reviewer": "Codex independent artwork and binding QC /root",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "altTextReviewed": "The covered Cup-One brews through its supported basket into a large mug kept in the receiving ring.",
+      "p1Targets": [
+        "p1_auto_cupone_20_300_stage_04_instruction"
+      ],
+      "notes": [
+        "Actual long cover, independent basket support, tank/tower arrangement, receiving ring and continuous stream into a stable mug. Demonstrates running state only; button activation and numeric capacity remain text.",
+        "Original raw, actual delivered phone composites on both themes, primary actual Cup-One product/basket photograph and source safety context inspected; intentional macro crops retain critical action."
+      ]
+    },
+    {
+      "sceneId": "cupone_tail",
+      "version": 1,
+      "candidateSha256": "9ee049a52700edea5ab65d10f8f38097c14b555530d158f09585fc24d9b9cca6",
+      "rawSha256": "773d9bb9e6d19ff58ed87f3340c5ea3a84137b221ebc87c5e9559a72542b3b63",
+      "promptSha256": "34db566d8a2a9baf9bba0067b30d996bc07b52ed691f78cf289a337b1a3e1638",
+      "reviewer": "Codex independent artwork and binding QC /root",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "altTextReviewed": "The Cup-One reservoir is empty and a final separate drop falls while the collected coffee stays beneath the basket.",
+      "p1Targets": [
+        "p1_auto_cupone_20_300_stage_05_instruction"
+      ],
+      "notes": [
+        "Same actual machine; empty tank and separate last drop while receiver remains in place. Waiting tail state, not proof dripping stopped or completed removal.",
+        "Original raw, actual delivered phone composites on both themes, primary actual Cup-One product/basket photograph and source safety context inspected; intentional macro crops retain critical action."
+      ]
+    },
+    {
+      "sceneId": "cupone_clean_outlet",
+      "version": 2,
+      "candidateSha256": "6eacdb8b9177e975b229637edf8e86e3c8dc1a26dcdc324df5c61dd23dfaef7f",
+      "rawSha256": "04b32221a0e340b96b6a8451cd2b8977cc425a40b5593fc6111832122a608cc5",
+      "promptSha256": "35b8abd6157c9dd4d89a7bec82916286dadcb4a7b2789c1fad23e194d9a79404",
+      "reviewer": "Codex independent artwork and binding QC /root",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "altTextReviewed": "A thin cleaning tool clears the tiny outlet of a cool empty Cup-One basket held only by its wire handle.",
+      "p1Targets": [
+        "p1_auto_cupone_20_300_stage_06_instruction"
+      ],
+      "notes": [
+        "Paper removed; cool empty basket held by wire handle, narrow tool visibly enters correct small outlet frombelow. Tool contact remains legible at320px even though hole itself is tiny. Does not teach widening the hole or cleaning hot parts.",
+        "Original raw, actual delivered phone composites on both themes, primary actual Cup-One product/basket photograph and source safety context inspected; intentional macro crops retain critical action."
+      ]
+    },
+    {
+      "sceneId": "kurasu_serve_fresh_ice",
+      "version": 1,
+      "candidateSha256": "aa6463c5d62fb02ccde7dce813f68538248ffddc8ce6aa76d895afe74a2d1ca1",
+      "rawSha256": "5c5360da7772f5cf1d7193e1252324ca50b464bd92d129bbb75053a2b98adaa7",
+      "promptSha256": "1ac983b4585e2d3fcab18256aecccc776ea7022be093d0d0709653e2ce475c6b",
+      "reviewer": "Codex independent artwork and binding QC /root",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "altTextReviewed": "A tilted glass server pours chilled coffee through its spout in a connected stream into a stable glass of fresh ice, with headroom remaining.",
+      "p1Targets": [
+        "p1_v60_kurasu_flash_16_150_70_stage_06_instruction"
+      ],
+      "notes": [
+        "Safe handle grip, horizontal internal free surface continuously reaches spout and output stream; fresh ice in stable receiving glass with headroom. No dry gap or fixed-yield claim.",
+        "Original raw, actual delivered phone composites on both themes, primary actual Cup-One product/basket photograph and source safety context inspected; intentional macro crops retain critical action."
+      ]
+    }
+  ]
+}

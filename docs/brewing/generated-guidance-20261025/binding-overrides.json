@@ -1,0 +1,191 @@
+{
+  "reviewed_on": "2026-10-25",
+  "reviewer": "/root physical content-binding review",
+  "canonical_replacements": {
+    "p1_switch_official_20_240_stage_01_instruction": "switch_closed_empty",
+    "p1_switch_official_20_240_stage_02_instruction": "switch_retained",
+    "p1_switch_official_20_240_stage_03_instruction": "switch_retained",
+    "p1_switch_official_20_240_stage_04_instruction": "switch_open_flow",
+    "p1_switch_official_20_240_stage_05_instruction": "switch_open_drained",
+    "p1_switch_ole_boen_hybrid_16_5_240_stage_01_instruction": "switch_retained",
+    "p1_switch_ole_boen_hybrid_16_5_240_stage_02_instruction": "switch_open_pour",
+    "p1_switch_ole_boen_hybrid_16_5_240_stage_03_instruction": "switch_retained",
+    "p1_switch_ole_boen_hybrid_16_5_240_stage_04_instruction": "switch_open_flow",
+    "p1_switch_ole_boen_hybrid_16_5_240_stage_05_instruction": "switch_open_drained",
+    "p1_switch_gravity_15_250_stage_01_instruction": "switch_open_rinse",
+    "p1_switch_gravity_15_250_stage_02_instruction": "switch_open_pour",
+    "p1_switch_gravity_15_250_stage_03_instruction": "switch_open_pour",
+    "p1_switch_gravity_15_250_stage_04_instruction": "switch_open_drained",
+    "p1_auto_batch_500_30_stage_01_instruction": "auto_coffee",
+    "p1_auto_batch_500_30_stage_02_instruction": "auto_water_half",
+    "p1_auto_batch_500_30_stage_03_instruction": "auto_brew_flow",
+    "p1_auto_batch_500_30_stage_04_instruction": "auto_no_flow",
+    "p1_auto_batch_500_30_stage_05_instruction": "auto_swirl",
+    "p1_auto_batch_1000_60_stage_01_instruction": "auto_coffee",
+    "p1_auto_batch_1000_60_stage_02_instruction": "auto_water_full",
+    "p1_auto_batch_1000_60_stage_03_instruction": "auto_brew_flow",
+    "p1_auto_batch_1000_60_stage_04_instruction": "auto_swirl",
+    "p1_auto_cupone_20_300_stage_01_instruction": "cupone_paper_outlet",
+    "p1_auto_cupone_20_300_stage_02_instruction": "cupone_load",
+    "p1_auto_cupone_20_300_stage_03_instruction": "cupone_fill",
+    "p1_auto_cupone_20_300_stage_04_instruction": "cupone_active",
+    "p1_auto_cupone_20_300_stage_05_instruction": "cupone_tail",
+    "p1_auto_cupone_20_300_stage_06_instruction": "cupone_clean_outlet",
+    "p1_phin_screw_18_120_stage_02_instruction": "phin_screw_light",
+    "p1_v60_kurasu_flash_16_150_70_stage_06_instruction": "kurasu_serve_fresh_ice",
+    "pulsar_gagne_20_340_stage_01_instruction": "pulsar_prime",
+    "pulsar_gagne_20_340_stage_02_instruction": "pulsar_dose",
+    "pulsar_gagne_20_340_stage_03_instruction": "pulsar_open_bloom",
+    "pulsar_gagne_20_340_stage_04_instruction": "pulsar_close",
+    "pulsar_gagne_20_340_stage_05_instruction": "pulsar_retained",
+    "pulsar_gagne_20_340_stage_06_instruction": "pulsar_open_pulse",
+    "pulsar_gagne_20_340_stage_07_instruction": "pulsar_drain",
+    "pulsar_gagne_20_340_stage_08_instruction": "pulsar_lift_base"
+  },
+  "targets": {
+    "reviewed_hario_switch_v1_close_and_add_coffee": "switch_closed_coffee",
+    "reviewed_hario_switch_v1_fill": "switch_retained",
+    "reviewed_hario_switch_v1_steep": "switch_retained",
+    "reviewed_hario_switch_v1_release": "switch_open_flow",
+    "reviewed_hario_switch_v1_finish": "switch_open_drained",
+    "hario_switch_insert_and_rinse_filter": "switch_open_rinse",
+    "hario_switch_close_valve": "switch_closed_empty",
+    "hario_switch_add_coffee": "switch_closed_coffee",
+    "hario_switch_add_water": "switch_retained",
+    "hario_switch_steep": "switch_retained",
+    "hario_switch_agitate": "switch_closed_stir",
+    "hario_switch_open_valve": "switch_open_flow",
+    "hario_switch_observe_drawdown": "switch_open_drained",
+    "hario_switch_remove_and_serve": "switch_open_drained",
+    "hario_switch_open_valve_for_manual_gravity": "switch_open_rinse",
+    "hario_switch_pour_water": "switch_open_pour",
+    "pulsar_prepare": "pulsar_generic_cap",
+    "pulsar_bloom": "pulsar_retained",
+    "pulsar_manual_brew": "pulsar_open_pulse",
+    "pulsar_finish": "pulsar_lift_base",
+    "reviewed_pulsar_v1_prime_paper": "pulsar_prime",
+    "reviewed_pulsar_v1_dose_level_tare": "pulsar_dose",
+    "reviewed_pulsar_v1_open_start_bloom": "pulsar_open_bloom",
+    "reviewed_pulsar_v1_retained_bloom": "pulsar_retained",
+    "reviewed_pulsar_v1_open_and_pulse": "pulsar_open_pulse",
+    "reviewed_pulsar_v1_drain_and_serve": "pulsar_lift_base",
+    "aeropress_standard_prepare": "aero_prepare",
+    "espresso_pump_generic_prepare": "espresso_basket",
+    "espresso_pump_generic_finish": "espresso_clean",
+    "reviewed_turkish_v1_prepare": "instruction_p1_cezve_turkish_single_rise_6_65_stage_01_instruction_default",
+    "cezve_generic_select_pot_capacity": "instruction_p1_cezve_turkish_single_rise_6_65_stage_01_instruction_default",
+    "cezve_generic_observe_foam_rising": "instruction_p1_cezve_bounded_repeated_rise_12_130_stage_03_instruction_default",
+    "vietnamese_phin_collect_concentrate": "instruction_p1_phin_screw_18_120_stage_05_instruction_default",
+    "vietnamese_phin_observe_drip_completion": "instruction_p1_phin_gravity_14_118_stage_06_instruction_default",
+    "vietnamese_phin_add_coffee": "concept_coffee_level",
+    "vietnamese_phin_level_coffee": "concept_coffee_level",
+    "moka_observe_flow": "moka-stop"
+  },
+  "binding_details": {
+    "aeropress_standard_prepare": {
+      "alt_text": "An upright AeroPress with its standard filter cap secured beneath the chamber, loaded coffee and a sturdy receiving mug.",
+      "notes": [
+        "Selected original standard cap is locked under the upright coffee-loaded chamber on a sturdy mug; the filter medium is wholly hidden. Thus a neutral assembled-preparation alt does not claim paper versus compatible metal. No quantities, cap material change, or pressure cap transferred. Producer is this agent, so target-binding proposal requires parent independent confirmation; prior image QC was independent.",
+        "Explicit bounded subaction/state only; original quantities, timing, safety and remaining operations stay in the authored instruction."
+      ],
+      "source_sha256": "95bb1bdd6c3dc46c1dd9cee3b379fc0d0dbf7766d01e4e8732b59e2c0adf3489"
+    },
+    "espresso_pump_generic_prepare": {
+      "alt_text": "A clean dry espresso basket fitted in a portafilter beside a folded wiping cloth.",
+      "notes": [
+        "Clean basket fitted to portafilter is exactly the clean-basket portion of generic preparation. No machine controls, numerical capacity, basket label or calibrated dose shown. Only preparation of the clean basket is covered; measured coffee is not yet added and must remain instruction. Do not inherit source's single-wall/two-cup labels into generic alt. Producer is this agent; parent independent target-binding confirmation required.",
+        "Explicit bounded subaction/state only; original quantities, timing, safety and remaining operations stay in the authored instruction."
+      ],
+      "source_sha256": "da4ee616754f08db089f18cfad3dafd9ec8cd8e465f06a4ed8b5150b3ddc00da"
+    },
+    "espresso_pump_generic_finish": {
+      "alt_text": "Spent espresso grounds drop from a portafilter into a knock box during cleanup.",
+      "notes": [
+        "Ground-puck removal into a knock box is the cleaning portion of generic completion with no controls, dose or basket capacity. This is not a served-cup illustration or all manufacturer cleaning operations. Serving and safe depressurization/cooling stay textual. Producer is this agent; parent independent target-binding confirmation required.",
+        "Explicit bounded subaction/state only; original quantities, timing, safety and remaining operations stay in the authored instruction."
+      ],
+      "source_sha256": "b4f3711bffbcd00faebf31b51214ed3aaeccfdd898a6b1721caf09ea08e4b1c0"
+    },
+    "reviewed_turkish_v1_prepare": {
+      "alt_text": "A cold cezve on heat-safe support, with an attached handle and visible space above the contents for expansion.",
+      "notes": [
+        "Cold off-heat cutaway explicitly exposes ample expansion space and attached handle on stable heat-safe support. Target does not require an empty pot. No specific vessel capacity or coffee/water measurement transfers. It does not demonstrate an actual handle-security test or verify burner compatibility; accompanying checks remain. Proposed for both reviewed prepare and generic select-capacity as an illustrative headroom check, never proof of capacity.",
+        "Explicit bounded subaction/state only; original quantities, timing, safety and remaining operations stay in the authored instruction."
+      ],
+      "source_sha256": "3c553131d1df04bb7c097128c6864377aaa0b3efea76b500a92d0aff2a23d23f"
+    },
+    "cezve_generic_select_pot_capacity": {
+      "alt_text": "A cold cezve on heat-safe support, with an attached handle and visible space above the contents for expansion.",
+      "notes": [
+        "Cold off-heat cutaway explicitly exposes ample expansion space and attached handle on stable heat-safe support. Target does not require an empty pot. No specific vessel capacity or coffee/water measurement transfers. It does not demonstrate an actual handle-security test or verify burner compatibility; accompanying checks remain. Proposed for both reviewed prepare and generic select-capacity as an illustrative headroom check, never proof of capacity.",
+        "Explicit bounded subaction/state only; original quantities, timing, safety and remaining operations stay in the authored instruction."
+      ],
+      "source_sha256": "3c553131d1df04bb7c097128c6864377aaa0b3efea76b500a92d0aff2a23d23f"
+    },
+    "cezve_generic_observe_foam_rising": {
+      "alt_text": "Foam rising toward the neck of a cezve over a low flame contained beneath its base.",
+      "notes": [
+        "Foam visibly rising below the rim over low contained heat is the exact physical observation requested. It implies neither a second rise nor a fixed temperature/time. Generic target owns when to remove and selected recipe; no repeated-rise instruction transfers.",
+        "Explicit bounded subaction/state only; original quantities, timing, safety and remaining operations stay in the authored instruction."
+      ],
+      "source_sha256": "0d5bad4c856253f88ecabad676c5958b634b714d73c58dff8d3e4f188a426f03"
+    },
+    "vietnamese_phin_collect_concentrate": {
+      "alt_text": "Coffee drops collect from a covered phin into a stable glass cup; the insert mechanism remains hidden.",
+      "notes": [
+        "Opaque closed chamber hides insert mechanism, and downward drops collect into a stable clear cup showing concentrate. No serving additions/controls/numeric capacity appear. Image shows collection ongoing, not final-drip completion.",
+        "Explicit bounded subaction/state only; original quantities, timing, safety and remaining operations stay in the authored instruction."
+      ],
+      "source_sha256": "115e57346091ba6a0f150b7d2f9c0a03c2a0c4e321e1edd8af9cc1cab21196aa"
+    },
+    "vietnamese_phin_observe_drip_completion": {
+      "alt_text": "A covered phin remains over its cup while the final drips are observed before removal.",
+      "notes": [
+        "Closed opaque chamber hides mechanism and the last visible drop over collected coffee illustrates observing the drip tail before removal. Must retain 'wait until flow stops' text: this is the observation while waiting, not proof that dripping has already stopped. If target admission requires a no-drop completed state, new art is required.",
+        "Explicit bounded subaction/state only; original quantities, timing, safety and remaining operations stay in the authored instruction."
+      ],
+      "source_sha256": "7c95ea55631193a440280ba6ced1d0a03a2b387607bc39c2625df3c09eb95af4"
+    },
+    "vietnamese_phin_add_coffee": {
+      "alt_text": "Conceptual end state: loose coffee forms an even level bed in an open receptacle; no phin insert mechanism is shown.",
+      "notes": [
+        "Common loose coffee/level-bed subaction only. Selected dose and actual phin loading/fitting remain in source instruction."
+      ],
+      "source_sha256": "ccf408afcd41f53828896682afd27155dd6f51715f43d0a94eaf215fb9b6a206"
+    },
+    "vietnamese_phin_level_coffee": {
+      "alt_text": "Conceptual end state: loose coffee forms an even level bed in an open receptacle; no phin insert mechanism is shown.",
+      "notes": [
+        "Common loose coffee/level-bed subaction only. Selected dose and actual phin loading/fitting remain in source instruction."
+      ],
+      "source_sha256": "ccf408afcd41f53828896682afd27155dd6f51715f43d0a94eaf215fb9b6a206"
+    },
+    "moka_observe_flow": {
+      "alt_text": "Moka pot rests off heat on a heatproof trivet with its lid closed.",
+      "notes": [
+        "Shows the off-heat settling end state after the observed pale/sputtering flow. It does not show a visible stream, an open lid or a hand disabling heat. Source instruction retains the actual observation and removal condition."
+      ]
+    },
+    "pulsar_prepare": {
+      "alt_text": "The black perforated dispersion cap is seated level on the top rim of the clear Pulsar barrel.",
+      "notes": [
+        "Only cap placement is illustrated. Filter medium, coffee dose, base preparation and scale state are outside this macro view and remain in the selected compatible-filter instruction."
+      ]
+    },
+    "hario_switch_remove_and_serve": {
+      "notes": [
+        "Shows the drained open-valve state to establish readiness before safe removal; removal and serving remain in the authored instruction. The picture does not assert that handling is safe merely because flow ended."
+      ]
+    },
+    "reviewed_hario_switch_v1_finish": {
+      "notes": [
+        "Shows the drained open-valve state to establish readiness before safe removal; removal and serving remain in the authored instruction. The picture does not assert that handling is safe merely because flow ended."
+      ]
+    },
+    "p1_switch_official_20_240_stage_01_instruction": {
+      "notes": [
+        "Shows the empty fitted paper and CLOSED valve state after rinse drainage. Rinsing and discarding the rinse remain explicit authored operations."
+      ]
+    }
+  }
+}

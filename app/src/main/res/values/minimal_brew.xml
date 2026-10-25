@@ -16,5 +16,5 @@
     <string name="label_brew_water_height_target" translatable="false">Target</string>
     <string name="label_brew_water_height_value" translatable="false">~1 cm</string>
     <string name="label_brew_water_height_reference" translatable="false">above bed</string>
-    <string name="cd_brew_water_height_target" translatable="false">Target water height, not a measurement. The bracket runs from the top of the coffee bed to the target waterline, about 1 cm above it. Pause pouring if higher.</string>
+    <string name="cd_brew_water_height_target" translatable="false">Target water height, not a measurement: keep a shallow layer of water about 1 cm above the coffee bed. Pause pouring if higher.</string>
 </resources>

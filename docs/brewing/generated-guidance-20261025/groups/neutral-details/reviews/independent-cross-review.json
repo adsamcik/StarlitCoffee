@@ -1,0 +1,258 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/heated_brewer_art",
+  "reviewedOn": "2026-10-25",
+  "independentOfProducer": true,
+  "status": "Seven selected scenes and two bounded reuse bindings approved. Root final admission remains separate.",
+  "manifestSha256": "e137c8f2fcce5e3c58470cc46f236c34b2847c429df69b03934968b5bb61b2af",
+  "reuseProposalSha256": "adf1d08c02fa42a986d3ee1058954c4ec838046cc2b7ed04115583e320a078f4",
+  "inspection": {
+    "fullRawInspected": 8,
+    "fullDeliveryInspected": 8,
+    "phoneLightDarkPairsInspected": 8,
+    "hashVerification": "Independently computed raw/prompt/delivery hashes for all seven selected scenes and proposed reuse delivery; all match.",
+    "actualContextsRead": [
+      "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1BuiltInGuidanceCatalog.kt",
+      "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/LegacyBuiltInGuidanceCatalog.kt",
+      "app/src/main/assets/brewing/reviewed-method-guides.json#reviewed_phin_v1"
+    ],
+    "sourceEvidence": [
+      "https://www.mehmetefendi.com/hazirlama/turk-kahvesi/cezve-ile",
+      "https://nguyencoffeesupply.com/blogs/vietnamese-coffee-brew-guide/traditional-vietnamese-drip-phin",
+      "https://nguyencoffeesupply.com/blogs/news/what-is-the-vietnamese-phin-filter",
+      "https://assets.breville.com/BES870/BES870_USCM_IB_X26_LR.pdf"
+    ],
+    "referenceChecks": "Viewed primary Nguyen placement and gravity-disc photographs, Mehmet Efendi water and ingredient photographs, and both selected P1 gravity/screw anatomy reference images. Read Breville locked-portafilter/extraction/safety sections. Source recipe numbers are not transferred."
+  },
+  "entries": [
+    {
+      "sceneId": "cezve_cold_water",
+      "version": 1,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/cezve_cold_water/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/cezve_cold_water/candidate-v1.webp",
+      "rawSha256": "c955dbe1a819b3ea49432a3a7917f1179d1fc91db2cea1b9174157c91ab96246",
+      "candidateSha256": "95f9940379b3ebfcc84f96004ee0bc7b91fa3cfe5cd850ea3640ea3db844a242",
+      "promptSha256": "07966c6c702707d8acb2e5d9251d5edfbbed4a8debf02078632cb42a21790c81",
+      "verdict": "approved",
+      "bindingScope": "Off-heat water addition with visible headroom only. No measured volume, capacity or confirmed water temperature inferred.",
+      "bindingContentIds": [
+        "cezve_generic_add_water"
+      ],
+      "checks": {
+        "equipmentGeometry": true,
+        "physicalActionState": true,
+        "handlingSafety": true,
+        "cropAndFlow": true,
+        "altAgreement": true,
+        "minimalismAndPrecision": true,
+        "phoneLightDark": true,
+        "sourceScopeCompatibility": true
+      },
+      "notes": [
+        "No concrete pixel or contract conflict found within bounded scope. Secondary subactions and exact recipe values remain in accompanying authored guidance."
+      ]
+    },
+    {
+      "sceneId": "cezve_optional_sugar",
+      "version": 1,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/cezve_optional_sugar/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/cezve_optional_sugar/candidate-v1.webp",
+      "rawSha256": "7278d7e6121e676918384c0d64f80a44550b9d13f40e0e43e8277b831c0a2775",
+      "candidateSha256": "266ab6bee1df2f0466e6ff255cd4780eb5446db859f5b6a95ed8a5cc8c6ad73c",
+      "promptSha256": "7666892bf6793e7d6b54d040172225e4937170acbcbd8999f313342a4644629a",
+      "verdict": "approved",
+      "bindingScope": "Optional sugar addition before heating only. Authored condition must remain; image does not prescribe sugar for every recipe.",
+      "bindingContentIds": [
+        "cezve_generic_add_sugar_before_heating"
+      ],
+      "checks": {
+        "equipmentGeometry": true,
+        "physicalActionState": true,
+        "handlingSafety": true,
+        "cropAndFlow": true,
+        "altAgreement": true,
+        "minimalismAndPrecision": true,
+        "phoneLightDark": true,
+        "sourceScopeCompatibility": true
+      },
+      "notes": [
+        "No concrete pixel or contract conflict found within bounded scope. Secondary subactions and exact recipe values remain in accompanying authored guidance."
+      ]
+    },
+    {
+      "sceneId": "espresso_generic_extract",
+      "version": 2,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/espresso_generic_extract/raw-v2.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/espresso_generic_extract/candidate-v2.webp",
+      "rawSha256": "ef45d4b57853e11514d4f44b8b00ec7e8642db44c1f261a9ed3ce2b041812e52",
+      "candidateSha256": "daeb047f64bcdac4202fb9fcdc7ca40a58620a9ad8de9eff52f0892f8b9bfe1e",
+      "promptSha256": "6ede1f1bd73a99f0892a37f480fd54e6088417cd21c881379c9c831901b9165a",
+      "verdict": "approved",
+      "bindingScope": "Stable cup below a visibly seated portafilter with uninterrupted extraction streams. No target yield, basket size, controls, pressure, timing or auto-stop claim.",
+      "bindingContentIds": [
+        "espresso_pull"
+      ],
+      "checks": {
+        "equipmentGeometry": true,
+        "physicalActionState": true,
+        "handlingSafety": true,
+        "cropAndFlow": true,
+        "altAgreement": true,
+        "minimalismAndPrecision": true,
+        "phoneLightDark": true,
+        "sourceScopeCompatibility": true
+      },
+      "notes": [
+        "No concrete pixel or contract conflict found within bounded scope. Secondary subactions and exact recipe values remain in accompanying authored guidance."
+      ]
+    },
+    {
+      "sceneId": "phin_neutral_support",
+      "version": 1,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_support/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_support/candidate-v1.webp",
+      "rawSha256": "fdd62091a285619f60a105d4b6e1fbecb6641dbebe4f42c6dbad7918aa7470dc",
+      "candidateSha256": "a17b12e5bb6266001b037a9d36edc66fa14a8d09c520c67c339e1a0891b06f66",
+      "promptSha256": "347e07fa65a63ce1def60e1e072e011df5e63ff9764ea0420bf963d27fafe742",
+      "verdict": "approved",
+      "bindingScope": "Common chamber/plate stable support only, valid for reviewed prepare and generic placement. Model-specific handles, floor/insert, cleanliness and dry holes are not proved.",
+      "bindingContentIds": [
+        "reviewed_phin_v1_prepare",
+        "vietnamese_phin_place_on_stable_cup"
+      ],
+      "checks": {
+        "equipmentGeometry": true,
+        "physicalActionState": true,
+        "handlingSafety": true,
+        "cropAndFlow": true,
+        "altAgreement": true,
+        "minimalismAndPrecision": true,
+        "phoneLightDark": true,
+        "sourceScopeCompatibility": true
+      },
+      "notes": [
+        "No concrete pixel or contract conflict found within bounded scope. Secondary subactions and exact recipe values remain in accompanying authored guidance."
+      ]
+    },
+    {
+      "sceneId": "phin_neutral_pour",
+      "version": 1,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_pour/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_pour/candidate-v1.webp",
+      "rawSha256": "faf66a01c17afbb1dc29d081dc0ed3f4743c66138f52e2974aa54b61152befb9",
+      "candidateSha256": "eadeba0c1ef689c7905e8bc2dc05f52593c1ed6758a0090754d2a4be43d12a1a",
+      "promptSha256": "650b7b0261d05ced18f999e065c8fe11454af84f8182535f55dd5f2de8eb4489",
+      "verdict": "approved",
+      "bindingScope": "Gentle water entry into supported opaque phin only. Appropriate for initial and later addition as physical action agrees; no liquid level, amount, rim clearance or insert state inferred.",
+      "bindingContentIds": [
+        "vietnamese_phin_pre_wet",
+        "vietnamese_phin_fill_chamber"
+      ],
+      "checks": {
+        "equipmentGeometry": true,
+        "physicalActionState": true,
+        "handlingSafety": true,
+        "cropAndFlow": true,
+        "altAgreement": true,
+        "minimalismAndPrecision": true,
+        "phoneLightDark": true,
+        "sourceScopeCompatibility": true
+      },
+      "notes": [
+        "No concrete pixel or contract conflict found within bounded scope. Secondary subactions and exact recipe values remain in accompanying authored guidance."
+      ]
+    },
+    {
+      "sceneId": "phin_neutral_selected_insert",
+      "version": 1,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_selected_insert/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_selected_insert/candidate-v1.webp",
+      "rawSha256": "bc4ee41f13761c446c895191116c386ca724c77ee5d92ab851ee3e664d29f1cc",
+      "candidateSha256": "452d4e650e9378f038427d375e515866370f860520f87877fc4d138d14e6b5b2",
+      "promptSha256": "2d02164d87d5b34a6a4c26fae6d0bd839dd71695e4fc19921bf90d40f103a7a6",
+      "verdict": "approved",
+      "bindingScope": "Paired conceptual alternatives only: loose gravity plate versus matching threaded hub/post. Not sequential installation and not both inserts in one phin; no universal tightening direction/pressure inferred.",
+      "bindingContentIds": [
+        "vietnamese_phin_place_gravity_or_screw_insert"
+      ],
+      "checks": {
+        "equipmentGeometry": true,
+        "physicalActionState": true,
+        "handlingSafety": true,
+        "cropAndFlow": true,
+        "altAgreement": true,
+        "minimalismAndPrecision": true,
+        "phoneLightDark": true,
+        "sourceScopeCompatibility": true
+      },
+      "notes": [
+        "No concrete pixel or contract conflict found within bounded scope. Secondary subactions and exact recipe values remain in accompanying authored guidance."
+      ]
+    },
+    {
+      "sceneId": "phin_neutral_remove",
+      "version": 1,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_remove/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_remove/candidate-v1.webp",
+      "rawSha256": "660233f171fd701bc2274d710ef3b9acfe79ae01ac2d8dea95a6ede0643c89cb",
+      "candidateSha256": "e3f27e6e4ae1b1b603fed21a1505f90e3d1728916d44e7bc4e7a4414f789daa6",
+      "promptSha256": "ba7b4e4363d4f9d468184af9ae1cf00f76b77292ab66b6c1fabaa9c853a5cbac",
+      "verdict": "approved",
+      "bindingScope": "Heat-protected opposite plate-edge grip and upright removal clear of cup, with a separate receiving dish. Does not prove timed drainage; actual manufacturer handling points remain authoritative.",
+      "bindingContentIds": [
+        "vietnamese_phin_remove_hot_filter"
+      ],
+      "checks": {
+        "equipmentGeometry": true,
+        "physicalActionState": true,
+        "handlingSafety": true,
+        "cropAndFlow": true,
+        "altAgreement": true,
+        "minimalismAndPrecision": true,
+        "phoneLightDark": true,
+        "sourceScopeCompatibility": true
+      },
+      "notes": [
+        "No concrete pixel or contract conflict found within bounded scope. Secondary subactions and exact recipe values remain in accompanying authored guidance."
+      ]
+    }
+  ],
+  "reuseBindings": [
+    {
+      "contentId": "vietnamese_phin_add_coffee",
+      "targetContentRevision": "397bb4fba23e9d4bd1818ce5549f36178e427e13587cbd46a831eca233bee019",
+      "sourceSceneId": "concept_coffee_level",
+      "sourcePath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_coffee_level/candidate-v1.webp",
+      "sourceSha256": "ccf408afcd41f53828896682afd27155dd6f51715f43d0a94eaf215fb9b6a206",
+      "verdict": "approved",
+      "bindingScope": "Conceptual loose, level coffee-bed end state only. Does not claim a real phin receptacle, insert/post geometry, dosing motion, weight or packing technique.",
+      "checks": {
+        "fullRawAndDeliveredInspected": true,
+        "phoneLightDark": true,
+        "altAgreement": true,
+        "actualContextCompatibility": true
+      },
+      "notes": [
+        "Approve only end state after adding coffee. Image does not depict loading motion; do not label it as coffee actively falling into a phin."
+      ]
+    },
+    {
+      "contentId": "vietnamese_phin_level_coffee",
+      "targetContentRevision": "eee74d69c8094e2d406766b8df8cc00e1aa15c0a96895cffa9f59674fe3a07fe",
+      "sourceSceneId": "concept_coffee_level",
+      "sourcePath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_coffee_level/candidate-v1.webp",
+      "sourceSha256": "ccf408afcd41f53828896682afd27155dd6f51715f43d0a94eaf215fb9b6a206",
+      "verdict": "approved",
+      "bindingScope": "Conceptual loose, level coffee-bed end state only. Does not claim a real phin receptacle, insert/post geometry, dosing motion, weight or packing technique.",
+      "checks": {
+        "fullRawAndDeliveredInspected": true,
+        "phoneLightDark": true,
+        "altAgreement": true,
+        "actualContextCompatibility": true
+      },
+      "notes": [
+        "Level loose bed supports gentle leveling result; no tamp/press is shown or implied."
+      ]
+    }
+  ]
+}

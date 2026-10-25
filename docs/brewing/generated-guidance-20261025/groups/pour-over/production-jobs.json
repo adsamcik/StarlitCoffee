@@ -1,0 +1,26 @@
+[
+  {
+    "sceneId": "switch_open_coffee",
+    "methodId": "hario-switch",
+    "stepIds": [],
+    "version": 1,
+    "ref": "C:/Users/adam-/GitHub/StarlitCoffee/worktree/guidance-art-qc/docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_closed_coffee_v3.png",
+    "altText": "Loose dry coffee fills the fitted cone paper in the Switch; its clear paddle lies flat in the open position.",
+    "extra": "Edit this precise Switch dry-coffee illustration. Change ONLY the clear valve paddle pose: lower the free tip so the thin clear paddle lies horizontal and flush with the black support flange, the manufacturer's OPEN position. Preserve the complete lower black cylindrical outlet housing inside the server, full silicone flange, continuous loose dry coffee filling the pointed paper bottom, glass cone and empty stable server. No water or outflow. Retain the exact minimal style and transparent background.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-brewing illustration on a genuinely transparent 4:3 landscape canvas. Crisp uniform dark-espresso outlines, cream paper, pale-blue glass/water, warm coffee-brown, restrained silver/gray metal; simple solid fills and at most one flat shading plane. No photographic realism, glossy reflections, texture, gradients, decorative island or scenery. Entire subject and necessary action within central80%, no clipping. Legible at320px width. No words, numerals, logos, arrows, labels, icons, clocks, scales, extra props or decorative marks. One actual physical state/action, precise brewer anatomy and stable support. Edit this precise Switch dry-coffee illustration. Change ONLY the clear valve paddle pose: lower the free tip so the thin clear paddle lies horizontal and flush with the black support flange, the manufacturer's OPEN position. Preserve the complete lower black cylindrical outlet housing inside the server, full silicone flange, continuous loose dry coffee filling the pointed paper bottom, glass cone and empty stable server. No water or outflow. Retain the exact minimal style and transparent background.",
+    "resultKey": "switch_open_coffee_v1_result",
+    "rawSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a1585a-5980-7931-a355-8b6045a9e34a\\exec-1cf2fe9c-dd65-48e6-b96e-54b1a74732e4.png"
+  },
+  {
+    "sceneId": "pulsar_generic_cap",
+    "methodId": "pulsar",
+    "stepIds": [],
+    "version": 1,
+    "ref": "C:/Users/adam-/GitHub/StarlitCoffee/worktree/guidance-art-qc/docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_open_pulse-v1/raw.png",
+    "altText": "The black perforated dispersion cap is seated level on the top rim of the clear Pulsar barrel.",
+    "extra": "Use the reference to create a precise close-up of ONLY the TOP HALF of the clear straight Pulsar barrel and its actual black circular perforated dispersion cap, seated level on the upper rim. Main learning: correct cap placement. The lower barrel, coffee bed, base and filter are deliberately outside the close-up, so no filter medium is specified. Remove kettle, pouring water, server, valve and all other props. Show the complete circular cap, its raised outer rim and patterned round holes clearly at phone size. Preserve the manufacturer's cap geometry and minimal flat illustration style. Generous transparent margins around the upper-barrel close-up. No hands, text, symbols, dimensions or arrows.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-brewing illustration on a genuinely transparent 4:3 landscape canvas. Crisp uniform dark-espresso outlines, cream paper, pale-blue glass/water, warm coffee-brown, restrained silver/gray metal; simple solid fills and at most one flat shading plane. No photographic realism, glossy reflections, texture, gradients, decorative island or scenery. Entire subject and necessary action within central80%, no clipping. Legible at320px width. No words, numerals, logos, arrows, labels, icons, clocks, scales, extra props or decorative marks. One actual physical state/action, precise brewer anatomy and stable support. Use the reference to create a precise close-up of ONLY the TOP HALF of the clear straight Pulsar barrel and its actual black circular perforated dispersion cap, seated level on the upper rim. Main learning: correct cap placement. The lower barrel, coffee bed, base and filter are deliberately outside the close-up, so no filter medium is specified. Remove kettle, pouring water, server, valve and all other props. Show the complete circular cap, its raised outer rim and patterned round holes clearly at phone size. Preserve the manufacturer's cap geometry and minimal flat illustration style. Generous transparent margins around the upper-barrel close-up. No hands, text, symbols, dimensions or arrows.",
+    "resultKey": "pulsar_generic_cap_v1_result",
+    "rawSource": "C:\\Users\\adam-\\.codex\\generated_images\\01a1585a-5980-7931-a355-8b6045a9e34a\\exec-9adf819e-3855-420d-9af5-99062b3ea4fc.png"
+  }
+]

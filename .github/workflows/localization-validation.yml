@@ -11,6 +11,13 @@ on:
       - 'app/src/main/res/xml/locales_config.xml'
       - 'app/src/test/java/com/adsamcik/starlitcoffee/ui/guidance/**'
       - 'docs/brewing/p1-exact-*'
+      - 'docs/brewing/generated-guidance-20261025/**'
+      - 'docs/brewing/*production-*.json'
+      - 'docs/brewing/starlit-tactile-production-tracker-*.json'
+      - 'app/src/main/assets/brewing/reviewed-method-guides.json'
+      - 'app/src/main/res/drawable-nodpi/instruction_*.webp'
+      - 'tools/*guidance_asset*'
+      - 'tools/verify_instruction_assets.py'
       - 'docs/brewing/research/terminology-2026-08-06/**'
       - 'tools/*p1_exact*'
       - 'tools/*pulsar_learn_guidance*'
@@ -26,6 +33,13 @@ on:
       - 'app/src/main/res/xml/locales_config.xml'
       - 'app/src/test/java/com/adsamcik/starlitcoffee/ui/guidance/**'
       - 'docs/brewing/p1-exact-*'
+      - 'docs/brewing/generated-guidance-20261025/**'
+      - 'docs/brewing/*production-*.json'
+      - 'docs/brewing/starlit-tactile-production-tracker-*.json'
+      - 'app/src/main/assets/brewing/reviewed-method-guides.json'
+      - 'app/src/main/res/drawable-nodpi/instruction_*.webp'
+      - 'tools/*guidance_asset*'
+      - 'tools/verify_instruction_assets.py'
       - 'docs/brewing/research/terminology-2026-08-06/**'
       - 'tools/*p1_exact*'
       - 'tools/*pulsar_learn_guidance*'
@@ -59,6 +73,8 @@ jobs:
           python tools/generate_p1_exact_terminology_locale_queue.py --check
           python tools/generate_p1_tracker_accepted_asset_catalog.py --check
           python tools/generate_p1_exact_visual_review_catalog.py --check
+          python tools/generate_guidance_asset_catalog.py --check --require-complete
+          python tools/test_guidance_asset_admission.py
           python tools/generate_p1_exact_guidance_localizations.py --check
           python tools/generate_pulsar_learn_guidance_localizations.py --check
 

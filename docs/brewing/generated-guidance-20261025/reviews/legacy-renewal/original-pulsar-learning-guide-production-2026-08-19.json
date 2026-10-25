@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "updatedOn": "2026-08-19",
+  "guideId": "pulsar_gagne_20_340",
+  "profileId": "pulsar_standard",
+  "methodFamilyId": "valve_controlled_no_bypass",
+  "recipe": {
+    "coffeeG": 20,
+    "waterG": 340,
+    "bloomWaterG": 60,
+    "waterTemperatureC": 99,
+    "bloomEndSeconds": 60,
+    "targetTotalTimeSeconds": [210, 270]
+  },
+  "evidence": [
+    {
+      "authority": "manufacturer",
+      "title": "NextLevel Pulsar product page",
+      "url": "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "supports": ["380 ml liquid volume", "flow-control valve", "dispersion cap", "no-bypass design", "20 g / 340 g optimal batch"]
+    },
+    {
+      "authority": "manufacturer",
+      "title": "Pulsar User Guide",
+      "url": "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+      "supports": ["paper seating", "closed-valve bloom", "three-times-dose bloom", "low slurry", "lift only by base", "coarse grind", "4–7 minute general range"]
+    },
+    {
+      "authority": "co-creator",
+      "title": "The Pulsar Dripper",
+      "url": "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/",
+      "supports": ["air-displacing open bloom start", "close at first drips", "one-minute steeped bloom", "20 g / 340 g", "99 °C", "about 1 cm slurry", "3:30–4:30 target"]
+    },
+    {
+      "authority": "recipe author",
+      "title": "Scott Rao Pulsar Recipe",
+      "url": "https://www.scottrao.com/blog/pulsar-recipe",
+      "supports": ["three-times-dose bloom", "1:17 ratio", "low slurry", "3:30–4:30 target"]
+    }
+  ],
+  "assetContract": {
+    "widthPx": 1024,
+    "heightPx": 768,
+    "format": "webp",
+    "alphaRequired": true,
+    "promptDocument": "docs/brewing/pulsar-learning-guide-image-prompts-2026-08-19.md"
+  },
+  "stages": [
+    {
+      "number": 1,
+      "contentId": "pulsar_gagne_20_340_stage_01_instruction",
+      "selectedCandidate": "starlit_tactile_v3_alpha_fixed.png",
+      "rejectedCandidates": ["starlit_tactile_v1_rejected.png"],
+      "review": "Paper fits the recess; closed valve and placement action are legible; every outer background region uses genuine alpha.",
+      "sha256": "d5370b89b32f2ba695a5d8b5e3f52b98d58e25f44d8e1e6e0b1d439eded63249"
+    },
+    {
+      "number": 2,
+      "contentId": "pulsar_gagne_20_340_stage_02_instruction",
+      "selectedCandidate": "starlit_tactile_v3_alpha_fixed.png",
+      "rejectedCandidates": ["starlit_tactile_v1_rejected.png"],
+      "review": "Correct dispersion cap, closed valve, coffee-loading action, stable setup, and genuine outer alpha.",
+      "sha256": "a1bc96b99f26630ca0fbf022b8f8fd2d7488e27f4999424e0f1ee491f17f9e1e"
+    },
+    {
+      "number": 3,
+      "contentId": "pulsar_gagne_20_340_stage_03_instruction",
+      "selectedCandidate": "starlit_tactile_v3_alpha_fixed.png",
+      "rejectedCandidates": ["starlit_tactile_v1_rejected.png"],
+      "review": "Shallow bloom, open valve, distributed droplets, first drawdown, and genuine outer alpha agree.",
+      "sha256": "38f9e4c9f98856c8f0bfb2fe2b1cff543b88104b6dcb96d45dfcf4abdf8eaab2"
+    },
+    {
+      "number": 4,
+      "contentId": "pulsar_gagne_20_340_stage_04_instruction",
+      "selectedCandidate": "starlit_tactile_v2_alpha_fixed.png",
+      "rejectedCandidates": [],
+      "review": "Base-stabilizing hand, valve hand, horizontal close, and stopped flow agree.",
+      "sha256": "e7b8cdec0075f7bf12ac2d48f36da1b97b1477d1a1bcc3f703c83c60dc208ec2"
+    },
+    {
+      "number": 5,
+      "contentId": "pulsar_gagne_20_340_stage_05_instruction",
+      "selectedCandidate": "starlit_tactile_v1.png",
+      "rejectedCandidates": [],
+      "review": "Retained bloom is visibly still, shallow, isolated by the closed valve, and cleanly transparent outside the backdrop.",
+      "sha256": "dfc19dcae8f7ed6bdd47a5397dcc3c428cbda32796e0f1732340890b40d1b71c"
+    },
+    {
+      "number": 6,
+      "contentId": "pulsar_gagne_20_340_stage_06_instruction",
+      "selectedCandidate": "starlit_tactile_v2_alpha_fixed.png",
+      "rejectedCandidates": [],
+      "review": "Low slurry, cap shower, upright valve, continuous drawdown, and genuine outer alpha agree.",
+      "sha256": "b7d88481006c155e686cbfc9b6a2c4a3fec4e466798b9dc294058549323d384a"
+    },
+    {
+      "number": 7,
+      "contentId": "pulsar_gagne_20_340_stage_07_instruction",
+      "selectedCandidate": "starlit_tactile_v2_alpha_fixed.png",
+      "rejectedCandidates": [],
+      "review": "No standing water remains; final drops, finished coffee, and the clean transparent surround are readable.",
+      "sha256": "808b6fa705e0bd02510c94cd9ce350a7c768dc08e44181ab7ab004ca03260ae0"
+    },
+    {
+      "number": 8,
+      "contentId": "pulsar_gagne_20_340_stage_08_instruction",
+      "selectedCandidate": "starlit_tactile_v2_alpha_fixed.png",
+      "rejectedCandidates": [],
+      "review": "Safety-critical grip uses only the base; valve is closed, the gap is clear, and the outer background uses genuine alpha.",
+      "sha256": "ce35e35d4a6141b5cef9685954492488401cc098a0260fab0d864a749ebd813d"
+    }
+  ]
+}

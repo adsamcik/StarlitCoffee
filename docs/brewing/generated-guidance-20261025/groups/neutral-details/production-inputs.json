@@ -1,0 +1,85 @@
+[
+  {
+    "id": "espresso_generic_extract",
+    "alt": "Espresso flows from a locked portafilter into a cup on a stable scale; machine controls are outside the view.",
+    "sources": [
+      "https://assets.breville.com/BES870/BES870_USCM_IB_X26_LR.pdf"
+    ],
+    "missing": [
+      "espresso_generic_extract"
+    ],
+    "prompt": "Use case: scientific-educational. Asset: one precise minimalist coffee brewing instruction illustration. Flat 2D editorial diagram with espresso-brown thick smooth outlines, warm cream fills, pale blue water/metal, restrained coffee-brown liquid, minimal tiny details. Genuine transparent background, 4:3 landscape canvas. All objects entirely inside the frame with generous transparent margins. No text, numbers, logos, arrows, decorative ground islands, gradients, photorealism, shadows or irrelevant objects. The physical action must be understandable at a phone width of320 pixels. Show a cropped generic espresso machine group head at top center with an actual portafilter firmly locked into the group collar. Portafilter handle extends clearly right. Two short downward spouts release two thin continuous coffee-brown streams into ONE wide cream espresso cup below; the cup stands centrally on a simple rectangular pale blue scale with blank face and no digits. Include only group collar, fully engaged portafilter, handle, spouts, streams, cup, scale and a short machine support edge. Do not show any buttons, knobs, control panel, steam wand, pressure gauge, reservoir, hands or loose portafilter. Coffee is actively extracting; cup is less than half full with ample space. Correct gravity flow, no leaks outside cup, no cup floating and no dangerous removal during extraction."
+  },
+  {
+    "id": "cezve_cold_water",
+    "alt": "Cold water pours into an unheated cezve with room below the rim.",
+    "sources": [
+      "https://www.mehmetefendi.com/hazirlama/turk-kahvesi/cezve-ile",
+      "https://www.turkkahvesidernegi.org/en/index.php?gastronomi=menuactive&icerik=7-adimda-mukemmel-turk-kahvesi-kilavuzu"
+    ],
+    "missing": [
+      "cezve_cold_water"
+    ],
+    "prompt": "Use case: scientific-educational. Asset: one precise minimalist coffee brewing instruction illustration. Flat 2D editorial diagram with espresso-brown thick smooth outlines, warm cream fills, pale blue water/metal, restrained coffee-brown liquid, minimal tiny details. Genuine transparent background, 4:3 landscape canvas. All objects entirely inside the frame with generous transparent margins. No text, numbers, logos, arrows, decorative ground islands, gradients, photorealism, shadows or irrelevant objects. The physical action must be understandable at a phone width of320 pixels. Show ONE traditional unbranded cezve, a small pot with broad rounded base, narrower neck, flared pouring lip and one long firmly attached dark handle extending right, standing upright off heat. A small plain cream cup tipped from upper left pours a narrow pale blue stream of cold water into the open cezve mouth. Slight top-down three-quarter view makes clear water visible well below the rim with generous room for later foam. Only pot and pouring cup. No stove, flame, steam, foam, coffee grounds, sugar, hands, fill marks or measured quantity. The stream must enter the opening, never cross its front wall or spill."
+  },
+  {
+    "id": "cezve_optional_sugar",
+    "alt": "Sugar falls from a spoon into an unheated cezve; use it only if the selected recipe includes sugar.",
+    "sources": [
+      "https://www.mehmetefendi.com/hazirlama/turk-kahvesi/cezve-ile"
+    ],
+    "missing": [
+      "cezve_optional_sugar"
+    ],
+    "prompt": "Use case: scientific-educational. Asset: one precise minimalist coffee brewing instruction illustration. Flat 2D editorial diagram with espresso-brown thick smooth outlines, warm cream fills, pale blue water/metal, restrained coffee-brown liquid, minimal tiny details. Genuine transparent background, 4:3 landscape canvas. All objects entirely inside the frame with generous transparent margins. No text, numbers, logos, arrows, decorative ground islands, gradients, photorealism, shadows or irrelevant objects. The physical action must be understandable at a phone width of320 pixels. Show ONE traditional unbranded cezve, small broad rounded base, narrower neck, flared lip and long attached dark handle extending right, standing upright OFF heat. A plain small spoon tipped above the opening drops a short sparse stream of unmistakably light cream sugar granules into the cold coffee-and-water mixture visible well below the rim. No hand. Only spoon, sugar and cezve. Clearly no heat, no flame, no burner, no steam, no foam, no boiling, no hot serving cup, no amount or measurement. This depicts optional sugar addition during cold preparation, not a required universal ingredient. Stream enters opening without crossing wall. Keep spoon and all contents inside the canvas."
+  },
+  {
+    "id": "phin_neutral_support",
+    "alt": "A clean phin chamber and support plate sit squarely on a stable cup; the internal insert mechanism is out of view.",
+    "sources": [
+      "https://nguyencoffeesupply.com/blogs/vietnamese-coffee-brew-guide/traditional-vietnamese-drip-phin"
+    ],
+    "missing": [
+      "phin_gravity_empty_support",
+      "phin_neutral_support"
+    ],
+    "prompt": "Use case: scientific-educational. Asset: one precise minimalist coffee brewing instruction illustration. Flat 2D editorial diagram with espresso-brown thick smooth outlines, warm cream fills, pale blue water/metal, restrained coffee-brown liquid, minimal tiny details. Genuine transparent background, 4:3 landscape canvas. All objects entirely inside the frame with generous transparent margins. No text, numbers, logos, arrows, decorative ground islands, gradients, photorealism, shadows or irrelevant objects. The physical action must be understandable at a phone width of320 pixels. Show a clean plain Vietnamese phin as an OPAQUE pale-blue cylindrical steel brew chamber with a broad flat circular support/filter plate resting squarely across a sturdy cream mug rim. LOW EYE-LEVEL external front-three-quarter view: rim opening appears as a very thin ellipse; the front chamber wall fully occludes the inner floor and any possible central post or insert. Do not depict internals as absent. Chamber is upright centered over cup, plate wide enough to be stable. Preparation BEFORE coffee or water are added: no grounds, liquid, stream, dripping, steam or condensation visible. Lid can be omitted. No loose disc, paper, glass cutaway, see-through steel, screw, threaded post, hand or invented controls. Only clean chamber, broad plate, stable empty mug; no stacked drippers."
+  },
+  {
+    "id": "phin_neutral_pour",
+    "alt": "A gentle stream enters a supported phin from above; the opaque chamber hides its insert mechanism.",
+    "sources": [
+      "https://nguyencoffeesupply.com/blogs/vietnamese-coffee-brew-guide/traditional-vietnamese-drip-phin"
+    ],
+    "missing": [
+      "phin_neutral_pour"
+    ],
+    "prompt": "Use case: scientific-educational. Asset: one precise minimalist coffee brewing instruction illustration. Flat 2D editorial diagram with espresso-brown thick smooth outlines, warm cream fills, pale blue water/metal, restrained coffee-brown liquid, minimal tiny details. Genuine transparent background, 4:3 landscape canvas. All objects entirely inside the frame with generous transparent margins. No text, numbers, logos, arrows, decorative ground islands, gradients, photorealism, shadows or irrelevant objects. The physical action must be understandable at a phone width of320 pixels. Show an OPAQUE plain pale-blue Vietnamese phin chamber with its broad support plate centered securely on a sturdy cream mug. LOW EYE-LEVEL side-front external view, thin open-rim ellipse, front steel wall hides inner floor, coffee bed, insert and possible central post: do not imply any insert is absent. A COMPLETE small gooseneck kettle, its handle and lid entirely inside canvas, at upper left pours ONE thin gentle pale-blue water stream precisely through open rim. Cup and chamber remain upright and centered. No overflowing liquid, no visible water at rim, no cutaway, no transparent metal, no exposed screw or gravity insert. No hands, arrows, text or numbers. This depicts controlled water addition, not a universal fill quantity, capacity, timed bloom or mechanism."
+  },
+  {
+    "id": "phin_neutral_selected_insert",
+    "alt": "Conceptual alternatives: a loose gravity disc above coffee on the left, and a disc aligned with a threaded central post on the right; fit only the type documented for the phin.",
+    "sources": [
+      "https://nguyencoffeesupply.com/blogs/news/what-is-the-vietnamese-phin-filter"
+    ],
+    "missing": [
+      "phin_neutral_selected_insert"
+    ],
+    "references": [
+      "app/src/main/res/drawable-nodpi/instruction_p1_phin_gravity_14_118_stage_01_instruction_default.webp",
+      "app/src/main/res/drawable-nodpi/instruction_p1_phin_screw_18_120_stage_01_instruction_default.webp"
+    ],
+    "prompt": "Use case: scientific-educational. Asset: one precise minimalist coffee brewing instruction illustration. Flat 2D editorial diagram with espresso-brown thick smooth outlines, warm cream fills, pale blue water/metal, restrained coffee-brown liquid, minimal tiny details. Genuine transparent background, 4:3 landscape canvas. All objects entirely inside the frame with generous transparent margins. No text, numbers, logos, arrows, decorative ground islands, gradients, photorealism, shadows or irrelevant objects. The physical action must be understandable at a phone width of320 pixels. The two supplied images are HARDWARE GEOMETRY REFERENCES ONLY, not style references. Draw TWO SEPARATE equal-sized conceptual phin examples side by side, spaced apart, no shared parts: LEFT gravity type: short cylindrical steel chamber with a flat brown coffee bed, no central post, and a single perforated circular gravity disc hovering just above its opening. RIGHT screw type: short cylindrical chamber with a brown coffee bed surrounding a visible short threaded central post; a separate matching perforated disc with central threaded hub hovers directly aligned above that post. Threads and hub must be legible at phone size; no arbitrary extra knobs. The loose gravity disc has NO screw hole/hub and the screw disc has a clearly defined threaded central hub. Only one insert belongs to each chamber; do not install both together. Mild high three-quarter perspective makes the distinguishing center post clear. Chamber+plate only, no cups, hands, water, heat, arrows, labels, captions or text. This is a comparison of alternatives, not a sequence or universal fit/tightening instruction. Keep all discs inside the canvas and leave generous separation."
+  },
+  {
+    "id": "phin_neutral_remove",
+    "alt": "After dripping stops, heat-protected hands lift the covered phin by opposite support-plate edges toward a heat-safe dish, clear of the coffee cup.",
+    "sources": [
+      "https://nguyencoffeesupply.com/blogs/news/what-is-the-vietnamese-phin-filter"
+    ],
+    "missing": [
+      "phin_neutral_remove"
+    ],
+    "prompt": "Use case: scientific-educational. Asset: one precise minimalist coffee brewing instruction illustration. Flat 2D editorial diagram with espresso-brown thick smooth outlines, warm cream fills, pale blue water/metal, restrained coffee-brown liquid, minimal tiny details. Genuine transparent background, 4:3 landscape canvas. All objects entirely inside the frame with generous transparent margins. No text, numbers, logos, arrows, decorative ground islands, gradients, photorealism, shadows or irrelevant objects. The physical action must be understandable at a phone width of320 pixels. Show a covered opaque Vietnamese phin chamber and broad flat support plate being lifted clear above a sturdy cream cup containing finished coffee. No dripping remains. TWO simple hands wearing clearly thick pale-blue heat-protective oven mitts grip opposite OUTER EDGES of the broad support plate, supporting the plate/chamber together. No bare skin touches any metal. The covered chamber stays upright; its fitted lid hides all internal insert mechanisms. To the right is one empty shallow cream heat-safe dish where the brewer can be placed; no arrows or motion marks. Cup sits stable, coffee well below rim. Do not invent plastic handles, clamps, protruding tabs or fingers on hot steel. No steam, kettle, detached loose insert or second phin. Make protected grip, upright brewer and separation from cup obvious. All mitts complete inside frame."
+  }
+]

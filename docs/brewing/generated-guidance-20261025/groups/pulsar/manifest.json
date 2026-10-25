@@ -1,0 +1,234 @@
+[
+  {
+    "sceneId": "pulsar_prime",
+    "methodId": "pulsar",
+    "stepIds": [
+      "prime_paper"
+    ],
+    "learnStageNumbers": [
+      1
+    ],
+    "altText": "With the barrel removed, a flat round paper sits in the Pulsar base while water drains through the open upright valve; a hand supports only the base.",
+    "sources": [
+      "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+      "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/"
+    ],
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_prime-v1/raw.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_prime-v1/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_prime-v1/prompt.txt",
+    "rawSha256": "ac417aaefe50d154813c2c915ca6e2d735ae00764be2503ba9807b7c5b779d73",
+    "candidateSha256": "f36edeb6ee3504e05e9c4e097b2f83ef0857fb8b0e613e11942348347d6dfd1b",
+    "promptSha256": "a4d2538001ff306f160a33fa5911f4c87bc9b36816adacd27d0ab6fa334260df",
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected full raw, delivered and phone light/dark before handoff. Independent admission pending.",
+        "Image depicts action/state only; exact quantities, timings and completion remain in authored guidance."
+      ]
+    }
+  },
+  {
+    "sceneId": "pulsar_dose",
+    "methodId": "pulsar",
+    "stepIds": [
+      "dose_level_tare"
+    ],
+    "learnStageNumbers": [
+      2
+    ],
+    "altText": "Ground coffee is added into the open straight Pulsar barrel on its base, server and scale; the perforated dispersion cap rests beside it and the valve is horizontal.",
+    "sources": [
+      "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+      "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/"
+    ],
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_dose-v2/raw.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_dose-v2/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_dose-v2/prompt.txt",
+    "rawSha256": "50a5d26662457005c4656ba9c94cafe7406f5c176fd157e704a0deeefcc36dc0",
+    "candidateSha256": "c75aa2a9109fa60954482c8e45e8f397114d22b30cdb4864699e224ed254c574",
+    "promptSha256": "f5deb6130332e2e9ad2ac587d67b251cb144469e99cd56a586099b9dfa0ef806",
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected full raw, delivered and phone light/dark before handoff. Independent admission pending.",
+        "Image depicts action/state only; exact quantities, timings and completion remain in authored guidance."
+      ]
+    }
+  },
+  {
+    "sceneId": "pulsar_open_bloom",
+    "methodId": "pulsar",
+    "stepIds": [
+      "open_start_bloom"
+    ],
+    "learnStageNumbers": [
+      3
+    ],
+    "altText": "A thin kettle stream enters the fitted Pulsar dispersion cap; a shallow wet coffee bed drains its first drops while the clear valve lever is upright and open.",
+    "sources": [
+      "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+      "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/"
+    ],
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_open_bloom-v2/raw.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_open_bloom-v2/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_open_bloom-v2/prompt.txt",
+    "rawSha256": "989b3c954242359555cebe82d23b0652147a0367bad9978d8de58e93c2619d04",
+    "candidateSha256": "dfe0813788676741f96361755deddde1bb8941835c035193efc7121b8fde09b9",
+    "promptSha256": "7135cbb648633e1c85f6bcd7e8a74315a32b1fe955539ab8f129bab17fe09055",
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected full raw, delivered and phone light/dark before handoff. Independent admission pending.",
+        "Image depicts action/state only; exact quantities, timings and completion remain in authored guidance."
+      ]
+    }
+  },
+  {
+    "sceneId": "pulsar_close",
+    "methodId": "pulsar",
+    "stepIds": [
+      "open_start_bloom"
+    ],
+    "learnStageNumbers": [
+      4
+    ],
+    "altText": "One hand stabilizes the black Pulsar base while the other holds its clear lever horizontal and closed; the shallow bloom remains wet with no outflow.",
+    "sources": [
+      "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+      "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/"
+    ],
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_close-v1/raw.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_close-v1/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_close-v1/prompt.txt",
+    "rawSha256": "75dbf7dd9f8f035a0675a0a40212908d6c0952411498f2e34cab4fe0cecac949",
+    "candidateSha256": "4e810076e592b15791e4aaeabe726b61bed0defa0b723e52a4c92ddffcda0feb",
+    "promptSha256": "3e96963c8b78b57ab718e4a6d0c859fa763179c03cccac980d59d90af4e10c71",
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected full raw, delivered and phone light/dark before handoff. Independent admission pending.",
+        "Image depicts action/state only; exact quantities, timings and completion remain in authored guidance."
+      ]
+    }
+  },
+  {
+    "sceneId": "pulsar_retained",
+    "methodId": "pulsar",
+    "stepIds": [
+      "retained_bloom"
+    ],
+    "learnStageNumbers": [
+      5
+    ],
+    "altText": "The Pulsar rests undisturbed with a shallow wet bloom, horizontal closed valve, and no drops entering the server.",
+    "sources": [
+      "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+      "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/"
+    ],
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_retained-v1/raw.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_retained-v1/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_retained-v1/prompt.txt",
+    "rawSha256": "ec202f7b51ee21f490869c6e9d2f66f77a4e9aacdc7739a6b66f6be8e78511fb",
+    "candidateSha256": "23b1be413fc1e760d4793e72531231701c8507dafc1a8a631d1e3a91d4b6ce9f",
+    "promptSha256": "fec961f37bbfb7a834499f3055adc1bbeecb4584d3bc9af81c219ea042a9acec",
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected full raw, delivered and phone light/dark before handoff. Independent admission pending.",
+        "Image depicts action/state only; exact quantities, timings and completion remain in authored guidance."
+      ]
+    }
+  },
+  {
+    "sceneId": "pulsar_open_pulse",
+    "methodId": "pulsar",
+    "stepIds": [
+      "open_and_pulse"
+    ],
+    "learnStageNumbers": [
+      6
+    ],
+    "altText": "Water passes through the fitted dispersion cap above a shallow coffee slurry while the upright open valve drains brewed coffee into the server.",
+    "sources": [
+      "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+      "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/"
+    ],
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_open_pulse-v1/raw.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_open_pulse-v1/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_open_pulse-v1/prompt.txt",
+    "rawSha256": "77a04f815a7994461da6a557e9faf892dbc5e325f7bc5dd693ac6ca0fb8f3887",
+    "candidateSha256": "5a78f33130d57e8473eadca91f07048d8ac71841fa0ebd3b8337a90598a5d610",
+    "promptSha256": "b5aa62aa30d0b5d83d960b89cc823ac5538d5eeefe356ab9a8fc028908f9da4f",
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected full raw, delivered and phone light/dark before handoff. Independent admission pending.",
+        "Image depicts action/state only; exact quantities, timings and completion remain in authored guidance."
+      ]
+    }
+  },
+  {
+    "sceneId": "pulsar_drain",
+    "methodId": "pulsar",
+    "stepIds": [
+      "drain_and_serve"
+    ],
+    "learnStageNumbers": [
+      7
+    ],
+    "altText": "The open Pulsar valve releases the final drops above the server; its flat damp coffee bed has no standing water.",
+    "sources": [
+      "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+      "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/"
+    ],
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_drain-v1/raw.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_drain-v1/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_drain-v1/prompt.txt",
+    "rawSha256": "75ee8fab8f4a63775cd2fba10d377a2e8744181b0b5968bff898a631ee688794",
+    "candidateSha256": "d194375841c9dc51705a94d97f8b2fff0a4c2f954be0f2022d626a12b1403687",
+    "promptSha256": "324c2a313a6a2234590a1c9a0b1436c211921c8e091b01b4421ad72c8d3f50be",
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected full raw, delivered and phone light/dark before handoff. Independent admission pending.",
+        "Image depicts action/state only; exact quantities, timings and completion remain in authored guidance."
+      ]
+    }
+  },
+  {
+    "sceneId": "pulsar_lift_base",
+    "methodId": "pulsar",
+    "stepIds": [
+      "drain_and_serve"
+    ],
+    "learnStageNumbers": [
+      8
+    ],
+    "altText": "Two hands lift the drained Pulsar only by its black base above a stationary server on a scale; its clear valve is horizontal and closed.",
+    "sources": [
+      "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+      "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/"
+    ],
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_lift_base-v1/raw.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_lift_base-v1/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pulsar/scenes/pulsar_lift_base-v1/prompt.txt",
+    "rawSha256": "c03ee6a6508f8aee1b54033b8c0b0bef7d0137d98123e9498fe7e358d0915f22",
+    "candidateSha256": "1573cccec8cc6e10a96218adb395898e2bdba3e3102d26223a4cb34a43c707c8",
+    "promptSha256": "ceb06b523469c75891a21204b655a97a5999b6d20702f48e9e6de89291fc2e4f",
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected full raw, delivered and phone light/dark before handoff. Independent admission pending.",
+        "Image depicts action/state only; exact quantities, timings and completion remain in authored guidance."
+      ]
+    }
+  }
+]

@@ -1,0 +1,162 @@
+[
+  {
+    "sceneId": "pulsar_prime",
+    "rawSize": [
+      1448,
+      1086
+    ],
+    "deliverySize": [
+      1024,
+      768
+    ],
+    "bytes": 55222,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "rawSha256": "ac417aaefe50d154813c2c915ca6e2d735ae00764be2503ba9807b7c5b779d73",
+    "candidateSha256": "f36edeb6ee3504e05e9c4e097b2f83ef0857fb8b0e613e11942348347d6dfd1b"
+  },
+  {
+    "sceneId": "pulsar_dose",
+    "rawSize": [
+      1448,
+      1086
+    ],
+    "deliverySize": [
+      1024,
+      768
+    ],
+    "bytes": 74760,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "rawSha256": "50a5d26662457005c4656ba9c94cafe7406f5c176fd157e704a0deeefcc36dc0",
+    "candidateSha256": "c75aa2a9109fa60954482c8e45e8f397114d22b30cdb4864699e224ed254c574"
+  },
+  {
+    "sceneId": "pulsar_open_bloom",
+    "rawSize": [
+      1448,
+      1086
+    ],
+    "deliverySize": [
+      1024,
+      768
+    ],
+    "bytes": 60048,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "rawSha256": "989b3c954242359555cebe82d23b0652147a0367bad9978d8de58e93c2619d04",
+    "candidateSha256": "dfe0813788676741f96361755deddde1bb8941835c035193efc7121b8fde09b9"
+  },
+  {
+    "sceneId": "pulsar_close",
+    "rawSize": [
+      1448,
+      1086
+    ],
+    "deliverySize": [
+      1024,
+      768
+    ],
+    "bytes": 81408,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "rawSha256": "75dbf7dd9f8f035a0675a0a40212908d6c0952411498f2e34cab4fe0cecac949",
+    "candidateSha256": "4e810076e592b15791e4aaeabe726b61bed0defa0b723e52a4c92ddffcda0feb"
+  },
+  {
+    "sceneId": "pulsar_retained",
+    "rawSize": [
+      1448,
+      1086
+    ],
+    "deliverySize": [
+      1024,
+      768
+    ],
+    "bytes": 54726,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "rawSha256": "ec202f7b51ee21f490869c6e9d2f66f77a4e9aacdc7739a6b66f6be8e78511fb",
+    "candidateSha256": "23b1be413fc1e760d4793e72531231701c8507dafc1a8a631d1e3a91d4b6ce9f"
+  },
+  {
+    "sceneId": "pulsar_open_pulse",
+    "rawSize": [
+      1448,
+      1086
+    ],
+    "deliverySize": [
+      1024,
+      768
+    ],
+    "bytes": 62132,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "rawSha256": "77a04f815a7994461da6a557e9faf892dbc5e325f7bc5dd693ac6ca0fb8f3887",
+    "candidateSha256": "5a78f33130d57e8473eadca91f07048d8ac71841fa0ebd3b8337a90598a5d610"
+  },
+  {
+    "sceneId": "pulsar_drain",
+    "rawSize": [
+      1448,
+      1086
+    ],
+    "deliverySize": [
+      1024,
+      768
+    ],
+    "bytes": 67960,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "rawSha256": "75ee8fab8f4a63775cd2fba10d377a2e8744181b0b5968bff898a631ee688794",
+    "candidateSha256": "d194375841c9dc51705a94d97f8b2fff0a4c2f954be0f2022d626a12b1403687"
+  },
+  {
+    "sceneId": "pulsar_lift_base",
+    "rawSize": [
+      1448,
+      1086
+    ],
+    "deliverySize": [
+      1024,
+      768
+    ],
+    "bytes": 75480,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "rawSha256": "c03ee6a6508f8aee1b54033b8c0b0bef7d0137d98123e9498fe7e358d0915f22",
+    "candidateSha256": "1573cccec8cc6e10a96218adb395898e2bdba3e3102d26223a4cb34a43c707c8"
+  }
+]

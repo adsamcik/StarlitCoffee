@@ -51,7 +51,12 @@ object PulsarLearnGuideCatalog {
         require(document.stages.map(PulsarLearnStageSpec::number) == (1..8).toList()) {
             "Pulsar Learn stages must be complete and ordered"
         }
-        return BuiltInGuidanceCatalog(document.stages.map(::stage))
+        return BuiltInGuidanceCatalog(document.stages.map { spec ->
+            val content = stage(spec)
+            content.copy(visualContentRevision = visualContractRevision(
+                content.visualContractParts("pulsar_learn") + listOf(spec.target, spec.completionCue),
+            ))
+        })
     }
 
     private fun stage(spec: PulsarLearnStageSpec): BuiltInGuidanceContent = BuiltInGuidanceContent(

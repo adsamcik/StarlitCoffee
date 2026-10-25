@@ -1,0 +1,438 @@
+{
+  "generatedOn": "2026-10-25",
+  "generator": "Codex built-in image_gen",
+  "entries": [
+    {
+      "sceneId": "cold_prepare",
+      "methodId": "cold-brew",
+      "stepIds": [
+        "prepare"
+      ],
+      "altText": "A clean jar, lid and spoon ready beside a refrigerator shelf.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-365b53ea-ecdd-4574-9fb5-71991b8fd598.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. One clean empty wide-mouth food-safe glass jar and clean spoon, lid beside it, beside a minimal refrigerator shelf outline with plain analog thermometer without digits. Focus clean equipment and cold storage readiness, no food clutter, no hot kettle, no liquid yet."
+    },
+    {
+      "sceneId": "cold_combine",
+      "methodId": "cold-brew",
+      "stepIds": [
+        "combine"
+      ],
+      "altText": "A spoon mixing cold water and coffee grounds in a food-safe jar with headroom.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-96053bdc-1996-4b3c-bac0-cc92c8a255e9.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Wide-mouth food-safe glass jar with coarse coffee grounds and cold water well below rim. Clean spoon gently mixes wet grounds, no dry clumps. Plain matching lid lies next to jar ready to cover. No ice, no heat, no steam, no pouring from decorative vessels. One clear preparation action."
+    },
+    {
+      "sceneId": "cold_steep",
+      "methodId": "cold-brew",
+      "stepIds": [
+        "steep"
+      ],
+      "altText": "A covered jar of coffee steeping on a refrigerator shelf.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-7ee8388c-eb7a-4bdc-9e97-6a5c59589de5.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. A covered glass jar of coffee steeping on one simple refrigerator shelf inside a minimal cropped fridge frame. Jar lid clearly closed, coffee slurry below rim, no steam, no outside-room countertop. Small blank preparation tag on jar, no text or clock. Cold storage must be obvious but no decorative snowflakes."
+    },
+    {
+      "sceneId": "cold_filter",
+      "methodId": "cold-brew",
+      "stepIds": [
+        "filter"
+      ],
+      "altText": "Cold concentrate draining through a supported paper filter into a clean server.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-9ad032bd-4382-44d5-8d82-db512e3a687a.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Cold-brew concentrate being gently poured from glass jar into a supported paper filter seated in a dripper over a clean glass server. Coffee held far below filter rim; small thin gravity stream draining into server. Jar held by stable cool handle or clean hand. No steam, no oversized high pour, no unsupported paper, no floating filter."
+    },
+    {
+      "sceneId": "french_stir",
+      "methodId": "french-press",
+      "stepIds": [
+        "stir-cover"
+      ],
+      "altText": "A plastic spoon gently stirring French press coffee before the raised plunger is fitted.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-6bd094b4-c517-4888-bbad-742622952581.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Open1liter French press beaker half-filled with coffee slurry, side handle and small spout. A heat-safe plastic spoon gently stirs wet grounds; matching lid and upright raised mesh plunger beside beaker ready to cover, not inserted during stirring. No metal spoon, no hand touching glass, no force, no multiple motion marks."
+    },
+    {
+      "sceneId": "french_steep",
+      "methodId": "french-press",
+      "stepIds": [
+        "steep"
+      ],
+      "altText": "A covered French press resting with its plunger raised above the coffee.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-ebf4a44b-1ac6-4476-8131-59186c6bbb8e.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. 1liter glass French press half-filled with coffee slurry, matching lid fitted. Straight plunger rod fully raised with round mesh screen just beneath lid and above coffee, not pressed into liquid. Small pour spout rotated closed by lid, stable frame and handle, no hands, kettle, timer text or motion. Focus resting undisturbed before plunging."
+    },
+    {
+      "sceneId": "french_plunge",
+      "methodId": "french-press",
+      "stepIds": [
+        "plunge"
+      ],
+      "altText": "One hand holding the handle while a relaxed palm gently lowers the French press screen.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-d4bb2678-a6ee-4df2-be7e-53395c18988c.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. 1liter French press half-filled with coffee on stable heat-safe surface, NO scale. One hand holds the side handle securely; other relaxed palm lightly lowers centered plunger knob vertically. Mesh screen halfway through liquid, grounds remain below it with space, no compressed puck, no splashing. Small spout points away from body side. Correct lid seated, hands clear of spout, no hard fist or bent rod."
+    },
+    {
+      "sceneId": "french_decant",
+      "methodId": "french-press",
+      "stepIds": [
+        "decant"
+      ],
+      "altText": "French press tilted by its handle so coffee reaches the open spout and pours into a stable mug, with grounds retained below the lowered screen.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-b2342849-33dc-4382-95b3-02ef067998e2.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Create a physically accurate French-press DECANTING moment. One1liter French press with correctly seated secured lid, mesh plunger lowered to the grounds at the bottom, straight rod aligned with vessel axis. Tilt the whole press markedly about60degrees from upright toward a stable receiving mug on the LEFT; hand holds only its cool black HANDLE on the RIGHT. Show transparent glass so the remaining coffee is visible. CRITICAL FLUID PHYSICS: the remaining coffee's free surface is HORIZONTAL in the image/world, and visibly MEETS the actual OPEN SPOUT LIP at the lowest left edge of the tilted mouth. The liquid inside must connect continuously through the open spout to the narrow stream entering the mug. No air gap between internal coffee and spout, no stream leaving a dry area, no horizontal liquid surface below a high spout. Choose correct tilt and fill for the liquid to reach the lip. Grounds remain contained below the lowered mesh near bottom-right, no compressed puck. Receiving mug only partly full with generous headroom, no overflow. Focus single safe handle-held pouring action, no extra utensils, numbers, text, arrows or decorative background. Keep full press, handle-gripping hand and mug within transparent perimeter."
+    },
+    {
+      "sceneId": "espresso_ready",
+      "methodId": "espresso",
+      "stepIds": [
+        "prepare_machine"
+      ],
+      "altText": "A compact pump espresso machine with its water tank and drip tray seated.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-830c6ab6-f335-49f5-8335-a8ecedf25b4f.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. A compact Bambino Plus style espresso machine, accurate low rectangular stainless body with rounded top corners, one centered grouphead, slim steam wand on right, three circular buttons along upper front, smaller plain setting buttons right, rear water reservoir seated, drip tray seated below group. All circles blank no icons or text. Stable dry support, no cup or running flow, portafilter may be unlocked absent. Modest pale blue water reservoir. Do not invent extra gauges, grinders, dual groups, levers."
+    },
+    {
+      "sceneId": "espresso_basket",
+      "methodId": "espresso",
+      "stepIds": [
+        "prepare_basket"
+      ],
+      "altText": "A clean dry single-wall two-cup basket fitted in a spouted portafilter.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-c9381d19-a3a5-4928-8893-29276314aeef.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Close elevated view of a clean dry 54 mm two-cup single-wall espresso basket fitted inside a matching spouted portafilter. Show one simple fine perforated basket floor, no coffee, no double stacked basket, no extra valves. Black handle extends diagonally, thin folded dry cloth beside it indicates drying. No machine necessary."
+    },
+    {
+      "sceneId": "espresso_tamp",
+      "methodId": "espresso",
+      "stepIds": [
+        "dose_and_tamp"
+      ],
+      "altText": "A level tamper pressing evenly distributed grounds in a supported portafilter.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-01c1f3fd-5f1e-4257-ad9a-02d16ac2c581.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Close view of matching54mm spouted portafilter with dark grounds held securely on a small plain tamp mat. A simple flat tamper held vertically presses level into grounds, wrist aligned, no tilted tamper, no huge force, black handle supported. Only necessary hand, tamper and portafilter, no machine. Precise flat puck and clean basket rim. Accuracy correction: the flat54mm tamper base exactly matches the INNER basket diameter. It fits snugly inside basket with only a tiny narrow clearance, absolutely NO wide coffee ring around an undersized tamper. Show tamper already inserted level down inside rim, not hovering. Basket supported firmly on plain tamp mat at its bowl; relaxed support hand on portafilter handle, no bending spouts. Flat dark outlines and cream/charcoal solid fills, no polished gradients."
+    },
+    {
+      "sceneId": "espresso_fit",
+      "methodId": "espresso",
+      "stepIds": [
+        "check_fit"
+      ],
+      "altText": "A dose-trimming blade resting across the portafilter rim to check puck clearance.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-0e806312-e706-41a7-af73-2a0a2a0d2959.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Close elevated view of a54mm portafilter containing tamped coffee. A narrow metal espresso dose-trimming Razor-style blade bridges the basket rim with its two shoulders resting on rim, central lower blade checking puck clearance. Hand lightly holds blade upright, not a knife slicing sideways. No labels/logos, no shower screen, no machine internals, clear clean basket lip."
+    },
+    {
+      "sceneId": "espresso_start",
+      "methodId": "espresso",
+      "stepIds": [
+        "start_shot"
+      ],
+      "altText": "A fingertip starting a pump espresso shot with a cup on a scale under the spouts.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-917b34a7-fa21-429c-b0b6-ec98f6ecb6bd.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Compact Bambino Plus style machine with three blank round brew/steam buttons in upper front, slim steam wand at right,54mm spouted portafilter locked securely in centered group. Small cup on a thin digital scale with blank display beneath dual spouts. One fingertip presses second of three main front buttons; a few initial coffee drops enter nearly empty cup, no full flow yet. No pressure gauges or labels. Accuracy correction: Bambino Plus front has exactly THREE LARGE round controls in a horizontal row (single shot, double shot, steam) AND TWO SMALLER round setting buttons stacked vertically at the far right. Include all five buttons as blank circles with no letters/icons. Finger presses middle LARGE button. Bottom54mm portafilter has a paired twin-spout outlet, same hardware for starting and stopping. Do not simplify away the two small buttons. Flat cream/lightgray solid fills, no metallic glossy gradients."
+    },
+    {
+      "sceneId": "espresso_stop",
+      "methodId": "espresso",
+      "stepIds": [
+        "stop_and_taste"
+      ],
+      "altText": "A fingertip stopping the espresso shot while the filled cup remains on the scale.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-ba22c197-db26-4baa-86c6-91ceefea38f9.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Compact Bambino Plus style machine with three blank round main buttons, slim steam wand at right. Portafilter locked. Small cup partly filled with espresso on a thin blank-display scale. Fingertip presses second main front button to stop; coffee flow has ended with one residual drop only. No flowing twin streams, no restarting, no hand unlocking hot portafilter. Crop to machine front and scale with generous safe margin. Accuracy correction: Bambino Plus front has exactly THREE LARGE round controls in a horizontal row (single shot, double shot, steam) AND TWO SMALLER round setting buttons stacked vertically at the far right. Include all five buttons as blank circles with no letters/icons. Finger presses middle LARGE button. Bottom54mm portafilter has a paired twin-spout outlet, same hardware for starting and stopping. Do not simplify away the two small buttons. Flat cream/lightgray solid fills, no metallic glossy gradients."
+    },
+    {
+      "sceneId": "espresso_clean",
+      "methodId": "espresso",
+      "stepIds": [
+        "clean"
+      ],
+      "altText": "A cooled portafilter releasing spent grounds into a knock box.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-3b66254a-74c3-4880-84d9-d8699ce22306.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Cooled detached54mm portafilter with spent coffee puck tipped gently into simple knock box, standard basket remains fitted, a clean dry cloth nearby. No machine running, no steam, no pressurized spray, no hand near hot grouphead. Focus safe grounds removal after shot and cooling."
+    },
+    {
+      "sceneId": "aero_prepare",
+      "methodId": "aeropress",
+      "stepIds": [
+        "prepare"
+      ],
+      "altText": "An upright AeroPress with a paper-filter cap locked beneath the chamber on a sturdy mug.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-13482dba-6928-4fdb-ac0e-e0424881c769.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Upright standard AeroPress Original/Clear with its paper-filter standard perforated cap locked at bottom resting securely on a sturdy wide ceramic mug. Top open, no plunger inserted. Shallow loose coffee bed at chamber bottom ready for water, very large empty headroom. Gray translucent cylinder with broad hexagonal lower flange, black shallow standard cap immediately above mug rim. Exactly ONE fitted cap; NO spare cap, NO separated filter, NO metal portafilter, NO screw knob. Full equipment centered within margins. Strict simple flat vector-like solid shapes no gradients or reflections."
+    },
+    {
+      "sceneId": "aero_pour",
+      "methodId": "aeropress",
+      "stepIds": [
+        "pour"
+      ],
+      "altText": "Water pouring into an upright AeroPress securely supported by a sturdy mug.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-73e48813-2843-41d2-983e-f093851dc32d.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Standard upright AeroPress with black perforated paper-filter cap securely on sturdy mug. Open upper cylindrical chamber holding a shallow coffee bed; narrow kettle spout pours water into chamber. Plenty of headroom; no plunger, no inversion. Show coffee lightly collecting in mug through standard cap, no pressurized spray."
+    },
+    {
+      "sceneId": "aero_seal",
+      "methodId": "aeropress",
+      "stepIds": [
+        "seal_steep"
+      ],
+      "altText": "The AeroPress plunger resting shallowly in the chamber mouth while coffee steeps.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-d3d80c35-5105-4b1a-9e1d-d32ff5386b9e.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Upright standard AeroPress Original/Clear on a sturdy mug. Coffee slurry below rim. Black rubber plunger seal inserted only shallowly into upper mouth, about half an inch; long gray plunger shaft projects upward above chamber, broad pressing flange at top. It is resting still, no pressing hand. The shallow seal traps air to limit drainage, not a plunger driven to coffee bed. Complete visible anatomy no impossible nested rims."
+    },
+    {
+      "sceneId": "aero_press",
+      "methodId": "aeropress",
+      "stepIds": [
+        "press"
+      ],
+      "altText": "A relaxed palm gently pressing an upright AeroPress on a sturdy mug.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-9aab875a-ff59-4d65-9382-1ef17e17f781.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Standard upright AeroPress securely supported on sturdy wide ceramic mug. One open relaxed palm on broad plunger top, gently pressing straight down; black rubber seal halfway down chamber, coffee below it flows through perforated bottom cap into mug. No inversion, no vigorous force, no hand under filter cap, no touching hot liquid. Keep cup and chamber centered stable, full anatomy."
+    },
+    {
+      "sceneId": "aero_stir",
+      "methodId": "aeropress",
+      "stepIds": [
+        "stir",
+        "restir"
+      ],
+      "altText": "A plastic paddle gently stirring coffee in an upright AeroPress with the plunger removed.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-1a36b100-d990-43a4-8368-ac8d5343ad8b.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Upright standard AeroPress Original/Clear brewer, no plunger. One translucent gray cylinder open at top, shallow slurry below rim; broad hexagonal support FLANGE at BOTTOM of cylinder. The thin BLACK PERFORATED FILTER CAP is attached BENEATH that flange, inserted into sturdy mug rim; no black cap above flange. Mug supports flange securely. A black plastic paddle held gently through open top stirs coffee front-to-back. Draw only this physical moment, no numbers, no motion marks. Same upright standard cap anatomy as maker instructions, no inversion."
+    },
+    {
+      "sceneId": "aero_cleanup",
+      "methodId": "aeropress",
+      "stepIds": [
+        "cleanup"
+      ],
+      "altText": "Clean AeroPress chamber, plunger and filter cap stored separately with the rubber seal uncompressed.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-bdb84759-604f-4b36-8fac-1aa39ef19934.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Show the FINAL CLEAN STORAGE STATE after AeroPress cleanup: exactly THREE clean dry parts arranged separately side by side with clear gaps. One empty transparent gray AeroPress Original/Clear CHAMBER upright with open top and broad hexagonal support flange at its BOTTOM. One entirely removed PLUNGER upright beside it, gray shaft, broad pressing top and black rubber seal at its BOTTOM clearly outside any chamber, relaxed and uncompressed. One black standard perforated FILTER CAP placed face up next to parts, no paper remaining. No coffee, puck, bin, cup, water or hands. The user must understand the seal is stored uncompressed because plunger is fully removed. Preserve accurate external anatomy; no labels, arrows, decorative base, gradients or reflections. Flat minimal2D shapes with generous transparent safe margins. Ensure standalone standard perforated cap is rendered in MEDIUM charcoal-gray flat fill with crisp dark outline and pale gray edge plane, so cap silhouette and holes remain legible on both cream and deep dark app backgrounds. No background added. Plunger black rubber seal also distinct from dark background. Keep all three separate parts anatomically identical."
+    },
+    {
+      "sceneId": "cold_dilute",
+      "methodId": "cold-brew",
+      "stepIds": [
+        "dilute"
+      ],
+      "altText": "Equal measured portions of cold water and concentrate being combined in a serving glass.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-61636a67-7517-4d0c-a6ec-1642491dc833.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. One small serving glass on a simple digital scale with blank display, containing dark cold concentrate. One small glass water beaker held over it gently pours pale blue cold water into serving glass. Exactly TWO vessels in scene, receiving glass and water beaker; NO other beakers or spare portions. Same measured water/concentrate amounts are communicated in adjacent app copy, not in image. No numbers, labels, ice, milk, froth or steam. Clear simple act of dilution."
+    },
+    {
+      "sceneId": "cold_clean",
+      "methodId": "cold-brew",
+      "stepIds": [
+        "clean"
+      ],
+      "altText": "Clean brewing equipment drying beside covered concentrate stored on a refrigerator shelf.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-b5aa0461-ba7f-4787-a75a-03b9b6a690d2.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. One clean EMPTY food-safe glass jar with matching lid beside it, and one clean EMPTY plastic dripper drying on a small simple rack. Dripper contains NO PAPER and NO grounds. Beside these a sealed jar of leftover concentrate on one minimal refrigerator shelf outline. Keep minimal clear separation, no paper lining in dripper, no dirty grounds, no soap near coffee. No glass shine, flat vector-like fills."
+    },
+    {
+      "sceneId": "french_prepare",
+      "methodId": "french-press",
+      "stepIds": [
+        "prepare"
+      ],
+      "altText": "A sound French press with dry grounds on a scale and its assembled plunger beside it.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-f00323f8-c9ee-40c3-bdb8-7cf3116a6e07.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. One1liter French press glass beaker in simple dark frame with side handle and small spout. Open top with VERY THIN loose dry coffee bed only one centimeter deep at bottom, NOT quarter vessel height. A separate correctly assembled mesh filter-plunger and lid stands beside it; straight rod, round mesh support plate, no loose layers. Beaker on a thin plain scale, blank display. No water yet. Clear generous empty space above thin grounds bed."
+    },
+    {
+      "sceneId": "french_pour",
+      "methodId": "french-press",
+      "stepIds": [
+        "add-water"
+      ],
+      "altText": "Water pouring into a French press with generous space below the rim.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-20bd653f-786b-4f18-bb49-50c9d95b3004.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. One1liter French press glass beaker in dark frame with handle and spout. Open top no lid/plunger. A slim kettle spout enters composition from upper left and ends over the beaker; only short spout visible, NO clipped kettle body. Gentle pale blue water stream wets coffee. Vessel about half-full leaving very generous headroom. Stable blank-display scale beneath. All instructional equipment entirely within transparent safe margin; no hand touching hot glass."
+    }
+  ],
+  "rejected": [
+    {
+      "sceneId": "aero_prepare_v1",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-6f665d19-b24d-43ba-a9f0-0538ed560c09.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Upright standard AeroPress Original/Clear with standard perforated cap locked at bottom resting securely on a sturdy ceramic mug. Top open, no plunger inserted, empty clean chamber. Show a thin white paper filter disc seated within a detached spare standard cap beside it ONLY if useful; avoid duplicate ambiguous cap. Focus: paper-fitted standard cap safely locked and brewer upright. Gray translucent cylindrical chamber with broad hexagonal lower flange, black shallow perforated cap immediately above mug rim, no screw knob, no espresso portafilter.",
+      "notes": [
+        "Rejected: duplicate filter cap creates ambiguity, empty chamber omits dosed preparation state."
+      ]
+    },
+    {
+      "sceneId": "cold_dilute_v1",
+      "methodId": "cold-brew",
+      "stepIds": [
+        "dilute"
+      ],
+      "altText": "Equal measured portions of cold water and concentrate being combined in a serving glass.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-6bbb7890-c30a-4890-bf7f-4aa7a3e5c4c6.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. A serving glass centered on a plain digital scale with blank display. Two small identical clear measuring beakers beside it show equal-height portions, one dark coffee concentrate and one pale-blue cold water; one small water stream pours into dark coffee in serving glass. Focus equal measured portions; no numbers or ratio text, no ice, no milk.",
+      "notes": [
+        "Rejected before admission; targeted regeneration needed: One small serving glass on a simple digital scale with blank display, containing dark cold concentrate. One small glass water beaker held over it gently pours pale blue cold water into serving glass. Exactly TWO vessels in scene, receiving glass and water beaker; NO other beakers or spare portions. Same measured water/concentrate amounts are communicated in adjacent app copy, not in image. No numbers, labels, ice, milk, froth or steam. Clear simple act of dilution."
+      ]
+    },
+    {
+      "sceneId": "cold_clean_v1",
+      "methodId": "cold-brew",
+      "stepIds": [
+        "clean"
+      ],
+      "altText": "Clean brewing equipment drying beside covered concentrate stored on a refrigerator shelf.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-54a08823-286c-4b9b-967c-09253888af6c.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Clean washed empty glass jar and supported dripper drying on a small simple rack; one sealed jar of leftover concentrate sits on a minimal refrigerator shelf beside it. Keep objects separated and few, no dirty grounds in clean jar, no cleaning liquid near coffee, no steam. Focus cleanup and covered cold storage.",
+      "notes": [
+        "Rejected before admission; targeted regeneration needed: One clean EMPTY food-safe glass jar with matching lid beside it, and one clean EMPTY plastic dripper drying on a small simple rack. Dripper contains NO PAPER and NO grounds. Beside these a sealed jar of leftover concentrate on one minimal refrigerator shelf outline. Keep minimal clear separation, no paper lining in dripper, no dirty grounds, no soap near coffee. No glass shine, flat vector-like fills."
+      ]
+    },
+    {
+      "sceneId": "french_prepare_v1",
+      "methodId": "french-press",
+      "stepIds": [
+        "prepare"
+      ],
+      "altText": "A sound French press with dry grounds on a scale and its assembled plunger beside it.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-05b7a2db-988e-4b62-b48c-5758a065fc28.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. One1liter French press glass beaker in simple dark frame with side handle and small spout; open top, loose dry coarse coffee bed at bottom. Separate correctly assembled mesh filter-plunger and lid stands beside it, rod straight, round mesh with support plate, no disassembled floating layers. Beaker centered on thin plain scale with blank display. No water yet.",
+      "notes": [
+        "Rejected before admission; targeted regeneration needed: One1liter French press glass beaker in simple dark frame with side handle and small spout. Open top with VERY THIN loose dry coffee bed only one centimeter deep at bottom, NOT quarter vessel height. A separate correctly assembled mesh filter-plunger and lid stands beside it; straight rod, round mesh support plate, no loose layers. Beaker on a thin plain scale, blank display. No water yet. Clear generous empty space above thin grounds bed."
+      ]
+    },
+    {
+      "sceneId": "french_pour_v1",
+      "methodId": "french-press",
+      "stepIds": [
+        "add-water"
+      ],
+      "altText": "Water pouring into a French press with generous space below the rim.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-93c91bc1-e981-4acb-8812-1585f0aea53a.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. 1liter French press glass beaker in dark frame, side handle and spout, lid/plunger removed. Kettle spout gently pours water over coarse coffee slurry inside. Filled only about half volume so generous obvious headroom remains, far below rim. Beaker stable on a thin blank scale, no hand grasping hot glass, no steam clouds. No paper filter.",
+      "notes": [
+        "Rejected before admission; targeted regeneration needed: One1liter French press glass beaker in dark frame with handle and spout. Open top no lid/plunger. A slim kettle spout enters composition from upper left and ends over the beaker; only short spout visible, NO clipped kettle body. Gentle pale blue water stream wets coffee. Vessel about half-full leaving very generous headroom. Stable blank-display scale beneath. All instructional equipment entirely within transparent safe margin; no hand touching hot glass."
+      ]
+    },
+    {
+      "sceneId": "aero_stir_v1",
+      "methodId": "aeropress",
+      "stepIds": [
+        "stir",
+        "restir"
+      ],
+      "altText": "A plastic paddle gently stirring coffee in an upright AeroPress with the plunger removed.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-55eb66e3-e0c4-4fe5-ae24-99c9dcea8244.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Upright standard AeroPress on sturdy ceramic mug, perforated cap at bottom, chamber with coffee slurry well below rim. A narrow plastic paddle entering the open top makes gentle front-to-back stirring. No plunger in chamber during stirring, no swirling motion arrows, no numbers. Hand on paddle only, no touching hot lower surfaces.",
+      "notes": [
+        "Rejected before admission; targeted regeneration needed: Upright standard AeroPress Original/Clear brewer, no plunger. One translucent gray cylinder open at top, shallow slurry below rim; broad hexagonal support FLANGE at BOTTOM of cylinder. The thin BLACK PERFORATED FILTER CAP is attached BENEATH that flange, inserted into sturdy mug rim; no black cap above flange. Mug supports flange securely. A black plastic paddle held gently through open top stirs coffee front-to-back. Draw only this physical moment, no numbers, no motion marks. Same upright standard cap anatomy as maker instructions, no inversion."
+      ]
+    },
+    {
+      "sceneId": "aero_cleanup_v1",
+      "methodId": "aeropress",
+      "stepIds": [
+        "cleanup"
+      ],
+      "altText": "A cooled AeroPress ejecting spent grounds and paper into a bin with the filter cap removed.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-fa5d8e52-3521-4106-8275-f6c17357453c.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. A cooled standard AeroPress chamber held horizontally above a simple open waste bin, black standard filter cap removed and lying beside bin. Plunger pushes one compact spent-coffee puck and thin paper disc out of open lower chamber into bin. Hand holds dry upper barrel securely; no hot steam, no cup, no detached floating internals. Flat precise instructional view.",
+      "notes": [
+        "Rejected before admission; targeted regeneration needed: Cooled standard AeroPress held VERTICALLY directly above a simple open waste bin, NO mug. Black filter cap REMOVED completely, shown beside bin. Chamber bottom OPEN DOWNWARD. Plunger fully down, pushing spent coffee puck and white paper disc OUT ALONG THE VERTICAL AXIS through chamber open bottom into bin. One hand supports dry upper flange, other relaxed hand pushes plunger. Absolutely NO hole in side wall; puck exits only open bottom. No steam. Entire cylinder, bin and cap visible with generous transparent margin."
+      ]
+    },
+    {
+      "sceneId": "espresso_start_v1",
+      "methodId": "espresso",
+      "stepIds": [
+        "start_shot"
+      ],
+      "altText": "A fingertip starting a pump espresso shot with a cup on a scale under the spouts.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-b051831a-c9ba-4b11-a058-54f33d0ce083.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Compact Bambino Plus style machine with three blank round brew/steam buttons in upper front, slim steam wand at right,54mm spouted portafilter locked securely in centered group. Small cup on a thin digital scale with blank display beneath dual spouts. One fingertip presses second of three main front buttons; a few initial coffee drops enter nearly empty cup, no full flow yet. No pressure gauges or labels.",
+      "notes": [
+        "Rejected: full machine omitted the Bambino Plus two smaller right-hand steam-setting buttons, inconsistent control anatomy."
+      ]
+    },
+    {
+      "sceneId": "espresso_stop_v1",
+      "methodId": "espresso",
+      "stepIds": [
+        "stop_and_taste"
+      ],
+      "altText": "A fingertip stopping the espresso shot while the filled cup remains on the scale.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-3fa26596-5963-4ff5-889f-81cac44c0341.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Compact Bambino Plus style machine with three blank round main buttons, slim steam wand at right. Portafilter locked. Small cup partly filled with espresso on a thin blank-display scale. Fingertip presses second main front button to stop; coffee flow has ended with one residual drop only. No flowing twin streams, no restarting, no hand unlocking hot portafilter. Crop to machine front and scale with generous safe margin.",
+      "notes": [
+        "Rejected: full machine omitted the Bambino Plus two smaller right-hand steam-setting buttons, inconsistent control anatomy."
+      ]
+    },
+    {
+      "sceneId": "aero_cleanup_v2",
+      "methodId": "aeropress",
+      "stepIds": [
+        "cleanup"
+      ],
+      "altText": "A cooled AeroPress ejecting spent grounds and paper into a bin with the filter cap removed.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-02c3ccb8-8766-4621-9dee-012a75da6bc2.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Cooled standard AeroPress held VERTICALLY directly above a simple open waste bin, NO mug. Black filter cap REMOVED completely, shown beside bin. Chamber bottom OPEN DOWNWARD. Plunger fully down, pushing spent coffee puck and white paper disc OUT ALONG THE VERTICAL AXIS through chamber open bottom into bin. One hand supports dry upper flange, other relaxed hand pushes plunger. Absolutely NO hole in side wall; puck exits only open bottom. No steam. Entire cylinder, bin and cap visible with generous transparent margin.",
+      "notes": [
+        "Rejected: vertical ejection is corrected but barrel support flange appears near upper mouth rather than around the open filter end. Regenerate with source-anatomy reference."
+      ]
+    },
+    {
+      "sceneId": "aero_cleanup_v3",
+      "methodId": "aeropress",
+      "stepIds": [
+        "cleanup"
+      ],
+      "altText": "A cooled AeroPress ejecting spent grounds and paper into a bin with the filter cap removed.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-8f67d11d-52a3-4449-bde6-e8e89ca3da73.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Reference is the exact upright brewer anatomy only: preserve the chamber's wide hexagonal support flange at its BOTTOM filter end. Create a new cleanup action with NO mug. Hold this same chamber upright over a simple open waste bin. The black perforated cap is removed and lies beside bin. The wide hexagonal barrel flange REMAINS at the open bottom directly over bin. Show a plunger inserted through top and pushed almost all the way down; rubber seal at chamber bottom pushes one spent coffee puck with paper disc out downwards along cylinder axis through the uncapped BOTTOM. One hand holds upper barrel safely, other hand operates plunger. Chamber bottom flange, open end, puck and bin must all align. Do not flip barrel, do not put barrel flange at its top mouth. Parts cooled, no steam. Flat simple editorial rendering with safe transparent margin.",
+      "referenceImagePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-13482dba-6928-4fdb-ac0e-e0424881c769.png",
+      "notes": [
+        "Rejected: corrected flange but duplicated grounds inside and outside barrel make the axial ejection ambiguous. Use clean uncompressed final storage state instead."
+      ]
+    },
+    {
+      "sceneId": "aero_cleanup_phone_rejected",
+      "methodId": "aeropress",
+      "stepIds": [
+        "cleanup"
+      ],
+      "altText": "Clean AeroPress chamber, plunger and filter cap stored separately with the rubber seal uncompressed.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-92fd1d61-49a9-4804-a8a8-646bce0ae063.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Show the FINAL CLEAN STORAGE STATE after AeroPress cleanup: exactly THREE clean dry parts arranged separately side by side with clear gaps. One empty transparent gray AeroPress Original/Clear CHAMBER upright with open top and broad hexagonal support flange at its BOTTOM. One entirely removed PLUNGER upright beside it, gray shaft, broad pressing top and black rubber seal at its BOTTOM clearly outside any chamber, relaxed and uncompressed. One black standard perforated FILTER CAP placed face up next to parts, no paper remaining. No coffee, puck, bin, cup, water or hands. The user must understand the seal is stored uncompressed because plunger is fully removed. Preserve accurate external anatomy; no labels, arrows, decorative base, gradients or reflections. Flat minimal2D shapes with generous transparent safe margins.",
+      "notes": [
+        "Rejected: standard black cap becomes hard to distinguish on dark phone background."
+      ]
+    },
+    {
+      "sceneId": "espresso_tamp_phone_rejected",
+      "methodId": "espresso",
+      "stepIds": [
+        "dose_and_tamp"
+      ],
+      "altText": "A level tamper pressing evenly distributed grounds in a supported portafilter.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-583427ab-6c62-4b80-a9e3-c08585b7c2b0.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. Close view of matching54mm spouted portafilter with dark grounds held securely on a small plain tamp mat. A simple flat tamper held vertically presses level into grounds, wrist aligned, no tilted tamper, no huge force, black handle supported. Only necessary hand, tamper and portafilter, no machine. Precise flat puck and clean basket rim.",
+      "notes": [
+        "Rejected: tamper appears materially narrower than basket and could teach use of the wrong size."
+      ]
+    },
+    {
+      "sceneId": "french_decant_independent_rejected_v1",
+      "methodId": "french-press",
+      "stepIds": [
+        "decant"
+      ],
+      "altText": "French press coffee pouring into a stable mug with grounds held below the lowered screen.",
+      "sourcePath": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-745082fc-530b-470c-b580-48e84508dfab.png",
+      "prompt": "Create a scientific-educational coffee brewing instruction illustration, one precise physical action/state, clear at 320px. Flat 2D editorial raster art with crisp dark espresso outlines, cream and pale blue and coffee brown solid fills, at most one flat shade plane. Genuine transparent background, landscape 4:3 composition with generous 12% transparent safe margin on every edge. No words, letters, numbers, logos, arrows, UI, decorative props, background island, photorealism, reflections or glossy 3D shading. Necessary equipment only. Keep anatomy mechanically accurate and stable. French press tilted safely by its black handle, lid seated and spout open. Mesh plunger lowered to grounds near bottom without compressing, rod straight. Smooth narrow coffee stream pours from small spout into stable ceramic mug; grounds remain in beaker, no overflow, hand on handle only, no loose lid falling, no force. Show full device and cup within margin.",
+      "notes": [
+        "Independent QC rejected disconnected pour: remaining coffee did not reach actual spout. Regenerated only this scene with physically connected free surface/spout/stream, correct tilt/fill and safe handle grip."
+      ]
+    }
+  ]
+}

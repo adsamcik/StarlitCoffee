@@ -1,0 +1,39 @@
+{
+  "producer": "/root/guidance_art_audit",
+  "date": "2026-10-25",
+  "status": "candidate_only",
+  "independentApproval": false,
+  "rawCountInspected": 7,
+  "deliveredCountInspected": 7,
+  "phoneSize": [
+    320,
+    240
+  ],
+  "phoneThemes": [
+    "light",
+    "dark"
+  ],
+  "phoneSheet": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/phone-light-dark.png",
+  "phoneSheetSha256": "2da56a26d2c3169b371c12f564674c32c96afa698277a7454434754e2ebe3c23",
+  "scopes": {
+    "cupone_paper_outlet": "Fitted matching paper and small clear outlet in detached cool basket; no complete cleaning, paper rinse or machine-off proof. Opening is physically tiny at320px; independent reviewer should assess whether it can carry outlet-inspection teaching or needs a separate macro.",
+    "cupone_load": "Coffee loading subaction only; actual20g measurement, final leveling and rim check remain text.",
+    "cupone_fill": "Tank filling below physical mark only; actual marked fill and outlet-arm positioning remain source instructions; intentional lower-tower detail crop.",
+    "cupone_active": "Covered supported machine-controlled brewing state only; button activation, temperature and auto-off timing remain text.",
+    "cupone_tail": "Observe residual-drop tail before removing cup; no claim that flow has already stopped, temperature is safe or power automatically off.",
+    "cupone_clean_outlet": "Tiny outlet clearing after cooling/unplugging and grounds/paper disposal; macro omits appliance and power-state proof.",
+    "kurasu_serve_fresh_ice": "Continuous spout-connected serving into fresh ice only; no claimed volume/ratio or hot-brewing state."
+  },
+  "rejectedAttempts": [
+    {
+      "scene": "cupone_clean_outlet_v1",
+      "reason": "Retained paper during outlet clearing; preserved raw/prompt under rejected.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/rejected/cupone_clean_outlet_v1/raw.png"
+    }
+  ],
+  "referenceNotes": [
+    "Exact manufacturer full-appliance photograph fetched and visually inspected at1200px; crop is mechanical source-reference crop, not generated artwork.",
+    "Cup-One quick-guide direct PDF returned404; indexed official guide says9-hole outlet arm. Full current manufacturer manual read and retained. No thin-pipe-only anatomy assumption used.",
+    "Original Cup-One broad-arm rejection assertion was corrected in legacy-renewal record; missing long cover/inconsistent actual layout remains the concrete failure."
+  ]
+}

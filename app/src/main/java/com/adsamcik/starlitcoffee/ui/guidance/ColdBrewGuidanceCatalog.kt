@@ -13,7 +13,7 @@ object ColdBrewGuidanceCatalog {
             val key = "cold_refrigerated_$id"
             BuiltInGuidanceContent(StageContentId(key), profile.familyId, profileId = profile.id,
                 stageId = StageId(key), placement = BuiltInGuidancePlacement.LIVE_STAGE,
-                text = text, visibility = GuidanceVisibilityPolicy())
+                text = text, visibility = GuidanceVisibilityPolicy()).withVisualContract("cold_refrigerated")
         })
     }
 

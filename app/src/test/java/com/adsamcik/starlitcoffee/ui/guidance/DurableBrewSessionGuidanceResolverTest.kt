@@ -352,6 +352,63 @@ class DurableBrewSessionGuidanceResolverTest {
         )
     }
 
+    @Test
+    fun `shared scene resolves to current target with reviewed alt and rejects changed instruction`() {
+        val content = stageContent().withVisualContract("test")
+        val review = InstructionAssetReview(InstructionAssetReviewStatus.APPROVED, "Independent QA",
+            LocalDate.of(2026, 10, 25), "Pulsar retained bloom with closed valve; same hardware and state.")
+        val source = InstructionAssetRecord(
+            id = InstructionAssetId("instruction_shared_pulsar_bloom_default"),
+            familyId = FAMILY, profileId = PROFILE, contentId = StageContentId("shared_pulsar_bloom"),
+            namingConvention = InstructionAssetNamingConvention.EXACT_CONTENT_ID,
+            drawableRes = 1, mandatoryForFullGuidance = false, safetySensitive = false,
+            provenance = InstructionAssetProvenance("prompt.txt", "v1"), review = review,
+            resourceSha256 = "a".repeat(64),
+        )
+        val binding = InstructionAssetAlias(content.id, source.id, FAMILY, PROFILE,
+            requireNotNull(source.resourceSha256), requireNotNull(content.visualContentRevision), review,
+            altText = "Closed-valve Pulsar retains its bloom without dripping.")
+        val assets = InstructionAssetCatalog(listOf(source), listOf(binding))
+        fun resolve(copy: BuiltInGuidanceContent) = DurableBrewSessionGuidanceResolver(
+            guidanceCatalogs = listOf(BuiltInGuidanceCatalog(listOf(copy))), instructionAssets = assets,
+        ).resolve(request())
+        val approved = resolve(content).visualStatus as DurableBrewGuidanceVisualStatus.Approved
+        assertEquals(content.id, approved.targetContentId)
+        assertEquals(source, approved.asset)
+        assertEquals(binding.altText, approved.altText)
+        val changed = content.copy(text = content.text.copy(primaryInstruction = "Open the valve."))
+            .withVisualContract("test")
+        assertFalse(resolve(changed).visualStatus is DurableBrewGuidanceVisualStatus.Approved)
+        assertEquals("Open the valve.", resolve(changed).routineContent.single().instruction)
+    }
+
+    @Test
+    fun `canonical approved image carries matching alt and discards stale image description`() {
+        val content = stageContent().withVisualContract("test")
+        val source = instructionAsset(
+            InstructionAssetId("instruction_${FAMILY.value}_${PROFILE.value}_${BLOOM_CONTENT.value}_default"),
+            InstructionAssetReview(InstructionAssetReviewStatus.APPROVED, "Independent QA",
+                LocalDate.of(2026, 10, 25))).copy(
+            id = InstructionAssetId("instruction_${BLOOM_CONTENT.value}_default"),
+            namingConvention = InstructionAssetNamingConvention.EXACT_CONTENT_ID,
+            altTextRes = null, companionInstructionRes = null,
+        )
+        val target = AdmittedGuidanceTarget(content.id.value, FAMILY.value, PROFILE.value, "test",
+            requireNotNull(content.visualContentRevision), source.id.value, "Closed valve retains the wet bloom.")
+        val assets = InstructionAssetCatalog(listOf(source), admittedTargets = listOf(target))
+        fun resolve(current: BuiltInGuidanceContent) = DurableBrewSessionGuidanceResolver(
+            guidanceCatalogs = listOf(BuiltInGuidanceCatalog(listOf(current))), instructionAssets = assets,
+        ).resolve(request(stage = stage(instructionAssetId = source.id)))
+        val approved = resolve(content).visualStatus as DurableBrewGuidanceVisualStatus.Approved
+        assertEquals(target.altText, approved.altText)
+        assertEquals(content.id, approved.targetContentId)
+        val changed = content.copy(text = content.text.copy(primaryInstruction = "Changed current instruction."))
+            .withVisualContract("test")
+        val stale = resolve(changed).visualStatus as DurableBrewGuidanceVisualStatus.Approved
+        assertEquals(changed.text.primaryInstruction, stale.altText)
+        assertEquals(changed.text.altText, resolve(changed).routineContent.single().altText)
+    }
+
     private fun request(
         stage: CurrentBrewStagePresentation? = stage(),
         level: GuidancePresentationLevel? = GuidancePresentationLevel.FULL,

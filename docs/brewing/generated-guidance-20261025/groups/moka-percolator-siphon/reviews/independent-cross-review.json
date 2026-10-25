@@ -1,0 +1,1157 @@
+{
+  "schemaVersion": 1,
+  "reviewedOn": "2026-10-25",
+  "reviewer": {
+    "name": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+    "independence": "Reviewer did not produce or edit any image in this group. Review compares actual pixels and exact step/manufacturer evidence, not production QC labels."
+  },
+  "reviewContext": {
+    "fullRawAndDeliveredInspection": true,
+    "phoneSize": [
+      320,
+      240
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "phoneSheets": [
+      "phone-review-1.png",
+      "phone-review-2.png",
+      "phone-review-3.png"
+    ],
+    "nativeAppPlacementInspected": false,
+    "promotionAuthorizedByThisFile": false,
+    "sources": [
+      "https://m.media-amazon.com/images/I/913VOwvygKL.pdf",
+      "https://bialetti-cookware.zendesk.com/hc/en-us/articles/5416235346322-How-to-use-the-Moka-Express",
+      "https://www.gopresto.com/uploads/02822_72_875J_SCM_Eng_Web_Instructions.pdf",
+      "https://www.gopresto.com/product/basket-for-6-cup-stainless-steel-coffee-maker-94643",
+      "https://www.gopresto.com/product/electric-cord-36276",
+      "https://global.hario.com/product/TCAR.pdf"
+    ],
+    "sourceScope": "Hario official PDF retained by production agent and its actual manual pages6/7 viewed independently; primary manufacturer PDFs/parts references read/rendered independently; exact reviewed-method-guide step copy compared."
+  },
+  "summary": {
+    "sceneCount": 24,
+    "approvedCount": 17,
+    "rejectedCount": 7
+  },
+  "scenes": [
+    {
+      "sceneId": "moka-inspect",
+      "methodId": "moka-pot",
+      "stepIds": [
+        "inspect"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-inspect/original.png",
+      "rawSha256": "e99e607277cd0da901ea5056d2451ef290993dd48fbb9f04d64d0ecd4c9bd1aa",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-inspect/candidate.webp",
+      "candidateSha256": "2b4469c19576db14d149504f6f955beda1968fb9a225b7acf468ae525b1a9d76",
+      "altTextReviewed": "Cold moka pot separated to inspect the boiler, funnel basket, filter plate and gasket.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Separated cold major components and visible gasket/filter/valve inspection only; diagram is not a literal hovering assembly or proof of commissioning.",
+      "notes": [
+        "Inspected the entire selected original and1024x768 delivery pixels, then both actual320x240 theme composites; no concrete conflicting anatomy/action/safety detail found within the bounded scope below."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 54564,
+        "alphaBounds": [
+          88,
+          32,
+          936,
+          726
+        ]
+      }
+    },
+    {
+      "sceneId": "moka-fill-water",
+      "methodId": "moka-pot",
+      "stepIds": [
+        "fill_water"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-fill-water/original.png",
+      "rawSha256": "94d45274f0a7bdb242c628c2ec5486ae8259ae264b83cb778928649923fdfe6f",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-fill-water/candidate.webp",
+      "candidateSha256": "7daa5ab07d44808a1d7823618c3cd19bcc395cd774a3d4a807665aac80ac4d78",
+      "altTextReviewed": "Cold lower moka boiler with water visibly below the safety valve.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Cutaway view of cold boiler water below valve only; UI/copy must identify cutaway as instructional and still require correct funnel insertion/no flooded basket.",
+      "notes": [
+        "Inspected the entire selected original and1024x768 delivery pixels, then both actual320x240 theme composites; no concrete conflicting anatomy/action/safety detail found within the bounded scope below."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 57074,
+        "alphaBounds": [
+          42,
+          32,
+          981,
+          709
+        ]
+      }
+    },
+    {
+      "sceneId": "moka-fill-coffee",
+      "methodId": "moka-pot",
+      "stepIds": [
+        "fill_coffee"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-fill-coffee/original.png",
+      "rawSha256": "6571f5af8ab2098f1b34b7768413878315c415ced45c887e8125c3dcfee065fa",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-fill-coffee/candidate.webp",
+      "candidateSha256": "6912491033940ab2778c6e15c008e895de44449da441fc0a8d86c124c791d951",
+      "altTextReviewed": "A full loose level bed of grounds in a moka funnel basket, with clean rim.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Loose full basket and clean rim, without a tamping action; no universal spoon quantity is established.",
+      "notes": [
+        "Inspected the entire selected original and1024x768 delivery pixels, then both actual320x240 theme composites; no concrete conflicting anatomy/action/safety detail found within the bounded scope below."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 47470,
+        "alphaBounds": [
+          147,
+          80,
+          954,
+          715
+        ]
+      }
+    },
+    {
+      "sceneId": "moka-assemble",
+      "methodId": "moka-pot",
+      "stepIds": [
+        "assemble"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-assemble/original.png",
+      "rawSha256": "7f8014a686040d37923e7994cb5849512fc5773a667494de40b589c2748250c8",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-assemble/candidate.webp",
+      "candidateSha256": "dcb457c580ebb7cadc39b3692a5d5d04804d0dc7edcfd3a20e17f453e89edc20",
+      "altTextReviewed": "Cold moka pot fully assembled with lid closed and clear safety valve.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Closed assembled endpoint only; cannot prove tightening torque or valve orientation relative to unseen people.",
+      "notes": [
+        "Inspected the entire selected original and1024x768 delivery pixels, then both actual320x240 theme composites; no concrete conflicting anatomy/action/safety detail found within the bounded scope below."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 44834,
+        "alphaBounds": [
+          67,
+          67,
+          895,
+          703
+        ]
+      }
+    },
+    {
+      "sceneId": "moka-heat",
+      "methodId": "moka-pot",
+      "stepIds": [
+        "heat"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-heat/original.png",
+      "rawSha256": "7674f4b987116a5bd6c7c80144754552aae83dadfeb89879110257bdf3069100",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-heat/candidate.webp",
+      "candidateSha256": "8288c6e203770e69e1fb2e83f5fb45a0676da46ddc003ae01d3c7f2fb1605d0a",
+      "altTextReviewed": "Closed moka pot heating on a small gas flame confined beneath its base.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Closed stable pot with small flame confined under base; no elapsed deadline or automatic stop is shown.",
+      "notes": [
+        "Inspected the entire selected original and1024x768 delivery pixels, then both actual320x240 theme composites; no concrete conflicting anatomy/action/safety detail found within the bounded scope below."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 49038,
+        "alphaBounds": [
+          262,
+          55,
+          949,
+          699
+        ]
+      }
+    },
+    {
+      "sceneId": "moka-stop",
+      "methodId": "moka-pot",
+      "stepIds": [
+        "stop"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-stop/original.png",
+      "rawSha256": "abac5b063f4d9b7c8eb7313112f5ca8ad3be2d52fc4c6d3ed1da7081b8f4893a",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-stop/candidate.webp",
+      "candidateSha256": "5a6172b7b512c3c36bf170cbd02127a65fe1e1503925e59e11addf4b08ff5b4a",
+      "altTextReviewed": "Moka pot rests off heat on a heatproof trivet with its lid closed.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Off-heat closed pot on trivet, with dry heat-protection cloth nearby; does not visually teach the audible first-gurgle trigger or complete cooling.",
+      "notes": [
+        "Inspected the entire selected original and1024x768 delivery pixels, then both actual320x240 theme composites; no concrete conflicting anatomy/action/safety detail found within the bounded scope below."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 61420,
+        "alphaBounds": [
+          94,
+          70,
+          950,
+          736
+        ]
+      }
+    },
+    {
+      "sceneId": "moka-serve",
+      "methodId": "moka-pot",
+      "stepIds": [
+        "serve_cool_clean"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-serve/original.png",
+      "rawSha256": "13de709285fb76aac382648c2c25b4bc99039221dcdba5997daa8a1182830d38",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-serve/candidate.webp",
+      "candidateSha256": "c9197a438360ff305b16416d4a4327ed103ed09431acc67fc7e250ac3310bbbb",
+      "altTextReviewed": "Coffee pours carefully from the moka pot into a cup after discharge settles.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Careful handle-held pouring after discharge; does not replace cooling-before-opening or detergent-free cleaning instructions.",
+      "notes": [
+        "Inspected the entire selected original and1024x768 delivery pixels, then both actual320x240 theme composites; no concrete conflicting anatomy/action/safety detail found within the bounded scope below."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 64188,
+        "alphaBounds": [
+          131,
+          47,
+          961,
+          695
+        ]
+      }
+    },
+    {
+      "sceneId": "percolator-prepare",
+      "methodId": "percolator",
+      "stepIds": [
+        "prepare"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-prepare/original.png",
+      "rawSha256": "f2c1a0f85cf25a06d2a6edff609e82c93014051b4481c771ca49e87684e418f5",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-prepare/candidate.webp",
+      "candidateSha256": "0a6b07837b12b0d9d38eb993f2305ccb382306cdb919117aba46607a2797a31e",
+      "altTextReviewed": "Cool electric percolator parts laid out with cord detached and electrical base dry.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "rejected",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "fail",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Reject current exact binding; any narrower supplementary use requires an explicit separate binding and review.",
+      "notes": [
+        "Exact Presto02822/94643 manufacturer basket has solid side walls; artwork invents dense side-wall perforations and therefore depicts a different basket/flow topology.",
+        "The dark round front feature could be an unlit indicator; do not infer a wrong power connector from this scene alone."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 82826,
+        "alphaBounds": [
+          78,
+          38,
+          969,
+          715
+        ]
+      }
+    },
+    {
+      "sceneId": "percolator-fill",
+      "methodId": "percolator",
+      "stepIds": [
+        "fill_reservoir"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-fill/original.png",
+      "rawSha256": "7e3ca5dd90919361666662fee7f22bccd57c0c6d0a341891b67c27f7b814a11a",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-fill/candidate.webp",
+      "candidateSha256": "977acf3b54b8d39b37370d7cd65292568f70c8a84772c79ab8f118c4c84a5af1",
+      "altTextReviewed": "Cold water enters the open electric percolator reservoir with its basket removed.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Water-adding action with basket removed only. Unnumbered line cannot establish exact four-mark level; precise model mark must remain in adjacent instruction.",
+      "notes": [
+        "Inspected the entire selected original and1024x768 delivery pixels, then both actual320x240 theme composites; no concrete conflicting anatomy/action/safety detail found within the bounded scope below."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 48180,
+        "alphaBounds": [
+          138,
+          32,
+          950,
+          726
+        ]
+      }
+    },
+    {
+      "sceneId": "percolator-load",
+      "methodId": "percolator",
+      "stepIds": [
+        "load_basket"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-load/original.png",
+      "rawSha256": "41f719eee26bfe6d9b5aab49c37b227f3a0267566f26cdee989e3951c32a24f2",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-load/candidate.webp",
+      "candidateSha256": "c68fcf84ade565592669a6ea74924d2bb3ca7e13e22da0fe18e7fc29b8768a80",
+      "altTextReviewed": "Coffee is added to a wraparound-paper-lined percolator basket while its center stem stays covered.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "rejected",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "fail",
+        "action_state": "fail",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "fail",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Reject current exact binding; any narrower supplementary use requires an explicit separate binding and review.",
+      "notes": [
+        "Exact Presto94643 basket has solid side walls; artwork invents dense side-wall perforations.",
+        "Selected recipe uses wraparound paper with corner holes folded to the center stem (manufacturer Fig.B). This scene depicts a round pleated bowl liner without identifying wraparound corners/holes, so the current wraparound-paper alt and exact binding are not established.",
+        "Blocking the stem while loading is correctly depicted, but that correct detail does not cure the wrong equipment/filter scene."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 92052,
+        "alphaBounds": [
+          42,
+          39,
+          981,
+          710
+        ]
+      }
+    },
+    {
+      "sceneId": "percolator-assemble",
+      "methodId": "percolator",
+      "stepIds": [
+        "assemble"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-assemble/original.png",
+      "rawSha256": "ee651a68611189a19160ae8fab3f815bab9af830457614fa93790ef591f38be3",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-assemble/candidate.webp",
+      "candidateSha256": "3603fce892ec2879a51b851a06ca894963bf25a1c4edaa40ca441e3e9490cab5",
+      "altTextReviewed": "Lidded percolator basket sits on its perk tube above the open pot ready for insertion.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "rejected",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "fail",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Reject current exact binding; any narrower supplementary use requires an explicit separate binding and review.",
+      "notes": [
+        "Exact Presto94643 basket has solid side walls; dense side perforations in the generated assembly depict a different flow topology.",
+        "Exploded insertion arrangement alone does not establish that the tube is seated in the bottom perk well; final adjacent instruction must still require seating and secured cover."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 40450,
+        "alphaBounds": [
+          241,
+          32,
+          748,
+          724
+        ]
+      }
+    },
+    {
+      "sceneId": "percolator-brew",
+      "methodId": "percolator",
+      "stepIds": [
+        "brew"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-brew/original.png",
+      "rawSha256": "84ad471b073680696578ddcf75d018227519c7a12e2dd9d2b6dae826099d0c70",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-brew/candidate.webp",
+      "candidateSha256": "dd7e82658fc86d1306502db4f4da0414bd721adb89841f6c3c485c685f9fc9bf",
+      "altTextReviewed": "Closed electric percolator stands plugged in with its ready indicator illuminated.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Closed plugged-in appliance with ready signal endpoint only; connection order and appropriate outlet remain textual instructions.",
+      "notes": [
+        "Inspected the entire selected original and1024x768 delivery pixels, then both actual320x240 theme composites; no concrete conflicting anatomy/action/safety detail found within the bounded scope below."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 48148,
+        "alphaBounds": [
+          94,
+          38,
+          981,
+          724
+        ]
+      }
+    },
+    {
+      "sceneId": "percolator-serve",
+      "methodId": "percolator",
+      "stepIds": [
+        "disconnect_serve"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-serve/original.png",
+      "rawSha256": "46488fab656c40ac347b299d93238ec7d0d76d41d05025dfd0e48b43969abb63",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-serve/candidate.webp",
+      "candidateSha256": "1007e2c447bd92ced3b37e6aaf988044133f262913b12efd5c765f2f0a82c5bc",
+      "altTextReviewed": "Disconnected electric percolator pours coffee into a cup with its lid secured.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Handle-held pouring with secured cover and no connected cord shown; safe disconnect order remains adjacent instruction, not proven by image.",
+      "notes": [
+        "Inspected the entire selected original and1024x768 delivery pixels, then both actual320x240 theme composites; no concrete conflicting anatomy/action/safety detail found within the bounded scope below."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 55872,
+        "alphaBounds": [
+          75,
+          55,
+          941,
+          711
+        ]
+      }
+    },
+    {
+      "sceneId": "percolator-clean",
+      "methodId": "percolator",
+      "stepIds": [
+        "cool_clean"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-clean/original.png",
+      "rawSha256": "740402b091a5beedbf7176f946c6125c320a63c58a05630d117ca687ad4b0134",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-clean/candidate.webp",
+      "candidateSha256": "fe16af60137c8ea1277daba2fa04933e8a1b9355d35991325ba5338591819a8d",
+      "altTextReviewed": "Cooled percolator basket, lid and tube are cleaned separately while the electrical pot stays dry.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "rejected",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "fail",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Reject current exact binding; any narrower supplementary use requires an explicit separate binding and review.",
+      "notes": [
+        "Exact Presto94643 basket has solid side walls; generated basket has dense side-wall holes and exaggerated center-stem height.",
+        "Artwork explicitly invents a round gold center-pin barrel power socket at the front of the base. Manufacturer cord36276 uses the appliance coupler shown in the retained reference; the front circle in the manual is the signal light.",
+        "Dry disconnected cleanup state is otherwise clear, but incorrect electrical hardware cannot be admitted as exact-model guidance."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 94954,
+        "alphaBounds": [
+          82,
+          62,
+          962,
+          723
+        ]
+      }
+    },
+    {
+      "sceneId": "siphon-prepare",
+      "methodId": "siphon",
+      "stepIds": [
+        "prepare"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-prepare/original.png",
+      "rawSha256": "d2f1d0b3f053c67ed588d93a4ddec95543658bc4d4665bdb588042e570ba8fb4",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-prepare/candidate.webp",
+      "candidateSha256": "cf64a8a79b1614f0c9da6c51d377b4f129fa3bffdf510dff92849010a7386658",
+      "altTextReviewed": "New cloth siphon filter assembly soaks in freshly boiled water before first use.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "rejected",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "fail"
+      },
+      "scopeLimit": "Reject current exact binding; any narrower supplementary use requires an explicit separate binding and review.",
+      "notes": [
+        "Accurate only as supplementary new-cloth soaking/preparation. It does not teach the recurring prepare-step completion: centered installed cloth assembly, chain pulled down and hooked onto the upper stem end, secure lower-bowl fastener.",
+        "May be retained for an explicitly scoped new-filter subtopic, but reject as the primary/current prepare-step illustration. No false boiling-temperature measurement is inferred from blue water."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 66390,
+        "alphaBounds": [
+          83,
+          85,
+          905,
+          711
+        ]
+      }
+    },
+    {
+      "sceneId": "siphon-add-coffee",
+      "methodId": "siphon",
+      "stepIds": [
+        "add_coffee"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-add-coffee/original.png",
+      "rawSha256": "a1c34a8e473fdcb5f03294d4c11187f0aa3574ccf036446d55abf3a112a338fa",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-add-coffee/candidate.webp",
+      "candidateSha256": "45e17c8a8802d181c597d9e971264f1ef1010d1802657a3c48655ca67e064cba",
+      "altTextReviewed": "Ground coffee enters the supported siphon upper chamber above its cloth filter.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "rejected",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "fail",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Reject current exact binding; any narrower supplementary use requires an explicit separate binding and review.",
+      "notes": [
+        "The upper chamber, dry grounds, cloth and pouring action are clear.",
+        "At actual320x240 dark theme the nearly black support frame disappears sufficiently that the required supported chamber reads as weakly supported/floating. Supporting the chamber is an explicit instruction and needs a visible frame/silhouette in both themes.",
+        "Do not correct by adding invented supports; regenerate the existing compatible support with adequate tone separation."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 40676,
+        "alphaBounds": [
+          126,
+          32,
+          959,
+          713
+        ]
+      }
+    },
+    {
+      "sceneId": "siphon-fill",
+      "methodId": "siphon",
+      "stepIds": [
+        "fill_lower"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-fill/original.png",
+      "rawSha256": "782c160116fcb6843520f7687ea71106556474dd09bb8772bf35057d24f184df",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-fill/candidate.webp",
+      "candidateSha256": "56e82c8bda7fc0cf19e5cbd33911a83de5f800d663ceb7c4a4a531b664184805",
+      "altTextReviewed": "Water fills the siphon lower globe secured in its stand.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Supported lower globe filling only; unnumbered line does not independently establish360mL/three-cup calibration.",
+      "notes": [
+        "Inspected the entire selected original and1024x768 delivery pixels, then both actual320x240 theme composites; no concrete conflicting anatomy/action/safety detail found within the bounded scope below."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 54896,
+        "alphaBounds": [
+          42,
+          32,
+          916,
+          736
+        ]
+      }
+    },
+    {
+      "sceneId": "siphon-transfer",
+      "methodId": "siphon",
+      "stepIds": [
+        "heat_and_transfer"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-transfer/original.png",
+      "rawSha256": "a80e8d083b7ed25f499bfc213de02481512fdfe0ef83a111b8b650f92de44860",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-transfer/candidate.webp",
+      "candidateSha256": "14c75a75fc8989970de09c54d07cb0d5bb2bf9d835bb75e07071599615fd5c31",
+      "altTextReviewed": "Siphon water transfer is complete, with upper chamber upright over a small stationary lamp.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Post-transfer upright arrangement, small residual lower water and centered controlled heat; does not teach unlit wick adjustment or earlier tilted placement.",
+      "notes": [
+        "Inspected the entire selected original and1024x768 delivery pixels, then both actual320x240 theme composites; no concrete conflicting anatomy/action/safety detail found within the bounded scope below."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 46134,
+        "alphaBounds": [
+          69,
+          41,
+          930,
+          726
+        ]
+      }
+    },
+    {
+      "sceneId": "siphon-steep",
+      "methodId": "siphon",
+      "stepIds": [
+        "steep"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-steep/original.png",
+      "rawSha256": "dccd3376dc1c4d221b6d7c67d30bf8ff5d1b00748135c56898f4696b29467b25",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-steep/candidate.webp",
+      "candidateSha256": "9e96073b93f538aff8659af3b6cbe8854a6e703eef17664ad05c750464badbc6",
+      "altTextReviewed": "Coffee in the heated siphon upper chamber is stirred gently.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Gentle initial stirring over controlled stationary heat with residual water below; timing starts after stir and remains in app.",
+      "notes": [
+        "Inspected the entire selected original and1024x768 delivery pixels, then both actual320x240 theme composites; no concrete conflicting anatomy/action/safety detail found within the bounded scope below."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 44302,
+        "alphaBounds": [
+          116,
+          32,
+          894,
+          726
+        ]
+      }
+    },
+    {
+      "sceneId": "siphon-remove-heat",
+      "methodId": "siphon",
+      "stepIds": [
+        "remove_heat"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-remove-heat/original.png",
+      "rawSha256": "0c2a552e5c1d87fbeef34f3be213bb4e3d1c072d7164009de052ca9e349ba8a3",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-remove-heat/candidate.webp",
+      "candidateSha256": "f489433313a8066d67a9631d0388f73d8d84faf59e24ae1c4dc46f67baf54e7b",
+      "altTextReviewed": "Siphon brewer stands clear of its stationary lamp, now extinguished under its cover.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Brewer clear of separate covered/extinguished lamp; does not show moving technique or prove extinguishment beyond visible capped no-flame state.",
+      "notes": [
+        "Inspected the entire selected original and1024x768 delivery pixels, then both actual320x240 theme composites; no concrete conflicting anatomy/action/safety detail found within the bounded scope below."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 47192,
+        "alphaBounds": [
+          58,
+          52,
+          946,
+          714
+        ]
+      }
+    },
+    {
+      "sceneId": "siphon-return",
+      "methodId": "siphon",
+      "stepIds": [
+        "return"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-return/original.png",
+      "rawSha256": "2b935412f3edad9bb0bdb269338ab0d647c45234866fca69d2398d74a7c6a222",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-return/candidate.webp",
+      "candidateSha256": "7aeba0c7db1b3e365d2c89ac7ed7371dc5313eef1a619cc42cc5da883034f114",
+      "altTextReviewed": "Coffee drains naturally through the cloth into the lower globe with no heat beneath.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Unheated natural coffee return with grounds retained above filter; app must still require flow to stop and avoid forcing apart.",
+      "notes": [
+        "Inspected the entire selected original and1024x768 delivery pixels, then both actual320x240 theme composites; no concrete conflicting anatomy/action/safety detail found within the bounded scope below."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 47662,
+        "alphaBounds": [
+          121,
+          38,
+          894,
+          725
+        ]
+      }
+    },
+    {
+      "sceneId": "siphon-serve",
+      "methodId": "siphon",
+      "stepIds": [
+        "serve"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-serve/original.png",
+      "rawSha256": "17157ef617e6575545f91c2a6a511732c533fe341469e1671bfdd997cbb087cf",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-serve/candidate.webp",
+      "candidateSha256": "56db07ac5c98a78b559f17dceecf1edf828e626b7385e2cf661d5c23f9b9946f",
+      "altTextReviewed": "Coffee pours from the siphon lower globe after the upper chamber is removed and safely supported.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Upper chamber removed and lower globe poured using stand/handle with dry cloth; the upper chamber support is outside this picture and must not be represented as visibly verified.",
+      "notes": [
+        "Inspected the entire selected original and1024x768 delivery pixels, then both actual320x240 theme composites; no concrete conflicting anatomy/action/safety detail found within the bounded scope below."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 82716,
+        "alphaBounds": [
+          42,
+          57,
+          981,
+          736
+        ]
+      }
+    },
+    {
+      "sceneId": "siphon-clean",
+      "methodId": "siphon",
+      "stepIds": [
+        "clean_up"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-clean/original.png",
+      "rawSha256": "efa96e9f1889011197092868359f7b7969e8c6e6b4d53d8147911e0fd89beba3",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-clean/candidate.webp",
+      "candidateSha256": "059f261766247a975b8ea9228e00d8f73de1805d76ca716a4c64d1069d2adb5e",
+      "altTextReviewed": "Clean cloth siphon filter is stored submerged in a small container of fresh water.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Clean cloth submerged in fresh water with brush nearby only. Refrigerated storage and regular water changes are not visible and must remain explicit in adjacent guidance.",
+      "notes": [
+        "Inspected the entire selected original and1024x768 delivery pixels, then both actual320x240 theme composites; no concrete conflicting anatomy/action/safety detail found within the bounded scope below."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 69426,
+        "alphaBounds": [
+          57,
+          56,
+          960,
+          676
+        ]
+      }
+    },
+    {
+      "sceneId": "siphon-install-filter",
+      "methodId": "siphon",
+      "stepIds": [
+        "prepare"
+      ],
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-install-filter/original.png",
+      "rawSha256": "53881b5592a32536c3cca28c41207ebd578470e4d0f55a8bb552a5b9b0bd4d86",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-install-filter/candidate.webp",
+      "candidateSha256": "1360fd52fb606cc6538c76373f2358f739c105bc4caf8b841c0140d0f5f42688",
+      "altTextReviewed": "Centered siphon cloth filter with chain through the open stem and hook caught on its lower rim.",
+      "reviewer": "OpenAI Codex independent cross-review /root/guidance_art_audit",
+      "reviewedOn": "2026-10-25",
+      "verdict": "rejected",
+      "checks": {
+        "full_resolution": "pass",
+        "delivered_resolution": "pass",
+        "phone_light": "fail",
+        "phone_dark": "fail",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass",
+        "binding_scope": "pass"
+      },
+      "scopeLimit": "Reject current exact binding; any narrower supplementary use requires an explicit separate binding and review.",
+      "notes": [
+        "Full-resolution geometry shows a centered cloth disc, a chain/spring through the stem, open lower mouth and external rim hook; no invented solid glass plug is visible.",
+        "At actual320x240 delivery the hook-to-rim relationship collapses to approximately3-5pixels and does not explain the attachment accurately at a glance.",
+        "Generate a tighter explanatory detail of disc, stem and exterior hook; the tall empty chamber consumes the working image area. This is a phone instructional-clarity rejection, not a claim that the full-resolution hook is anatomically wrong."
+      ],
+      "delivery": {
+        "size": [
+          1024,
+          768
+        ],
+        "mode": "RGBA",
+        "bytes": 24448,
+        "alphaBounds": [
+          69,
+          60,
+          932,
+          698
+        ]
+      }
+    }
+  ]
+}

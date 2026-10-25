@@ -70,6 +70,8 @@ data class ResolvedLearnGuidanceContent(
     val utilities: List<GuidanceOperationalCue>,
     val altText: String,
     val safetyCritical: Boolean,
+    val visualContentRevision: String? = null,
+    val visualInstruction: String = instruction,
 )
 
 data class LearnGuidanceCatalogResolution(
@@ -260,6 +262,8 @@ class LearnGuidanceCatalogResolver(
                 utilities = authored.utilities,
                 altText = authored.accessibleAltText,
                 safetyCritical = safetyCritical,
+                visualContentRevision = visualContentRevision,
+                visualInstruction = text.primaryInstruction,
             )
         }
         val showSupportingCopy = level in setOf(
@@ -289,6 +293,8 @@ class LearnGuidanceCatalogResolver(
             utilities = emptyList(),
             altText = text.altText,
             safetyCritical = safetyCritical,
+            visualContentRevision = visualContentRevision,
+            visualInstruction = text.primaryInstruction,
         )
     }
 }

@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "sourceUrls": [
+    "https://chemexcoffeemaker.com/pages/how-to-brew-with-chemex",
+    "https://chemexcoffeemaker.com/products/three-cup-classic-chemex"
+  ],
+  "entries": [
+    {
+      "sceneId": "chemex_sixcup_dose",
+      "candidateSha256": "3a9f95f2d1873100110679585ed7c91497a6bec474943ab1ed76e8f1582d944e",
+      "rawSha256": "90654499d4b0de11a55b5ab857b75b247351c71b253e7d42ef3ba8a93e137a68",
+      "promptSha256": "ff843cb5f5392c700a0a12d9e2643d53b688425133c68b81f6ffd89dec84ac49",
+      "verdict": "approved",
+      "reviewer": "Codex independent visual and binding review /root",
+      "reviewedOn": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "altTextReviewed": "Ground coffee is poured from a small cup into the bonded paper of a six-cup Classic Chemex resting on a scale.",
+      "targetContentIds": [
+        "chemex_30_480_dose"
+      ],
+      "notes": [
+        "Active coffee loading into matching bonded paper in a Classic vessel on stable scale. No numeric dose, tared reading or completed level-bed claim.",
+        "Full raw artwork, encoded delivery conversion, and actual 320px light/dark sheet inspected; no in-image text or numeric recipe claims. Manufacturer filter orientation and distinct three-cup paper scope checked."
+      ]
+    },
+    {
+      "sceneId": "chemex_unspecified_prepare",
+      "candidateSha256": "2e6f10e65a5a49a13c085c88d5bb864bd7726917c154df281b302080df20d01c",
+      "rawSha256": "15ecb1fe85aeb8f0f030d41d11e0baf6518bd2356ad69b50a4a6638b2871da95",
+      "promptSha256": "d1f8c810e42582b13de77ae56df977e3dcf8e12a10ed6eca65512ccaf20bd945",
+      "verdict": "approved",
+      "reviewer": "Codex independent visual and binding review /root",
+      "reviewedOn": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "altTextReviewed": "Close-up of three layers of bonded paper facing the Chemex spout, with the open glass air channel visible beneath them.",
+      "targetContentIds": [
+        "chemex_unspecified_prepare"
+      ],
+      "notes": [
+        "Conceptual close-up only: reinforced paper side faces the spout with a visible blue air gap below. This is not a folding-template diagram or a statement of filter size, overall vessel dimensions or capacity.",
+        "Full raw artwork, encoded delivery conversion, and actual 320px light/dark sheet inspected; no in-image text or numeric recipe claims. Manufacturer filter orientation and distinct three-cup paper scope checked."
+      ]
+    },
+    {
+      "sceneId": "chemex_unspecified_pour",
+      "candidateSha256": "5b2a841bfad0967a854b4c7c95033a1ab2f58735a3366ba74eb9bb6c796b8ea5",
+      "rawSha256": "fa95bf743f1a11c2a9a950e03d269d13aebb07b64012968972e5693fc1b04456",
+      "promptSha256": "84feddaff9ab41d63759108375d18d96bec2ee22b7c277c4b5b8c33cb7df1bcf",
+      "verdict": "approved",
+      "reviewer": "Codex independent visual and binding review /root",
+      "reviewedOn": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "altTextReviewed": "Close-up of a thin kettle stream wetting coffee evenly inside bonded Chemex paper, with generous space below the paper rim.",
+      "targetContentIds": [
+        "chemex_bloom",
+        "chemex_pour"
+      ],
+      "notes": [
+        "Focused wetting action inside fitted bonded paper with headroom. Exact batch, filter shape, clock, circle pattern and completed bloom remain textual. Vessel/kettle intentionally cropped as a close-up; no critical flow segment is cropped.",
+        "Full raw artwork, encoded delivery conversion, and actual 320px light/dark sheet inspected; no in-image text or numeric recipe claims. Manufacturer filter orientation and distinct three-cup paper scope checked."
+      ]
+    },
+    {
+      "sceneId": "chemex_unspecified_drain",
+      "candidateSha256": "80253981c3e1007c6960a36d3378780e5730bb86362eed3efb8a614ff68d227c",
+      "rawSha256": "c69bdb7fb6f125fd191d90f7e08623f146af9339ad969cecb3e1b1d404c8adee",
+      "promptSha256": "5989018eb3bd60025de58dda3ea9d337f4d236e0b99566ce53f91864abfec972",
+      "verdict": "approved",
+      "reviewer": "Codex independent visual and binding review /root",
+      "reviewedOn": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "altTextReviewed": "Close-up of the drained coffee bed in Chemex bonded paper; no standing water remains and only an occasional drop falls from the filter tip inside the glass neck.",
+      "targetContentIds": [
+        "chemex_drawdown"
+      ],
+      "notes": [
+        "Visible wet granular surface without standing water and last drip below filter tip. Supports observation of drawdown; does not prove all dripping already stopped or a measured time.",
+        "Full raw artwork, encoded delivery conversion, and actual 320px light/dark sheet inspected; no in-image text or numeric recipe claims. Manufacturer filter orientation and distinct three-cup paper scope checked."
+      ]
+    },
+    {
+      "sceneId": "chemex_unspecified_serve",
+      "candidateSha256": "5397e7f6879cc70b2110351af9fa1e804575bcbb3510ed354bec94549017049b",
+      "rawSha256": "5cd1553e0f9b9ac6b12f118bf6e2db4b2d5d5695f689c2783ea30cdd4dfa42a0",
+      "promptSha256": "72b7a4e0fd44fb3beac0d6cb8f07a1d00f08df5ce46b6d4440b58aaece94ca6b",
+      "verdict": "approved",
+      "reviewer": "Codex independent visual and binding review /root",
+      "reviewedOn": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "altTextReviewed": "Close-up of a hand holding the wooden Chemex collar while coffee pours from its clear, filter-free spout into a cup.",
+      "targetContentIds": [
+        "chemex_serve",
+        "chemex_unspecified_finish"
+      ],
+      "notes": [
+        "Protected wood-collar grip, filter removed from mouth, horizontal internal free surface reaches active spout and stream connects to cup. Deliberate neck/handling close-up avoids a universal body-size claim.",
+        "Full raw artwork, encoded delivery conversion, and actual 320px light/dark sheet inspected; no in-image text or numeric recipe claims. Manufacturer filter orientation and distinct three-cup paper scope checked."
+      ]
+    }
+  ]
+}

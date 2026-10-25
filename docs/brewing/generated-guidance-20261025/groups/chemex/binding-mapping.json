@@ -1,0 +1,59 @@
+{
+  "source": "docs/brewing/generated-guidance-20261025/bindings-draft.json#missing_scene_summary",
+  "reviewedOn": "2026-10-25",
+  "existingArtInspected": [
+    "instruction_p1_chemex_42_700_stage_01_instruction_default.webp",
+    "instruction_p1_chemex_42_700_stage_02_instruction_default.webp",
+    "instruction_p1_chemex_42_700_stage_03_instruction_default.webp",
+    "instruction_p1_chemex_42_700_stage_04_instruction_default.webp",
+    "instruction_p1_chemex_42_700_stage_05_instruction_default.webp",
+    "instruction_p1_chemex_42_700_stage_06_instruction_default.webp",
+    "instruction_p1_chemex_42_700_stage_07_instruction_default.webp",
+    "guides/chemex_dose-v1.png"
+  ],
+  "reuseDecision": "Existing P1 full Classic silhouettes carry source model proportions. Do not reuse as an unspecified-size brewer. New six-cup dosing diagram covers the missing exact action. New unspecified closeups show only common action/topology, not full capacity, paper selection template or recipe numbers.",
+  "mappings": [
+    {
+      "sourceId": "chemex_sixcup_dose",
+      "sceneId": "chemex_sixcup_dose",
+      "targetContentIds": [
+        "chemex_30_480_dose"
+      ],
+      "scope": "Adding grounds to correctly papered six-cup Classic standing on scale. Does not depict gentle leveling or actual tare operation."
+    },
+    {
+      "sourceId": "chemex_unspecified_prepare",
+      "sceneId": "chemex_unspecified_prepare",
+      "targetContentIds": [
+        "chemex_unspecified_prepare"
+      ],
+      "scope": "Three-layer orientation and open spout air-channel detail only. Matching paper selection, half-moon 3-cup distinction, rinse/discard, dose and tare remain in authored text."
+    },
+    {
+      "sourceId": "chemex_unspecified_pour",
+      "sceneId": "chemex_unspecified_pour",
+      "targetContentIds": [
+        "chemex_bloom",
+        "chemex_pour"
+      ],
+      "scope": "Thin-stream even wetting with headroom, reusable for bloom and later gentle pour as the physical action is equivalent. Does not establish pause, amount, pace or countdown completion."
+    },
+    {
+      "sourceId": "chemex_unspecified_drain",
+      "sceneId": "chemex_unspecified_drain",
+      "targetContentIds": [
+        "chemex_drawdown"
+      ],
+      "scope": "Exposed damp bed without standing water and occasional final drip. No measured time or automatic completion."
+    },
+    {
+      "sourceId": "chemex_unspecified_serve",
+      "sceneId": "chemex_unspecified_serve",
+      "targetContentIds": [
+        "chemex_serve",
+        "chemex_unspecified_finish"
+      ],
+      "scope": "Filter-free spout and safe wooden-collar serving grip, physically continuous outflow. Does not show prior filter removal or swirling."
+    }
+  ]
+}

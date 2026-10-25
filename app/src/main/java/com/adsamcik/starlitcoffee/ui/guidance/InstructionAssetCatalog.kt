@@ -159,6 +159,9 @@ data class InstructionAssetRecord(
     val review: InstructionAssetReview,
     /** SHA-256 of the packaged drawable bytes used for hash-bound visual review. */
     val resourceSha256: String? = null,
+    /** Exact recipe wrappers retain the source hardware scope for independently reviewed reuse. */
+    val physicalFamilyId: MethodFamilyId = familyId,
+    val physicalProfileId: BrewerProfileId? = profileId,
 ) {
     init {
         require(drawableRes != 0) { "Instruction assets must use a drawable resource" }
@@ -242,22 +245,92 @@ data class GuidanceContentRecord(
     }
 }
 
-/**
- * Immutable lookup for reviewed instruction assets. It validates metadata but
- * intentionally permits drafts so a build can surface release-readiness gaps
- * before a catalog entry becomes shippable.
- */
+/** An independently reviewed reuse of the same physical scene for one explicit content contract. */
+@Suppress("LongParameterList")
+data class InstructionAssetAlias(
+    val contentId: StageContentId,
+    val sourceAssetId: InstructionAssetId,
+    val familyId: MethodFamilyId,
+    val profileId: BrewerProfileId,
+    val sourceResourceSha256: String,
+    val targetContentRevision: String,
+    val review: InstructionAssetReview,
+    val allowFamilySource: Boolean = false,
+    /** Source taxonomy is explicit when the reviewed target uses a different ID for the same hardware. */
+    val sourcePhysicalFamilyId: MethodFamilyId = familyId,
+    val sourcePhysicalProfileId: BrewerProfileId? = profileId,
+    /** Accessibility copy independently reviewed for these pixels in this target context. */
+    val altText: String? = null,
+) {
+    init {
+        require(sourceResourceSha256.matches(Regex("[0-9a-f]{64}"))) { "Alias sources require a reviewed SHA-256" }
+        require(targetContentRevision.isNotBlank()) { "Aliases require the reviewed target content revision" }
+        require(altText == null || altText.isNotBlank()) { "Binding alt text cannot be blank" }
+        require(review.isApproved && !review.notes.isNullOrBlank()) {
+            "Aliases require approved binding evidence describing hardware, action and state agreement"
+        }
+    }
+}
+
+/** Immutable metadata lookup; drafts remain available for release-readiness reporting, never visual admission. */
 class InstructionAssetCatalog(
     val assets: List<InstructionAssetRecord>,
+    val contentAliases: List<InstructionAssetAlias> = emptyList(),
+    val admittedTargets: List<AdmittedGuidanceTarget> = emptyList(),
 ) {
     private val assetsById = assets.associateBy(InstructionAssetRecord::id)
+    private val aliasesByContentId = contentAliases.associateBy(InstructionAssetAlias::contentId)
 
     init {
         requireUnique(assets.map { it.id.value }, "instruction asset")
         requireUnique(assets.map { it.slot }, "instruction asset slot")
+        requireUnique(contentAliases.map { it.contentId }, "instruction alias target")
+        contentAliases.forEach { alias ->
+            require(assets.none { it.contentId == alias.contentId }) { "Alias cannot replace canonical content" }
+            val source = requireNotNull(assetsById[alias.sourceAssetId]) { "Alias references an unknown source asset" }
+            require(source.review.isApproved && source.resourceSha256 == alias.sourceResourceSha256) {
+                "Alias source must retain its approved reviewed bytes"
+            }
+            require(source.physicalFamilyId == alias.sourcePhysicalFamilyId) {
+                "Alias must identify the reviewed source physical family"
+            }
+            require(source.physicalProfileId == alias.sourcePhysicalProfileId &&
+                (source.physicalProfileId != null || alias.allowFamilySource)) {
+                "Alias must identify the reviewed source profile and explicitly allow family artwork"
+            }
+        }
     }
 
     fun find(id: InstructionAssetId): InstructionAssetRecord? = assetsById[id]
+
+    fun approvedAliasForContent(contentId: StageContentId, contentRevision: String?): InstructionAssetAlias? =
+        aliasesByContentId[contentId]?.takeIf { alias ->
+            alias.targetContentRevision == contentRevision && !alias.altText.isNullOrBlank()
+        }
+
+    fun findApprovedAliasForContent(contentId: StageContentId, contentRevision: String?): InstructionAssetRecord? =
+        approvedAliasForContent(contentId, contentRevision)?.let { alias -> assetsById[alias.sourceAssetId] }
+
+    /** Exact reviewed pixel alt, or a current localized instruction caption for canonical artwork. */
+    fun approvedAltTextForContent(
+        contentId: StageContentId,
+        contentRevision: String?,
+        sourceAssetId: InstructionAssetId,
+        currentInstruction: String? = null,
+    ): String? {
+        val alias = approvedAliasForContent(contentId, contentRevision)
+        val source = assetsById[sourceAssetId]
+        val admitted = admittedTargets.singleOrNull { target ->
+            target.contentId == contentId.value && target.sourceAssetId == sourceAssetId.value
+        }
+        return when {
+            contentRevision == null || source?.review?.isApproved != true -> null
+            alias?.sourceAssetId == sourceAssetId -> alias.altText
+            admitted?.contentRevision == contentRevision -> admitted.altText.takeIf(String::isNotBlank)
+            source?.contentId == contentId && admitted != null -> currentInstruction?.takeIf(String::isNotBlank)
+            else -> null
+        }
+    }
 
     fun releaseReadiness(
         familyId: MethodFamilyId,

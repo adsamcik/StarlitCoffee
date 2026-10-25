@@ -1,0 +1,793 @@
+{
+  "schemaVersion": 1,
+  "generatedOn": "2026-10-25",
+  "generator": "Codex built-in image_gen",
+  "conversion": "Preserved raw RGBA; Lanczos contain within896x672; centered transparent1024x768 canvas; WebP quality92 method6 exact alpha. No drawing or visual fixes.",
+  "entries": [
+    {
+      "sceneId": "aero_cleanup",
+      "methodId": "aeropress",
+      "stepIds": [
+        "cleanup"
+      ],
+      "altText": "Clean AeroPress chamber, plunger and filter cap stored separately with the rubber seal uncompressed.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/aero_cleanup/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/aero_cleanup/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/aero_cleanup/prompt-v1.txt",
+      "sources": [
+        "https://aeropress.com/pages/how-to-use",
+        "https://timwendelboe.no/pages/how-to-brew-with-an-aeropress"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "e5d096ba2ec2cdf016055e8f7508297717742d472866d4b86f3f71af5927cfe4",
+      "candidateSha256": "19ab4cf483c17cf2c6a98bcb1745c0d60f4c9586f10bc4710ef0533ef1e084fb",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Clean dry final storage state: plunger removed entirely, relaxed rubber seal outside chamber, separate standard cap; ejection alternatives rejected. Phone correction: cap fill lightened in generator for dark-theme legibility.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "aero_pour",
+      "methodId": "aeropress",
+      "stepIds": [
+        "pour"
+      ],
+      "altText": "Water pouring into an upright AeroPress securely supported by a sturdy mug.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/aero_pour/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/aero_pour/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/aero_pour/prompt-v1.txt",
+      "sources": [
+        "https://aeropress.com/pages/how-to-use",
+        "https://timwendelboe.no/pages/how-to-brew-with-an-aeropress"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "6ec23a282d20ccf9d1601e09788dba7f55aeab04955eb85d68c782c078be2f26",
+      "candidateSha256": "8f0fc5e25a3eae4620c189f46bf012ffd74b3563706029d2b004854130728212",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Upright open chamber; generous headroom; standard-cap gravity drips; no inverted handling.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "aero_prepare",
+      "methodId": "aeropress",
+      "stepIds": [
+        "prepare"
+      ],
+      "altText": "An upright AeroPress with a paper-filter cap locked beneath the chamber on a sturdy mug.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/aero_prepare/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/aero_prepare/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/aero_prepare/prompt-v1.txt",
+      "sources": [
+        "https://aeropress.com/pages/how-to-use",
+        "https://timwendelboe.no/pages/how-to-brew-with-an-aeropress"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "de69a80037229cb1f0767b4c5305fdd13a9b17676d4b08bd4b2f584cad892a19",
+      "candidateSha256": "95bb1bdd6c3dc46c1dd9cee3b379fc0d0dbf7766d01e4e8732b59e2c0adf3489",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "One standard cap beneath support flange; upright mug support; shallow grounds; no spare cap.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "aero_press",
+      "methodId": "aeropress",
+      "stepIds": [
+        "press"
+      ],
+      "altText": "A relaxed palm gently pressing an upright AeroPress on a sturdy mug.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/aero_press/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/aero_press/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/aero_press/prompt-v1.txt",
+      "sources": [
+        "https://aeropress.com/pages/how-to-use",
+        "https://timwendelboe.no/pages/how-to-brew-with-an-aeropress"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "78eef53c345b8f5a6cfa0827972e45bd5b0c541cbda36c14e43e0621372d50a7",
+      "candidateSha256": "e4eb0a0e77edc42000ea2c06c647196437e012e7f18d4c2791a8b370c1f1db52",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Relaxed palm, centered mug support, seal descending and coffee through standard cap.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "aero_seal",
+      "methodId": "aeropress",
+      "stepIds": [
+        "seal_steep"
+      ],
+      "altText": "The AeroPress plunger resting shallowly in the chamber mouth while coffee steeps.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/aero_seal/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/aero_seal/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/aero_seal/prompt-v1.txt",
+      "sources": [
+        "https://aeropress.com/pages/how-to-use",
+        "https://timwendelboe.no/pages/how-to-brew-with-an-aeropress"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "c989c2f848b968eaae1b8127a42f7605285dc3cb95b07637821a19529c020fd7",
+      "candidateSha256": "e1e560641cf6757daafbb2c0a57e94b81fc918e3b780b86fbfb60457ffd969af",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Black seal shallowly seated at chamber mouth, plunger raised; no pressing hand.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "aero_stir",
+      "methodId": "aeropress",
+      "stepIds": [
+        "stir",
+        "restir"
+      ],
+      "altText": "A plastic paddle gently stirring coffee in an upright AeroPress with the plunger removed.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/aero_stir/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/aero_stir/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/aero_stir/prompt-v1.txt",
+      "sources": [
+        "https://aeropress.com/pages/how-to-use",
+        "https://timwendelboe.no/pages/how-to-brew-with-an-aeropress"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "bf895b2f0071dbf6ff7d00e3d62a676a1cab528d1dec4eb39c6792a9583edf2b",
+      "candidateSha256": "e05b945f52c30ac6c21b01017fa521983f874ba5fba431e2971b0a0844857bd3",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Corrected cap below flange; open chamber and plastic paddle; equivalent first and repeat stirring physical action.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "cold_clean",
+      "methodId": "cold-brew",
+      "stepIds": [
+        "clean"
+      ],
+      "altText": "Clean brewing equipment drying beside covered concentrate stored on a refrigerator shelf.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/cold_clean/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/cold_clean/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/cold_clean/prompt-v1.txt",
+      "sources": [
+        "https://counterculturecoffee.com/blogs/counter-culture-coffee/guide-to-cold-brew",
+        "https://www.bccdc.ca/health-info/prevention-public-health/food-safety"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "976bc9ebb6a0107aab1e5c069d39d01dc2cb07ca0895513c7c18545a95b48c88",
+      "candidateSha256": "b2245fcab620b0a01b066e1d7ed3019cea452c92142e57c4d5ba947dd126e9ce",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Regenerated empty dripper without retained paper; covered leftover jar on refrigerator shelf.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "cold_combine",
+      "methodId": "cold-brew",
+      "stepIds": [
+        "combine"
+      ],
+      "altText": "A spoon mixing cold water and coffee grounds in a food-safe jar with headroom.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/cold_combine/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/cold_combine/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/cold_combine/prompt-v1.txt",
+      "sources": [
+        "https://counterculturecoffee.com/blogs/counter-culture-coffee/guide-to-cold-brew",
+        "https://www.bccdc.ca/health-info/prevention-public-health/food-safety"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "b4f5fcf2fff521a8832a0e9a0d73df3400e6fdad5356aa4df789bd41de84ce7d",
+      "candidateSha256": "560571d561082f62307472ae1c59110291fb3f1609ed876d7a87f9b5dc010323",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Wet grounds gently mixed below rim; lid ready to cover; no heat.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "cold_dilute",
+      "methodId": "cold-brew",
+      "stepIds": [
+        "dilute"
+      ],
+      "altText": "Cold water being added to measured coffee concentrate in a serving glass on a scale.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/cold_dilute/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/cold_dilute/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/cold_dilute/prompt-v1.txt",
+      "sources": [
+        "https://counterculturecoffee.com/blogs/counter-culture-coffee/guide-to-cold-brew",
+        "https://www.bccdc.ca/health-info/prevention-public-health/food-safety"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "021e09e2ae50d62c67d27c91ca0ceba2d60f3d0e1ea7635664a14deefc7601cb",
+      "candidateSha256": "969ced8500217b47d76aa16f54e2f73350d578ac23257d7e4cc1d725a9e44ade",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Regenerated two-vessel dilution action; dose equality stays in measured app targets rather than picture.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "cold_filter",
+      "methodId": "cold-brew",
+      "stepIds": [
+        "filter"
+      ],
+      "altText": "Cold concentrate draining through a supported paper filter into a clean server.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/cold_filter/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/cold_filter/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/cold_filter/prompt-v1.txt",
+      "sources": [
+        "https://counterculturecoffee.com/blogs/counter-culture-coffee/guide-to-cold-brew",
+        "https://www.bccdc.ca/health-info/prevention-public-health/food-safety"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "755407f00125e34b943370e47d333d165597d0b67d0fa2284488358af0bedf98",
+      "candidateSha256": "059c2f35781095ba77d8f63682b8fcf7d2a8da67fc1c3858fd1dca363570388b",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Supported paper filter with headroom and gravity flow into clean server.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "cold_prepare",
+      "methodId": "cold-brew",
+      "stepIds": [
+        "prepare"
+      ],
+      "altText": "A clean jar, lid and spoon ready beside a refrigerator shelf.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/cold_prepare/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/cold_prepare/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/cold_prepare/prompt-v1.txt",
+      "sources": [
+        "https://counterculturecoffee.com/blogs/counter-culture-coffee/guide-to-cold-brew",
+        "https://www.bccdc.ca/health-info/prevention-public-health/food-safety"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "54aca25bb0e67b1075d286c53b2b1615d8332cb7cd232f8c9ed191e399537ab6",
+      "candidateSha256": "3070e9d2fdbb281247e4152872595174cc1891235666eaf0d1dc800153012c81",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Clean open jar and lid; refrigeration readiness shown; temperature value remains adjacent app text.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "cold_steep",
+      "methodId": "cold-brew",
+      "stepIds": [
+        "steep"
+      ],
+      "altText": "A covered jar of coffee steeping on a refrigerator shelf.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/cold_steep/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/cold_steep/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/cold_steep/prompt-v1.txt",
+      "sources": [
+        "https://counterculturecoffee.com/blogs/counter-culture-coffee/guide-to-cold-brew",
+        "https://www.bccdc.ca/health-info/prevention-public-health/food-safety"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "5fcc34ec8cf00a6129d62c9f48b1975b11fc562132a6a6002f1c883f7a9e95a6",
+      "candidateSha256": "eefb2244e075326f51744166421f53500b40fe6f3cd50335425eeeeade88303f",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Covered jar on refrigerator shelf; no hot equipment; blank preparation tag.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "espresso_basket",
+      "methodId": "espresso",
+      "stepIds": [
+        "prepare_basket"
+      ],
+      "altText": "A clean dry single-wall two-cup basket fitted in a spouted portafilter.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_basket/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_basket/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_basket/prompt-v1.txt",
+      "sources": [
+        "https://assets.breville.com/BES500/BES500_USCM_IB_T23_LR.pdf",
+        "https://counterculturecoffee.com/pages/quick-easy-espresso"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "8b57cbac6b39791ca1df0cefa29d5eb07d5095f67f4d8f8662e3c62e2aa4cfc8",
+      "candidateSha256": "da4ee616754f08db089f18cfad3dafd9ec8cd8e465f06a4ed8b5150b3ddc00da",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Dry basket floor with many perforations, no double-wall pressure valve; clean portafilter.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "espresso_clean",
+      "methodId": "espresso",
+      "stepIds": [
+        "clean"
+      ],
+      "altText": "A cooled portafilter releasing spent grounds into a knock box.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_clean/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_clean/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_clean/prompt-v1.txt",
+      "sources": [
+        "https://assets.breville.com/BES500/BES500_USCM_IB_T23_LR.pdf",
+        "https://counterculturecoffee.com/pages/quick-easy-espresso"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "1ecef324a16d2c23ff08ab70a2c8e27984d9126cbd36bc27f3a7948399844732",
+      "candidateSha256": "b4f3711bffbcd00faebf31b51214ed3aaeccfdd898a6b1721caf09ea08e4b1c0",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Detached cooled portafilter ejecting puck into knock box, no active pressure.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "espresso_fit",
+      "methodId": "espresso",
+      "stepIds": [
+        "check_fit"
+      ],
+      "altText": "A dose-trimming blade resting across the portafilter rim to check puck clearance.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_fit/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_fit/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_fit/prompt-v1.txt",
+      "sources": [
+        "https://assets.breville.com/BES500/BES500_USCM_IB_T23_LR.pdf",
+        "https://counterculturecoffee.com/pages/quick-easy-espresso"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "4907bdb3e610365c4ef93cbe5184ea952d1b645bc98f9c211d4d99de7846c122",
+      "candidateSha256": "2da2815484686ba86f22942b639cb6b9a1ddedd37adbb08bdde4ef4ebbb1235e",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Dose-trimming blade bridges basket rim; no pressure operation or invented internals.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "espresso_ready",
+      "methodId": "espresso",
+      "stepIds": [
+        "prepare_machine"
+      ],
+      "altText": "A compact pump espresso machine with its water tank and drip tray seated.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_ready/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_ready/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_ready/prompt-v1.txt",
+      "sources": [
+        "https://assets.breville.com/BES500/BES500_USCM_IB_T23_LR.pdf",
+        "https://counterculturecoffee.com/pages/quick-easy-espresso"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "22f78ca4794aa4689b8335362bea0d80acb5c68740a7ac9baa282e6034e00321",
+      "candidateSha256": "953fc7b4fd04996fce144b541a765f522b9164c8d68662e6652af2f780b8c114",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Seated rear tank and drip tray, compact pump-machine anatomy; no running flow.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "espresso_start",
+      "methodId": "espresso",
+      "stepIds": [
+        "start_shot"
+      ],
+      "altText": "A fingertip starting a pump espresso shot with a cup on a scale under the spouts.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_start/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_start/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_start/prompt-v1.txt",
+      "sources": [
+        "https://assets.breville.com/BES500/BES500_USCM_IB_T23_LR.pdf",
+        "https://counterculturecoffee.com/pages/quick-easy-espresso"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "383948dab708e60e447c69f82dc5b0c9ad267b68f43d1a2de5dc345da911b72a",
+      "candidateSha256": "227c26008878a0d3ab523c19479c188ba791bce321b59b00ceb9ecf43c9dbcb3",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Second main brew button pressed, early drops, portafilter locked and cup on scale. Regenerated complete control anatomy: three large main buttons plus two smaller setting controls, paired spouts.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "espresso_stop",
+      "methodId": "espresso",
+      "stepIds": [
+        "stop_and_taste"
+      ],
+      "altText": "A fingertip stopping the espresso shot while the filled cup remains on the scale.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_stop/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_stop/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_stop/prompt-v1.txt",
+      "sources": [
+        "https://assets.breville.com/BES500/BES500_USCM_IB_T23_LR.pdf",
+        "https://counterculturecoffee.com/pages/quick-easy-espresso"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "8b724b77ef31be9c50c5d5e7924decef0ef0e68dbc5653cf3ed097c9f07f5d50",
+      "candidateSha256": "e80782e6a386ff59d2edee593b0db7360a4d697a65f3a9c98b249e7b2726380a",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Second main brew button pressed, filled cup and only residual drop, portafilter still locked. Regenerated complete control anatomy: three large main buttons plus two smaller setting controls, paired spouts.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "espresso_tamp",
+      "methodId": "espresso",
+      "stepIds": [
+        "dose_and_tamp"
+      ],
+      "altText": "A level tamper pressing evenly distributed grounds in a supported portafilter.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_tamp/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_tamp/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_tamp/prompt-v1.txt",
+      "sources": [
+        "https://assets.breville.com/BES500/BES500_USCM_IB_T23_LR.pdf",
+        "https://counterculturecoffee.com/pages/quick-easy-espresso"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "e62382bb8b2ce3d49528a94cb48774d8774ed1acda65ccedbb243daf7c5adaf3",
+      "candidateSha256": "39f2fa4cd5693ef9f6b23f9904f7d99f4f1a832e3d7dc795007e2fc4b4a92d71",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Phone correction: snug matching tamper base inserted level into basket; supported portafilter; no broad coffee ring.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "french_decant",
+      "methodId": "french-press",
+      "stepIds": [
+        "decant"
+      ],
+      "altText": "French press tilted by its handle so coffee reaches the open spout and pours into a stable mug, with grounds retained below the lowered screen.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/french_decant/raw-v2.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/french_decant/candidate-v2.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/french_decant/prompt-v2.txt",
+      "sources": [
+        "https://d9pl0lig74xnv.cloudfront.net/product_manuals/z/p/zp2019-000001_frenchpress_coffeemakers_v1-20190308_pages.pdf",
+        "https://www.stumptowncoffee.com/pages/brew-guide-french-press"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "689da68f957e9a3801e1a2a5704485c020ce9b782103beb47f87c063e7a9dac3",
+      "candidateSha256": "d0885a458ea8d466b570cffcc37b9a7cc7ba38809f0bbf589301204537ca8707",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Regenerated after independent rejection: horizontal free surface visibly reaches open spout, continuous liquid path into stable partly-filled mug, hand holds handle and lid remains seated.",
+          "Prior version and independent rejection preserved. Requires cross-recheck of this replacement before admission."
+        ]
+      }
+    },
+    {
+      "sceneId": "french_plunge",
+      "methodId": "french-press",
+      "stepIds": [
+        "plunge"
+      ],
+      "altText": "One hand holding the handle while a relaxed palm gently lowers the French press screen.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/french_plunge/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/french_plunge/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/french_plunge/prompt-v1.txt",
+      "sources": [
+        "https://d9pl0lig74xnv.cloudfront.net/product_manuals/z/p/zp2019-000001_frenchpress_coffeemakers_v1-20190308_pages.pdf",
+        "https://www.stumptowncoffee.com/pages/brew-guide-french-press"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "a8f31ea194f8967831607b786ae3ac05d12f4539b0e26f0719b7668056b8d773",
+      "candidateSha256": "fd2bb3cf128077fcf5c1829d80096a4089672b26d94ae71c65bf758a6fc8b77f",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Relaxed palm lowers screen; other hand holds handle; no scale or forceful pressing.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "french_pour",
+      "methodId": "french-press",
+      "stepIds": [
+        "add-water"
+      ],
+      "altText": "Water pouring into a French press with generous space below the rim.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/french_pour/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/french_pour/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/french_pour/prompt-v1.txt",
+      "sources": [
+        "https://d9pl0lig74xnv.cloudfront.net/product_manuals/z/p/zp2019-000001_frenchpress_coffeemakers_v1-20190308_pages.pdf",
+        "https://www.stumptowncoffee.com/pages/brew-guide-french-press"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "95de1d2ce1407ee65e4a7bb5af92137bb7ba9856874deaf2ddf325cb2a2d7889",
+      "candidateSha256": "cc017af26faa9a383777ea2327f893bab2e28b6ea94f03fab85ef4ff9ab381f9",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Regenerated short kettle spout, half-volume fill with generous headroom, no clipped kettle body.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "french_prepare",
+      "methodId": "french-press",
+      "stepIds": [
+        "prepare"
+      ],
+      "altText": "A sound French press with dry grounds on a scale and its assembled plunger beside it.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/french_prepare/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/french_prepare/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/french_prepare/prompt-v1.txt",
+      "sources": [
+        "https://d9pl0lig74xnv.cloudfront.net/product_manuals/z/p/zp2019-000001_frenchpress_coffeemakers_v1-20190308_pages.pdf",
+        "https://www.stumptowncoffee.com/pages/brew-guide-french-press"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "eb1cfd0ec7bdb60f8dca498a3d8b93bf83f97b14248c8fcc5199de39fda0973c",
+      "candidateSha256": "c7fca4080b85ffcd767bc114303e1a5b196833f70aa8ea3aaf3167ebd74b6413",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Regenerated shallow dry coffee bed, sound beaker and assembled detached mesh plunger.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "french_steep",
+      "methodId": "french-press",
+      "stepIds": [
+        "steep"
+      ],
+      "altText": "A covered French press resting with its plunger raised above the coffee.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/french_steep/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/french_steep/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/french_steep/prompt-v1.txt",
+      "sources": [
+        "https://d9pl0lig74xnv.cloudfront.net/product_manuals/z/p/zp2019-000001_frenchpress_coffeemakers_v1-20190308_pages.pdf",
+        "https://www.stumptowncoffee.com/pages/brew-guide-french-press"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "e80df196441a596a1e58104461ec4cc17440d999f129be771d086a441737ba71",
+      "candidateSha256": "cb129d72ccefa5efbad7e9b31e1021c5170a745608a075789772f7afbd09e92e",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Lid fitted and mesh raised above brew; no early plunge.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    },
+    {
+      "sceneId": "french_stir",
+      "methodId": "french-press",
+      "stepIds": [
+        "stir-cover"
+      ],
+      "altText": "A plastic spoon gently stirring French press coffee before the raised plunger is fitted.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/french_stir/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/french_stir/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/french_stir/prompt-v1.txt",
+      "sources": [
+        "https://d9pl0lig74xnv.cloudfront.net/product_manuals/z/p/zp2019-000001_frenchpress_coffeemakers_v1-20190308_pages.pdf",
+        "https://www.stumptowncoffee.com/pages/brew-guide-french-press"
+      ],
+      "generatedOn": "2026-10-25",
+      "rawSha256": "aba37e3c81de201f333450987266a4874e63ec60185fee4f2af7e98dd0983c20",
+      "candidateSha256": "008a7f91935379cdb20315e9495738f86c9fc088c71bbf630bc9040b48a5f0ba",
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Plastic spoon; plunger detached while stirring; no hand on hot glass.",
+          "Production agent inspected full generated image and320x240 light/dark composites; independent admission QC remains required."
+        ]
+      }
+    }
+  ],
+  "rejected": [
+    {
+      "sceneId": "aero_prepare_v1",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/aero_prepare_v1/raw.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/aero_prepare_v1/prompt.txt",
+      "qc": {
+        "status": "rejected",
+        "notes": [
+          "Rejected: duplicate filter cap creates ambiguity, empty chamber omits dosed preparation state."
+        ]
+      }
+    },
+    {
+      "sceneId": "cold_dilute_v1",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/cold_dilute_v1/raw.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/cold_dilute_v1/prompt.txt",
+      "qc": {
+        "status": "rejected",
+        "notes": [
+          "Rejected before admission; targeted regeneration needed: One small serving glass on a simple digital scale with blank display, containing dark cold concentrate. One small glass water beaker held over it gently pours pale blue cold water into serving glass. Exactly TWO vessels in scene, receiving glass and water beaker; NO other beakers or spare portions. Same measured water/concentrate amounts are communicated in adjacent app copy, not in image. No numbers, labels, ice, milk, froth or steam. Clear simple act of dilution."
+        ]
+      }
+    },
+    {
+      "sceneId": "cold_clean_v1",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/cold_clean_v1/raw.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/cold_clean_v1/prompt.txt",
+      "qc": {
+        "status": "rejected",
+        "notes": [
+          "Rejected before admission; targeted regeneration needed: One clean EMPTY food-safe glass jar with matching lid beside it, and one clean EMPTY plastic dripper drying on a small simple rack. Dripper contains NO PAPER and NO grounds. Beside these a sealed jar of leftover concentrate on one minimal refrigerator shelf outline. Keep minimal clear separation, no paper lining in dripper, no dirty grounds, no soap near coffee. No glass shine, flat vector-like fills."
+        ]
+      }
+    },
+    {
+      "sceneId": "french_prepare_v1",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/french_prepare_v1/raw.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/french_prepare_v1/prompt.txt",
+      "qc": {
+        "status": "rejected",
+        "notes": [
+          "Rejected before admission; targeted regeneration needed: One1liter French press glass beaker in simple dark frame with side handle and small spout. Open top with VERY THIN loose dry coffee bed only one centimeter deep at bottom, NOT quarter vessel height. A separate correctly assembled mesh filter-plunger and lid stands beside it; straight rod, round mesh support plate, no loose layers. Beaker on a thin plain scale, blank display. No water yet. Clear generous empty space above thin grounds bed."
+        ]
+      }
+    },
+    {
+      "sceneId": "french_pour_v1",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/french_pour_v1/raw.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/french_pour_v1/prompt.txt",
+      "qc": {
+        "status": "rejected",
+        "notes": [
+          "Rejected before admission; targeted regeneration needed: One1liter French press glass beaker in dark frame with handle and spout. Open top no lid/plunger. A slim kettle spout enters composition from upper left and ends over the beaker; only short spout visible, NO clipped kettle body. Gentle pale blue water stream wets coffee. Vessel about half-full leaving very generous headroom. Stable blank-display scale beneath. All instructional equipment entirely within transparent safe margin; no hand touching hot glass."
+        ]
+      }
+    },
+    {
+      "sceneId": "aero_stir_v1",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/aero_stir_v1/raw.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/aero_stir_v1/prompt.txt",
+      "qc": {
+        "status": "rejected",
+        "notes": [
+          "Rejected before admission; targeted regeneration needed: Upright standard AeroPress Original/Clear brewer, no plunger. One translucent gray cylinder open at top, shallow slurry below rim; broad hexagonal support FLANGE at BOTTOM of cylinder. The thin BLACK PERFORATED FILTER CAP is attached BENEATH that flange, inserted into sturdy mug rim; no black cap above flange. Mug supports flange securely. A black plastic paddle held gently through open top stirs coffee front-to-back. Draw only this physical moment, no numbers, no motion marks. Same upright standard cap anatomy as maker instructions, no inversion."
+        ]
+      }
+    },
+    {
+      "sceneId": "aero_cleanup_v1",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/aero_cleanup_v1/raw.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/aero_cleanup_v1/prompt.txt",
+      "qc": {
+        "status": "rejected",
+        "notes": [
+          "Rejected before admission; targeted regeneration needed: Cooled standard AeroPress held VERTICALLY directly above a simple open waste bin, NO mug. Black filter cap REMOVED completely, shown beside bin. Chamber bottom OPEN DOWNWARD. Plunger fully down, pushing spent coffee puck and white paper disc OUT ALONG THE VERTICAL AXIS through chamber open bottom into bin. One hand supports dry upper flange, other relaxed hand pushes plunger. Absolutely NO hole in side wall; puck exits only open bottom. No steam. Entire cylinder, bin and cap visible with generous transparent margin."
+        ]
+      }
+    },
+    {
+      "sceneId": "espresso_start_v1",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/espresso_start_v1/raw.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/espresso_start_v1/prompt.txt",
+      "qc": {
+        "status": "rejected",
+        "notes": [
+          "Rejected: full machine omitted the Bambino Plus two smaller right-hand steam-setting buttons, inconsistent control anatomy."
+        ]
+      }
+    },
+    {
+      "sceneId": "espresso_stop_v1",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/espresso_stop_v1/raw.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/espresso_stop_v1/prompt.txt",
+      "qc": {
+        "status": "rejected",
+        "notes": [
+          "Rejected: full machine omitted the Bambino Plus two smaller right-hand steam-setting buttons, inconsistent control anatomy."
+        ]
+      }
+    },
+    {
+      "sceneId": "aero_cleanup_v2",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/aero_cleanup_v2/raw.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/aero_cleanup_v2/prompt.txt",
+      "qc": {
+        "status": "rejected",
+        "notes": [
+          "Rejected: vertical ejection is corrected but barrel support flange appears near upper mouth rather than around the open filter end. Regenerate with source-anatomy reference."
+        ]
+      }
+    },
+    {
+      "sceneId": "aero_cleanup_v3",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/aero_cleanup_v3/raw.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/aero_cleanup_v3/prompt.txt",
+      "qc": {
+        "status": "rejected",
+        "notes": [
+          "Rejected: corrected flange but duplicated grounds inside and outside barrel make the axial ejection ambiguous. Use clean uncompressed final storage state instead."
+        ]
+      }
+    },
+    {
+      "sceneId": "aero_cleanup_phone_rejected",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/aero_cleanup_phone_rejected/raw.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/aero_cleanup_phone_rejected/prompt.txt",
+      "qc": {
+        "status": "rejected",
+        "notes": [
+          "Rejected: standard black cap becomes hard to distinguish on dark phone background."
+        ]
+      }
+    },
+    {
+      "sceneId": "espresso_tamp_phone_rejected",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/espresso_tamp_phone_rejected/raw.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/rejected/espresso_tamp_phone_rejected/prompt.txt",
+      "qc": {
+        "status": "rejected",
+        "notes": [
+          "Rejected: tamper appears materially narrower than basket and could teach use of the wrong size."
+        ]
+      }
+    },
+    {
+      "sceneId": "french_decant_independent_rejected_v1",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/french_decant/raw-v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/french_decant/candidate-v1.webp",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/french_decant/prompt-v1.txt",
+      "rawSha256": "42b073c599914a686c201b69948bfb8ef4a2429ff9fea15974e43944a59bcbf4",
+      "candidateSha256": "2b5b6079a36109023b81384921cb4bae77d45ba2d27027e9817c4d885c04e3ad",
+      "qc": {
+        "status": "rejected",
+        "notes": [
+          "Independent QC rejected disconnected pour: remaining coffee did not reach actual spout. Regenerated only this scene with physically connected free surface/spout/stream, correct tilt/fill and safe handle grip."
+        ]
+      }
+    }
+  ]
+}

@@ -166,8 +166,12 @@ fun LearnBrewerScreen(
                                 style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
                         }
                         steps.firstOrNull()?.let { introduction ->
-                            instructionAssets?.findApprovedAssetForContent(introduction.id)?.let { asset ->
-                                item { ApprovedInstructionAssetImage(asset, introduction.altText) }
+                            instructionAssets?.findApprovedAssetForContent(introduction.id,
+                                introduction.visualContentRevision)?.let { asset ->
+                                val alt = instructionAssets?.approvedAltTextForContent(introduction.id,
+                                    introduction.visualContentRevision, asset.id,
+                                    currentInstruction = introduction.visualInstruction) ?: introduction.altText
+                                item { ApprovedInstructionAssetImage(asset, alt) }
                             }
                         }
                         exactGuide?.let { guide -> item { ExactLearnRecipeOverview(guide) } }
@@ -195,8 +199,11 @@ fun LearnBrewerScreen(
                         }
                         item {
                             val step = requireNotNull(currentStep)
-                            LearningStepContent(step, stageFacts[step.id],
-                                instructionAssets?.findApprovedAssetForContent(step.id), detailsExpanded,
+                            val asset = instructionAssets?.findApprovedAssetForContent(step.id, step.visualContentRevision)
+                            val admittedAlt = asset?.let { instructionAssets?.approvedAltTextForContent(step.id,
+                                step.visualContentRevision, it.id, currentInstruction = step.visualInstruction) }
+                            LearningStepContent(step.copy(altText = admittedAlt ?: step.altText), stageFacts[step.id],
+                                asset, detailsExpanded,
                                 onToggleDetails = { detailsExpanded = !detailsExpanded },
                                 equipmentProfileId = reviewedGuide?.profileId)
                         }

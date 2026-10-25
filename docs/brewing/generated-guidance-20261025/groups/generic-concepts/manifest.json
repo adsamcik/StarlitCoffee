@@ -1,0 +1,972 @@
+{
+  "schemaVersion": 1,
+  "generatedOn": "2026-10-25",
+  "generator": "Codex built-in image_gen",
+  "conversion": "Original RGBA preserved. Lanczos contain within896x672; centered transparent1024x768; WebP quality92/method4/exact alpha; phone320x240. No visual hand edits.",
+  "scope": "Conceptual diagrams only. No real brewer, controls, filter compatibility, location, cycle or universal capacity claimed. Source manuals remain authoritative.",
+  "selectedSceneCount": 14,
+  "targetContextCount": 32,
+  "entries": [
+    {
+      "sceneId": "concept_filter_options",
+      "methodId": "generic-concept",
+      "stepIds": [],
+      "targetContentIds": [],
+      "altText": "Conceptual alternatives: separate paper and reusable mesh filters; use the filter specified for the brewer.",
+      "version": 1,
+      "conceptual": true,
+      "sourcePhysicalFamilyId": "conceptual_common_actions",
+      "sourcePhysicalProfileId": null,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_filter_options/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_filter_options/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_filter_options/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_filter_options/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_filter_options/phone-dark-v1.png"
+      },
+      "rawSha256": "d413b173ec7ed0444fc5240cd8f924fe296fe32f690475db0d82510570c76257",
+      "promptSha256": "7ed20ff8ce109d9a1b68eda53c0225aba7784e81dc15ca84b42beb90948b65f7",
+      "candidateSha256": "8cd4b628964f0006321265ca03607370c56cb13ac5f25ceb11f34774523844cc",
+      "sourceContracts": [],
+      "sources": [],
+      "bindingContexts": [],
+      "qc": {
+        "status": "rejected",
+        "notes": [
+          "Not selected: automatic contexts require paper-only alternatives; generic valve uses conditional rinse concept.",
+          "Rejected/not selected during producer full-resolution review; originals and delivery/phone artifacts retained for evidence. No independent admission approval."
+        ]
+      }
+    },
+    {
+      "sceneId": "concept_filter_rinse",
+      "methodId": "generic-concept",
+      "stepIds": [],
+      "targetContentIds": [],
+      "altText": "Conceptual rinsing: clean water passes through a detached selected filter into a receiving bowl.",
+      "version": 1,
+      "conceptual": true,
+      "sourcePhysicalFamilyId": "conceptual_common_actions",
+      "sourcePhysicalProfileId": null,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_filter_rinse/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_filter_rinse/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_filter_rinse/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_filter_rinse/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_filter_rinse/phone-dark-v1.png"
+      },
+      "rawSha256": "3046bd213c18375fd0fdd252d497ddeac37dff115eb9b17866fbd61575453c37",
+      "promptSha256": "bbf02d3e330fbcc1548a8e664cff36ac35ed5157b45209a77a0aa1b33e780817",
+      "candidateSha256": "64aa4e845d424e55d6adcd5e3700b262a71a3fc2588c211312e06a0dd2441f54",
+      "sourceContracts": [],
+      "sources": [],
+      "bindingContexts": [],
+      "qc": {
+        "status": "rejected",
+        "notes": [
+          "Rejected: smooth cone-like funnel could imply universal filter shape.",
+          "Rejected/not selected during producer full-resolution review; originals and delivery/phone artifacts retained for evidence. No independent admission approval."
+        ]
+      }
+    },
+    {
+      "sceneId": "concept_coffee_loading",
+      "methodId": "generic-concept",
+      "stepIds": [],
+      "targetContentIds": [],
+      "altText": "Conceptual loading: loose grounds fall into an open receptacle with room below its rim.",
+      "version": 1,
+      "conceptual": true,
+      "sourcePhysicalFamilyId": "conceptual_common_actions",
+      "sourcePhysicalProfileId": null,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_coffee_loading/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_coffee_loading/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_coffee_loading/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_coffee_loading/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_coffee_loading/phone-dark-v1.png"
+      },
+      "rawSha256": "4c2bf3e72460142968a943b49a52598aef387a12c4667fa9f97c85a5cd2f0dcb",
+      "promptSha256": "42986ed5c168e1378c58b41a0b7068caa2a58509051f7bba25c5aba4f7ff78b8",
+      "candidateSha256": "5b8ad0bb52bf66fce87024fa8d2355044e9fd1a028e2e8dc729a798897680aa0",
+      "sourceContracts": [],
+      "sources": [],
+      "bindingContexts": [],
+      "qc": {
+        "status": "rejected",
+        "notes": [
+          "Not selected: loaded loose-level end-state is shared with loading/leveling contracts to avoid redundant scenes.",
+          "Rejected/not selected during producer full-resolution review; originals and delivery/phone artifacts retained for evidence. No independent admission approval."
+        ]
+      }
+    },
+    {
+      "sceneId": "concept_coffee_level",
+      "methodId": "generic-concept",
+      "stepIds": [
+        "valve_release_generic_add_coffee",
+        "automatic_single_cup_generic_add_coffee",
+        "automatic_single_cup_generic_level_coffee_bed",
+        "automatic_batch_generic_add_coffee",
+        "automatic_batch_generic_level_coffee_bed",
+        "reviewed_automatic_drip_v1_coffee"
+      ],
+      "targetContentIds": [
+        "valve_release_generic_add_coffee",
+        "automatic_single_cup_generic_add_coffee",
+        "automatic_single_cup_generic_level_coffee_bed",
+        "automatic_batch_generic_add_coffee",
+        "automatic_batch_generic_level_coffee_bed",
+        "reviewed_automatic_drip_v1_coffee"
+      ],
+      "altText": "Conceptual level bed: loose grounds lie evenly below the rim, without compression.",
+      "version": 1,
+      "conceptual": true,
+      "sourcePhysicalFamilyId": "conceptual_common_actions",
+      "sourcePhysicalProfileId": null,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_coffee_level/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_coffee_level/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_coffee_level/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_coffee_level/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_coffee_level/phone-dark-v1.png"
+      },
+      "rawSha256": "ab77ea24201e9b604772ba9e64b73a5dc73946912a81360a2820c544a0cbd111",
+      "promptSha256": "acfa1ceea95b904306109fd43dc3b82ea29fbeb76800a0f5c84a48468c717d63",
+      "candidateSha256": "ccf408afcd41f53828896682afd27155dd6f51715f43d0a94eaf215fb9b6a206",
+      "sourceContracts": [
+        "app/src/main/assets/brewing/reviewed-method-guides.json",
+        "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1BuiltInGuidanceCatalog.kt"
+      ],
+      "sources": [],
+      "bindingContexts": [
+        {
+          "content_id": "valve_release_generic_add_coffee",
+          "target_family_id": "steep_and_release",
+          "target_profile_id": "valve_release_generic",
+          "target_content_revision": "336c7e6053e49d068338baa66a94149fd61257b46bd34569eeae9ddaec73ae08",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. Loose loaded/level END-STATE only, not measured dose, actual basket topology, active loading or tamping."
+        },
+        {
+          "content_id": "automatic_single_cup_generic_add_coffee",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_single_cup_generic",
+          "target_content_revision": "686b123c2f7409862c704b4628a50cdc576ab4014dc4c1ed18066b28e619466d",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. Loose loaded/level END-STATE only, not measured dose, actual basket topology, active loading or tamping."
+        },
+        {
+          "content_id": "automatic_single_cup_generic_level_coffee_bed",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_single_cup_generic",
+          "target_content_revision": "cbe98af837d629a885af5c3d6a17bb6f85e54b56f8ce691f51bfd295f6278234",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. Loose loaded/level END-STATE only, not measured dose, actual basket topology, active loading or tamping."
+        },
+        {
+          "content_id": "automatic_batch_generic_add_coffee",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_batch_generic",
+          "target_content_revision": "61eee0d26720a686af01ed5cc8cdfafe127535808f967183b2e615b549650ed0",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. Loose loaded/level END-STATE only, not measured dose, actual basket topology, active loading or tamping."
+        },
+        {
+          "content_id": "automatic_batch_generic_level_coffee_bed",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_batch_generic",
+          "target_content_revision": "d939d52a150baa70a6f777400a9962cb2d3f57dd08ae9776fc9193daab359475",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. Loose loaded/level END-STATE only, not measured dose, actual basket topology, active loading or tamping."
+        },
+        {
+          "content_id": "reviewed_automatic_drip_v1_coffee",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_batch_generic",
+          "target_content_revision": "69a8407929816393253dfb91e2a75dfe6d849c6c2a444120deff917f8253d6b7",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. Loose loaded/level END-STATE only, not measured dose, actual basket topology, active loading or tamping."
+        }
+      ],
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Candidate; independent full/binding QC required.",
+          "Producer inspected raw PNG, encoded full WebP and320px light/dark previews. Production inspection is not independent admission approval."
+        ]
+      }
+    },
+    {
+      "sceneId": "concept_retained_liquid",
+      "methodId": "generic-concept",
+      "stepIds": [
+        "valve_release_generic_close_valve",
+        "valve_release_generic_steep"
+      ],
+      "targetContentIds": [
+        "valve_release_generic_close_valve",
+        "valve_release_generic_steep"
+      ],
+      "altText": "Conceptual retention: liquid stays in a chamber with no outflow into the cup below; controls are omitted.",
+      "version": 1,
+      "conceptual": true,
+      "sourcePhysicalFamilyId": "conceptual_common_actions",
+      "sourcePhysicalProfileId": null,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_retained_liquid/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_retained_liquid/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_retained_liquid/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_retained_liquid/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_retained_liquid/phone-dark-v1.png"
+      },
+      "rawSha256": "318f63d3c97ee03ca4f47f10191edd2e1e85c73812c4e2b34b7cafab83131a50",
+      "promptSha256": "661594bd640ff60f943725e23c2add514c83b89ce06a156308071005a0e235d2",
+      "candidateSha256": "8cf5687d732667e70719c6061e1540ba68e61a331249b91e2aa88a20259533a0",
+      "sourceContracts": [
+        "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1BuiltInGuidanceCatalog.kt"
+      ],
+      "sources": [],
+      "bindingContexts": [
+        {
+          "content_id": "valve_release_generic_close_valve",
+          "target_family_id": "steep_and_release",
+          "target_profile_id": "valve_release_generic",
+          "target_content_revision": "5063e6ababe86e66f41765e2c61a55c40b71bf04dc9285279e6c31532c0598ab",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. Retention is a functional concept, not a literal current filled state or an illustrated actuator."
+        },
+        {
+          "content_id": "valve_release_generic_steep",
+          "target_family_id": "steep_and_release",
+          "target_profile_id": "valve_release_generic",
+          "target_content_revision": "7125fdcae8c3b37f6c7e708473a4ac460460bdd943efa55da464ebf66108d293",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text."
+        }
+      ],
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Candidate; independent full/binding QC required.",
+          "Producer inspected raw PNG, encoded full WebP and320px light/dark previews. Production inspection is not independent admission approval."
+        ]
+      }
+    },
+    {
+      "sceneId": "concept_water_to_coffee",
+      "methodId": "generic-concept",
+      "stepIds": [
+        "valve_release_generic_add_water"
+      ],
+      "targetContentIds": [
+        "valve_release_generic_add_water"
+      ],
+      "altText": "Conceptual water addition: a gentle stream wets coffee while leaving generous headroom.",
+      "version": 1,
+      "conceptual": true,
+      "sourcePhysicalFamilyId": "conceptual_common_actions",
+      "sourcePhysicalProfileId": null,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_water_to_coffee/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_water_to_coffee/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_water_to_coffee/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_water_to_coffee/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_water_to_coffee/phone-dark-v1.png"
+      },
+      "rawSha256": "1408cbe417fd79e94ac0cb49a13953e766d7401e1c4871069e4b1ecc122036f9",
+      "promptSha256": "31ac44731739c565113fd73a0e8a1b4b1626ef579bf3b7cfddc12fd8bfb372d6",
+      "candidateSha256": "b2ed588bd723cb403233ea5bb7f83bdfb9a6e33649240143b8d89b2c0f8545cc",
+      "sourceContracts": [
+        "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1BuiltInGuidanceCatalog.kt"
+      ],
+      "sources": [],
+      "bindingContexts": [
+        {
+          "content_id": "valve_release_generic_add_water",
+          "target_family_id": "steep_and_release",
+          "target_profile_id": "valve_release_generic",
+          "target_content_revision": "bc03f79abaa9c0950a9d17961f626f9a6d1b50efd2b21a91abb2b4767b70ec08",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text."
+        }
+      ],
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Candidate; independent full/binding QC required.",
+          "Producer inspected raw PNG, encoded full WebP and320px light/dark previews. Production inspection is not independent admission approval."
+        ]
+      }
+    },
+    {
+      "sceneId": "concept_gentle_stir",
+      "methodId": "generic-concept",
+      "stepIds": [],
+      "targetContentIds": [],
+      "altText": "Conceptual agitation: a spoon gently stirs coffee below the rim, with fingers clear of the liquid.",
+      "version": 1,
+      "conceptual": true,
+      "sourcePhysicalFamilyId": "conceptual_common_actions",
+      "sourcePhysicalProfileId": null,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_gentle_stir/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_gentle_stir/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_gentle_stir/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_gentle_stir/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_gentle_stir/phone-dark-v1.png"
+      },
+      "rawSha256": "138a4a2d32b48870cc86c78dc91cdcfc1a35290f9900ce77bdd9d1aba756f411",
+      "promptSha256": "fba997ff6e85229a06e4d3c67a037bd4aab6390193d4c364f5b21c0e9699c67b",
+      "candidateSha256": "282a8ce0c722a1676469a5e9a0b73f912978b4c1e9272dbff5e8882414ac8f75",
+      "sourceContracts": [],
+      "sources": [],
+      "bindingContexts": [],
+      "qc": {
+        "status": "rejected",
+        "notes": [
+          "Rejected: exposed spoon bowl with piled grounds could read as scooping rather than agitation.",
+          "Rejected/not selected during producer full-resolution review; originals and delivery/phone artifacts retained for evidence. No independent admission approval."
+        ]
+      }
+    },
+    {
+      "sceneId": "concept_reservoir_fill",
+      "methodId": "generic-concept",
+      "stepIds": [
+        "automatic_single_cup_generic_add_reservoir_water",
+        "automatic_batch_generic_add_reservoir_water",
+        "reviewed_automatic_drip_v1_water"
+      ],
+      "targetContentIds": [
+        "automatic_single_cup_generic_add_reservoir_water",
+        "automatic_batch_generic_add_reservoir_water",
+        "reviewed_automatic_drip_v1_water"
+      ],
+      "altText": "Conceptual reservoir filling: clean water enters an isolated tank with headroom; machine location and capacity are unspecified.",
+      "version": 1,
+      "conceptual": true,
+      "sourcePhysicalFamilyId": "conceptual_common_actions",
+      "sourcePhysicalProfileId": null,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_reservoir_fill/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_reservoir_fill/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_reservoir_fill/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_reservoir_fill/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_reservoir_fill/phone-dark-v1.png"
+      },
+      "rawSha256": "2db6f4ad478f6b487370143b271d66df56b9059d80faa3d99e16cf52321cbc7e",
+      "promptSha256": "24861e2ad24d2d106a66b5fc3777adcb434db7a50ae6fdef26023a6579bcc65d",
+      "candidateSha256": "53083f7d71067bc6c142d9d719c528dde54516ffc584a59e6f54cbd24503391c",
+      "sourceContracts": [
+        "app/src/main/assets/brewing/reviewed-method-guides.json",
+        "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1BuiltInGuidanceCatalog.kt"
+      ],
+      "sources": [],
+      "bindingContexts": [
+        {
+          "content_id": "automatic_single_cup_generic_add_reservoir_water",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_single_cup_generic",
+          "target_content_revision": "0242dfd9ba950eef49b12429f8ad1f9a86d3fb8a882c7d6ad3f3ba669e82392c",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text."
+        },
+        {
+          "content_id": "automatic_batch_generic_add_reservoir_water",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_batch_generic",
+          "target_content_revision": "41fbb12344e0b577ea373394567c87af6c95979b02784137cc71ef1f044169b2",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text."
+        },
+        {
+          "content_id": "reviewed_automatic_drip_v1_water",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_batch_generic",
+          "target_content_revision": "8987cc2bde7230f8347666fc0dd5c16e1147a8989301d4075341f50cfa8d0f99",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text."
+        }
+      ],
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Candidate; independent full/binding QC required.",
+          "Producer inspected raw PNG, encoded full WebP and320px light/dark previews. Production inspection is not independent admission approval."
+        ]
+      }
+    },
+    {
+      "sceneId": "concept_active_flow",
+      "methodId": "generic-concept",
+      "stepIds": [
+        "valve_release_generic_open_valve",
+        "automatic_single_cup_generic_start_machine"
+      ],
+      "targetContentIds": [
+        "valve_release_generic_open_valve",
+        "automatic_single_cup_generic_start_machine"
+      ],
+      "altText": "Conceptual active flow: coffee runs from an unspecified outlet into a stable cup.",
+      "version": 1,
+      "conceptual": true,
+      "sourcePhysicalFamilyId": "conceptual_common_actions",
+      "sourcePhysicalProfileId": null,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_active_flow/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_active_flow/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_active_flow/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_active_flow/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_active_flow/phone-dark-v1.png"
+      },
+      "rawSha256": "457e011b3e4d2643ffd605e640a303099469fe69989580fbb1974c4ba01464e3",
+      "promptSha256": "801aa4d9f387738bc9e5d59f47b01a449118334930a4d5dad1f7a5c06cdf2f7e",
+      "candidateSha256": "1c54560eacc46317f706752c432344cfaf983452466bdc65b2f4870bbee1e2f0",
+      "sourceContracts": [
+        "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1BuiltInGuidanceCatalog.kt"
+      ],
+      "sources": [],
+      "bindingContexts": [
+        {
+          "content_id": "valve_release_generic_open_valve",
+          "target_family_id": "steep_and_release",
+          "target_profile_id": "valve_release_generic",
+          "target_content_revision": "618514bf4e00dbfc34b19238bb569bc262fb4da3b73be54731d196a80916e8cc",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text."
+        },
+        {
+          "content_id": "automatic_single_cup_generic_start_machine",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_single_cup_generic",
+          "target_content_revision": "40058d90fc1beb59b0033a6840fac0e27dbdb2b25584274a0cd478596bd0bcc7",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. Observed output AFTER starting only; no actual start control, batch setting or assembly claim."
+        }
+      ],
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Candidate; independent full/binding QC required.",
+          "Producer inspected raw PNG, encoded full WebP and320px light/dark previews. Production inspection is not independent admission approval."
+        ]
+      }
+    },
+    {
+      "sceneId": "concept_no_flow",
+      "methodId": "generic-concept",
+      "stepIds": [
+        "valve_release_generic_observe_drawdown",
+        "automatic_single_cup_generic_observe_machine_completion"
+      ],
+      "targetContentIds": [
+        "valve_release_generic_observe_drawdown",
+        "automatic_single_cup_generic_observe_machine_completion"
+      ],
+      "altText": "Conceptual flow check: coffee is collected in a cup and no outflow is visible; the machine's completion rules still apply.",
+      "version": 1,
+      "conceptual": true,
+      "sourcePhysicalFamilyId": "conceptual_common_actions",
+      "sourcePhysicalProfileId": null,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_no_flow/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_no_flow/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_no_flow/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_no_flow/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_no_flow/phone-dark-v1.png"
+      },
+      "rawSha256": "fc33a658da805bed2b3a87ec31378a08138598b08abd889ce75d07923ddb5878",
+      "promptSha256": "a25888886d978d49e0753884138923f4ad8969c8ef8e02e4f6c3677d49dcbf55",
+      "candidateSha256": "ca7df0dc466b685d05d0fdafec4296099961b593fe5b10fd860eaec7ef9aa8af",
+      "sourceContracts": [
+        "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1BuiltInGuidanceCatalog.kt"
+      ],
+      "sources": [],
+      "bindingContexts": [
+        {
+          "content_id": "valve_release_generic_observe_drawdown",
+          "target_family_id": "steep_and_release",
+          "target_profile_id": "valve_release_generic",
+          "target_content_revision": "cf7e157d139c370719baed0597be46d1eb3a4c210818820ffd597dd1f2177ead",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. No visible flow is an observation, not proof of completion, auto-off, sensor state, pressure release or timer rule."
+        },
+        {
+          "content_id": "automatic_single_cup_generic_observe_machine_completion",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_single_cup_generic",
+          "target_content_revision": "c1839b90549155a4410fef2c48cf3ec3c3cc80145d03adea262bd262843d09ae",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. No visible flow is an observation, not proof of completion, auto-off, sensor state, pressure release or timer rule."
+        }
+      ],
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Candidate; independent full/binding QC required.",
+          "Producer inspected raw PNG, encoded full WebP and320px light/dark previews. Production inspection is not independent admission approval."
+        ]
+      }
+    },
+    {
+      "sceneId": "concept_ready_cup",
+      "methodId": "generic-concept",
+      "stepIds": [
+        "valve_release_generic_remove_and_serve",
+        "automatic_single_cup_generic_serve"
+      ],
+      "targetContentIds": [
+        "valve_release_generic_remove_and_serve",
+        "automatic_single_cup_generic_serve"
+      ],
+      "altText": "Conceptual serving: a hand holds the filled cup by its handle, clear of the coffee.",
+      "version": 1,
+      "conceptual": true,
+      "sourcePhysicalFamilyId": "conceptual_common_actions",
+      "sourcePhysicalProfileId": null,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_ready_cup/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_ready_cup/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_ready_cup/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_ready_cup/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_ready_cup/phone-dark-v1.png"
+      },
+      "rawSha256": "3bad843136abf4b8902852c06d04bb677b185c579ada090c39b8fb6a5fbfa7c6",
+      "promptSha256": "b1e5c67b7de1ddeaf10811d0f0043b33dd66e879ebd1b2a939cbc2faa1ec8e15",
+      "candidateSha256": "39409dc1557c7a1ffdb48dd35ac0a10a6367458a1f4e175025164fbf724def14",
+      "sourceContracts": [
+        "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1BuiltInGuidanceCatalog.kt"
+      ],
+      "sources": [],
+      "bindingContexts": [
+        {
+          "content_id": "valve_release_generic_remove_and_serve",
+          "target_family_id": "steep_and_release",
+          "target_profile_id": "valve_release_generic",
+          "target_content_revision": "177d10d98958e583f5c11899b111462a97e7f8a1ac874d9080313bb0f262ba2f",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. Cup-serving component only AFTER brewer removal; does not invent safe grip/release for unknown hot hardware."
+        },
+        {
+          "content_id": "automatic_single_cup_generic_serve",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_single_cup_generic",
+          "target_content_revision": "8daa3eca6a8f990d57de9661715a4ca97797979607d5c3f5a802bd0d9ae5964a",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text."
+        }
+      ],
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Candidate; independent full/binding QC required.",
+          "Producer inspected raw PNG, encoded full WebP and320px light/dark previews. Production inspection is not independent admission approval."
+        ]
+      }
+    },
+    {
+      "sceneId": "concept_batch_active_flow",
+      "methodId": "generic-concept",
+      "stepIds": [
+        "automatic_batch_generic_start_machine",
+        "reviewed_automatic_drip_v1_start"
+      ],
+      "targetContentIds": [
+        "automatic_batch_generic_start_machine",
+        "reviewed_automatic_drip_v1_start"
+      ],
+      "altText": "Conceptual batch flow: coffee runs from an unspecified outlet into a stable carafe.",
+      "version": 1,
+      "conceptual": true,
+      "sourcePhysicalFamilyId": "conceptual_common_actions",
+      "sourcePhysicalProfileId": null,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_batch_active_flow/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_batch_active_flow/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_batch_active_flow/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_batch_active_flow/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_batch_active_flow/phone-dark-v1.png"
+      },
+      "rawSha256": "04fbcf50470722ae7d53385530db4a5e82ab05b5025d2c3a2855e521179448f3",
+      "promptSha256": "cbcb39f2fd4e49498d21815512f746b86614e3cb4bfffadeb3afec656bfb9f4b",
+      "candidateSha256": "ebc02e16e9f6a6b28951b48799197c4a7f0e5a26cbada6399698d504c6b39cda",
+      "sourceContracts": [
+        "app/src/main/assets/brewing/reviewed-method-guides.json",
+        "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1BuiltInGuidanceCatalog.kt"
+      ],
+      "sources": [],
+      "bindingContexts": [
+        {
+          "content_id": "automatic_batch_generic_start_machine",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_batch_generic",
+          "target_content_revision": "a61896ff9911327168bd3b608e107ca6b3c09c295fbf472b79c77924109e0193",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. Observed output AFTER starting only; no actual start control, batch setting or assembly claim."
+        },
+        {
+          "content_id": "reviewed_automatic_drip_v1_start",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_batch_generic",
+          "target_content_revision": "c3b21e6e1563350cecd8e13990bd95ae9353c1c4d123a73c2567e619e7407bb0",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. Observed output AFTER starting only; no actual start control, batch setting or assembly claim."
+        }
+      ],
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Candidate; independent full/binding QC required.",
+          "Producer inspected raw PNG, encoded full WebP and320px light/dark previews. Production inspection is not independent admission approval."
+        ]
+      }
+    },
+    {
+      "sceneId": "concept_batch_no_flow",
+      "methodId": "generic-concept",
+      "stepIds": [
+        "automatic_batch_generic_observe_machine_completion",
+        "reviewed_automatic_drip_v1_finish"
+      ],
+      "targetContentIds": [
+        "automatic_batch_generic_observe_machine_completion",
+        "reviewed_automatic_drip_v1_finish"
+      ],
+      "altText": "Conceptual batch flow check: coffee is collected in a carafe with no visible outflow; completion follows the machine's instructions.",
+      "version": 1,
+      "conceptual": true,
+      "sourcePhysicalFamilyId": "conceptual_common_actions",
+      "sourcePhysicalProfileId": null,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_batch_no_flow/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_batch_no_flow/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_batch_no_flow/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_batch_no_flow/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_batch_no_flow/phone-dark-v1.png"
+      },
+      "rawSha256": "bda109ff8953fe1e2671596f763b8ca198768bf9521d37ce3dbcccf3d0d8838c",
+      "promptSha256": "8a2dfcffcc1ef23d450f95c48aca9da9a64a10c0d319c383e38c30a236a5c64d",
+      "candidateSha256": "3f252f8d8c3ef960b933d4de52e9323bafbfc02e4a29115057d71da47acac84d",
+      "sourceContracts": [
+        "app/src/main/assets/brewing/reviewed-method-guides.json",
+        "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1BuiltInGuidanceCatalog.kt"
+      ],
+      "sources": [],
+      "bindingContexts": [
+        {
+          "content_id": "automatic_batch_generic_observe_machine_completion",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_batch_generic",
+          "target_content_revision": "0f36d79e94c9b541cad3e46fb7bcc6dffc685ad1b69486fee911b85ac1b195df",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. No visible flow is an observation, not proof of completion, auto-off, sensor state, pressure release or timer rule."
+        },
+        {
+          "content_id": "reviewed_automatic_drip_v1_finish",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_batch_generic",
+          "target_content_revision": "e1cad524c70cedfd16e435f733f2fd0b39a274cada805eadcd13e6b6d505c096",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. No visible flow is an observation, not proof of completion, auto-off, sensor state, pressure release or timer rule."
+        }
+      ],
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Candidate; independent full/binding QC required.",
+          "Producer inspected raw PNG, encoded full WebP and320px light/dark previews. Production inspection is not independent admission approval."
+        ]
+      }
+    },
+    {
+      "sceneId": "concept_safe_carafe",
+      "methodId": "generic-concept",
+      "stepIds": [
+        "automatic_batch_generic_stir_or_swirl_carafe",
+        "automatic_batch_generic_serve",
+        "reviewed_automatic_drip_v1_serve"
+      ],
+      "targetContentIds": [
+        "automatic_batch_generic_stir_or_swirl_carafe",
+        "automatic_batch_generic_serve",
+        "reviewed_automatic_drip_v1_serve"
+      ],
+      "altText": "Conceptual carafe handling: a hand grips only the handle while collected coffee remains safely below the rim.",
+      "version": 1,
+      "conceptual": true,
+      "sourcePhysicalFamilyId": "conceptual_common_actions",
+      "sourcePhysicalProfileId": null,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_safe_carafe/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_safe_carafe/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_safe_carafe/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_safe_carafe/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_safe_carafe/phone-dark-v1.png"
+      },
+      "rawSha256": "87511a38202cb0fcecbdc9446ef2a768d04a0ccbf0d03040c9e128b4370b5235",
+      "promptSha256": "986d446a8200450c3e9227a2a77e8e897cb08e8d994512bb3107f2d5e451643d",
+      "candidateSha256": "4c8f436e155119467e84659866e031157848ed272d974080fb494b143c8ba8c1",
+      "sourceContracts": [
+        "app/src/main/assets/brewing/reviewed-method-guides.json",
+        "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1BuiltInGuidanceCatalog.kt"
+      ],
+      "sources": [],
+      "bindingContexts": [
+        {
+          "content_id": "automatic_batch_generic_stir_or_swirl_carafe",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_batch_generic",
+          "target_content_revision": "dac5ddb49deb1b601cd89589a38afa39d30c1ac30c16ec1fb6324202a7f08128",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. Gentle swirl only if source machine/carafe allows; no permission to remove required lid or move connected appliance."
+        },
+        {
+          "content_id": "automatic_batch_generic_serve",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_batch_generic",
+          "target_content_revision": "4d6b3338596df6e7f26080e8b6360559f1319a9f67d134671c091da764651f29",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. Gentle swirl only if source machine/carafe allows; no permission to remove required lid or move connected appliance."
+        },
+        {
+          "content_id": "reviewed_automatic_drip_v1_serve",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_batch_generic",
+          "target_content_revision": "15db560fffb5f640b633e20e81ccc3a3bd4218aafed719cb19a0abe3ed598d19",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. Gentle swirl only if source machine/carafe allows; no permission to remove required lid or move connected appliance."
+        }
+      ],
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Candidate; independent full/binding QC required.",
+          "Producer inspected raw PNG, encoded full WebP and320px light/dark previews. Production inspection is not independent admission approval."
+        ]
+      }
+    },
+    {
+      "sceneId": "concept_filter_rinse",
+      "methodId": "generic-concept",
+      "stepIds": [
+        "valve_release_generic_insert_and_rinse_filter"
+      ],
+      "targetContentIds": [
+        "valve_release_generic_insert_and_rinse_filter"
+      ],
+      "altText": "Conceptual conditional rinse alternatives: separate paper and mesh filters drain into separate bowls; follow the selected filter's instructions.",
+      "version": 2,
+      "conceptual": true,
+      "sourcePhysicalFamilyId": "conceptual_common_actions",
+      "sourcePhysicalProfileId": null,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_filter_rinse/raw-v2.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_filter_rinse/prompt-v2.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_filter_rinse/candidate-v2.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_filter_rinse/phone-light-v2.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_filter_rinse/phone-dark-v2.png"
+      },
+      "rawSha256": "101964efb2b9fba870ae00cbdec540ee49a8c3a6be849a9eadaaf3fe8db59e13",
+      "promptSha256": "37f3eea7fdf23986c3f026d118e88f6b5dcab50151bc95a94c9a64199e9f99a6",
+      "candidateSha256": "7377e8542b6a9bfe3b05956096a502fdc228d9c09d7120b899dae49002d5ba59",
+      "sourceContracts": [
+        "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1BuiltInGuidanceCatalog.kt"
+      ],
+      "sources": [],
+      "bindingContexts": [
+        {
+          "content_id": "valve_release_generic_insert_and_rinse_filter",
+          "target_family_id": "steep_and_release",
+          "target_profile_id": "valve_release_generic",
+          "target_content_revision": "25f6e0701fb0beea21350191e5241f36ba72bef1919e1e9ab46b6aef9b110d5a",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. Paper/mesh examples are alternatives, not universal compatibility or simultaneous installation."
+        }
+      ],
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Independent alternatives, not simultaneous installation; conceptual conditional rinse only.",
+          "Producer inspected raw PNG, encoded full WebP and320px light/dark previews. Production inspection is not independent admission approval."
+        ]
+      }
+    },
+    {
+      "sceneId": "concept_gentle_stir",
+      "methodId": "generic-concept",
+      "stepIds": [
+        "valve_release_generic_agitate"
+      ],
+      "targetContentIds": [
+        "valve_release_generic_agitate"
+      ],
+      "altText": "Conceptual agitation: a spoon gently stirs coffee below the rim, with fingers clear of the liquid.",
+      "version": 2,
+      "conceptual": true,
+      "sourcePhysicalFamilyId": "conceptual_common_actions",
+      "sourcePhysicalProfileId": null,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_gentle_stir/raw-v2.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_gentle_stir/prompt-v2.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_gentle_stir/candidate-v2.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_gentle_stir/phone-light-v2.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_gentle_stir/phone-dark-v2.png"
+      },
+      "rawSha256": "f55d86210fed71b1a35f6604b113c1d9d9ca16e7c560f1b615d7e2434d536f91",
+      "promptSha256": "6bd91a779cd805f89ca3f7f95bb67095618d6e3969e1f42db8ba49e5e53f6278",
+      "candidateSha256": "28fbf9d1b96e38d434006b2591c33ba5a00d213e7f3bd3f2d2650bd99f7385b3",
+      "sourceContracts": [
+        "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1BuiltInGuidanceCatalog.kt"
+      ],
+      "sources": [],
+      "bindingContexts": [
+        {
+          "content_id": "valve_release_generic_agitate",
+          "target_family_id": "steep_and_release",
+          "target_profile_id": "valve_release_generic",
+          "target_content_revision": "75d42fe1dfea9382a8539fc9504e5f59198990e5583614d9f7fab86882051f80",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text."
+        }
+      ],
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Entire spoon bowl submerged; no grounds are scooped or removed; independent QC required.",
+          "Producer inspected raw PNG, encoded full WebP and320px light/dark previews. Production inspection is not independent admission approval."
+        ]
+      }
+    },
+    {
+      "sceneId": "concept_paper_options",
+      "methodId": "generic-concept",
+      "stepIds": [
+        "automatic_single_cup_generic_select_and_insert_filter",
+        "automatic_batch_generic_select_filter_and_basket",
+        "reviewed_automatic_drip_v1_prepare"
+      ],
+      "targetContentIds": [
+        "automatic_single_cup_generic_select_and_insert_filter",
+        "automatic_batch_generic_select_filter_and_basket",
+        "reviewed_automatic_drip_v1_prepare"
+      ],
+      "altText": "Conceptual paper alternatives: separate cone and flat-basket papers; use only the shape and size specified for the machine.",
+      "version": 1,
+      "conceptual": true,
+      "sourcePhysicalFamilyId": "conceptual_common_actions",
+      "sourcePhysicalProfileId": null,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_paper_options/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_paper_options/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_paper_options/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_paper_options/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_paper_options/phone-dark-v1.png"
+      },
+      "rawSha256": "2e27f078e60188aea8b4c9f3c2b3043398e89eeef9811a0b75c132b68b200b24",
+      "promptSha256": "1d88c2a3c44fc8112e14b3d6fd3c645095a2db1ce86c82b1460a4fa23f8886c5",
+      "candidateSha256": "b21760c9837fbb3db8a5b4a90192000df3e97efed1cfc46bf6afe8c24bd01777",
+      "sourceContracts": [
+        "app/src/main/assets/brewing/reviewed-method-guides.json",
+        "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1BuiltInGuidanceCatalog.kt"
+      ],
+      "sources": [],
+      "bindingContexts": [
+        {
+          "content_id": "automatic_single_cup_generic_select_and_insert_filter",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_single_cup_generic",
+          "target_content_revision": "78bc8991f72277bdd30788498994c29d342db3ce15e7ea9bac007bbe22082ab4",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. Paper forms are alternatives, not permission to substitute the machine's specified paper."
+        },
+        {
+          "content_id": "automatic_batch_generic_select_filter_and_basket",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_batch_generic",
+          "target_content_revision": "5c70324cf0d783a3bc9a8d2ab1bfacae2e391f96f9409678e318119d4c3cbdd1",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. Paper forms are alternatives, not permission to substitute the machine's specified paper."
+        },
+        {
+          "content_id": "reviewed_automatic_drip_v1_prepare",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_batch_generic",
+          "target_content_revision": "a88f8c5aa3c282aff6b41e0767a3738b3f2e820293b939462a9f8958c3db9930",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. Paper forms are alternatives, not permission to substitute the machine's specified paper."
+        }
+      ],
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Paper-only alternatives preserve automatic paper-filter scope; independent QC required.",
+          "Producer inspected raw PNG, encoded full WebP and320px light/dark previews. Production inspection is not independent admission approval."
+        ]
+      }
+    },
+    {
+      "sceneId": "concept_paper_rinse",
+      "methodId": "generic-concept",
+      "stepIds": [
+        "automatic_single_cup_generic_rinse_filter",
+        "automatic_batch_generic_rinse_filter"
+      ],
+      "targetContentIds": [
+        "automatic_single_cup_generic_rinse_filter",
+        "automatic_batch_generic_rinse_filter"
+      ],
+      "altText": "Conceptual conditional rinsing: cone and flat-basket papers are shown separately, each draining to its own bowl; rinse only as the machine directs.",
+      "version": 1,
+      "conceptual": true,
+      "sourcePhysicalFamilyId": "conceptual_common_actions",
+      "sourcePhysicalProfileId": null,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_paper_rinse/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_paper_rinse/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_paper_rinse/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_paper_rinse/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_paper_rinse/phone-dark-v1.png"
+      },
+      "rawSha256": "11a1fab4daafba81790d74cde2c072a294f9a5b5acfbce3fc540ffb3a1dede2e",
+      "promptSha256": "4277ce4d4b23e4b71375a3ab0a849efaa935b463059dd859c4ffc8a920ab559b",
+      "candidateSha256": "753cd1da49746502fdc6c9af02998e5389baa19fda61abe0d230fc6ed58697eb",
+      "sourceContracts": [
+        "app/src/main/java/com/adsamcik/starlitcoffee/ui/guidance/P1BuiltInGuidanceCatalog.kt"
+      ],
+      "sources": [],
+      "bindingContexts": [
+        {
+          "content_id": "automatic_single_cup_generic_rinse_filter",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_single_cup_generic",
+          "target_content_revision": "00b1390e6ff29465e7cd25f939a51a74795ba35cd787ff3f56be6222b5fce554",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. Conditional: rinse only when the actual machine manual calls for it. Alternatives never install together."
+        },
+        {
+          "content_id": "automatic_batch_generic_rinse_filter",
+          "target_family_id": "automatic_batch",
+          "target_profile_id": "automatic_batch_generic",
+          "target_content_revision": "6464eb310fb33f2dd77cc94df2facab44090e37573d643bc3ba718fcc6c7fa88",
+          "review_status": "candidate",
+          "notes": "Conceptual functional action/state only; no actual brewer geometry, control location, mounting, size, capacity or cycle semantics is inferred. Keep manufacturer-specific source instructions and safety text. Conditional: rinse only when the actual machine manual calls for it. Alternatives never install together."
+        }
+      ],
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Paper-only alternatives preserve automatic paper-filter scope; independent QC required.",
+          "Producer inspected raw PNG, encoded full WebP and320px light/dark previews. Production inspection is not independent admission approval."
+        ]
+      }
+    }
+  ],
+  "unresolved": [],
+  "unproducedIdeas": [
+    {
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_removed_brewer/prompt-v1.txt",
+      "reason": "Not generated: unknown hot brewer handling points must not be invented. Cup-serving component is illustrated after manufacturer-directed safe removal."
+    }
+  ]
+}

@@ -1,0 +1,1666 @@
+[
+  {
+    "sceneId": "wave155_paper",
+    "methodId": "kalita-wave",
+    "stepIds": [
+      "prepare"
+    ],
+    "altText": "A small stainless flat-bottom Kalita Wave155 rests securely on a glass server, with a matching pleated paper filter seated centrally and its folds kept open.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/wave155_paper_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/wave155_paper_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/wave155_paper_v1.webp",
+    "sources": [
+      "https://ozonecoffee.co.uk/pages/kalita-wave-brew-guide",
+      "https://kalitausa.com/products/kalita-wave-185-stainless-steel-coffee-dripper",
+      "https://kalitausa.com/products/kalita-wave-185-glass-dripper",
+      "https://kalitausa.com/products/kalita-mino-ceramic-dripper-185-sand-beige"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "4537fc78df2ffee89aa4a5666ef1fe1ef2d27a4f242ce4fcc3c2ee2a708d7a69",
+    "candidateSha256": "7eaafa8a985046af382930f744110a846954199d83df74eb8e235ad838c896f4",
+    "promptSha256": "a49ae23726c1ad52b23c0ed27917f99fe4648ec56a558bc63816898c93fdf6f9"
+  },
+  {
+    "sceneId": "wave155_load",
+    "methodId": "kalita-wave",
+    "stepIds": [
+      "rinse_load"
+    ],
+    "altText": "Ground coffee is added into the matching pleated Wave155 paper while the stainless dripper rests securely on its server.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/wave155_load_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/wave155_load_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/wave155_load_v1.webp",
+    "sources": [
+      "https://ozonecoffee.co.uk/pages/kalita-wave-brew-guide",
+      "https://kalitausa.com/products/kalita-wave-185-stainless-steel-coffee-dripper",
+      "https://kalitausa.com/products/kalita-wave-185-glass-dripper",
+      "https://kalitausa.com/products/kalita-mino-ceramic-dripper-185-sand-beige"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "96f396b6b5e1cf649bdcebef65754466ce1df7429d268ea2b21517dd55b6fb6a",
+    "candidateSha256": "a517954ad7833d18673e30e82cbae82188e95a75e7a3ca7167c98859c077ea68",
+    "promptSha256": "2062e3c500ceeb2d777b6b55a2f254f97a9a92914d37c2fe73b7b98fa602e761"
+  },
+  {
+    "sceneId": "wave155_pour",
+    "methodId": "kalita-wave",
+    "stepIds": [
+      "bloom",
+      "pour_one",
+      "pour_two"
+    ],
+    "altText": "A narrow kettle stream lands gently on coffee inside the small flat-bottom Wave155 pleated paper, with clear headroom below the rim and coffee draining into the server.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/wave155_pour_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/wave155_pour_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/wave155_pour_v1.webp",
+    "sources": [
+      "https://ozonecoffee.co.uk/pages/kalita-wave-brew-guide",
+      "https://kalitausa.com/products/kalita-wave-185-stainless-steel-coffee-dripper",
+      "https://kalitausa.com/products/kalita-wave-185-glass-dripper",
+      "https://kalitausa.com/products/kalita-mino-ceramic-dripper-185-sand-beige"
+    ],
+    "qc": {
+      "status": "rejected",
+      "notes": [
+        "Superseded incorrect/cropped hardware; see independent root-scene review."
+      ]
+    }
+  },
+  {
+    "sceneId": "v60_pour",
+    "methodId": "v60",
+    "stepIds": [
+      "bloom_pour",
+      "main_pour",
+      "final_pour"
+    ],
+    "altText": "A narrow gooseneck stream lands inside the V60 paper on the coffee bed, with generous headroom while coffee drains into its stable server.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/v60_pour_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/v60_pour_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/v60_pour_v1.webp",
+    "sources": [
+      "https://www.hario.co.uk/blogs/news/how-to-brew-coffee-with-hario-v60-coffee-dripper",
+      "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+      "https://www.hario-usa.com/products/vd-01t",
+      "https://www.hario-usa.com/products/v60-plastic-coffee-dripper-02",
+      "https://www.hario-usa.com/products/v60-plastic-dripper-03",
+      "https://www.hario-usa.com/products/v60-meteor-filters-02",
+      "https://www.hario.co.uk/blogs/hario-ambassadors/hario-v60-recipe-interview-with-hario-ambassador-scott-rao",
+      "https://www.hario.co.uk/blogs/hario-ambassadors/hario-v60-recipe-interview-with-hario-ambassador-tetsu-kasuya",
+      "https://kurasu.kyoto/blogs/recipe/japanese-brew-guide-on-iced-pour-over-coffee",
+      "https://assets.breville.com/ZCG495/manual-encoreesp-v1-0-en-010923.pdf"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "6fd957bfe7996ceb9777e216fba4dfec8638bd7fd53f198fa840dc9c7c9ee27b",
+    "candidateSha256": "b57453c40316098077dd18d663950c7850ba657451554d1e622d72d01e688005",
+    "promptSha256": "65302585c6e49a9211dabd99d6bef765cfc2c366243fa9d83c260a3fe3a7455d"
+  },
+  {
+    "sceneId": "melitta_outlets",
+    "methodId": "melitta",
+    "stepIds": [
+      "setup"
+    ],
+    "altText": "A dry black Melitta1x4 wedge dripper is held by its handle with the underside visible, showing two clear outlet holes in the narrow bottom.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/melitta_outlets_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/melitta_outlets_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/melitta_outlets_v1.webp",
+    "sources": [
+      "https://www.melitta-international.com/accessories/Manual-Coffee-Preparation/Coffeefilters-pots/Coffee-Filter-1x4",
+      "https://www.melitta.co.uk/faq/filter-papers",
+      "https://library.sweetmarias.com/wp-content/uploads/2020/08/Drip-Brewing-Pourover-Filtercone-Tip-Sheet.pdf",
+      "https://shoponline.melitta.com/products/1-cup-pour-over-coffee-brew-cone-black",
+      "https://www.melitta.co.jp/enjoyment/how_to/brewing_with_hasamicoffeefilter/",
+      "https://voltagecoffee.com/melitta/"
+    ],
+    "qc": {
+      "status": "rejected",
+      "notes": [
+        "Superseded incorrect/cropped hardware; see independent root-scene review."
+      ]
+    }
+  },
+  {
+    "sceneId": "melitta_rinse",
+    "methodId": "melitta",
+    "stepIds": [
+      "rinse"
+    ],
+    "altText": "Hot rinse water wets fitted wedge paper inside a black Melitta1x4 dripper seated securely on an empty glass server.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/melitta_rinse_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/melitta_rinse_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/melitta_rinse_v1.webp",
+    "sources": [
+      "https://www.melitta-international.com/accessories/Manual-Coffee-Preparation/Coffeefilters-pots/Coffee-Filter-1x4",
+      "https://www.melitta.co.uk/faq/filter-papers",
+      "https://library.sweetmarias.com/wp-content/uploads/2020/08/Drip-Brewing-Pourover-Filtercone-Tip-Sheet.pdf",
+      "https://shoponline.melitta.com/products/1-cup-pour-over-coffee-brew-cone-black",
+      "https://www.melitta.co.jp/enjoyment/how_to/brewing_with_hasamicoffeefilter/",
+      "https://voltagecoffee.com/melitta/"
+    ],
+    "qc": {
+      "status": "rejected",
+      "notes": [
+        "Superseded incorrect/cropped hardware; see independent root-scene review."
+      ]
+    }
+  },
+  {
+    "sceneId": "melitta_pour",
+    "methodId": "melitta",
+    "stepIds": [
+      "bloom",
+      "first_main_pour",
+      "last_pour"
+    ],
+    "altText": "A gentle kettle stream wets coffee within wedge paper below the rim of the black Melitta1x4 dripper while coffee drains from its two outlets into a stable server.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/melitta_pour_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/melitta_pour_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/melitta_pour_v1.webp",
+    "sources": [
+      "https://www.melitta-international.com/accessories/Manual-Coffee-Preparation/Coffeefilters-pots/Coffee-Filter-1x4",
+      "https://www.melitta.co.uk/faq/filter-papers",
+      "https://library.sweetmarias.com/wp-content/uploads/2020/08/Drip-Brewing-Pourover-Filtercone-Tip-Sheet.pdf",
+      "https://shoponline.melitta.com/products/1-cup-pour-over-coffee-brew-cone-black",
+      "https://www.melitta.co.jp/enjoyment/how_to/brewing_with_hasamicoffeefilter/",
+      "https://voltagecoffee.com/melitta/"
+    ],
+    "qc": {
+      "status": "rejected",
+      "notes": [
+        "Superseded incorrect/cropped hardware; see independent root-scene review."
+      ]
+    }
+  },
+  {
+    "sceneId": "wave155_pour",
+    "methodId": "kalita-wave",
+    "stepIds": [
+      "bloom",
+      "pour_one",
+      "pour_two"
+    ],
+    "altText": "A narrow kettle stream lands gently on coffee inside the small flat-bottom Wave155 pleated paper, with clear headroom below the rim and coffee draining into the server.",
+    "version": 2,
+    "resultKey": "wave155_pour_v2_result",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/wave155_pour_v2.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/wave155_pour_v2.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/wave155_pour_v2.webp",
+    "sources": [
+      "https://ozonecoffee.co.uk/pages/kalita-wave-brew-guide",
+      "https://kalitausa.com/products/kalita-wave-185-stainless-steel-coffee-dripper",
+      "https://kalitausa.com/products/kalita-wave-185-glass-dripper",
+      "https://kalitausa.com/products/kalita-mino-ceramic-dripper-185-sand-beige"
+    ],
+    "qc": {
+      "status": "rejected",
+      "notes": [
+        "Superseded incorrect/cropped hardware; see independent root-scene review."
+      ]
+    }
+  },
+  {
+    "sceneId": "melitta_rinse",
+    "methodId": "melitta",
+    "stepIds": [
+      "rinse"
+    ],
+    "altText": "Hot rinse water wets fitted wedge paper inside a black Melitta1x4 dripper seated securely on an empty glass server.",
+    "version": 2,
+    "resultKey": "melitta_rinse_v2_result",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/melitta_rinse_v2.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/melitta_rinse_v2.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/melitta_rinse_v2.webp",
+    "sources": [
+      "https://www.melitta-international.com/accessories/Manual-Coffee-Preparation/Coffeefilters-pots/Coffee-Filter-1x4",
+      "https://www.melitta.co.uk/faq/filter-papers",
+      "https://library.sweetmarias.com/wp-content/uploads/2020/08/Drip-Brewing-Pourover-Filtercone-Tip-Sheet.pdf",
+      "https://shoponline.melitta.com/products/1-cup-pour-over-coffee-brew-cone-black",
+      "https://www.melitta.co.jp/enjoyment/how_to/brewing_with_hasamicoffeefilter/",
+      "https://voltagecoffee.com/melitta/"
+    ],
+    "qc": {
+      "status": "rejected",
+      "notes": [
+        "Superseded incorrect/cropped hardware; see independent root-scene review."
+      ]
+    }
+  },
+  {
+    "sceneId": "melitta_pour",
+    "methodId": "melitta",
+    "stepIds": [
+      "bloom",
+      "first_main_pour",
+      "last_pour"
+    ],
+    "altText": "A gentle kettle stream wets coffee within wedge paper below the rim of the black Melitta1x4 dripper while coffee drains from its two outlets into a stable server.",
+    "version": 2,
+    "resultKey": "melitta_pour_v2_result",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/melitta_pour_v2.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/melitta_pour_v2.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/melitta_pour_v2.webp",
+    "sources": [
+      "https://www.melitta-international.com/accessories/Manual-Coffee-Preparation/Coffeefilters-pots/Coffee-Filter-1x4",
+      "https://www.melitta.co.uk/faq/filter-papers",
+      "https://library.sweetmarias.com/wp-content/uploads/2020/08/Drip-Brewing-Pourover-Filtercone-Tip-Sheet.pdf",
+      "https://shoponline.melitta.com/products/1-cup-pour-over-coffee-brew-cone-black",
+      "https://www.melitta.co.jp/enjoyment/how_to/brewing_with_hasamicoffeefilter/",
+      "https://voltagecoffee.com/melitta/"
+    ],
+    "qc": {
+      "status": "rejected",
+      "notes": [
+        "Superseded incorrect/cropped hardware; see independent root-scene review."
+      ]
+    }
+  },
+  {
+    "sceneId": "auto_ready",
+    "methodId": "automatic-drip",
+    "stepIds": [
+      "prepare"
+    ],
+    "altText": "An idle compatible automatic paper brewer has its correct fitted basket paper and empty glass receiving carafe seated securely; power is off.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_ready_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/auto_ready_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_ready_v1.webp",
+    "sources": [
+      "https://counterculturecoffee.com/pages/auto-drip",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009389881-How-much-coffee-should-I-use-in-my-Moccamaster",
+      "https://support.moccamaster.com/hc/en-us/article_attachments/1500014339002",
+      "https://www.moccamaster.eu/pub/media/handleidingen/talen/Manual_SELECT.pdf",
+      "https://www.moccamaster.nl/pub/media/handleidingen/Gebruiksaanwijzing-Cup-One-2.0-zonder-wegwerpbeker.pdf",
+      "https://us.moccamaster.com/products/cup-one",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009392081-What-size-filter-does-my-Moccamaster-use",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009385562-Can-grind-size-make-my-coffee-taste-bitter-or-weak",
+      "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009428621-How-frequently-should-I-descale-and-clean-my-brewer-and-what-should-I-use",
+      "https://sca.coffee/sca-news/2023/10/10/new-sca-certified-home-brewer-technivorm-moccamaster-kbgv-select-fjpd6"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "2e6dc6ed86f5298118bc0d71d50f731d993c4e2e535f2606475291e15410e855",
+    "candidateSha256": "967424164d8fe6cad0187b184f4bba230d3b87b919d5e64040210cc1be4a6a0a",
+    "promptSha256": "1827bdd7d22554b7424aaadfe80b95c251eb8f27a37385f79bd068fb53370abe"
+  },
+  {
+    "sceneId": "auto_water_full",
+    "methodId": "automatic-drip",
+    "stepIds": [
+      "water"
+    ],
+    "altText": "A clean jug transfers cold water into the open reservoir of an unpowered compatible automatic brewer, below its maximum fill.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_water_full_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/auto_water_full_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_water_full_v1.webp",
+    "sources": [
+      "https://counterculturecoffee.com/pages/auto-drip",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009389881-How-much-coffee-should-I-use-in-my-Moccamaster",
+      "https://support.moccamaster.com/hc/en-us/article_attachments/1500014339002",
+      "https://www.moccamaster.eu/pub/media/handleidingen/talen/Manual_SELECT.pdf",
+      "https://www.moccamaster.nl/pub/media/handleidingen/Gebruiksaanwijzing-Cup-One-2.0-zonder-wegwerpbeker.pdf",
+      "https://us.moccamaster.com/products/cup-one",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009392081-What-size-filter-does-my-Moccamaster-use",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009385562-Can-grind-size-make-my-coffee-taste-bitter-or-weak",
+      "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009428621-How-frequently-should-I-descale-and-clean-my-brewer-and-what-should-I-use",
+      "https://sca.coffee/sca-news/2023/10/10/new-sca-certified-home-brewer-technivorm-moccamaster-kbgv-select-fjpd6"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "p1Targets": [
+      "p1_auto_batch_1000_60_stage_02_instruction"
+    ],
+    "rawSha256": "29909e1b35bb3e1d908d8c23e8e5f4344e01ebe1c09aa75e3886c3f9d1ad87b1",
+    "candidateSha256": "12ec23e14d08ce8f2b8f0ed5112623efd8b18e92099402d0aa6c3ca90a5b1385",
+    "promptSha256": "0cce4c050e6ed0e06e1bfec4a2d5c53c60f3b7f49156ade99c3034c33c12bbe8"
+  },
+  {
+    "sceneId": "auto_water_half",
+    "methodId": "automatic-drip",
+    "stepIds": [],
+    "p1Targets": [
+      "p1_auto_batch_500_30_stage_02_instruction"
+    ],
+    "altText": "Cold water is transferred into the KBGV Select reservoir with power off, leaving substantial headroom for the half batch.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_water_half_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/auto_water_half_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_water_half_v1.webp",
+    "sources": [
+      "https://counterculturecoffee.com/pages/auto-drip",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009389881-How-much-coffee-should-I-use-in-my-Moccamaster",
+      "https://support.moccamaster.com/hc/en-us/article_attachments/1500014339002",
+      "https://www.moccamaster.eu/pub/media/handleidingen/talen/Manual_SELECT.pdf",
+      "https://www.moccamaster.nl/pub/media/handleidingen/Gebruiksaanwijzing-Cup-One-2.0-zonder-wegwerpbeker.pdf",
+      "https://us.moccamaster.com/products/cup-one",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009392081-What-size-filter-does-my-Moccamaster-use",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009385562-Can-grind-size-make-my-coffee-taste-bitter-or-weak",
+      "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009428621-How-frequently-should-I-descale-and-clean-my-brewer-and-what-should-I-use",
+      "https://sca.coffee/sca-news/2023/10/10/new-sca-certified-home-brewer-technivorm-moccamaster-kbgv-select-fjpd6"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "82b83097cb7bbea26873b5438a0bcd4d87d71824e3e4bfc54b3db71fae61552c",
+    "candidateSha256": "3c01a7db56de3a1768221af5ef8d3fc2e100117f8b279d22b16310620ee50b19",
+    "promptSha256": "05df87b5470605a9e6915bb36b90d08242f1d248c70bd873245ab9274ba8c14d"
+  },
+  {
+    "sceneId": "wave155_pour",
+    "version": 3,
+    "resultKey": "wave155_pour_v3_result",
+    "methodId": "kalita-wave",
+    "stepIds": [
+      "bloom",
+      "pour_one",
+      "pour_two"
+    ],
+    "altText": "A narrow kettle stream wets coffee inside the small horizontally corrugated stainless Wave155, keeping the pleated paper open and leaving headroom.",
+    "reference": "C:\\Users\\adam-\\GitHub\\StarlitCoffee\\worktree\\guidance-art-qc\\docs\\brewing\\generated-guidance-20261025\\groups\\pour-over\\masters\\wave155_paper_v1.png",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/wave155_pour_v3.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/wave155_pour_v3.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/wave155_pour_v3.webp",
+    "sources": [
+      "https://ozonecoffee.co.uk/pages/kalita-wave-brew-guide",
+      "https://kalitausa.com/products/kalita-wave-185-stainless-steel-coffee-dripper",
+      "https://kalitausa.com/products/kalita-wave-185-glass-dripper",
+      "https://kalitausa.com/products/kalita-mino-ceramic-dripper-185-sand-beige"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "64d284f69b431c7cedd444cab01086304162602c28f4c9499c15304821d7fa7e",
+    "candidateSha256": "0e72c03dd82a8dedfcb4b4f27cf15206442f692447b22a9fdfdfaeeca413d807",
+    "promptSha256": "4e806b6753c93029a1f6b60afd4e1fc19cf232675a32755740d55b42b346b4a3"
+  },
+  {
+    "sceneId": "switch_retained",
+    "methodId": "hario-switch",
+    "stepIds": [
+      "fill",
+      "steep"
+    ],
+    "p1Targets": [
+      "p1_switch_official_20_240_stage_02_instruction"
+    ],
+    "altText": "The Hario Switch lever is raised closed and the shallow coffee-water mixture stays in the paper above the valve; no liquid drains into the server.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_retained_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_retained_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_retained_v1.webp",
+    "sources": [
+      "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+      "https://www.hario-usa.com/products/switch-immersion-dripper",
+      "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+      "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+      "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+      "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "40e04edb343c33e943a6d70de35e26aa8faf1452c43c8d5adbcefba1da2053cd",
+    "candidateSha256": "a25045875c7cd1dd1d5b375ce199447c35e815aced751cf821061cb9ca3882f5",
+    "promptSha256": "541ebdc47a28b70e86d2a99e340514cd398b43c5b918188e6b7f7a362c9622fb"
+  },
+  {
+    "sceneId": "phin_screw_light",
+    "methodId": "phin",
+    "stepIds": [],
+    "p1Targets": [
+      "p1_phin_screw_18_120_stage_02_instruction"
+    ],
+    "altText": "The screw phin disc rests lightly on a loose level coffee bed; no hand presses it and the coffee has room to swell.",
+    "reference": "C:\\Users\\adam-\\GitHub\\StarlitCoffee\\worktree\\guidance-art-qc\\app\\src\\main\\res\\drawable-nodpi\\instruction_p1_phin_screw_18_120_stage_02_instruction_default.webp",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/phin_screw_light_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/phin_screw_light_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/phin_screw_light_v1.webp",
+    "sources": [
+      "https://nguyencoffeesupply.com/blogs/vietnamese-coffee-brew-guide/traditional-vietnamese-drip-phin",
+      "https://nguyencoffeesupply.com/blogs/news/dialing-in-your-phin-how-to-make-the-best-vietnamese-phin-coffee?_pos=1&_psq=dialin&_ss=e&_v=1.0",
+      "https://nguyencoffeesupply.com/blogs/news/using-and-maintaining-a-vietnamese-phin-filter?_pos=2&_psq=phin+filter&_ss=e&_v=1.0",
+      "https://nguyencoffeesupply.com/pages/master-phin-filter-faq",
+      "https://www.nam.coffee/products/phin-filter-black"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "8101beb94bc1a404059ad23f3cac3a4cee4c58767ded5b23445aa2ed526f2ced",
+    "candidateSha256": "afaf05b5eb69b443e585fdb7c6dbcb3bbbbfcd541170ccbffa3e6ba757b61f86",
+    "promptSha256": "1a2ba3af42bb474ff360cba16f66d6f14d6b78be94f00bb300b31450bf7cac96"
+  },
+  {
+    "sceneId": "melitta_outlets",
+    "version": 2,
+    "resultKey": "melitta_outlets_v2_result",
+    "methodId": "melitta",
+    "stepIds": [
+      "setup"
+    ],
+    "altText": "The underside of the dry Melitta1x4 shows two clear outlet holes and its broad support plate; it is held only by the handle for inspection.",
+    "reference": "C:\\Users\\adam-\\GitHub\\StarlitCoffee\\worktree\\guidance-art-qc\\build\\guidance-reference\\melitta-1x4.png",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/melitta_outlets_v2.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/melitta_outlets_v2.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/melitta_outlets_v2.webp",
+    "sources": [
+      "https://www.melitta-international.com/accessories/Manual-Coffee-Preparation/Coffeefilters-pots/Coffee-Filter-1x4",
+      "https://www.melitta.co.uk/faq/filter-papers",
+      "https://library.sweetmarias.com/wp-content/uploads/2020/08/Drip-Brewing-Pourover-Filtercone-Tip-Sheet.pdf",
+      "https://shoponline.melitta.com/products/1-cup-pour-over-coffee-brew-cone-black",
+      "https://www.melitta.co.jp/enjoyment/how_to/brewing_with_hasamicoffeefilter/",
+      "https://voltagecoffee.com/melitta/"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "711528bcd2e90f324ce3b40d8fc31f78b876cdd3e7bb4278459b09b4c2cd9ac0",
+    "candidateSha256": "f358ddf1cbd59231f04192290176534295fbf7f878f60839894c5e7c966d463a",
+    "promptSha256": "6e0776a5ed694732913ed37af84038e345776156f2fea596b085beb286120282"
+  },
+  {
+    "sceneId": "v60_wait",
+    "methodId": "v60",
+    "stepIds": [
+      "bloom_wait",
+      "pause"
+    ],
+    "altText": "The V60 remains on its server with a shallow wet coffee bed and occasional drips; there is no active pour.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/v60_wait_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/v60_wait_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/v60_wait_v1.webp",
+    "sources": [
+      "https://www.hario.co.uk/blogs/news/how-to-brew-coffee-with-hario-v60-coffee-dripper",
+      "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+      "https://www.hario-usa.com/products/vd-01t",
+      "https://www.hario-usa.com/products/v60-plastic-coffee-dripper-02",
+      "https://www.hario-usa.com/products/v60-plastic-dripper-03",
+      "https://www.hario-usa.com/products/v60-meteor-filters-02",
+      "https://www.hario.co.uk/blogs/hario-ambassadors/hario-v60-recipe-interview-with-hario-ambassador-scott-rao",
+      "https://www.hario.co.uk/blogs/hario-ambassadors/hario-v60-recipe-interview-with-hario-ambassador-tetsu-kasuya",
+      "https://kurasu.kyoto/blogs/recipe/japanese-brew-guide-on-iced-pour-over-coffee",
+      "https://assets.breville.com/ZCG495/manual-encoreesp-v1-0-en-010923.pdf"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "0c463c768a38a1a2fe70b34894c9dc621822277ea755cc6e6e51b9fec37a2fe9",
+    "candidateSha256": "079356aec8efe5e80420c0530166cce9cb5ab25fa025510a610851676c090cee",
+    "promptSha256": "4cf0a023af7a0c94d12b51178851ab1d6e958bd9c3cdd6fcd7313dc72b4653ee"
+  },
+  {
+    "sceneId": "pulsar_water_height",
+    "methodId": "pulsar",
+    "stepIds": [
+      "open_and_pulse"
+    ],
+    "altText": "Conceptual section: a thin water layer sits just above a level granular coffee bed; the adjacent target states about one centimetre, not a measured reading.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/pulsar_water_height_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/pulsar_water_height_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/pulsar_water_height_v1.webp",
+    "sources": [
+      "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+      "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/",
+      "https://www.scottrao.com/blog/pulsar-recipe",
+      "https://kaldiscoffee.com/blogs/recipes/nextlevel-pulsar-dripper-brew-recipe",
+      "https://nextlevelbrewer.com/shop/pulsar-stainless-steel-filter-discs/",
+      "https://nextlevelbrewer.com/pulsar-mini-recipes/",
+      "https://nextlevelbrewer.com/brewing-suggestions/"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "eb6e7d51bb11013ffbd0bab3f824b5cd6e16f2f8cd10393c5d3b05d08d0eb1a4",
+    "candidateSha256": "36c9b2f4053a344831dc6454cce05c624ccd4c1e40a43db55a462eb9af8318b7",
+    "promptSha256": "45bd1168940228addac7aa48208514c7aa923aa422fa44f340a0f39a8ce819af"
+  },
+  {
+    "sceneId": "clever_large_prepare",
+    "methodId": "clever",
+    "stepIds": [
+      "prepare"
+    ],
+    "altText": "An empty paper filter is fitted inside the large Clever, which rests off the server on its own base.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/clever_large_prepare_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/clever_large_prepare_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/clever_large_prepare_v1.webp",
+    "sources": [
+      "https://www.handybrew.com/",
+      "https://www.sweetmarias.com/products/clever-coffee-dripper-with-filters",
+      "https://crema-coffee.com/pages/clever-dripper-brewing-guide"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "142292d9bc03e124e7d3840c7b95a44a6176f9a064879c39f7d636e29ee8440b",
+    "candidateSha256": "445ffbd5e677b910b3b64bd10d79075b1461c9f2b1ebc8e1431d3650fac69f2f",
+    "promptSha256": "e0d3be1d46bad71f72024990e64a4248cb116e48bcd78792f0ff72fb01e39746"
+  },
+  {
+    "sceneId": "clever_large_water",
+    "methodId": "clever",
+    "stepIds": [
+      "fill_water"
+    ],
+    "altText": "Clear water is poured into the empty paper-lined large Clever while it rests off the server; no coffee has been added.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/clever_large_water_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/clever_large_water_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/clever_large_water_v1.webp",
+    "sources": [
+      "https://www.handybrew.com/",
+      "https://www.sweetmarias.com/products/clever-coffee-dripper-with-filters",
+      "https://crema-coffee.com/pages/clever-dripper-brewing-guide"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "fa945b79784a3074c94c77b505a50f38e3de5fde9ea68bff0718bf7753bf67c2",
+    "candidateSha256": "cd4cf25241c7096ad12c2638784bc35a3f54d0185cf0aab2e44b2278a9969f34",
+    "promptSha256": "4a4e2ac1247ae46a63df3f399ee4a26a67629afaa8a1ceaa365f98e245eaccb1"
+  },
+  {
+    "sceneId": "clever_large_steep",
+    "methodId": "clever",
+    "stepIds": [
+      "steep"
+    ],
+    "altText": "Coffee and water remain in the large Clever off the server, with no outflow.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/clever_large_steep_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/clever_large_steep_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/clever_large_steep_v1.webp",
+    "sources": [
+      "https://www.handybrew.com/",
+      "https://www.sweetmarias.com/products/clever-coffee-dripper-with-filters",
+      "https://crema-coffee.com/pages/clever-dripper-brewing-guide"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "67e7e069f478f5b490837085053b15c518815517c4d75442e705e6a3c16bd412",
+    "candidateSha256": "956de23221a4e1f53c3d44c3e517384cde732c4ae0f1d97075a87b260b3f17aa",
+    "promptSha256": "a62700f1f23f92ecb959fee0cb18d63332f7cb215c49e267f216e83295647736"
+  },
+  {
+    "sceneId": "clever_large_add_coffee",
+    "methodId": "clever",
+    "stepIds": [
+      "add_coffee_start_clock"
+    ],
+    "altText": "Coffee grounds are added onto water already retained inside the paper-lined large Clever, away from a receiving vessel.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/clever_large_add_coffee_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/clever_large_add_coffee_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/clever_large_add_coffee_v1.webp",
+    "sources": [
+      "https://www.handybrew.com/",
+      "https://www.sweetmarias.com/products/clever-coffee-dripper-with-filters",
+      "https://crema-coffee.com/pages/clever-dripper-brewing-guide"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "e9d0d7a5fc4d52be64dc2d24c7482a44ecbd14477391b1c3edb8fc427fa95924",
+    "candidateSha256": "d2d0648aaacb7d40ea898e5b9dcaff2a75882f55f0500e90f232f22806a5da12",
+    "promptSha256": "c2c6993f12428f2688811557f49cc60333da16e4030336d345933a6493626bd6"
+  },
+  {
+    "sceneId": "clever_large_stir",
+    "methodId": "clever",
+    "stepIds": [
+      "break_crust_settle"
+    ],
+    "altText": "A spoon gently stirs the coffee surface while the large Clever remains off the server with water retained.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/clever_large_stir_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/clever_large_stir_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/clever_large_stir_v1.webp",
+    "sources": [
+      "https://www.handybrew.com/",
+      "https://www.sweetmarias.com/products/clever-coffee-dripper-with-filters",
+      "https://crema-coffee.com/pages/clever-dripper-brewing-guide"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "3d1e81063c64a22735c748b249bd21f41031f44b2bfcc85bbe2da1350d0fd309",
+    "candidateSha256": "1fdbf142dd6ede3886a037c1bab1f24591573abb03787d2de97cdd704151f412",
+    "promptSha256": "efa344b7dc4b151c089c1466235083cb5f98f170647e89d8da24a1fabf4d7c50"
+  },
+  {
+    "sceneId": "clever_large_release",
+    "methodId": "clever",
+    "stepIds": [
+      "release_and_drain"
+    ],
+    "altText": "The large Clever sits securely on a compatible server rim and coffee drains through its bottom valve.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/clever_large_release_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/clever_large_release_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/clever_large_release_v1.webp",
+    "sources": [
+      "https://www.handybrew.com/",
+      "https://www.sweetmarias.com/products/clever-coffee-dripper-with-filters",
+      "https://crema-coffee.com/pages/clever-dripper-brewing-guide"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "a0fdd9c3b86934ce6d0b4f046f194356366775f6c616f7602267a22ad69bad34",
+    "candidateSha256": "e0261552bf54100cfbce9ef5c6134798e2f890eae1cbf7de10e388c97066e12a",
+    "promptSha256": "24506e163b412f76825af3bef2a5919b69682f126e63780bff1bd39e90ab3dc1"
+  },
+  {
+    "sceneId": "melitta_rinse",
+    "methodId": "melitta",
+    "stepIds": [
+      "rinse"
+    ],
+    "altText": "Clear water rinses empty wedge paper in a Melitta1x4 supported securely on a server; rinse water collects below.",
+    "version": 3,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/melitta_rinse_v3.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/melitta_rinse_v3.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/melitta_rinse_v3.webp",
+    "sources": [
+      "https://www.melitta-international.com/accessories/Manual-Coffee-Preparation/Coffeefilters-pots/Coffee-Filter-1x4",
+      "https://www.melitta.co.uk/faq/filter-papers",
+      "https://library.sweetmarias.com/wp-content/uploads/2020/08/Drip-Brewing-Pourover-Filtercone-Tip-Sheet.pdf",
+      "https://shoponline.melitta.com/products/1-cup-pour-over-coffee-brew-cone-black",
+      "https://www.melitta.co.jp/enjoyment/how_to/brewing_with_hasamicoffeefilter/",
+      "https://voltagecoffee.com/melitta/"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "9f1e11a4555fc8b7aa088077ad43ec074e8009dc5b8c5e7e8a6c35d691d436a1",
+    "candidateSha256": "2674901f9fa9cb07c56288231a9e833f4847b1bf3ccd9191904eae483a4ad3e1",
+    "promptSha256": "65981d728e8b7b735be511af8650e0ae0ee90596228af131a67438d7b7fd41c5"
+  },
+  {
+    "sceneId": "melitta_pour",
+    "methodId": "melitta",
+    "stepIds": [
+      "bloom",
+      "first_main_pour",
+      "last_pour"
+    ],
+    "altText": "A gentle stream wets coffee within the Melitta1x4 wedge paper, with clear headroom while coffee drains into the server.",
+    "version": 3,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/melitta_pour_v3.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/melitta_pour_v3.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/melitta_pour_v3.webp",
+    "sources": [
+      "https://www.melitta-international.com/accessories/Manual-Coffee-Preparation/Coffeefilters-pots/Coffee-Filter-1x4",
+      "https://www.melitta.co.uk/faq/filter-papers",
+      "https://library.sweetmarias.com/wp-content/uploads/2020/08/Drip-Brewing-Pourover-Filtercone-Tip-Sheet.pdf",
+      "https://shoponline.melitta.com/products/1-cup-pour-over-coffee-brew-cone-black",
+      "https://www.melitta.co.jp/enjoyment/how_to/brewing_with_hasamicoffeefilter/",
+      "https://voltagecoffee.com/melitta/"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "cfb935717dada35157c814af7a4e7b8d4c0ed00278bcc1e702f8f88d3e8196e9",
+    "candidateSha256": "3dc71bd166e16630693cc36483ec0b8108e2702c2a31d6280dd788c080924828",
+    "promptSha256": "c3af24be32e55bd4cea765a004c931b6bf3e954397a0aef987f3be10b2137ba8"
+  },
+  {
+    "sceneId": "melitta_coffee",
+    "methodId": "melitta",
+    "stepIds": [
+      "coffee"
+    ],
+    "altText": "A shallow level bed of loose coffee rests inside the matching Melitta1x4 wedge paper.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/melitta_coffee_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/melitta_coffee_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/melitta_coffee_v1.webp",
+    "sources": [
+      "https://www.melitta-international.com/accessories/Manual-Coffee-Preparation/Coffeefilters-pots/Coffee-Filter-1x4",
+      "https://www.melitta.co.uk/faq/filter-papers",
+      "https://library.sweetmarias.com/wp-content/uploads/2020/08/Drip-Brewing-Pourover-Filtercone-Tip-Sheet.pdf",
+      "https://shoponline.melitta.com/products/1-cup-pour-over-coffee-brew-cone-black",
+      "https://www.melitta.co.jp/enjoyment/how_to/brewing_with_hasamicoffeefilter/",
+      "https://voltagecoffee.com/melitta/"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "345390f40213211b7f5628567337c20f5c27c0ff2c993caee4b1fc2b0004b692",
+    "candidateSha256": "647a9795a5d5382b7fd35b05050f7bbb255d61f9c765a35738b36de5d1b7eea5",
+    "promptSha256": "7fe591a151dd6f7db1db8ff090fa0d4906ea7c43cd2e161ff755f8cb810eb086"
+  },
+  {
+    "sceneId": "wave155_drain_remove",
+    "methodId": "kalita-wave",
+    "stepIds": [
+      "drain_serve"
+    ],
+    "altText": "After drainage, the short steel Wave155 rests on a heat-safe dish beside a server of brewed coffee.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/wave155_drain_remove_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/wave155_drain_remove_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/wave155_drain_remove_v1.webp",
+    "sources": [
+      "https://ozonecoffee.co.uk/pages/kalita-wave-brew-guide",
+      "https://kalitausa.com/products/kalita-wave-185-stainless-steel-coffee-dripper",
+      "https://kalitausa.com/products/kalita-wave-185-glass-dripper",
+      "https://kalitausa.com/products/kalita-mino-ceramic-dripper-185-sand-beige"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "dbb1501fa0e60ec99a9aecf562490303e0da80a4f40cb23fe89223c476f4f724",
+    "candidateSha256": "df4ef6aa77078e81a534639170c99721ae5cf729583416a78bd28cd7e25d52b4",
+    "promptSha256": "0f41a7accf069e08680aa8900977808418f863807162f930bebbd6ebf2813c99"
+  },
+  {
+    "sceneId": "clever_large_remove",
+    "methodId": "clever",
+    "stepIds": [
+      "remove_serve"
+    ],
+    "altText": "After drainage, the large Clever rests on its coaster beside a server of brewed coffee.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/clever_large_remove_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/clever_large_remove_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/clever_large_remove_v1.webp",
+    "sources": [
+      "https://www.handybrew.com/",
+      "https://www.sweetmarias.com/products/clever-coffee-dripper-with-filters",
+      "https://crema-coffee.com/pages/clever-dripper-brewing-guide"
+    ],
+    "qc": {
+      "status": "rejected",
+      "notes": [
+        "End-state still shows full chamber instead of shallow drained coffee bed."
+      ]
+    }
+  },
+  {
+    "sceneId": "melitta_drain_remove",
+    "methodId": "melitta",
+    "stepIds": [
+      "drain_serve"
+    ],
+    "altText": "The Melitta1x4 with drained grounds rests on a heat-safe dish beside the server of coffee.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/melitta_drain_remove_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/melitta_drain_remove_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/melitta_drain_remove_v1.webp",
+    "sources": [
+      "https://www.melitta-international.com/accessories/Manual-Coffee-Preparation/Coffeefilters-pots/Coffee-Filter-1x4",
+      "https://www.melitta.co.uk/faq/filter-papers",
+      "https://library.sweetmarias.com/wp-content/uploads/2020/08/Drip-Brewing-Pourover-Filtercone-Tip-Sheet.pdf",
+      "https://shoponline.melitta.com/products/1-cup-pour-over-coffee-brew-cone-black",
+      "https://www.melitta.co.jp/enjoyment/how_to/brewing_with_hasamicoffeefilter/",
+      "https://voltagecoffee.com/melitta/"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "e71135ff4157664ac019e16fb6ba6a303e08a778a51c87eed3b803c0648098cb",
+    "candidateSha256": "bf3f6af5fcbe1099605a1c18e4575c603a15ffb8ecb4027e77cf3eb82f5fd30c",
+    "promptSha256": "3ac031ba5a77468ab800d6fb499594f3b2c206ab58645ae9160d5a893b93427b"
+  },
+  {
+    "sceneId": "phin_screw_light",
+    "methodId": "phin",
+    "stepIds": [],
+    "altText": "A perforated screw insert is lightly engaged on the central threaded stem of the phin, just touching the loose dry coffee.",
+    "version": 2,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/phin_screw_light_v2.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/phin_screw_light_v2.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/phin_screw_light_v2.webp",
+    "sources": [
+      "https://nguyencoffeesupply.com/blogs/vietnamese-coffee-brew-guide/traditional-vietnamese-drip-phin",
+      "https://nguyencoffeesupply.com/blogs/news/dialing-in-your-phin-how-to-make-the-best-vietnamese-phin-coffee?_pos=1&_psq=dialin&_ss=e&_v=1.0",
+      "https://nguyencoffeesupply.com/blogs/news/using-and-maintaining-a-vietnamese-phin-filter?_pos=2&_psq=phin+filter&_ss=e&_v=1.0",
+      "https://nguyencoffeesupply.com/pages/master-phin-filter-faq",
+      "https://www.nam.coffee/products/phin-filter-black"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "908ce9e6d414849a7113c0b5cea99eb9311d391eaed8e9b4956072b668362a35",
+    "candidateSha256": "cac54d673111231b574e4dfec8c51141dcea85544f2e95e37da9e373fa4fdaae",
+    "promptSha256": "fa51945d7adce171643e657773465dee7cb94761af133a954dc794ccd8e52346"
+  },
+  {
+    "sceneId": "switch_retained",
+    "methodId": "hario-switch",
+    "stepIds": [
+      "fill",
+      "steep"
+    ],
+    "altText": "Coffee and water remain inside the paper-lined Switch with its clear paddle unpressed and no flow into the server.",
+    "version": 2,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_retained_v2.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_retained_v2.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_retained_v2.webp",
+    "sources": [
+      "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+      "https://www.hario-usa.com/products/switch-immersion-dripper",
+      "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+      "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+      "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+      "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "54fc72da9c924099180ea66b2b8b75f10b46a8324a6595ce4ca5bc57be5c6300",
+    "candidateSha256": "1960e63e7142c6ecfba37eb79c349d5312424f296188df40644b629c6c3d2809",
+    "promptSha256": "da28b8302fc9cb128de7484f72495b51d442db4055ddd63e51a7c784b3a0ba83"
+  },
+  {
+    "sceneId": "clever_large_remove",
+    "methodId": "clever",
+    "stepIds": [
+      "remove_serve"
+    ],
+    "altText": "The drained large Clever rests on its coaster, with only a shallow spent coffee bed, beside a server of brewed coffee.",
+    "version": 2,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/clever_large_remove_v2.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/clever_large_remove_v2.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/clever_large_remove_v2.webp",
+    "sources": [
+      "https://www.handybrew.com/",
+      "https://www.sweetmarias.com/products/clever-coffee-dripper-with-filters",
+      "https://crema-coffee.com/pages/clever-dripper-brewing-guide"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "9831f4080f3d2bf2b8afb97d2532b8bcc59328f624a09f4a647f5db01780641b",
+    "candidateSha256": "1c3c188bd2a4b70b135d8aa9547fc6c8905034bd486580bdb048998b8c087043",
+    "promptSha256": "d10e86365fb6b71afc8e500b55f485c689dac2ed9582c871a9bfb944f7e277f6"
+  },
+  {
+    "sceneId": "auto_water_full",
+    "methodId": "automatic-drip",
+    "stepIds": [
+      "water"
+    ],
+    "altText": "A jug pours cool water into the KBGV Select reservoir with clear headroom; its glass carafe remains seated below the supported basket.",
+    "version": 2,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_water_full_v2.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/auto_water_full_v2.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_water_full_v2.webp",
+    "sources": [
+      "https://counterculturecoffee.com/pages/auto-drip",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009389881-How-much-coffee-should-I-use-in-my-Moccamaster",
+      "https://support.moccamaster.com/hc/en-us/article_attachments/1500014339002",
+      "https://www.moccamaster.eu/pub/media/handleidingen/talen/Manual_SELECT.pdf",
+      "https://www.moccamaster.nl/pub/media/handleidingen/Gebruiksaanwijzing-Cup-One-2.0-zonder-wegwerpbeker.pdf",
+      "https://us.moccamaster.com/products/cup-one",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009392081-What-size-filter-does-my-Moccamaster-use",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009385562-Can-grind-size-make-my-coffee-taste-bitter-or-weak",
+      "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009428621-How-frequently-should-I-descale-and-clean-my-brewer-and-what-should-I-use",
+      "https://sca.coffee/sca-news/2023/10/10/new-sca-certified-home-brewer-technivorm-moccamaster-kbgv-select-fjpd6"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "acd5c2415d00264b5cd602daf35d6accf6f56d0d7ee2341e28957318fc2f6f60",
+    "candidateSha256": "5d531e13691896976f87f0c074c9a3c36b6fef494c7815b3cfe09997bc13d5f0",
+    "promptSha256": "08973e1c9ca78b153bf00d1ace8aba9b355c501f513c9df4fb9c03a1e8248f61"
+  },
+  {
+    "sceneId": "auto_coffee",
+    "methodId": "automatic-drip",
+    "stepIds": [
+      "coffee"
+    ],
+    "altText": "A shallow level bed of loose dry coffee sits in No.4 wedge paper inside the removable KBGV Select basket.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_coffee_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/auto_coffee_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_coffee_v1.webp",
+    "sources": [
+      "https://counterculturecoffee.com/pages/auto-drip",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009389881-How-much-coffee-should-I-use-in-my-Moccamaster",
+      "https://support.moccamaster.com/hc/en-us/article_attachments/1500014339002",
+      "https://www.moccamaster.eu/pub/media/handleidingen/talen/Manual_SELECT.pdf",
+      "https://www.moccamaster.nl/pub/media/handleidingen/Gebruiksaanwijzing-Cup-One-2.0-zonder-wegwerpbeker.pdf",
+      "https://us.moccamaster.com/products/cup-one",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009392081-What-size-filter-does-my-Moccamaster-use",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009385562-Can-grind-size-make-my-coffee-taste-bitter-or-weak",
+      "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009428621-How-frequently-should-I-descale-and-clean-my-brewer-and-what-should-I-use",
+      "https://sca.coffee/sca-news/2023/10/10/new-sca-certified-home-brewer-technivorm-moccamaster-kbgv-select-fjpd6"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "ec3bf3cd7763e4c0c20eaa2c24b845f63504ef51de98d843c9366e2a4ac8d5ba",
+    "candidateSha256": "48fa539653fa8ab890693aaa8e733a760ff6cf6335f6fdb4f30c3764ad862600",
+    "promptSha256": "65cd4708072b34544f7f1f3f12fa05dd6deeb590c5bf1e8a20b406a02ac70c2a"
+  },
+  {
+    "sceneId": "auto_brew_flow",
+    "methodId": "automatic-drip",
+    "stepIds": [
+      "start"
+    ],
+    "altText": "Coffee drains from the independently supported KBGV Select basket through the mixing lid into its seated glass carafe.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_brew_flow_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/auto_brew_flow_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_brew_flow_v1.webp",
+    "sources": [
+      "https://counterculturecoffee.com/pages/auto-drip",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009389881-How-much-coffee-should-I-use-in-my-Moccamaster",
+      "https://support.moccamaster.com/hc/en-us/article_attachments/1500014339002",
+      "https://www.moccamaster.eu/pub/media/handleidingen/talen/Manual_SELECT.pdf",
+      "https://www.moccamaster.nl/pub/media/handleidingen/Gebruiksaanwijzing-Cup-One-2.0-zonder-wegwerpbeker.pdf",
+      "https://us.moccamaster.com/products/cup-one",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009392081-What-size-filter-does-my-Moccamaster-use",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009385562-Can-grind-size-make-my-coffee-taste-bitter-or-weak",
+      "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009428621-How-frequently-should-I-descale-and-clean-my-brewer-and-what-should-I-use",
+      "https://sca.coffee/sca-news/2023/10/10/new-sca-certified-home-brewer-technivorm-moccamaster-kbgv-select-fjpd6"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "cc45401ec3c395ae311dfe0afd0274f9d74a98b8a5b5cb6b0539edaecfd47bff",
+    "candidateSha256": "490aea1799cacf3d44fdb7d39c0179aa8013d6e0ec2fdabca599fc12b02638f5",
+    "promptSha256": "3d4d636e94e4907883df0f798aa4b999ba22e48a025117423e33c2a7f015da07"
+  },
+  {
+    "sceneId": "switch_closed_coffee",
+    "methodId": "hario-switch",
+    "stepIds": [
+      "close_and_add_coffee"
+    ],
+    "altText": "Loose dry coffee rests in the paper-lined Switch with its clear paddle unpressed; the server is empty.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_closed_coffee_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_closed_coffee_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_closed_coffee_v1.webp",
+    "sources": [
+      "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+      "https://www.hario-usa.com/products/switch-immersion-dripper",
+      "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+      "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+      "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+      "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "c66d7f8d8c07533fd883b160af067f5423afaaec07c84388ca2f54b868c692a1",
+    "candidateSha256": "4da49b752066732f41bd22dd218a10eb3a8837cc2ac22510e0ab8212ca7c6993",
+    "promptSha256": "2002012ea601cc9996be558580bc6f91926267054d96f073cc3776fe38676851"
+  },
+  {
+    "sceneId": "switch_open_flow",
+    "methodId": "hario-switch",
+    "stepIds": [
+      "release"
+    ],
+    "altText": "Coffee drains through the open Switch into a stable server below.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_flow_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_open_flow_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_flow_v1.webp",
+    "sources": [
+      "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+      "https://www.hario-usa.com/products/switch-immersion-dripper",
+      "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+      "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+      "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+      "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "d46feeb3e5165fe5dcc61161f0c954bacf965cb5f391fa85fcc5c95e44635758",
+    "candidateSha256": "f37fef495f7df27af74b38483f469dda56fe456de80b94ecd3a978992f69868d",
+    "promptSha256": "45eaf21976f97257a8ef2ea52b11fe0e7750f213ff4d1d0c15c1f78ac283a7a0"
+  },
+  {
+    "sceneId": "switch_open_rinse",
+    "methodId": "hario-switch",
+    "stepIds": [
+      "prepare"
+    ],
+    "altText": "Clear water rinses empty paper in the Switch and drains through its open valve into the server.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_rinse_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_open_rinse_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_rinse_v1.webp",
+    "sources": [
+      "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+      "https://www.hario-usa.com/products/switch-immersion-dripper",
+      "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+      "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+      "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+      "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "c39729d5fce7814b59d07cd77d62343439b81f926780813042458da345bd84b1",
+    "candidateSha256": "1fcccf317c921845afe4376955ad1bdfb8cfbb57daf6019e60e65e830171a369",
+    "promptSha256": "29b5c8075a4b91009050dfe1432e8c2349654bf874c73750d618748fd289672c"
+  },
+  {
+    "sceneId": "switch_closed_empty",
+    "methodId": "hario-switch",
+    "stepIds": [],
+    "altText": "The Switch has empty fitted cone paper and an unpressed clear paddle, with no flow into the empty server.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_closed_empty_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_closed_empty_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_closed_empty_v1.webp",
+    "sources": [
+      "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+      "https://www.hario-usa.com/products/switch-immersion-dripper",
+      "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+      "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+      "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+      "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "e2bc70a80da04536852e15b1124c9f76d7e329d13517996c0646eb2990fbbecc",
+    "candidateSha256": "24e0c0e74458275cbe8f486e8047a7b91cfb96d0b718a6a26620968cd931c48c",
+    "promptSha256": "4fad654c895cc8e14e56ad8c7d619e5c07fa6240e458fd43f8b10387a860db5a"
+  },
+  {
+    "sceneId": "switch_closed_stir",
+    "methodId": "hario-switch",
+    "stepIds": [],
+    "altText": "A spoon gently stirs the retained coffee inside the Switch while no liquid drains into the server.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_closed_stir_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_closed_stir_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_closed_stir_v1.webp",
+    "sources": [
+      "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+      "https://www.hario-usa.com/products/switch-immersion-dripper",
+      "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+      "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+      "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+      "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "7504106996f9fd0ad40c6cacb52436eb8dfbeaf1a28272f1835ea4dbbb22409e",
+    "candidateSha256": "0679ed8aa6ad0d63414969f26053eb4c300ba068ef68887fffceeba0efafe797",
+    "promptSha256": "f8336c8454fbd1368c92d5c59197222cd829f5b73aaabd137b4de41607b5f025"
+  },
+  {
+    "sceneId": "switch_open_drained",
+    "methodId": "hario-switch",
+    "stepIds": [
+      "finish"
+    ],
+    "altText": "The open Switch has drained to a shallow wet coffee bed, with coffee collected in the server and no continuous flow.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_drained_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_open_drained_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_drained_v1.webp",
+    "sources": [
+      "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+      "https://www.hario-usa.com/products/switch-immersion-dripper",
+      "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+      "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+      "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+      "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "4df43a96ec2180d4502e9f638e88517f84e320b2aeab60f29254b6f889c193da",
+    "candidateSha256": "f239ce273c90dfdea0a638499b93813698b241426fe7f8ec2f349e4c8f9c8744",
+    "promptSha256": "dc9bf2d915398d7766f94d80bb62e551ca32db1168e73a9e31c41590201006ba"
+  },
+  {
+    "sceneId": "wave155_drain_remove",
+    "methodId": "kalita-wave",
+    "stepIds": [
+      "drain_serve"
+    ],
+    "altText": "The drained Wave155 rests on its broad steel support flange on a heat-safe dish beside a server of coffee.",
+    "version": 2,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/wave155_drain_remove_v2.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/wave155_drain_remove_v2.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/wave155_drain_remove_v2.webp",
+    "sources": [
+      "https://ozonecoffee.co.uk/pages/kalita-wave-brew-guide",
+      "https://kalitausa.com/products/kalita-wave-185-stainless-steel-coffee-dripper",
+      "https://kalitausa.com/products/kalita-wave-185-glass-dripper",
+      "https://kalitausa.com/products/kalita-mino-ceramic-dripper-185-sand-beige"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "8bd1dc352912de052ffd4246d9b69c974bba5d0549d711a2eae1600bad3903b6",
+    "candidateSha256": "45be3a31656bc7ddcace9121ba11bc54f83782425a0c6f003ce4ba3c574babbf",
+    "promptSha256": "c08dbe7ade0e752c14d36409603c4d724bdbaf97bbbcff4c154c43c96f58e891"
+  },
+  {
+    "sceneId": "switch_closed_coffee",
+    "methodId": "hario-switch",
+    "stepIds": [
+      "close_and_add_coffee"
+    ],
+    "altText": "A shallow loose dry coffee bed fills the bottom of the Switch cone paper; its clear paddle is unpressed and the server is empty.",
+    "version": 2,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_closed_coffee_v2.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_closed_coffee_v2.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_closed_coffee_v2.webp",
+    "sources": [
+      "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+      "https://www.hario-usa.com/products/switch-immersion-dripper",
+      "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+      "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+      "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+      "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "f43b74b149ccefff98b78a6658f7c2c5c12c45155ec8648045d8c3fc4507e527",
+    "candidateSha256": "005e03618df4b2e5be41073d89856df3bb574224602aaaa6917ecc815eb4813b",
+    "promptSha256": "81eff4adef29efd2caaba162dfebbc135c193918e23124d7adfba3cc947e39ba"
+  },
+  {
+    "sceneId": "auto_brew_flow",
+    "methodId": "automatic-drip",
+    "stepIds": [
+      "start"
+    ],
+    "altText": "Coffee drains from the supported KBGV Select basket through its mixing-lid tube into the seated glass carafe.",
+    "version": 2,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_brew_flow_v2.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/auto_brew_flow_v2.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_brew_flow_v2.webp",
+    "sources": [
+      "https://counterculturecoffee.com/pages/auto-drip",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009389881-How-much-coffee-should-I-use-in-my-Moccamaster",
+      "https://support.moccamaster.com/hc/en-us/article_attachments/1500014339002",
+      "https://www.moccamaster.eu/pub/media/handleidingen/talen/Manual_SELECT.pdf",
+      "https://www.moccamaster.nl/pub/media/handleidingen/Gebruiksaanwijzing-Cup-One-2.0-zonder-wegwerpbeker.pdf",
+      "https://us.moccamaster.com/products/cup-one",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009392081-What-size-filter-does-my-Moccamaster-use",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009385562-Can-grind-size-make-my-coffee-taste-bitter-or-weak",
+      "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009428621-How-frequently-should-I-descale-and-clean-my-brewer-and-what-should-I-use",
+      "https://sca.coffee/sca-news/2023/10/10/new-sca-certified-home-brewer-technivorm-moccamaster-kbgv-select-fjpd6"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "941f869f692a3284665d9eee5de7dd46e255bbbfbdd5457b02256ead9dfcfee5",
+    "candidateSha256": "1f92e48220b8515b455e1f322a2efe42c3a256b2a24b5c4bc46063ac084ba4fc",
+    "promptSha256": "bcc6af621bf5c265f04d30369c5fdb9d234b6dd23685b6ed27dc732183b854f7"
+  },
+  {
+    "sceneId": "switch_open_flow",
+    "methodId": "hario-switch",
+    "stepIds": [
+      "release"
+    ],
+    "altText": "Coffee drains through the open Switch outlet beneath its intact base into the stable server.",
+    "version": 2,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_flow_v2.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_open_flow_v2.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_flow_v2.webp",
+    "sources": [
+      "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+      "https://www.hario-usa.com/products/switch-immersion-dripper",
+      "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+      "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+      "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+      "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "43a77ba3387c4eb461e57fc5f425d43da02db558d013dc6acebf8869be1a2f5f",
+    "candidateSha256": "3a4387bf2c2996d7a5f55ed53e082cdb8e7bde628212b9f744d59a55a63a967f",
+    "promptSha256": "20cec3c7ce0aeef077745db060bfb2c377a978527220c24ec221cb6812935396"
+  },
+  {
+    "sceneId": "auto_no_flow",
+    "methodId": "automatic-drip",
+    "stepIds": [
+      "finish"
+    ],
+    "altText": "The KBGV Select glass carafe remains beneath its supported basket after visible flow has ended; its mixing-lid tube stays fitted.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_no_flow_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/auto_no_flow_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_no_flow_v1.webp",
+    "sources": [
+      "https://counterculturecoffee.com/pages/auto-drip",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009389881-How-much-coffee-should-I-use-in-my-Moccamaster",
+      "https://support.moccamaster.com/hc/en-us/article_attachments/1500014339002",
+      "https://www.moccamaster.eu/pub/media/handleidingen/talen/Manual_SELECT.pdf",
+      "https://www.moccamaster.nl/pub/media/handleidingen/Gebruiksaanwijzing-Cup-One-2.0-zonder-wegwerpbeker.pdf",
+      "https://us.moccamaster.com/products/cup-one",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009392081-What-size-filter-does-my-Moccamaster-use",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009385562-Can-grind-size-make-my-coffee-taste-bitter-or-weak",
+      "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009428621-How-frequently-should-I-descale-and-clean-my-brewer-and-what-should-I-use",
+      "https://sca.coffee/sca-news/2023/10/10/new-sca-certified-home-brewer-technivorm-moccamaster-kbgv-select-fjpd6"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "dce89e20ede36a8d80dc199982d5ac2316f13c7d9023728a8383376aae884ced",
+    "candidateSha256": "f8a43dfa3d3dcfc561087d87df0c02ec5c702184076d2beaffdd86e391be0a4c",
+    "promptSha256": "f7aee9352804a9de9c9be1323cc82a933804426b99138203f22716635d8057fb"
+  },
+  {
+    "sceneId": "auto_swirl",
+    "methodId": "automatic-drip",
+    "stepIds": [
+      "serve"
+    ],
+    "altText": "A hand grips only the KBGV glass carafe handle while the fitted mixing lid and coffee remain safely in place.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_swirl_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/auto_swirl_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_swirl_v1.webp",
+    "sources": [
+      "https://counterculturecoffee.com/pages/auto-drip",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009389881-How-much-coffee-should-I-use-in-my-Moccamaster",
+      "https://support.moccamaster.com/hc/en-us/article_attachments/1500014339002",
+      "https://www.moccamaster.eu/pub/media/handleidingen/talen/Manual_SELECT.pdf",
+      "https://www.moccamaster.nl/pub/media/handleidingen/Gebruiksaanwijzing-Cup-One-2.0-zonder-wegwerpbeker.pdf",
+      "https://us.moccamaster.com/products/cup-one",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009392081-What-size-filter-does-my-Moccamaster-use",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009385562-Can-grind-size-make-my-coffee-taste-bitter-or-weak",
+      "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159",
+      "https://support.moccamaster.com/hc/en-us/articles/1500009428621-How-frequently-should-I-descale-and-clean-my-brewer-and-what-should-I-use",
+      "https://sca.coffee/sca-news/2023/10/10/new-sca-certified-home-brewer-technivorm-moccamaster-kbgv-select-fjpd6"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "0ece2a0204cbeae623b7a8d565c1a88362853829efdc530577c8b62ea1ad4386",
+    "candidateSha256": "c943a59f5712f5f51027978f1bf35dca617ba2df9c43639d5d914f3378573d7d",
+    "promptSha256": "6e2391371f25c255efc53dbe008a223b1f9bdca012c382bd6e2c5506bfe0a8ab"
+  },
+  {
+    "sceneId": "switch_retained",
+    "methodId": "hario-switch",
+    "stepIds": [
+      "fill",
+      "steep"
+    ],
+    "altText": "Coffee and water remain inside the Switch with its clear paddle visibly raised and no flow into the empty server.",
+    "version": 3,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_retained_v3.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_retained_v3.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_retained_v3.webp",
+    "sources": [
+      "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+      "https://www.hario-usa.com/products/switch-immersion-dripper",
+      "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+      "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+      "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+      "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "6cb2757559a6030c02afe270ed510de4243eadc0504fbe4b80c21cf59a4ebdd0",
+    "candidateSha256": "a704109c7d9344c47fbe6e847b11eda2833a413b0620fc60c4bab40440b32a52",
+    "promptSha256": "acdfb662cfdf8407ce5d4fe1183f1e82a8da75c0e864bb9f15dbd9fe07fa48f4"
+  },
+  {
+    "sceneId": "switch_closed_empty",
+    "methodId": "hario-switch",
+    "stepIds": [],
+    "altText": "Empty fitted cone paper sits in the Switch; its clear paddle is visibly raised in the retained-water position.",
+    "version": 2,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_closed_empty_v2.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_closed_empty_v2.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_closed_empty_v2.webp",
+    "sources": [
+      "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+      "https://www.hario-usa.com/products/switch-immersion-dripper",
+      "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+      "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+      "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+      "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "e4267b22305f9c4b45f2b48874a2e808707d23b19a37e6238f422d6c902d120e",
+    "candidateSha256": "fcbb4f0abfc4b789cf110c9c5d5844bd08860e75f95da13a8ae3fc200054668a",
+    "promptSha256": "846264265f19765379880ed825f8d50cffcd2470ad4c690fc218e46f4794a433"
+  },
+  {
+    "sceneId": "switch_closed_coffee",
+    "methodId": "hario-switch",
+    "stepIds": [
+      "close_and_add_coffee"
+    ],
+    "altText": "Loose dry coffee fills the pointed bottom of the Switch paper, with the clear paddle visibly raised and the server empty.",
+    "version": 3,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_closed_coffee_v3.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_closed_coffee_v3.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_closed_coffee_v3.webp",
+    "sources": [
+      "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+      "https://www.hario-usa.com/products/switch-immersion-dripper",
+      "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+      "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+      "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+      "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "419e415b131d3d1f9f8c3a84054f8476bbd6a98ef20416a7494255a737dad9d0",
+    "candidateSha256": "b7e53718a0dd6a68c4a6270aec6ef12d612578c2286e64468422c745a93a1cdf",
+    "promptSha256": "9a820686ee88952fa14019edf9071c74eaea160405745073116b871bd6fefba5"
+  },
+  {
+    "sceneId": "switch_closed_stir",
+    "methodId": "hario-switch",
+    "stepIds": [],
+    "altText": "A spoon gently stirs retained coffee in the Switch; its clear paddle remains visibly raised and no coffee drains below.",
+    "version": 2,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_closed_stir_v2.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_closed_stir_v2.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_closed_stir_v2.webp",
+    "sources": [
+      "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+      "https://www.hario-usa.com/products/switch-immersion-dripper",
+      "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+      "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+      "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+      "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "ddd297a1012cee7d81fed16cee5de7120a1453afaab1fc6a1441abcd5a2f68cc",
+    "candidateSha256": "6bc30331ba7e6080662f33e39c568d3a552d90e70ca085b5174f9b9a703f7471",
+    "promptSha256": "cf7b54835dfa26f9756bb7dd90fa44847558294fa763878a372eddf10f4e7447"
+  },
+  {
+    "sceneId": "switch_open_drained",
+    "methodId": "hario-switch",
+    "stepIds": [
+      "finish"
+    ],
+    "altText": "The Switch has a shallow drained coffee bed, an open valve and coffee collected in the server; no continuous flow remains.",
+    "version": 2,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_drained_v2.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_open_drained_v2.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_drained_v2.webp",
+    "sources": [
+      "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+      "https://www.hario-usa.com/products/switch-immersion-dripper",
+      "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+      "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+      "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+      "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "b9f40e801c256f6a7c9fd9ebffa1a385bd837716b3d6412e6052cbfcefbf65a3",
+    "candidateSha256": "99e1f305f971b037cfe9abbb608bd1e43212808696dbd9f7581641176e77fc1c",
+    "promptSha256": "06adc1be73d500e5f4b63f19d3273312713cfbf4c2b3ba9080793a8402b41784"
+  },
+  {
+    "sceneId": "switch_open_pour",
+    "methodId": "hario-switch",
+    "stepIds": [],
+    "altText": "Water is poured gently onto coffee in the open Switch while brewed coffee drains into the server.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_pour_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_open_pour_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_pour_v1.webp",
+    "sources": [
+      "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+      "https://www.hario-usa.com/products/switch-immersion-dripper",
+      "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+      "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+      "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+      "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "9bf5898e84c1c7f951829b458084bf6a294fd62c89712485ece501c13c564d4a",
+    "candidateSha256": "8ccdc90e179d1fc48fa35d2315e20185b03cdb4859bad05ca66ee4eb7004a89c",
+    "promptSha256": "91c85c3145a42d61514fcd08fdb41113bdd870f681ce71e3c0ec8e535a63b6b9"
+  },
+  {
+    "sceneId": "switch_open_coffee",
+    "methodId": "hario-switch",
+    "stepIds": [],
+    "altText": "Loose dry coffee fills the fitted cone paper in the Switch; its clear paddle lies flat in the open position.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_coffee_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_open_coffee_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_coffee_v1.webp",
+    "sources": [
+      "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+      "https://www.hario-usa.com/products/switch-immersion-dripper",
+      "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+      "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+      "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+      "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "e5259dd509c2e65eeb0f7e71f2dec8b1d2ef3eb297ef6116f4a5fe906cc48479",
+    "candidateSha256": "b17016d45c6156bae0252c0119ffb1b001f7d87a86a34716b29c0ff44cff45a8",
+    "promptSha256": "09f9cb210c5dc373337d90dbfdd98d29f145fd7ccd44a079f7a05199803b43fb"
+  },
+  {
+    "sceneId": "pulsar_generic_cap",
+    "methodId": "pulsar",
+    "stepIds": [],
+    "altText": "The black perforated dispersion cap is seated level on the top rim of the clear Pulsar barrel.",
+    "version": 1,
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/pulsar_generic_cap_v1.png",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/pulsar_generic_cap_v1.txt",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/pulsar_generic_cap_v1.webp",
+    "sources": [
+      "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+      "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/",
+      "https://www.scottrao.com/blog/pulsar-recipe",
+      "https://kaldiscoffee.com/blogs/recipes/nextlevel-pulsar-dripper-brew-recipe",
+      "https://nextlevelbrewer.com/shop/pulsar-stainless-steel-filter-discs/",
+      "https://nextlevelbrewer.com/pulsar-mini-recipes/",
+      "https://nextlevelbrewer.com/brewing-suggestions/"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Pending independent pixel and binding QC."
+      ]
+    },
+    "rawSha256": "bcce0e9f969d0ace0e11f12d03854b01c8a316d8823b561e881e7ec7c7a6bdda",
+    "candidateSha256": "b57e9aee773d513cbe5be7a63d5632b603b1b5de24a6d7fdd121700bd2b17667",
+    "promptSha256": "59c55b18b036a2489e21e0a478740f63fa1f577ded4bfdab822739e41cb46f97"
+  }
+]

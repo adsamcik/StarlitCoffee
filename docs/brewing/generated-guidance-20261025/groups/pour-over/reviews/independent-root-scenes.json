@@ -1,0 +1,396 @@
+{
+  "schema_version": 1,
+  "purpose": "Independent review evidence only; not final runtime admission. Approvals are bound to these exact bytes, alt text and listed physical action/source scope. Phone composites inspected at384px wide; this is not native app verification. Unverified checks are not approvals.",
+  "reviews": [
+    {
+      "scene_id": "wave155_paper",
+      "version": 1,
+      "verdict": "approved",
+      "reviewer": "Codex independent minimal_brew_review",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/wave155_paper_v1.png",
+          "sha256": "4537fc78df2ffee89aa4a5666ef1fe1ef2d27a4f242ce4fcc3c2ee2a708d7a69"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/wave155_paper_v1.txt",
+          "sha256": "a49ae23726c1ad52b23c0ed27917f99fe4648ec56a558bc63816898c93fdf6f9"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/wave155_paper_v1.webp",
+          "sha256": "7eaafa8a985046af382930f744110a846954199d83df74eb8e235ad838c896f4"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/wave155_paper_v1_light.png",
+          "sha256": "eea597b74ef5cf79afe9762568278e40be008418766cd9e9d31a54d0fd725141"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/wave155_paper_v1_dark.png",
+          "sha256": "9e9461129ef40b9e6e74b2622dc8e6be84c4a8284620b779d79906030388bbe0"
+        }
+      },
+      "source_guide_id": "reviewed_kalita_wave_v1",
+      "source_guide_revision": "71b62fca70557fc5c935a81c794b7fa97eca62aff99e610ab276bdea67dc32e6",
+      "reviewed_profile_id": "manual_wave_155",
+      "reviewed_step_ids": [
+        "prepare"
+      ],
+      "reviewed_alt_text": "A small stainless flat-bottom Kalita Wave155 rests securely on a glass server, with a matching pleated paper filter seated centrally and its folds kept open.",
+      "manufacturer_references": [
+        "https://kalitausa.com/products/kalita-wave-155-stainless-steel-coffee-dripper",
+        "https://kalitausa.com/products/kalita-wave-155-filter-100ct"
+      ],
+      "notes": [
+        "Approved only for reviewed_kalita_wave_v1 prepare: matching flat-bottom Wave155 paper seated centrally with open pleats, stainless horizontal-corrugated dripper and stable empty receiving server. Three extraction holes are hidden, so this image does not establish outlet inspection or a rinsed/completed preparation state. Official155 hardware and155paper photos checked; no185 or other-material reuse."
+      ]
+    },
+    {
+      "scene_id": "wave155_load",
+      "version": 1,
+      "verdict": "approved",
+      "reviewer": "Codex independent minimal_brew_review",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/wave155_load_v1.png",
+          "sha256": "96f396b6b5e1cf649bdcebef65754466ce1df7429d268ea2b21517dd55b6fb6a"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/wave155_load_v1.txt",
+          "sha256": "2062e3c500ceeb2d777b6b55a2f254f97a9a92914d37c2fe73b7b98fa602e761"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/wave155_load_v1.webp",
+          "sha256": "a517954ad7833d18673e30e82cbae82188e95a75e7a3ca7167c98859c077ea68"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/wave155_load_v1_light.png",
+          "sha256": "508b8bfb238f977a05442391e5f529ea53020cbf1e10bbf4b500aa0566eaed76"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/wave155_load_v1_dark.png",
+          "sha256": "f8464f5b26a0ed3d8e922a0cfc73fa134c06310e070540a2accbe8753bd268a3"
+        }
+      },
+      "source_guide_id": "reviewed_kalita_wave_v1",
+      "source_guide_revision": "71b62fca70557fc5c935a81c794b7fa97eca62aff99e610ab276bdea67dc32e6",
+      "reviewed_profile_id": "manual_wave_155",
+      "reviewed_step_ids": [
+        "rinse_load"
+      ],
+      "reviewed_alt_text": "Ground coffee is added into the rinsed pleated Wave155 paper while the stainless dripper remains securely on its empty glass server.",
+      "manufacturer_references": [
+        "https://kalitausa.com/products/kalita-wave-155-stainless-steel-coffee-dripper",
+        "https://kalitausa.com/products/kalita-wave-155-filter-100ct"
+      ],
+      "notes": [
+        "Approved only for the active coffee-loading portion of reviewed_kalita_wave_v1 rinse_load: grounds enter matching pleated flat-bottom paper in the stainless Wave155 over its empty server. It does not depict rinsing, completed leveling,15g measurement or taring; those source requirements must remain in accompanying guidance. No185 or other-material reuse."
+      ]
+    },
+    {
+      "scene_id": "v60_pour",
+      "version": 1,
+      "verdict": "approved",
+      "reviewer": "Codex independent minimal_brew_review",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/v60_pour_v1.png",
+          "sha256": "6fd957bfe7996ceb9777e216fba4dfec8638bd7fd53f198fa840dc9c7c9ee27b"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/v60_pour_v1.txt",
+          "sha256": "65302585c6e49a9211dabd99d6bef765cfc2c366243fa9d83c260a3fe3a7455d"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/v60_pour_v1.webp",
+          "sha256": "b57453c40316098077dd18d663950c7850ba657451554d1e622d72d01e688005"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/v60_pour_v1_light.png",
+          "sha256": "3838c2256e5ef2351157888b7d9e6b1c4ba06ad0033ba9835fb43add38f8677e"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/v60_pour_v1_dark.png",
+          "sha256": "97588687e29c6d57379c3d319c160f2c0db5ed2ab3e74578c51d9a0a1d07860b"
+        }
+      },
+      "source_guide_id": "reviewed_v60_v1",
+      "source_guide_revision": "1dd141d69378f3f8a99a943d74db00851333782064850a270f6b176ed969f83f",
+      "reviewed_profile_id": "v60_02",
+      "reviewed_step_ids": [
+        "bloom_pour",
+        "main_pour",
+        "final_pour"
+      ],
+      "reviewed_alt_text": "A narrow gooseneck stream lands inside the V60 paper on the coffee bed, with generous headroom while coffee drains into its stable server.",
+      "manufacturer_references": [
+        "https://www.hario.cc/V60/v60series.html",
+        "https://www.hario-europe.com/pages/nf-about-the-v60-dripper"
+      ],
+      "notes": [
+        "Approved only as an active water-onto-coffee scene for reviewed_v60_v1 bloom_pour, main_pour and final_pour: conventional plastic02 cone with classic cone paper, spiral-rib outline, stable supported receiver, narrow stream inside paper, visible headroom and drainage. It does not encode quantities, completion, circular movement, waiting or any01/03/Kasuya/iced variant. Those source specifics remain outside the bitmap. Intentional isolated spout ends inside the canvas; equipment and water path are uncropped."
+      ]
+    },
+    {
+      "scene_id": "melitta_outlets",
+      "version": 1,
+      "verdict": "rejected",
+      "reviewer": "Codex independent minimal_brew_review",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "fail",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/melitta_outlets_v1.png",
+          "sha256": "449c3ecc1aaa33a38b72eeefcf5f73a63003d4a6c9a4bea9de94816c75cf3e24"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/melitta_outlets_v1.txt",
+          "sha256": "405c47c5d2d2afd7a38eecb73a024ebba6699f056b619b5d733fb8281d4de7f1"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/melitta_outlets_v1.webp",
+          "sha256": "0f5c250048f6f0f9c7ebbddc753099c948fd5d9cd18e19c4f42eb2b11ddd3bf3"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/melitta_outlets_v1_light.png",
+          "sha256": "ff9a00087db70681866e1fdb70745e6f8b0a856ef90e319b318de226908105bb"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/melitta_outlets_v1_dark.png",
+          "sha256": "75d4c27ae6fb320a743baa21286f32691c34de3e7c1b935f0e7b1824b64aa39b"
+        }
+      },
+      "source_guide_id": "reviewed_melitta_v1",
+      "source_guide_revision": "5f2c85301741e492f4fb50357330216b4db84cc764981dd8cbe48ee84c363683",
+      "reviewed_profile_id": "manual_wedge_generic",
+      "reviewed_step_ids": [
+        "setup"
+      ],
+      "reviewed_alt_text": "A dry black Melitta1x4 wedge dripper is held by its handle with the underside visible, showing two clear outlet holes in the narrow bottom.",
+      "manufacturer_references": [
+        "https://www.melitta-international.com/accessories/Manual-Coffee-Preparation/Coffeefilters-pots/Coffee-Filter-1x4",
+        "https://www.melitta.co.uk/accessories/black-coffee-filtercone-to-fit-1x4-filter-papers",
+        "https://www.melitta.de/media/700x450/2f/47/24/1701165495/Kaffeefilter1x2schwarz1Becher_MMB.jpg?ts=1701165495"
+      ],
+      "notes": [
+        "Rejected equipment geometry: official1x4 product page linked hardware photo shows a broad supportplate with visible side viewing openings; candidate substitutes a narrow ring/bottom with no matching plate. Root independently viewed the same primary reference and confirmed the discrepancy. Regenerate from verified hardware reference. The linked photo filename is1x2, so it supplies family construction evidence, not exact1x4 dimensional measurement.",
+        "Withheld: official exact EU plastic1x4 product prose confirms two extraction outlets and separate side viewing openings, but the exact product gallery could not be fetched (HTTP403/cache miss). The available official linked family photo shows a broad supportplate with side viewing openings; candidate shows a narrow bottom and lacks that visible supportplate. Need exact1x4 photo or regenerated faithful hardware before equipment_geometry can pass. Two painted dark holes are distinct and hand is on the dry handle; this does not by itself establish source model fidelity."
+      ]
+    },
+    {
+      "scene_id": "wave155_pour",
+      "version": 2,
+      "verdict": "rejected",
+      "reviewer": "Codex independent minimal_brew_review",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "fail",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/wave155_pour_v2.png",
+          "sha256": "5c02b31ddc5704dce3d03c1864d2a4170adec3efbbcdd705ffb53bcb570c63ea"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/wave155_pour_v2.txt",
+          "sha256": "e28ceb6738b1c9809c4c3e8e9bda2321dc746445b5287a104e6b21db3ce94873"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/wave155_pour_v2.webp",
+          "sha256": "256f716e2ad72a411aada129f1457bb8246d417bbfdcddcd3e002aba081e583f"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/wave155_pour_v2_light.png",
+          "sha256": "af938589e63278e788096a0c0d903dff6cb789b3e829100800d6a2510123af49"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/wave155_pour_v2_dark.png",
+          "sha256": "e4bb09a901bce4a684ff7a3108413dd4e393f2de113245afe88ec14b5d0ce4d3"
+        }
+      },
+      "source_guide_id": "reviewed_kalita_wave_v1",
+      "source_guide_revision": "71b62fca70557fc5c935a81c794b7fa97eca62aff99e610ab276bdea67dc32e6",
+      "reviewed_profile_id": "manual_wave_155",
+      "reviewed_step_ids": [
+        "bloom",
+        "pour_one",
+        "pour_two"
+      ],
+      "reviewed_alt_text": "A narrow kettle stream lands gently on coffee inside the small flat-bottom Wave155 pleated paper, with clear headroom below the rim and coffee draining into the server.",
+      "manufacturer_references": [
+        "https://kalitausa.com/products/kalita-wave-155-stainless-steel-coffee-dripper",
+        "https://kalitausa.com/products/kalita-wave-155-filter-100ct"
+      ],
+      "notes": [
+        "Rejected: v2 fixes the cropped kettle but substitutes a tall vertically fluted metal body for the source stainless Wave155 horizontal-corrugated body. Official155 product photo and matching paper/load candidates show materially different hardware. Cannot certify source equipment geometry. No final admission."
+      ]
+    },
+    {
+      "scene_id": "melitta_rinse",
+      "version": 2,
+      "verdict": "rejected",
+      "reviewer": "Codex independent minimal_brew_review",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "fail",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "fail",
+        "minimalism": "pass"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/melitta_rinse_v2.png",
+          "sha256": "e95444e8c5575fd38cb9ca550312cf2c0b86e5252b1e0c906000716b9b9d91e5"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/melitta_rinse_v2.txt",
+          "sha256": "652c44054c55b99a8117c635f956c3b4a1dbc19acfeff0a07552a46e29070e4e"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/melitta_rinse_v2.webp",
+          "sha256": "cad513b8516e0bdfc7b93a61ba25a37db2f335c42ecef79fe432db8273ea2cc5"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/melitta_rinse_v2_light.png",
+          "sha256": "9289bcb27447643e81271038b27020a661cfed1b30e9e7c5c7251284fb0c9202"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/melitta_rinse_v2_dark.png",
+          "sha256": "48e64d9de2769bc30b56b68017e6e5824b5ebe62b0480d4f0b2cc4021fbfb460"
+        }
+      },
+      "source_guide_id": "reviewed_melitta_v1",
+      "source_guide_revision": "5f2c85301741e492f4fb50357330216b4db84cc764981dd8cbe48ee84c363683",
+      "reviewed_profile_id": "manual_wedge_generic",
+      "reviewed_step_ids": [
+        "rinse"
+      ],
+      "reviewed_alt_text": "Hot rinse water wets fitted wedge paper inside a black Melitta1x4 dripper seated securely on an empty glass server.",
+      "manufacturer_references": [
+        "https://www.melitta-international.com/accessories/Manual-Coffee-Preparation/Coffeefilters-pots/Coffee-Filter-1x4",
+        "https://www.melitta.co.uk/accessories/black-coffee-filtercone-to-fit-1x4-filter-papers",
+        "https://www.melitta.de/media/700x450/2f/47/24/1701165495/Kaffeefilter1x2schwarz1Becher_MMB.jpg?ts=1701165495"
+      ],
+      "notes": [
+        "Rejected equipment geometry: official1x4 product page linked hardware photo shows a broad supportplate with visible side viewing openings; candidate substitutes a narrow ring/bottom with no matching plate. Root independently viewed the same primary reference and confirmed the discrepancy. Regenerate from verified hardware reference. The linked photo filename is1x2, so it supplies family construction evidence, not exact1x4 dimensional measurement.",
+        "Rejected for current alt disagreement: the receiving server visibly contains collected rinse water, while alt says empty glass server. Image can illustrate active rinsing only, never source completion that rinse water has been discarded. Also withheld exact EU plastic1x4 geometry certification pending exact-model photo; official text confirms2outlets, but linked family photo has a broader side-window supportplate. No invented protruding outlet nozzles are visible in v2."
+      ]
+    },
+    {
+      "scene_id": "melitta_pour",
+      "version": 2,
+      "verdict": "rejected",
+      "reviewer": "Codex independent minimal_brew_review",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "fail",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/melitta_pour_v2.png",
+          "sha256": "65219e5a36b110adca3183a3da4d3afa00475b552a9159d9fefb235e692a64aa"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/melitta_pour_v2.txt",
+          "sha256": "6c2cb7fd353311507cca2614e19609694da8fbbf440dc6a093cab9370b686642"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/melitta_pour_v2.webp",
+          "sha256": "a25eadbad1d0ee554a13f669e373b360c89ff14637e97908c4ca46cce29cdf99"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/melitta_pour_v2_light.png",
+          "sha256": "795d7b2bbe10bc91635b8afdbf0882dc87e835b0c3ce01bbc09a0fb3ffbf4e44"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/melitta_pour_v2_dark.png",
+          "sha256": "2a8fd840cf85e19ffe827e4c813b2e323287a3d736a8d576939d7dd3e0e6b4a5"
+        }
+      },
+      "source_guide_id": "reviewed_melitta_v1",
+      "source_guide_revision": "5f2c85301741e492f4fb50357330216b4db84cc764981dd8cbe48ee84c363683",
+      "reviewed_profile_id": "manual_wedge_generic",
+      "reviewed_step_ids": [
+        "bloom",
+        "first_main_pour",
+        "last_pour"
+      ],
+      "reviewed_alt_text": "A gentle kettle stream wets coffee within wedge paper below the rim of the black Melitta1x4 dripper while coffee drains from its two outlets into a stable server.",
+      "manufacturer_references": [
+        "https://www.melitta-international.com/accessories/Manual-Coffee-Preparation/Coffeefilters-pots/Coffee-Filter-1x4",
+        "https://www.melitta.co.uk/accessories/black-coffee-filtercone-to-fit-1x4-filter-papers",
+        "https://www.melitta.de/media/700x450/2f/47/24/1701165495/Kaffeefilter1x2schwarz1Becher_MMB.jpg?ts=1701165495"
+      ],
+      "notes": [
+        "Rejected equipment geometry: official1x4 product page linked hardware photo shows a broad supportplate with visible side viewing openings; candidate substitutes a narrow ring/bottom with no matching plate. Root independently viewed the same primary reference and confirmed the discrepancy. Regenerate from verified hardware reference. The linked photo filename is1x2, so it supplies family construction evidence, not exact1x4 dimensional measurement.",
+        "Withheld exact EU plastic1x4 geometry certification pending exact-model photo. Official product prose confirms2outlets, and v2 correctly shows two liquid paths rather than invented protruding nozzles. But exact product gallery could not be fetched; available official family photo has a broader side-window supportplate than candidate. Do not admit on matching hole count alone. Intended use if corrected/verified is active pouring only, not completion or quantitative targets."
+      ]
+    }
+  ]
+}

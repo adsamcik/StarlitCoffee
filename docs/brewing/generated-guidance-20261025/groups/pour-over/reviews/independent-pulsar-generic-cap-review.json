@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "reviewer": "Independent Codex reviewer /root/minimal_brew_review",
+  "reviewed_on": "2026-10-25",
+  "independence_basis": "Reviewer did not produce this cap macro; independently inspected full raw PNG,1024x768 delivered WebP,320x240 light and dark previews, and manufacturer cap photos/manual from the Pulsar reference group.",
+  "scene_id": "pulsar_generic_cap",
+  "resource_sha256": "b57e9aee773d513cbe5be7a63d5632b603b1b5de24a6d7fdd121700bd2b17667",
+  "raw_source_sha256": "bcce0e9f969d0ace0e11f12d03854b01c8a316d8823b561e881e7ec7c7a6bdda",
+  "prompt_sha256": "59c55b18b036a2489e21e0a478740f63fa1f577ded4bfdab822739e41cb46f97",
+  "verdict": "approved",
+  "checks": {
+    "full_resolution": "pass",
+    "phone_light": "pass",
+    "phone_dark": "pass",
+    "equipment_geometry": "pass",
+    "action_state": "pass",
+    "hand_safety": "pass",
+    "crop_and_flow": "pass",
+    "alt_text_agreement": "pass",
+    "minimalism": "pass"
+  },
+  "reviewed_alt_text": "The black perforated dispersion cap is seated level on the top rim of the clear Pulsar barrel.",
+  "notes": [
+    "The black rim and perforated pale dispersion surface are seated squarely over the straight clear barrel, consistent with the actual manufacturer cap's functional form. Hole count and tiny molding details are schematic, not a calibrated hardware drawing.",
+    "The macro intentionally ends at a straight lower barrel crop. Filter, base, coffee and valve are outside the view; no paper-only or valve-state inference is introduced.",
+    "Shows the placed-cap end state only. Does not certify filter preparation, measured dose, level bed or scale tare. Those remain in the preparation instruction.",
+    "No hands or hot liquid introduced. No text, quantities or decorative island. Cap seating and perforations remain legible on both320px backgrounds."
+  ],
+  "binding": {
+    "content_id": "pulsar_prepare",
+    "target_family_id": "valve_controlled_no_bypass",
+    "target_profile_id": "pulsar_standard",
+    "target_content_revision": "254037b4ccac0aaa0b4ab327414c852f53f26bbfee6adada79334c08c0fc27e2",
+    "scope": "Only the dispersion-cap placement clause of pulsar_prepare; same physical standard Pulsar cap with filter/base intentionally out of view.",
+    "review_status": "approved"
+  },
+  "mechanical": {
+    "size": [
+      1024,
+      768
+    ],
+    "mode": "RGBA",
+    "bytes": 70728,
+    "transparent_corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "hashes_recomputed": true,
+    "phone_size": [
+      320,
+      240
+    ]
+  },
+  "sources": [
+    "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+    "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/"
+  ],
+  "reference_images": [
+    "groups/pulsar/references/product-detail.jpg",
+    "groups/pulsar/references/product-parts.jpg"
+  ]
+}

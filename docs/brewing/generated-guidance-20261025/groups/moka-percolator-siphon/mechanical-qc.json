@@ -1,0 +1,314 @@
+[
+  {
+    "sceneId": "moka-inspect",
+    "width": 1024,
+    "height": 768,
+    "bytes": 54564,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "e99e607277cd0da901ea5056d2451ef290993dd48fbb9f04d64d0ecd4c9bd1aa",
+    "candidateSha256": "2b4469c19576db14d149504f6f955beda1968fb9a225b7acf468ae525b1a9d76"
+  },
+  {
+    "sceneId": "moka-fill-water",
+    "width": 1024,
+    "height": 768,
+    "bytes": 57074,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "94d45274f0a7bdb242c628c2ec5486ae8259ae264b83cb778928649923fdfe6f",
+    "candidateSha256": "7daa5ab07d44808a1d7823618c3cd19bcc395cd774a3d4a807665aac80ac4d78"
+  },
+  {
+    "sceneId": "moka-fill-coffee",
+    "width": 1024,
+    "height": 768,
+    "bytes": 47470,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "6571f5af8ab2098f1b34b7768413878315c415ced45c887e8125c3dcfee065fa",
+    "candidateSha256": "6912491033940ab2778c6e15c008e895de44449da441fc0a8d86c124c791d951"
+  },
+  {
+    "sceneId": "moka-assemble",
+    "width": 1024,
+    "height": 768,
+    "bytes": 44834,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "7f8014a686040d37923e7994cb5849512fc5773a667494de40b589c2748250c8",
+    "candidateSha256": "dcb457c580ebb7cadc39b3692a5d5d04804d0dc7edcfd3a20e17f453e89edc20"
+  },
+  {
+    "sceneId": "moka-heat",
+    "width": 1024,
+    "height": 768,
+    "bytes": 49038,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "7674f4b987116a5bd6c7c80144754552aae83dadfeb89879110257bdf3069100",
+    "candidateSha256": "8288c6e203770e69e1fb2e83f5fb45a0676da46ddc003ae01d3c7f2fb1605d0a"
+  },
+  {
+    "sceneId": "moka-stop",
+    "width": 1024,
+    "height": 768,
+    "bytes": 61420,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "abac5b063f4d9b7c8eb7313112f5ca8ad3be2d52fc4c6d3ed1da7081b8f4893a",
+    "candidateSha256": "5a6172b7b512c3c36bf170cbd02127a65fe1e1503925e59e11addf4b08ff5b4a"
+  },
+  {
+    "sceneId": "moka-serve",
+    "width": 1024,
+    "height": 768,
+    "bytes": 64188,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "13de709285fb76aac382648c2c25b4bc99039221dcdba5997daa8a1182830d38",
+    "candidateSha256": "c9197a438360ff305b16416d4a4327ed103ed09431acc67fc7e250ac3310bbbb"
+  },
+  {
+    "sceneId": "percolator-prepare",
+    "width": 1024,
+    "height": 768,
+    "bytes": 82826,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "f2c1a0f85cf25a06d2a6edff609e82c93014051b4481c771ca49e87684e418f5",
+    "candidateSha256": "0a6b07837b12b0d9d38eb993f2305ccb382306cdb919117aba46607a2797a31e"
+  },
+  {
+    "sceneId": "percolator-fill",
+    "width": 1024,
+    "height": 768,
+    "bytes": 48180,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "7e3ca5dd90919361666662fee7f22bccd57c0c6d0a341891b67c27f7b814a11a",
+    "candidateSha256": "977acf3b54b8d39b37370d7cd65292568f70c8a84772c79ab8f118c4c84a5af1"
+  },
+  {
+    "sceneId": "percolator-load",
+    "width": 1024,
+    "height": 768,
+    "bytes": 92052,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "41f719eee26bfe6d9b5aab49c37b227f3a0267566f26cdee989e3951c32a24f2",
+    "candidateSha256": "c68fcf84ade565592669a6ea74924d2bb3ca7e13e22da0fe18e7fc29b8768a80"
+  },
+  {
+    "sceneId": "percolator-assemble",
+    "width": 1024,
+    "height": 768,
+    "bytes": 40450,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "ee651a68611189a19160ae8fab3f815bab9af830457614fa93790ef591f38be3",
+    "candidateSha256": "3603fce892ec2879a51b851a06ca894963bf25a1c4edaa40ca441e3e9490cab5"
+  },
+  {
+    "sceneId": "percolator-brew",
+    "width": 1024,
+    "height": 768,
+    "bytes": 48148,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "84ad471b073680696578ddcf75d018227519c7a12e2dd9d2b6dae826099d0c70",
+    "candidateSha256": "dd7e82658fc86d1306502db4f4da0414bd721adb89841f6c3c485c685f9fc9bf"
+  },
+  {
+    "sceneId": "percolator-serve",
+    "width": 1024,
+    "height": 768,
+    "bytes": 55872,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "46488fab656c40ac347b299d93238ec7d0d76d41d05025dfd0e48b43969abb63",
+    "candidateSha256": "1007e2c447bd92ced3b37e6aaf988044133f262913b12efd5c765f2f0a82c5bc"
+  },
+  {
+    "sceneId": "percolator-clean",
+    "width": 1024,
+    "height": 768,
+    "bytes": 94954,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "740402b091a5beedbf7176f946c6125c320a63c58a05630d117ca687ad4b0134",
+    "candidateSha256": "fe16af60137c8ea1277daba2fa04933e8a1b9355d35991325ba5338591819a8d"
+  },
+  {
+    "sceneId": "siphon-prepare",
+    "width": 1024,
+    "height": 768,
+    "bytes": 66390,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "d2f1d0b3f053c67ed588d93a4ddec95543658bc4d4665bdb588042e570ba8fb4",
+    "candidateSha256": "cf64a8a79b1614f0c9da6c51d377b4f129fa3bffdf510dff92849010a7386658"
+  },
+  {
+    "sceneId": "siphon-add-coffee",
+    "width": 1024,
+    "height": 768,
+    "bytes": 40676,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "a1c34a8e473fdcb5f03294d4c11187f0aa3574ccf036446d55abf3a112a338fa",
+    "candidateSha256": "45e17c8a8802d181c597d9e971264f1ef1010d1802657a3c48655ca67e064cba"
+  },
+  {
+    "sceneId": "siphon-fill",
+    "width": 1024,
+    "height": 768,
+    "bytes": 54896,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "782c160116fcb6843520f7687ea71106556474dd09bb8772bf35057d24f184df",
+    "candidateSha256": "56e82c8bda7fc0cf19e5cbd33911a83de5f800d663ceb7c4a4a531b664184805"
+  },
+  {
+    "sceneId": "siphon-transfer",
+    "width": 1024,
+    "height": 768,
+    "bytes": 46134,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "a80e8d083b7ed25f499bfc213de02481512fdfe0ef83a111b8b650f92de44860",
+    "candidateSha256": "14c75a75fc8989970de09c54d07cb0d5bb2bf9d835bb75e07071599615fd5c31"
+  },
+  {
+    "sceneId": "siphon-steep",
+    "width": 1024,
+    "height": 768,
+    "bytes": 44302,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "dccd3376dc1c4d221b6d7c67d30bf8ff5d1b00748135c56898f4696b29467b25",
+    "candidateSha256": "9e96073b93f538aff8659af3b6cbe8854a6e703eef17664ad05c750464badbc6"
+  },
+  {
+    "sceneId": "siphon-remove-heat",
+    "width": 1024,
+    "height": 768,
+    "bytes": 47192,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "0c2a552e5c1d87fbeef34f3be213bb4e3d1c072d7164009de052ca9e349ba8a3",
+    "candidateSha256": "f489433313a8066d67a9631d0388f73d8d84faf59e24ae1c4dc46f67baf54e7b"
+  },
+  {
+    "sceneId": "siphon-return",
+    "width": 1024,
+    "height": 768,
+    "bytes": 47662,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "2b935412f3edad9bb0bdb269338ab0d647c45234866fca69d2398d74a7c6a222",
+    "candidateSha256": "7aeba0c7db1b3e365d2c89ac7ed7371dc5313eef1a619cc42cc5da883034f114"
+  },
+  {
+    "sceneId": "siphon-serve",
+    "width": 1024,
+    "height": 768,
+    "bytes": 82716,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "17157ef617e6575545f91c2a6a511732c533fe341469e1671bfdd997cbb087cf",
+    "candidateSha256": "56db07ac5c98a78b559f17dceecf1edf828e626b7385e2cf661d5c23f9b9946f"
+  },
+  {
+    "sceneId": "siphon-clean",
+    "width": 1024,
+    "height": 768,
+    "bytes": 69426,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "efa96e9f1889011197092868359f7b7969e8c6e6b4d53d8147911e0fd89beba3",
+    "candidateSha256": "059f261766247a975b8ea9228e00d8f73de1805d76ca716a4c64d1069d2adb5e"
+  },
+  {
+    "sceneId": "siphon-install-filter",
+    "width": 1024,
+    "height": 768,
+    "bytes": 24448,
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "perimeterTransparent": true,
+    "rawSha256": "53881b5592a32536c3cca28c41207ebd578470e4d0f55a8bb552a5b9b0bd4d86",
+    "candidateSha256": "1360fd52fb606cc6538c76373f2358f739c105bc4caf8b841c0140d0f5f42688"
+  }
+]

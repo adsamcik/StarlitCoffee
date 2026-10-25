@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "updated_on": "2026-08-04",
+  "updated_on": "2026-10-25",
   "scope": {
     "queue_glob": "docs/brewing/p1-exact-stage-production-queue-batch-*.md",
     "expected_asset_count": 114,
@@ -1052,13 +1052,23 @@
           "phone_light_review": "pass",
           "phone_dark_review": "pass",
           "notes": "Open plain server, continuous serving stream, fresh ice only in glass; clean alpha; light and dark phone previews pass."
+        },
+        {
+          "revision": "generated_20261025_kurasu_serve_fresh_ice_v1",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/kurasu_serve_fresh_ice/raw-v1.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Safe handle grip, horizontal internal free surface continuously reaches spout and output stream; fresh ice in stable receiving glass with headroom. No dry gap or fixed-yield claim. Original raw, actual delivered phone composites on both themes, primary actual Cup-One product/basket photograph and source safety context inspected; intentional macro crops retain critical action.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/reviews/independent-root-review.json"
         }
       ],
       "open_todos": [],
       "qa": "complete",
-      "accepted_revision": "v3",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_v60_kurasu_flash_16_150_70_stage_06_instruction_default/starlit_tactile_v3.webp",
-      "notes": "Open plain server, continuous serving stream, fresh ice only in glass; clean alpha; light and dark phone previews pass."
+      "accepted_revision": "generated_20261025_kurasu_serve_fresh_ice_v1",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/kurasu_serve_fresh_ice/candidate-v1.webp",
+      "notes": "Safe handle grip, horizontal internal free surface continuously reaches spout and output stream; fresh ice in stable receiving glass with headroom. No dry gap or fixed-yield claim. Original raw, actual delivered phone composites on both themes, primary actual Cup-One product/basket photograph and source safety context inspected; intentional macro crops retain critical action."
     },
     {
       "asset_id": "instruction_p1_wave185_ozone_25_400_stage_01_instruction_default",
@@ -1295,7 +1305,7 @@
           "verdict": "rejected",
           "raw_cache": "exec-fd2c9d88-879b-4c7b-9228-b4f3998ddecd.png",
           "issues": [
-            "The normalized light and dark previews make the server beverage level fractionally lower than accepted stage 4, breaking the required monotonic 160→220→280→340→400 g sequence."
+            "The normalized light and dark previews make the server beverage level fractionally lower than accepted stage 4, breaking the required monotonic 160\u2192220\u2192280\u2192340\u2192400 g sequence."
           ],
           "regeneration_todo": {
             "status": "resolved",
@@ -2523,12 +2533,32 @@
           "notes": "The ball visibly seals a distinct circular seat with zero gap; the resting lever is untouched, the outlet is dry, and the server is empty.",
           "phone_light_review": "pass",
           "phone_dark_review": "pass"
+        },
+        {
+          "revision": "generated_20261025_switch_open_rinse_v1",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_rinse_v1.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Water-only open rinsing state; actual lower base projection remains visible. Rinse-discard remains authored text.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-new-subset-round2.json"
+        },
+        {
+          "revision": "generated_20261025_switch_closed_empty_v2",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_closed_empty_v2.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Empty paper, empty server and lower outlet housing are coherent. Raised clear paddle teaches the closed hardware position; the alt phrase retained-water position names the control state, not an assertion that water is currently present. Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-root-scenes-round4.json"
         }
       ],
-      "accepted_revision": "v3",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_official_20_240_stage_01_instruction_default/starlit_tactile_v3.webp",
+      "accepted_revision": "generated_20261025_switch_closed_empty_v2",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_closed_empty_v2.webp",
       "qa": "complete",
-      "notes": "Seated ball-to-ring contact, untouched resting lever, dry outlet, wet clean paper, and empty server remain legible in both themes.",
+      "notes": "Empty paper, empty server and lower outlet housing are coherent. Raised clear paddle teaches the closed hardware position; the alt phrase retained-water position names the control state, not an assertion that water is currently present. Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content.",
       "priority": "safety-critical",
       "blocker": "NONE-BOUNDED",
       "matrix_line": 319
@@ -2577,13 +2607,33 @@
           "phone_light_review": "pass",
           "phone_dark_review": "pass",
           "notes": "Third revision passes full-resolution and both phone-theme reviews: contained water-in action, smooth retained liquid with thin granular surface, seated closed ball, dry outlet, and empty server remain readable."
+        },
+        {
+          "revision": "generated_20261025_switch_retained_v2",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_retained_v2.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Retained slurry and no outflow, intact silicone base and flat transparent paddle agree with Hario primary product/manual. Scope is retained state, not detailed press/release handling.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-new-subset.json"
+        },
+        {
+          "revision": "generated_20261025_switch_retained_v3",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_retained_v3.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Thin clear paddle is raised relative to silicone rim, matching actual CLOSED reference rather than inferring closure only from no flow. Retained coffee is continuously filled to the lower cone, remains below fitted paper top; outlet cylinder and stable empty receiver are intact. Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-root-scenes-round4.json"
         }
       ],
       "open_todos": [],
       "qa": "complete",
-      "accepted_revision": "starlit_tactile_v3",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_official_20_240_stage_02_instruction_default/starlit_tactile_v3.webp",
-      "notes": "Third revision passes full-resolution and both phone-theme reviews: contained water-in action, smooth retained liquid with thin granular surface, seated closed ball, dry outlet, and empty server remain readable."
+      "accepted_revision": "generated_20261025_switch_retained_v3",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_retained_v3.webp",
+      "notes": "Thin clear paddle is raised relative to silicone rim, matching actual CLOSED reference rather than inferring closure only from no flow. Retained coffee is continuously filled to the lower cone, remains below fitted paper top; outlet cylinder and stable empty receiver are intact. Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content."
     },
     {
       "asset_id": "instruction_p1_switch_official_20_240_stage_03_instruction_default",
@@ -2603,25 +2653,57 @@
           "phone_light_review": "pass",
           "phone_dark_review": "pass",
           "notes": "Full-resolution and both phone-theme reviews pass: smooth quiet retained liquid, thin surface raft, seated ball, dry outlet, and empty server communicate the closed steep."
+        },
+        {
+          "revision": "generated_20261025_switch_retained_v2",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_retained_v2.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Retained slurry and no outflow, intact silicone base and flat transparent paddle agree with Hario primary product/manual. Scope is retained state, not detailed press/release handling.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-new-subset.json"
+        },
+        {
+          "revision": "generated_20261025_switch_retained_v3",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_retained_v3.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Thin clear paddle is raised relative to silicone rim, matching actual CLOSED reference rather than inferring closure only from no flow. Retained coffee is continuously filled to the lower cone, remains below fitted paper top; outlet cylinder and stable empty receiver are intact. Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-root-scenes-round4.json"
         }
       ],
       "open_todos": [],
       "qa": "complete",
-      "accepted_revision": "starlit_tactile_v1",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_official_20_240_stage_03_instruction_default/starlit_tactile_v1.webp",
-      "notes": "Full-resolution and both phone-theme reviews pass: smooth quiet retained liquid, thin surface raft, seated ball, dry outlet, and empty server communicate the closed steep."
+      "accepted_revision": "generated_20261025_switch_retained_v3",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_retained_v3.webp",
+      "notes": "Thin clear paddle is raised relative to silicone rim, matching actual CLOSED reference rather than inferring closure only from no flow. Retained coffee is continuously filled to the lower cone, remains below fitted paper top; outlet cylinder and stable empty receiver are intact. Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content."
     },
     {
       "asset_id": "instruction_p1_switch_official_20_240_stage_04_instruction_default",
       "batch": 1,
       "status": "accepted_candidate",
-      "accepted_revision": "v9",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_official_20_240_stage_04_instruction_default/starlit_tactile_v9.webp",
+      "accepted_revision": "generated_20261025_switch_open_flow_v2",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_flow_v2.webp",
       "qa": "complete",
-      "notes": "Lever, supported ball, open path, granular slurry, and continuous stream remain legible.",
+      "notes": "Corrected lower silicone cylinder is present under the support flange. The thin translucent paddle lies flush/open as specified by Hario; no invented visible ball or side hinge. Coffee forms one contained path through the outlet into the stable server; liquid stays below the fitted paper top. Raw, delivered and phone light/dark images retain the visible paddle, outlet, stream and receiving coffee.",
       "priority": "safety-critical",
       "blocker": "NONE-BOUNDED",
-      "matrix_line": 322
+      "matrix_line": 322,
+      "attempts": [
+        {
+          "revision": "generated_20261025_switch_open_flow_v2",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_flow_v2.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Corrected lower silicone cylinder is present under the support flange. The thin translucent paddle lies flush/open as specified by Hario; no invented visible ball or side hinge. Coffee forms one contained path through the outlet into the stable server; liquid stays below the fitted paper top. Raw, delivered and phone light/dark images retain the visible paddle, outlet, stream and receiving coffee.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-root-scenes-round3.json"
+        }
+      ]
     },
     {
       "asset_id": "instruction_p1_switch_official_20_240_stage_05_instruction_default",
@@ -2680,13 +2762,23 @@
           "phone_light_review": "pass",
           "phone_dark_review": "pass",
           "notes": "Qualified identical completion-state reuse passes both themes: open raised-ball mechanism, drained bed, final isolated drop, and finished server encode the official no-standing-water cue; removal wording remains in text."
+        },
+        {
+          "revision": "generated_20261025_switch_open_drained_v2",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_drained_v2.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Paddle lies flat/open; lower cylinder remains present. A single shallow tapered bed has no standing water or separated floating upper ellipse; no stream or drops are shown below the outlet. Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-root-scenes-round4.json"
         }
       ],
       "open_todos": [],
       "qa": "complete",
-      "accepted_revision": "starlit_tactile_v4",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_official_20_240_stage_05_instruction_default/starlit_tactile_v4.webp",
-      "notes": "Qualified identical completion-state reuse passes both themes: open raised-ball mechanism, drained bed, final isolated drop, and finished server encode the official no-standing-water cue; removal wording remains in text."
+      "accepted_revision": "generated_20261025_switch_open_drained_v2",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_drained_v2.webp",
+      "notes": "Paddle lies flat/open; lower cylinder remains present. A single shallow tapered bed has no standing water or separated floating upper ellipse; no stream or drops are shown below the outlet. Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content."
     },
     {
       "asset_id": "instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_01_instruction_default",
@@ -2715,12 +2807,32 @@
           "notes": "The ball visibly contacts the circular seat with zero gap; the low uniformly wet bloom is retained and the server remains empty.",
           "phone_light_review": "pass",
           "phone_dark_review": "pass"
+        },
+        {
+          "revision": "generated_20261025_switch_open_rinse_v1",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_rinse_v1.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Water-only open rinsing state; actual lower base projection remains visible. Rinse-discard remains authored text.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-new-subset-round2.json"
+        },
+        {
+          "revision": "generated_20261025_switch_retained_v3",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_retained_v3.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Thin clear paddle is raised relative to silicone rim, matching actual CLOSED reference rather than inferring closure only from no flow. Retained coffee is continuously filled to the lower cone, remains below fitted paper top; outlet cylinder and stable empty receiver are intact. Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-root-scenes-round4.json"
         }
       ],
-      "accepted_revision": "v2",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_01_instruction_default/starlit_tactile_v2.webp",
+      "accepted_revision": "generated_20261025_switch_retained_v3",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_retained_v3.webp",
       "qa": "complete",
-      "notes": "A shallow uniformly wet first bloom, direct ball-to-seat seal, untouched lever, dry outlet, and empty server remain distinct in both themes.",
+      "notes": "Thin clear paddle is raised relative to silicone rim, matching actual CLOSED reference rather than inferring closure only from no flow. Retained coffee is continuously filled to the lower cone, remains below fitted paper top; outlet cylinder and stable empty receiver are intact. Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content.",
       "priority": "safety-critical",
       "blocker": "NONE-BOUNDED",
       "matrix_line": 335
@@ -2743,13 +2855,23 @@
           "phone_light_review": "pass",
           "phone_dark_review": "pass",
           "notes": "Full-resolution and both phone-theme reviews pass: contained center pour, raised-ball gap, continuous inlet and outlet paths, and low early server level communicate open hybrid percolation."
+        },
+        {
+          "revision": "generated_20261025_switch_open_pour_v1",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_pour_v1.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Kettle stream reaches the actual coffee surface while a continuous coffee stream exits intact lower cylinder into stable server. Paddle is flat/open, water below paper top, server has headroom, no exposed fictitious ball or invented side hinge. Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-root-scenes-round4.json"
         }
       ],
       "open_todos": [],
       "qa": "complete",
-      "accepted_revision": "starlit_tactile_v1",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_02_instruction_default/starlit_tactile_v1.webp",
-      "notes": "Full-resolution and both phone-theme reviews pass: contained center pour, raised-ball gap, continuous inlet and outlet paths, and low early server level communicate open hybrid percolation."
+      "accepted_revision": "generated_20261025_switch_open_pour_v1",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_pour_v1.webp",
+      "notes": "Kettle stream reaches the actual coffee surface while a continuous coffee stream exits intact lower cylinder into stable server. Paddle is flat/open, water below paper top, server has headroom, no exposed fictitious ball or invented side hinge. Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content."
     },
     {
       "asset_id": "instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_03_instruction_default",
@@ -2765,12 +2887,32 @@
           "notes": "Closed retained pour shows a seated ball, no drainage, an empty server, safe hand position, and complete props.",
           "phone_light_review": "pass",
           "phone_dark_review": "pass"
+        },
+        {
+          "revision": "generated_20261025_switch_retained_v2",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_retained_v2.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Retained slurry and no outflow, intact silicone base and flat transparent paddle agree with Hario primary product/manual. Scope is retained state, not detailed press/release handling.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-new-subset.json"
+        },
+        {
+          "revision": "generated_20261025_switch_retained_v3",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_retained_v3.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Thin clear paddle is raised relative to silicone rim, matching actual CLOSED reference rather than inferring closure only from no flow. Retained coffee is continuously filled to the lower cone, remains below fitted paper top; outlet cylinder and stable empty receiver are intact. Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-root-scenes-round4.json"
         }
       ],
-      "accepted_revision": "v1",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_03_instruction_default/starlit_tactile_v1.webp",
+      "accepted_revision": "generated_20261025_switch_retained_v3",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_retained_v3.webp",
       "qa": "complete",
-      "notes": "Seated ball, retained slurry, no drainage, and empty server remain distinct in both phone themes.",
+      "notes": "Thin clear paddle is raised relative to silicone rim, matching actual CLOSED reference rather than inferring closure only from no flow. Retained coffee is continuously filled to the lower cone, remains below fitted paper top; outlet cylinder and stable empty receiver are intact. Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content.",
       "priority": "safety-critical",
       "blocker": "NONE-BOUNDED",
       "matrix_line": 337
@@ -2793,13 +2935,23 @@
           "phone_light_review": "pass",
           "phone_dark_review": "pass",
           "notes": "Exact-state reuse: raised steel ball, separate circular seat, open path, granular retained slurry, continuous centered stream, stable server, and safe perimeter already passed full-size and dual-theme phone review."
+        },
+        {
+          "revision": "generated_20261025_switch_open_flow_v2",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_flow_v2.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Corrected lower silicone cylinder is present under the support flange. The thin translucent paddle lies flush/open as specified by Hario; no invented visible ball or side hinge. Coffee forms one contained path through the outlet into the stable server; liquid stays below the fitted paper top. Raw, delivered and phone light/dark images retain the visible paddle, outlet, stream and receiving coffee.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-root-scenes-round3.json"
         }
       ],
       "open_todos": [],
       "qa": "complete",
-      "accepted_revision": "v1",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_04_instruction_default/starlit_tactile_v1.webp",
-      "notes": "Exact-state reuse: raised steel ball, separate circular seat, open path, granular retained slurry, continuous centered stream, stable server, and safe perimeter already passed full-size and dual-theme phone review."
+      "accepted_revision": "generated_20261025_switch_open_flow_v2",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_flow_v2.webp",
+      "notes": "Corrected lower silicone cylinder is present under the support flange. The thin translucent paddle lies flush/open as specified by Hario; no invented visible ball or side hinge. Coffee forms one contained path through the outlet into the stable server; liquid stays below the fitted paper top. Raw, delivered and phone light/dark images retain the visible paddle, outlet, stream and receiving coffee."
     },
     {
       "asset_id": "instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_05_instruction_default",
@@ -2858,13 +3010,23 @@
           "phone_light_review": "pass",
           "phone_dark_review": "pass",
           "notes": "Qualified identical completion-state reuse passes both themes: open raised-ball mechanism, drained bed, final isolated drop, and finished server communicate completed hybrid drawdown without making quantity or timing claims."
+        },
+        {
+          "revision": "generated_20261025_switch_open_drained_v2",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_drained_v2.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Paddle lies flat/open; lower cylinder remains present. A single shallow tapered bed has no standing water or separated floating upper ellipse; no stream or drops are shown below the outlet. Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-root-scenes-round4.json"
         }
       ],
       "open_todos": [],
       "qa": "complete",
-      "accepted_revision": "starlit_tactile_v4",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_ole_boen_hybrid_16_5_240_stage_05_instruction_default/starlit_tactile_v4.webp",
-      "notes": "Qualified identical completion-state reuse passes both themes: open raised-ball mechanism, drained bed, final isolated drop, and finished server communicate completed hybrid drawdown without making quantity or timing claims."
+      "accepted_revision": "generated_20261025_switch_open_drained_v2",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_drained_v2.webp",
+      "notes": "Paddle lies flat/open; lower cylinder remains present. A single shallow tapered bed has no standing water or separated floating upper ellipse; no stream or drops are shown below the outlet. Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content."
     },
     {
       "asset_id": "instruction_p1_switch_gravity_15_250_stage_01_instruction_default",
@@ -2904,12 +3066,22 @@
           "notes": "Raised ball, separate open seat, continuous clear flow, complete hand/kettle, and safe perimeter are visible.",
           "phone_light_review": "pass",
           "phone_dark_review": "pass"
+        },
+        {
+          "revision": "generated_20261025_switch_open_rinse_v1",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_rinse_v1.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Water-only open rinsing state; actual lower base projection remains visible. Rinse-discard remains authored text.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-new-subset-round2.json"
         }
       ],
-      "accepted_revision": "v3",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_gravity_15_250_stage_01_instruction_default/starlit_tactile_v3.webp",
+      "accepted_revision": "generated_20261025_switch_open_rinse_v1",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_rinse_v1.webp",
       "qa": "complete",
-      "notes": "Raised ball, separate open seat, and continuous clear flow remain legible in both phone themes.",
+      "notes": "Water-only open rinsing state; actual lower base projection remains visible. Rinse-discard remains authored text.",
       "priority": "safety-critical",
       "blocker": "NONE-BOUNDED",
       "matrix_line": 351
@@ -2932,13 +3104,23 @@
           "phone_light_review": "pass",
           "phone_dark_review": "pass",
           "notes": "Full-resolution and both phone-theme reviews pass: modest wet bloom, raised ball, continuous water-in and coffee-out paths, and very low server level communicate open gravity blooming."
+        },
+        {
+          "revision": "generated_20261025_switch_open_pour_v1",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_pour_v1.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Kettle stream reaches the actual coffee surface while a continuous coffee stream exits intact lower cylinder into stable server. Paddle is flat/open, water below paper top, server has headroom, no exposed fictitious ball or invented side hinge. Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-root-scenes-round4.json"
         }
       ],
       "open_todos": [],
       "qa": "complete",
-      "accepted_revision": "starlit_tactile_v1",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_gravity_15_250_stage_02_instruction_default/starlit_tactile_v1.webp",
-      "notes": "Full-resolution and both phone-theme reviews pass: modest wet bloom, raised ball, continuous water-in and coffee-out paths, and very low server level communicate open gravity blooming."
+      "accepted_revision": "generated_20261025_switch_open_pour_v1",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_pour_v1.webp",
+      "notes": "Kettle stream reaches the actual coffee surface while a continuous coffee stream exits intact lower cylinder into stable server. Paddle is flat/open, water below paper top, server has headroom, no exposed fictitious ball or invented side hinge. Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content."
     },
     {
       "asset_id": "instruction_p1_switch_gravity_15_250_stage_03_instruction_default",
@@ -3010,13 +3192,23 @@
           "phone_light_review": "pass",
           "phone_dark_review": "pass",
           "notes": "Fifth revision passes full-resolution and both phone-theme reviews: complete contained kettle action, separate continuous inlet/outlet paths, raised ball with visible gap, and mid-level server communicate the main open-gravity pour."
+        },
+        {
+          "revision": "generated_20261025_switch_open_pour_v1",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_pour_v1.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Kettle stream reaches the actual coffee surface while a continuous coffee stream exits intact lower cylinder into stable server. Paddle is flat/open, water below paper top, server has headroom, no exposed fictitious ball or invented side hinge. Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-root-scenes-round4.json"
         }
       ],
       "open_todos": [],
       "qa": "complete",
-      "accepted_revision": "starlit_tactile_v5",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_gravity_15_250_stage_03_instruction_default/starlit_tactile_v5.webp",
-      "notes": "Fifth revision passes full-resolution and both phone-theme reviews: complete contained kettle action, separate continuous inlet/outlet paths, raised ball with visible gap, and mid-level server communicate the main open-gravity pour."
+      "accepted_revision": "generated_20261025_switch_open_pour_v1",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_pour_v1.webp",
+      "notes": "Kettle stream reaches the actual coffee surface while a continuous coffee stream exits intact lower cylinder into stable server. Paddle is flat/open, water below paper top, server has headroom, no exposed fictitious ball or invented side hinge. Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content."
     },
     {
       "asset_id": "instruction_p1_switch_gravity_15_250_stage_04_instruction_default",
@@ -3049,13 +3241,23 @@
           "phone_light_review": "pass",
           "phone_dark_review": "pass",
           "notes": "Second revision passes full-resolution and both phone-theme reviews: shallow drained bed, raised ball with visible gap, one isolated final drop, and high finished server communicate completed open gravity drawdown."
+        },
+        {
+          "revision": "generated_20261025_switch_open_drained_v2",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_drained_v2.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Paddle lies flat/open; lower cylinder remains present. A single shallow tapered bed has no standing water or separated floating upper ellipse; no stream or drops are shown below the outlet. Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-root-scenes-round4.json"
         }
       ],
       "open_todos": [],
       "qa": "complete",
-      "accepted_revision": "starlit_tactile_v2",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_switch_gravity_15_250_stage_04_instruction_default/starlit_tactile_v2.webp",
-      "notes": "Second revision passes full-resolution and both phone-theme reviews: shallow drained bed, raised ball with visible gap, one isolated final drop, and high finished server communicate completed open gravity drawdown."
+      "accepted_revision": "generated_20261025_switch_open_drained_v2",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_drained_v2.webp",
+      "notes": "Paddle lies flat/open; lower cylinder remains present. A single shallow tapered bed has no standing water or separated floating upper ellipse; no stream or drops are shown below the outlet. Raw and delivered images inspected in full. Phone light/dark composites inspected at native320x240; relevant paddle/cylinder/bed or liquid paths remain recognizable. Transparent perimeter and wrist/kettle framing do not cut required teaching content."
     },
     {
       "asset_id": "instruction_p1_cezve_turkish_single_rise_6_65_stage_01_instruction_default",
@@ -3567,15 +3769,25 @@
           "phone_light_review": "pass",
           "phone_dark_review": "pass",
           "notes": "Exact 4:3 raw and both phone themes preserve the shallow granular 30 g bed, No. 4 paper and basket, fully empty carafe and reservoir, powered-off preparation state, clean perimeter, and readable contrast."
+        },
+        {
+          "revision": "generated_20261025_auto_coffee_v1",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_coffee_v1.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Loose level bed inside fitted wedge paper. Does not depict dosing or reinstallation. Replace corrupted apostrophe with: A shallow level bed of loose dry coffee sits in No.4 wedge paper inside the removable KBGV Select basket. 2026-10-25 caption recheck: literal ASCII caption now agrees with the unchanged hash-bound pixels; previous conditional caption finding retained in captionHistory.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-new-subset-round2.json"
         }
       ],
       "open_todos": [],
       "qa": "complete",
       "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
       "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
-      "accepted_revision": "starlit_tactile_v4",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_batch_500_30_stage_01_instruction_default/starlit_tactile_v4.webp",
-      "notes": "Exact 4:3 raw and both phone themes preserve the shallow granular 30 g bed, No. 4 paper and basket, fully empty carafe and reservoir, powered-off preparation state, clean perimeter, and readable contrast."
+      "accepted_revision": "generated_20261025_auto_coffee_v1",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_coffee_v1.webp",
+      "notes": "Loose level bed inside fitted wedge paper. Does not depict dosing or reinstallation. Replace corrupted apostrophe with: A shallow level bed of loose dry coffee sits in No.4 wedge paper inside the removable KBGV Select basket. 2026-10-25 caption recheck: literal ASCII caption now agrees with the unchanged hash-bound pixels; previous conditional caption finding retained in captionHistory."
     },
     {
       "asset_id": "instruction_p1_auto_batch_500_30_stage_02_instruction_default",
@@ -3660,15 +3872,25 @@
           "phone_light_review": "pass",
           "phone_dark_review": "pass",
           "notes": "Both phone themes preserve the clear pitcher-to-left-reservoir path, half reservoir, completely dry closed basket, empty seated carafe, powered-off state, clean perimeter, and contrast."
+        },
+        {
+          "revision": "generated_20261025_auto_water_half_v1",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_water_half_v1.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Approved only for the reservoir-filling subaction: clean jug into open tank with substantial headroom, separate tower-mounted basket support, lidded glass carafe and mixing tube. Hardware layout matches the manufacturer's Figure A at this level. Not approval of half/full selector or off-position instruction: symbols are absent and cannot be read. Exact measured 500g and compliance with the actual machine maximum remain in accompanying target guidance; no dose or selector recipe is transferred.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-root-scenes-round2.json"
         }
       ],
       "open_todos": [],
       "qa": "complete",
       "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
       "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
-      "accepted_revision": "starlit_tactile_v6",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_batch_500_30_stage_02_instruction_default/starlit_tactile_v6.webp",
-      "notes": "Both phone themes preserve the clear pitcher-to-left-reservoir path, half reservoir, completely dry closed basket, empty seated carafe, powered-off state, clean perimeter, and contrast."
+      "accepted_revision": "generated_20261025_auto_water_half_v1",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_water_half_v1.webp",
+      "notes": "Approved only for the reservoir-filling subaction: clean jug into open tank with substantial headroom, separate tower-mounted basket support, lidded glass carafe and mixing tube. Hardware layout matches the manufacturer's Figure A at this level. Not approval of half/full selector or off-position instruction: symbols are absent and cannot be read. Exact measured 500g and compliance with the actual machine maximum remain in accompanying target guidance; no dose or selector recipe is transferred."
     },
     {
       "asset_id": "instruction_p1_auto_batch_500_30_stage_03_instruction_default",
@@ -3727,15 +3949,25 @@
           "phone_light_review": "pass",
           "phone_dark_review": "pass",
           "notes": "Both phone themes preserve half-reservoir start state, visible inlet and outlet paths, low initial carafe level, readable grounds texture, clean perimeter, and contrast."
+        },
+        {
+          "revision": "generated_20261025_auto_brew_flow_v2",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_brew_flow_v2.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The basket now has an actual support bracket from the tower, and coffee drains via a fitted mixing-lid tube into the seated glass carafe. Required covers remain fitted; stable carafe, contained stream and adequate headroom are visible. The narrow stream and mixing tube remain legible at320px on light/dark backgrounds.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-root-scenes-round3.json"
         }
       ],
       "open_todos": [],
       "qa": "complete",
       "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
       "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
-      "accepted_revision": "starlit_tactile_v4",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_batch_500_30_stage_03_instruction_default/starlit_tactile_v4.webp",
-      "notes": "Both phone themes preserve half-reservoir start state, visible inlet and outlet paths, low initial carafe level, readable grounds texture, clean perimeter, and contrast."
+      "accepted_revision": "generated_20261025_auto_brew_flow_v2",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_brew_flow_v2.webp",
+      "notes": "The basket now has an actual support bracket from the tower, and coffee drains via a fitted mixing-lid tube into the seated glass carafe. Required covers remain fitted; stable carafe, contained stream and adequate headroom are visible. The narrow stream and mixing tube remain legible at320px on light/dark backgrounds."
     },
     {
       "asset_id": "instruction_p1_auto_batch_500_30_stage_04_instruction_default",
@@ -3755,15 +3987,25 @@
           "phone_light_review": "pass",
           "phone_dark_review": "pass",
           "notes": "Exact 4:3 raw and both phone themes preserve the empty reservoir, stopped outlet arm, isolated final drop, half-batch carafe level, KBGV geometry, clean transparent perimeter, and readable contrast."
+        },
+        {
+          "revision": "generated_20261025_auto_no_flow_v1",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_no_flow_v1.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Supported basket, seated receiving carafe, fitted lids and mixing tube remain intact. Reservoir is empty and no stream/drops leave the tube. Phone images clearly distinguish stopped flow from the active-flow image.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-root-scenes-round3.json"
         }
       ],
       "open_todos": [],
       "qa": "complete",
       "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
       "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
-      "accepted_revision": "starlit_tactile_v1",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_batch_500_30_stage_04_instruction_default/starlit_tactile_v1.webp",
-      "notes": "Exact 4:3 raw and both phone themes preserve the empty reservoir, stopped outlet arm, isolated final drop, half-batch carafe level, KBGV geometry, clean transparent perimeter, and readable contrast."
+      "accepted_revision": "generated_20261025_auto_no_flow_v1",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_no_flow_v1.webp",
+      "notes": "Supported basket, seated receiving carafe, fitted lids and mixing tube remain intact. Reservoir is empty and no stream/drops leave the tube. Phone images clearly distinguish stopped flow from the active-flow image."
     },
     {
       "asset_id": "instruction_p1_auto_batch_500_30_stage_05_instruction_default",
@@ -3835,15 +4077,25 @@
           "phone_light_review": "pass",
           "phone_dark_review": "pass",
           "notes": "Both phone themes preserve the lifted half-filled carafe, visible gap over the hotplate, tilted vessel and opposing liquid slope, complete handle grip, arm ending before the canvas edge, empty cup, clean perimeter, and contrast."
+        },
+        {
+          "revision": "generated_20261025_auto_swirl_v1",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_swirl_v1.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "A coherent hand holds only the insulating carafe handle; the fitted mixing lid/tube remain in place. The glass body is untouched. Contained coffee has headroom and a subtle surface swirl; the actual handle and vessel remain clear at phone size.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-root-scenes-round3.json"
         }
       ],
       "open_todos": [],
       "qa": "complete",
       "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
       "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
-      "accepted_revision": "starlit_tactile_v5",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_batch_500_30_stage_05_instruction_default/starlit_tactile_v5.webp",
-      "notes": "Both phone themes preserve the lifted half-filled carafe, visible gap over the hotplate, tilted vessel and opposing liquid slope, complete handle grip, arm ending before the canvas edge, empty cup, clean perimeter, and contrast."
+      "accepted_revision": "generated_20261025_auto_swirl_v1",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_swirl_v1.webp",
+      "notes": "A coherent hand holds only the insulating carafe handle; the fitted mixing lid/tube remain in place. The glass body is untouched. Contained coffee has headroom and a subtle surface swirl; the actual handle and vessel remain clear at phone size."
     },
     {
       "asset_id": "instruction_p1_auto_batch_1000_60_stage_01_instruction_default",
@@ -3863,15 +4115,25 @@
           "phone_light_review": "pass",
           "phone_dark_review": "pass",
           "notes": "Exact 4:3 raw and both phone themes clearly distinguish the deeper 60 g granular bed in a No. 4 paper and basket, preserve the machine context, transparent perimeter, and contrast."
+        },
+        {
+          "revision": "generated_20261025_auto_coffee_v1",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_coffee_v1.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Loose level bed inside fitted wedge paper. Does not depict dosing or reinstallation. Replace corrupted apostrophe with: A shallow level bed of loose dry coffee sits in No.4 wedge paper inside the removable KBGV Select basket. 2026-10-25 caption recheck: literal ASCII caption now agrees with the unchanged hash-bound pixels; previous conditional caption finding retained in captionHistory.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-new-subset-round2.json"
         }
       ],
       "open_todos": [],
       "qa": "complete",
       "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
       "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
-      "accepted_revision": "starlit_tactile_v1",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_batch_1000_60_stage_01_instruction_default/starlit_tactile_v1.webp",
-      "notes": "Exact 4:3 raw and both phone themes clearly distinguish the deeper 60 g granular bed in a No. 4 paper and basket, preserve the machine context, transparent perimeter, and contrast."
+      "accepted_revision": "generated_20261025_auto_coffee_v1",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_coffee_v1.webp",
+      "notes": "Loose level bed inside fitted wedge paper. Does not depict dosing or reinstallation. Replace corrupted apostrophe with: A shallow level bed of loose dry coffee sits in No.4 wedge paper inside the removable KBGV Select basket. 2026-10-25 caption recheck: literal ASCII caption now agrees with the unchanged hash-bound pixels; previous conditional caption finding retained in captionHistory."
     },
     {
       "asset_id": "instruction_p1_auto_batch_1000_60_stage_02_instruction_default",
@@ -3917,15 +4179,25 @@
           "phone_light_review": "pass",
           "phone_dark_review": "pass",
           "notes": "Both phone themes preserve the high full-batch reservoir, seated empty carafe, installed closed basket, no-flow powered-off state, transparent perimeter, and contrast."
+        },
+        {
+          "revision": "generated_20261025_auto_water_full_v2",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_water_full_v2.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Cool-water filling with actual supporting bracket, carafe seated and lid/tube fitted. Reservoir headroom remains; no exact water target claimed.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-new-subset-round2.json"
         }
       ],
       "open_todos": [],
       "qa": "complete",
       "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
       "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
-      "accepted_revision": "starlit_tactile_v3",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_batch_1000_60_stage_02_instruction_default/starlit_tactile_v3.webp",
-      "notes": "Both phone themes preserve the high full-batch reservoir, seated empty carafe, installed closed basket, no-flow powered-off state, transparent perimeter, and contrast."
+      "accepted_revision": "generated_20261025_auto_water_full_v2",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_water_full_v2.webp",
+      "notes": "Cool-water filling with actual supporting bracket, carafe seated and lid/tube fitted. Reservoir headroom remains; no exact water target claimed."
     },
     {
       "asset_id": "instruction_p1_auto_batch_1000_60_stage_03_instruction_default",
@@ -3971,15 +4243,25 @@
           "phone_light_review": "pass",
           "phone_dark_review": "pass",
           "notes": "Both phone themes preserve the depleted reservoir, shower-to-basket and basket-to-carafe flow paths, mid-high beverage level, clean perimeter, and readable contrast."
+        },
+        {
+          "revision": "generated_20261025_auto_brew_flow_v2",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_brew_flow_v2.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "The basket now has an actual support bracket from the tower, and coffee drains via a fitted mixing-lid tube into the seated glass carafe. Required covers remain fitted; stable carafe, contained stream and adequate headroom are visible. The narrow stream and mixing tube remain legible at320px on light/dark backgrounds.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-root-scenes-round3.json"
         }
       ],
       "open_todos": [],
       "qa": "complete",
       "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
       "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
-      "accepted_revision": "starlit_tactile_v3",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_batch_1000_60_stage_03_instruction_default/starlit_tactile_v3.webp",
-      "notes": "Both phone themes preserve the depleted reservoir, shower-to-basket and basket-to-carafe flow paths, mid-high beverage level, clean perimeter, and readable contrast."
+      "accepted_revision": "generated_20261025_auto_brew_flow_v2",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_brew_flow_v2.webp",
+      "notes": "The basket now has an actual support bracket from the tower, and coffee drains via a fitted mixing-lid tube into the seated glass carafe. Required covers remain fitted; stable carafe, contained stream and adequate headroom are visible. The narrow stream and mixing tube remain legible at320px on light/dark backgrounds."
     },
     {
       "asset_id": "instruction_p1_auto_batch_1000_60_stage_04_instruction_default",
@@ -4038,15 +4320,25 @@
           "phone_light_review": "pass",
           "phone_dark_review": "pass",
           "notes": "Both phone themes preserve the empty reservoir, isolated final drop, high completed-batch carafe, gentle sloped surface, safe handle grip, contained arm, clean perimeter, and contrast."
+        },
+        {
+          "revision": "generated_20261025_auto_swirl_v1",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_swirl_v1.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "A coherent hand holds only the insulating carafe handle; the fitted mixing lid/tube remain in place. The glass body is untouched. Contained coffee has headroom and a subtle surface swirl; the actual handle and vessel remain clear at phone size.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-root-scenes-round3.json"
         }
       ],
       "open_todos": [],
       "qa": "complete",
       "blocker_resolution": "moccamaster-kbgv-select-cone-glass",
       "resolution_document": "docs/brewing/p1-exact-stage-blocker-resolutions-2026-08-03.md",
-      "accepted_revision": "starlit_tactile_v4",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_batch_1000_60_stage_04_instruction_default/starlit_tactile_v4.webp",
-      "notes": "Both phone themes preserve the empty reservoir, isolated final drop, high completed-batch carafe, gentle sloped surface, safe handle grip, contained arm, clean perimeter, and contrast."
+      "accepted_revision": "generated_20261025_auto_swirl_v1",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_swirl_v1.webp",
+      "notes": "A coherent hand holds only the insulating carafe handle; the fitted mixing lid/tube remain in place. The glass body is untouched. Contained coffee has headroom and a subtle surface swirl; the actual handle and vessel remain clear at phone size."
     },
     {
       "asset_id": "instruction_p1_auto_cupone_20_300_stage_01_instruction_default",
@@ -4062,12 +4354,22 @@
           "notes": "One seated No. 1 paper, one open bottom hole, detached dry holder, and machine-off state are clear.",
           "phone_light_review": "pass",
           "phone_dark_review": "pass"
+        },
+        {
+          "revision": "generated_20261025_cupone_paper_outlet_v1",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_paper_outlet/raw-v1.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Approved for matching fitted-paper subaction and handle-only cold basket handling. Outlet exists at the correct location but is too small to establish clear-hole inspection at320px; that check remains explicit source text. Alt corrected to omit a visible-open-hole claim. Original raw, actual delivered phone composites on both themes, primary actual Cup-One product/basket photograph and source safety context inspected; intentional macro crops retain critical action.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/reviews/independent-root-review.json"
         }
       ],
-      "accepted_revision": "v1",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_cupone_20_300_stage_01_instruction_default/starlit_tactile_v1.webp",
+      "accepted_revision": "generated_20261025_cupone_paper_outlet_v1",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_paper_outlet/candidate-v1.webp",
       "qa": "complete",
-      "notes": "Single seated No. 1 paper and open bottom hole remain clear in both phone themes.",
+      "notes": "Approved for matching fitted-paper subaction and handle-only cold basket handling. Outlet exists at the correct location but is too small to establish clear-hole inspection at320px; that check remains explicit source text. Alt corrected to omit a visible-open-hole claim. Original raw, actual delivered phone composites on both themes, primary actual Cup-One product/basket photograph and source safety context inspected; intentional macro crops retain critical action.",
       "priority": "safety-critical",
       "blocker": "NONE-BOUNDED",
       "matrix_line": 431
@@ -4129,25 +4431,47 @@
           "phone_light_review": "pass",
           "phone_dark_review": "pass",
           "notes": "Manufacturer topology and both phone themes pass: one removed No. 1 basket with granular 20 g bed, the fixed circular-opening support ring remains empty, and there is no duplicate basket or visual noise."
+        },
+        {
+          "revision": "generated_20261025_cupone_load_v1",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_load/raw-v1.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Active loading into matching paper and correct wire-handle basket. Does not prove completed leveling or a numeric coffee dose. Original raw, actual delivered phone composites on both themes, primary actual Cup-One product/basket photograph and source safety context inspected; intentional macro crops retain critical action.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/reviews/independent-root-review.json"
         }
       ],
       "open_todos": [],
       "qa": "complete",
-      "accepted_revision": "starlit_tactile_v4",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_cupone_20_300_stage_02_instruction_default/starlit_tactile_v4.webp",
-      "notes": "Manufacturer topology and both phone themes pass: one removed No. 1 basket with granular 20 g bed, the fixed circular-opening support ring remains empty, and there is no duplicate basket or visual noise."
+      "accepted_revision": "generated_20261025_cupone_load_v1",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_load/candidate-v1.webp",
+      "notes": "Active loading into matching paper and correct wire-handle basket. Does not prove completed leveling or a numeric coffee dose. Original raw, actual delivered phone composites on both themes, primary actual Cup-One product/basket photograph and source safety context inspected; intentional macro crops retain critical action."
     },
     {
       "asset_id": "instruction_p1_auto_cupone_20_300_stage_03_instruction_default",
       "batch": 1,
       "status": "accepted_candidate",
-      "accepted_revision": "v2",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_cupone_20_300_stage_03_instruction_default/starlit_tactile_v2.webp",
+      "accepted_revision": "generated_20261025_cupone_fill_v1",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_fill/candidate-v1.webp",
       "qa": "complete",
-      "notes": "Reservoir ridge, outlet arm, No. 1 paper, stable mug, and off state remain unambiguous.",
+      "notes": "Correct actual shallow top reservoir; active cool-water transfer below physical fill mark. Omits arm positioning and does not establish final exact300mL. Original raw, actual delivered phone composites on both themes, primary actual Cup-One product/basket photograph and source safety context inspected; intentional macro crops retain critical action.",
       "priority": "safety-critical",
       "blocker": "NONE-BOUNDED",
-      "matrix_line": 433
+      "matrix_line": 433,
+      "attempts": [
+        {
+          "revision": "generated_20261025_cupone_fill_v1",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_fill/raw-v1.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Correct actual shallow top reservoir; active cool-water transfer below physical fill mark. Omits arm positioning and does not establish final exact300mL. Original raw, actual delivered phone composites on both themes, primary actual Cup-One product/basket photograph and source safety context inspected; intentional macro crops retain critical action.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/reviews/independent-root-review.json"
+        }
+      ]
     },
     {
       "asset_id": "instruction_p1_auto_cupone_20_300_stage_04_instruction_default",
@@ -4176,12 +4500,22 @@
           "notes": "The installed outlet arm uses multiple underside perforations over a wet bed; the only visible stream is brewed coffee entering the centered mug.",
           "phone_light_review": "pass",
           "phone_dark_review": "pass"
+        },
+        {
+          "revision": "generated_20261025_cupone_active_v1",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_active/raw-v1.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Actual long cover, independent basket support, tank/tower arrangement, receiving ring and continuous stream into a stable mug. Demonstrates running state only; button activation and numeric capacity remain text. Original raw, actual delivered phone composites on both themes, primary actual Cup-One product/basket photograph and source safety context inspected; intentional macro crops retain critical action.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/reviews/independent-root-review.json"
         }
       ],
-      "accepted_revision": "v2",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_cupone_20_300_stage_04_instruction_default/starlit_tactile_v2.webp",
+      "accepted_revision": "generated_20261025_cupone_active_v1",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_active/candidate-v1.webp",
       "qa": "complete",
-      "notes": "Distributed outlet-arm perforations, wet bed, brewed-coffee stream, on indicator, and centered mug remain distinct in both phone themes.",
+      "notes": "Actual long cover, independent basket support, tank/tower arrangement, receiving ring and continuous stream into a stable mug. Demonstrates running state only; button activation and numeric capacity remain text. Original raw, actual delivered phone composites on both themes, primary actual Cup-One product/basket photograph and source safety context inspected; intentional macro crops retain critical action.",
       "priority": "safety-critical",
       "blocker": "NONE-BOUNDED",
       "matrix_line": 434
@@ -4201,12 +4535,22 @@
           "notes": "The current single-hole arm and holder remain installed; the indicator is dark and exactly one residual bead clings above the centered mug.",
           "phone_light_review": "pass",
           "phone_dark_review": "pass"
+        },
+        {
+          "revision": "generated_20261025_cupone_tail_v1",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_tail/raw-v1.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Same actual machine; empty tank and separate last drop while receiver remains in place. Waiting tail state, not proof dripping stopped or completed removal. Original raw, actual delivered phone composites on both themes, primary actual Cup-One product/basket photograph and source safety context inspected; intentional macro crops retain critical action.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/reviews/independent-root-review.json"
         }
       ],
-      "accepted_revision": "v1",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_cupone_20_300_stage_05_instruction_default/starlit_tactile_v1.webp",
+      "accepted_revision": "generated_20261025_cupone_tail_v1",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_tail/candidate-v1.webp",
       "qa": "complete",
-      "notes": "Current single-hole arm, dark indicator, centered mug, hands-off state, and one attached residual bead remain clear in both themes.",
+      "notes": "Same actual machine; empty tank and separate last drop while receiver remains in place. Waiting tail state, not proof dripping stopped or completed removal. Original raw, actual delivered phone composites on both themes, primary actual Cup-One product/basket photograph and source safety context inspected; intentional macro crops retain critical action.",
       "priority": "mandatory",
       "blocker": "NONE-BOUNDED",
       "matrix_line": 435
@@ -4225,12 +4569,22 @@
           "notes": "Unplugged dry machine, detached empty holder, and tool passing through the bottom hole are visible.",
           "phone_light_review": "pass",
           "phone_dark_review": "pass"
+        },
+        {
+          "revision": "generated_20261025_cupone_clean_outlet_v2",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_clean_outlet/raw-v2.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Paper removed; cool empty basket held by wire handle, narrow tool visibly enters correct small outlet frombelow. Tool contact remains legible at320px even though hole itself is tiny. Does not teach widening the hole or cleaning hot parts. Original raw, actual delivered phone composites on both themes, primary actual Cup-One product/basket photograph and source safety context inspected; intentional macro crops retain critical action.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/reviews/independent-root-review.json"
         }
       ],
-      "accepted_revision": "v1",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_auto_cupone_20_300_stage_06_instruction_default/starlit_tactile_v1.webp",
+      "accepted_revision": "generated_20261025_cupone_clean_outlet_v2",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_clean_outlet/candidate-v2.webp",
       "qa": "complete",
-      "notes": "Unplugged dry cleaning path remains continuous and readable in both phone themes.",
+      "notes": "Paper removed; cool empty basket held by wire handle, narrow tool visibly enters correct small outlet frombelow. Tool contact remains legible at320px even though hole itself is tiny. Does not teach widening the hole or cleaning hot parts. Original raw, actual delivered phone composites on both themes, primary actual Cup-One product/basket photograph and source safety context inspected; intentional macro crops retain critical action.",
       "priority": "safety-critical",
       "blocker": "NONE-BOUNDED",
       "matrix_line": 436
@@ -4568,13 +4922,25 @@
       "asset_id": "instruction_p1_phin_screw_18_120_stage_02_instruction_default",
       "batch": 1,
       "status": "accepted_candidate",
-      "accepted_revision": "v3",
-      "candidate": "docs/brewing/illustration-candidates/instruction_p1_phin_screw_18_120_stage_02_instruction_default/starlit_tactile_v3.webp",
+      "accepted_revision": "generated_20261025_phin_screw_light_v2",
+      "candidate": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/phin_screw_light_v2.webp",
       "qa": "complete",
-      "notes": "Threaded disc rests lightly on loose grounds without tamping or compression.",
+      "notes": "Threaded central post and perforated threaded insert agree with existing screw-phin geometry reference. No hand force or tamping. Replace corrupted apostrophe in alt with ASCII wording supplied to root. 2026-10-25 caption recheck: literal ASCII caption now agrees with the unchanged hash-bound pixels; previous conditional caption finding retained in captionHistory.",
       "priority": "safety-critical",
       "blocker": "NONE-PHIN-MECHANISM",
-      "matrix_line": 467
+      "matrix_line": 467,
+      "attempts": [
+        {
+          "revision": "generated_20261025_phin_screw_light_v2",
+          "raw_cache": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/phin_screw_light_v2.png",
+          "verdict": "accepted",
+          "full_resolution_review": "pass",
+          "phone_light_review": "pass",
+          "phone_dark_review": "pass",
+          "notes": "Threaded central post and perforated threaded insert agree with existing screw-phin geometry reference. No hand force or tamping. Replace corrupted apostrophe in alt with ASCII wording supplied to root. 2026-10-25 caption recheck: literal ASCII caption now agrees with the unchanged hash-bound pixels; previous conditional caption finding retained in captionHistory.",
+          "independent_review": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/independent-new-subset.json"
+        }
+      ]
     },
     {
       "asset_id": "instruction_p1_phin_screw_18_120_stage_03_instruction_default",

@@ -106,12 +106,12 @@ fun BrewSessionGuidancePanel(
     val visibleContent = remember(
         resolution.routineContent,
         resolution.criticalContent,
-        approvedVisual?.asset?.contentId,
+        approvedVisual?.targetContentId,
     ) {
         orderedLiveGuidanceContent(
             routineContent = resolution.routineContent,
             criticalContent = resolution.criticalContent,
-            illustratedContentId = approvedVisual?.asset?.contentId,
+            illustratedContentId = approvedVisual?.targetContentId,
         )
     }
     val shouldRender = resolution.policy != null ||
@@ -142,9 +142,10 @@ fun BrewSessionGuidancePanel(
                             showFullExplanations || resolution.policy?.level in
                                 setOf(GuidancePresentationLevel.FULL, GuidancePresentationLevel.CUSTOM)
                         }).filterNot { it == "None" }.distinct(),
-                    altText = content.altText,
+                    altText = approvedVisual?.takeIf { it.targetContentId == content.id }?.altText
+                        ?: content.altText,
                 ),
-                visualAsset = approvedVisual?.asset?.takeIf { it.contentId == content.id },
+                visualAsset = approvedVisual?.takeIf { it.targetContentId == content.id }?.asset,
                 expanded = expanded,
                 onExpandedChange = { expanded = it },
                 equipmentProfileId = equipmentProfileId,

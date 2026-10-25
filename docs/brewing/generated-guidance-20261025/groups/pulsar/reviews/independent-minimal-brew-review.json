@@ -1,0 +1,414 @@
+{
+  "schema_version": 1,
+  "reviewer": "Independent Codex reviewer /root/minimal_brew_review",
+  "reviewed_on": "2026-10-25",
+  "independence_basis": "Reviewer did not produce these Pulsar images; inspected all eight original raw PNGs, all eight delivered WebP images, both phone sheets at original size with each320x240 light/dark card, manufacturer photos and manual, exact shipped Gagne Learn8 and genericPulsar4 contracts.",
+  "sources": [
+    "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+    "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+    "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/"
+  ],
+  "review_context": {
+    "native_resolution_px": [
+      1024,
+      768
+    ],
+    "raw_resolution_px": [
+      1448,
+      1086
+    ],
+    "phone_card_px": [
+      320,
+      240
+    ],
+    "theme_previews": [
+      "phone-review-1.png",
+      "phone-review-2.png"
+    ]
+  },
+  "scope": "Artwork-only approval against the truthful altText in this candidate manifest. Does not approve contradictory old canonical alt text, infer selected filter material, assert elapsed timing or admit a source under a different physical state.",
+  "assets": [
+    {
+      "scene_id": "pulsar_prime",
+      "resource_sha256": "f36edeb6ee3504e05e9c4e097b2f83ef0857fb8b0e613e11942348347d6dfd1b",
+      "raw_source_sha256": "ac417aaefe50d154813c2c915ca6e2d735ae00764be2503ba9807b7c5b779d73",
+      "prompt_sha256": "a4d2538001ff306f160a33fa5911f4c87bc9b36816adacd27d0ab6fa334260df",
+      "reviewer": "Independent Codex reviewer /root/minimal_brew_review",
+      "reviewed_on": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "notes": [
+        "Flat round paper is visible in the detached low footed base; open upright lever and downward water drops depict only the draining phase. Hand supports base and does not contact the wet filter.",
+        "Barrel is absent as Gagne priming requires. This image is not a complete closed-open-closed valve cycle. Current canonical stage1 spoken alt must be corrected from horizontal to upright/open."
+      ],
+      "reviewed_alt_text": "With the barrel removed, a flat round paper sits in the Pulsar base while water drains through the open upright valve; a hand supports only the base.",
+      "mechanical": {
+        "size": [
+          1024,
+          768
+        ],
+        "encoding": "RGBA WebP",
+        "max_bytes": 300000,
+        "transparent_corners": true,
+        "evidence_hashes_recomputed": true
+      }
+    },
+    {
+      "scene_id": "pulsar_dose",
+      "resource_sha256": "c75aa2a9109fa60954482c8e45e8f397114d22b30cdb4864699e224ed254c574",
+      "raw_source_sha256": "50a5d26662457005c4656ba9c94cafe7406f5c176fd157e704a0deeefcc36dc0",
+      "prompt_sha256": "f5deb6130332e2e9ad2ac587d67b251cb144469e99cd56a586099b9dfa0ef806",
+      "reviewer": "Independent Codex reviewer /root/minimal_brew_review",
+      "reviewed_on": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "notes": [
+        "Coffee enters the open straight barrel on base/server/blank scale; detached perforated dispersion cap matches manufacturer reference. Closed horizontal lever, stable receiver and no flow are correct.",
+        "Depicts loading before leveling/cap seating/tare confirmation. Thin cream filter edge remains visible under coffee: approved for exact Gagne paper scope; unconditional generic selected-filter reuse is not established."
+      ],
+      "reviewed_alt_text": "Ground coffee is added into the open straight Pulsar barrel on its base, server and scale; the perforated dispersion cap rests beside it and the valve is horizontal.",
+      "mechanical": {
+        "size": [
+          1024,
+          768
+        ],
+        "encoding": "RGBA WebP",
+        "max_bytes": 300000,
+        "transparent_corners": true,
+        "evidence_hashes_recomputed": true
+      }
+    },
+    {
+      "scene_id": "pulsar_open_bloom",
+      "resource_sha256": "dfe0813788676741f96361755deddde1bb8941835c035193efc7121b8fde09b9",
+      "raw_source_sha256": "989b3c954242359555cebe82d23b0652147a0367bad9978d8de58e93c2619d04",
+      "prompt_sha256": "7135cbb648633e1c85f6bcd7e8a74315a32b1fe955539ab8f129bab17fe09055",
+      "reviewer": "Independent Codex reviewer /root/minimal_brew_review",
+      "reviewed_on": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "notes": [
+        "Fitted dispersion cap receives a narrow incoming water stream and releases shower droplets toward the shallow wet bed; open upright valve allows first drops into receiver.",
+        "No raised paper basket wall remains in this delivered version. Partial kettle spout is a deliberate action crop; no heat, quantity or timing is encoded. Canonical stage3 old black-kettle wording must use truthful manifest alt."
+      ],
+      "reviewed_alt_text": "A thin kettle stream enters the fitted Pulsar dispersion cap; a shallow wet coffee bed drains its first drops while the clear valve lever is upright and open.",
+      "mechanical": {
+        "size": [
+          1024,
+          768
+        ],
+        "encoding": "RGBA WebP",
+        "max_bytes": 300000,
+        "transparent_corners": true,
+        "evidence_hashes_recomputed": true
+      }
+    },
+    {
+      "scene_id": "pulsar_close",
+      "resource_sha256": "4e810076e592b15791e4aaeabe726b61bed0defa0b723e52a4c92ddffcda0feb",
+      "raw_source_sha256": "75dbf7dd9f8f035a0675a0a40212908d6c0952411498f2e34cab4fe0cecac949",
+      "prompt_sha256": "3e96963c8b78b57ab718e4a6d0c859fa763179c03cccac980d59d90af4e10c71",
+      "reviewer": "Independent Codex reviewer /root/minimal_brew_review",
+      "reviewed_on": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "notes": [
+        "Left hand stabilizes black base while right hand operates horizontal closed valve; no outflow and shallow wet bloom are consistent with closure after first drainage.",
+        "No wall lifting or unsupported twisting shown. Does not demonstrate the subsequent gentle swirl. Receiver visibly contains coffee; canonical stage4 old empty-server wording must be corrected."
+      ],
+      "reviewed_alt_text": "One hand stabilizes the black Pulsar base while the other holds its clear lever horizontal and closed; the shallow bloom remains wet with no outflow.",
+      "mechanical": {
+        "size": [
+          1024,
+          768
+        ],
+        "encoding": "RGBA WebP",
+        "max_bytes": 300000,
+        "transparent_corners": true,
+        "evidence_hashes_recomputed": true
+      }
+    },
+    {
+      "scene_id": "pulsar_retained",
+      "resource_sha256": "23b1be413fc1e760d4793e72531231701c8507dafc1a8a631d1e3a91d4b6ce9f",
+      "raw_source_sha256": "ec202f7b51ee21f490869c6e9d2f66f77a4e9aacdc7739a6b66f6be8e78511fb",
+      "prompt_sha256": "fec961f37bbfb7a834499f3055adc1bbeecb4584d3bc9af81c219ea042a9acec",
+      "reviewer": "Independent Codex reviewer /root/minimal_brew_review",
+      "reviewed_on": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "notes": [
+        "Still shallow wet bloom, fitted cap, horizontal closed lever and absent outflow distinguish retention from pouring and drawdown.",
+        "No stir/WWDT action added; elapsed minute remains source text. Suitable for the retained phase of generic closed-start bloom, never proof of a measured completion time."
+      ],
+      "reviewed_alt_text": "The Pulsar rests undisturbed with a shallow wet bloom, horizontal closed valve, and no drops entering the server.",
+      "mechanical": {
+        "size": [
+          1024,
+          768
+        ],
+        "encoding": "RGBA WebP",
+        "max_bytes": 300000,
+        "transparent_corners": true,
+        "evidence_hashes_recomputed": true
+      }
+    },
+    {
+      "scene_id": "pulsar_open_pulse",
+      "resource_sha256": "5a78f33130d57e8473eadca91f07048d8ac71841fa0ebd3b8337a90598a5d610",
+      "raw_source_sha256": "77a04f815a7994461da6a557e9faf892dbc5e325f7bc5dd693ac6ca0fb8f3887",
+      "prompt_sha256": "b5aa62aa30d0b5d83d960b89cc823ac5538d5eeefe356ab9a8fc028908f9da4f",
+      "reviewer": "Independent Codex reviewer /root/minimal_brew_review",
+      "reviewed_on": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "notes": [
+        "Upright open lever, fitted perforated cap, incoming water and shallow pool above bed with ongoing drainage correctly show active pulse-pour state.",
+        "Physical water path stays within brewer and receiver, with ample headroom. Does not measure one centimeter, pulse count or total mass. Canonical stage6 black-kettle wording must be corrected to visible cream spout."
+      ],
+      "reviewed_alt_text": "Water passes through the fitted dispersion cap above a shallow coffee slurry while the upright open valve drains brewed coffee into the server.",
+      "mechanical": {
+        "size": [
+          1024,
+          768
+        ],
+        "encoding": "RGBA WebP",
+        "max_bytes": 300000,
+        "transparent_corners": true,
+        "evidence_hashes_recomputed": true
+      }
+    },
+    {
+      "scene_id": "pulsar_drain",
+      "resource_sha256": "d194375841c9dc51705a94d97f8b2fff0a4c2f954be0f2022d626a12b1403687",
+      "raw_source_sha256": "75ee8fab8f4a63775cd2fba10d377a2e8744181b0b5968bff898a631ee688794",
+      "prompt_sha256": "324c2a313a6a2234590a1c9a0b1436c211921c8e091b01b4421ad72c8d3f50be",
+      "reviewer": "Independent Codex reviewer /root/minimal_brew_review",
+      "reviewed_on": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "notes": [
+        "No kettle or standing water; flat damp bed, upright open lever and last drops correctly depict late drawdown over collected coffee.",
+        "Final drops mean flow has not fully stopped; retain authored completion check before closing/removing. Do not reuse as a confirmed completed no-flow state."
+      ],
+      "reviewed_alt_text": "The open Pulsar valve releases the final drops above the server; its flat damp coffee bed has no standing water.",
+      "mechanical": {
+        "size": [
+          1024,
+          768
+        ],
+        "encoding": "RGBA WebP",
+        "max_bytes": 300000,
+        "transparent_corners": true,
+        "evidence_hashes_recomputed": true
+      }
+    },
+    {
+      "scene_id": "pulsar_lift_base",
+      "resource_sha256": "1573cccec8cc6e10a96218adb395898e2bdba3e3102d26223a4cb34a43c707c8",
+      "raw_source_sha256": "c03ee6a6508f8aee1b54033b8c0b0bef7d0137d98123e9498fe7e358d0915f22",
+      "prompt_sha256": "ceb06b523469c75891a21204b655a97a5999b6d20702f48e9e6de89291fc2e4f",
+      "reviewer": "Independent Codex reviewer /root/minimal_brew_review",
+      "reviewed_on": "2026-10-25",
+      "verdict": "approved",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "alt_text_agreement": "pass",
+        "minimalism": "pass"
+      },
+      "notes": [
+        "Two hands support only the black base of an upright drained brewer above stationary server/scale; horizontal closed valve and no drops make removal state clear.",
+        "Hands do not grip transparent barrel or perforated cap. Shows safe removal component, not the later act of pouring/serving coffee."
+      ],
+      "reviewed_alt_text": "Two hands lift the drained Pulsar only by its black base above a stationary server on a scale; its clear valve is horizontal and closed.",
+      "mechanical": {
+        "size": [
+          1024,
+          768
+        ],
+        "encoding": "RGBA WebP",
+        "max_bytes": 300000,
+        "transparent_corners": true,
+        "evidence_hashes_recomputed": true
+      }
+    }
+  ],
+  "binding_findings": [
+    {
+      "content_ids": [
+        "pulsar_gagne_20_340_stage_01_instruction"
+      ],
+      "status": "blocked_until_spoken_alt_matches",
+      "consequence": "Old canonical alt says horizontal valve while delivered image depicts upright open drainage. Canonical self lookup cannot use an alias alt override.",
+      "required_correction": "Deliver approved manifest alt for this canonical image and bind updated English source revision."
+    },
+    {
+      "content_ids": [
+        "pulsar_gagne_20_340_stage_03_instruction",
+        "pulsar_gagne_20_340_stage_06_instruction"
+      ],
+      "status": "blocked_until_spoken_alt_matches",
+      "consequence": "Old canonical alt says black kettle; delivered art shows a cream spout only.",
+      "required_correction": "Deliver scene-specific truthful alt for canonical images without importing old kettle-color claim."
+    },
+    {
+      "content_ids": [
+        "pulsar_gagne_20_340_stage_04_instruction"
+      ],
+      "status": "blocked_until_spoken_alt_matches",
+      "consequence": "Old canonical alt describes empty receiver, but closing after first drips has coffee in receiver.",
+      "required_correction": "Use truthful closure alt acknowledging the collected coffee; no swirl completion claim."
+    },
+    {
+      "content_ids": [
+        "pulsar_prepare"
+      ],
+      "status": "not_approved_unconditionally",
+      "consequence": "The target allows the selected compatible filter, while dose art visibly includes a cream paper edge. Exact paper-only Gagne scope does not establish applicability to another compatible filter.",
+      "required_correction": "Hide filter material completely for mechanism-neutral loading, or enforce actual paper-selection context before rendering this source. No universal paper claim."
+    }
+  ],
+  "recommended_bindings": [
+    {
+      "targets": [
+        "reviewed_pulsar_v1_prime_paper",
+        "pulsar_gagne_20_340_stage_01_instruction"
+      ],
+      "scene": "pulsar_prime",
+      "component": "Open drainage part of priming cycle"
+    },
+    {
+      "targets": [
+        "reviewed_pulsar_v1_dose_level_tare",
+        "pulsar_gagne_20_340_stage_02_instruction"
+      ],
+      "scene": "pulsar_dose",
+      "component": "Exact Gagne paper-scope coffee loading before level/cap/tare"
+    },
+    {
+      "targets": [
+        "reviewed_pulsar_v1_open_start_bloom",
+        "pulsar_gagne_20_340_stage_03_instruction"
+      ],
+      "scene": "pulsar_open_bloom",
+      "component": "Open initial pour/first drainage"
+    },
+    {
+      "targets": [
+        "pulsar_gagne_20_340_stage_04_instruction"
+      ],
+      "scene": "pulsar_close",
+      "component": "Valve closure with stabilized base; not completed swirl"
+    },
+    {
+      "targets": [
+        "reviewed_pulsar_v1_retained_bloom",
+        "pulsar_gagne_20_340_stage_05_instruction",
+        "pulsar_bloom"
+      ],
+      "scene": "pulsar_retained",
+      "component": "Closed retained bloom; generic closed-start pour itself not depicted"
+    },
+    {
+      "targets": [
+        "reviewed_pulsar_v1_open_and_pulse",
+        "pulsar_gagne_20_340_stage_06_instruction",
+        "pulsar_manual_brew"
+      ],
+      "scene": "pulsar_open_pulse",
+      "component": "Open cap pouring and drainage; no generic numerical transfer"
+    },
+    {
+      "targets": [
+        "pulsar_gagne_20_340_stage_07_instruction"
+      ],
+      "scene": "pulsar_drain",
+      "component": "Observe late drawdown before flow stops"
+    },
+    {
+      "targets": [
+        "reviewed_pulsar_v1_drain_and_serve",
+        "pulsar_gagne_20_340_stage_08_instruction",
+        "pulsar_finish"
+      ],
+      "scene": "pulsar_lift_base",
+      "component": "Closed upright base-only removal after drainage; serving follows in text"
+    }
+  ]
+}

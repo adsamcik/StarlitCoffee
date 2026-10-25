@@ -1,0 +1,130 @@
+{
+  "reviewedOn": "2026-10-25",
+  "reviewer": "/root/guidance_art_audit",
+  "scope": "Explicit physical-compatibility proposals for current missing_scene_summary only; not final admission or numeric/recipe transfer. Own-produced source artwork still requires independent target-binding decision.",
+  "proposals": [
+    {
+      "missing": "aero_selected_filter_prepare",
+      "source": "aero_prepare",
+      "status": "compatible_subaction_proposal",
+      "notes": "Selected original standard cap is locked under the upright coffee-loaded chamber on a sturdy mug; the filter medium is wholly hidden. Thus a neutral assembled-preparation alt does not claim paper versus compatible metal. No quantities, cap material change, or pressure cap transferred. Producer is this agent, so target-binding proposal requires parent independent confirmation; prior image QC was independent.",
+      "alt": "An upright AeroPress with its standard filter cap secured beneath the chamber, loaded coffee and a sturdy receiving mug.",
+      "sourcePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/aero_prepare/candidate-v1.webp",
+      "sourceSha256": "95bb1bdd6c3dc46c1dd9cee3b379fc0d0dbf7766d01e4e8732b59e2c0adf3489"
+    },
+    {
+      "missing": "espresso_generic_basket",
+      "source": "espresso_basket",
+      "status": "compatible_subaction_proposal",
+      "notes": "Clean basket fitted to portafilter is exactly the clean-basket portion of generic preparation. No machine controls, numerical capacity, basket label or calibrated dose shown. Only preparation of the clean basket is covered; measured coffee is not yet added and must remain instruction. Do not inherit source's single-wall/two-cup labels into generic alt. Producer is this agent; parent independent target-binding confirmation required.",
+      "alt": "A clean dry espresso basket fitted in a portafilter beside a folded wiping cloth.",
+      "sourcePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_basket/candidate-v1.webp",
+      "sourceSha256": "da4ee616754f08db089f18cfad3dafd9ec8cd8e465f06a4ed8b5150b3ddc00da"
+    },
+    {
+      "missing": "espresso_generic_extract",
+      "source": null,
+      "status": "new_scene_required",
+      "notes": "espresso_start/stop picture a specific control panel and finger pressing a specific button. Generic target delegates operating controls to the actual machine manual; no button selection can safely transfer. Generate a cropped group/spouts-to-cup-on-scale flow view with controls excluded."
+    },
+    {
+      "missing": "espresso_generic_serve",
+      "source": "espresso_clean",
+      "status": "compatible_subaction_proposal",
+      "notes": "Ground-puck removal into a knock box is the cleaning portion of generic completion with no controls, dose or basket capacity. This is not a served-cup illustration or all manufacturer cleaning operations. Serving and safe depressurization/cooling stay textual. Producer is this agent; parent independent target-binding confirmation required.",
+      "alt": "Spent espresso grounds drop from a portafilter into a knock box during cleanup.",
+      "sourcePath": "docs/brewing/generated-guidance-20261025/groups/aeropress-cold-espresso-french/scenes/espresso_clean/candidate-v1.webp",
+      "sourceSha256": "b4f3711bffbcd00faebf31b51214ed3aaeccfdd898a6b1721caf09ea08e4b1c0"
+    },
+    {
+      "missing": "cezve_capacity_check",
+      "source": "instruction_p1_cezve_turkish_single_rise_6_65_stage_01_instruction_default",
+      "status": "compatible_state_proposal",
+      "notes": "Cold off-heat cutaway explicitly exposes ample expansion space and attached handle on stable heat-safe support. Target does not require an empty pot. No specific vessel capacity or coffee/water measurement transfers. It does not demonstrate an actual handle-security test or verify burner compatibility; accompanying checks remain. Proposed for both reviewed prepare and generic select-capacity as an illustrative headroom check, never proof of capacity.",
+      "alt": "A cold cezve on heat-safe support, with an attached handle and visible space above the contents for expansion.",
+      "sourcePath": "app/src/main/res/drawable-nodpi/instruction_p1_cezve_turkish_single_rise_6_65_stage_01_instruction_default.webp",
+      "sourceSha256": "3c553131d1df04bb7c097128c6864377aaa0b3efea76b500a92d0aff2a23d23f"
+    },
+    {
+      "missing": "cezve_cold_water",
+      "source": null,
+      "status": "new_scene_required",
+      "notes": "Existing01 cezve images already contain coffee/water mixture; none shows a separate cold-water addition. Stirring or a completed mixture would not explain this selected action."
+    },
+    {
+      "missing": "cezve_foam_observe",
+      "source": "instruction_p1_cezve_bounded_repeated_rise_12_130_stage_03_instruction_default",
+      "status": "compatible_state_proposal",
+      "notes": "Foam visibly rising below the rim over low contained heat is the exact physical observation requested. It implies neither a second rise nor a fixed temperature/time. Generic target owns when to remove and selected recipe; no repeated-rise instruction transfers.",
+      "alt": "Foam rising toward the neck of a cezve over a low flame contained beneath its base.",
+      "sourcePath": "app/src/main/res/drawable-nodpi/instruction_p1_cezve_bounded_repeated_rise_12_130_stage_03_instruction_default.webp",
+      "sourceSha256": "0d5bad4c856253f88ecabad676c5958b634b714d73c58dff8d3e4f188a426f03"
+    },
+    {
+      "missing": "cezve_optional_sugar",
+      "source": null,
+      "status": "new_scene_required",
+      "notes": "No existing source inspected shows sugar entering the cold pot. Optional sugar in source prose is not image evidence."
+    },
+    {
+      "missing": "phin_gravity_empty_support",
+      "source": null,
+      "status": "new_scene_required",
+      "notes": "Gravity01 already contains coffee. Other sources hide contents or show a brewing/finished state; none demonstrates clean dry empty supported chamber."
+    },
+    {
+      "missing": "phin_neutral_support",
+      "source": null,
+      "status": "new_scene_required",
+      "notes": "Target says before adding anything. All supported open source chambers contain coffee; do not transfer a loaded/active state as empty setup."
+    },
+    {
+      "missing": "phin_neutral_add_coffee",
+      "source": null,
+      "status": "new_scene_required",
+      "notes": "No existing inspected source shows coffee being added to a neutral phin with insert mechanism excluded. Gravity01 shows loaded state plus loose gravity disc; screw01 exposes threads."
+    },
+    {
+      "missing": "phin_neutral_level",
+      "source": null,
+      "status": "new_scene_required",
+      "notes": "Gravity01 has a level bed but explicitly displays the separate gravity insert, while screw01 displays pillar/threaded insert. These violate this draft's mechanism-neutral condition."
+    },
+    {
+      "missing": "phin_neutral_pour",
+      "source": null,
+      "status": "new_scene_required",
+      "notes": "Legacy prewet views show the insert in the open chamber, and retained-fill cutaways expose it further. Under the draft's explicit no screw/gravity mechanism criterion none is an exact neutral reuse. A higher external cropped opaque chamber pour can hide internals."
+    },
+    {
+      "missing": "phin_neutral_selected_insert",
+      "source": null,
+      "status": "new_scene_required",
+      "notes": "The source needs to explain selection-specific fitting while generic method permits either type. Existing gravity/screw images teach one concrete mechanism. A deliberately paired two-type conceptual illustration with appropriate documented-selection text needs independent QC; one undisclosed type is not neutral."
+    },
+    {
+      "missing": "phin_neutral_collected",
+      "source": "instruction_p1_phin_screw_18_120_stage_05_instruction_default",
+      "status": "compatible_state_proposal",
+      "notes": "Opaque closed chamber hides insert mechanism, and downward drops collect into a stable clear cup showing concentrate. No serving additions/controls/numeric capacity appear. Image shows collection ongoing, not final-drip completion.",
+      "alt": "Coffee drops collect from a covered phin into a stable glass cup; the insert mechanism remains hidden.",
+      "sourcePath": "app/src/main/res/drawable-nodpi/instruction_p1_phin_screw_18_120_stage_05_instruction_default.webp",
+      "sourceSha256": "115e57346091ba6a0f150b7d2f9c0a03c2a0c4e321e1edd8af9cc1cab21196aa"
+    },
+    {
+      "missing": "phin_neutral_finished",
+      "source": "instruction_p1_phin_gravity_14_118_stage_06_instruction_default",
+      "status": "compatible_observation_proposal",
+      "notes": "Closed opaque chamber hides mechanism and the last visible drop over collected coffee illustrates observing the drip tail before removal. Must retain 'wait until flow stops' text: this is the observation while waiting, not proof that dripping has already stopped. If target admission requires a no-drop completed state, new art is required.",
+      "alt": "A covered phin remains over its cup while the final drips are observed before removal.",
+      "sourcePath": "app/src/main/res/drawable-nodpi/instruction_p1_phin_gravity_14_118_stage_06_instruction_default.webp",
+      "sourceSha256": "7c95ea55631193a440280ba6ced1d0a03a2b387607bc39c2625df3c09eb95af4"
+    },
+    {
+      "missing": "phin_neutral_remove",
+      "source": null,
+      "status": "new_scene_required",
+      "notes": "Both existing protected-removal scenes expose the open chamber and insert knob/disc. They are mechanically safe but violate the draft's explicit mechanism-neutral condition; generate covered-chamber protected removal."
+    }
+  ]
+}

@@ -13,9 +13,20 @@ import hashlib
 import json
 import re
 import sys
+from datetime import date
 from pathlib import Path
 
 from PIL import Image, UnidentifiedImageError
+
+from generate_p1_exact_visual_review_catalog import (
+    DEFAULT_GUIDANCE,
+    DEFAULT_REVIEW,
+    ReviewError,
+    expected_assets,
+    load_json,
+    validate_review,
+)
+from generate_guidance_asset_catalog import load_admission
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -23,6 +34,12 @@ DRAWABLE_DIR = ROOT / "app" / "src" / "main" / "res" / "drawable-nodpi"
 TRACKER_PATH = (
     ROOT / "docs" / "brewing" / "starlit-tactile-production-tracker-2026-08-02.json"
 )
+GENERATED_ADMISSION_PATH = ROOT / "docs/brewing/generated-guidance-20261025/admission.json"
+PULSAR_TRACKER_PATH = ROOT / "docs/brewing/pulsar-learning-guide-production-2026-08-19.json"
+GENERATED_CHECKS = frozenset({
+    "full_resolution", "phone_light", "phone_dark", "equipment_geometry", "action_state",
+    "hand_safety", "crop_and_flow", "alt_text_agreement", "minimalism",
+})
 EXPECTED_SIZE = (1024, 768)
 MAX_ENCODED_BYTES = 300_000
 RESOURCE_NAME = re.compile(r"[a-z][a-z0-9_]*")
@@ -44,14 +61,13 @@ def sha256(path: Path) -> str:
 
 
 def load_approved_candidates() -> tuple[dict[str, Path], list[str]]:
-    """Load the exact assets that completed the documented visual QA loop."""
+    """Load tracker delivery candidates; this does not grant independent pixel approval."""
     errors: list[str] = []
     try:
         tracker = json.loads(TRACKER_PATH.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as error:
         return {}, [f"cannot load production tracker ({error})"]
 
-    expected_count = tracker.get("scope", {}).get("expected_asset_count")
     candidates: dict[str, Path] = {}
     for item in tracker.get("assets", []):
         asset_id = item.get("asset_id")
@@ -75,6 +91,119 @@ def load_approved_candidates() -> tuple[dict[str, Path], list[str]]:
 
 
     return candidates, errors
+
+
+def admitted_file(scene: dict, path_key: str, hash_key: str) -> Path:
+    """Resolve only repository-owned evidence and bind approval to its actual bytes."""
+    relative = scene.get(path_key)
+    digest = scene.get(hash_key)
+    if not isinstance(relative, str) or not relative:
+        raise ValueError(f"missing {path_key}")
+    path = (ROOT / relative).resolve()
+    if not path.is_relative_to(ROOT.resolve()) or not path.is_file():
+        raise ValueError(f"{path_key} must name an existing repository file")
+    if not isinstance(digest, str) or re.fullmatch(r"[0-9a-f]{64}", digest) is None:
+        raise ValueError(f"invalid {hash_key}")
+    if sha256(path) != digest:
+        raise ValueError(f"{path_key} bytes differ from reviewed {hash_key}")
+    return path
+
+
+def load_pulsar_candidates() -> tuple[dict[str, Path], list[str]]:
+    """Recognize existing transparent Pulsar delivery only through its exact production hashes."""
+    try:
+        tracker = json.loads(PULSAR_TRACKER_PATH.read_text(encoding="utf-8"))
+        if tracker.get("schemaVersion") != 1 or tracker.get("guideId") != "pulsar_gagne_20_340":
+            raise ValueError("unexpected tracker identity")
+        stages = tracker.get("stages")
+        if not isinstance(stages, list) or len(stages) != 8:
+            raise ValueError("tracker must cover the eight source stages")
+        candidates: dict[str, Path] = {}
+        for stage in stages:
+            number = stage.get("number")
+            if not isinstance(number, int) or number not in range(1, 9):
+                raise ValueError("invalid source stage number")
+            content_id = f"pulsar_gagne_20_340_stage_{number:02d}_instruction"
+            if stage.get("contentId") != content_id or not stage.get("review", "").strip():
+                raise ValueError("stage content identity or review is missing")
+            asset_id = f"instruction_{content_id}_default"
+            if asset_id in candidates:
+                raise ValueError(f"duplicate stage: {content_id}")
+            drawable = admitted_file({
+                "path": f"app/src/main/res/drawable-nodpi/{asset_id}.webp", "hash": stage.get("sha256"),
+            }, "path", "hash")
+            candidates[asset_id] = drawable
+        return candidates, []
+    except (OSError, json.JSONDecodeError, ValueError, TypeError, AttributeError) as error:
+        return {}, [f"Pulsar production admission: {error}"]
+
+
+def load_generated_candidates() -> tuple[dict[str, Path], list[str]]:
+    """Admit only individually reviewed generated scenes with complete, hash-bound provenance."""
+    if not GENERATED_ADMISSION_PATH.is_file():
+        return {}, []
+    try:
+        # Share the strict binding/source rules with the runtime generator.
+        load_admission(ROOT, GENERATED_ADMISSION_PATH)
+        manifest = json.loads(GENERATED_ADMISSION_PATH.read_text(encoding="utf-8"))
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        return {}, [f"cannot load generated admission manifest ({error})"]
+    if not isinstance(manifest, dict) or manifest.get("schema_version") != 1 or not isinstance(manifest.get("scenes"), list):
+        return {}, ["generated admission requires schema_version 1 and a scenes list"]
+    admitted: dict[str, Path] = {}
+    seen_assets: set[str] = set()
+    bound_content: set[str] = set()
+    errors: list[str] = []
+    for scene in manifest["scenes"]:
+        asset_id = scene.get("asset_id") if isinstance(scene, dict) else None
+        try:
+            if not isinstance(asset_id, str) or RESOURCE_NAME.fullmatch(asset_id) is None:
+                raise ValueError("invalid scene asset_id")
+            if asset_id in seen_assets:
+                raise ValueError("duplicate scene asset_id")
+            seen_assets.add(asset_id)
+            drawable = admitted_file(scene, "drawable_path", "resource_sha256")
+            if drawable.parent != DRAWABLE_DIR.resolve() or drawable.name != f"{asset_id}.webp":
+                raise ValueError("drawable_path must match the packaged asset_id")
+            raw_source = admitted_file(scene, "raw_source_path", "raw_source_sha256")
+            prompt = admitted_file(scene, "prompt_path", "prompt_sha256")
+            if len({drawable, raw_source, prompt}) != 3:
+                raise ValueError("raw generator output, exact prompt and imported drawable must be preserved separately")
+            if not isinstance(scene.get("method_id"), str) or not scene["method_id"].strip():
+                raise ValueError("missing method_id")
+            review = scene.get("review", {})
+            if not isinstance(review, dict) or review.get("verdict") != "approved":
+                raise ValueError("scene does not have an approved review")
+            if not isinstance(review.get("reviewer"), str) or not review["reviewer"].strip():
+                raise ValueError("missing reviewer")
+            date.fromisoformat(review.get("reviewed_on", ""))
+            checks = review.get("checks")
+            if not isinstance(checks, dict) or set(checks) != GENERATED_CHECKS or any(
+                verdict != "pass" for verdict in checks.values()
+            ):
+                raise ValueError("every required pixel, phone, mechanics, accessibility and minimalism check must pass")
+            notes = review.get("notes")
+            if not isinstance(notes, list) or not notes or any(not isinstance(note, str) or not note.strip() for note in notes):
+                raise ValueError("review requires recorded findings for its content bindings")
+            bindings = scene.get("bindings")
+            if not isinstance(bindings, list) or not bindings:
+                raise ValueError("scene requires explicit reviewed content bindings")
+            for binding in bindings:
+                if not isinstance(binding, dict):
+                    raise ValueError("content binding must be an object")
+                content_id = binding.get("content_id")
+                if not isinstance(content_id, str) or RESOURCE_NAME.fullmatch(content_id) is None:
+                    raise ValueError("invalid bound content_id")
+                if content_id in bound_content:
+                    raise ValueError(f"ambiguous duplicate content binding: {content_id}")
+                bound_content.add(content_id)
+                for key in ("target_content_revision", "alt_text"):
+                    if not isinstance(binding.get(key), str) or not binding[key].strip():
+                        raise ValueError(f"content binding requires {key}")
+            admitted[asset_id] = drawable
+        except (ValueError, TypeError, OSError) as error:
+            errors.append(f"{asset_id or '<missing scene id>'}: generated admission: {error}")
+    return admitted, errors
 
 
 def verify_asset(path: Path, approved_candidate: Path | None) -> list[str]:
@@ -141,6 +270,24 @@ def main() -> int:
         return 1
 
     approved_candidates, errors = load_approved_candidates()
+    pulsar_candidates, pulsar_errors = load_pulsar_candidates()
+    approved_candidates.update(pulsar_candidates)
+    errors.extend(pulsar_errors)
+    generated_candidates, generated_errors = load_generated_candidates()
+    errors.extend(generated_errors)
+    for asset_id, drawable in generated_candidates.items():
+        tracker_candidate = approved_candidates.get(asset_id)
+        if tracker_candidate is not None and sha256(tracker_candidate) != sha256(drawable):
+            errors.append(f"{asset_id}: generated admission conflicts with the tracker candidate")
+        approved_candidates[asset_id] = drawable
+    # Independent rejection must survive tracker acceptance and hash-valid packaging.
+    # The shared validator checks exact stage/alt-text identity, every QC verdict,
+    # and the actual packaged bytes before the runtime admission catalog is generated.
+    visual_reviews: list[dict] = []
+    try:
+        visual_reviews = validate_review(load_json(DEFAULT_REVIEW), expected_assets(load_json(DEFAULT_GUIDANCE)))
+    except ReviewError as error:
+        errors.append(f"independent visual admission: {error}")
     deployed_names = {asset.stem for asset in assets}
     for retired_name in RETIRED_RESOURCE_NAMES & deployed_names:
         errors.append(f"{retired_name}: retired legacy instruction asset is packaged")
@@ -164,7 +311,10 @@ def main() -> int:
         f"{len(assets)} static WebP files at "
         f"{EXPECTED_SIZE[0]}x{EXPECTED_SIZE[1]}; largest is "
         f"{largest.name} ({largest.stat().st_size:,} bytes). "
-        f"{len(approved_candidates)} tracker-approved exact assets are transparent; "
+        f"{len(approved_candidates)} reviewed delivery candidates are transparent; "
+        f"{sum(review['verdict'] == 'approved' for review in visual_reviews)} independently approved, "
+        f"{sum(review['verdict'] == 'rejected' for review in visual_reviews)} rejected and excluded from runtime admission; "
+        f"{len(generated_candidates)} generated scenes have complete admission provenance; "
         f"{len(assets) - len(approved_candidates)} untracked review inputs are opaque.",
     )
     return 0

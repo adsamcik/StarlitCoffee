@@ -1,0 +1,114 @@
+[
+  {
+    "sceneId": "cupone_paper_outlet",
+    "size": [
+      1024,
+      768
+    ],
+    "mode": "RGBA",
+    "bbox": [
+      74,
+      70,
+      960,
+      720
+    ],
+    "bytes": 55834,
+    "sha256": "a1e95e352c989a7c14a9dea94be64a7076c6499dda1cbb2b3384866252b2a9e4"
+  },
+  {
+    "sceneId": "cupone_load",
+    "size": [
+      1024,
+      768
+    ],
+    "mode": "RGBA",
+    "bbox": [
+      64,
+      48,
+      960,
+      720
+    ],
+    "bytes": 83766,
+    "sha256": "5896ff27405aeee12454a4faba5896260eef6a058f35d7018b8c1954e6a0c7c9"
+  },
+  {
+    "sceneId": "cupone_fill",
+    "size": [
+      1024,
+      768
+    ],
+    "mode": "RGBA",
+    "bbox": [
+      64,
+      77,
+      953,
+      720
+    ],
+    "bytes": 69956,
+    "sha256": "16936453751f1b8df33a097b04a2db5e0e696bf86bddeb3149ff4c58c4b49c9c"
+  },
+  {
+    "sceneId": "cupone_active",
+    "size": [
+      1024,
+      768
+    ],
+    "mode": "RGBA",
+    "bbox": [
+      96,
+      63,
+      932,
+      720
+    ],
+    "bytes": 63048,
+    "sha256": "7b1ff144d91837c740ed511672197339ef43a6934ddb4105e75676cb2b76294d"
+  },
+  {
+    "sceneId": "cupone_tail",
+    "size": [
+      1024,
+      768
+    ],
+    "mode": "RGBA",
+    "bbox": [
+      187,
+      53,
+      943,
+      715
+    ],
+    "bytes": 61318,
+    "sha256": "9ee049a52700edea5ab65d10f8f38097c14b555530d158f09585fc24d9b9cca6"
+  },
+  {
+    "sceneId": "cupone_clean_outlet",
+    "size": [
+      1024,
+      768
+    ],
+    "mode": "RGBA",
+    "bbox": [
+      148,
+      78,
+      960,
+      720
+    ],
+    "bytes": 65476,
+    "sha256": "6eacdb8b9177e975b229637edf8e86e3c8dc1a26dcdc324df5c61dd23dfaef7f"
+  },
+  {
+    "sceneId": "kurasu_serve_fresh_ice",
+    "size": [
+      1024,
+      768
+    ],
+    "mode": "RGBA",
+    "bbox": [
+      104,
+      67,
+      942,
+      720
+    ],
+    "bytes": 80552,
+    "sha256": "aa6463c5d62fb02ccde7dce813f68538248ffddc8ce6aa76d895afe74a2d1ca1"
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "sceneId": "percolator-prepare",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-prepare-v2/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-prepare-v2/candidate.webp",
+    "rawSha256": "df81709e9f35c5a71af7276f2c4ee6114297536d4a3f8b57d8ad08bf6790d69e",
+    "candidateSha256": "cb075d622beea4c3b70c88cb45b593d2fb433b242a0ea13d76719adfe4b76c47"
+  },
+  {
+    "sceneId": "percolator-load",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-load-v3/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-load-v3/candidate.webp",
+    "rawSha256": "0dec66dbc2860feae9c728d257081c386c6ac033ae4ff76b49b3ee5dabfa4dc0",
+    "candidateSha256": "1916a3a105796a490b673d8bea714dd3dbbd8d4894501c69d578447aaa6bce88"
+  },
+  {
+    "sceneId": "percolator-assemble",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-assemble-v2/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-assemble-v2/candidate.webp",
+    "rawSha256": "cb27aab2f68f1bfa4aa3db8441d8b0ddfd3b97e08c84658f0b7fc06644ea2b85",
+    "candidateSha256": "daa269ab0dd9dc85560e6ee193e66c35aeea937c8f9f348badcac7900b61951e"
+  },
+  {
+    "sceneId": "percolator-clean",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-clean-v2/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-clean-v2/candidate.webp",
+    "rawSha256": "98bdf78555a1b3703cbd288147ecee7fd0ce46042bce19ec644bbddcaddfdc7a",
+    "candidateSha256": "a3f6811040ac01d84a406977f66120cb5b4c83c110a3e8d8650295159acc61b9"
+  },
+  {
+    "sceneId": "siphon-install-filter",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/siphon-install-filter-v2/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/siphon-install-filter-v2/candidate.webp",
+    "rawSha256": "1c253e310ee0825fb58a964972ddd668af2ff4e681842b9131732b9aa551db52",
+    "candidateSha256": "23a7e77673969f7407538eba7a2b74b3c74c032a8179221736c178f25c076daa"
+  },
+  {
+    "sceneId": "siphon-add-coffee",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/siphon-add-coffee-v2/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/siphon-add-coffee-v2/candidate.webp",
+    "rawSha256": "a726dc4bac5294273319647505aa8e6e085e6d35d5796c4b02ba0aaec1b3b4a2",
+    "candidateSha256": "b000561fda3ccca6d47053c772cc3cc69ec275c75bb6c69e99092e079e050f7b"
+  }
+]

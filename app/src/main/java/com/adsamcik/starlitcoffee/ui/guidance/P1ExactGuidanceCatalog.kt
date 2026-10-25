@@ -102,6 +102,7 @@ data class P1ExactStageGuidance(
     val concise: P1ExactConciseGuidance,
     val focused: P1ExactFocusedGuidance,
     val utilitiesOnly: List<String>,
+    val visualContentRevision: String? = null,
 ) {
     val warning: String?
         get() = full.warning
@@ -201,6 +202,7 @@ data class P1ExactStageGuidance(
             )
         },
         terminologyReferences = terminologyCatalog?.referencesFor(contentId).orEmpty(),
+        visualContentRevision = visualContentRevision,
     )
 
     private fun P1ExactGuidancePresentation.toAuthoredPresentation(
@@ -402,7 +404,7 @@ private fun P1ExactGuidanceManifestDto.toCatalog(): P1ExactGuidanceCatalog {
                     methodFamilyId = definition.methodFamilyId,
                     brewerProfileId = definition.brewerProfileId,
                     planStage = planStage,
-                )
+                ).copy(visualContentRevision = stage.visualContractRevision(sourceRecipe))
             },
         ).applyVerifiedFactualErrata()
     }
@@ -421,6 +423,14 @@ private fun P1ExactRecipeDto.requireRecipeCopy() {
         originalSourceOrProvenance,
     ).forEach { value -> require(value.isNotBlank()) { "Exact recipe copy cannot be blank" } }
 }
+
+/** Retain the exact decoded language contract before optional-text normalization and factual errata. */
+private fun P1ExactStageDto.visualContractRevision(recipe: P1ExactRecipeDto): String =
+    visualContractRevision(listOf(recipe.recipeId, recipe.methodFamilyId, recipe.brewerProfileId, stageId,
+        action, startTimeOrPrecedingCondition, targetDurationOrRange, addedWaterTarget,
+        cumulativeWaterTarget, beverageYieldTarget, equipmentState, completionCriterion,
+        full.imperativeInstruction, full.conciseExplanation, full.observableCompletionCue,
+        full.warning, full.accessibleAltText))
 
 // Validation intentionally stays beside mapping so no unverified source field can enter runtime.
 @Suppress("LongMethod", "LongParameterList")

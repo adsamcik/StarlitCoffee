@@ -95,7 +95,9 @@ object P1BuiltInGuidanceCatalog {
         val profileEntries = profileSafetyById.flatMap { (profileId, safety) ->
             profileSafetyEntries(profileId, safety)
         }
-        return stageEntries + stageSafetyEntries + profileEntries
+        return (stageEntries + stageSafetyEntries + profileEntries).map { entry ->
+            entry.copy(content = entry.content.withVisualContract("generic_p1"))
+        }
     }
 
     private fun validateCopyCoverage(sourceStages: List<P1SourceStage>) {

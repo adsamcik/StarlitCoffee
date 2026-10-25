@@ -1,0 +1,177 @@
+[
+  {
+    "sceneId": "cupone_paper_outlet",
+    "methodId": "automatic-drip",
+    "stepIds": [],
+    "p1Targets": [
+      "p1_auto_cupone_20_300_stage_01_instruction"
+    ],
+    "altText": "The cool Cup-One basket has fitted small paper and a visibly open lower outlet; it is held by its wire handle.",
+    "prompt": "Use case: scientific-educational. Generate ONE minimal coffee-guidance illustration, 4:3 landscape with genuine transparent perimeter and generous safe margins. Reference image1 is style only: flat2D editorial illustration with crisp dark espresso outline, simple cream/pale-blue/charcoal fills and one restrained shading plane, no photorealism or gloss. Reference image2 is exact Cup-One13265 basket anatomy only: small smooth black tapered cone, thin bent-wire rectangular side handle, pointed lower cone ending in one tiny always-open outlet tube; no shutoff valve. Scene: close-up of this single detached cool basket held by its wire handle, viewed three-quarter from slightly above. Show a single small matching white No1 folded paper seated neatly inside and the tiny bottom outlet visibly unobstructed. Tip the basket only slightly so paper stays fitted, and make the open outlet visible at its pointed lower tip. Human hand safely holds only handle, no fingers on outlet. Omit the entire coffee machine, reservoir, mug, scale and decorative objects. This teaches fitted paper and clear outlet, not measured dose or an assembled machine. All critical basket edges/outlet inside frame. No text, numbers, symbols, arrows, logos, gradients, decorative island, additional components, metal mesh, valve lever, round pleated basket paper or invented cutaway.",
+    "sourceRaw": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-e125addc-0833-4a84-ba2a-d3227c148f67.png",
+    "sources": [
+      "https://us.moccamaster.com/collections/cup-one-coffee-brewer-parts/products/brew-basket-cup-one",
+      "https://us.moccamaster.com/products/cup-one",
+      "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer original-resolution inspection: seated paper, open tube, handle-only cool grip. Pending delivery/phone and independent QC."
+      ]
+    }
+  },
+  {
+    "sceneId": "cupone_load",
+    "p1Targets": [
+      "p1_auto_cupone_20_300_stage_02_instruction"
+    ],
+    "altText": "Ground coffee enters the fitted paper in a cool Cup-One basket held upright by its wire handle.",
+    "methodId": "automatic-drip",
+    "stepIds": [],
+    "prompt": "Use case: scientific-educational. ONE minimal 4:3 transparent coffee-guidance illustration in the same flat2D editorial style and exact basket anatomy as the reference. Show a single action: measured ground coffee being gently poured from a small scoop into the fitted small white paper of the cool Cup-One13265 black cone brew basket. One hand supports ONLY the thin wire side handle, keeping basket upright and level; the other hand holds the scoop. Smooth tapered upper basket, pointed lower cone and tiny always-open bottom outlet, NO valve, NO stand or machine. Grounds stay inside the paper and leave generous room below its upper edge; no tamping or pressure. Reference basket silhouette, wire handle with upper/lower attachments, paper fit, small clear lower opening and flat espresso-outline palette must be preserved. Transparent4:3 perimeter with safe margins; critical basket/scoop/fingers completely visible, wrists may end cleanly. No text, numbers, labels, logos, arrows, detached decorations, photographic texture or shiny gradients. Do not invent a pleated paper or metal sieve. This shows loading only and makes no visible numeric-dose claim.",
+    "sourceRaw": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-e88be897-c04d-47db-b83e-c5c8fe8d9e35.png",
+    "sources": [
+      "https://us.moccamaster.com/collections/cup-one-coffee-brewer-parts/products/brew-basket-cup-one",
+      "https://us.moccamaster.com/products/cup-one",
+      "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer full-resolution inspection passed: correct basket, handle-only support, contained coffee, safe headroom. Pending phone/independent QC."
+      ]
+    }
+  },
+  {
+    "sceneId": "cupone_fill",
+    "p1Targets": [
+      "p1_auto_cupone_20_300_stage_03_instruction"
+    ],
+    "altText": "Fresh cold water pours from a clean jug into the Cup-One reservoir on top of its tower, below its physical fill mark.",
+    "methodId": "automatic-drip",
+    "stepIds": [],
+    "prompt": "Use case: scientific-educational. Generate ONE minimal4:3 transparent instructional illustration. Reference1 is exact Moccamaster Cup-One anatomy; reference2 is style only, NOT brewer anatomy. Flat2D editorial, crisp espresso outlines, cream/pale-blue/charcoal fills, restrained single-plane shading, no glossy realism. Scene is a close-up of a clean jug pouring fresh cold water into the OPEN Cup-One clear shallow rectangular reservoir seated on TOP of its silver vertical tower. Use the real tank's short shallow width-dominant shape, central glass riser and single short black physical fill mark as seen in reference1, but the lid is removed for filling. Water stream enters open tank space BESIDE the central riser, not into its tube. Water remains below the actual fill mark while pouring; no overflow. Show only tank and upper portion of supporting silver tower, ending as an intentional straight detail crop at lower edge; omit all basket, outlet arm, base, switches and mug because this scene teaches only reservoir filling, not pipe assembly. Hands use clean jug handle. Real transparent perimeter and safe margins around tank/jug. No text/numbers/logos/arrows, no extra tanks, side-hanging reservoir, invented internal heater, caps on riser, decorative island, splash, gradient or photorealism.",
+    "sourceRaw": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-40acffa6-e2fe-4480-a1ff-f5bdcb5afe5f.png",
+    "sources": [
+      "https://us.moccamaster.com/collections/cup-one-coffee-brewer-parts/products/brew-basket-cup-one",
+      "https://us.moccamaster.com/products/cup-one",
+      "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer full-resolution inspection: exact shallow top tank, stream beside riser, fill remains below mark. Detail omits outlet-arm positioning, which remains text."
+      ]
+    }
+  },
+  {
+    "sceneId": "cupone_active",
+    "p1Targets": [
+      "p1_auto_cupone_20_300_stage_04_instruction"
+    ],
+    "altText": "The covered Cup-One brews through its supported basket into a large mug kept in the receiving ring.",
+    "methodId": "automatic-drip",
+    "stepIds": [],
+    "prompt": "Use case: scientific-educational. Generate ONE minimal4:3 transparent coffee-guidance illustration. Reference1 is the EXACT original Moccamaster Cup-One appliance anatomy: keep all structural shapes and positions; reference2 sets only flat2D espresso-outline editorial style. Show the model brewing into one large stable cream ceramic mug nested in its receiving ring. A narrow brown coffee stream descends from the basket's tiny always-open bottom outlet into the mug, with only a shallow collected amount and ample cup headroom. The basket must remain correctly seated on its separate tower-mounted ring bracket; preserve its thin wire handle and small pointed lower cone. Preserve the actual shallow clear tank ABOVE the silver tower, the one-piece LONG black top cover across BOTH tank and basket/outlet arm, rectangular low silver base, and single power rocker on front-left BASE. Use no visible generic thin bent kettle pipe or new showerhead; the real outlet arm is under its cover and must not be invented. Tank contains a modest amount of pale-blue water while running; no steam or spills. Entire actual appliance, support, mug and flow fully inside transparent safe margins. Simple cream/silver/charcoal fills with espresso outline, one restrained shading plane, flatter and much simpler than product photography. No text, numbers, logos, arrows, decorative background/island, extra controls, extra carafe, scale, double reservoir, side-hanging tank or cutaway. No hand needed: depict the active machine-controlled cycle state, not selecting a button.",
+    "sourceRaw": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-60ecc72f-e2b6-4d8e-b9a6-e4645217a509.png",
+    "sources": [
+      "https://us.moccamaster.com/collections/cup-one-coffee-brewer-parts/products/brew-basket-cup-one",
+      "https://us.moccamaster.com/products/cup-one",
+      "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer full-resolution: actual tank/cover/bracket/wire handle/base rocker layout preserved; active connected downward flow into stable cup. Pending phone and independent QC."
+      ]
+    }
+  },
+  {
+    "sceneId": "cupone_tail",
+    "p1Targets": [
+      "p1_auto_cupone_20_300_stage_05_instruction"
+    ],
+    "altText": "The Cup-One reservoir is empty and a final separate drop falls while the collected coffee stays beneath the basket.",
+    "methodId": "automatic-drip",
+    "stepIds": [],
+    "prompt": "Use case: precise-object-edit. Create ONE distinct finished-drainage state from reference Cup-One illustration while preserving exact accurate appliance geometry, bracket, long cover, wire basket handle, tiny always-open outlet and stable receiving cup. Change ONLY the brew state: tank has emptied and appears clear with no blue water; continuous stream is gone, leaving one small separate final brown drop below the basket outlet, and cup now contains collected brewed coffee at a safe level below its rim. The mug remains securely in the receiving ring while waiting for the last drop. No hand, no removal yet, no active continuous flow. Do not imply that the power switch has automatically turned off: keep control details neutral as in reference, and add no new marks. Keep same minimal flat2D espresso outline/cream/silver/charcoal/pale-blue editorial appearance, simplify excessive gloss to restrained single-plane shading. Genuine transparent4:3 perimeter; full appliance and cup inside margins. No text/numbers/logos/arrows/decorative background, no pipe exposed through the cover, no extra filter or basket. This image teaches residual-drip observation before removing the hot cup, not serving already completed.",
+    "sourceRaw": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-94ad7a8c-d05d-4a8a-b610-5740d6e6b182.png",
+    "sources": [
+      "https://us.moccamaster.com/collections/cup-one-coffee-brewer-parts/products/brew-basket-cup-one",
+      "https://us.moccamaster.com/products/cup-one",
+      "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer full-resolution: same correct hardware, empty tank, one separate drop, collected coffee with safe headroom. Waiting state only, not proof flow already stopped."
+      ]
+    }
+  },
+  {
+    "sceneId": "cupone_clean_outlet",
+    "p1Targets": [
+      "p1_auto_cupone_20_300_stage_06_instruction"
+    ],
+    "altText": "A thin cleaning tool passes through the cool empty Cup-One basket's tiny drip hole, with hands kept clear underneath.",
+    "methodId": "automatic-drip",
+    "stepIds": [],
+    "prompt": "Use case: scientific-educational. ONE minimal4:3 transparent coffee-instruction illustration in the same flat2D espresso-outline style and exact Cup-One13265 basket silhouette as reference. Show ONLY cleaning the clear tiny bottom drip hole of a detached cool empty basket. No machine, paper, grounds, water, sink, valve, electricity, or decorative objects. One hand holds the thin wire SIDE HANDLE, keeping basket tipped slightly toward viewer so its empty inside and pointed lower cone are visible. Other hand gently guides a very thin straight cleaning tool from ABOVE through the central tiny always-open bottom outlet; show a short thin end emerging BELOW the outlet with FREE SPACE underneath, never directed at or touching the supporting hand. Tool diameter is finer than the hole, no force or oversized brush, no screwdriver. The basket must remain smooth charcoal black with precise thin wire upper/lower handle attachments and small pointed bottom outlet; never add a removable cap, shutoff piston, mesh or invented parts. Generous transparent safe margins around critical hole, tool and fingers; wrists may end cleanly. No text, numbers, logos, symbols, arrows, gloss, photorealism or background island. A precise close-up teaching an unobstructed hole after cooled unplugged cleaning; actual cooling/unplugging stays in surrounding guidance.",
+    "sourceRaw": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-b58a8eab-1fee-4421-8b40-bc6dd4676f36.png",
+    "sources": [
+      "https://us.moccamaster.com/collections/cup-one-coffee-brewer-parts/products/brew-basket-cup-one",
+      "https://us.moccamaster.com/products/cup-one",
+      "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159"
+    ],
+    "qc": {
+      "status": "rejected",
+      "notes": [
+        "Generator retained the white paper filter despite cleanup prompt requiring empty basket; must discard paper before clearing outlet. Preserved for provenance; do not admit."
+      ]
+    }
+  },
+  {
+    "sceneId": "cupone_clean_outlet",
+    "version": 2,
+    "p1Targets": [
+      "p1_auto_cupone_20_300_stage_06_instruction"
+    ],
+    "altText": "A thin cleaning tool clears the tiny outlet of a cool empty Cup-One basket held only by its wire handle.",
+    "methodId": "automatic-drip",
+    "stepIds": [],
+    "prompt": "Use case: precise-object-edit. Correct this instructional CLEANING image. REMOVE THE ENTIRE WHITE PAPER FILTER completely from the basket; there must be NO white/cream liner, NO seam, NO filter, NO grounds, NO liquid. Reveal the EMPTY DARK CHARCOAL PLASTIC INSIDE of this Cup-One basket, with the same material inside and outside. Keep the tiny always-open drip hole and precise smooth cone, pointed lower outlet and wire side handle. One hand supports only the side wire handle. Other hand holds a thin cleaning tool from below, gently passing its slender tip INTO the tiny bottom outlet, as in reference. The tool is finer than the opening, no force and no screwdriver; no supporting hand in its internal exit path. This is cooled detached cleanup AFTER paper and grounds are discarded. Keep existing espresso-outline flat2D editorial style and hand anatomy. Transparent4:3 safe perimeter. No text, numbers, logos, arrows, machine, electrical parts, metal sieve, shutoff valve, decorative island or photorealism. Make the EMPTY DARK INTERIOR unmistakable, never retain the old fitted paper.",
+    "sourceRaw": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-c3c92ef0-f482-467e-9792-96ab80e96f3c.png",
+    "sources": [
+      "https://us.moccamaster.com/collections/cup-one-coffee-brewer-parts/products/brew-basket-cup-one",
+      "https://us.moccamaster.com/products/cup-one",
+      "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer full-resolution: paper removed, dark empty interior, fine tool enters outlet with supporting hand safely on side handle. Pending phone and independent QC."
+      ]
+    }
+  },
+  {
+    "sceneId": "kurasu_serve_fresh_ice",
+    "methodId": "v60",
+    "p1Targets": [
+      "p1_v60_kurasu_flash_16_150_70_stage_06_instruction"
+    ],
+    "altText": "A tilted glass server pours chilled coffee through its spout in a connected stream into a stable glass of fresh ice, with headroom remaining.",
+    "stepIds": [],
+    "prompt": "Use case: scientific-educational. Generate ONE minimal4:3 transparent coffee-guidance image illustrating serving chilled flash-brew coffee over FRESH ice. Reference image1 is style only; reference image2 is the old serving concept to CORRECT, never copy its disconnected liquid. Flat2D editorial, crisp dark espresso outlines, simple cream/pale-blue/brown fills and restrained one-plane shading, no photo/gloss. A right hand securely grips the actual glass server HANDLE and tilts the server strongly toward the left, about65 degrees from upright. PHYSICAL FLOW IS CRITICAL: the brown coffee free surface is approximately horizontal under gravity and reaches the actual lowest POURING SPOUT; the liquid inside is visibly continuous right to that lip, from which ONE connected stream falls into a stable clear glass containing fresh pale-blue ice cubes. Choose tilt/fill together so no dry gap exists between inside liquid and spout. Show transparent glass/coffee boundary clearly, with the draining server partly emptied; do not depict liquid flowing from dry glass above the free surface. The receiving glass is only partly filled and has obvious headroom above ice and coffee. No brewer/filter/scale/timer/steam; brew ice has already melted earlier. Entire server/spout/stream/receiving glass and safe handle grip inside transparent margins, wrists may crop cleanly. No text/numbers/logos/arrows/decorative island or invented internal cross-section. Coffee can be shown through transparent vessel but not behind ceramic.",
+    "sourceRaw": "C:\\Users\\adam-\\.codex\\generated_images\\01a1715c-0641-7202-8dfb-106d8ee556cf\\exec-bc035245-ebb6-466e-9fdf-a9022c8e71d9.png",
+    "sources": [
+      "https://kurasu.kyoto/blogs/recipe/japanese-brew-guide-on-iced-pour-over-coffee"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer full-resolution inspection: horizontal coffee surface reaches real lowest spout, connected stream enters stable fresh-ice glass; safe handle grip and headroom. Pending phone and independent QC."
+      ]
+    }
+  }
+]

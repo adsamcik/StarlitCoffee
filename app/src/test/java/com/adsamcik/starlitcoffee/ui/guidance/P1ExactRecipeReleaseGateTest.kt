@@ -33,7 +33,7 @@ class P1ExactRecipeReleaseGateTest {
     }
 
     @Test
-    fun `production visual review unlocks only recipes whose required pixels pass`() {
+    fun `approved production artwork preserves outstanding recipe evidence blocks`() {
         val gate = P1ExactRecipeReleaseGate(
             guidanceLoadResult = loaded,
             instructionAssets = BuiltInInstructionAssetCatalog.catalog,
@@ -50,17 +50,41 @@ class P1ExactRecipeReleaseGateTest {
                 "generic_conical_low_agitation_20_320",
                 "clever_water_first_15_250",
                 "clever_coffee_first_15_250",
+                "switch_official_20_240",
                 "switch_ole_boen_hybrid_16_5_240",
                 "switch_gravity_15_250",
+                "auto_batch_500_30",
+                "auto_batch_1000_60",
                 "auto_cupone_20_300",
                 "phin_gravity_14_118",
             ).mapTo(linkedSetOf(), ::BuiltInRecipeId),
             gate.eligibleRecipeIds,
         )
-        assertFalse(gate.isEligible(BuiltInRecipeId("switch_official_20_240")))
-        assertFalse(gate.isEligible(BuiltInRecipeId("auto_batch_500_30")))
-        assertFalse(gate.isEligible(BuiltInRecipeId("auto_batch_1000_60")))
+        assertFalse(gate.isEligible(BuiltInRecipeId("v60_kasuya_4_6_20_300")))
+        assertFalse(gate.isEligible(BuiltInRecipeId("v60_kurasu_flash_16_150_70")))
+        assertFalse(gate.isEligible(BuiltInRecipeId("cezve_turkish_single_rise_6_65")))
+        assertFalse(gate.isEligible(BuiltInRecipeId("cezve_bounded_repeated_rise_12_130")))
         assertFalse(gate.isEligible(BuiltInRecipeId("phin_screw_18_120")))
+    }
+
+    @Test
+    fun `one rejected required frame blocks an otherwise fully approved recipe`() {
+        val assets = approvedAssetsFor(PRIMARY_RECIPE)
+        val rejectedAssetId = assets.assets.first().id
+        val reviews = assets.assets.map { asset ->
+            val approved = approvedVisualReview(asset)
+            if (asset.id == rejectedAssetId) approved.copy(mechanicsReviewed = false) else approved
+        }
+        val gate = P1ExactRecipeReleaseGate(
+            guidanceLoadResult = loaded,
+            instructionAssets = assets,
+            localizationCoverage = fullyLocalized(PRIMARY_RECIPE),
+            releaseReadiness = P1ExactRecipeReleaseReadiness.allClear,
+            visualReviewLedger = P1ExactVisualReviewLedger(reviews),
+        )
+
+        assertFalse(gate.isEligible(PRIMARY_RECIPE))
+        assertNull(gate.catalogFor(PRIMARY_RECIPE))
     }
 
     @Test

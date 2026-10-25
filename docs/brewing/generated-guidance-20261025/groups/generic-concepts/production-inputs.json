@@ -1,0 +1,164 @@
+[
+  {
+    "id": "concept_filter_options",
+    "prompt": "Use case: scientific-educational. Asset: one explicitly CONCEPTUAL teaching diagram for a coffee app, NOT an illustration of a particular real brewer. Generate genuinely transparent 4:3 landscape PNG. Minimal flat 2D editorial vector-like shapes: crisp uniform dark-espresso outlines, cream, pale-blue water/glass, coffee-brown liquid, restrained warmgray. Solid fills only, at most one flat shadow plane, no gradients, texture, photorealism, gloss, decorative background or island. Keep all useful content within central80%, uncropped, readable at320px. No text, numbers, logos, arrows, labels, badges, controls, valves, actuator, buttons, invented internals or specific machine architecture. One functional action/state only. Two separated, clearly independent alternative detached filter examples, NOT a combined assembly: at left one simple open cream paper filter, at right one simple open fine-mesh reusable filter. Both are empty and dry, roughly equal visual weight, with generous empty separation, no device or support rack and no dimensions. No overlaid/stacked filters, water, coffee, hands or extra parts. These are alternative examples, not claims of universal fit.",
+    "alt": "Conceptual alternatives: separate paper and reusable mesh filters; use the filter specified for the brewer.",
+    "version": 1,
+    "src": "C:\\Users\\adam-\\.codex\\generated_images\\01a15da9-9510-7752-a99d-139c4109274b\\exec-593b0667-a4a2-4b16-9a8e-846fe1a38d1f.png",
+    "selected": false,
+    "reason": "Not selected: automatic contexts require paper-only alternatives; generic valve uses conditional rinse concept."
+  },
+  {
+    "id": "concept_filter_rinse",
+    "prompt": "Use case: scientific-educational. Asset: one explicitly CONCEPTUAL teaching diagram for a coffee app, NOT an illustration of a particular real brewer. Generate genuinely transparent 4:3 landscape PNG. Minimal flat 2D editorial vector-like shapes: crisp uniform dark-espresso outlines, cream, pale-blue water/glass, coffee-brown liquid, restrained warmgray. Solid fills only, at most one flat shadow plane, no gradients, texture, photorealism, gloss, decorative background or island. Keep all useful content within central80%, uncropped, readable at320px. No text, numbers, logos, arrows, labels, badges, controls, valves, actuator, buttons, invented internals or specific machine architecture. One functional action/state only. One isolated simple detached filter represented by a minimal neutral open funnel outline, without pleats, mesh pattern, specific fitting geometry or size. A small clean jug pours a gentle pale-blue stream onto its inside; rinse droplets exit into a separate stable receiving bowl below. Show plain geometric shapes, not an actual brewer. Generous headroom, no hands in water path, no simultaneous paper+mesh assembly, no coffee. This depicts the conditional rinse operation for a selected manufacturer-compatible filter, not universal machine instructions.",
+    "alt": "Conceptual rinsing: clean water passes through a detached selected filter into a receiving bowl.",
+    "version": 1,
+    "src": "C:\\Users\\adam-\\.codex\\generated_images\\01a15da9-9510-7752-a99d-139c4109274b\\exec-afc61ce2-6514-4b2d-83ae-24c233e0cea5.png",
+    "selected": false,
+    "reason": "Rejected: smooth cone-like funnel could imply universal filter shape."
+  },
+  {
+    "id": "concept_coffee_loading",
+    "prompt": "Use case: scientific-educational. Asset: one explicitly CONCEPTUAL teaching diagram for a coffee app, NOT an illustration of a particular real brewer. Generate genuinely transparent 4:3 landscape PNG. Minimal flat 2D editorial vector-like shapes: crisp uniform dark-espresso outlines, cream, pale-blue water/glass, coffee-brown liquid, restrained warmgray. Solid fills only, at most one flat shadow plane, no gradients, texture, photorealism, gloss, decorative background or island. Keep all useful content within central80%, uncropped, readable at320px. No text, numbers, logos, arrows, labels, badges, controls, valves, actuator, buttons, invented internals or specific machine architecture. One functional action/state only. A small plain dosing cup tips loose brown coffee grains into a neutral shallow open receptacle with a broad rim. The receptacle is a simple conceptual container, not a real basket or brewer: no filter shape, mesh, paper folds, ports or controls. Side three-quarter view clearly shows grains landing inside with generous empty space below rim. No water, tamping tool, compacted puck, or extra objects.",
+    "alt": "Conceptual loading: loose grounds fall into an open receptacle with room below its rim.",
+    "version": 1,
+    "src": "C:\\Users\\adam-\\.codex\\generated_images\\01a15da9-9510-7752-a99d-139c4109274b\\exec-4e451fb0-2944-4fbf-810f-707f7a3743a5.png",
+    "selected": false,
+    "reason": "Not selected: loaded loose-level end-state is shared with loading/leveling contracts to avoid redundant scenes."
+  },
+  {
+    "id": "concept_coffee_level",
+    "prompt": "Use case: scientific-educational. Asset: one explicitly CONCEPTUAL teaching diagram for a coffee app, NOT an illustration of a particular real brewer. Generate genuinely transparent 4:3 landscape PNG. Minimal flat 2D editorial vector-like shapes: crisp uniform dark-espresso outlines, cream, pale-blue water/glass, coffee-brown liquid, restrained warmgray. Solid fills only, at most one flat shadow plane, no gradients, texture, photorealism, gloss, decorative background or island. Keep all useful content within central80%, uncropped, readable at320px. No text, numbers, logos, arrows, labels, badges, controls, valves, actuator, buttons, invented internals or specific machine architecture. One functional action/state only. A single neutral shallow open receptacle holding a loose, level brown bed of coffee below its rim. Clear high three-quarter view of flat uncompressed surface made of a few simple dot-like grains. No pouring, hands, spoon, tamper, water, paper/mesh pattern, scale, controls or real-machine fittings. Plain geometric container communicates the loose level state without specifying actual hardware.",
+    "alt": "Conceptual level bed: loose grounds lie evenly below the rim, without compression.",
+    "version": 1,
+    "src": "C:\\Users\\adam-\\.codex\\generated_images\\01a15da9-9510-7752-a99d-139c4109274b\\exec-6f82ffc4-fe99-4a06-9789-37974f75a2c1.png",
+    "selected": true,
+    "reason": "Candidate; independent full/binding QC required."
+  },
+  {
+    "id": "concept_retained_liquid",
+    "prompt": "Use case: scientific-educational. Asset: one explicitly CONCEPTUAL teaching diagram for a coffee app, NOT an illustration of a particular real brewer. Generate genuinely transparent 4:3 landscape PNG. Minimal flat 2D editorial vector-like shapes: crisp uniform dark-espresso outlines, cream, pale-blue water/glass, coffee-brown liquid, restrained warmgray. Solid fills only, at most one flat shadow plane, no gradients, texture, photorealism, gloss, decorative background or island. Keep all useful content within central80%, uncropped, readable at320px. No text, numbers, logos, arrows, labels, badges, controls, valves, actuator, buttons, invented internals or specific machine architecture. One functional action/state only. A simple front-view geometric chamber as an abstract functional schematic, its opaque neutral blank base hides all mechanisms. Inside the chamber brown coffee slurry rests well below the rim over a thin brown bed, shown as a schematic cross-section rather than fabricated real internals. A separate empty cup is supported below; absolutely no dripping or outflow. No control, handle, valve, filter drawing, water jug, hand, flame or real-brewer silhouette. This state teaches retained liquid with no outflow, not how to operate a device.",
+    "alt": "Conceptual retention: liquid stays in a chamber with no outflow into the cup below; controls are omitted.",
+    "version": 1,
+    "src": "C:\\Users\\adam-\\.codex\\generated_images\\01a15da9-9510-7752-a99d-139c4109274b\\exec-e9c18a3b-3ce3-47b0-86fe-fabb6e26df8a.png",
+    "selected": true,
+    "reason": "Candidate; independent full/binding QC required."
+  },
+  {
+    "id": "concept_water_to_coffee",
+    "prompt": "Use case: scientific-educational. Asset: one explicitly CONCEPTUAL teaching diagram for a coffee app, NOT an illustration of a particular real brewer. Generate genuinely transparent 4:3 landscape PNG. Minimal flat 2D editorial vector-like shapes: crisp uniform dark-espresso outlines, cream, pale-blue water/glass, coffee-brown liquid, restrained warmgray. Solid fills only, at most one flat shadow plane, no gradients, texture, photorealism, gloss, decorative background or island. Keep all useful content within central80%, uncropped, readable at320px. No text, numbers, logos, arrows, labels, badges, controls, valves, actuator, buttons, invented internals or specific machine architecture. One functional action/state only. A small clean jug pours a thin pale-blue stream gently onto the brown coffee surface in one simple open geometric chamber. Brown slurry is clearly far below rim, with generous visible cream empty headroom. Chamber base is a blank neutral shape hiding all mechanisms; no actual brewer anatomy, filter type, controls, valve, numbers or scale. No dripping into a receiving vessel and no overflow, splash or hands in liquid. One action: gentle water addition with room below rim.",
+    "alt": "Conceptual water addition: a gentle stream wets coffee while leaving generous headroom.",
+    "version": 1,
+    "src": "C:\\Users\\adam-\\.codex\\generated_images\\01a15da9-9510-7752-a99d-139c4109274b\\exec-b563c587-725b-4abb-9f43-2a45fa7699d0.png",
+    "selected": true,
+    "reason": "Candidate; independent full/binding QC required."
+  },
+  {
+    "id": "concept_gentle_stir",
+    "prompt": "Use case: scientific-educational. Asset: one explicitly CONCEPTUAL teaching diagram for a coffee app, NOT an illustration of a particular real brewer. Generate genuinely transparent 4:3 landscape PNG. Minimal flat 2D editorial vector-like shapes: crisp uniform dark-espresso outlines, cream, pale-blue water/glass, coffee-brown liquid, restrained warmgray. Solid fills only, at most one flat shadow plane, no gradients, texture, photorealism, gloss, decorative background or island. Keep all useful content within central80%, uncropped, readable at320px. No text, numbers, logos, arrows, labels, badges, controls, valves, actuator, buttons, invented internals or specific machine architecture. One functional action/state only. One plain cream spoon partly immersed in brown coffee slurry in a simple open geometric chamber. Only a few subtle concentric ripples around the spoon suggest gentle stirring; no arrows or motion marks. A small relaxed hand holds only the upper spoon handle above the rim, fingers well clear of liquid. Plenty of headroom. Blank neutral base omits mechanisms; no filter drawings, valve, controls or real device geometry, no flame or other objects.",
+    "alt": "Conceptual agitation: a spoon gently stirs coffee below the rim, with fingers clear of the liquid.",
+    "version": 1,
+    "src": "C:\\Users\\adam-\\.codex\\generated_images\\01a15da9-9510-7752-a99d-139c4109274b\\exec-5544b8d3-389b-43e8-ba8d-844b9357ae89.png",
+    "selected": false,
+    "reason": "Rejected: exposed spoon bowl with piled grounds could read as scooping rather than agitation."
+  },
+  {
+    "id": "concept_reservoir_fill",
+    "prompt": "Use case: scientific-educational. Asset: one explicitly CONCEPTUAL teaching diagram for a coffee app, NOT an illustration of a particular real brewer. Generate genuinely transparent 4:3 landscape PNG. Minimal flat 2D editorial vector-like shapes: crisp uniform dark-espresso outlines, cream, pale-blue water/glass, coffee-brown liquid, restrained warmgray. Solid fills only, at most one flat shadow plane, no gradients, texture, photorealism, gloss, decorative background or island. Keep all useful content within central80%, uncropped, readable at320px. No text, numbers, logos, arrows, labels, badges, controls, valves, actuator, buttons, invented internals or specific machine architecture. One functional action/state only. A clean plain jug pours pale-blue water into a standalone conceptual reservoir: one simple neutral open rectangular tank with a clearly visible upper rim and a water surface far below it. Isolate tank and jug only; no presumed attachment or position on any machine, no coffee, grounds, basket, controls, pipes, numbers or marks. No overflow or hands in water. This illustrates filling a selected reservoir with headroom, without specifying its location or capacity.",
+    "alt": "Conceptual reservoir filling: clean water enters an isolated tank with headroom; machine location and capacity are unspecified.",
+    "version": 1,
+    "src": "C:\\Users\\adam-\\.codex\\generated_images\\01a15da9-9510-7752-a99d-139c4109274b\\exec-16eaef8b-ea14-47a2-8b9d-3e9e54dd349a.png",
+    "selected": true,
+    "reason": "Candidate; independent full/binding QC required."
+  },
+  {
+    "id": "concept_active_flow",
+    "prompt": "Use case: scientific-educational. Asset: one explicitly CONCEPTUAL teaching diagram for a coffee app, NOT an illustration of a particular real brewer. Generate genuinely transparent 4:3 landscape PNG. Minimal flat 2D editorial vector-like shapes: crisp uniform dark-espresso outlines, cream, pale-blue water/glass, coffee-brown liquid, restrained warmgray. Solid fills only, at most one flat shadow plane, no gradients, texture, photorealism, gloss, decorative background or island. Keep all useful content within central80%, uncropped, readable at320px. No text, numbers, logos, arrows, labels, badges, controls, valves, actuator, buttons, invented internals or specific machine architecture. One functional action/state only. A simple abstract neutral outlet block, unbranded and without controls or internals, stands above one stable cream cup. A narrow coffee-brown stream falls from its lower center into the partly filled cup with generous headroom. No reservoir, filter/brewer body, handle mechanism, buttons, hand, steam, flame or invented parts. This is a functional coffee-output diagram that can teach observed drainage or an automatic brew cycle without asserting how a machine is started.",
+    "alt": "Conceptual active flow: coffee runs from an unspecified outlet into a stable cup.",
+    "version": 1,
+    "src": "C:\\Users\\adam-\\.codex\\generated_images\\01a15da9-9510-7752-a99d-139c4109274b\\exec-8116a0ef-88b2-4fda-8a29-8dc4ab010827.png",
+    "selected": true,
+    "reason": "Candidate; independent full/binding QC required."
+  },
+  {
+    "id": "concept_no_flow",
+    "prompt": "Use case: scientific-educational. Asset: one explicitly CONCEPTUAL teaching diagram for a coffee app, NOT an illustration of a particular real brewer. Generate genuinely transparent 4:3 landscape PNG. Minimal flat 2D editorial vector-like shapes: crisp uniform dark-espresso outlines, cream, pale-blue water/glass, coffee-brown liquid, restrained warmgray. Solid fills only, at most one flat shadow plane, no gradients, texture, photorealism, gloss, decorative background or island. Keep all useful content within central80%, uncropped, readable at320px. No text, numbers, logos, arrows, labels, badges, controls, valves, actuator, buttons, invented internals or specific machine architecture. One functional action/state only. A simple abstract neutral outlet block stands above one stable cream cup containing coffee safely below rim. Clearly no stream, drops or falling particles anywhere between outlet and cup. No controls, internals, machine architecture, hand, steam, checkmark, symbols, numbers or completion light. This diagram teaches the observable no-flow state only; it must not imply a timer or sensor proved completion.",
+    "alt": "Conceptual flow check: coffee is collected in a cup and no outflow is visible; the machine's completion rules still apply.",
+    "version": 1,
+    "src": "C:\\Users\\adam-\\.codex\\generated_images\\01a15da9-9510-7752-a99d-139c4109274b\\exec-d414ede7-ea8c-42d5-992f-43c01b27a1f5.png",
+    "selected": true,
+    "reason": "Candidate; independent full/binding QC required."
+  },
+  {
+    "id": "concept_ready_cup",
+    "prompt": "Use case: scientific-educational. Asset: one explicitly CONCEPTUAL teaching diagram for a coffee app, NOT an illustration of a particular real brewer. Generate genuinely transparent 4:3 landscape PNG. Minimal flat 2D editorial vector-like shapes: crisp uniform dark-espresso outlines, cream, pale-blue water/glass, coffee-brown liquid, restrained warmgray. Solid fills only, at most one flat shadow plane, no gradients, texture, photorealism, gloss, decorative background or island. Keep all useful content within central80%, uncropped, readable at320px. No text, numbers, logos, arrows, labels, badges, controls, valves, actuator, buttons, invented internals or specific machine architecture. One functional action/state only. One simple cream coffee cup filled with brown coffee safely below the rim, on a small plain saucer. A relaxed hand holds only the cup handle with fingers outside and away from the hot liquid. No brewer, machine, strainer, kettle, pouring, controls, steam symbols, numbers, decorative background or surface island. Minimal clear conceptual safe serving by the cup handle, without a machine-specific procedure.",
+    "alt": "Conceptual serving: a hand holds the filled cup by its handle, clear of the coffee.",
+    "version": 1,
+    "src": "C:\\Users\\adam-\\.codex\\generated_images\\01a15da9-9510-7752-a99d-139c4109274b\\exec-2f391775-101a-4dfa-829f-be63e296531b.png",
+    "selected": true,
+    "reason": "Candidate; independent full/binding QC required."
+  },
+  {
+    "id": "concept_batch_active_flow",
+    "prompt": "Use case: scientific-educational. Asset: one explicitly CONCEPTUAL teaching diagram for a coffee app, NOT an illustration of a particular real brewer. Generate genuinely transparent 4:3 landscape PNG. Minimal flat 2D editorial vector-like shapes: crisp uniform dark-espresso outlines, cream, pale-blue water/glass, coffee-brown liquid, restrained warmgray. Solid fills only, at most one flat shadow plane, no gradients, texture, photorealism, gloss, decorative background or island. Keep all useful content within central80%, uncropped, readable at320px. No text, numbers, logos, arrows, labels, badges, controls, valves, actuator, buttons, invented internals or specific machine architecture. One functional action/state only. A simple abstract neutral outlet block, unbranded without controls or internals, stands above a stable plain handled coffee carafe. A narrow brown coffee stream falls into the partly filled carafe with generous headroom. Clearly a carafe, not a cup. No machine architecture, reservoir position, paper/basket geometry, hotplate, switch, button, completion indicator, cord or automatic shutoff claim. Pure observed batch coffee flow, not a particular actual brewer.",
+    "alt": "Conceptual batch flow: coffee runs from an unspecified outlet into a stable carafe.",
+    "version": 1,
+    "src": "C:\\Users\\adam-\\.codex\\generated_images\\01a15da9-9510-7752-a99d-139c4109274b\\exec-02838ae2-bb55-4ae9-b5d8-1b47e3a35e20.png",
+    "selected": true,
+    "reason": "Candidate; independent full/binding QC required."
+  },
+  {
+    "id": "concept_batch_no_flow",
+    "prompt": "Use case: scientific-educational. Asset: one explicitly CONCEPTUAL teaching diagram for a coffee app, NOT an illustration of a particular real brewer. Generate genuinely transparent 4:3 landscape PNG. Minimal flat 2D editorial vector-like shapes: crisp uniform dark-espresso outlines, cream, pale-blue water/glass, coffee-brown liquid, restrained warmgray. Solid fills only, at most one flat shadow plane, no gradients, texture, photorealism, gloss, decorative background or island. Keep all useful content within central80%, uncropped, readable at320px. No text, numbers, logos, arrows, labels, badges, controls, valves, actuator, buttons, invented internals or specific machine architecture. One functional action/state only. A simple abstract neutral outlet block stands above a stable plain handled carafe containing brown coffee well below its rim. A clear empty gap between outlet and carafe: absolutely no stream, drops or falling particles. No machine architecture, controls, hotplate, indicator, timer, checkmark or shutoff symbol. Clearly a carafe, not a cup. This teaches observable end of flow only, not guaranteed completion or automatic power state.",
+    "alt": "Conceptual batch flow check: coffee is collected in a carafe with no visible outflow; completion follows the machine's instructions.",
+    "version": 1,
+    "src": "C:\\Users\\adam-\\.codex\\generated_images\\01a15da9-9510-7752-a99d-139c4109274b\\exec-a761241a-0faf-4426-975e-86887eef3061.png",
+    "selected": true,
+    "reason": "Candidate; independent full/binding QC required."
+  },
+  {
+    "id": "concept_safe_carafe",
+    "prompt": "Use case: scientific-educational. Asset: one explicitly CONCEPTUAL teaching diagram for a coffee app, NOT an illustration of a particular real brewer. Generate genuinely transparent 4:3 landscape PNG. Minimal flat 2D editorial vector-like shapes: crisp uniform dark-espresso outlines, cream, pale-blue water/glass, coffee-brown liquid, restrained warmgray. Solid fills only, at most one flat shadow plane, no gradients, texture, photorealism, gloss, decorative background or island. Keep all useful content within central80%, uncropped, readable at320px. No text, numbers, logos, arrows, labels, badges, controls, valves, actuator, buttons, invented internals or specific machine architecture. One functional action/state only. One plain unbranded handled coffee carafe, an abstract simple neutral cream pitcher shape without specific material/size claims, contains brown coffee well below its upper rim. A relaxed hand grips ONLY its handle, fingers outside and clear of liquid/body. Upright with very subtle gentle concentric surface ripples and slight liquid tilt suggesting a careful small swirl, absolutely no outflow or splashing. No cup, lid mechanism, hotplate, machine, numbers, arrows or motion marks. Show safe handling of collected coffee before serving; do not prescribe removing a required lid or a universal swirl.",
+    "alt": "Conceptual carafe handling: a hand grips only the handle while collected coffee remains safely below the rim.",
+    "version": 1,
+    "src": "C:\\Users\\adam-\\.codex\\generated_images\\01a15da9-9510-7752-a99d-139c4109274b\\exec-f7d7c1f3-56bd-4220-863a-9b9b640768a2.png",
+    "selected": true,
+    "reason": "Candidate; independent full/binding QC required."
+  },
+  {
+    "id": "concept_filter_rinse",
+    "prompt": "Use case: scientific-educational. Asset: one explicitly CONCEPTUAL teaching diagram for a coffee app, NOT an illustration of a particular real brewer. Generate genuinely transparent 4:3 landscape PNG. Minimal flat 2D editorial vector-like shapes: crisp uniform dark-espresso outlines, cream, pale-blue water/glass, coffee-brown liquid, restrained warmgray. Solid fills only, at most one flat shadow plane, no gradients, texture, photorealism, gloss, decorative background or island. Keep all useful content within central80%, uncropped, readable at320px. No text, numbers, logos, arrows, labels, badges, controls, valves, actuator, buttons, invented internals or specific machine architecture. One functional action/state only. Two clearly separated alternative conceptual RINSE diagrams side by side, NOT one assembled setup. Left: one detached cream paper filter rests above its own small receiving bowl, with its own small jug pouring a thin blue stream into it and a few blue drops passing into that bowl. Right: one detached reusable mesh filter rests above a DIFFERENT separate small receiving bowl, with its own separate small jug pouring a thin blue stream into it and a few blue drops passing into that bowl. Generous blank gap separates complete alternatives. Make each jug/filter/bowl arrangement visually independent; no shared vessel, shared stream or stacked paper+mesh. No real machine, universal size, basket fittings or installed-both claim. These are conditional rinsing alternatives only, selected by the actual manufacturer's instructions. Simple visible paper versus mesh distinction, readable at320px.",
+    "alt": "Conceptual conditional rinse alternatives: separate paper and mesh filters drain into separate bowls; follow the selected filter's instructions.",
+    "version": 2,
+    "src": "C:\\Users\\adam-\\.codex\\generated_images\\01a15da9-9510-7752-a99d-139c4109274b\\exec-0732ed75-e2e2-41b3-b2f5-d728df20e949.png",
+    "selected": true,
+    "reason": "Independent alternatives, not simultaneous installation; conceptual conditional rinse only."
+  },
+  {
+    "id": "concept_gentle_stir",
+    "prompt": "Use case: scientific-educational. Asset: one explicitly CONCEPTUAL teaching diagram for a coffee app, NOT an illustration of a particular real brewer. Generate genuinely transparent 4:3 landscape PNG. Minimal flat 2D editorial vector-like shapes: crisp uniform dark-espresso outlines, cream, pale-blue water/glass, coffee-brown liquid, restrained warmgray. Solid fills only, at most one flat shadow plane, no gradients, texture, photorealism, gloss, decorative background or island. Keep all useful content within central80%, uncropped, readable at320px. No text, numbers, logos, arrows, labels, badges, controls, valves, actuator, buttons, invented internals or specific machine architecture. One functional action/state only. One simple open geometric chamber containing brown coffee slurry, far below its rim. A plain cream spoon is stirring with its ENTIRE BOWL UNDER the liquid surface: only its long upper handle emerges above the brown liquid and a few small concentric surface ripples meet that handle. A relaxed hand holds the upper spoon handle above the rim, fingers safely clear of liquid. Critical: NO visible spoon bowl, NO grounds piled on spoon, NO scooping, lifting or removal of grounds. No invented brewer fittings, valve, filter drawings, machine controls or real device silhouette, no flame or other objects. One action: gentle mixing within the chamber.",
+    "alt": "Conceptual agitation: a spoon gently stirs coffee below the rim, with fingers clear of the liquid.",
+    "version": 2,
+    "src": "C:\\Users\\adam-\\.codex\\generated_images\\01a15da9-9510-7752-a99d-139c4109274b\\exec-8da4fe04-486f-439a-8077-c63db7ebf12b.png",
+    "selected": true,
+    "reason": "Entire spoon bowl submerged; no grounds are scooped or removed; independent QC required."
+  },
+  {
+    "id": "concept_paper_options",
+    "alt": "Conceptual paper alternatives: separate cone and flat-basket papers; use only the shape and size specified for the machine.",
+    "prompt": "Use case: scientific-educational. Asset: one explicitly CONCEPTUAL teaching diagram for a coffee app, NOT an illustration of a particular real brewer. Generate genuinely transparent 4:3 landscape PNG. Minimal flat 2D editorial vector-like shapes: crisp uniform dark-espresso outlines, cream, pale-blue water/glass, coffee-brown liquid, restrained warmgray. Solid fills only, at most one flat shadow plane, no gradients, texture, photorealism, gloss, decorative background or island. Keep all useful content within central80%, uncropped, readable at320px. No text, numbers, logos, arrows, labels, badges, controls, valves, actuator, buttons, invented internals or specific machine architecture. One functional action/state only. Two clearly separated alternative PAPER filter examples only: at left one simple open cream cone paper filter; at right one simple open cream flat-bottom pleated basket paper filter. They are independent alternatives, not one assembly and not universal sizes. No mesh or metal filter, actual machine, fittings, water, coffee, hands, numbers or shared support. Roughly equal visual weight and generous empty separation. Teach that the selected paper must match the actual machine's instructions.",
+    "version": 1,
+    "src": "C:\\Users\\adam-\\.codex\\generated_images\\01a15da9-9510-7752-a99d-139c4109274b\\exec-a6674bbe-967e-4d04-b4ed-08c515d9c7e5.png",
+    "selected": true,
+    "reason": "Paper-only alternatives preserve automatic paper-filter scope; independent QC required."
+  },
+  {
+    "id": "concept_paper_rinse",
+    "alt": "Conceptual conditional rinsing: cone and flat-basket papers are shown separately, each draining to its own bowl; rinse only as the machine directs.",
+    "prompt": "Use case: scientific-educational. Asset: one explicitly CONCEPTUAL teaching diagram for a coffee app, NOT an illustration of a particular real brewer. Generate genuinely transparent 4:3 landscape PNG. Minimal flat 2D editorial vector-like shapes: crisp uniform dark-espresso outlines, cream, pale-blue water/glass, coffee-brown liquid, restrained warmgray. Solid fills only, at most one flat shadow plane, no gradients, texture, photorealism, gloss, decorative background or island. Keep all useful content within central80%, uncropped, readable at320px. No text, numbers, logos, arrows, labels, badges, controls, valves, actuator, buttons, invented internals or specific machine architecture. One functional action/state only. Two clearly separated alternative PAPER RINSE diagrams side by side. Left: one detached cream cone paper filter over its own receiving bowl with its own small jug pouring a gentle narrow blue stream and blue drops into that bowl. Right: one detached cream flat-bottom pleated basket paper over a DIFFERENT separate receiving bowl with its own separate jug and gentle stream. No mesh, metal filter, shared stream, shared bowl or stacked pair. Generous blank gap separates alternatives. These are conditional rinse concepts, not actual mounting/support instructions or universal filter sizes; actual compatible filter/manual decides whether to rinse. Keep each complete alternative readable at320px.",
+    "version": 1,
+    "src": "C:\\Users\\adam-\\.codex\\generated_images\\01a15da9-9510-7752-a99d-139c4109274b\\exec-97b68d1e-f627-4d33-a16d-75b247194a66.png",
+    "selected": true,
+    "reason": "Paper-only alternatives preserve automatic paper-filter scope; independent QC required."
+  }
+]

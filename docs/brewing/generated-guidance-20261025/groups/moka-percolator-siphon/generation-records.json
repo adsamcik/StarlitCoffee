@@ -1,0 +1,342 @@
+[
+  {
+    "sceneId": "moka-inspect",
+    "methodId": "moka-pot",
+    "stepIds": [
+      "inspect"
+    ],
+    "altText": "Cold moka pot separated to inspect the boiler, funnel basket, filter plate and gasket.",
+    "prompt": "Use case: scientific-educational. Create one minimalist flat 2D editorial coffee-instruction diagram on a genuinely transparent 4:3 canvas. Crisp espresso-brown outlines, solid warm cream metal and pale-blue accents, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, textures, background island or realism. Center an exploded COLD classic octagonal aluminum moka pot for inspecting its actual parts: lower water boiler with safety valve, funnel-shaped coffee basket, upper collector tipped enough to show the circular perforated filter plate with its rubber gasket seated underneath. Show clean intact parts separated slightly without heat, water, coffee, tools or hands. Accurate proportions and anatomy; distinguish lower funnel basket from upper filter plate. Large generous silhouette, useful at 320px width. Reference image is style only; change subject completely.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-57d60b3b-2cb3-41f8-a372-ca9b25205888.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-57d60b3b-2cb3-41f8-a372-ca9b25205888.png"
+  },
+  {
+    "sceneId": "moka-fill-water",
+    "methodId": "moka-pot",
+    "stepIds": [
+      "fill_water"
+    ],
+    "altText": "Cold lower moka boiler with water visibly below the safety valve.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Keep the lower-boiler diagram and valve location. Raise the waterline so it ends JUST below the safety valve LOWER edge, with a small clearly visible dry gap about one valve radius, rather than low in the boiler. No basket or heating.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-e182407f-e132-4013-b303-d00e7e082a41.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "rejectedAttempts": [
+      {
+        "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show only the open octagonal lower boiler of a classic aluminum moka pot, in a precise partial cutaway that reveals pale-blue cold water ending clearly BELOW the LOWER EDGE of its visible safety valve. The valve and threaded rim must remain dry and unobstructed. A kettle spout pours a short thin stream into the open boiler. No basket inserted yet, no heat, no handle or upper collector on this lower component. Emphasize the visible air gap below the valve.",
+        "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-8c03fcdd-29f6-4e99-af6b-b419e1c740fb.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      }
+    ],
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-e182407f-e132-4013-b303-d00e7e082a41.png"
+  },
+  {
+    "sceneId": "moka-fill-coffee",
+    "methodId": "moka-pot",
+    "stepIds": [
+      "fill_coffee"
+    ],
+    "altText": "A full loose level bed of grounds in a moka funnel basket, with clean rim.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show one moka funnel basket in three-quarter view, filled loosely with brown coffee exactly level with its top rim, clean rim, uncompressed granular surface. A small spoon hovers alongside but does not press down. Clear funnel stem below basket. No tamper, hand pressure, water, heat or other equipment.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-c2fa916e-21f5-48f8-8076-360b44c7f5bc.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-c2fa916e-21f5-48f8-8076-360b44c7f5bc.png"
+  },
+  {
+    "sceneId": "moka-assemble",
+    "methodId": "moka-pot",
+    "stepIds": [
+      "assemble"
+    ],
+    "altText": "Cold moka pot fully assembled with lid closed and clear safety valve.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show one fully assembled classic aluminum octagonal moka pot upright, closed lid, black handle and knob, securely meeting metal sections, visible unobstructed safety valve on lower boiler opposite the handle. No hands, no stove, no steam, no water. Communicate the securely closed cold assembled state.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-d745df61-ea9d-42c1-bf88-e718c6015900.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-d745df61-ea9d-42c1-bf88-e718c6015900.png"
+  },
+  {
+    "sceneId": "moka-heat",
+    "methodId": "moka-pot",
+    "stepIds": [
+      "heat"
+    ],
+    "altText": "Closed moka pot heating on a small gas flame confined beneath its base.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show one closed-lid classic octagonal moka pot stable on a small gas hob grate. Small restrained blue flame only beneath the center of its base, never beyond the base or along the sides, black handle well clear. Visible clear safety valve. No lid opening, no dramatic steam, no person, no timers.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-cd1dfe53-3341-488e-8b37-157cafbc543a.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-cd1dfe53-3341-488e-8b37-157cafbc543a.png"
+  },
+  {
+    "sceneId": "moka-stop",
+    "methodId": "moka-pot",
+    "stepIds": [
+      "stop"
+    ],
+    "altText": "Moka pot rests off heat on a heatproof trivet with its lid closed.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show one closed classic octagonal moka pot standing fully on a simple compact heatproof trivet, OFF all heating sources. A small folded dry heat cloth rests beside its handle. No stove, flame, steam jets, hand opening the boiler, or lid opening. Keep the trivet functional and small, no decorative island.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-ecdfd00c-2ed6-4ba8-8256-a2818891a05d.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-ecdfd00c-2ed6-4ba8-8256-a2818891a05d.png"
+  },
+  {
+    "sceneId": "moka-serve",
+    "methodId": "moka-pot",
+    "stepIds": [
+      "serve_cool_clean"
+    ],
+    "altText": "Coffee pours carefully from the moka pot into a cup after discharge settles.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show one classic octagonal moka pot gently tilted by its black handle, lid closed, a narrow brown coffee stream from its spout into one cream cup. One minimal hand grips only the handle, no hand touches the hot metal, valve unobstructed. No heat, steam, pressure, unscrewing or disassembly. Precise realistic spout geometry. Focus on serving subaction of this combined serve/cool/clean step.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-c72fbdb8-d89c-4cb4-a2cc-2a0cbc9b5f6e.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-c72fbdb8-d89c-4cb4-a2cc-2a0cbc9b5f6e.png"
+  },
+  {
+    "sceneId": "percolator-prepare",
+    "methodId": "percolator",
+    "stepIds": [
+      "prepare"
+    ],
+    "altText": "Cool electric percolator parts laid out with cord detached and electrical base dry.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show Presto02822 cold clean separated parts correctly: the coffee basket has a clearly visible raised hollow CENTRAL STEM; outer cover has a solid black knob, never a transparent glass knob; basket lid is a flat perforated metal disc with central hole, NOT a post. Pot open, cord disconnected, dry base. One long perk tube has a small washer at bottom. No invented hinged lid.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-bd985349-4200-4881-87c1-42f4911f7974.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "rejectedAttempts": [
+      {
+        "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show a six-cup Presto02822-style stainless ELECTRIC percolator upright with black handle and black dry electrical base, lid removed. Beside it separate the actual perforated cylindrical basket, its flat perforated metal lid, and long narrow perk tube ending in a small washer. The detachable cord lies disconnected from the pot and outlet. No water, heat, steam, stove or additional invented parts.",
+        "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-72d149e3-c307-450b-a6a9-1e8078d9f7e1.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      }
+    ],
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-bd985349-4200-4881-87c1-42f4911f7974.png"
+  },
+  {
+    "sceneId": "percolator-fill",
+    "methodId": "percolator",
+    "stepIds": [
+      "fill_reservoir"
+    ],
+    "altText": "Cold water enters the open electric percolator reservoir with its basket removed.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show ONLY the OPEN lidless Presto02822 electric percolator, black handle, dry black base and pale-blue water reaching a short horizontal internal fill tick. Tiny kettle SPOUT ONLY enters frame above opening with thin water stream. The outer pot lid has been fully REMOVED and is NOT visible; no hinge, hinged cover, attached cover or lid arm. Basket removed. No numbers, heat, stove, cord.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-f62fd146-1ad5-45a3-8c2c-ce2f7d1b347b.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "rejectedAttempts": [
+      {
+        "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show one open six-cup stainless electric percolator with black handle and dry black electrical base, viewed slightly down into the reservoir. Basket and tube removed. A kettle spout pours a thin pale-blue stream into the reservoir; pale-blue water below the rim, a short unnumbered internal fill tick at the waterline on handle side. Cord absent, no stove, no heat, exterior and socket dry.",
+        "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-c68194b3-4c30-4926-a3c3-3aa15d4ef759.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      }
+    ],
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-f62fd146-1ad5-45a3-8c2c-ce2f7d1b347b.png"
+  },
+  {
+    "sceneId": "percolator-load",
+    "methodId": "percolator",
+    "stepIds": [
+      "load_basket"
+    ],
+    "altText": "Coffee is added to a wraparound-paper-lined percolator basket while its center stem stays covered.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Correct only the fingertip: place pad of the fingertip FLAT ACROSS the ENTIRE center-stem opening, fully occluding the black hole; no visible uncovered aperture. Keep coffee dropping around the stem, paper lining, basket, measuring spoon and natural hands unchanged.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-0a66ffe8-c479-4643-bee3-9c406d044571.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "rejectedAttempts": [
+      {
+        "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Close-up of one perforated cylindrical electric-percolator coffee basket, lined with cream wraparound paper with its central hole fitted over the raised central basket stem. One fingertip blocks ONLY the center stem opening, while a measuring tablespoon adds loose coarse brown coffee into paper around the stem. Keep hand anatomy natural. Paper extends slightly above rim ready to fold inward. No coffee entering the stem, no water, no appliance or heat.",
+        "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-e63fd2ff-081b-490f-ad3d-a395d398612d.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      }
+    ],
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-0a66ffe8-c479-4643-bee3-9c406d044571.png"
+  },
+  {
+    "sceneId": "percolator-assemble",
+    "methodId": "percolator",
+    "stepIds": [
+      "assemble"
+    ],
+    "altText": "Lidded percolator basket sits on its perk tube above the open pot ready for insertion.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show one open six-cup stainless electric percolator, black handle and dry electrical base, unplugged. Directly above its opening aligned vertically: the LONG narrow perk tube with small washer at its bottom, and a perforated basket mounted near its top with its perforated metal basket lid fitted. Outer pot cover with black knob floats slightly above the basket. Accurate simple assembly illustration, no invented internals, no arrows, no heat.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-570f4367-83e8-4c7d-857b-89d3ed254684.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-570f4367-83e8-4c7d-857b-89d3ed254684.png"
+  },
+  {
+    "sceneId": "percolator-brew",
+    "methodId": "percolator",
+    "stepIds": [
+      "brew"
+    ],
+    "altText": "Closed electric percolator stands plugged in with its ready indicator illuminated.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show one six-cup Presto02822-style stainless ELECTRIC percolator upright on its own dry black base, lid firmly closed, black handle to right. A detachable black cord is visibly connected at lower handle-side socket, its cord exits frame naturally without dangling. One small restrained amber ready light illuminated near base. No stove, flames, opening lid, or heat decoration.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-20e4b790-b631-41c5-bafb-19dc2cad3e72.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-20e4b790-b631-41c5-bafb-19dc2cad3e72.png"
+  },
+  {
+    "sceneId": "percolator-serve",
+    "methodId": "percolator",
+    "stepIds": [
+      "disconnect_serve"
+    ],
+    "altText": "Disconnected electric percolator pours coffee into a cup with its lid secured.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show one six-cup stainless ELECTRIC percolator with black handle and black electrical base tilted gently to pour a narrow brown stream into one cream cup. Lid firmly secured, no cord attached at appliance socket. One hand grips only insulated handle. No stove, flames, visible steam, hand on metal, wall cord or active electrical connection.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-34b6adc3-89c3-489f-9918-28f4f70e2aad.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-34b6adc3-89c3-489f-9918-28f4f70e2aad.png"
+  },
+  {
+    "sceneId": "percolator-clean",
+    "methodId": "percolator",
+    "stepIds": [
+      "cool_clean"
+    ],
+    "altText": "Cooled percolator basket, lid and tube are cleaned separately while the electrical pot stays dry.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Presto02822 ELECTRIC percolator on right, open with outer cover removed and placed nearby with its SOLID BLACK knob; no transparent glass knob. The perforated coffee basket on left has a clearly VISIBLE HOLLOW CENTER STEM. Beside basket is FLAT perforated metal basket lid with central hole, NOT a knob or post, and long perk tube with little bottom washer. Small soft cleaning brush. Unplugged, dry base/socket. No sink immersion, water, steam, electric cord or stovetop.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-3109a23c-e604-4792-8f27-460b30138db7.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "rejectedAttempts": [
+      {
+        "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show one cold unplugged six-cup stainless ELECTRIC percolator upright with black base, no water touching its base or electrical socket. To its left show removed perforated coffee basket, metal basket lid, and long perk tube with washer, resting beside a small soft cleaning brush. No sink immersion, stove, steam or cord connection. Clear separated clean parts, dry outside.",
+        "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-b17a30a8-2481-458c-8dbd-7bce60c71779.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      }
+    ],
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-3109a23c-e604-4792-8f27-460b30138db7.png"
+  },
+  {
+    "sceneId": "siphon-prepare",
+    "methodId": "siphon",
+    "stepIds": [
+      "prepare"
+    ],
+    "altText": "New cloth siphon filter assembly soaks in freshly boiled water before first use.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Close-up of a new Hario F-103S/FS-103 circular cloth siphon filter being prepared by soaking in freshly boiled water. Show a small simple heatproof bowl of pale-blue hot water, the circular cream cloth wrapped snugly over its round flat metal holder, with short metal chain ATTACHED TO THE CENTRAL UNDERSIDE OF THE HOLDER (never sewn to cloth edge), ending in a tension spring and hook, all resting inside water. Chain and holder visible through water. No brewer, no installed stem, no hand, no flame, no text. The filter is a metal-supported flat disc, not a bag or tea strainer. Match clear central attachment of siphon-clean source image.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-c1b60041-82db-4ae8-89aa-868caeaba6ec.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "rejectedAttempts": [
+      {
+        "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Close-up side view of Hario Technica upper glass siphon chamber, cylindrical open bowl tapering at bottom into a LONG narrow glass stem. Cloth filter disc is centered at bowl bottom; fine metal chain descends inside stem and its small spring hook catches the LOWER END of stem. Use pale-blue glass outline and cream cloth, clearly show this exact filter attachment. Upper chamber supported upright in its matching small black bowl support, no flame, water, coffee or hands.",
+        "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-84e817e3-2828-4686-aae9-dfec7f8e31b3.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      },
+      {
+        "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Close-up of isolated Hario Technica upper chamber glass stem and centered circular cloth-filter disc at bowl bottom. Fine chain runs down INSIDE the long narrow stem, and a small spring hook is VISIBLY HOOKED OVER LOWER GLASS STEM END. Leave entire stem end and hook exposed and unobscured: NO support or holder, no flame, coffee or hands. Do not draw the spring hanging without a hook. The physical chain tension secures the disc flat against bowl bottom.",
+        "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-a47dd005-ee22-455b-85ed-6c1001308ff7.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      },
+      {
+        "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show a closeup of ONLY the actual Hario cloth filter disc and its chain/spring/hook removed from the brewer, laid out gently extended. Round cream cloth filter disc at top, short metal chain, then tension spring ending in a small J hook. No glass vessel, no stand, no heat. Clear mechanical component for preparation, not an installed cross-section.",
+        "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-9284357b-c215-4a25-a0ca-b027ea12a889.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      }
+    ],
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-c1b60041-82db-4ae8-89aa-868caeaba6ec.png"
+  },
+  {
+    "sceneId": "siphon-add-coffee",
+    "methodId": "siphon",
+    "stepIds": [
+      "add_coffee"
+    ],
+    "altText": "Ground coffee enters the supported siphon upper chamber above its cloth filter.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show Hario Technica cylindrical upper glass siphon chamber upright IN its small black support with its long glass stem protected. Cream cloth filter seated at bowl bottom and brown dry grounds above it. A spoon releases brown coffee into the open bowl. No lower globe connection, flame, water or hands pressing coffee. Correct tall cylindrical upper chamber with long narrow stem.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-8026ee0b-0a97-4496-bff3-da14a311ba60.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-8026ee0b-0a97-4496-bff3-da14a311ba60.png"
+  },
+  {
+    "sceneId": "siphon-fill",
+    "methodId": "siphon",
+    "stepIds": [
+      "fill_lower"
+    ],
+    "altText": "Water fills the siphon lower globe secured in its stand.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show ONLY Hario Technica round lower glass globe with narrow open neck, securely mounted by its metal neck fastener to the recognizable black-handled upright metal stand and broad black base. A kettle spout pours pale-blue water through the open neck, lower bowl moderately filled below neck with an unnumbered short fill tick at water surface. No upper chamber, heat, flame or wet exterior.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-4288fb06-2381-423e-97ed-e6bbffcf7cbf.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-4288fb06-2381-423e-97ed-e6bbffcf7cbf.png"
+  },
+  {
+    "sceneId": "siphon-transfer",
+    "methodId": "siphon",
+    "stepIds": [
+      "heat_and_transfer"
+    ],
+    "altText": "Siphon water transfer is complete, with upper chamber upright over a small stationary lamp.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show Hario Technica complete siphon: tall cylindrical upper glass bowl with long narrow stem seated upright through black gasket in round lower globe, globe securely clamped by its neck to black-handled metal stand on broad black base. Most pale-blue water has risen into upper bowl and mixed with brown grounds above cloth filter; small water residue remains in lower globe. SMALL alcohol lamp centered beneath lower globe with small restrained flame, no hands, no movement, no dramatic steam. Accurate stable anatomy.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-15e37d40-25ab-4f21-b8e6-7dd702ae96c2.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-15e37d40-25ab-4f21-b8e6-7dd702ae96c2.png"
+  },
+  {
+    "sceneId": "siphon-steep",
+    "methodId": "siphon",
+    "stepIds": [
+      "steep"
+    ],
+    "altText": "Coffee in the heated siphon upper chamber is stirred gently.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Edit reference siphon diagram by adding only a thin wooden stirring paddle entering upper coffee slurry from above, held by a single natural hand far above the hot glass. Preserve the reference's FLAT circular cloth filter at chamber bottom; never add a bulbous cloth bag, sack or second filter. Keep anatomy, stationary lamp, small flame and water residue unchanged.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-9716ed2b-662e-47b7-a4ca-6c4d63668503.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "rejectedAttempts": [
+      {
+        "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show Hario Technica complete stable siphon with cylindrical upper glass bowl upright above round lower globe, correctly secured to black-handled metal stand and broad base. Brown brewed slurry in upper bowl above centered cloth filter; little water residue below. A thin wooden paddle enters slurry gently from above, held by one natural hand WELL ABOVE hot glass. SMALL centered stationary alcohol lamp with small flame below lower globe. No steam effects, vigorous splashing, timers or text.",
+        "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-ec90dbc3-b474-4f8d-b0b9-4dea11a5a23e.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      }
+    ],
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-9716ed2b-662e-47b7-a4ca-6c4d63668503.png"
+  },
+  {
+    "sceneId": "siphon-remove-heat",
+    "methodId": "siphon",
+    "stepIds": [
+      "remove_heat"
+    ],
+    "altText": "Siphon brewer stands clear of its stationary lamp, now extinguished under its cover.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Correct only liquid in lower globe: remove the brown granules/grounds completely and replace with a little smooth clear pale-blue water residue. Preserve brewer and separate capped alcohol lamp beside stand in reference. Lamp must remain separate on surface OUTSIDE stand base with a visible gap. No flame, no hand, no movement.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-bfbb7b18-2615-4197-92bb-b9f39b088d58.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "rejectedAttempts": [
+      {
+        "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show complete Hario Technica siphon upright and stable on its black-handled metal stand and broad base, brown coffee in cylindrical upper chamber and small residue in round lower globe. The entire stand is positioned CLEAR TO ONE SIDE of a separate stationary alcohol lamp; lamp is already completely COVERED with its metal snuffer cap, no flame. Nothing being moved or touched. No lit lamp, no hand lifting lamp, no ambiguous lamp under bowl. This is the safe completed heat-removal state.",
+        "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-c5bcb4a0-a05d-49dc-a5fc-5b55180e6e8d.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      },
+      {
+        "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Edit reference siphon diagram to safe completed heat-removal state: relocate its stationary alcohol lamp well to the SIDE of the entire stand, with its snuffer cap fully covering wick and NO flame. Stand remains stable with a completely empty heating space underneath globe. Keep upper coffee slurry with grounds above FLAT filter and only small amount of CLEAR liquid below, no grounds in lower globe. No hand, moving lamp, arrow or text.",
+        "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-e852003e-a476-426f-8e41-5ac7d13499aa.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      }
+    ],
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-bfbb7b18-2615-4197-92bb-b9f39b088d58.png"
+  },
+  {
+    "sceneId": "siphon-return",
+    "methodId": "siphon",
+    "stepIds": [
+      "return"
+    ],
+    "altText": "Coffee drains naturally through the cloth into the lower globe with no heat beneath.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show complete Hario Technica siphon upright on secure stand, tall cylindrical upper glass chamber connected through gasket to round lower globe. Brown wet grounds remain on cloth filter at upper bowl bottom; narrow brown liquid stream visible down glass stem and coffee collecting in lower globe. No lamp under bowl, no flame, no hands, no pressure arrows, no pulling chambers apart.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-05d26562-f8c6-4a97-9024-4cbcea1d2a81.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-05d26562-f8c6-4a97-9024-4cbcea1d2a81.png"
+  },
+  {
+    "sceneId": "siphon-serve",
+    "methodId": "siphon",
+    "stepIds": [
+      "serve"
+    ],
+    "altText": "Coffee pours from the siphon lower globe after the upper chamber is removed and safely supported.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Correct the coffee stream: it must come ONLY from the tilted lower globe's OPEN NECK MOUTH, touching its lowest glass rim. Remove the impossible coffee exit through the SIDE WALL. Make entire mounted stand and globe tilted together enough that liquid reaches open neck. Keep dry cloth protecting hand on black handle. No hole or spout on globe wall, no hand on metal, no steam.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-c645c8de-6367-479d-b7f5-f0aa94abdff9.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "rejectedAttempts": [
+      {
+        "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show Hario Technica lower round glass globe still securely clamped at neck in its black-handled metal stand, gently tilted by a hand gripping its protected black stand handle to pour a narrow brown stream from open globe neck into cream cup. Separate upper cylindrical glass chamber stands safely upright in its small black support nearby, with long stem protected. No flame, no attached upper chamber, no forced separation, no hand gripping hot glass.",
+        "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-803022e5-002d-4dda-a5ad-690a9244e82f.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      },
+      {
+        "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show only Hario Technica lower round glass globe securely clamped in its matching metal stand. Tilt it gently to pour coffee from open globe neck into cream cup. A hand with a folded DRY HEAT CLOTH grips the black insulated stand handle, never the metal rod, globe, neck or clamp. Omit upper chamber entirely to remove distraction. No flame, steam, splashing or cord.",
+        "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-a5b78706-b5a7-41b6-9195-4dbcfff8d1ff.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      }
+    ],
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-c645c8de-6367-479d-b7f5-f0aa94abdff9.png"
+  },
+  {
+    "sceneId": "siphon-clean",
+    "methodId": "siphon",
+    "stepIds": [
+      "clean_up"
+    ],
+    "altText": "Clean cloth siphon filter is stored submerged in a small container of fresh water.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Show one small plain open cream container filled with pale-blue fresh water. The siphon circular cream cloth filter with small metal center and short chain is completely submerged in water, clearly visible below water surface. A small soft cleaning brush lies beside it; no brewer heating, flame, detergent bottle, floating dry cloth or refrigerator decoration. Focus on cloth-care storage subaction; simple uncluttered scene.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-b059d94c-f377-4770-9911-00104eb1d3c8.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-b059d94c-f377-4770-9911-00104eb1d3c8.png"
+  },
+  {
+    "sceneId": "siphon-install-filter",
+    "methodId": "siphon",
+    "stepIds": [
+      "prepare"
+    ],
+    "altText": "Centered siphon cloth filter with chain through the open stem and hook caught on its lower rim.",
+    "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Correct the installed-filter assembly in reference, keeping its open lower glass rim and external hook placement. Remove ALL dangling chain beneath the lower-rim hook. The chain must run taut from filter center through stem, then end in ONE short tension spring and J hook caught around the actual lower rim. There must be NO chain or loose end hanging below the hook. The filter disc rests fully against the bowl bottom, centered over the stem entrance, never floating above it. Preserve simple detached upper chamber, open stem bore and no invented glass plug. No text, arrows or extra inset.",
+    "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-251e9c8b-cc6d-433c-83cc-e09eee078e86.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "rejectedAttempts": [
+      {
+        "prompt": "Use case: scientific-educational. One minimalist flat 2D editorial coffee-instruction diagram. Genuine transparent 4:3 canvas with generous transparent perimeter. Crisp espresso-brown outlines, solid warm cream and pale-blue surfaces, brown coffee, at most one restrained flat shadow plane. No text, numbers, arrows, logos, gradients, texture, background island, decorative steam, photorealism, or invented internals. Clear large shapes readable at 320px. Create ONE accurate installed cloth-filter diagram for Hario Technica detached UPPER chamber only. The manufacturer manual image supplied is anatomical reference. Show the upper cylindrical glass bowl, flat circular cloth filter centered at its bottom, and long straight narrow hollow stem below. Fine chain descends through stem and EXITS its OPEN LOWER MOUTH; small spring tension hook catches the actual lower rim on one side, exactly as manufacturer's circular detail view. CRITICAL: stem lower mouth is OPEN with an oval rim, not rounded sealed glass; hook is partly OUTSIDE below that mouth and curls upward around rim, never enclosed entirely inside glass. Leave clear visible liquid passage around chain. No lower globe, support, stand, hands, coffee, water, arrows, numbers, text, extra magnification inset or invented mechanism. Show entire subject within ample transparent perimeter. Render a simplified flat diagram with dark precise outlines and pale-blue translucent glass, cream cloth.",
+        "hint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-f706db4b-971c-4aaa-a32a-f7257faffadb.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      }
+    ],
+    "originalPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-251e9c8b-cc6d-433c-83cc-e09eee078e86.png"
+  }
+]

@@ -1,0 +1,224 @@
+[
+  {
+    "sceneId": "cupone_paper_outlet",
+    "methodId": "automatic-drip",
+    "stepIds": [],
+    "p1Targets": [
+      "p1_auto_cupone_20_300_stage_01_instruction"
+    ],
+    "altText": "Matching small paper is fitted inside the detached Cup-One basket, which is held by its wire handle.",
+    "sources": [
+      "https://us.moccamaster.com/collections/cup-one-coffee-brewer-parts/products/brew-basket-cup-one",
+      "https://us.moccamaster.com/products/cup-one",
+      "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer original-resolution inspection: seated paper, open tube, handle-only cool grip. Pending delivery/phone and independent QC.",
+        "Producer inspected selected raw, delivered WebP and actual320px light/dark composite; independent admission remains pending."
+      ]
+    },
+    "version": 1,
+    "generatedOn": "2026-10-25",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_paper_outlet/raw-v1.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_paper_outlet/candidate-v1.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_paper_outlet/prompt-v1.txt",
+    "generator": "built-in image_gen",
+    "conversion": "Pillow containment into896x672 safe area on1024x768 transparent WebP; no visual pixel fixes",
+    "rawSha256": "d9a5898246a8229b97ff7a12d65074cf6a479b6aaed2ca3e6b5773fb9370bae8",
+    "candidateSha256": "a1e95e352c989a7c14a9dea94be64a7076c6499dda1cbb2b3384866252b2a9e4",
+    "promptSha256": "b2ee4200367fce85ce7d1428cf02ad3a97f30599173a5e21f08ac07b3d75775e",
+    "scopeLimit": "Fitted matching paper and small clear outlet in detached cool basket; no complete cleaning, paper rinse or machine-off proof. Opening is physically tiny at320px; independent reviewer should assess whether it can carry outlet-inspection teaching or needs a separate macro."
+  },
+  {
+    "sceneId": "cupone_load",
+    "methodId": "automatic-drip",
+    "stepIds": [],
+    "p1Targets": [
+      "p1_auto_cupone_20_300_stage_02_instruction"
+    ],
+    "altText": "Ground coffee enters the fitted paper in a cool Cup-One basket held upright by its wire handle.",
+    "sources": [
+      "https://us.moccamaster.com/collections/cup-one-coffee-brewer-parts/products/brew-basket-cup-one",
+      "https://us.moccamaster.com/products/cup-one",
+      "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer full-resolution inspection passed: correct basket, handle-only support, contained coffee, safe headroom. Pending phone/independent QC.",
+        "Producer inspected selected raw, delivered WebP and actual320px light/dark composite; independent admission remains pending."
+      ]
+    },
+    "version": 1,
+    "generatedOn": "2026-10-25",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_load/raw-v1.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_load/candidate-v1.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_load/prompt-v1.txt",
+    "generator": "built-in image_gen",
+    "conversion": "Pillow containment into896x672 safe area on1024x768 transparent WebP; no visual pixel fixes",
+    "rawSha256": "33f6c3e0447b55bbc75bc693484d9b9da60ebf9554976a35b5bb7d413557d5f2",
+    "candidateSha256": "5896ff27405aeee12454a4faba5896260eef6a058f35d7018b8c1954e6a0c7c9",
+    "promptSha256": "c1e3dcd7ffad84958b9149469e6dc3012dfa67f5c7ef9e5dca7b5a3f4cbd78a1",
+    "scopeLimit": "Coffee loading subaction only; actual20g measurement, final leveling and rim check remain text."
+  },
+  {
+    "sceneId": "cupone_fill",
+    "methodId": "automatic-drip",
+    "stepIds": [],
+    "p1Targets": [
+      "p1_auto_cupone_20_300_stage_03_instruction"
+    ],
+    "altText": "Fresh cold water pours from a clean jug into the Cup-One reservoir on top of its tower, below its physical fill mark.",
+    "sources": [
+      "https://us.moccamaster.com/collections/cup-one-coffee-brewer-parts/products/brew-basket-cup-one",
+      "https://us.moccamaster.com/products/cup-one",
+      "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer full-resolution inspection: exact shallow top tank, stream beside riser, fill remains below mark. Detail omits outlet-arm positioning, which remains text.",
+        "Producer inspected selected raw, delivered WebP and actual320px light/dark composite; independent admission remains pending."
+      ]
+    },
+    "version": 1,
+    "generatedOn": "2026-10-25",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_fill/raw-v1.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_fill/candidate-v1.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_fill/prompt-v1.txt",
+    "generator": "built-in image_gen",
+    "conversion": "Pillow containment into896x672 safe area on1024x768 transparent WebP; no visual pixel fixes",
+    "rawSha256": "bfe999851dd584a9e0291a2b955dacba0907a308742fdb4261b3a538c454a8bd",
+    "candidateSha256": "16936453751f1b8df33a097b04a2db5e0e696bf86bddeb3149ff4c58c4b49c9c",
+    "promptSha256": "ab9a5a36fb69f0a4d8652044a6e0ba9a3232859e785bacde065a9800b1da5b68",
+    "scopeLimit": "Tank filling below physical mark only; actual marked fill and outlet-arm positioning remain source instructions; intentional lower-tower detail crop."
+  },
+  {
+    "sceneId": "cupone_active",
+    "methodId": "automatic-drip",
+    "stepIds": [],
+    "p1Targets": [
+      "p1_auto_cupone_20_300_stage_04_instruction"
+    ],
+    "altText": "The covered Cup-One brews through its supported basket into a large mug kept in the receiving ring.",
+    "sources": [
+      "https://us.moccamaster.com/collections/cup-one-coffee-brewer-parts/products/brew-basket-cup-one",
+      "https://us.moccamaster.com/products/cup-one",
+      "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer full-resolution: actual tank/cover/bracket/wire handle/base rocker layout preserved; active connected downward flow into stable cup. Pending phone and independent QC.",
+        "Producer inspected selected raw, delivered WebP and actual320px light/dark composite; independent admission remains pending."
+      ]
+    },
+    "version": 1,
+    "generatedOn": "2026-10-25",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_active/raw-v1.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_active/candidate-v1.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_active/prompt-v1.txt",
+    "generator": "built-in image_gen",
+    "conversion": "Pillow containment into896x672 safe area on1024x768 transparent WebP; no visual pixel fixes",
+    "rawSha256": "b1906bada9ddf32678c6fb99578eacf137c21834ec2a836906c71552edf37d12",
+    "candidateSha256": "7b1ff144d91837c740ed511672197339ef43a6934ddb4105e75676cb2b76294d",
+    "promptSha256": "02ede2b9630cd1c7ec9c2c5b971e681ed3bb3c05b575560152113c1f5ec98e09",
+    "scopeLimit": "Covered supported machine-controlled brewing state only; button activation, temperature and auto-off timing remain text."
+  },
+  {
+    "sceneId": "cupone_tail",
+    "methodId": "automatic-drip",
+    "stepIds": [],
+    "p1Targets": [
+      "p1_auto_cupone_20_300_stage_05_instruction"
+    ],
+    "altText": "The Cup-One reservoir is empty and a final separate drop falls while the collected coffee stays beneath the basket.",
+    "sources": [
+      "https://us.moccamaster.com/collections/cup-one-coffee-brewer-parts/products/brew-basket-cup-one",
+      "https://us.moccamaster.com/products/cup-one",
+      "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer full-resolution: same correct hardware, empty tank, one separate drop, collected coffee with safe headroom. Waiting state only, not proof flow already stopped.",
+        "Producer inspected selected raw, delivered WebP and actual320px light/dark composite; independent admission remains pending."
+      ]
+    },
+    "version": 1,
+    "generatedOn": "2026-10-25",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_tail/raw-v1.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_tail/candidate-v1.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_tail/prompt-v1.txt",
+    "generator": "built-in image_gen",
+    "conversion": "Pillow containment into896x672 safe area on1024x768 transparent WebP; no visual pixel fixes",
+    "rawSha256": "773d9bb9e6d19ff58ed87f3340c5ea3a84137b221ebc87c5e9559a72542b3b63",
+    "candidateSha256": "9ee049a52700edea5ab65d10f8f38097c14b555530d158f09585fc24d9b9cca6",
+    "promptSha256": "34db566d8a2a9baf9bba0067b30d996bc07b52ed691f78cf289a337b1a3e1638",
+    "scopeLimit": "Observe residual-drop tail before removing cup; no claim that flow has already stopped, temperature is safe or power automatically off."
+  },
+  {
+    "sceneId": "cupone_clean_outlet",
+    "methodId": "automatic-drip",
+    "stepIds": [],
+    "p1Targets": [
+      "p1_auto_cupone_20_300_stage_06_instruction"
+    ],
+    "altText": "A thin cleaning tool clears the tiny outlet of a cool empty Cup-One basket held only by its wire handle.",
+    "sources": [
+      "https://us.moccamaster.com/collections/cup-one-coffee-brewer-parts/products/brew-basket-cup-one",
+      "https://us.moccamaster.com/products/cup-one",
+      "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer full-resolution: paper removed, dark empty interior, fine tool enters outlet with supporting hand safely on side handle. Pending phone and independent QC.",
+        "Producer inspected selected raw, delivered WebP and actual320px light/dark composite; independent admission remains pending."
+      ]
+    },
+    "version": 2,
+    "generatedOn": "2026-10-25",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_clean_outlet/raw-v2.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_clean_outlet/candidate-v2.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/cupone_clean_outlet/prompt-v2.txt",
+    "generator": "built-in image_gen",
+    "conversion": "Pillow containment into896x672 safe area on1024x768 transparent WebP; no visual pixel fixes",
+    "rawSha256": "04b32221a0e340b96b6a8451cd2b8977cc425a40b5593fc6111832122a608cc5",
+    "candidateSha256": "6eacdb8b9177e975b229637edf8e86e3c8dc1a26dcdc324df5c61dd23dfaef7f",
+    "promptSha256": "35b8abd6157c9dd4d89a7bec82916286dadcb4a7b2789c1fad23e194d9a79404",
+    "scopeLimit": "Tiny outlet clearing after cooling/unplugging and grounds/paper disposal; macro omits appliance and power-state proof."
+  },
+  {
+    "sceneId": "kurasu_serve_fresh_ice",
+    "methodId": "v60",
+    "stepIds": [],
+    "p1Targets": [
+      "p1_v60_kurasu_flash_16_150_70_stage_06_instruction"
+    ],
+    "altText": "A tilted glass server pours chilled coffee through its spout in a connected stream into a stable glass of fresh ice, with headroom remaining.",
+    "sources": [
+      "https://kurasu.kyoto/blogs/recipe/japanese-brew-guide-on-iced-pour-over-coffee"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer full-resolution inspection: horizontal coffee surface reaches real lowest spout, connected stream enters stable fresh-ice glass; safe handle grip and headroom. Pending phone and independent QC.",
+        "Producer inspected selected raw, delivered WebP and actual320px light/dark composite; independent admission remains pending."
+      ]
+    },
+    "version": 1,
+    "generatedOn": "2026-10-25",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/kurasu_serve_fresh_ice/raw-v1.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/kurasu_serve_fresh_ice/candidate-v1.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/cup-one-kurasu/scenes/kurasu_serve_fresh_ice/prompt-v1.txt",
+    "generator": "built-in image_gen",
+    "conversion": "Pillow containment into896x672 safe area on1024x768 transparent WebP; no visual pixel fixes",
+    "rawSha256": "5c5360da7772f5cf1d7193e1252324ca50b464bd92d129bbb75053a2b98adaa7",
+    "candidateSha256": "aa6463c5d62fb02ccde7dce813f68538248ffddc8ce6aa76d895afe74a2d1ca1",
+    "promptSha256": "1ac983b4585e2d3fcab18256aecccc776ea7022be093d0d0709653e2ce475c6b",
+    "scopeLimit": "Continuous spout-connected serving into fresh ice only; no claimed volume/ratio or hot-brewing state."
+  }
+]

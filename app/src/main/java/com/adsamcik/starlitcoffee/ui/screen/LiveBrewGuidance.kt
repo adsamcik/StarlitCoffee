@@ -3,7 +3,6 @@
 
 package com.adsamcik.starlitcoffee.ui.screen
 
-import androidx.compose.foundation.Canvas
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,17 +22,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.domain.brewing.InstructionAssetId
+import com.adsamcik.starlitcoffee.ui.guidance.BuiltInInstructionAssetCatalog
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.ui.guidance.BuiltInGuidancePlacement
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewGuidanceAvailability
@@ -67,7 +62,7 @@ internal fun selectLiveBrewGuidance(
         else -> emptySet()
     }
     val illustratedContentId = (resolution.visualStatus as? DurableBrewGuidanceVisualStatus.Approved)
-        ?.asset?.contentId
+        ?.targetContentId
     val routineStages = resolution.routineContent.filter { it.placement == BuiltInGuidancePlacement.LIVE_STAGE }
     val primaryCandidate = routineStages.firstOrNull { it.id == illustratedContentId }
         ?: routineStages.firstOrNull()
@@ -121,7 +116,7 @@ internal fun LiveBrewGuidance(
     val showInstruction = showSupportingCopy && (!minimal || primary?.safetyCritical == true)
     val showAvailability = showSupportingCopy && !minimal
     val primaryTarget = primary?.target?.takeIf(String::isNotBlank)
-    val approvedAsset = (resolution.visualStatus as? DurableBrewGuidanceVisualStatus.Approved)?.asset
+    val approvedVisual = resolution.visualStatus as? DurableBrewGuidanceVisualStatus.Approved
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -174,10 +169,10 @@ internal fun LiveBrewGuidance(
             when {
                 hasPulsarWaterHeightTarget(content.id, equipmentProfileId) ->
                     PulsarWaterHeightTarget(Modifier.align(Alignment.CenterHorizontally))
-                approvedAsset?.contentId == content.id && content.altText.isNotBlank() -> {
+                approvedVisual != null && approvedVisual.targetContentId == content.id && content.altText.isNotBlank() -> {
                     ApprovedInstructionAssetImage(
-                        asset = approvedAsset,
-                        contentDescription = content.altText,
+                        asset = approvedVisual.asset,
+                        contentDescription = approvedVisual.altText ?: content.altText,
                         modifier = Modifier.widthIn(max = 260.dp).align(Alignment.CenterHorizontally),
                     )
                 }
@@ -222,61 +217,24 @@ private fun LiveBrewSafetyCopy(selection: LiveBrewGuidanceSelection, equipmentPr
     }
 }
 
-/** A waterline/bed measurement, without a substitute brewer illustration or sensor claim. */
+/** Reviewed conceptual water/bed artwork; the quantitative target remains accessible text. */
 @Composable
 private fun PulsarWaterHeightTarget(modifier: Modifier = Modifier) {
     val caption = stringResource(R.string.label_brew_water_height_target)
     val description = stringResource(R.string.cd_brew_water_height_target)
-    val water = MaterialTheme.colorScheme.primary
-    val bed = MaterialTheme.colorScheme.secondary
-    val line = MaterialTheme.colorScheme.onSurfaceVariant
     Column(
         modifier = modifier.widthIn(max = 340.dp).fillMaxWidth().padding(top = 12.dp, bottom = 4.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            Canvas(
-                modifier = Modifier.weight(1.2f).height(108.dp).semantics { contentDescription = description },
-            ) {
-                val left = size.width * 0.06f
-                val right = size.width * 0.78f
-                val waterline = size.height * 0.3f
-                val bedTop = size.height * 0.72f
-                val bedBottom = size.height * 0.94f
-                val bracket = size.width * 0.94f
-                val stroke = 1.5.dp.toPx()
-                drawRect(Brush.verticalGradient(listOf(water.copy(alpha = 0.22f), water.copy(alpha = 0.04f)),
-                    startY = waterline, endY = bedTop), Offset(left, waterline), Size(right - left, bedTop - waterline))
-                drawRect(bed.copy(alpha = 0.12f), Offset(left, bedTop), Size(right - left, bedBottom - bedTop))
-                // Stippling distinguishes the coffee bed from water without relying on colour.
-                val step = 5.dp.toPx()
-                var y = bedTop + step / 2
-                var row = 0
-                while (y < bedBottom - stroke) {
-                    var x = left + step / 2 + if (row % 2 == 0) 0f else step / 2
-                    while (x < right - stroke) {
-                        drawCircle(bed.copy(alpha = 0.75f), 0.7.dp.toPx(), Offset(x, y))
-                        x += step
-                    }
-                    y += step
-                    row++
-                }
-                drawLine(water, Offset(left, waterline), Offset(right, waterline), 3.dp.toPx())
-                drawLine(line, Offset(left, bedTop), Offset(right, bedTop), stroke)
-                drawLine(water, Offset(bracket, waterline), Offset(bracket, bedTop), stroke)
-                val tick = 4.dp.toPx()
-                listOf(waterline, bedTop).forEach { y ->
-                    drawLine(water, Offset(bracket - tick, y), Offset(bracket + tick, y), stroke)
-                }
-                val outline = Path().apply {
-                    moveTo(left, size.height * 0.06f)
-                    lineTo(left, bedBottom - 4.dp.toPx())
-                    quadraticTo(left, bedBottom, left + 4.dp.toPx(), bedBottom)
-                    lineTo(right - 4.dp.toPx(), bedBottom)
-                    quadraticTo(right, bedBottom, right, bedBottom - 4.dp.toPx())
-                    lineTo(right, size.height * 0.06f)
-                }
-                drawPath(outline, line.copy(alpha = 0.8f), style = Stroke(stroke))
+            BuiltInInstructionAssetCatalog.catalog.find(
+                InstructionAssetId("instruction_scene_pulsar_water_height_default"),
+            )?.takeIf { it.review.isApproved }?.let { asset ->
+                ApprovedInstructionAssetImage(
+                    asset = asset,
+                    contentDescription = description,
+                    modifier = Modifier.weight(1.2f).height(108.dp),
+                )
             }
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 Text(caption, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)

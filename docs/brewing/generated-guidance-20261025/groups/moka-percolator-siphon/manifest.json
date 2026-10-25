@@ -1,0 +1,623 @@
+[
+  {
+    "sceneId": "moka-inspect",
+    "methodId": "moka-pot",
+    "stepIds": [
+      "inspect"
+    ],
+    "altText": "Cold moka pot separated to inspect the boiler, funnel basket, filter plate and gasket.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-inspect/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-inspect/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-inspect/prompt.txt",
+    "sources": [
+      "https://m.media-amazon.com/images/I/913VOwvygKL.pdf",
+      "https://bialetti-cookware.zendesk.com/hc/en-us/articles/5416235346322-How-to-use-the-Moka-Express"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected selected generated PNG at full size and1024x768 candidate at320px on light and dark surfaces.",
+        "Mechanical checks passed: alpha preserved, transparent perimeter,1024x768, below300KB.",
+        "Independent factual and visual QC required before admission; no approved status assigned."
+      ]
+    }
+  },
+  {
+    "sceneId": "moka-fill-water",
+    "methodId": "moka-pot",
+    "stepIds": [
+      "fill_water"
+    ],
+    "altText": "Cold lower moka boiler with water visibly below the safety valve.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-fill-water/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-fill-water/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-fill-water/prompt.txt",
+    "sources": [
+      "https://m.media-amazon.com/images/I/913VOwvygKL.pdf",
+      "https://bialetti-cookware.zendesk.com/hc/en-us/articles/5416235346322-How-to-use-the-Moka-Express"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected selected generated PNG at full size and1024x768 candidate at320px on light and dark surfaces.",
+        "Mechanical checks passed: alpha preserved, transparent perimeter,1024x768, below300KB.",
+        "Independent factual and visual QC required before admission; no approved status assigned."
+      ]
+    }
+  },
+  {
+    "sceneId": "moka-fill-coffee",
+    "methodId": "moka-pot",
+    "stepIds": [
+      "fill_coffee"
+    ],
+    "altText": "A full loose level bed of grounds in a moka funnel basket, with clean rim.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-fill-coffee/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-fill-coffee/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-fill-coffee/prompt.txt",
+    "sources": [
+      "https://m.media-amazon.com/images/I/913VOwvygKL.pdf",
+      "https://bialetti-cookware.zendesk.com/hc/en-us/articles/5416235346322-How-to-use-the-Moka-Express"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected selected generated PNG at full size and1024x768 candidate at320px on light and dark surfaces.",
+        "Mechanical checks passed: alpha preserved, transparent perimeter,1024x768, below300KB.",
+        "Independent factual and visual QC required before admission; no approved status assigned."
+      ]
+    }
+  },
+  {
+    "sceneId": "moka-assemble",
+    "methodId": "moka-pot",
+    "stepIds": [
+      "assemble"
+    ],
+    "altText": "Cold moka pot fully assembled with lid closed and clear safety valve.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-assemble/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-assemble/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-assemble/prompt.txt",
+    "sources": [
+      "https://m.media-amazon.com/images/I/913VOwvygKL.pdf",
+      "https://bialetti-cookware.zendesk.com/hc/en-us/articles/5416235346322-How-to-use-the-Moka-Express"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected selected generated PNG at full size and1024x768 candidate at320px on light and dark surfaces.",
+        "Mechanical checks passed: alpha preserved, transparent perimeter,1024x768, below300KB.",
+        "Independent factual and visual QC required before admission; no approved status assigned."
+      ]
+    }
+  },
+  {
+    "sceneId": "moka-heat",
+    "methodId": "moka-pot",
+    "stepIds": [
+      "heat"
+    ],
+    "altText": "Closed moka pot heating on a small gas flame confined beneath its base.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-heat/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-heat/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-heat/prompt.txt",
+    "sources": [
+      "https://m.media-amazon.com/images/I/913VOwvygKL.pdf",
+      "https://bialetti-cookware.zendesk.com/hc/en-us/articles/5416235346322-How-to-use-the-Moka-Express"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected selected generated PNG at full size and1024x768 candidate at320px on light and dark surfaces.",
+        "Mechanical checks passed: alpha preserved, transparent perimeter,1024x768, below300KB.",
+        "Independent factual and visual QC required before admission; no approved status assigned."
+      ]
+    }
+  },
+  {
+    "sceneId": "moka-stop",
+    "methodId": "moka-pot",
+    "stepIds": [
+      "stop"
+    ],
+    "altText": "Moka pot rests off heat on a heatproof trivet with its lid closed.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-stop/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-stop/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-stop/prompt.txt",
+    "sources": [
+      "https://m.media-amazon.com/images/I/913VOwvygKL.pdf",
+      "https://bialetti-cookware.zendesk.com/hc/en-us/articles/5416235346322-How-to-use-the-Moka-Express"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected selected generated PNG at full size and1024x768 candidate at320px on light and dark surfaces.",
+        "Mechanical checks passed: alpha preserved, transparent perimeter,1024x768, below300KB.",
+        "Independent factual and visual QC required before admission; no approved status assigned."
+      ]
+    }
+  },
+  {
+    "sceneId": "moka-serve",
+    "methodId": "moka-pot",
+    "stepIds": [
+      "serve_cool_clean"
+    ],
+    "altText": "Coffee pours carefully from the moka pot into a cup after discharge settles.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-serve/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-serve/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/moka-serve/prompt.txt",
+    "sources": [
+      "https://m.media-amazon.com/images/I/913VOwvygKL.pdf",
+      "https://bialetti-cookware.zendesk.com/hc/en-us/articles/5416235346322-How-to-use-the-Moka-Express"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected selected generated PNG at full size and1024x768 candidate at320px on light and dark surfaces.",
+        "Mechanical checks passed: alpha preserved, transparent perimeter,1024x768, below300KB.",
+        "Independent factual and visual QC required before admission; no approved status assigned.",
+        "Illustrates serving subaction only; cooldown, stirring and compatible cleaning remain in adjacent instructions."
+      ]
+    }
+  },
+  {
+    "sceneId": "percolator-prepare",
+    "methodId": "percolator",
+    "stepIds": [
+      "prepare"
+    ],
+    "altText": "Cool electric percolator parts laid out with cord detached and electrical base dry.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-prepare-v2/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-prepare-v2/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-prepare-v2/prompt.txt",
+    "sources": [
+      "https://www.gopresto.com/uploads/02822_72_875J_SCM_Eng_Web_Instructions.pdf",
+      "https://www.gopresto.com/product/basket-for-6-cup-stainless-steel-coffee-maker-94643",
+      "https://www.gopresto.com/product/electric-cord-36276"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Targeted generator correction after independent QC; previous selected originals/prompts/candidates retained unchanged.",
+        "Producer full and phone light/dark inspection; independent corrected-subset recheck required."
+      ]
+    },
+    "priorSelections": [
+      {
+        "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-prepare/original.png",
+        "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-prepare/candidate.webp",
+        "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-prepare/prompt.txt"
+      }
+    ],
+    "rawSha256": "df81709e9f35c5a71af7276f2c4ee6114297536d4a3f8b57d8ad08bf6790d69e",
+    "candidateSha256": "cb075d622beea4c3b70c88cb45b593d2fb433b242a0ea13d76719adfe4b76c47"
+  },
+  {
+    "sceneId": "percolator-fill",
+    "methodId": "percolator",
+    "stepIds": [
+      "fill_reservoir"
+    ],
+    "altText": "Cold water enters the open electric percolator reservoir with its basket removed.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-fill/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-fill/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-fill/prompt.txt",
+    "sources": [
+      "https://www.gopresto.com/uploads/02822_72_875J_SCM_Eng_Web_Instructions.pdf"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected selected generated PNG at full size and1024x768 candidate at320px on light and dark surfaces.",
+        "Mechanical checks passed: alpha preserved, transparent perimeter,1024x768, below300KB.",
+        "Independent factual and visual QC required before admission; no approved status assigned."
+      ]
+    }
+  },
+  {
+    "sceneId": "percolator-load",
+    "methodId": "percolator",
+    "stepIds": [
+      "load_basket"
+    ],
+    "altText": "Coffee loads into square wraparound paper in the solid-sided percolator basket while a fingertip blocks the short center stem.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-load-v3/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-load-v3/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-load-v3/prompt.txt",
+    "sources": [
+      "https://www.gopresto.com/uploads/02822_72_875J_SCM_Eng_Web_Instructions.pdf",
+      "https://www.gopresto.com/product/basket-for-6-cup-stainless-steel-coffee-maker-94643",
+      "https://www.gopresto.com/product/electric-cord-36276"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Targeted generator correction after independent QC; previous selected originals/prompts/candidates retained unchanged.",
+        "Producer full and phone light/dark inspection; independent corrected-subset recheck required."
+      ]
+    },
+    "priorSelections": [
+      {
+        "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-load/original.png",
+        "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-load/candidate.webp",
+        "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-load/prompt.txt"
+      },
+      {
+        "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-load-v2/original.png",
+        "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-load-v2/candidate.webp",
+        "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-load-v2/prompt.txt",
+        "rawSha256": "12632aeb9e1a58f1318f550a5c4f38b2a9f7ba48a09698057430fbc8c72fc6a4",
+        "candidateSha256": "c661a433eb46cafb261e705a5a68d01638629f744cab15a175ac834edd764c29"
+      }
+    ],
+    "rawSha256": "0dec66dbc2860feae9c728d257081c386c6ac033ae4ff76b49b3ee5dabfa4dc0",
+    "candidateSha256": "1916a3a105796a490b673d8bea714dd3dbbd8d4894501c69d578447aaa6bce88"
+  },
+  {
+    "sceneId": "percolator-assemble",
+    "methodId": "percolator",
+    "stepIds": [
+      "assemble"
+    ],
+    "altText": "Exploded view of the solid-sided basket, slotted basket lid, perk tube and outer cover aligned above the open percolator.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-assemble-v2/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-assemble-v2/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-assemble-v2/prompt.txt",
+    "sources": [
+      "https://www.gopresto.com/uploads/02822_72_875J_SCM_Eng_Web_Instructions.pdf",
+      "https://www.gopresto.com/product/basket-for-6-cup-stainless-steel-coffee-maker-94643",
+      "https://www.gopresto.com/product/electric-cord-36276"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Targeted generator correction after independent QC; previous selected originals/prompts/candidates retained unchanged.",
+        "Producer full and phone light/dark inspection; independent corrected-subset recheck required."
+      ]
+    },
+    "priorSelections": [
+      {
+        "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-assemble/original.png",
+        "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-assemble/candidate.webp",
+        "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-assemble/prompt.txt"
+      }
+    ],
+    "rawSha256": "cb27aab2f68f1bfa4aa3db8441d8b0ddfd3b97e08c84658f0b7fc06644ea2b85",
+    "candidateSha256": "daa269ab0dd9dc85560e6ee193e66c35aeea937c8f9f348badcac7900b61951e"
+  },
+  {
+    "sceneId": "percolator-brew",
+    "methodId": "percolator",
+    "stepIds": [
+      "brew"
+    ],
+    "altText": "Closed electric percolator stands plugged in with its ready indicator illuminated.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-brew/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-brew/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-brew/prompt.txt",
+    "sources": [
+      "https://www.gopresto.com/uploads/02822_72_875J_SCM_Eng_Web_Instructions.pdf"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected selected generated PNG at full size and1024x768 candidate at320px on light and dark surfaces.",
+        "Mechanical checks passed: alpha preserved, transparent perimeter,1024x768, below300KB.",
+        "Independent factual and visual QC required before admission; no approved status assigned."
+      ]
+    }
+  },
+  {
+    "sceneId": "percolator-serve",
+    "methodId": "percolator",
+    "stepIds": [
+      "disconnect_serve"
+    ],
+    "altText": "Disconnected electric percolator pours coffee into a cup with its lid secured.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-serve/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-serve/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-serve/prompt.txt",
+    "sources": [
+      "https://www.gopresto.com/uploads/02822_72_875J_SCM_Eng_Web_Instructions.pdf"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected selected generated PNG at full size and1024x768 candidate at320px on light and dark surfaces.",
+        "Mechanical checks passed: alpha preserved, transparent perimeter,1024x768, below300KB.",
+        "Independent factual and visual QC required before admission; no approved status assigned."
+      ]
+    }
+  },
+  {
+    "sceneId": "percolator-clean",
+    "methodId": "percolator",
+    "stepIds": [
+      "cool_clean"
+    ],
+    "altText": "Cooled percolator basket, lid and tube are cleaned separately while the electrical pot stays dry.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-clean-v2/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-clean-v2/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/percolator-clean-v2/prompt.txt",
+    "sources": [
+      "https://www.gopresto.com/uploads/02822_72_875J_SCM_Eng_Web_Instructions.pdf",
+      "https://www.gopresto.com/product/basket-for-6-cup-stainless-steel-coffee-maker-94643",
+      "https://www.gopresto.com/product/electric-cord-36276"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Targeted generator correction after independent QC; previous selected originals/prompts/candidates retained unchanged.",
+        "Producer full and phone light/dark inspection; independent corrected-subset recheck required."
+      ]
+    },
+    "priorSelections": [
+      {
+        "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-clean/original.png",
+        "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-clean/candidate.webp",
+        "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/percolator-clean/prompt.txt"
+      }
+    ],
+    "rawSha256": "98bdf78555a1b3703cbd288147ecee7fd0ce46042bce19ec644bbddcaddfdc7a",
+    "candidateSha256": "a3f6811040ac01d84a406977f66120cb5b4c83c110a3e8d8650295159acc61b9"
+  },
+  {
+    "sceneId": "siphon-prepare",
+    "methodId": "siphon",
+    "stepIds": [
+      "prepare"
+    ],
+    "altText": "New cloth siphon filter assembly soaks in freshly boiled water before first use.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-prepare/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-prepare/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-prepare/prompt.txt",
+    "sources": [
+      "https://global.hario.com/product/TCAR.pdf",
+      "https://www.manualslib.com/manual/4267319/Hario-Coffee-Syphon.html?page=7",
+      "https://www.manualslib.com/manual/4267319/Hario-Coffee-Syphon.html?page=8"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected selected generated PNG at full size and1024x768 candidate at320px on light and dark surfaces.",
+        "Mechanical checks passed: alpha preserved, transparent perimeter,1024x768, below300KB.",
+        "Independent factual and visual QC required before admission; no approved status assigned.",
+        "Supplementary first-use cloth soaking subaction; does not explain recurring chain/hook installation. See siphon-install-filter candidate."
+      ]
+    }
+  },
+  {
+    "sceneId": "siphon-add-coffee",
+    "methodId": "siphon",
+    "stepIds": [
+      "add_coffee"
+    ],
+    "altText": "Ground coffee enters the siphon upper chamber held upright in its visible support.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/siphon-add-coffee-v2/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/siphon-add-coffee-v2/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/siphon-add-coffee-v2/prompt.txt",
+    "sources": [
+      "https://global.hario.com/product/TCAR.pdf",
+      "https://www.manualslib.com/manual/4267319/Hario-Coffee-Syphon.html?page=7",
+      "https://www.manualslib.com/manual/4267319/Hario-Coffee-Syphon.html?page=8"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Targeted generator correction after independent QC; previous selected originals/prompts/candidates retained unchanged.",
+        "Producer full and phone light/dark inspection; independent corrected-subset recheck required."
+      ]
+    },
+    "priorSelections": [
+      {
+        "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-add-coffee/original.png",
+        "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-add-coffee/candidate.webp",
+        "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-add-coffee/prompt.txt"
+      }
+    ],
+    "rawSha256": "a726dc4bac5294273319647505aa8e6e085e6d35d5796c4b02ba0aaec1b3b4a2",
+    "candidateSha256": "b000561fda3ccca6d47053c772cc3cc69ec275c75bb6c69e99092e079e050f7b"
+  },
+  {
+    "sceneId": "siphon-fill",
+    "methodId": "siphon",
+    "stepIds": [
+      "fill_lower"
+    ],
+    "altText": "Water fills the siphon lower globe secured in its stand.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-fill/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-fill/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-fill/prompt.txt",
+    "sources": [
+      "https://global.hario.com/product/TCAR.pdf",
+      "https://www.manualslib.com/manual/4267319/Hario-Coffee-Syphon.html?page=7",
+      "https://www.manualslib.com/manual/4267319/Hario-Coffee-Syphon.html?page=8"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected selected generated PNG at full size and1024x768 candidate at320px on light and dark surfaces.",
+        "Mechanical checks passed: alpha preserved, transparent perimeter,1024x768, below300KB.",
+        "Independent factual and visual QC required before admission; no approved status assigned."
+      ]
+    }
+  },
+  {
+    "sceneId": "siphon-transfer",
+    "methodId": "siphon",
+    "stepIds": [
+      "heat_and_transfer"
+    ],
+    "altText": "Siphon water transfer is complete, with upper chamber upright over a small stationary lamp.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-transfer/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-transfer/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-transfer/prompt.txt",
+    "sources": [
+      "https://global.hario.com/product/TCAR.pdf",
+      "https://www.manualslib.com/manual/4267319/Hario-Coffee-Syphon.html?page=7",
+      "https://www.manualslib.com/manual/4267319/Hario-Coffee-Syphon.html?page=8"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected selected generated PNG at full size and1024x768 candidate at320px on light and dark surfaces.",
+        "Mechanical checks passed: alpha preserved, transparent perimeter,1024x768, below300KB.",
+        "Independent factual and visual QC required before admission; no approved status assigned."
+      ]
+    }
+  },
+  {
+    "sceneId": "siphon-steep",
+    "methodId": "siphon",
+    "stepIds": [
+      "steep"
+    ],
+    "altText": "Coffee in the heated siphon upper chamber is stirred gently.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-steep/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-steep/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-steep/prompt.txt",
+    "sources": [
+      "https://global.hario.com/product/TCAR.pdf",
+      "https://www.manualslib.com/manual/4267319/Hario-Coffee-Syphon.html?page=7",
+      "https://www.manualslib.com/manual/4267319/Hario-Coffee-Syphon.html?page=8"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected selected generated PNG at full size and1024x768 candidate at320px on light and dark surfaces.",
+        "Mechanical checks passed: alpha preserved, transparent perimeter,1024x768, below300KB.",
+        "Independent factual and visual QC required before admission; no approved status assigned."
+      ]
+    }
+  },
+  {
+    "sceneId": "siphon-remove-heat",
+    "methodId": "siphon",
+    "stepIds": [
+      "remove_heat"
+    ],
+    "altText": "Siphon brewer stands clear of its stationary lamp, now extinguished under its cover.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-remove-heat/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-remove-heat/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-remove-heat/prompt.txt",
+    "sources": [
+      "https://global.hario.com/product/TCAR.pdf",
+      "https://www.manualslib.com/manual/4267319/Hario-Coffee-Syphon.html?page=7",
+      "https://www.manualslib.com/manual/4267319/Hario-Coffee-Syphon.html?page=8"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected selected generated PNG at full size and1024x768 candidate at320px on light and dark surfaces.",
+        "Mechanical checks passed: alpha preserved, transparent perimeter,1024x768, below300KB.",
+        "Independent factual and visual QC required before admission; no approved status assigned."
+      ]
+    }
+  },
+  {
+    "sceneId": "siphon-return",
+    "methodId": "siphon",
+    "stepIds": [
+      "return"
+    ],
+    "altText": "Coffee drains naturally through the cloth into the lower globe with no heat beneath.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-return/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-return/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-return/prompt.txt",
+    "sources": [
+      "https://global.hario.com/product/TCAR.pdf",
+      "https://www.manualslib.com/manual/4267319/Hario-Coffee-Syphon.html?page=7",
+      "https://www.manualslib.com/manual/4267319/Hario-Coffee-Syphon.html?page=8"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected selected generated PNG at full size and1024x768 candidate at320px on light and dark surfaces.",
+        "Mechanical checks passed: alpha preserved, transparent perimeter,1024x768, below300KB.",
+        "Independent factual and visual QC required before admission; no approved status assigned."
+      ]
+    }
+  },
+  {
+    "sceneId": "siphon-serve",
+    "methodId": "siphon",
+    "stepIds": [
+      "serve"
+    ],
+    "altText": "Coffee pours from the siphon lower globe after the upper chamber is removed and safely supported.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-serve/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-serve/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-serve/prompt.txt",
+    "sources": [
+      "https://global.hario.com/product/TCAR.pdf",
+      "https://www.manualslib.com/manual/4267319/Hario-Coffee-Syphon.html?page=7",
+      "https://www.manualslib.com/manual/4267319/Hario-Coffee-Syphon.html?page=8"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected selected generated PNG at full size and1024x768 candidate at320px on light and dark surfaces.",
+        "Mechanical checks passed: alpha preserved, transparent perimeter,1024x768, below300KB.",
+        "Independent factual and visual QC required before admission; no approved status assigned."
+      ]
+    }
+  },
+  {
+    "sceneId": "siphon-clean",
+    "methodId": "siphon",
+    "stepIds": [
+      "clean_up"
+    ],
+    "altText": "Clean cloth siphon filter is stored submerged in a small container of fresh water.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-clean/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-clean/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-clean/prompt.txt",
+    "sources": [
+      "https://global.hario.com/product/TCAR.pdf",
+      "https://www.manualslib.com/manual/4267319/Hario-Coffee-Syphon.html?page=7",
+      "https://www.manualslib.com/manual/4267319/Hario-Coffee-Syphon.html?page=8"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Producer inspected selected generated PNG at full size and1024x768 candidate at320px on light and dark surfaces.",
+        "Mechanical checks passed: alpha preserved, transparent perimeter,1024x768, below300KB.",
+        "Independent factual and visual QC required before admission; no approved status assigned.",
+        "Illustrates submerged cloth storage subaction only; cooling and glass washing remain in adjacent instructions."
+      ]
+    }
+  },
+  {
+    "sceneId": "siphon-install-filter",
+    "methodId": "siphon",
+    "stepIds": [
+      "prepare"
+    ],
+    "altText": "Close-up of centered siphon cloth filter, tension spring through the open stem and external hook caught on the lower rim.",
+    "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/siphon-install-filter-v2/original.png",
+    "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/siphon-install-filter-v2/candidate.webp",
+    "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/corrections/siphon-install-filter-v2/prompt.txt",
+    "sources": [
+      "https://global.hario.com/product/TCAR.pdf",
+      "https://www.manualslib.com/manual/4267319/Hario-Coffee-Syphon.html?page=7",
+      "https://www.manualslib.com/manual/4267319/Hario-Coffee-Syphon.html?page=8"
+    ],
+    "qc": {
+      "status": "candidate",
+      "notes": [
+        "Targeted generator correction after independent QC; previous selected originals/prompts/candidates retained unchanged.",
+        "Producer full and phone light/dark inspection; independent corrected-subset recheck required."
+      ]
+    },
+    "priorSelections": [
+      {
+        "rawPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-install-filter/original.png",
+        "candidatePath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-install-filter/candidate.webp",
+        "promptPath": "docs/brewing/generated-guidance-20261025/groups/moka-percolator-siphon/siphon-install-filter/prompt.txt"
+      }
+    ],
+    "rawSha256": "1c253e310ee0825fb58a964972ddd668af2ff4e681842b9131732b9aa551db52",
+    "candidateSha256": "23a7e77673969f7407538eba7a2b74b3c74c032a8179221736c178f25c076daa"
+  }
+]

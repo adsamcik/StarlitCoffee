@@ -1,0 +1,204 @@
+[
+  {
+    "sceneId": "pulsar_prime",
+    "methodId": "pulsar",
+    "stepIds": [
+      "prime_paper"
+    ],
+    "learnStageNumbers": [
+      1
+    ],
+    "altText": "With the barrel removed, a flat round paper sits in the Pulsar base while water drains through the open upright valve; a hand supports only the base.",
+    "sources": [
+      "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+      "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/"
+    ],
+    "prompt": "One precise minimalist flat 2D editorial instructional illustration on a genuinely transparent 4:3 canvas. Crisp espresso-brown outlines; cream paper; pale-blue transparent plastic/glass; charcoal-black base/cap with restrained pale rim material contrast so it reads on dark surfaces; warm brown coffee. At most one restrained shadow plane. No photorealism, 3D, realistic texture, background island, floor, decorations, steam, arrows, numbers, letters, logos, measurements or labels. All important objects fit with transparent margins. Reference 1 is STYLE only; other references are ACTUAL manufacturer geometry only, not permission to copy photographic styling or recipe fill heights. Pulsar hardware: straight smooth cylindrical transparent barrel, flat round filter at bottom, low thick black footed base with two large arch-like lower openings, a small clear valve lever at its front/right; lever upright = OPEN and horizontal = CLOSED; black-rimmed transparent perforated dispersion cap. No cone, piston, spout or handle on brewer. SCENE: priming/draining a flat paper, BARREL AND DISPERSION CAP REMOVED and absent. Close elevated three-quarter view of the bare low black footed Pulsar base held steadily by one hand at its OUTER side, safely clear of hot water. A single ROUND cream paper filter lies FLAT snugly across the base ridges, not curved up into a basket. The paper is damp, no trapped-air dome. Tiny pale-blue edge of shallow priming water, not a flooded tub. The small clear valve is conspicuously UPRIGHT OPEN on the front/right of base. A few blue drops drain from the real central underside outlet into empty space below, indicating drain over a sink outside frame; no server or cup. Do not invent interior pump, spokes, valves or central pins. Show only actual base, flat paper, open upright lever, supporting hand and a few drain drops. Main learning is paper flat with barrel absent and open drainage. Hand must not press paper or dip into hot water. Keep flat-paper edge and lever readable at 320px.",
+    "generatedPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-b9ddfdab-9e32-49e5-b46c-591032ff65f8.png",
+    "generatorOutputHint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-b9ddfdab-9e32-49e5-b46c-591032ff65f8.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "version": 1
+  },
+  {
+    "sceneId": "pulsar_dose",
+    "methodId": "pulsar",
+    "stepIds": [
+      "dose_level_tare"
+    ],
+    "learnStageNumbers": [
+      2
+    ],
+    "altText": "Ground coffee is added into the open straight Pulsar barrel on its base, server and scale; the perforated dispersion cap rests beside it and the valve is horizontal.",
+    "sources": [
+      "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+      "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/"
+    ],
+    "prompt": "One precise minimalist flat 2D editorial instructional illustration on a genuinely transparent 4:3 canvas. Crisp espresso-brown outlines; cream paper; pale-blue transparent plastic/glass; charcoal-black base/cap with restrained pale rim material contrast so it reads on dark surfaces; warm brown coffee. At most one restrained shadow plane. No photorealism, 3D, realistic texture, background island, floor, decorations, steam, arrows, numbers, letters, logos, measurements or labels. All important objects fit with transparent margins. Reference 1 is STYLE only; other references are ACTUAL manufacturer geometry only, not permission to copy photographic styling or recipe fill heights. Pulsar hardware: straight smooth cylindrical transparent barrel, flat round filter at bottom, low thick black footed base with two large arch-like lower openings, a small clear valve lever at its front/right; lever upright = OPEN and horizontal = CLOSED; black-rimmed transparent perforated dispersion cap. No cone, piston, spout or handle on brewer. SCENE: dry coffee dosing. Assembled upright Pulsar stands securely on a plain glass coffee server with generous capacity, all on a low rectangular scale with blank display. Barrel open with NO CAP fitted yet; pour loose coarse ground coffee from a small tilted dosing cup into its center. Keep ground bed relatively shallow; no compacted puck, no tamp or piston. At the side, show the real black-rimmed round dispersion cap resting tilted so its transparent perforated shower plate is visible, NOT a solid pot lid. Clear valve lever visibly horizontal to RIGHT, CLOSED, no liquid or outflow. Paper is flat round at bottom and receiver empty. Use actual low footed base proportions, straight barrel, no markings/logos/numbers. Entire scale, server, brewer, dose cup, small cap inside transparent margins. Focus on coffee addition; no numeric quantity confirmation or taring claim. CRITICAL CORRECTION: Under the coffee there is ONE PLAIN CREAM PAPER DISC, absolutely smooth and opaque, with NO HOLES, NO NIPPLES, NO PATTERN and NO SHOWER SCREEN under the grounds. The separate dispersion CAP beside the setup is the ONLY perforated transparent plate. Do not copy cap perforations onto the bottom. Make coffee loosely level with only a slight dosing mound, not a tall cone. Keep all other actual device geometry.",
+    "generatedPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-6649225a-a136-4ca4-891f-712bb9dc81f7.png",
+    "generatorOutputHint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-6649225a-a136-4ca4-891f-712bb9dc81f7.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "version": 2
+  },
+  {
+    "sceneId": "pulsar_open_bloom",
+    "methodId": "pulsar",
+    "stepIds": [
+      "open_start_bloom"
+    ],
+    "learnStageNumbers": [
+      3
+    ],
+    "altText": "A thin kettle stream enters the fitted Pulsar dispersion cap; a shallow wet coffee bed drains its first drops while the clear valve lever is upright and open.",
+    "sources": [
+      "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+      "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/"
+    ],
+    "prompt": "Edit reference 1 with ONE precise technical correction only: REMOVE the cream paper CUP/SIDEWALL around the coffee bed at bottom of the Pulsar cylinder. The Pulsar uses a FLAT ROUND PAPER DISC below the coffee, which has NO vertical wall, no raised rim and no basket shape. Brown coffee must extend all the way across the cylinder to touch its inside wall on every side. Hide all paper beneath the coffee except, if necessary, a hairline thin straight horizontal cream edge BELOW the bed. There must be absolutely NO pale ring standing up around coffee. Preserve the actual straight barrel, low footed black base, vertical OPEN lever, fitted perforated cap, thin incoming stream, shower droplets inside, shallow wet bed, first coffee drops into server, transparency, palette, crisp editorial lines and layout exactly. No new content, labels or decorative marks. The reference is current artwork to correct, not a request for realism. Output genuinely transparent.",
+    "version": 2,
+    "generatedPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-3e45fba5-5374-413f-b23d-e64a7746008f.png",
+    "generatorOutputHint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-3e45fba5-5374-413f-b23d-e64a7746008f.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+  },
+  {
+    "sceneId": "pulsar_close",
+    "methodId": "pulsar",
+    "stepIds": [
+      "open_start_bloom"
+    ],
+    "learnStageNumbers": [
+      4
+    ],
+    "altText": "One hand stabilizes the black Pulsar base while the other holds its clear lever horizontal and closed; the shallow bloom remains wet with no outflow.",
+    "sources": [
+      "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+      "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/"
+    ],
+    "prompt": "One precise minimalist flat 2D editorial instructional illustration on a genuinely transparent 4:3 canvas. Crisp espresso-brown outlines; cream paper; pale-blue transparent plastic/glass; charcoal-black base/cap with restrained pale rim material contrast so it reads on dark surfaces; warm brown coffee. At most one restrained shadow plane. No photorealism, 3D, realistic texture, background island, floor, decorations, steam, arrows, numbers, letters, logos, measurements or labels. All important objects fit with transparent margins. Reference 1 is STYLE only; other references are ACTUAL manufacturer geometry only, not permission to copy photographic styling or recipe fill heights. Pulsar hardware: straight smooth cylindrical transparent barrel, flat round filter at bottom, low thick black footed base with two large arch-like lower openings, a small clear valve lever at its front/right; lever upright = OPEN and horizontal = CLOSED; black-rimmed transparent perforated dispersion cap. No cone, piston, spout or handle on brewer. SCENE: close at first drips, safe handling. The actual assembled Pulsar stands upright stably on a plain almost-empty glass server. Fitted black-rimmed transparent perforated dispersion cap, shallow uniformly wet brown bloom across full barrel width at very bottom, huge empty headroom above. Coffee directly touches inside barrel walls; flat paper underneath is invisible except a hairline BELOW coffee, NO raised cream paper rim or basket. NO kettle, no pouring. LEFT hand gently steadies only OUTER BLACK BASE (fingers below clear barrel), RIGHT hand lightly pinches the actual CLEAR side valve lever already HORIZONTAL to right, CLOSED. No fingers touch clear hot barrel/cap/liquid or server. NO outflow or hanging drip under brewer. Receiver contains only a tiny early-coffee pool. Make hand placement and horizontal valve clear, leave black-base windows and actual circular valve hub visible. Show full assembly and normal anatomically plausible two hands, no extra limbs, inside transparent margins. No motion arrows or swirl strokes. This still illustrates closure/support, not violent shaking.",
+    "generatedPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-a173123b-d7a2-4b0f-bf43-7a1fb5290731.png",
+    "generatorOutputHint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-a173123b-d7a2-4b0f-bf43-7a1fb5290731.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "version": 1
+  },
+  {
+    "sceneId": "pulsar_retained",
+    "methodId": "pulsar",
+    "stepIds": [
+      "retained_bloom"
+    ],
+    "learnStageNumbers": [
+      5
+    ],
+    "altText": "The Pulsar rests undisturbed with a shallow wet bloom, horizontal closed valve, and no drops entering the server.",
+    "sources": [
+      "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+      "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/"
+    ],
+    "prompt": "Create a new illustration of the STILL CLOSED RETAINED BLOOM using reference 1 as exact assembled-device and style reference. Keep actual straight clear barrel, plain flat coffee bed across bottom with a little wet bubbly slurry, fitted black-rimmed transparent perforated cap, low black footed base, actual circular valve hub and HORIZONTAL CLOSED clear lever to right. No paper basket sidewall; filter flat beneath bed and invisible except thin bottom edge. Large headroom: wet coffee/slurry only at very bottom. Remove BOTH HANDS completely. No spoon, WDT tool, kettle, incoming water, falling droplets anywhere or motion marks. This is an undisturbed REST, not agitation. Coffee is retained above closed valve; small early pool already in stable glass server below, no stream. All objects fully fit with transparent perimeter. Preserve restrained espresso outline, pale-blue glass, cream/brown/charcoal flat editorial diagram style, subtle pale base-rim material contrast for dark background. No numbers, labels, text, arrows, decorative background, photorealism or new internals.",
+    "generatedPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-15f8c1f1-ff44-4bd5-addb-1ffcfe0264cf.png",
+    "generatorOutputHint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-15f8c1f1-ff44-4bd5-addb-1ffcfe0264cf.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "version": 1
+  },
+  {
+    "sceneId": "pulsar_open_pulse",
+    "methodId": "pulsar",
+    "stepIds": [
+      "open_and_pulse"
+    ],
+    "learnStageNumbers": [
+      6
+    ],
+    "altText": "Water passes through the fitted dispersion cap above a shallow coffee slurry while the upright open valve drains brewed coffee into the server.",
+    "sources": [
+      "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+      "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/"
+    ],
+    "prompt": "Generate one minimal instructional Pulsar OPEN PULSE POUR using reference1 for exact current diagram geometry and style. Preserve straight transparent barrel, actual black-rimmed perforated dispersion cap fitted on top, black footed base, clear valve UPRIGHT and OPEN, thin gooseneck stream onto cap center and scattered shower drops inside barrel. At bottom show an even compact-looking but NOT tamped brown coffee bed, with a SHALLOW lighter brown liquid pool just above bed; most of barrel completely EMPTY, level safely low, no full tank. Coffee touches barrel walls, plain flat paper hidden beneath bed, no white basket rim or cream sidewalls. Brewed coffee drains in one thin brown stream from central underside into a HALF-FILLED stable glass server with generous headroom. Do not show water squirting sideways or through bypass. Difference from initial bloom: established shallow pool over bed and receiver with substantially more finished coffee. Reference2 is manufacturer hardware only, never copy its very high immersion fill. Crisp espresso outlines, pale-blue clear glass, charcoal black pale rim contrast, warm coffee, cream, at most one shadow plane. Transparent4:3 perimeter. No scale readings, numbers, text, arrows, labels, floor, backdrop island or photo realism. Keep all equipment and narrow kettle spout tip within transparent margins.",
+    "generatedPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-885597e6-5669-40ce-aafc-8634a68af9ca.png",
+    "generatorOutputHint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-885597e6-5669-40ce-aafc-8634a68af9ca.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "version": 1
+  },
+  {
+    "sceneId": "pulsar_drain",
+    "methodId": "pulsar",
+    "stepIds": [
+      "drain_and_serve"
+    ],
+    "learnStageNumbers": [
+      7
+    ],
+    "altText": "The open Pulsar valve releases the final drops above the server; its flat damp coffee bed has no standing water.",
+    "sources": [
+      "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+      "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/"
+    ],
+    "prompt": "Create final DRAW-DOWN STATE using reference1 as exact Pulsar geometry and crisp editorial style. Preserve actual cylindrical clear barrel on low black footed base, fitted black-rimmed transparent perforated cap, clear side valve lever UPRIGHT OPEN, stable plain glass server beneath. REMOVE kettle/spout and incoming water completely. REMOVE all shower drops inside barrel. At bottom, show an exposed FLAT DAMP GRANULAR COFFEE BED with NO STANDING LIQUID, NO shiny flat pool, no foam layer; cream flat paper hidden under bed, NO paper basket sidewall. Most barrel clear and empty. Replace continuous underside coffee stream with only two tiny final brown drops (one hanging, one falling) from actual central underside outlet. Server holds brewed coffee at about half to two-thirds full, generous headroom. This is near-complete drainage while valve stays open, NOT closed steeping. Keep real hardware and pale rim/material contrast readable over dark background. Genuinely transparent4:3 perimeter, all objects inside margins. No text, digits, labels, arrows, clock, motion, extra utensils, decorative islands, photorealism or invented components.",
+    "generatedPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-a1d8b80c-98da-4034-b81e-06c412a6799c.png",
+    "generatorOutputHint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-a1d8b80c-98da-4034-b81e-06c412a6799c.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "version": 1
+  },
+  {
+    "sceneId": "pulsar_lift_base",
+    "methodId": "pulsar",
+    "stepIds": [
+      "drain_and_serve"
+    ],
+    "learnStageNumbers": [
+      8
+    ],
+    "altText": "Two hands lift the drained Pulsar only by its black base above a stationary server on a scale; its clear valve is horizontal and closed.",
+    "sources": [
+      "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+      "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/"
+    ],
+    "prompt": "One precise minimalist flat 2D editorial instructional illustration on a genuinely transparent 4:3 canvas. Crisp espresso-brown outlines; cream paper; pale-blue transparent plastic/glass; charcoal-black base/cap with restrained pale rim material contrast so it reads on dark surfaces; warm brown coffee. At most one restrained shadow plane. No photorealism, 3D, realistic texture, background island, floor, decorations, steam, arrows, numbers, letters, logos, measurements or labels. All important objects fit with transparent margins. Reference 1 is STYLE only; other references are ACTUAL manufacturer geometry only, not permission to copy photographic styling or recipe fill heights. Pulsar hardware: straight smooth cylindrical transparent barrel, flat round filter at bottom, low thick black footed base with two large arch-like lower openings, a small clear valve lever at its front/right; lever upright = OPEN and horizontal = CLOSED; black-rimmed transparent perforated dispersion cap. No cone, piston, spout or handle on brewer. SCENE: safety-critical removal, LIFT ONLY BY BLACK BASE. Reference3 is current correct diagram geometry. Upright assembled Pulsar with fitted actual perforated cap and drained flat damp coffee bed, no standing water. Clear valve lever HORIZONTAL to right, CLOSED. Two normal hands SUPPORT ONLY BLACK BASE: thumbs contact outside black wall below clear barrel, fingertips curl underneath black base/feet; NO skin touches transparent chamber or cap, no grasp on clear lever, no server handle grip. Brewer is clearly lifted straight UP, leaving visible empty AIR GAP between all black feet and receiving glass server rim. No drops at all. Stationary glass server below has finished coffee and generous headroom, standing fully on a plain low rectangular scale with BLANK unlit display. Do not tilt brewer. Hands must not cover the actual safety-critical grip surfaces completely; visible black strip between thumbs and hot clear barrel. Entire base/lift gap/receiver and scale comfortably visible on transparent4:3 canvas with margins; no decorative arrows or motion lines. Main teaching is two hands at black base, CLOSED horizontal valve, clear separation from server. No measurement digits or step labels.",
+    "generatedPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-7a77adb8-67a6-491a-8dcb-c27c0595a556.png",
+    "generatorOutputHint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-7a77adb8-67a6-491a-8dcb-c27c0595a556.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "version": 1
+  },
+  {
+    "sceneId": "pulsar_dose",
+    "methodId": "pulsar",
+    "stepIds": [
+      "dose_level_tare"
+    ],
+    "learnStageNumbers": [
+      2
+    ],
+    "altText": "Ground coffee is added into the open straight Pulsar barrel on its base, server and scale; the perforated dispersion cap rests beside it and the valve is horizontal.",
+    "sources": [
+      "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+      "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/"
+    ],
+    "prompt": "One precise minimalist flat 2D editorial instructional illustration on a genuinely transparent 4:3 canvas. Crisp espresso-brown outlines; cream paper; pale-blue transparent plastic/glass; charcoal-black base/cap with restrained pale rim material contrast so it reads on dark surfaces; warm brown coffee. At most one restrained shadow plane. No photorealism, 3D, realistic texture, background island, floor, decorations, steam, arrows, numbers, letters, logos, measurements or labels. All important objects fit with transparent margins. Reference 1 is STYLE only; other references are ACTUAL manufacturer geometry only, not permission to copy photographic styling or recipe fill heights. Pulsar hardware: straight smooth cylindrical transparent barrel, flat round filter at bottom, low thick black footed base with two large arch-like lower openings, a small clear valve lever at its front/right; lever upright = OPEN and horizontal = CLOSED; black-rimmed transparent perforated dispersion cap. No cone, piston, spout or handle on brewer. SCENE: dry coffee dosing. Assembled upright Pulsar stands securely on a plain glass coffee server with generous capacity, all on a low rectangular scale with blank display. Barrel open with NO CAP fitted yet; pour loose coarse ground coffee from a small tilted dosing cup into its center. Keep ground bed relatively shallow; no compacted puck, no tamp or piston. At the side, show the real black-rimmed round dispersion cap resting tilted so its transparent perforated shower plate is visible, NOT a solid pot lid. Clear valve lever visibly horizontal to RIGHT, CLOSED, no liquid or outflow. Paper is flat round at bottom and receiver empty. Use actual low footed base proportions, straight barrel, no markings/logos/numbers. Entire scale, server, brewer, dose cup, small cap inside transparent margins. Focus on coffee addition; no numeric quantity confirmation or taring claim.",
+    "generatedPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-712da044-8d28-4271-a140-c0d12c9c3eae.png",
+    "reason": "Generated a perforated plate beneath coffee rather than plain flat paper.",
+    "status": "rejected",
+    "version": 1
+  },
+  {
+    "sceneId": "pulsar_open_bloom",
+    "methodId": "pulsar",
+    "stepIds": [
+      "open_start_bloom"
+    ],
+    "learnStageNumbers": [
+      3
+    ],
+    "altText": "A thin kettle stream enters the fitted Pulsar dispersion cap; a shallow wet coffee bed drains its first drops while the clear valve lever is upright and open.",
+    "sources": [
+      "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+      "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+      "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/"
+    ],
+    "prompt": "One precise minimalist flat 2D editorial instructional illustration on a genuinely transparent 4:3 canvas. Crisp espresso-brown outlines; cream paper; pale-blue transparent plastic/glass; charcoal-black base/cap with restrained pale rim material contrast so it reads on dark surfaces; warm brown coffee. At most one restrained shadow plane. No photorealism, 3D, realistic texture, background island, floor, decorations, steam, arrows, numbers, letters, logos, measurements or labels. All important objects fit with transparent margins. Reference 1 is STYLE only; other references are ACTUAL manufacturer geometry only, not permission to copy photographic styling or recipe fill heights. Pulsar hardware: straight smooth cylindrical transparent barrel, flat round filter at bottom, low thick black footed base with two large arch-like lower openings, a small clear valve lever at its front/right; lever upright = OPEN and horizontal = CLOSED; black-rimmed transparent perforated dispersion cap. No cone, piston, spout or handle on brewer. SCENE: OPEN INITIAL BLOOM. Actual assembled Pulsar stably on an almost-empty plain glass server, optional plain low scale blank display. Black-rimmed transparent perforated dispersion cap properly FITTED on top of straight cylindrical barrel. A short gooseneck kettle SPOUT pours a thin blue stream onto center of actual perforated cap; multiple small droplets beneath cap distribute downwards inside barrel, NOT a solid opaque lid and not a tall central inlet tube. Ground coffee sits shallow and flat at bottom on an unpatterned cream paper disc (NO HOLES under coffee). Only a shallow brown wet slurry just above bed, majority of tall barrel EMPTY with huge headroom; no full-tank immersion. Clear side valve lever unmistakably UPRIGHT vertical, OPEN; first few small brown drops descend from actual center underside outlet into almost-empty receiver. No hand gripping barrel, no piston, no tamper, no air bubbles or water level in server implying later brew. Cap black rim pale edge for dark contrast. All parts fully visible with transparent border. Keep the open lever larger enough to read at320px.",
+    "generatedPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-f1d663b4-9e4f-44e7-87dd-087a223d0067.png",
+    "reason": "Cream paper incorrectly forms a raised rim/sidewall around coffee rather than flat paper disc.",
+    "status": "rejected",
+    "version": 1
+  }
+]

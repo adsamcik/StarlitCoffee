@@ -1,0 +1,125 @@
+[
+  {
+    "sceneId": "chemex_sixcup_dose",
+    "methodId": "chemex",
+    "stepIds": [
+      "dose"
+    ],
+    "bindingSourceIds": [
+      "chemex_sixcup_dose"
+    ],
+    "targetContentIds": [
+      "chemex_30_480_dose"
+    ],
+    "altText": "Ground coffee is poured from a small cup into the bonded paper of a six-cup Classic Chemex resting on a scale.",
+    "sources": [
+      "https://chemexcoffeemaker.com/products/six-cup-classic-chemex",
+      "https://chemexcoffeemaker.com/pages/how-to-brew-with-chemex"
+    ],
+    "prompt": "Create one clear minimalist flat 2D instructional illustration on a genuinely transparent 4:3 canvas. Match reference 1 only for style: crisp espresso-brown outlines, cream paper, pale blue glass, coffee-brown fills, at most one restrained shadow plane. Reference 2 is geometry/action reference only, simplify its realistic rendering completely, remove dark background island. Show a recognizable SIX-CUP Classic Chemex standing upright stably on a plain low rectangular scale with an entirely blank display. Correct wide glass funnel, narrow wooden collar, lower bulbous glass receiver, spout air groove; a correctly seated smooth bonded paper cone with thick side against the spout and air passage clear. A small tilted dosing cup pours ground coffee into center of filter. Ground particles should read ground coffee, not whole beans; enough space above coffee bed. The receiver is empty. Hand may grip the dosing cup only; no touching hot glass. No kettle, no water, no filter ridges or pleats, no arrow, no numbers, no text, no logos, no labels, no extra objects or decorative backdrop. All objects fully fit with transparent perimeter. Focus on coffee entering the filter and stable assembly on scale; do not imply the scale has measured or confirmed any amount. Style is editorial diagram, never photorealistic or 3D.",
+    "generatedPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-e15bd15c-e966-4074-a56e-63df85fe97fa.png",
+    "generatorOutputHint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-e15bd15c-e966-4074-a56e-63df85fe97fa.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "version": 1
+  },
+  {
+    "sceneId": "chemex_unspecified_prepare",
+    "methodId": "chemex-unspecified",
+    "stepIds": [
+      "prepare"
+    ],
+    "bindingSourceIds": [
+      "chemex_unspecified_prepare"
+    ],
+    "targetContentIds": [
+      "chemex_unspecified_prepare"
+    ],
+    "altText": "Close-up of three layers of bonded paper facing the Chemex spout, with the open glass air channel visible beneath them.",
+    "sources": [
+      "https://chemexcoffeemaker.com/pages/how-to-brew-with-chemex",
+      "https://chemexcoffeemaker.com/pages/faq",
+      "https://chemexcoffeemaker.com/products/three-cup-classic-chemex"
+    ],
+    "prompt": "Generate a precise minimalist instructional CLOSE-UP, flat 2D editorial diagram, genuinely transparent 4:3 canvas. Reference 1 is STYLE only: crisp espresso outlines, pale blue glass, cream paper, at most one restrained flat shadow plane. Reference 2 is MANUFACTURER paper-opening topology only. Show ONLY the upper rim and spout air-channel detail of a Chemex, not the whole carafe, no base, no wooden collar, no overall brewer proportions or capacity. A smooth bonded paper cone is seated inside the glass funnel. At the FRONT pouring-spout side the paper has THREE clearly distinct parallel layer edges, while the far side shows ONE edge. Three leaves must sit together against the front spout, not spread into separate filters. Immediately below those three paper edges, show the physical glass spout groove as a clearly OPEN little air channel between paper and glass, never a sealed plug. Use an elevated front three-quarter view so paper inside empty opening, its triple-layer front edge, and open glass groove are easy to compare at 320px. The lower glass funnel is a short cropped detail with a natural simple end, not a full vessel. This is a conceptual orientation detail applicable to correctly size-matched paper, NOT a literal folding template and NOT an assertion of 6-cup shape. Do not depict unfolded paper outlines, don't depict square corners or half-moon template, no pleats or ribbed V60 dripper. No coffee/water yet, no hand blocking air channel. No arrows, text, labels, digits, logos, decoration, shadows on background, realism, dark islands. Transparent perimeter with generous margins, make triple layer edges large and unmistakable.",
+    "generatedPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-e1a842ad-7392-4737-8735-73c9cea912fc.png",
+    "generatorOutputHint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-e1a842ad-7392-4737-8735-73c9cea912fc.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "version": 1
+  },
+  {
+    "sceneId": "chemex_unspecified_pour",
+    "methodId": "chemex-unspecified",
+    "stepIds": [
+      "bloom",
+      "pour"
+    ],
+    "bindingSourceIds": [
+      "chemex_unspecified_pour"
+    ],
+    "targetContentIds": [
+      "chemex_bloom",
+      "chemex_pour"
+    ],
+    "altText": "Close-up of a thin kettle stream wetting coffee evenly inside bonded Chemex paper, with generous space below the paper rim.",
+    "sources": [
+      "https://chemexcoffeemaker.com/products/three-cup-classic-chemex",
+      "https://chemexcoffeemaker.com/pages/how-to-brew-with-chemex"
+    ],
+    "prompt": "Create one minimal flat 2D editorial instructional CLOSE-UP on transparent 4:3 canvas. Match reference 1's crisp espresso outlines, cream smooth paper, pale-blue glass, warm coffee-brown palette, one restrained flat shadow plane, no realism. Reference 2 is geometry of smooth bonded paper seated in Chemex upper glass funnel; render a closeup to avoid asserting total brewer capacity or exact model dimensions. Show ONLY the broad upper rim, smooth paper cone, wet coffee bed and a short curved gooseneck SPOUT TIP from the upper right. The lower vessel, collar and whole kettle must be omitted; only enough glass under rim to recognize joined Chemex funnel, not a separate dripper. A narrow blue water stream lands gently INSIDE coffee bed, coffee is visibly evenly wet across full bed. The low slurry surface has mild bloom bubbles and ample cream paper headroom all around; no high flooded slurry, no direct stream at paper wall. Thick paper side faces open front spout air channel. Focus on thin stream and uniformly wet coffee; this one conceptual wetting action may illustrate bloom or a later gradual pour, quantities/timing are outside illustration. No numerals, text, arrows, circular motion symbols, decorative steam or speed strokes, logos, additional objects, floor, background island, pleats, V60 ribs, hands on hot glass. Full featured rim and tip fit inside transparent margins; bottom of partial glass detail ends cleanly without showing entire carafe.",
+    "generatedPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-6c758528-b418-48a0-8ab9-0be57fea0520.png",
+    "generatorOutputHint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-6c758528-b418-48a0-8ab9-0be57fea0520.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "version": 1
+  },
+  {
+    "sceneId": "chemex_unspecified_drain",
+    "methodId": "chemex-unspecified",
+    "stepIds": [
+      "drawdown"
+    ],
+    "bindingSourceIds": [
+      "chemex_unspecified_drain"
+    ],
+    "targetContentIds": [
+      "chemex_drawdown"
+    ],
+    "altText": "Close-up of the drained coffee bed in Chemex bonded paper; no standing water remains and only an occasional drop falls from the filter tip inside the glass neck.",
+    "sources": [
+      "https://chemexcoffeemaker.com/products/three-cup-classic-chemex",
+      "https://chemexcoffeemaker.com/products/six-cup-classic-chemex"
+    ],
+    "prompt": "Generate one precise minimalist flat 2D editorial CLOSE-UP on genuinely transparent 4:3 canvas. Same illustration style as reference 1: crisp espresso outlines, cream smooth paper, pale-blue glass, coffee brown, at most one restrained shadow plane, no realistic texture. Reference 2 gives only upper-rim paper/spout topology; use exactly this shared conceptual detail, do not show a whole brewer or assert capacity/model dimensions. Show upper smooth bonded paper seated in the joined glass funnel of a Chemex, front spout channel open and triple-paper side facing it. Inside is a FLAT moist bed of spent medium-coarse brown coffee, NO standing water, NO shiny horizontal liquid pool, no kettle. Include enough transparent joined glass neck below to see the paper filter tip naturally inside that neck; ONE small brown drop hangs/falls from the filter tip, indicating last occasional drips, never a continuous stream. No separate external dripper or separate receiving vessel; this must visibly be one joined-glass carafe upper detail. No coffee drop floating outside glass. No collar, lower bulb or capacity-revealing full vessel, scale, arrows, clock, letters, digits, labels, logos, decorative marks, dark background island. Make exposed drained bed and single small drip intelligible at phone size. Keep transparent perimeter and restrained simple crop of lower neck.",
+    "generatedPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-5fb62d85-6940-4c4b-823d-7320b1bd6762.png",
+    "generatorOutputHint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-5fb62d85-6940-4c4b-823d-7320b1bd6762.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "version": 1
+  },
+  {
+    "sceneId": "chemex_unspecified_serve",
+    "methodId": "chemex-unspecified",
+    "stepIds": [
+      "serve",
+      "finish"
+    ],
+    "bindingSourceIds": [
+      "chemex_unspecified_serve"
+    ],
+    "targetContentIds": [
+      "chemex_serve",
+      "chemex_unspecified_finish"
+    ],
+    "altText": "Close-up of a hand holding the wooden Chemex collar while coffee pours from its clear, filter-free spout into a cup.",
+    "sources": [
+      "https://chemexcoffeemaker.com/products/three-cup-classic-chemex",
+      "https://chemexcoffeemaker.com/products/six-cup-classic-chemex"
+    ],
+    "prompt": "Generate a technically precise minimalist flat 2D serving CLOSE-UP on genuinely transparent 4:3. Espresso-brown crisp outlines, pale blue glass, cream cup, brown coffee, warm wood collar, at most one simple shadow plane. Reference 1 STYLE only. Reference 2 provides Chemex shape only. Depict ONLY the NECK and spout of a Chemex in a strong pouring tilt: its axis points almost HORIZONTALLY toward the left, mouth to the left and its receiver toward the right and HIGHER. A hand grips the WOODEN COLLAR only. Do not show the receiver body/base or a lower coffee pool at all: truncate the neck detail immediately behind/right of the wooden collar, with the unseen receiver outside frame to the upper right. Only a short section of the actual neck is shown. The open glass funnel has NO PAPER and no grounds. Coffee inside this tilted neck has a physically HORIZONTAL free surface aligned continuously to the low left pouring spout lip; the coffee flows from that lip in a narrow continuous curved stream into an upright cream cup beneath/left. Keep the inside liquid and spout stream clearly joined, with NO lower separate liquid surface and no air gap from source to spout. Hand anatomy plausible and skin touches only wood. No full vessel silhouette, no assertion of model capacity, no scale, text, numerals, arrows, logos, decoration, steam, background island, realism or gradients. All important mouth/spout/collar/hand/stream/cup comfortably inside canvas margins, with receiver intentionally omitted as a closeup detail. Technical priority: flowing coffee at spout must correspond to same horizontal free surface inside neck. Cup coffee below rim.",
+    "generatedPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-39e13732-8275-4327-895b-1521100fe320.png",
+    "generatorOutputHint": "Generated images are saved to C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb as C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-39e13732-8275-4327-895b-1521100fe320.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "version": 2
+  },
+  {
+    "sceneId": "chemex_unspecified_serve",
+    "version": 1,
+    "status": "rejected",
+    "reason": "Visible lower liquid free surface was below pouring spout while active stream exited; impossible hydraulic connection.",
+    "generatedPath": "C:\\Users\\adam-\\.codex\\generated_images\\01a17162-12c0-7a73-beb4-1b9a6e33a0eb\\exec-fc76894a-90da-4ca0-b680-2a947e1671a0.png",
+    "prompt": "Generate a minimal flat 2D instructional CLOSE-UP, genuinely transparent 4:3. Match reference 1 style: espresso outlines, pale blue clear glass, cream cup, warm brown coffee, simple warm wood collar with at most one restrained shadow plane. Reference 2 is only source of correct Chemex collar grip and spout geometry; remove all realistic rendering/background. Show a close-up serving detail of a Chemex: ONLY its neck, wooden collar, open empty upper glass funnel/spout, and a small portion of the glass receiver below collar. Its overall body/base is intentionally OUT OF VIEW so no capacity/model proportions asserted. The neck is TILTED so coffee reaches the pouring spout. One normal anatomically plausible hand safely grasps only wooden collar, never hot glass. Coffee stream must begin at the spout with a visible continuous connection to coffee reaching the low side INSIDE tilted glass, and fall into a plain cream cup below. Absolutely NO paper filter or grounds remain in upper funnel. Cup stable upright with coffee well below rim. Feature collar grip, filter-free spout, continuous liquid path and receiving cup. Do not show entire brewer or whole bulb/base or a six-cup-specific full silhouette. Do not invent a separate pouring nozzle or metal handle. No text/digits/arrows/logos/background island/steam/decorative swirls, no realistic texture or gradients. All important upper rim, collar grip, spout, stream, and cup fit with transparent margins; lower receiver ends as an honest cropped close-up detail."
+  }
+]

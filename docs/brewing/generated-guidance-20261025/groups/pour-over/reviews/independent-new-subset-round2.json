@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/heated_brewer_art",
+  "reviewedOn": "2026-10-25",
+  "independentOfProducer": true,
+  "inspection": "All nine full raw and delivered images inspected individually; each phone light and dark inspected. Wave original three were rechecked only for concrete support-flange concern and retain real metal support flanges. Unchanged failed Wave finish v1 remains in previous report.",
+  "sourceChecks": [
+    "https://www.moccamaster.eu/pub/media/handleidingen/talen/Manual_SELECT.pdf",
+    "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+    "https://www.hario-usa.com/products/switch-immersion-dripper",
+    "https://kalitausa.com/products/kalita-wave-155-stainless-steel-coffee-dripper"
+  ],
+  "entries": [
+    {
+      "sceneId": "auto_brew_flow",
+      "version": 1,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_brew_flow_v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_brew_flow_v1.webp",
+      "rawSha256": "cc45401ec3c395ae311dfe0afd0274f9d74a98b8a5b5cb6b0539edaecfd47bff",
+      "candidateSha256": "490aea1799cacf3d44fdb7d39c0179aa8013d6e0ec2fdabca599fc12b02638f5",
+      "altTextReviewed": "Coffee drains from the independently supported KBGV Select basket through the mixing lid into its seated glass carafe.",
+      "verdict": "rejected",
+      "checks": {
+        "rawAndDelivery": true,
+        "phoneLightDark": true,
+        "equipmentGeometry": false,
+        "actionState": true,
+        "handlingSafety": true,
+        "flowAndCrop": false,
+        "minimalism": true,
+        "altAgreement": true
+      },
+      "notes": [
+        "Missing actual mixing-lid tube beneath carafe lid: free coffee stream depicted through empty carafe instead of traveling inside the tube shown by manufacturer manual."
+      ]
+    },
+    {
+      "sceneId": "auto_coffee",
+      "version": 1,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_coffee_v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_coffee_v1.webp",
+      "rawSha256": "ec3bf3cd7763e4c0c20eaa2c24b845f63504ef51de98d843c9366e2a4ac8d5ba",
+      "candidateSha256": "48fa539653fa8ab890693aaa8e733a760ff6cf6335f6fdb4f30c3764ad862600",
+      "altTextReviewed": "A shallow level bed of loose dry coffee sits in No.4 wedge paper inside the removable KBGV Select basket.",
+      "verdict": "approved",
+      "checks": {
+        "rawAndDelivery": true,
+        "phoneLightDark": true,
+        "equipmentGeometry": true,
+        "actionState": true,
+        "handlingSafety": true,
+        "flowAndCrop": true,
+        "minimalism": true,
+        "altAgreement": true
+      },
+      "notes": [
+        "Loose level bed inside fitted wedge paper. Does not depict dosing or reinstallation. Replace corrupted apostrophe with: A shallow level bed of loose dry coffee sits in No.4 wedge paper inside the removable KBGV Select basket.",
+        "2026-10-25 caption recheck: literal ASCII caption now agrees with the unchanged hash-bound pixels; previous conditional caption finding retained in captionHistory."
+      ],
+      "captionHistory": [
+        {
+          "altTextReviewed": "A shallow level bed of loose dry coffee sits in No.4 wedge paper inside the KBGV SelectÃ¢â‚¬â„¢s removable basket.",
+          "verdict": "approved_after_alt_correction",
+          "altAgreement": false
+        }
+      ]
+    },
+    {
+      "sceneId": "auto_water_full",
+      "version": 2,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_water_full_v2.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_water_full_v2.webp",
+      "rawSha256": "acd5c2415d00264b5cd602daf35d6accf6f56d0d7ee2341e28957318fc2f6f60",
+      "candidateSha256": "5d531e13691896976f87f0c074c9a3c36b6fef494c7815b3cfe09997bc13d5f0",
+      "altTextReviewed": "A jug pours cool water into the KBGV Select reservoir with clear headroom; its glass carafe remains seated below the supported basket.",
+      "verdict": "approved",
+      "checks": {
+        "rawAndDelivery": true,
+        "phoneLightDark": true,
+        "equipmentGeometry": true,
+        "actionState": true,
+        "handlingSafety": true,
+        "flowAndCrop": true,
+        "minimalism": true,
+        "altAgreement": true
+      },
+      "notes": [
+        "Cool-water filling with actual supporting bracket, carafe seated and lid/tube fitted. Reservoir headroom remains; no exact water target claimed."
+      ]
+    },
+    {
+      "sceneId": "switch_closed_coffee",
+      "version": 1,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_closed_coffee_v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_closed_coffee_v1.webp",
+      "rawSha256": "c66d7f8d8c07533fd883b160af067f5423afaaec07c84388ca2f54b868c692a1",
+      "candidateSha256": "4da49b752066732f41bd22dd218a10eb3a8837cc2ac22510e0ab8212ca7c6993",
+      "altTextReviewed": "Loose dry coffee rests in the paper-lined Switch with its clear paddle unpressed; the server is empty.",
+      "verdict": "rejected",
+      "checks": {
+        "rawAndDelivery": true,
+        "phoneLightDark": true,
+        "equipmentGeometry": true,
+        "actionState": false,
+        "handlingSafety": true,
+        "flowAndCrop": true,
+        "minimalism": true,
+        "altAgreement": true
+      },
+      "notes": [
+        "Dry grounds form a suspended horizontal brown band with empty white lower cone. Grounds must fill the paper cone continuously down to its tip."
+      ]
+    },
+    {
+      "sceneId": "switch_open_flow",
+      "version": 1,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_flow_v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_flow_v1.webp",
+      "rawSha256": "d46feeb3e5165fe5dcc61161f0c954bacf965cb5f391fa85fcc5c95e44635758",
+      "candidateSha256": "f37fef495f7df27af74b38483f469dda56fe456de80b94ecd3a978992f69868d",
+      "altTextReviewed": "Coffee drains through the open Switch into a stable server below.",
+      "verdict": "rejected",
+      "checks": {
+        "rawAndDelivery": true,
+        "phoneLightDark": true,
+        "equipmentGeometry": false,
+        "actionState": true,
+        "handlingSafety": true,
+        "flowAndCrop": false,
+        "minimalism": true,
+        "altAgreement": true
+      },
+      "notes": [
+        "Entire lower black cylindrical projection below Switch flange omitted versus actual product and retained v2. Flow shown leaving flange directly; preserve real base projection and let outflow leave its underside."
+      ]
+    },
+    {
+      "sceneId": "switch_open_rinse",
+      "version": 1,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_rinse_v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_rinse_v1.webp",
+      "rawSha256": "c39729d5fce7814b59d07cd77d62343439b81f926780813042458da345bd84b1",
+      "candidateSha256": "1fcccf317c921845afe4376955ad1bdfb8cfbb57daf6019e60e65e830171a369",
+      "altTextReviewed": "Clear water rinses empty paper in the Switch and drains through its open valve into the server.",
+      "verdict": "approved",
+      "checks": {
+        "rawAndDelivery": true,
+        "phoneLightDark": true,
+        "equipmentGeometry": true,
+        "actionState": true,
+        "handlingSafety": true,
+        "flowAndCrop": true,
+        "minimalism": true,
+        "altAgreement": true
+      },
+      "notes": [
+        "Water-only open rinsing state; actual lower base projection remains visible. Rinse-discard remains authored text."
+      ]
+    },
+    {
+      "sceneId": "wave155_load",
+      "version": 1,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/wave155_load_v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/wave155_load_v1.webp",
+      "rawSha256": "96f396b6b5e1cf649bdcebef65754466ce1df7429d268ea2b21517dd55b6fb6a",
+      "candidateSha256": "a517954ad7833d18673e30e82cbae82188e95a75e7a3ca7167c98859c077ea68",
+      "altTextReviewed": "Ground coffee is added into the matching pleated Wave155 paper while the stainless dripper rests securely on its server.",
+      "verdict": "approved",
+      "checks": {
+        "rawAndDelivery": true,
+        "phoneLightDark": true,
+        "equipmentGeometry": true,
+        "actionState": true,
+        "handlingSafety": true,
+        "flowAndCrop": true,
+        "minimalism": true,
+        "altAgreement": true
+      },
+      "notes": [
+        "Actual broad stainless support flange clearly remains; prepared paper/loading/pouring scope unchanged. No measured capacity or exact recipe amount inferred."
+      ]
+    },
+    {
+      "sceneId": "wave155_paper",
+      "version": 1,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/wave155_paper_v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/wave155_paper_v1.webp",
+      "rawSha256": "4537fc78df2ffee89aa4a5666ef1fe1ef2d27a4f242ce4fcc3c2ee2a708d7a69",
+      "candidateSha256": "7eaafa8a985046af382930f744110a846954199d83df74eb8e235ad838c896f4",
+      "altTextReviewed": "A small stainless flat-bottom Kalita Wave155 rests securely on a glass server, with a matching pleated paper filter seated centrally and its folds kept open.",
+      "verdict": "approved",
+      "checks": {
+        "rawAndDelivery": true,
+        "phoneLightDark": true,
+        "equipmentGeometry": true,
+        "actionState": true,
+        "handlingSafety": true,
+        "flowAndCrop": true,
+        "minimalism": true,
+        "altAgreement": true
+      },
+      "notes": [
+        "Actual broad stainless support flange clearly remains; prepared paper/loading/pouring scope unchanged. No measured capacity or exact recipe amount inferred."
+      ]
+    },
+    {
+      "sceneId": "wave155_pour",
+      "version": 3,
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/wave155_pour_v3.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/wave155_pour_v3.webp",
+      "rawSha256": "64d284f69b431c7cedd444cab01086304162602c28f4c9499c15304821d7fa7e",
+      "candidateSha256": "0e72c03dd82a8dedfcb4b4f27cf15206442f692447b22a9fdfdfaeeca413d807",
+      "altTextReviewed": "A narrow kettle stream wets coffee inside the small horizontally corrugated stainless Wave155, keeping the pleated paper open and leaving headroom.",
+      "verdict": "approved",
+      "checks": {
+        "rawAndDelivery": true,
+        "phoneLightDark": true,
+        "equipmentGeometry": true,
+        "actionState": true,
+        "handlingSafety": true,
+        "flowAndCrop": true,
+        "minimalism": true,
+        "altAgreement": true
+      },
+      "notes": [
+        "Actual broad stainless support flange clearly remains; prepared paper/loading/pouring scope unchanged. No measured capacity or exact recipe amount inferred."
+      ]
+    }
+  ]
+}

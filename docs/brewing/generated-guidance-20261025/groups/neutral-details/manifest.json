@@ -1,0 +1,610 @@
+{
+  "schemaVersion": 1,
+  "generatedOn": "2026-10-25",
+  "generator": "Codex built-in image_gen",
+  "conversion": "Original RGBA preserved. Lanczos contain within896x672 centered transparent1024x768; WebPquality92 method4 exactalpha;320x240 light/dark. No visual hand edits.",
+  "scope": "Minimal neutral physical details. Unknown phin internals hidden except explicit paired mechanism alternatives. No automatic control selection, capacity or quantity claim.",
+  "selectedSceneCount": 7,
+  "targetContextCount": 9,
+  "entries": [
+    {
+      "sceneId": "espresso_generic_extract",
+      "methodId": "neutral-details",
+      "version": 1,
+      "conceptual": false,
+      "sourcePhysicalFamilyId": "espresso",
+      "sourcePhysicalProfileId": null,
+      "stepIds": [
+        "espresso_pull"
+      ],
+      "targetContentIds": [],
+      "altText": "Espresso flows from a locked portafilter into a cup on a stable scale; machine controls are outside the view.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/espresso_generic_extract/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/espresso_generic_extract/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/espresso_generic_extract/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/espresso_generic_extract/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/espresso_generic_extract/phone-dark-v1.png"
+      },
+      "rawSha256": "9c78712ee94a058504fa5fe434c4077bb4fe2333116c0b0163c6fc0253725e1a",
+      "promptSha256": "2a2964b79c296358912661cd91081b333732fa4fe90ab7e85816717f37eaccb1",
+      "candidateSha256": "6ae37e8e5a00498d2e6d24aa633b219f47eecb77b322232086dba24309837e94",
+      "sources": [
+        {
+          "url": "https://assets.breville.com/BES870/BES870_USCM_IB_X26_LR.pdf",
+          "purpose": "Primary hardware/action reference; no unrelated quantities or operating controls transfer."
+        }
+      ],
+      "referenceImages": [],
+      "sourceContracts": [
+        {
+          "catalog": "legacy",
+          "family_id": "espresso",
+          "profile_id": "espresso_pump_generic",
+          "content_id": "espresso_pull",
+          "placement": "LIVE_STAGE",
+          "primaryInstruction": "Start the extraction, watch the stream and scale, and stop according to the beverage target in your selected recipe.",
+          "conciseInstruction": "Watch the stream and stop at the selected beverage target.",
+          "explanation": "The selected recipe owns the target yield and timing; this stage asks for a deliberate visual check rather than inventing a generic stop point.",
+          "tip": "Keep the cup and scale stable before starting the extraction.",
+          "warning": "",
+          "altText": "Espresso flowing from a group head into a cup on a stable scale."
+        }
+      ],
+      "bindingContexts": [],
+      "qc": {
+        "status": "rejected",
+        "notes": [
+          "Rejected by producer: opaque cream cup was rendered as see-through; replaced with real clear-glass cupv2."
+        ]
+      }
+    },
+    {
+      "sceneId": "cezve_cold_water",
+      "methodId": "neutral-details",
+      "version": 1,
+      "conceptual": false,
+      "sourcePhysicalFamilyId": "heated_unfiltered",
+      "sourcePhysicalProfileId": null,
+      "stepIds": [
+        "cezve_generic_add_water"
+      ],
+      "targetContentIds": [
+        "cezve_generic_add_water"
+      ],
+      "altText": "Cold water pours into an unheated cezve with room below the rim.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/cezve_cold_water/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/cezve_cold_water/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/cezve_cold_water/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/cezve_cold_water/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/cezve_cold_water/phone-dark-v1.png"
+      },
+      "rawSha256": "c955dbe1a819b3ea49432a3a7917f1179d1fc91db2cea1b9174157c91ab96246",
+      "promptSha256": "07966c6c702707d8acb2e5d9251d5edfbbed4a8debf02078632cb42a21790c81",
+      "candidateSha256": "95f9940379b3ebfcc84f96004ee0bc7b91fa3cfe5cd850ea3640ea3db844a242",
+      "sources": [
+        {
+          "url": "https://www.mehmetefendi.com/hazirlama/turk-kahvesi/cezve-ile",
+          "purpose": "Primary hardware/action reference; no unrelated quantities or operating controls transfer."
+        },
+        {
+          "url": "https://www.turkkahvesidernegi.org/en/index.php?gastronomi=menuactive&icerik=7-adimda-mukemmel-turk-kahvesi-kilavuzu",
+          "purpose": "Primary hardware/action reference; no unrelated quantities or operating controls transfer."
+        }
+      ],
+      "referenceImages": [],
+      "sourceContracts": [
+        {
+          "catalog": "generic_p1",
+          "family_id": "heated_unfiltered",
+          "profile_id": "cezve_generic",
+          "content_id": "cezve_generic_add_water",
+          "placement": "LIVE_STAGE",
+          "primaryInstruction": "Add the water amount from your selected recipe to the vessel.",
+          "conciseInstruction": "Add the selected water amount.",
+          "explanation": "",
+          "tip": "",
+          "warning": "",
+          "altText": "Measured water being added to a cezve or ibrik."
+        }
+      ],
+      "bindingContexts": [
+        {
+          "contentId": "cezve_generic_add_water",
+          "targetFamilyId": "heated_unfiltered",
+          "targetProfileId": "cezve_generic",
+          "targetContentRevision": "fff2d3fa97ef5180bbcd1dbd270e1d0c36ddaa9602eccdebd478a5ce8ffec731",
+          "targetCatalog": "generic_p1",
+          "altText": "Cold water pours into an unheated cezve with room below the rim.",
+          "reviewStatus": "candidate",
+          "scopeNotes": [
+            "Only visible physical subaction is illustrated; existing instruction owns quantities, controls and completion."
+          ]
+        }
+      ],
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Producer inspected full raw, delivered candidate and320px light/dark previews; independent QC still required.",
+          "Only visible physical subaction is illustrated; existing instruction owns quantities, controls and completion."
+        ]
+      }
+    },
+    {
+      "sceneId": "cezve_optional_sugar",
+      "methodId": "neutral-details",
+      "version": 1,
+      "conceptual": false,
+      "sourcePhysicalFamilyId": "heated_unfiltered",
+      "sourcePhysicalProfileId": null,
+      "stepIds": [
+        "cezve_generic_add_sugar_before_heating"
+      ],
+      "targetContentIds": [
+        "cezve_generic_add_sugar_before_heating"
+      ],
+      "altText": "Sugar falls from a spoon into an unheated cezve; use it only if the selected recipe includes sugar.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/cezve_optional_sugar/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/cezve_optional_sugar/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/cezve_optional_sugar/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/cezve_optional_sugar/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/cezve_optional_sugar/phone-dark-v1.png"
+      },
+      "rawSha256": "7278d7e6121e676918384c0d64f80a44550b9d13f40e0e43e8277b831c0a2775",
+      "promptSha256": "7666892bf6793e7d6b54d040172225e4937170acbcbd8999f313342a4644629a",
+      "candidateSha256": "266ab6bee1df2f0466e6ff255cd4780eb5446db859f5b6a95ed8a5cc8c6ad73c",
+      "sources": [
+        {
+          "url": "https://www.mehmetefendi.com/hazirlama/turk-kahvesi/cezve-ile",
+          "purpose": "Primary hardware/action reference; no unrelated quantities or operating controls transfer."
+        }
+      ],
+      "referenceImages": [],
+      "sourceContracts": [
+        {
+          "catalog": "generic_p1",
+          "family_id": "heated_unfiltered",
+          "profile_id": "cezve_generic",
+          "content_id": "cezve_generic_add_sugar_before_heating",
+          "placement": "LIVE_STAGE",
+          "primaryInstruction": "If your own selected recipe includes sugar, add it before heating.",
+          "conciseInstruction": "Add recipe sugar before heating.",
+          "explanation": "",
+          "tip": "",
+          "warning": "",
+          "altText": "Sugar being added to a cezve or ibrik before heating."
+        }
+      ],
+      "bindingContexts": [
+        {
+          "contentId": "cezve_generic_add_sugar_before_heating",
+          "targetFamilyId": "heated_unfiltered",
+          "targetProfileId": "cezve_generic",
+          "targetContentRevision": "6f0eb3ed41575e8ca7f23fdbc6669fb0db765d7da13ebdb61bf07e328fe49634",
+          "targetCatalog": "generic_p1",
+          "altText": "Sugar falls from a spoon into an unheated cezve; use it only if the selected recipe includes sugar.",
+          "reviewStatus": "candidate",
+          "scopeNotes": [
+            "Only visible physical subaction is illustrated; existing instruction owns quantities, controls and completion.",
+            "Optional ingredient only if selected recipe includes it; cold off-heat preparation, not sugar required for every brew."
+          ]
+        }
+      ],
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Producer inspected full raw, delivered candidate and320px light/dark previews; independent QC still required.",
+          "Only visible physical subaction is illustrated; existing instruction owns quantities, controls and completion.",
+          "Optional ingredient only if selected recipe includes it; cold off-heat preparation, not sugar required for every brew."
+        ]
+      }
+    },
+    {
+      "sceneId": "espresso_generic_extract",
+      "methodId": "neutral-details",
+      "version": 2,
+      "conceptual": false,
+      "sourcePhysicalFamilyId": "espresso",
+      "sourcePhysicalProfileId": null,
+      "stepIds": [
+        "espresso_pull"
+      ],
+      "targetContentIds": [
+        "espresso_pull"
+      ],
+      "altText": "Espresso flows from a locked portafilter into a cup on a stable scale; machine controls are outside the view.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/espresso_generic_extract/raw-v2.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/espresso_generic_extract/prompt-v2.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/espresso_generic_extract/candidate-v2.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/espresso_generic_extract/phone-light-v2.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/espresso_generic_extract/phone-dark-v2.png"
+      },
+      "rawSha256": "ef45d4b57853e11514d4f44b8b00ec7e8642db44c1f261a9ed3ce2b041812e52",
+      "promptSha256": "6ede1f1bd73a99f0892a37f480fd54e6088417cd21c881379c9c831901b9165a",
+      "candidateSha256": "daeb047f64bcdac4202fb9fcdc7ca40a58620a9ad8de9eff52f0892f8b9bfe1e",
+      "sources": [
+        {
+          "url": "https://assets.breville.com/BES870/BES870_USCM_IB_X26_LR.pdf",
+          "purpose": "Primary hardware/action reference; no unrelated quantities or operating controls transfer."
+        }
+      ],
+      "referenceImages": [],
+      "sourceContracts": [
+        {
+          "catalog": "legacy",
+          "family_id": "espresso",
+          "profile_id": "espresso_pump_generic",
+          "content_id": "espresso_pull",
+          "placement": "LIVE_STAGE",
+          "primaryInstruction": "Start the extraction, watch the stream and scale, and stop according to the beverage target in your selected recipe.",
+          "conciseInstruction": "Watch the stream and stop at the selected beverage target.",
+          "explanation": "The selected recipe owns the target yield and timing; this stage asks for a deliberate visual check rather than inventing a generic stop point.",
+          "tip": "Keep the cup and scale stable before starting the extraction.",
+          "warning": "",
+          "altText": "Espresso flowing from a group head into a cup on a stable scale."
+        }
+      ],
+      "bindingContexts": [
+        {
+          "contentId": "espresso_pull",
+          "targetFamilyId": "espresso",
+          "targetProfileId": "espresso_pump_generic",
+          "targetContentRevision": "1cd6ec34b7daee056dc928651251378fb931398334ddf7129756cfbdbc9cc352",
+          "targetCatalog": "legacy",
+          "altText": "Espresso flows from a locked portafilter into a cup on a stable scale; machine controls are outside the view.",
+          "reviewStatus": "candidate",
+          "scopeNotes": [
+            "Only visible physical subaction is illustrated; existing instruction owns quantities, controls and completion.",
+            "No machine controls, dimensions or basket capacity transfer. Clear glass cup in selectedv2 avoids impossible opaque-cup cutaway."
+          ]
+        }
+      ],
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Producer inspected full raw, delivered candidate and320px light/dark previews; independent QC still required.",
+          "Only visible physical subaction is illustrated; existing instruction owns quantities, controls and completion.",
+          "No machine controls, dimensions or basket capacity transfer. Clear glass cup in selectedv2 avoids impossible opaque-cup cutaway."
+        ]
+      }
+    },
+    {
+      "sceneId": "phin_neutral_support",
+      "methodId": "neutral-details",
+      "version": 1,
+      "conceptual": false,
+      "sourcePhysicalFamilyId": "restricted_flow_gravity_concentrate",
+      "sourcePhysicalProfileId": null,
+      "stepIds": [
+        "reviewed_phin_v1_prepare",
+        "vietnamese_phin_place_on_stable_cup"
+      ],
+      "targetContentIds": [
+        "reviewed_phin_v1_prepare",
+        "vietnamese_phin_place_on_stable_cup"
+      ],
+      "altText": "A clean phin chamber and support plate sit squarely on a stable cup; the internal insert mechanism is out of view.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_support/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_support/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_support/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_support/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_support/phone-dark-v1.png"
+      },
+      "rawSha256": "fdd62091a285619f60a105d4b6e1fbecb6641dbebe4f42c6dbad7918aa7470dc",
+      "promptSha256": "347e07fa65a63ce1def60e1e072e011df5e63ff9764ea0420bf963d27fafe742",
+      "candidateSha256": "a17b12e5bb6266001b037a9d36edc66fa14a8d09c520c67c339e1a0891b06f66",
+      "sources": [
+        {
+          "url": "https://nguyencoffeesupply.com/blogs/vietnamese-coffee-brew-guide/traditional-vietnamese-drip-phin",
+          "purpose": "Primary hardware/action reference; no unrelated quantities or operating controls transfer."
+        }
+      ],
+      "referenceImages": [],
+      "sourceContracts": [
+        {
+          "guide_id": "reviewed_phin_v1",
+          "profile_id": "vietnamese_phin",
+          "scope": "Nguyen Coffee Supply single-serving 4 oz stainless steel gravity phin with a loose drop-in disc; explicit rounded metric volume adaptation, not a universal screw-phin recipe",
+          "step_id": "prepare",
+          "instruction": "Use clean dry parts; seat the plate and chamber firmly on a stable heat-safe cup.",
+          "why": "Clear holes and stable support prevent blocked flow and spills.",
+          "completion": "Holes are clean; brewer sits flat without rocking."
+        },
+        {
+          "catalog": "generic_p1",
+          "family_id": "restricted_flow_gravity_concentrate",
+          "profile_id": "vietnamese_phin",
+          "content_id": "vietnamese_phin_place_on_stable_cup",
+          "placement": "LIVE_STAGE",
+          "primaryInstruction": "Place the phin on a stable cup or server before adding anything.",
+          "conciseInstruction": "Place the phin on a stable cup.",
+          "explanation": "A stable support reduces the risk of a hot spill during the slow extraction.",
+          "tip": "",
+          "warning": "",
+          "altText": "A Vietnamese phin resting securely on a stable cup."
+        }
+      ],
+      "bindingContexts": [
+        {
+          "contentId": "reviewed_phin_v1_prepare",
+          "targetFamilyId": "restricted_flow_gravity_concentrate",
+          "targetProfileId": "vietnamese_phin",
+          "targetContentRevision": "7d1c8b9bca6dc7a568fc7900a8c63eb75d6ba4416a715937d4ef302b5d726b67",
+          "targetCatalog": "reviewed",
+          "altText": "A clean phin chamber and support plate sit squarely on a stable cup; the internal insert mechanism is out of view.",
+          "reviewStatus": "candidate",
+          "scopeNotes": [
+            "Only visible physical subaction is illustrated; existing instruction owns quantities, controls and completion.",
+            "Low opaque exterior hides floor/insert/post; no visible fluid or grounds. Does not prove holes clean or dry; accompanying source checks remain."
+          ]
+        },
+        {
+          "contentId": "vietnamese_phin_place_on_stable_cup",
+          "targetFamilyId": "restricted_flow_gravity_concentrate",
+          "targetProfileId": "vietnamese_phin",
+          "targetContentRevision": "3ee21445e8018dc5795ec2dbf32980cf306e5bb476ee8c35fdf59e2715fd336d",
+          "targetCatalog": "generic_p1",
+          "altText": "A clean phin chamber and support plate sit squarely on a stable cup; the internal insert mechanism is out of view.",
+          "reviewStatus": "candidate",
+          "scopeNotes": [
+            "Only visible physical subaction is illustrated; existing instruction owns quantities, controls and completion.",
+            "Low opaque exterior hides floor/insert/post; no visible fluid or grounds. Does not prove holes clean or dry; accompanying source checks remain."
+          ]
+        }
+      ],
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Producer inspected full raw, delivered candidate and320px light/dark previews; independent QC still required.",
+          "Only visible physical subaction is illustrated; existing instruction owns quantities, controls and completion.",
+          "Low opaque exterior hides floor/insert/post; no visible fluid or grounds. Does not prove holes clean or dry; accompanying source checks remain."
+        ]
+      }
+    },
+    {
+      "sceneId": "phin_neutral_pour",
+      "methodId": "neutral-details",
+      "version": 1,
+      "conceptual": false,
+      "sourcePhysicalFamilyId": "restricted_flow_gravity_concentrate",
+      "sourcePhysicalProfileId": null,
+      "stepIds": [
+        "vietnamese_phin_pre_wet",
+        "vietnamese_phin_fill_chamber"
+      ],
+      "targetContentIds": [
+        "vietnamese_phin_pre_wet",
+        "vietnamese_phin_fill_chamber"
+      ],
+      "altText": "A gentle stream enters a supported phin from above; the opaque chamber hides its insert mechanism.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_pour/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_pour/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_pour/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_pour/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_pour/phone-dark-v1.png"
+      },
+      "rawSha256": "faf66a01c17afbb1dc29d081dc0ed3f4743c66138f52e2974aa54b61152befb9",
+      "promptSha256": "650b7b0261d05ced18f999e065c8fe11454af84f8182535f55dd5f2de8eb4489",
+      "candidateSha256": "eadeba0c1ef689c7905e8bc2dc05f52593c1ed6758a0090754d2a4be43d12a1a",
+      "sources": [
+        {
+          "url": "https://nguyencoffeesupply.com/blogs/vietnamese-coffee-brew-guide/traditional-vietnamese-drip-phin",
+          "purpose": "Primary hardware/action reference; no unrelated quantities or operating controls transfer."
+        }
+      ],
+      "referenceImages": [],
+      "sourceContracts": [
+        {
+          "catalog": "generic_p1",
+          "family_id": "restricted_flow_gravity_concentrate",
+          "profile_id": "vietnamese_phin",
+          "content_id": "vietnamese_phin_pre_wet",
+          "placement": "LIVE_STAGE",
+          "primaryInstruction": "Add the small initial pour from your selected recipe and let the coffee wet evenly.",
+          "conciseInstruction": "Add the selected initial pour.",
+          "explanation": "Use the selected recipe's amount rather than a universal pre-wet quantity.",
+          "tip": "",
+          "warning": "",
+          "altText": "A small initial pour wetting coffee in a Vietnamese phin."
+        },
+        {
+          "catalog": "generic_p1",
+          "family_id": "restricted_flow_gravity_concentrate",
+          "profile_id": "vietnamese_phin",
+          "content_id": "vietnamese_phin_fill_chamber",
+          "placement": "LIVE_STAGE",
+          "primaryInstruction": "Add the remaining water without overfilling the phin or destabilising the cup.",
+          "conciseInstruction": "Fill carefully without overfilling.",
+          "explanation": "The app does not infer a universal phin capacity.",
+          "tip": "",
+          "warning": "",
+          "altText": "Water being added carefully to a Vietnamese phin below the rim."
+        }
+      ],
+      "bindingContexts": [
+        {
+          "contentId": "vietnamese_phin_pre_wet",
+          "targetFamilyId": "restricted_flow_gravity_concentrate",
+          "targetProfileId": "vietnamese_phin",
+          "targetContentRevision": "1dad437ddb6351875405dd207d6d2089b83572b50ee076db924c7a1cba487206",
+          "targetCatalog": "generic_p1",
+          "altText": "A gentle stream enters a supported phin from above; the opaque chamber hides its insert mechanism.",
+          "reviewStatus": "candidate",
+          "scopeNotes": [
+            "Only visible physical subaction is illustrated; existing instruction owns quantities, controls and completion.",
+            "Opaque low view deliberately hides chosen insert. Pour quantity, headroom and initial-vs-remaining timing remain outside artwork."
+          ]
+        },
+        {
+          "contentId": "vietnamese_phin_fill_chamber",
+          "targetFamilyId": "restricted_flow_gravity_concentrate",
+          "targetProfileId": "vietnamese_phin",
+          "targetContentRevision": "5c28b2f857df452cf97ccb8afa42920f6d85cb7e7b5c460a584c287e8ea17e92",
+          "targetCatalog": "generic_p1",
+          "altText": "A gentle stream enters a supported phin from above; the opaque chamber hides its insert mechanism.",
+          "reviewStatus": "candidate",
+          "scopeNotes": [
+            "Only visible physical subaction is illustrated; existing instruction owns quantities, controls and completion.",
+            "Opaque low view deliberately hides chosen insert. Pour quantity, headroom and initial-vs-remaining timing remain outside artwork."
+          ]
+        }
+      ],
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Producer inspected full raw, delivered candidate and320px light/dark previews; independent QC still required.",
+          "Only visible physical subaction is illustrated; existing instruction owns quantities, controls and completion.",
+          "Opaque low view deliberately hides chosen insert. Pour quantity, headroom and initial-vs-remaining timing remain outside artwork."
+        ]
+      }
+    },
+    {
+      "sceneId": "phin_neutral_selected_insert",
+      "methodId": "neutral-details",
+      "version": 1,
+      "conceptual": true,
+      "sourcePhysicalFamilyId": "restricted_flow_gravity_concentrate",
+      "sourcePhysicalProfileId": null,
+      "stepIds": [
+        "vietnamese_phin_place_gravity_or_screw_insert"
+      ],
+      "targetContentIds": [
+        "vietnamese_phin_place_gravity_or_screw_insert"
+      ],
+      "altText": "Conceptual alternatives: a loose gravity disc above coffee on the left, and a disc aligned with a threaded central post on the right; fit only the type documented for the phin.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_selected_insert/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_selected_insert/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_selected_insert/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_selected_insert/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_selected_insert/phone-dark-v1.png"
+      },
+      "rawSha256": "bc4ee41f13761c446c895191116c386ca724c77ee5d92ab851ee3e664d29f1cc",
+      "promptSha256": "2d02164d87d5b34a6a4c26fae6d0bd839dd71695e4fc19921bf90d40f103a7a6",
+      "candidateSha256": "452d4e650e9378f038427d375e515866370f860520f87877fc4d138d14e6b5b2",
+      "sources": [
+        {
+          "url": "https://nguyencoffeesupply.com/blogs/news/what-is-the-vietnamese-phin-filter",
+          "purpose": "Primary hardware/action reference; no unrelated quantities or operating controls transfer."
+        }
+      ],
+      "referenceImages": [
+        "app/src/main/res/drawable-nodpi/instruction_p1_phin_gravity_14_118_stage_01_instruction_default.webp",
+        "app/src/main/res/drawable-nodpi/instruction_p1_phin_screw_18_120_stage_01_instruction_default.webp"
+      ],
+      "sourceContracts": [
+        {
+          "catalog": "generic_p1",
+          "family_id": "restricted_flow_gravity_concentrate",
+          "profile_id": "vietnamese_phin",
+          "content_id": "vietnamese_phin_place_gravity_or_screw_insert",
+          "placement": "LIVE_STAGE",
+          "primaryInstruction": "Fit the gravity or screw insert exactly as documented for your selected phin.",
+          "conciseInstruction": "Fit the selected phin insert.",
+          "explanation": "Do not generalize a screw-insert arrangement to every phin.",
+          "tip": "",
+          "warning": "",
+          "altText": "A Vietnamese phin with its documented insert placed over the coffee."
+        }
+      ],
+      "bindingContexts": [
+        {
+          "contentId": "vietnamese_phin_place_gravity_or_screw_insert",
+          "targetFamilyId": "restricted_flow_gravity_concentrate",
+          "targetProfileId": "vietnamese_phin",
+          "targetContentRevision": "0ed1ccc768658ed91dab7dfb52da72c4fd0dd9fd873f0df845fe04d77e69041f",
+          "targetCatalog": "generic_p1",
+          "altText": "Conceptual alternatives: a loose gravity disc above coffee on the left, and a disc aligned with a threaded central post on the right; fit only the type documented for the phin.",
+          "reviewStatus": "candidate",
+          "scopeNotes": [
+            "Only visible physical subaction is illustrated; existing instruction owns quantities, controls and completion.",
+            "Paired alternatives are NOT a sequence or two inserts in one brewer. Loose disc and matching threaded post/hub are distinguished. Selected manufacturer fitting/tightness remains textual."
+          ]
+        }
+      ],
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Producer inspected full raw, delivered candidate and320px light/dark previews; independent QC still required.",
+          "Only visible physical subaction is illustrated; existing instruction owns quantities, controls and completion.",
+          "Paired alternatives are NOT a sequence or two inserts in one brewer. Loose disc and matching threaded post/hub are distinguished. Selected manufacturer fitting/tightness remains textual."
+        ]
+      }
+    },
+    {
+      "sceneId": "phin_neutral_remove",
+      "methodId": "neutral-details",
+      "version": 1,
+      "conceptual": false,
+      "sourcePhysicalFamilyId": "restricted_flow_gravity_concentrate",
+      "sourcePhysicalProfileId": null,
+      "stepIds": [
+        "vietnamese_phin_remove_hot_filter"
+      ],
+      "targetContentIds": [
+        "vietnamese_phin_remove_hot_filter"
+      ],
+      "altText": "After dripping stops, heat-protected hands lift the covered phin by opposite support-plate edges toward a heat-safe dish, clear of the coffee cup.",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_remove/raw-v1.png",
+      "promptPath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_remove/prompt-v1.txt",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_remove/candidate-v1.webp",
+      "phonePreviews": {
+        "light": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_remove/phone-light-v1.png",
+        "dark": "docs/brewing/generated-guidance-20261025/groups/neutral-details/scenes/phin_neutral_remove/phone-dark-v1.png"
+      },
+      "rawSha256": "660233f171fd701bc2274d710ef3b9acfe79ae01ac2d8dea95a6ede0643c89cb",
+      "promptSha256": "ba7b4e4363d4f9d468184af9ae1cf00f76b77292ab66b6c1fabaa9c853a5cbac",
+      "candidateSha256": "e3f27e6e4ae1b1b603fed21a1505f90e3d1728916d44e7bc4e7a4414f789daa6",
+      "sources": [
+        {
+          "url": "https://nguyencoffeesupply.com/blogs/news/what-is-the-vietnamese-phin-filter",
+          "purpose": "Primary hardware/action reference; no unrelated quantities or operating controls transfer."
+        }
+      ],
+      "referenceImages": [],
+      "sourceContracts": [
+        {
+          "catalog": "generic_p1",
+          "family_id": "restricted_flow_gravity_concentrate",
+          "profile_id": "vietnamese_phin",
+          "content_id": "vietnamese_phin_remove_hot_filter",
+          "placement": "LIVE_STAGE",
+          "primaryInstruction": "Remove the phin carefully by a safe handling point after dripping finishes.",
+          "conciseInstruction": "Remove the phin carefully.",
+          "explanation": "Metal parts may remain hot after extraction.",
+          "tip": "",
+          "warning": "",
+          "altText": "A hand safely removing a hot Vietnamese phin from a cup."
+        }
+      ],
+      "bindingContexts": [
+        {
+          "contentId": "vietnamese_phin_remove_hot_filter",
+          "targetFamilyId": "restricted_flow_gravity_concentrate",
+          "targetProfileId": "vietnamese_phin",
+          "targetContentRevision": "3cb44c38cd8e9437ffd771fdafa45e1e4c5f7d53a00f8b4936df9e59b132e290",
+          "targetCatalog": "generic_p1",
+          "altText": "After dripping stops, heat-protected hands lift the covered phin by opposite support-plate edges toward a heat-safe dish, clear of the coffee cup.",
+          "reviewStatus": "candidate",
+          "scopeNotes": [
+            "Only visible physical subaction is illustrated; existing instruction owns quantities, controls and completion.",
+            "Thick mitts protect grip at opposite outer plate edges; covered chamber stays upright, no drips. Does not claim every phin has cool handles; use actual manufacturer-safe handling point."
+          ]
+        }
+      ],
+      "qc": {
+        "status": "candidate",
+        "notes": [
+          "Producer inspected full raw, delivered candidate and320px light/dark previews; independent QC still required.",
+          "Only visible physical subaction is illustrated; existing instruction owns quantities, controls and completion.",
+          "Thick mitts protect grip at opposite outer plate edges; covered chamber stays upright, no drips. Does not claim every phin has cool handles; use actual manufacturer-safe handling point."
+        ]
+      }
+    }
+  ]
+}

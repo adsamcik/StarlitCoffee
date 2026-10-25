@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/heated_brewer_art",
+  "reviewedOn": "2026-10-25",
+  "independentOfProducer": true,
+  "status": "All six approved within stated pixel scopes after two exact alt corrections verified from current manifest.",
+  "sourceUrls": [
+    "https://www.handybrew.com/",
+    "https://crema-coffee.com/pages/clever-dripper-brewing-guide",
+    "https://cdn.shopify.com/s/files/1/0775/2974/3667/t/3/assets/clever_brewguide9-1687832912816.jpg?v=1687832913"
+  ],
+  "inspection": "All six full raw PNG, all six full delivered WebP, and each 320px light/dark composite viewed individually. Release also checked on full-size light/dark composites; raw-view low-alpha RGB fringe is not visible in composited delivery.",
+  "entries": [
+    {
+      "sceneId": "clever_large_prepare",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/clever_large_prepare_v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/clever_large_prepare_v1.webp",
+      "rawSha256": "142292d9bc03e124e7d3840c7b95a44a6176f9a064879c39f7d636e29ee8440b",
+      "candidateSha256": "445ffbd5e677b910b3b64bd10d79075b1461c9f2b1ebc8e1431d3650fac69f2f",
+      "altTextReviewed": "An empty paper filter is fitted inside the large Clever, which rests off the server on its own base.",
+      "verdict": "approved",
+      "bindingScope": "Paper seated in empty Clever, resting off a receiving vessel. Does not depict rinsing, disposal or taring.",
+      "checks": {
+        "equipmentGeometry": true,
+        "actionState": true,
+        "handlingSafety": true,
+        "flowAndHeadroom": true,
+        "fullRawAndDeliveryInspected": true,
+        "phoneLightAndDarkInspected": true,
+        "minimalism": true,
+        "altAgreement": true
+      },
+      "notes": [
+        "No separate coaster is visible. Replace alt with: An empty paper filter is fitted inside the large Clever, which rests off the server on its own base.",
+        "Exact replacement alt verified in producer manifest; no pixel change."
+      ],
+      "priorAltText": "An empty paper-lined large Clever rests on its flat coaster, away from any receiving vessel."
+    },
+    {
+      "sceneId": "clever_large_water",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/clever_large_water_v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/clever_large_water_v1.webp",
+      "rawSha256": "fa945b79784a3074c94c77b505a50f38e3de5fde9ea68bff0718bf7753bf67c2",
+      "candidateSha256": "cd4cf25241c7096ad12c2638784bc35a3f54d0185cf0aab2e44b2278a9969f34",
+      "altTextReviewed": "Clear water is poured into the empty paper-lined large Clever while it rests off the server; no coffee has been added.",
+      "verdict": "approved",
+      "bindingScope": "Water-first filling with headroom and retained water, before coffee.",
+      "checks": {
+        "equipmentGeometry": true,
+        "actionState": true,
+        "handlingSafety": true,
+        "flowAndHeadroom": true,
+        "fullRawAndDeliveryInspected": true,
+        "phoneLightAndDarkInspected": true,
+        "minimalism": true,
+        "altAgreement": true
+      },
+      "notes": [
+        "No concrete pixel defect found within the stated action scope."
+      ]
+    },
+    {
+      "sceneId": "clever_large_steep",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/clever_large_steep_v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/clever_large_steep_v1.webp",
+      "rawSha256": "67e7e069f478f5b490837085053b15c518815517c4d75442e705e6a3c16bd412",
+      "candidateSha256": "956de23221a4e1f53c3d44c3e517384cde732c4ae0f1d97075a87b260b3f17aa",
+      "altTextReviewed": "Coffee and water remain in the large Clever off the server, with no outflow.",
+      "verdict": "approved",
+      "bindingScope": "Closed-valve retention off the server. Timer and recipe quantity remain textual.",
+      "checks": {
+        "equipmentGeometry": true,
+        "actionState": true,
+        "handlingSafety": true,
+        "flowAndHeadroom": true,
+        "fullRawAndDeliveryInspected": true,
+        "phoneLightAndDarkInspected": true,
+        "minimalism": true,
+        "altAgreement": true
+      },
+      "notes": [
+        "No separate coaster is visible. Replace alt with: Coffee and water remain in the large Clever off the server, with no outflow.",
+        "Exact replacement alt verified in producer manifest; no pixel change."
+      ],
+      "priorAltText": "Coffee and water remain in the large Clever on its coaster, with no outflow."
+    },
+    {
+      "sceneId": "clever_large_add_coffee",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/clever_large_add_coffee_v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/clever_large_add_coffee_v1.webp",
+      "rawSha256": "e9d0d7a5fc4d52be64dc2d24c7482a44ecbd14477391b1c3edb8fc427fa95924",
+      "candidateSha256": "d2d0648aaacb7d40ea898e5b9dcaff2a75882f55f0500e90f232f22806a5da12",
+      "altTextReviewed": "Coffee grounds are added onto water already retained inside the paper-lined large Clever, away from a receiving vessel.",
+      "verdict": "approved",
+      "bindingScope": "Coffee added to pre-existing water, off server. Does not depict subsequent full mixing.",
+      "checks": {
+        "equipmentGeometry": true,
+        "actionState": true,
+        "handlingSafety": true,
+        "flowAndHeadroom": true,
+        "fullRawAndDeliveryInspected": true,
+        "phoneLightAndDarkInspected": true,
+        "minimalism": true,
+        "altAgreement": true
+      },
+      "notes": [
+        "No concrete pixel defect found within the stated action scope."
+      ]
+    },
+    {
+      "sceneId": "clever_large_stir",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/clever_large_stir_v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/clever_large_stir_v1.webp",
+      "rawSha256": "3d1e81063c64a22735c748b249bd21f41031f44b2bfcc85bbe2da1350d0fd309",
+      "candidateSha256": "1fdbf142dd6ede3886a037c1bab1f24591573abb03787d2de97cdd704151f412",
+      "altTextReviewed": "A spoon gently stirs the coffee surface while the large Clever remains off the server with water retained.",
+      "verdict": "approved",
+      "bindingScope": "Gentle surface crust agitation, off server. Settling duration remains textual.",
+      "checks": {
+        "equipmentGeometry": true,
+        "actionState": true,
+        "handlingSafety": true,
+        "flowAndHeadroom": true,
+        "fullRawAndDeliveryInspected": true,
+        "phoneLightAndDarkInspected": true,
+        "minimalism": true,
+        "altAgreement": true
+      },
+      "notes": [
+        "No concrete pixel defect found within the stated action scope."
+      ]
+    },
+    {
+      "sceneId": "clever_large_release",
+      "rawPath": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/clever_large_release_v1.png",
+      "candidatePath": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/clever_large_release_v1.webp",
+      "rawSha256": "a0fdd9c3b86934ce6d0b4f046f194356366775f6c616f7602267a22ad69bad34",
+      "candidateSha256": "e0261552bf54100cfbce9ef5c6134798e2f890eae1cbf7de10e388c97066e12a",
+      "altTextReviewed": "The large Clever sits securely on a compatible server rim and coffee drains through its bottom valve.",
+      "verdict": "approved",
+      "bindingScope": "Bottom-valve discharge with brewer supported by compatible server rim. Does not establish timed completion.",
+      "checks": {
+        "equipmentGeometry": true,
+        "actionState": true,
+        "handlingSafety": true,
+        "flowAndHeadroom": true,
+        "fullRawAndDeliveryInspected": true,
+        "phoneLightAndDarkInspected": true,
+        "minimalism": true,
+        "altAgreement": true
+      },
+      "notes": [
+        "No concrete pixel defect found within the stated action scope."
+      ]
+    }
+  ]
+}

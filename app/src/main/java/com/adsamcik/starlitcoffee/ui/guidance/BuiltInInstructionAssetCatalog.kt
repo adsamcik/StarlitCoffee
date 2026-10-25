@@ -12,7 +12,9 @@ import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 object BuiltInInstructionAssetCatalog {
     val catalog: InstructionAssetCatalog = InstructionAssetCatalog(
         assets = P1TrackerAcceptedInstructionAssetCatalog.runtimeAssets() +
-            PulsarLearnInstructionAssetCatalog.runtimeAssets(),
+            PulsarLearnInstructionAssetCatalog.runtimeAssets() + GeneratedGuidanceCatalog.assets,
+        contentAliases = GeneratedGuidanceCatalog.aliases,
+        admittedTargets = GeneratedGuidanceCatalog.targets,
     )
 }
 
@@ -25,9 +27,10 @@ object BuiltInInstructionAssetCatalog {
  */
 fun InstructionAssetCatalog.findApprovedAssetForContent(
     contentId: StageContentId,
+    contentRevision: String? = null,
 ): InstructionAssetRecord? {
     val matchingAssets = assets.filter { asset -> asset.contentId == contentId }
-    val canonicalAsset = matchingAssets.firstOrNull() ?: return null
+    val canonicalAsset = matchingAssets.firstOrNull() ?: return findApprovedAliasForContent(contentId, contentRevision)
     val hasAmbiguousScope = matchingAssets.any { asset ->
         asset.familyId != canonicalAsset.familyId ||
             asset.profileId != canonicalAsset.profileId ||

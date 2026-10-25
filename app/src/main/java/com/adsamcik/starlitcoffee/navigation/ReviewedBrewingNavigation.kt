@@ -15,6 +15,7 @@ import com.adsamcik.starlitcoffee.data.brewing.session.BrewSessionRuntime
 import com.adsamcik.starlitcoffee.domain.brewing.BrewerProfileId
 import com.adsamcik.starlitcoffee.domain.brewing.BuiltinBrewingCatalog
 import com.adsamcik.starlitcoffee.ui.guidance.learnResolution
+import com.adsamcik.starlitcoffee.ui.guidance.BuiltInInstructionAssetCatalog
 import com.adsamcik.starlitcoffee.ui.screen.LearnBrewerScreen
 import com.adsamcik.starlitcoffee.ui.screen.LearningLibraryGuideOption
 import com.adsamcik.starlitcoffee.ui.screen.LearningLibraryProfileOption
@@ -59,6 +60,7 @@ internal fun ReviewedLearnDestination(
     var starting by remember(guide.id) { mutableStateOf(false) }
     var failed by remember(guide.id) { mutableStateOf(false) }
     LearnBrewerScreen(title = guide.methodName, resolution = remember(guide) { guide.learnResolution() },
+        instructionAssets = BuiltInInstructionAssetCatalog.catalog,
         reviewedGuide = guide, onBack = onBack, onBrewGuide = { preparing = true; failed = false })
     if (preparing) {
         ReviewedGuideStartSheet(guide, brewViewModel, starting, failed, onDismiss = { preparing = false },

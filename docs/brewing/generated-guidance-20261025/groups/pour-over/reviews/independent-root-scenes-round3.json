@@ -1,0 +1,600 @@
+{
+  "schema_version": 1,
+  "purpose": "Independent review only of nine exact latest requested root-generated revisions. Prior review artifacts are preserved. No artwork or production code modified. Every selected original raw PNG, delivered WebP and actual320x240 light/dark composite inspected. Verdicts bind bytes, alt and bounded action/state, not unrestricted whole-step claims or app admission.",
+  "reviewed_on": "2026-10-25",
+  "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+  "primary_source_checks": [
+    "Actual Hario SSD manual page1: CLOSE paddle raised, OPEN paddle flush; lower silicone cylinder present. Actual manufacturer photograph was checked as an OPEN state, not as a closed reference.",
+    "Actual Moccamaster Select manual FigureA and pages2-3: independent basket bracket, fitted mixing lid with tube, seated glass carafe, distinct Select versus non-Select right-rocker meanings.",
+    "Actual stainless Wave155 product photograph: corrugated wall, handle and broad metal support flange.",
+    "Current reviewed-method-guides.json exact recipe.steps, completion and profile scopes read for all three methods."
+  ],
+  "primary_reference_files": [
+    {
+      "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/source-checks/hario-switch-manual.pdf",
+      "sha256": "48cc87e1135f00d003b23d1ce99f32633e7328cb364aa5febee15d088ab620ed"
+    },
+    {
+      "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/source-checks/hario-switch-product.jpg",
+      "sha256": "32ed016eae8e86312376a35cfa03f48ca231bc4193fb77f51edd470d93cc0552"
+    },
+    {
+      "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/source-checks/moccamaster-select-manual.pdf",
+      "sha256": "0fa75f671da71f483a412cd32fbdbf7154ad0d1fbe7fe4d9bcb94d759ad9fe58"
+    },
+    {
+      "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/source-checks/wave155-primary.jpg",
+      "sha256": "03b9a8e72418c90f2b1500b694dd9f982a2a2e8456fe961691598047766a6d15"
+    }
+  ],
+  "reviews": [
+    {
+      "scene_id": "switch_closed_empty",
+      "version": 1,
+      "verdict": "rejected",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_raw_inspected": "pass",
+        "delivered_inspected": "pass",
+        "phone_light_inspected": "pass",
+        "phone_dark_inspected": "pass",
+        "crop": "pass",
+        "hand_safety": "pass",
+        "minimalism": "pass",
+        "equipment_geometry": "fail",
+        "action_state": "fail",
+        "alt_text_agreement": "fail"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_closed_empty_v1.png",
+          "sha256": "e2bc70a80da04536852e15b1124c9f76d7e329d13517996c0646eb2990fbbecc"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_closed_empty_v1.webp",
+          "sha256": "24e0c0e74458275cbe8f486e8047a7b91cfb96d0b718a6a26620968cd931c48c"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_closed_empty_v1.txt",
+          "sha256": "4fad654c895cc8e14e56ad8c7d619e5c07fa6240e458fd43f8b10387a860db5a"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_closed_empty_v1_light.png",
+          "sha256": "cefd36f2b869b0b32a3461d876dd73fbbb882619a72e87aa70a644d5e720afac"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_closed_empty_v1_dark.png",
+          "sha256": "124d870f18814105258b67a2dff8ddd8c6cb8edaa08efc7f44d4e81308c8ca0f"
+        }
+      },
+      "source_guide_id": "reviewed_hario_switch_v1",
+      "source_guide_revision": "b376a00df135a6a2210848e2b9dd97bd33150616f9b97cd4a0655c73043f289c",
+      "reviewed_profile_id": "hario_switch",
+      "reviewed_step_ids": [],
+      "reviewed_alt_text": "The Switch has empty fitted cone paper and an unpressed clear paddle, with no flow into the empty server.",
+      "manufacturer_references": [
+        "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+        "https://www.hario-usa.com/products/switch-immersion-dripper",
+        "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+        "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+        "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+        "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+      ],
+      "scope_limit": "No admitted binding; corrected raised closed paddle and lower cylinder are required.",
+      "notes": [
+        "The translucent paddle is horizontal/flush, the manual OPEN position, despite this scene requiring CLOSED. No-flow in an empty brewer cannot establish valve closure.",
+        "The silicone cylinder below the support flange is absent: the server interior begins immediately beneath the flange, unlike the actual SSD-200-B product and manual."
+      ]
+    },
+    {
+      "scene_id": "switch_closed_stir",
+      "version": 1,
+      "verdict": "rejected",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_raw_inspected": "pass",
+        "delivered_inspected": "pass",
+        "phone_light_inspected": "pass",
+        "phone_dark_inspected": "pass",
+        "crop": "pass",
+        "hand_safety": "pass",
+        "minimalism": "pass",
+        "equipment_geometry": "fail",
+        "action_state": "fail",
+        "alt_text_agreement": "fail"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_closed_stir_v1.png",
+          "sha256": "7504106996f9fd0ad40c6cacb52436eb8dfbeaf1a28272f1835ea4dbbb22409e"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_closed_stir_v1.webp",
+          "sha256": "0679ed8aa6ad0d63414969f26053eb4c300ba068ef68887fffceeba0efafe797"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_closed_stir_v1.txt",
+          "sha256": "f8336c8454fbd1368c92d5c59197222cd829f5b73aaabd137b4de41607b5f025"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_closed_stir_v1_light.png",
+          "sha256": "9735d43a3b3c35b491d65640d36989f5defed7667cc464358e36687fedfcfb9f"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_closed_stir_v1_dark.png",
+          "sha256": "36506554481e68d4e1530e44b8e81a31456c666118f241bb19a3ecec9be32844"
+        }
+      },
+      "source_guide_id": "reviewed_hario_switch_v1",
+      "source_guide_revision": "b376a00df135a6a2210848e2b9dd97bd33150616f9b97cd4a0655c73043f289c",
+      "reviewed_profile_id": "hario_switch",
+      "reviewed_step_ids": [],
+      "reviewed_alt_text": "A spoon gently stirs the retained coffee inside the Switch while no liquid drains into the server.",
+      "manufacturer_references": [
+        "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+        "https://www.hario-usa.com/products/switch-immersion-dripper",
+        "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+        "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+        "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+        "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+      ],
+      "scope_limit": "No admitted binding. If corrected, optional/manual stirring contexts only, with separately reviewed target context.",
+      "notes": [
+        "The paddle is horizontal/flush (OPEN) rather than visibly raised (CLOSED); retained coffee alone must not override the control geometry.",
+        "The lower silicone outlet cylinder is absent below the flange.",
+        "The reviewed first-brew steep path explicitly omits optional stirring; even a corrected stirring image must not be bound to that unchanged reviewed steep step."
+      ]
+    },
+    {
+      "scene_id": "switch_open_drained",
+      "version": 1,
+      "verdict": "rejected",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_raw_inspected": "pass",
+        "delivered_inspected": "pass",
+        "phone_light_inspected": "pass",
+        "phone_dark_inspected": "pass",
+        "crop": "pass",
+        "hand_safety": "pass",
+        "minimalism": "pass",
+        "equipment_geometry": "fail",
+        "action_state": "fail",
+        "alt_text_agreement": "fail"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_drained_v1.png",
+          "sha256": "4df43a96ec2180d4502e9f638e88517f84e320b2aeab60f29254b6f889c193da"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_drained_v1.webp",
+          "sha256": "f239ce273c90dfdea0a638499b93813698b241426fe7f8ec2f349e4c8f9c8744"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_open_drained_v1.txt",
+          "sha256": "dc9bf2d915398d7766f94d80bb62e551ca32db1168e73a9e31c41590201006ba"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_open_drained_v1_light.png",
+          "sha256": "304d64fc1728bf16b28c0ede7c97f56ca88cb0f3fd1b7ce37c1d44a978147a7b"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_open_drained_v1_dark.png",
+          "sha256": "2689f6b134417fa4da97e8e345ec67513ab24ff941721bacd72950dffb7cbf44"
+        }
+      },
+      "source_guide_id": "reviewed_hario_switch_v1",
+      "source_guide_revision": "b376a00df135a6a2210848e2b9dd97bd33150616f9b97cd4a0655c73043f289c",
+      "reviewed_profile_id": "hario_switch",
+      "reviewed_step_ids": [
+        "finish"
+      ],
+      "reviewed_alt_text": "The open Switch has drained to a shallow wet coffee bed, with coffee collected in the server and no continuous flow.",
+      "manufacturer_references": [
+        "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+        "https://www.hario-usa.com/products/switch-immersion-dripper",
+        "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+        "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+        "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+        "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+      ],
+      "scope_limit": "No admitted binding; continuous physically positioned bed, intact lower cylinder and open paddle required.",
+      "notes": [
+        "The lower silicone outlet cylinder is absent below the flange.",
+        "The grounds are shown in two disconnected positions: an upper ellipse near the mouth and a lower patch near the cone tip, separated by a blank paper area. This creates an impossible floating bed/cutaway ambiguity in a scene intended to teach the drained physical state."
+      ]
+    },
+    {
+      "scene_id": "switch_closed_coffee",
+      "version": 2,
+      "verdict": "rejected",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_raw_inspected": "pass",
+        "delivered_inspected": "pass",
+        "phone_light_inspected": "pass",
+        "phone_dark_inspected": "pass",
+        "crop": "pass",
+        "hand_safety": "pass",
+        "minimalism": "pass",
+        "equipment_geometry": "fail",
+        "action_state": "fail",
+        "alt_text_agreement": "fail"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_closed_coffee_v2.png",
+          "sha256": "f43b74b149ccefff98b78a6658f7c2c5c12c45155ec8648045d8c3fc4507e527"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_closed_coffee_v2.webp",
+          "sha256": "005e03618df4b2e5be41073d89856df3bb574224602aaaa6917ecc815eb4813b"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_closed_coffee_v2.txt",
+          "sha256": "81eff4adef29efd2caaba162dfebbc135c193918e23124d7adfba3cc947e39ba"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_closed_coffee_v2_light.png",
+          "sha256": "26f7bfa36bce9f8ee0e4077e16e6f60c02eb6187e5a3af61cc8bab5d711a27be"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_closed_coffee_v2_dark.png",
+          "sha256": "10cb14944cad4c036806e00abedfe379827919107500520d97059535caad80d6"
+        }
+      },
+      "source_guide_id": "reviewed_hario_switch_v1",
+      "source_guide_revision": "b376a00df135a6a2210848e2b9dd97bd33150616f9b97cd4a0655c73043f289c",
+      "reviewed_profile_id": "hario_switch",
+      "reviewed_step_ids": [
+        "close_and_add_coffee"
+      ],
+      "reviewed_alt_text": "A shallow loose dry coffee bed fills the bottom of the Switch cone paper; its clear paddle is unpressed and the server is empty.",
+      "manufacturer_references": [
+        "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+        "https://www.hario-usa.com/products/switch-immersion-dripper",
+        "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+        "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+        "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+        "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+      ],
+      "scope_limit": "No admitted binding; corrected closed control and lower cylinder are required.",
+      "notes": [
+        "Version2 corrects the prior floating dry-ground band; the bed is now contiguous.",
+        "The paddle remains horizontal/flush, which the actual manual identifies as OPEN, whereas close_and_add_coffee explicitly requires raising the lever.",
+        "The lower silicone outlet cylinder remains absent beneath the support flange."
+      ]
+    },
+    {
+      "scene_id": "switch_open_flow",
+      "version": 2,
+      "verdict": "approved",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_raw_inspected": "pass",
+        "delivered_inspected": "pass",
+        "phone_light_inspected": "pass",
+        "phone_dark_inspected": "pass",
+        "crop": "pass",
+        "hand_safety": "pass",
+        "minimalism": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "alt_text_agreement": "pass"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_open_flow_v2.png",
+          "sha256": "43a77ba3387c4eb461e57fc5f425d43da02db558d013dc6acebf8869be1a2f5f"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_open_flow_v2.webp",
+          "sha256": "3a4387bf2c2996d7a5f55ed53e082cdb8e7bde628212b9f744d59a55a63a967f"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_open_flow_v2.txt",
+          "sha256": "20cec3c7ce0aeef077745db060bfb2c377a978527220c24ec221cb6812935396"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_open_flow_v2_light.png",
+          "sha256": "e0dd01b4c83e3d17c6b3c5c83e7ed9a8f34fed46a666ec8d3799875f984f3110"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_open_flow_v2_dark.png",
+          "sha256": "31189fd3b24da69d8e26f14e77af676655e3882f26bfd74b6741cc222ece1367"
+        }
+      },
+      "source_guide_id": "reviewed_hario_switch_v1",
+      "source_guide_revision": "b376a00df135a6a2210848e2b9dd97bd33150616f9b97cd4a0655c73043f289c",
+      "reviewed_profile_id": "hario_switch",
+      "reviewed_step_ids": [
+        "release"
+      ],
+      "reviewed_alt_text": "Coffee drains through the open Switch outlet beneath its intact base into the stable server.",
+      "manufacturer_references": [
+        "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+        "https://www.hario-usa.com/products/switch-immersion-dripper",
+        "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+        "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+        "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+        "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+      ],
+      "scope_limit": "Approved only as the completed open-valve draining state for release, not proof of pressing motion, elapsed time, water quantity, completed drainage or safe-to-remove temperature.",
+      "notes": [
+        "Corrected lower silicone cylinder is present under the support flange. The thin translucent paddle lies flush/open as specified by Hario; no invented visible ball or side hinge.",
+        "Coffee forms one contained path through the outlet into the stable server; liquid stays below the fitted paper top.",
+        "Raw, delivered and phone light/dark images retain the visible paddle, outlet, stream and receiving coffee."
+      ]
+    },
+    {
+      "scene_id": "auto_brew_flow",
+      "version": 2,
+      "verdict": "approved",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_raw_inspected": "pass",
+        "delivered_inspected": "pass",
+        "phone_light_inspected": "pass",
+        "phone_dark_inspected": "pass",
+        "crop": "pass",
+        "hand_safety": "pass",
+        "minimalism": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "alt_text_agreement": "pass"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_brew_flow_v2.png",
+          "sha256": "941f869f692a3284665d9eee5de7dd46e255bbbfbdd5457b02256ead9dfcfee5"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_brew_flow_v2.webp",
+          "sha256": "1f92e48220b8515b455e1f322a2efe42c3a256b2a24b5c4bc46063ac084ba4fc"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/auto_brew_flow_v2.txt",
+          "sha256": "bcc6af621bf5c265f04d30369c5fdb9d234b6dd23685b6ed27dc732183b854f7"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/auto_brew_flow_v2_light.png",
+          "sha256": "484d53503849d41770f9227bfeb9df40660ca3054627f3cb2e882bcfbd7b959c"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/auto_brew_flow_v2_dark.png",
+          "sha256": "9944e5b42624c7dd28255aa5895e3a045a7c88f80e83b3397cef1d001b67af40"
+        }
+      },
+      "source_guide_id": "reviewed_automatic_drip_v1",
+      "source_guide_revision": "68a4deaf154f575d9d1b1a852666ee0545cdd3a9b8d5adb68cba1fb69f9b5ae8",
+      "reviewed_profile_id": "automatic_batch_generic",
+      "reviewed_step_ids": [
+        "start"
+      ],
+      "reviewed_alt_text": "Coffee drains from the supported KBGV Select basket through its mixing-lid tube into the seated glass carafe.",
+      "manufacturer_references": [
+        "https://counterculturecoffee.com/pages/auto-drip",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009389881-How-much-coffee-should-I-use-in-my-Moccamaster",
+        "https://support.moccamaster.com/hc/en-us/article_attachments/1500014339002",
+        "https://www.moccamaster.eu/pub/media/handleidingen/talen/Manual_SELECT.pdf",
+        "https://www.moccamaster.nl/pub/media/handleidingen/Gebruiksaanwijzing-Cup-One-2.0-zonder-wegwerpbeker.pdf",
+        "https://us.moccamaster.com/products/cup-one",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009392081-What-size-filter-does-my-Moccamaster-use",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009385562-Can-grind-size-make-my-coffee-taste-bitter-or-weak",
+        "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009428621-How-frequently-should-I-descale-and-clean-my-brewer-and-what-should-I-use",
+        "https://sca.coffee/sca-news/2023/10/10/new-sca-certified-home-brewer-technivorm-moccamaster-kbgv-select-fjpd6"
+      ],
+      "scope_limit": "KBGV/Select-style assembled brewing state only. Does not demonstrate pressing brew, selector setting, batch input, numeric capacity, power-switch position or transfer machine-specific controls to an unidentified brewer.",
+      "notes": [
+        "The basket now has an actual support bracket from the tower, and coffee drains via a fitted mixing-lid tube into the seated glass carafe.",
+        "Required covers remain fitted; stable carafe, contained stream and adequate headroom are visible.",
+        "The narrow stream and mixing tube remain legible at320px on light/dark backgrounds."
+      ]
+    },
+    {
+      "scene_id": "auto_no_flow",
+      "version": 1,
+      "verdict": "approved",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_raw_inspected": "pass",
+        "delivered_inspected": "pass",
+        "phone_light_inspected": "pass",
+        "phone_dark_inspected": "pass",
+        "crop": "pass",
+        "hand_safety": "pass",
+        "minimalism": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "alt_text_agreement": "pass"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_no_flow_v1.png",
+          "sha256": "dce89e20ede36a8d80dc199982d5ac2316f13c7d9023728a8383376aae884ced"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_no_flow_v1.webp",
+          "sha256": "f8a43dfa3d3dcfc561087d87df0c02ec5c702184076d2beaffdd86e391be0a4c"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/auto_no_flow_v1.txt",
+          "sha256": "f7aee9352804a9de9c9be1323cc82a933804426b99138203f22716635d8057fb"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/auto_no_flow_v1_light.png",
+          "sha256": "c30761981b01962663c6735e635e88531b1bf8f5186eeffc1a86a860401ba441"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/auto_no_flow_v1_dark.png",
+          "sha256": "5b0cfd1cf9a6c85c0ba7869bc44a837c57d7153d3c18a9c43e15847204718670"
+        }
+      },
+      "source_guide_id": "reviewed_automatic_drip_v1",
+      "source_guide_revision": "68a4deaf154f575d9d1b1a852666ee0545cdd3a9b8d5adb68cba1fb69f9b5ae8",
+      "reviewed_profile_id": "automatic_batch_generic",
+      "reviewed_step_ids": [
+        "finish"
+      ],
+      "reviewed_alt_text": "The KBGV Select glass carafe remains beneath its supported basket after visible flow has ended; its mixing-lid tube stays fitted.",
+      "manufacturer_references": [
+        "https://counterculturecoffee.com/pages/auto-drip",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009389881-How-much-coffee-should-I-use-in-my-Moccamaster",
+        "https://support.moccamaster.com/hc/en-us/article_attachments/1500014339002",
+        "https://www.moccamaster.eu/pub/media/handleidingen/talen/Manual_SELECT.pdf",
+        "https://www.moccamaster.nl/pub/media/handleidingen/Gebruiksaanwijzing-Cup-One-2.0-zonder-wegwerpbeker.pdf",
+        "https://us.moccamaster.com/products/cup-one",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009392081-What-size-filter-does-my-Moccamaster-use",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009385562-Can-grind-size-make-my-coffee-taste-bitter-or-weak",
+        "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009428621-How-frequently-should-I-descale-and-clean-my-brewer-and-what-should-I-use",
+        "https://sca.coffee/sca-news/2023/10/10/new-sca-certified-home-brewer-technivorm-moccamaster-kbgv-select-fjpd6"
+      ],
+      "scope_limit": "KBGV/Select-style receiving vessel kept in place at visually ended-flow state only; no claim that empty reservoir alone establishes completion, no timed auto-off/power-off proof, and no universal model-control claim.",
+      "notes": [
+        "Supported basket, seated receiving carafe, fitted lids and mixing tube remain intact. Reservoir is empty and no stream/drops leave the tube.",
+        "Phone images clearly distinguish stopped flow from the active-flow image."
+      ]
+    },
+    {
+      "scene_id": "auto_swirl",
+      "version": 1,
+      "verdict": "approved",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_raw_inspected": "pass",
+        "delivered_inspected": "pass",
+        "phone_light_inspected": "pass",
+        "phone_dark_inspected": "pass",
+        "crop": "pass",
+        "hand_safety": "pass",
+        "minimalism": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "alt_text_agreement": "pass"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_swirl_v1.png",
+          "sha256": "0ece2a0204cbeae623b7a8d565c1a88362853829efdc530577c8b62ea1ad4386"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_swirl_v1.webp",
+          "sha256": "c943a59f5712f5f51027978f1bf35dca617ba2df9c43639d5d914f3378573d7d"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/auto_swirl_v1.txt",
+          "sha256": "6e2391371f25c255efc53dbe008a223b1f9bdca012c382bd6e2c5506bfe0a8ab"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/auto_swirl_v1_light.png",
+          "sha256": "20d57a3d55c9a70b3d5061676dcdf8473b6fec650269d78102da33c37871fba5"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/auto_swirl_v1_dark.png",
+          "sha256": "6eac663f6ca128ff1ff20d9e3d57d2eb02b8ed8eb623b42a3c6ee89da7b4c1d0"
+        }
+      },
+      "source_guide_id": "reviewed_automatic_drip_v1",
+      "source_guide_revision": "68a4deaf154f575d9d1b1a852666ee0545cdd3a9b8d5adb68cba1fb69f9b5ae8",
+      "reviewed_profile_id": "automatic_batch_generic",
+      "reviewed_step_ids": [
+        "serve"
+      ],
+      "reviewed_alt_text": "A hand grips only the KBGV glass carafe handle while the fitted mixing lid and coffee remain safely in place.",
+      "manufacturer_references": [
+        "https://counterculturecoffee.com/pages/auto-drip",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009389881-How-much-coffee-should-I-use-in-my-Moccamaster",
+        "https://support.moccamaster.com/hc/en-us/article_attachments/1500014339002",
+        "https://www.moccamaster.eu/pub/media/handleidingen/talen/Manual_SELECT.pdf",
+        "https://www.moccamaster.nl/pub/media/handleidingen/Gebruiksaanwijzing-Cup-One-2.0-zonder-wegwerpbeker.pdf",
+        "https://us.moccamaster.com/products/cup-one",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009392081-What-size-filter-does-my-Moccamaster-use",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009385562-Can-grind-size-make-my-coffee-taste-bitter-or-weak",
+        "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009428621-How-frequently-should-I-descale-and-clean-my-brewer-and-what-should-I-use",
+        "https://sca.coffee/sca-news/2023/10/10/new-sca-certified-home-brewer-technivorm-moccamaster-kbgv-select-fjpd6"
+      ],
+      "scope_limit": "Safe handle grip and gentle mixing/ready-to-serve subaction only. A static image does not establish served output, pouring, switching off, measured volume or temperature. Do not require swirl as a new action where source instructions merely say serve.",
+      "notes": [
+        "A coherent hand holds only the insulating carafe handle; the fitted mixing lid/tube remain in place. The glass body is untouched.",
+        "Contained coffee has headroom and a subtle surface swirl; the actual handle and vessel remain clear at phone size."
+      ]
+    },
+    {
+      "scene_id": "wave155_drain_remove",
+      "version": 2,
+      "verdict": "approved",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_raw_inspected": "pass",
+        "delivered_inspected": "pass",
+        "phone_light_inspected": "pass",
+        "phone_dark_inspected": "pass",
+        "crop": "pass",
+        "hand_safety": "pass",
+        "minimalism": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass",
+        "alt_text_agreement": "pass"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/wave155_drain_remove_v2.png",
+          "sha256": "8bd1dc352912de052ffd4246d9b69c974bba5d0549d711a2eae1600bad3903b6"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/wave155_drain_remove_v2.webp",
+          "sha256": "45be3a31656bc7ddcace9121ba11bc54f83782425a0c6f003ce4ba3c574babbf"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/wave155_drain_remove_v2.txt",
+          "sha256": "c08dbe7ade0e752c14d36409603c4d724bdbaf97bbbcff4c154c43c96f58e891"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/wave155_drain_remove_v2_light.png",
+          "sha256": "1801c7e855ea465a855c2a2691289a3f01703cf92f3a649dfae3368ef1e6da2a"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/wave155_drain_remove_v2_dark.png",
+          "sha256": "48223283982837bdbad5f8b1d22aa6b46146adb8b6d0474d048d868d195997b7"
+        }
+      },
+      "source_guide_id": "reviewed_kalita_wave_v1",
+      "source_guide_revision": "71b62fca70557fc5c935a81c794b7fa97eca62aff99e610ab276bdea67dc32e6",
+      "reviewed_profile_id": "manual_wave_155",
+      "reviewed_step_ids": [
+        "drain_serve"
+      ],
+      "reviewed_alt_text": "The drained Wave155 rests on its broad steel support flange on a heat-safe dish beside a server of coffee.",
+      "manufacturer_references": [
+        "https://ozonecoffee.co.uk/pages/kalita-wave-brew-guide",
+        "https://kalitausa.com/products/kalita-wave-185-stainless-steel-coffee-dripper",
+        "https://kalitausa.com/products/kalita-wave-185-glass-dripper",
+        "https://kalitausa.com/products/kalita-mino-ceramic-dripper-185-sand-beige"
+      ],
+      "scope_limit": "Removed, drained Wave155-style stainless brewer placed on a suitable surface beside collected coffee only. Not proof of dose, elapsed150-180s, actual temperature, measured output or serving already completed.",
+      "notes": [
+        "The matching pleated paper and corrugated steel Wave-style body now retain the real broad metal support flange; the flange rests on a separate suitable dish.",
+        "Brewer has been removed from the server, with no stream/standing liquid shown and collected coffee in the adjacent stable server.",
+        "At320px the dish, flange, paper, handle and separate receiving server remain distinct in both backgrounds."
+      ]
+    }
+  ],
+  "counts": {
+    "approved": 5,
+    "rejected": 4,
+    "total": 9
+  }
+}

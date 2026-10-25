@@ -1,0 +1,578 @@
+{
+  "schema_version": 1,
+  "purpose": "Independent visual review only. Every selected raw, delivered WebP and320px light/dark composite was inspected. Approvals bind these exact bytes, alt text and explicitly limited action/state; no runtime admission or native app verification. Previous independent-root-scenes.json is preserved.",
+  "primary_source_checks": [
+    "Official Hario SSD manual page1 and current primary product photograph visually inspected; retained under source-checks.",
+    "Official Moccamaster Select manual pages2-3 visually inspected; actual bracket/lid and model selector differences checked.",
+    "Actual recipe.steps for every reviewed binding and canonical exact P1 stage context inspected.",
+    "Melitta actual1x4 manufacturer reference silhouette visually inspected."
+  ],
+  "reviews": [
+    {
+      "scene_id": "auto_ready",
+      "version": 1,
+      "verdict": "rejected",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "minimalism": "pass",
+        "equipment_geometry": "fail",
+        "action_state": "fail",
+        "alt_text_agreement": "fail"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_ready_v1.png",
+          "sha256": "2e6dc6ed86f5298118bc0d71d50f731d993c4e2e535f2606475291e15410e855"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_ready_v1.webp",
+          "sha256": "967424164d8fe6cad0187b184f4bba230d3b87b919d5e64040210cc1be4a6a0a"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/auto_ready_v1.txt",
+          "sha256": "1827bdd7d22554b7424aaadfe80b95c251eb8f27a37385f79bd068fb53370abe"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/auto_ready_v1_light_320.png",
+          "sha256": "8de3c9e7a1774da011b0a743b97b35c6f80f887c65fb831a6c86fe2f4c8d4a0a"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/auto_ready_v1_dark_320.png",
+          "sha256": "646423c53285b0dc05b97b799f183fd7de6b7dc284ba13350ae168d69b7043da"
+        }
+      },
+      "source_guide_id": "reviewed_automatic_drip_v1",
+      "source_guide_revision": "68a4deaf154f575d9d1b1a852666ee0545cdd3a9b8d5adb68cba1fb69f9b5ae8",
+      "reviewed_profile_id": "automatic_batch_generic",
+      "reviewed_step_ids": [
+        "prepare"
+      ],
+      "reviewed_p1_targets": [],
+      "reviewed_alt_text": "An idle compatible automatic paper brewer has its correct fitted basket paper and empty glass receiving carafe seated securely; power is off.",
+      "manufacturer_references": [
+        "https://counterculturecoffee.com/pages/auto-drip",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009389881-How-much-coffee-should-I-use-in-my-Moccamaster",
+        "https://support.moccamaster.com/hc/en-us/article_attachments/1500014339002",
+        "https://www.moccamaster.eu/pub/media/handleidingen/talen/Manual_SELECT.pdf",
+        "https://www.moccamaster.nl/pub/media/handleidingen/Gebruiksaanwijzing-Cup-One-2.0-zonder-wegwerpbeker.pdf",
+        "https://us.moccamaster.com/products/cup-one",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009392081-What-size-filter-does-my-Moccamaster-use",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009385562-Can-grind-size-make-my-coffee-taste-bitter-or-weak",
+        "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009428621-How-frequently-should-I-descale-and-clean-my-brewer-and-what-should-I-use",
+        "https://sca.coffee/sca-news/2023/10/10/new-sca-certified-home-brewer-technivorm-moccamaster-kbgv-select-fjpd6"
+      ],
+      "notes": [
+        "The isolated basket has no visible load-bearing bracket to the tower and hangs above the carafe. In the manufacturer's Figure A the filter holder is seated in a separate tower-mounted bracket. Do not teach this floating preparation assembly.",
+        "Off state and exact batch compatibility cannot be read from unlabeled rockers. Preparation does not establish first-use flushing or outlet inspection."
+      ]
+    },
+    {
+      "scene_id": "auto_water_full",
+      "version": 1,
+      "verdict": "rejected",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "minimalism": "pass",
+        "equipment_geometry": "fail",
+        "action_state": "fail",
+        "alt_text_agreement": "pass_with_scope"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_water_full_v1.png",
+          "sha256": "29909e1b35bb3e1d908d8c23e8e5f4344e01ebe1c09aa75e3886c3f9d1ad87b1"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_water_full_v1.webp",
+          "sha256": "12ec23e14d08ce8f2b8f0ed5112623efd8b18e92099402d0aa6c3ca90a5b1385"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/auto_water_full_v1.txt",
+          "sha256": "0cce4c050e6ed0e06e1bfec4a2d5c53c60f3b7f49156ade99c3034c33c12bbe8"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/auto_water_full_v1_light_320.png",
+          "sha256": "9219b0f9164eb80304f283652e7884e6f14b19e471ff96b9a2aff566ebaffb63"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/auto_water_full_v1_dark_320.png",
+          "sha256": "135bc4d01561299a8ead96b67b60b23fa9cb326c189ac788eb86a9706f0e322b"
+        }
+      },
+      "source_guide_id": "reviewed_automatic_drip_v1",
+      "source_guide_revision": "68a4deaf154f575d9d1b1a852666ee0545cdd3a9b8d5adb68cba1fb69f9b5ae8",
+      "reviewed_profile_id": "automatic_batch_generic",
+      "reviewed_step_ids": [
+        "water"
+      ],
+      "reviewed_p1_targets": [
+        "p1_auto_batch_1000_60_stage_02_instruction"
+      ],
+      "reviewed_alt_text": "A clean jug transfers cold water into the open reservoir of an unpowered compatible automatic brewer, below its maximum fill.",
+      "manufacturer_references": [
+        "https://counterculturecoffee.com/pages/auto-drip",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009389881-How-much-coffee-should-I-use-in-my-Moccamaster",
+        "https://support.moccamaster.com/hc/en-us/article_attachments/1500014339002",
+        "https://www.moccamaster.eu/pub/media/handleidingen/talen/Manual_SELECT.pdf",
+        "https://www.moccamaster.nl/pub/media/handleidingen/Gebruiksaanwijzing-Cup-One-2.0-zonder-wegwerpbeker.pdf",
+        "https://us.moccamaster.com/products/cup-one",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009392081-What-size-filter-does-my-Moccamaster-use",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009385562-Can-grind-size-make-my-coffee-taste-bitter-or-weak",
+        "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009428621-How-frequently-should-I-descale-and-clean-my-brewer-and-what-should-I-use",
+        "https://sca.coffee/sca-news/2023/10/10/new-sca-certified-home-brewer-technivorm-moccamaster-kbgv-select-fjpd6"
+      ],
+      "notes": [
+        "Basket base is seated directly on the carafe lid, with no independent tower-mounted bracket/gap as shown by the actual Select/manual Figure A. The jug-to-reservoir action is clear, but physical receiving assembly is misleading.",
+        "No exact 1000g/1000mL fill or power/selector state can be inferred from tank level and unlabeled controls. Retain target quantities in the binding text."
+      ]
+    },
+    {
+      "scene_id": "auto_water_half",
+      "version": 1,
+      "verdict": "approved",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "minimalism": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass_with_scope",
+        "alt_text_agreement": "pass_with_scope"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/auto_water_half_v1.png",
+          "sha256": "82b83097cb7bbea26873b5438a0bcd4d87d71824e3e4bfc54b3db71fae61552c"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/auto_water_half_v1.webp",
+          "sha256": "3c01a7db56de3a1768221af5ef8d3fc2e100117f8b279d22b16310620ee50b19"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/auto_water_half_v1.txt",
+          "sha256": "05df87b5470605a9e6915bb36b90d08242f1d248c70bd873245ab9274ba8c14d"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/auto_water_half_v1_light_320.png",
+          "sha256": "ae1aa2ccb96b75d3506ab63344f3ebc8bdd2403b3f5c12728cf8e297c9a994ac"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/auto_water_half_v1_dark_320.png",
+          "sha256": "527defc8f88b8ac608ce45a46b620a37c17e3fa42ecd1a6b61ac8a0e0112b3b7"
+        }
+      },
+      "source_guide_id": "reviewed_automatic_drip_v1",
+      "source_guide_revision": "68a4deaf154f575d9d1b1a852666ee0545cdd3a9b8d5adb68cba1fb69f9b5ae8",
+      "reviewed_profile_id": "automatic_batch_generic",
+      "reviewed_step_ids": [],
+      "reviewed_p1_targets": [
+        "p1_auto_batch_500_30_stage_02_instruction"
+      ],
+      "reviewed_alt_text": "Cold water is transferred into the KBGV Select reservoir with power off, leaving substantial headroom for the half batch.",
+      "manufacturer_references": [
+        "https://counterculturecoffee.com/pages/auto-drip",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009389881-How-much-coffee-should-I-use-in-my-Moccamaster",
+        "https://support.moccamaster.com/hc/en-us/article_attachments/1500014339002",
+        "https://www.moccamaster.eu/pub/media/handleidingen/talen/Manual_SELECT.pdf",
+        "https://www.moccamaster.nl/pub/media/handleidingen/Gebruiksaanwijzing-Cup-One-2.0-zonder-wegwerpbeker.pdf",
+        "https://us.moccamaster.com/products/cup-one",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009392081-What-size-filter-does-my-Moccamaster-use",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009385562-Can-grind-size-make-my-coffee-taste-bitter-or-weak",
+        "https://cdn.shopify.com/s/files/1/0528/3545/1043/files/v23.0_ENG_MM_IM_web.pdf?v=1621537159",
+        "https://support.moccamaster.com/hc/en-us/articles/1500009428621-How-frequently-should-I-descale-and-clean-my-brewer-and-what-should-I-use",
+        "https://sca.coffee/sca-news/2023/10/10/new-sca-certified-home-brewer-technivorm-moccamaster-kbgv-select-fjpd6"
+      ],
+      "notes": [
+        "Approved only for the reservoir-filling subaction: clean jug into open tank with substantial headroom, separate tower-mounted basket support, lidded glass carafe and mixing tube. Hardware layout matches the manufacturer's Figure A at this level.",
+        "Not approval of half/full selector or off-position instruction: symbols are absent and cannot be read. Exact measured 500g and compliance with the actual machine maximum remain in accompanying target guidance; no dose or selector recipe is transferred."
+      ]
+    },
+    {
+      "scene_id": "wave155_pour",
+      "version": 3,
+      "verdict": "approved",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "minimalism": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass_with_scope",
+        "alt_text_agreement": "pass_with_scope"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/wave155_pour_v3.png",
+          "sha256": "64d284f69b431c7cedd444cab01086304162602c28f4c9499c15304821d7fa7e"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/wave155_pour_v3.webp",
+          "sha256": "0e72c03dd82a8dedfcb4b4f27cf15206442f692447b22a9fdfdfaeeca413d807"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/wave155_pour_v3.txt",
+          "sha256": "4e806b6753c93029a1f6b60afd4e1fc19cf232675a32755740d55b42b346b4a3"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/wave155_pour_v3_light_320.png",
+          "sha256": "e60631c438dc0ddb20336a62df1bb0b153c3d108c18f62fadc554daba9c430c6"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/wave155_pour_v3_dark_320.png",
+          "sha256": "76da2be993806582af208081dfdc00d22594ba39cc696a656fd7b1f458a5654b"
+        }
+      },
+      "source_guide_id": "reviewed_kalita_wave_v1",
+      "source_guide_revision": "71b62fca70557fc5c935a81c794b7fa97eca62aff99e610ab276bdea67dc32e6",
+      "reviewed_profile_id": "manual_wave_155",
+      "reviewed_step_ids": [
+        "bloom",
+        "pour_one",
+        "pour_two"
+      ],
+      "reviewed_p1_targets": [],
+      "reviewed_alt_text": "A narrow kettle stream wets coffee inside the small horizontally corrugated stainless Wave155, keeping the pleated paper open and leaving headroom.",
+      "manufacturer_references": [
+        "https://ozonecoffee.co.uk/pages/kalita-wave-brew-guide",
+        "https://kalitausa.com/products/kalita-wave-185-stainless-steel-coffee-dripper",
+        "https://kalitausa.com/products/kalita-wave-185-glass-dripper",
+        "https://kalitausa.com/products/kalita-mino-ceramic-dripper-185-sand-beige"
+      ],
+      "notes": [
+        "Approved for narrow-stream pouring on the coffee inside the matching open pleated paper and stainless horizontal-corrugated Wave155, with safe headroom and downward drainage. Full brewer/server are visible at phone size.",
+        "Does not depict measured 50g/150g/250g, whole-bed coverage over time, circular motion, elapsed timing, or completed bloom; preserve all exact targets/instructions beside the illustration. No Wave185 or different-material transfer."
+      ]
+    },
+    {
+      "scene_id": "melitta_outlets",
+      "version": 2,
+      "verdict": "approved",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "minimalism": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass_with_scope",
+        "alt_text_agreement": "pass_with_scope"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/melitta_outlets_v2.png",
+          "sha256": "711528bcd2e90f324ce3b40d8fc31f78b876cdd3e7bb4278459b09b4c2cd9ac0"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/melitta_outlets_v2.webp",
+          "sha256": "f358ddf1cbd59231f04192290176534295fbf7f878f60839894c5e7c966d463a"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/melitta_outlets_v2.txt",
+          "sha256": "6e0776a5ed694732913ed37af84038e345776156f2fea596b085beb286120282"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/melitta_outlets_v2_light_320.png",
+          "sha256": "6762bb9f8ade00442a7ff240cbba5f61f05fdf0fed173834fbe80066c761985b"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/melitta_outlets_v2_dark_320.png",
+          "sha256": "a9b59c8c079de5ce040a2b194ac375919dd9a7dbde259fac39f0901aa3d1fc2e"
+        }
+      },
+      "source_guide_id": "reviewed_melitta_v1",
+      "source_guide_revision": "5f2c85301741e492f4fb50357330216b4db84cc764981dd8cbe48ee84c363683",
+      "reviewed_profile_id": "manual_wedge_generic",
+      "reviewed_step_ids": [
+        "setup"
+      ],
+      "reviewed_p1_targets": [],
+      "reviewed_alt_text": "The underside of the dry Melitta1x4 shows two clear outlet holes and its broad support plate; it is held only by the handle for inspection.",
+      "manufacturer_references": [
+        "https://www.melitta-international.com/accessories/Manual-Coffee-Preparation/Coffeefilters-pots/Coffee-Filter-1x4",
+        "https://www.melitta.co.uk/faq/filter-papers",
+        "https://library.sweetmarias.com/wp-content/uploads/2020/08/Drip-Brewing-Pourover-Filtercone-Tip-Sheet.pdf",
+        "https://shoponline.melitta.com/products/1-cup-pour-over-coffee-brew-cone-black",
+        "https://www.melitta.co.jp/enjoyment/how_to/brewing_with_hasamicoffeefilter/",
+        "https://voltagecoffee.com/melitta/"
+      ],
+      "notes": [
+        "The actual black European1x4 external silhouette/support plate matches the manufacturer reference, and two underside outlets remain separable on both phone backgrounds. Dry handle-only grip is safe.",
+        "Approval is only the outlet-inspection subaction of setup, before seating. It does not show a stable server assembly, prove holes have been physically cleaned, or check batch headroom. Right wrist intentionally exits the frame; equipment and outlet details remain fully visible."
+      ]
+    },
+    {
+      "scene_id": "v60_wait",
+      "version": 1,
+      "verdict": "approved",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "minimalism": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass_with_scope",
+        "alt_text_agreement": "pass_with_scope"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/v60_wait_v1.png",
+          "sha256": "0c463c768a38a1a2fe70b34894c9dc621822277ea755cc6e6e51b9fec37a2fe9"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/v60_wait_v1.webp",
+          "sha256": "079356aec8efe5e80420c0530166cce9cb5ab25fa025510a610851676c090cee"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/v60_wait_v1.txt",
+          "sha256": "4cf0a023af7a0c94d12b51178851ab1d6e958bd9c3cdd6fcd7313dc72b4653ee"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/v60_wait_v1_light_320.png",
+          "sha256": "219d95aee213d60bef4a8168082263f18511f652dd7e052cf35558ff2dc61d34"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/v60_wait_v1_dark_320.png",
+          "sha256": "30bf13346b44229a37dba2572cdfe8c38bbabf20b532b37323e00ce7113c67d9"
+        }
+      },
+      "source_guide_id": "reviewed_v60_v1",
+      "source_guide_revision": "1dd141d69378f3f8a99a943d74db00851333782064850a270f6b176ed969f83f",
+      "reviewed_profile_id": "v60_02",
+      "reviewed_step_ids": [
+        "bloom_wait",
+        "pause"
+      ],
+      "reviewed_p1_targets": [],
+      "reviewed_alt_text": "The V60 remains on its server with a shallow wet coffee bed and occasional drips; there is no active pour.",
+      "manufacturer_references": [
+        "https://www.hario.co.uk/blogs/news/how-to-brew-coffee-with-hario-v60-coffee-dripper",
+        "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+        "https://www.hario-usa.com/products/vd-01t",
+        "https://www.hario-usa.com/products/v60-plastic-coffee-dripper-02",
+        "https://www.hario-usa.com/products/v60-plastic-dripper-03",
+        "https://www.hario-usa.com/products/v60-meteor-filters-02",
+        "https://www.hario.co.uk/blogs/hario-ambassadors/hario-v60-recipe-interview-with-hario-ambassador-scott-rao",
+        "https://www.hario.co.uk/blogs/hario-ambassadors/hario-v60-recipe-interview-with-hario-ambassador-tetsu-kasuya",
+        "https://kurasu.kyoto/blogs/recipe/japanese-brew-guide-on-iced-pour-over-coffee",
+        "https://assets.breville.com/ZCG495/manual-encoreesp-v1-0-en-010923.pdf"
+      ],
+      "notes": [
+        "Approved for a stationary V60 on its stable server with wet coffee, no kettle/pour, and only separated downward drops. Both phone themes preserve the paper and flow cue.",
+        "Level is a schematic wet/draining state, not a measured45g or150g volume, nor a completed fully drained bed. Keep the wait duration and observation of falling liquid in text; the image cannot establish time elapsed."
+      ]
+    },
+    {
+      "scene_id": "phin_screw_light",
+      "version": 1,
+      "verdict": "rejected",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "minimalism": "pass",
+        "equipment_geometry": "fail",
+        "action_state": "fail",
+        "alt_text_agreement": "fail"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/phin_screw_light_v1.png",
+          "sha256": "8101beb94bc1a404059ad23f3cac3a4cee4c58767ded5b23445aa2ed526f2ced"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/phin_screw_light_v1.webp",
+          "sha256": "afaf05b5eb69b443e585fdb7c6dbcb3bbbbfcd541170ccbffa3e6ba757b61f86"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/phin_screw_light_v1.txt",
+          "sha256": "1a2ba3af42bb474ff360cba16f66d6f14d6b78be94f00bb300b31450bf7cac96"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/phin_screw_light_v1_light_320.png",
+          "sha256": "38b75d8dea4f9698fe39106e2a25e4383b689b46a320652925176071e357be78"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/phin_screw_light_v1_dark_320.png",
+          "sha256": "6d804170c946853a1d1445179628173023fdadc6d7c5b64dcdbeb5fa19b0505a"
+        }
+      },
+      "source_guide_id": "reviewed_phin_v1",
+      "source_guide_revision": "f9029704de8da284a547189ca1c6949e47dff5e763b231085936369dced1b625",
+      "reviewed_profile_id": "vietnamese_phin",
+      "reviewed_step_ids": [],
+      "reviewed_p1_targets": [
+        "p1_phin_screw_18_120_stage_02_instruction"
+      ],
+      "reviewed_alt_text": "The screw phin disc rests lightly on a loose level coffee bed; no hand presses it and the coffee has room to swell.",
+      "manufacturer_references": [
+        "https://nguyencoffeesupply.com/blogs/vietnamese-coffee-brew-guide/traditional-vietnamese-drip-phin",
+        "https://nguyencoffeesupply.com/blogs/news/dialing-in-your-phin-how-to-make-the-best-vietnamese-phin-coffee?_pos=1&_psq=dialin&_ss=e&_v=1.0",
+        "https://nguyencoffeesupply.com/blogs/news/using-and-maintaining-a-vietnamese-phin-filter?_pos=2&_psq=phin+filter&_ss=e&_v=1.0",
+        "https://nguyencoffeesupply.com/pages/master-phin-filter-faq",
+        "https://www.nam.coffee/products/phin-filter-black"
+      ],
+      "notes": [
+        "The cutaway makes the insert anatomy visible but depicts a disc with a plain short knob and no central threaded pillar or discernible screw engagement. It reads as a gravity/drop-in disc, which is incompatible with this exact screw-insert stage.",
+        "No finger pressure is an improvement but does not establish the required engaged threads without compression. Cannot approve merely by a screw-phin alt label."
+      ]
+    },
+    {
+      "scene_id": "pulsar_water_height",
+      "version": 1,
+      "verdict": "approved",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "minimalism": "pass",
+        "equipment_geometry": "pass",
+        "action_state": "pass_with_scope",
+        "alt_text_agreement": "pass_with_scope"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/pulsar_water_height_v1.png",
+          "sha256": "eb6e7d51bb11013ffbd0bab3f824b5cd6e16f2f8cd10393c5d3b05d08d0eb1a4"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/pulsar_water_height_v1.webp",
+          "sha256": "36c9b2f4053a344831dc6454cce05c624ccd4c1e40a43db55a462eb9af8318b7"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/pulsar_water_height_v1.txt",
+          "sha256": "45bd1168940228addac7aa48208514c7aa923aa422fa44f340a0f39a8ce819af"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/pulsar_water_height_v1_light_320.png",
+          "sha256": "c913eedc818c98967d4529099257c0f560cfad1b65d3328c93d78cbb1508b014"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/pulsar_water_height_v1_dark_320.png",
+          "sha256": "8641c4aa99dc05fc1539d1c0cb34c7d00ba43f0ff18ddfffd9e91a102d788a22"
+        }
+      },
+      "source_guide_id": "reviewed_pulsar_v1",
+      "source_guide_revision": "b56f5c5961205febddfde7d95911eefd3afec6387d429da67319b9358e8cb6c0",
+      "reviewed_profile_id": "pulsar_standard",
+      "reviewed_step_ids": [
+        "open_and_pulse"
+      ],
+      "reviewed_p1_targets": [],
+      "reviewed_alt_text": "Conceptual section: a thin water layer sits just above a level granular coffee bed; the adjacent target states about one centimetre, not a measured reading.",
+      "manufacturer_references": [
+        "https://nextlevelbrewer.com/wp-content/uploads/2023/06/PulsarUserGuide.pdf",
+        "https://nextlevelbrewer.com/shop/nextlevel-pulsar-brewer/",
+        "https://coffeeadastra.com/2023/09/13/the-pulsar-dripper/",
+        "https://www.scottrao.com/blog/pulsar-recipe",
+        "https://kaldiscoffee.com/blogs/recipes/nextlevel-pulsar-dripper-brew-recipe",
+        "https://nextlevelbrewer.com/shop/pulsar-stainless-steel-filter-discs/",
+        "https://nextlevelbrewer.com/pulsar-mini-recipes/",
+        "https://nextlevelbrewer.com/brewing-suggestions/"
+      ],
+      "notes": [
+        "Approved only as explicitly conceptual supplementary water-height cue: a thin blue layer above a level granular coffee bed. It does not purport to show the actual Pulsar, valve, filter base, or dispersion cap.",
+        "No calibrated scale exists. About1cm must remain an adjacent textual target; do not infer an exact height or use this alone to teach valve operation or pouring through the cap. The simplified curved lower outline is not approval of invented Pulsar internals."
+      ]
+    },
+    {
+      "scene_id": "switch_retained",
+      "version": 1,
+      "verdict": "rejected",
+      "reviewer": "Codex independent cross-review /root/guidance_art_audit",
+      "reviewed_on": "2026-10-25",
+      "checks": {
+        "full_resolution": "pass",
+        "phone_light": "pass",
+        "phone_dark": "pass",
+        "hand_safety": "pass",
+        "crop_and_flow": "pass",
+        "minimalism": "pass",
+        "equipment_geometry": "fail",
+        "action_state": "fail",
+        "alt_text_agreement": "fail"
+      },
+      "evidence": {
+        "rawPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/masters/switch_retained_v1.png",
+          "sha256": "40e04edb343c33e943a6d70de35e26aa8faf1452c43c8d5adbcefba1da2053cd"
+        },
+        "candidatePath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/candidates/switch_retained_v1.webp",
+          "sha256": "a25045875c7cd1dd1d5b375ce199447c35e815aced751cf821061cb9ca3882f5"
+        },
+        "promptPath": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/prompts/switch_retained_v1.txt",
+          "sha256": "541ebdc47a28b70e86d2a99e340514cd398b43c5b918188e6b7f7a362c9622fb"
+        },
+        "phone_light": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_retained_v1_light_320.png",
+          "sha256": "0cda687394eae156e313cd77e953ca094d873b3890afa0f6171e580baf6db5f4"
+        },
+        "phone_dark": {
+          "path": "docs/brewing/generated-guidance-20261025/groups/pour-over/reviews/switch_retained_v1_dark_320.png",
+          "sha256": "e62524fb2c9d8bae0f9aa9eb6761700ccd5589af7be845b20c89693a6d700b05"
+        }
+      },
+      "source_guide_id": "reviewed_hario_switch_v1",
+      "source_guide_revision": "b376a00df135a6a2210848e2b9dd97bd33150616f9b97cd4a0655c73043f289c",
+      "reviewed_profile_id": "hario_switch",
+      "reviewed_step_ids": [
+        "fill",
+        "steep"
+      ],
+      "reviewed_p1_targets": [
+        "p1_switch_official_20_240_stage_02_instruction"
+      ],
+      "reviewed_alt_text": "The Hario Switch lever is raised closed and the shallow coffee-water mixture stays in the paper above the valve; no liquid drains into the server.",
+      "manufacturer_references": [
+        "https://www.hario.cc/Items/manual_pdf/SSD.pdf",
+        "https://www.hario-usa.com/products/switch-immersion-dripper",
+        "https://globalhario.com/products/hario-immersion-dripper-switchglass",
+        "https://www.hario.co.uk/pages/brew-guides-v60-intermediate",
+        "https://www.hario-europe.com/blogs/hario-community/ole-kristian-boens-switch-recipe",
+        "https://www.hario.co.uk/blogs/news/how-to-brew-with-the-hario-v60-switch"
+      ],
+      "notes": [
+        "Retained liquid and empty server correctly remove the old closed-valve draining contradiction. However, the black steep upright lever and exposed circular side hinge are invented relative to original SSD-200-B: the official manual/product photo show a slender translucent paddle rising only slightly above the silicone base when closed.",
+        "The specific closed control must be recognizable to teach this physical action. A raised generic lever is not sufficient for exact Hario Switch02 approval."
+      ]
+    }
+  ]
+}

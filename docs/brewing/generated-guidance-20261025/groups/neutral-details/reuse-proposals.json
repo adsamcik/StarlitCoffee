@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "reviewStatus": "candidate",
+  "sourceSceneId": "concept_coffee_level",
+  "sourcePath": "docs/brewing/generated-guidance-20261025/groups/generic-concepts/scenes/concept_coffee_level/candidate-v1.webp",
+  "sourceSha256": "ccf408afcd41f53828896682afd27155dd6f51715f43d0a94eaf215fb9b6a206",
+  "scope": "Conceptual loose level coffee bed only; no phin mechanism or actual loading motion inferred.",
+  "bindings": [
+    {
+      "contentId": "vietnamese_phin_add_coffee",
+      "targetFamilyId": "restricted_flow_gravity_concentrate",
+      "targetProfileId": "vietnamese_phin",
+      "targetContentRevision": "397bb4fba23e9d4bd1818ce5549f36178e427e13587cbd46a831eca233bee019",
+      "targetCatalog": "generic_p1",
+      "altText": "Conceptual end state: loose coffee forms an even level bed in an open receptacle; no phin insert mechanism is shown.",
+      "notes": "Common loose coffee/level-bed subaction only. Selected dose and actual phin loading/fitting remain in source instruction."
+    },
+    {
+      "contentId": "vietnamese_phin_level_coffee",
+      "targetFamilyId": "restricted_flow_gravity_concentrate",
+      "targetProfileId": "vietnamese_phin",
+      "targetContentRevision": "eee74d69c8094e2d406766b8df8cc00e1aa15c0a96895cffa9f59674fe3a07fe",
+      "targetCatalog": "generic_p1",
+      "altText": "Conceptual end state: loose coffee forms an even level bed in an open receptacle; no phin insert mechanism is shown.",
+      "notes": "Common loose coffee/level-bed subaction only. Selected dose and actual phin loading/fitting remain in source instruction."
+    }
+  ]
+}
