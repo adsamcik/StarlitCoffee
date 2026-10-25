@@ -1,7 +1,6 @@
 package com.adsamcik.starlitcoffee.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
-import com.adsamcik.starlitcoffee.util.BagCaptureSide
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,21 +41,19 @@ class BagScanCaptureViewModelTest {
     // --- Phase + photo state ---
 
     @Test
-    fun `initial state is capturing with no photos and front side`() {
+    fun `initial state is capturing with no photos`() {
         val state = viewModel.uiState.value
         assertEquals(BagScanPhase.CAPTURING, state.phase)
         assertTrue(state.photos.isEmpty())
-        assertEquals(BagCaptureSide.FRONT, state.nextSide)
         assertEquals(false, state.hasPhotos)
         assertTrue(state.sessionId.isNotBlank())
     }
 
     @Test
-    fun `next side becomes back after first photo`() {
+    fun `added photo is included in extraction input`() {
         viewModel.addPhoto("uri-a")
         val state = viewModel.uiState.value
         assertEquals(1, state.photos.size)
-        assertEquals(BagCaptureSide.BACK, state.nextSide)
         assertEquals("uri-a", state.photosCsv())
     }
 
@@ -102,13 +99,6 @@ class BagScanCaptureViewModelTest {
         viewModel.addPhoto("uri-a")
         viewModel.finishCapturing()
         assertEquals(BagScanPhase.REVIEWING, viewModel.uiState.value.phase)
-    }
-
-    @Test
-    fun `backToCapture returns to capturing phase`() {
-        viewModel.finishCapturing()
-        viewModel.backToCapture()
-        assertEquals(BagScanPhase.CAPTURING, viewModel.uiState.value.phase)
     }
 
     @Test

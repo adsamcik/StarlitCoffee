@@ -22,7 +22,6 @@
     <string name="label_coffee">Kafija</string>
     <string name="label_water">Ūdens</string>
     <string name="label_ratio">Attiecība</string>
-    <string name="label_strength">Stiprums</string>
     <string name="label_grind">Malums</string>
     <string name="label_filter">Filtrs</string>
 <string name="label_all">Visi</string>
@@ -34,7 +33,6 @@
     <string name="label_taste">Garša</string>
     <string name="label_rating">Vērtējums</string>
     <string name="label_notes">Piezīmes</string>
-    <string name="label_no_filter">Bez filtra</string>
     <string name="label_settings">Iestatījumi</string>
 
     <!-- Units -->
@@ -42,58 +40,23 @@
     <string name="unit_ml">ml</string>
 
     <!-- Format strings -->
-    <string name="format_coffee_grams">☕ %1$sg</string>
-    <string name="format_water_grams">💧 %1$sg</string>
-    <string name="format_ratio">1:%1$s</string>
-    <string name="format_bloom_grams">Bloom %1$.0fg</string>
-    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
-    <string name="format_cup_volume">🥤 ~%1$.0fg tasē</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
 
     <!-- Method Picker Screen -->
-    <string name="screen_method_picker_title">Konfigurējiet gatavošanu</string>
-    <string name="label_coffee_input">Kafija (g)</string>
-    <string name="label_water_input">Ūdens (g)</string>
-    <string name="label_brew_size_input">Pagatavojamais daudzums (ml)</string>
-    <string name="label_cup_size_input">Tases tilpums (ml)</string>
-    <string name="label_brew_size">Pagatavojamais daudzums</string>
-    <string name="label_cup_size">Tases tilpums</string>
-    <string name="format_capacity_note">%1$s ietilpst %2$dg ūdens — lielākām gatavošanām uzpilde notiek automātiski</string>
-    <string name="format_amount_cd">%1$s: %2$d %3$s</string>
     <string name="label_select_coffee_bag">Izvēlēties kafijas iepakojumu</string>
     <string name="cd_clear_bag">Notīrīt iepakojumu</string>
     <string name="format_brewing_with">Gatavošana ar %1$s</string>
-    <string name="label_freshness">Svaigums</string>
-    <string name="format_recommended_now">Ieteicams tagad: %1$s</string>
-    <string name="format_last_time">Iepriekš: %1$s</string>
-    <string name="action_save_as_favorite">Saglabāt izlasē</string>
     <string name="label_select_coffee_bag_title">Izvēlēties kafijas iepakojumu</string>
     <string name="msg_no_active_bags">Nav aktīvu iepakojumu. Pievienojiet kādu sadaļā Jūsu pupiņas.</string>
     <string name="action_brew_without_bag">Gatavot bez izvēlēta iepakojuma</string>
-    <string name="label_best_now">Pašlaik labākais</string>
-    <string name="format_grind_generic">Malums: %1$s – %2$s</string>
     <string name="format_weight_left"> · Atlicis %1$.0fg</string>
-    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
-    <string name="tip_pulsar">💡 Pulsar padoms: Lejot uzturiet ūdens līmeni ~1cm virs kafijas slāņa. Lielākā daļa lietotāju gatavo 20–25g vienai sabalansētai tasei.</string>
-    <string name="tip_generic">💡 Padoms: Sāciet ar noklusējuma attiecību un pielāgojiet stiprumu pēc garšas. Smalkāks malums ekstrahē vairāk, rupjāks — mazāk.</string>
 
     <!-- Amount & Strength Screen -->
     <string name="screen_brew_setup_title">Pagatavošanas iestatīšana</string>
-<string name="label_custom_ratio">Pielāgota attiecība (piem., 16)</string>
     <string name="label_temperature">Temperatūra (°C)</string>
-    <string name="label_bloom_multiplier">Bloom reizinātājs (piem., 3.0)</string>
-    <string name="label_pulse_count">Pulsu skaits</string>
 <string name="action_start_brewing">Sākt gatavošanu →</string>
-    <string name="label_advanced_options">Papildu iespējas</string>
     <string name="cd_collapse_advanced">Sakļaut papildu iespējas</string>
     <string name="cd_expand_advanced">Izvērst papildu iespējas</string>
-    <plurals name="format_coffee_dose_cd">
-        <item quantity="zero">Kafijas deva: %1$d gramu</item>
-        <item quantity="one">Kafijas deva: %1$d grams</item>
-        <item quantity="other">Kafijas deva: %1$d grami</item>
-    </plurals>
-    <string name="label_decrease">Samazināt %1$s</string>
-    <string name="label_increase">Palielināt %1$s</string>
 
     <!-- Grind Prep Screen -->
 <string name="action_ready_to_brew_short">Gatavs gatavošanai</string>
@@ -285,9 +248,6 @@
     <string name="action_open_app_settings">Atvērt sistēmas iestatījumus</string>
 
     <!-- Water Retention (info sheet) -->
-    <string name="label_water_retention">Ūdens aizture</string>
-    <string name="format_retention_explanation">Kafijas biezumi ūdenī absorbē apmēram 2× savu sauso svaru. Ar %1$.0fg kafijas biezumi satur ~%2$.0fg, un Jūsu tasē paliek ~%3$.0fg.\n\nTas ir aprēķins — tumši grauzdējumi absorbē nedaudz vairāk, gaiši nedaudz mazāk.</string>
-    <string name="cd_about_cup_volume">Par tases tilpumu</string>
 
     <!-- Brew Visualization / Coffee Insights -->
 <!-- Grind notes -->
@@ -354,8 +314,6 @@
     <string name="adjust_clogged_no_grinder">Izmēģiniet daudz rupjāku maluma iestatījumu</string>
 
     <!-- Accessibility content descriptions -->
-    <string name="cd_coffee_grams">Kafija: %1$s g</string>
-    <string name="cd_water_grams">Ūdens: %1$s g</string>
     <string name="cd_ratio">Attiecība 1 pret %1$s</string>
 
     <!-- AddBagSheet -->
@@ -397,8 +355,6 @@
     <!-- BrewRatingSheet -->
 
     <!-- EmptyStateBox -->
-<!-- FavoritesRow -->
-    <string name="label_your_favorites_section">Jūsu izlase</string>
 
     <!-- FieldChipPicker -->
 
@@ -422,9 +378,6 @@
     <string name="consent_service_unavailable">Mindlayer AI pakalpojums nav pieejams</string>
     <string name="consent_failed">Neizdevās pieprasīt AI piekļuvi</string>
 
-    <!-- PostBrewCheckInCard -->
-    <string name="label_how_was_last_cup">Kā izdevās Jūsu pēdējā tase?</string>
-    <string name="label_what_was_off">Kas nebija kā vajag?</string>
 
     <!-- RescanDeltaDialog -->
     <string name="msg_rescan_no_changes">Skenētā etiķete atbilst saglabātajam iepakojumam — nav ko atjaunināt.</string>
@@ -473,8 +426,6 @@
     <string name="action_discard">Atmest</string>
     <string name="action_keep_scanning">Turpināt skenēšanu</string>
 
-    <!-- MethodPickerScreen -->
-    <string name="action_sync_to_bag">Sinhronizēt ar iepakojumu</string>
 
     <!-- SettingsScreen -->
     <string name="label_quick_brew">Ātrā gatavošana</string>

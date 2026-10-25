@@ -22,7 +22,6 @@
     <string name="label_coffee">Kohv</string>
     <string name="label_water">Vesi</string>
     <string name="label_ratio">Suhe</string>
-    <string name="label_strength">Kangus</string>
     <string name="label_grind">Jahvatus</string>
     <string name="label_filter">Filter</string>
 <string name="label_all">Kõik</string>
@@ -34,7 +33,6 @@
     <string name="label_taste">Maitse</string>
     <string name="label_rating">Hinnang</string>
     <string name="label_notes">Märkmed</string>
-    <string name="label_no_filter">Filter puudub</string>
     <string name="label_settings">Seaded</string>
 
     <!-- Units -->
@@ -42,57 +40,23 @@
     <string name="unit_ml">ml</string>
 
     <!-- Format strings -->
-    <string name="format_coffee_grams">☕ %1$sg</string>
-    <string name="format_water_grams">💧 %1$sg</string>
-    <string name="format_ratio">1:%1$s</string>
-    <string name="format_bloom_grams">Bloom %1$.0fg</string>
-    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
-    <string name="format_cup_volume">🥤 ~%1$.0fg tassis</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
 
     <!-- Method Picker Screen -->
-    <string name="screen_method_picker_title">Seadista oma kohv</string>
-    <string name="label_coffee_input">Kohv (g)</string>
-    <string name="label_water_input">Vesi (g)</string>
-    <string name="label_brew_size_input">Valmistuse maht (ml)</string>
-    <string name="label_cup_size_input">Tassi maht (ml)</string>
-    <string name="label_brew_size">Valmistuse maht</string>
-    <string name="label_cup_size">Tassi maht</string>
-    <string name="format_capacity_note">%1$s mahutab %2$dg vett — suuremate valmistuste jaoks lisatakse vett automaatselt</string>
-    <string name="format_amount_cd">%1$s: %2$d %3$s</string>
     <string name="label_select_coffee_bag">Vali kohvipakk</string>
     <string name="cd_clear_bag">Eemalda pakk</string>
     <string name="format_brewing_with">Valmistamisel: %1$s</string>
-    <string name="label_freshness">Värskus</string>
-    <string name="format_recommended_now">Soovitatud praegu: %1$s</string>
-    <string name="format_last_time">Eelmine kord: %1$s</string>
-    <string name="action_save_as_favorite">Salvesta lemmikuks</string>
     <string name="label_select_coffee_bag_title">Vali kohvipakk</string>
     <string name="msg_no_active_bags">Aktiivseid pakke pole. Lisa üks jaotises „Sinu oad“.</string>
     <string name="action_brew_without_bag">Valmista ilma pakki valimata</string>
-    <string name="label_best_now">Praegu parim</string>
-    <string name="format_grind_generic">Jahvatus: %1$s – %2$s</string>
     <string name="format_weight_left"> · %1$.0fg alles</string>
-    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
-    <string name="tip_pulsar">💡 Pulsari nõuanne: hoia valamise ajal vedelik ~1cm kohvikihi kohal. Enamik kasutajaid valmistab tasakaalustatud üksiktassiks 20–25g.</string>
-    <string name="tip_generic">💡 Nõuanne: alusta vaikesuhtega ja kohanda kangust maitse järgi. Peenem jahvatus ekstraheerib rohkem, jämedam vähem.</string>
 
     <!-- Amount & Strength Screen -->
     <string name="screen_brew_setup_title">Valmistuse seaded</string>
-<string name="label_custom_ratio">Kohandatud suhe (nt 16)</string>
     <string name="label_temperature">Temperatuur (°C)</string>
-    <string name="label_bloom_multiplier">Bloomi kordaja (nt 3.0)</string>
-    <string name="label_pulse_count">Pulsside arv</string>
 <string name="action_start_brewing">Alusta valmistamist →</string>
-    <string name="label_advanced_options">Täpsemad valikud</string>
     <string name="cd_collapse_advanced">Ahenda täpsemad valikud</string>
     <string name="cd_expand_advanced">Laienda täpsemad valikud</string>
-    <plurals name="format_coffee_dose_cd">
-        <item quantity="one">Kohvi kogus: %1$d gramm</item>
-        <item quantity="other">Kohvi kogus: %1$d grammi</item>
-    </plurals>
-    <string name="label_decrease">Vähenda %1$s</string>
-    <string name="label_increase">Suurenda %1$s</string>
 
     <!-- Grind Prep Screen -->
 <string name="action_ready_to_brew_short">Valmis alustama</string>
@@ -284,9 +248,6 @@
     <string name="action_open_app_settings">Ava süsteemi seaded</string>
 
     <!-- Water Retention (info sheet) -->
-    <string name="label_water_retention">Veepeetus</string>
-    <string name="format_retention_explanation">Kohvipuru neelab umbes 2× oma kuivkaalust vett. %1$.0fg kohviga peab puru kinni ~%2$.0fg, jättes tassi ~%3$.0fg.\n\nSee on hinnang — tumedad röstid neelavad veidi rohkem, heledad veidi vähem.</string>
-    <string name="cd_about_cup_volume">Teave tassi mahu kohta</string>
 
     <!-- Brew Visualization / Coffee Insights -->
 <!-- Grind notes -->
@@ -353,8 +314,6 @@
     <string name="adjust_clogged_no_grinder">Proovi palju jämedamat jahvatusastet</string>
 
     <!-- Accessibility content descriptions -->
-    <string name="cd_coffee_grams">Kohv: %1$s grammi</string>
-    <string name="cd_water_grams">Vesi: %1$s grammi</string>
     <string name="cd_ratio">Suhe 1 kuni %1$s</string>
 
     <!-- AddBagSheet -->
@@ -396,8 +355,6 @@
     <!-- BrewRatingSheet -->
 
     <!-- EmptyStateBox -->
-<!-- FavoritesRow -->
-    <string name="label_your_favorites_section">Sinu lemmikud</string>
 
     <!-- FieldChipPicker -->
 
@@ -421,9 +378,6 @@
     <string name="consent_service_unavailable">Mindlayeri AI-teenus pole saadaval</string>
     <string name="consent_failed">AI juurdepääsu ei õnnestunud taotleda</string>
 
-    <!-- PostBrewCheckInCard -->
-    <string name="label_how_was_last_cup">Kuidas su eelmine tass oli?</string>
-    <string name="label_what_was_off">Mis oli valesti?</string>
 
     <!-- RescanDeltaDialog -->
     <string name="msg_rescan_no_changes">Skannitud etikett vastab salvestatud pakile — pole midagi uuendada.</string>
@@ -472,8 +426,6 @@
     <string name="action_discard">Loobu</string>
     <string name="action_keep_scanning">Jätka skannimist</string>
 
-    <!-- MethodPickerScreen -->
-    <string name="action_sync_to_bag">Sünkrooni pakiga</string>
 
     <!-- SettingsScreen -->
     <string name="label_quick_brew">Kiirvalmistus</string>

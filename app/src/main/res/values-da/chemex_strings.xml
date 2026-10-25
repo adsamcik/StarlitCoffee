@@ -4,5 +4,4 @@
     <string name="instruction_chemex_bloom">Fugt al kaffen med vandet til bloom, og lad bloom afsluttes.</string>
     <string name="instruction_chemex_pour">Hæld forsigtigt op til den samlede vandmængde. Lad niveauet falde mellem hældningerne, og hold det under kanten.</string>
     <string name="instruction_chemex_drawdown">Vent, til vandet er løbet gennem kaffen. Fjern filteret, sving forsigtigt rundt og server ved at holde i kraven eller håndtaget.</string>
-    <string name="label_filter_chemex_bonded">Chemex-filterpapir</string>
 </resources>

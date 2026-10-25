@@ -4,33 +4,10 @@ import com.adsamcik.starlitcoffee.util.BagFieldConfidence
 import com.adsamcik.starlitcoffee.util.BagFieldEvidence
 import com.adsamcik.starlitcoffee.util.BagFieldSourceType
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
-import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class GuidedScanFlowPolicyTest {
-
-    @Test
-    fun `completed result is hidden while user captures more photos`() {
-        assertFalse(shouldShowCompletedScanReview(hasCompletedResult = true, isReviewing = false))
-    }
-
-    @Test
-    fun `new completed result reopens review`() {
-        assertTrue(shouldShowCompletedScanReview(hasCompletedResult = true, isReviewing = true))
-    }
-
-    @Test
-    fun `manual no photo review retains scan session identity`() {
-        assertEquals("session-42", initialScanReviewData("session-42").sessionId)
-    }
-
-    @Test
-    fun `transferred draft keeps staged photos for receiving form`() {
-        assertFalse(shouldDeleteStagedPhotosOnExit(ownershipTransferred = true))
-        assertTrue(shouldDeleteStagedPhotosOnExit(ownershipTransferred = false))
-    }
 
     @Test
     fun `rescan relocates origin from region while retaining evidence provenance`() {

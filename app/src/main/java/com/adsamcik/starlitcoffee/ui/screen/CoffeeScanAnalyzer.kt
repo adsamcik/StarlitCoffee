@@ -172,10 +172,4 @@ internal class BarcodeCameraLifecyclePolicy {
 
     /** Returns true only to the caller that takes ownership of disposal. */
     fun dispose(): Boolean = disposed.compareAndSet(false, true)
-
-    fun continueOrRelease(release: () -> Unit): Boolean {
-        if (isActive) return true
-        release()
-        return false
-    }
 }

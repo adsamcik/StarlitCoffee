@@ -3,7 +3,6 @@ package com.adsamcik.starlitcoffee.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.adsamcik.starlitcoffee.util.BagCaptureSide
 import com.adsamcik.starlitcoffee.util.BagPhotoReviewUris
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow
@@ -19,9 +18,8 @@ import kotlinx.coroutines.launch
 import java.util.UUID
 
 /**
- * Phase of the guided bag-scan flow. A single nav route hosts both the camera
- * capture UI and the review/action UI; this flag switches between them so the
- * captured-photo session survives "scan more photos" round-trips.
+ * Phase of the guided bag-scan capture session. Finishing capture hands the
+ * session to its durable review destination.
  */
 enum class BagScanPhase { CAPTURING, REVIEWING }
 
@@ -34,14 +32,6 @@ data class BagScanUiState(
     val photos: List<CapturedBagPhoto> = emptyList(),
 ) {
     val hasPhotos: Boolean get() = photos.isNotEmpty()
-
-    /**
-     * The side the user should aim for next: FRONT until the first photo is
-     * captured, then BACK. Extra photos beyond the back are still tagged BACK by
-     * the extraction pipeline (which keys side off photo index).
-     */
-    val nextSide: BagCaptureSide
-        get() = if (photos.isEmpty()) BagCaptureSide.FRONT else BagCaptureSide.BACK
 
     fun photosCsv(): String = photos.joinToString(",") { it.uri }
 }
@@ -98,10 +88,10 @@ class BagScanCaptureViewModel(
         }
     }
 
-    private fun scheduleExtraction(emitEmpty: Boolean = false) {
+    private fun scheduleExtraction() {
         debounceJob?.cancel()
         val csv = _uiState.value.photosCsv()
-        if (csv.isBlank() && !emitEmpty) {
+        if (csv.isBlank()) {
             lastRequestedCsv = null
             return
         }
@@ -125,11 +115,6 @@ class BagScanCaptureViewModel(
             lastRequestedCsv = csv
             viewModelScope.launch { _extractionRequests.emit(csv) }
         }
-    }
-
-    /** User tapped "Scan more photos" from the review screen. */
-    fun backToCapture() {
-        updateState { it.copy(phase = BagScanPhase.CAPTURING) }
     }
 
     fun resumeReview(sessionId: String, photoUrisCsv: String?) {

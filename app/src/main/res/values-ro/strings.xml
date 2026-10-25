@@ -22,7 +22,6 @@
     <string name="label_coffee">Cafea</string>
     <string name="label_water">Apă</string>
     <string name="label_ratio">Raport</string>
-    <string name="label_strength">Intensitate</string>
     <string name="label_grind">Măcinare</string>
     <string name="label_filter">Filtru</string>
     <string name="label_all">Toate</string>
@@ -34,7 +33,6 @@
     <string name="label_taste">Gust</string>
     <string name="label_rating">Evaluare</string>
     <string name="label_notes">Note</string>
-    <string name="label_no_filter">Fără filtru</string>
     <string name="label_settings">Setări</string>
 
     <!-- Units -->
@@ -42,58 +40,23 @@
     <string name="unit_ml">ml</string>
 
     <!-- Format strings -->
-    <string name="format_coffee_grams">☕ %1$sg</string>
-    <string name="format_water_grams">💧 %1$sg</string>
-    <string name="format_ratio">1:%1$s</string>
-    <string name="format_bloom_grams">Bloom %1$.0fg</string>
-    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
-    <string name="format_cup_volume">🥤 ~%1$.0fg în ceașcă</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
 
     <!-- Method Picker Screen -->
-    <string name="screen_method_picker_title">Configurați prepararea</string>
-    <string name="label_coffee_input">Cafea (g)</string>
-    <string name="label_water_input">Apă (g)</string>
-    <string name="label_brew_size_input">Volum preparat (ml)</string>
-    <string name="label_cup_size_input">Volum ceașcă (ml)</string>
-    <string name="label_brew_size">Volum preparat</string>
-    <string name="label_cup_size">Volum ceașcă</string>
-    <string name="format_capacity_note">%1$s ține %2$dg de apă — reumplerile sunt automate pentru preparări mai mari</string>
-    <string name="format_amount_cd">%1$s: %2$d %3$s</string>
     <string name="label_select_coffee_bag">Selectați pachetul de cafea</string>
     <string name="cd_clear_bag">Eliminați pachetul</string>
     <string name="format_brewing_with">Preparare cu %1$s</string>
-    <string name="label_freshness">Prospețime</string>
-    <string name="format_recommended_now">Recomandat acum: %1$s</string>
-    <string name="format_last_time">Data trecută: %1$s</string>
-    <string name="action_save_as_favorite">Salvați ca favorit</string>
     <string name="label_select_coffee_bag_title">Selectați pachetul de cafea</string>
     <string name="msg_no_active_bags">Nu există pachete active. Adăugați unul în secțiunea Boabele dumneavoastră.</string>
     <string name="action_brew_without_bag">Preparați fără să selectați un pachet</string>
-    <string name="label_best_now">Cel mai bun acum</string>
-    <string name="format_grind_generic">Măcinare: %1$s – %2$s</string>
     <string name="format_weight_left"> · %1$.0fg rămase</string>
-    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
-    <string name="tip_pulsar">💡 Sfat Pulsar: Mențineți suspensia la ~1cm deasupra patului de cafea în timpul turnărilor. Majoritatea utilizatorilor prepară 20–25g pentru o ceașcă echilibrată.</string>
-    <string name="tip_generic">💡 Sfat: Începeți cu raportul implicit și ajustați intensitatea după gust. Măcinările mai fine extrag mai mult, cele mai grosiere extrag mai puțin.</string>
 
     <!-- Amount & Strength Screen -->
     <string name="screen_brew_setup_title">Configurare preparare</string>
-    <string name="label_custom_ratio">Raport personalizat (ex. 16)</string>
     <string name="label_temperature">Temperatură (°C)</string>
-    <string name="label_bloom_multiplier">Multiplicator de bloom (ex. 3.0)</string>
-    <string name="label_pulse_count">Număr de turnări</string>
     <string name="action_start_brewing">Începeți prepararea →</string>
-    <string name="label_advanced_options">Opțiuni avansate</string>
     <string name="cd_collapse_advanced">Restrângeți opțiunile avansate</string>
     <string name="cd_expand_advanced">Extindeți opțiunile avansate</string>
-    <plurals name="format_coffee_dose_cd">
-        <item quantity="one">Doză de cafea: %1$d gram</item>
-        <item quantity="few">Doză de cafea: %1$d grame</item>
-        <item quantity="other">Doză de cafea: %1$d grame</item>
-    </plurals>
-    <string name="label_decrease">Reduceți %1$s</string>
-    <string name="label_increase">Măriți %1$s</string>
 
     <!-- Grind Prep Screen -->
     <string name="action_ready_to_brew_short">Gata de preparare</string>
@@ -285,9 +248,6 @@
     <string name="action_open_app_settings">Deschideți setările sistemului</string>
 
     <!-- Water Retention (info sheet) -->
-    <string name="label_water_retention">Retenția apei</string>
-    <string name="format_retention_explanation">Cafeaua măcinată absoarbe aproximativ 2× greutatea ei uscată în apă. Cu %1$.0fg de cafea, patul reține ~%2$.0fg, lăsând ~%3$.0fg în ceașca dumneavoastră.\n\nAceasta este o estimare — prăjirile închise absorb puțin mai mult, cele deschise puțin mai puțin.</string>
-    <string name="cd_about_cup_volume">Despre volumul din ceașcă</string>
 
     <!-- Brew Visualization / Coffee Insights -->
     <!-- Grind notes -->
@@ -354,8 +314,6 @@
     <string name="adjust_clogged_no_grinder">Încercați o setare de măcinare mult mai grosieră</string>
 
     <!-- Accessibility content descriptions -->
-    <string name="cd_coffee_grams">Cafea: %1$s grame</string>
-    <string name="cd_water_grams">Apă: %1$s grame</string>
     <string name="cd_ratio">Raport 1 la %1$s</string>
 
     <!-- AddBagSheet -->
@@ -397,8 +355,6 @@
     <!-- BrewRatingSheet -->
 
     <!-- EmptyStateBox -->
-    <!-- FavoritesRow -->
-    <string name="label_your_favorites_section">Favoritele dumneavoastră</string>
 
     <!-- FieldChipPicker -->
 
@@ -422,9 +378,6 @@
     <string name="consent_service_unavailable">Serviciul Mindlayer AI nu este disponibil</string>
     <string name="consent_failed">Nu s-a putut solicita accesul AI</string>
 
-    <!-- PostBrewCheckInCard -->
-    <string name="label_how_was_last_cup">Cum a fost ultima ceașcă?</string>
-    <string name="label_what_was_off">Ce nu a fost în regulă?</string>
 
     <!-- RescanDeltaDialog -->
     <string name="msg_rescan_no_changes">Eticheta scanată se potrivește cu pachetul stocat — nu este nimic de actualizat.</string>
@@ -473,8 +426,6 @@
     <string name="action_discard">Renunțați</string>
     <string name="action_keep_scanning">Continuați scanarea</string>
 
-    <!-- MethodPickerScreen -->
-    <string name="action_sync_to_bag">Sincronizați cu pachetul</string>
 
     <!-- SettingsScreen -->
     <string name="label_quick_brew">Preparare rapidă</string>

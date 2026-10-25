@@ -22,7 +22,6 @@
     <string name="label_coffee">Kaffee</string>
     <string name="label_water">Wasser</string>
     <string name="label_ratio">Verhältnis</string>
-    <string name="label_strength">Stärke</string>
     <string name="label_grind">Mahlung</string>
     <string name="label_filter">Filter</string>
 <string name="label_all">Alle</string>
@@ -34,7 +33,6 @@
     <string name="label_taste">Geschmack</string>
     <string name="label_rating">Bewertung</string>
     <string name="label_notes">Notizen</string>
-    <string name="label_no_filter">Kein Filter</string>
     <string name="label_settings">Einstellungen</string>
 
     <!-- Units -->
@@ -42,57 +40,23 @@
     <string name="unit_ml">ml</string>
 
     <!-- Format strings -->
-    <string name="format_coffee_grams">☕ %1$sg</string>
-    <string name="format_water_grams">💧 %1$sg</string>
-    <string name="format_ratio">1:%1$s</string>
-    <string name="format_bloom_grams">Bloom %1$.0fg</string>
-    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
-    <string name="format_cup_volume">🥤 ~%1$.0fg in der Tasse</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
 
     <!-- Method Picker Screen -->
-    <string name="screen_method_picker_title">Zubereitung konfigurieren</string>
-    <string name="label_coffee_input">Kaffee (g)</string>
-    <string name="label_water_input">Wasser (g)</string>
-    <string name="label_brew_size_input">Brühmenge (ml)</string>
-    <string name="label_cup_size_input">Tassengröße (ml)</string>
-    <string name="label_brew_size">Brühmenge</string>
-    <string name="label_cup_size">Tassengröße</string>
-    <string name="format_capacity_note">%1$s fasst %2$dg Wasser — für größere Zubereitungen wird automatisch nachgefüllt</string>
-    <string name="format_amount_cd">%1$s: %2$d %3$s</string>
     <string name="label_select_coffee_bag">Kaffeepackung auswählen</string>
     <string name="cd_clear_bag">Packung entfernen</string>
     <string name="format_brewing_with">Zubereitung mit %1$s</string>
-    <string name="label_freshness">Frische</string>
-    <string name="format_recommended_now">Jetzt empfohlen: %1$s</string>
-    <string name="format_last_time">Letztes Mal: %1$s</string>
-    <string name="action_save_as_favorite">Als Favorit speichern</string>
     <string name="label_select_coffee_bag_title">Kaffeepackung auswählen</string>
     <string name="msg_no_active_bags">Keine aktiven Packungen. Fügen Sie eine im Bereich Ihre Bohnen hinzu.</string>
     <string name="action_brew_without_bag">Ohne ausgewählte Packung brühen</string>
-    <string name="label_best_now">Jetzt am besten</string>
-    <string name="format_grind_generic">Mahlung: %1$s – %2$s</string>
     <string name="format_weight_left"> · %1$.0fg übrig</string>
-    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
-    <string name="tip_pulsar">💡 Pulsar-Tipp: Halten Sie den Wasserstand beim Eingießen ~1cm über dem Kaffeebett. Die meisten Nutzer brühen 20–25g für eine ausgewogene einzelne Tasse.</string>
-    <string name="tip_generic">💡 Tipp: Beginnen Sie mit dem Standardverhältnis und passen Sie die Stärke nach Geschmack an. Feinere Mahlungen extrahieren mehr, gröbere Mahlungen weniger.</string>
 
     <!-- Amount & Strength Screen -->
     <string name="screen_brew_setup_title">Brüh-Setup</string>
-<string name="label_custom_ratio">Eigenes Verhältnis (z. B. 16)</string>
     <string name="label_temperature">Temperatur (°C)</string>
-    <string name="label_bloom_multiplier">Bloom-Multiplikator (z. B. 3.0)</string>
-    <string name="label_pulse_count">Anzahl Pulse</string>
 <string name="action_start_brewing">Zubereitung starten →</string>
-    <string name="label_advanced_options">Erweiterte Optionen</string>
     <string name="cd_collapse_advanced">Erweiterte Optionen einklappen</string>
     <string name="cd_expand_advanced">Erweiterte Optionen ausklappen</string>
-    <plurals name="format_coffee_dose_cd">
-        <item quantity="one">Kaffeemenge: %1$d Gramm</item>
-        <item quantity="other">Kaffeemenge: %1$d Gramm</item>
-    </plurals>
-    <string name="label_decrease">%1$s verringern</string>
-    <string name="label_increase">%1$s erhöhen</string>
 
     <!-- Grind Prep Screen -->
 <string name="action_ready_to_brew_short">Bereit zum Brühen</string>
@@ -284,9 +248,6 @@
     <string name="action_open_app_settings">Systemeinstellungen öffnen</string>
 
     <!-- Water Retention (info sheet) -->
-    <string name="label_water_retention">Wasserbindung</string>
-    <string name="format_retention_explanation">Kaffeemehl absorbiert etwa 2× sein Trockengewicht an Wasser. Bei %1$.0fg Kaffee hält das Mahlgut ~%2$.0fg zurück, sodass ~%3$.0fg in Ihrer Tasse landen.\n\nDies ist eine Schätzung — dunkle Röstungen absorbieren etwas mehr, helle Röstungen etwas weniger.</string>
-    <string name="cd_about_cup_volume">Zur Tassenmenge</string>
 
     <!-- Brew Visualization / Coffee Insights -->
 <!-- Grind notes -->
@@ -353,8 +314,6 @@
     <string name="adjust_clogged_no_grinder">Einen deutlich gröberen Mahlgrad ausprobieren</string>
 
     <!-- Accessibility content descriptions -->
-    <string name="cd_coffee_grams">Kaffee: %1$s Gramm</string>
-    <string name="cd_water_grams">Wasser: %1$s Gramm</string>
     <string name="cd_ratio">Verhältnis 1 zu %1$s</string>
 
     <!-- AddBagSheet -->
@@ -396,8 +355,6 @@
     <!-- BrewRatingSheet -->
 
     <!-- EmptyStateBox -->
-<!-- FavoritesRow -->
-    <string name="label_your_favorites_section">Ihre Favoriten</string>
 
     <!-- FieldChipPicker -->
 
@@ -421,9 +378,6 @@
     <string name="consent_service_unavailable">Mindlayer-KI-Dienst ist nicht verfügbar</string>
     <string name="consent_failed">KI-Zugriff konnte nicht angefordert werden</string>
 
-    <!-- PostBrewCheckInCard -->
-    <string name="label_how_was_last_cup">Wie war Ihre letzte Tasse?</string>
-    <string name="label_what_was_off">Was hat nicht gepasst?</string>
 
     <!-- RescanDeltaDialog -->
     <string name="msg_rescan_no_changes">Das gescannte Etikett entspricht Ihrer gespeicherten Packung — es gibt nichts zu aktualisieren.</string>
@@ -472,8 +426,6 @@
     <string name="action_discard">Verwerfen</string>
     <string name="action_keep_scanning">Weiterscannen</string>
 
-    <!-- MethodPickerScreen -->
-    <string name="action_sync_to_bag">Mit Packung synchronisieren</string>
 
     <!-- SettingsScreen -->
     <string name="label_quick_brew">Schnellbrühen</string>

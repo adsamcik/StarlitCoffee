@@ -2,9 +2,7 @@ package com.adsamcik.starlitcoffee.ui.screen
 
 import com.google.mlkit.vision.barcode.common.Barcode
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
-import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class CoffeeScanCodeTest {
@@ -64,16 +62,5 @@ class CoffeeScanCodeTest {
         assertNull(classifyCoffeeCode(null, Barcode.TYPE_TEXT))
         assertEquals(product, selectCoffeeCode(listOf(website, product)))
         assertEquals(website, selectCoffeeCode(listOf(website)))
-    }
-
-    @Test
-    fun `only one disposer can close a scanner and late setup releases instead`() {
-        val policy = BarcodeCameraLifecyclePolicy()
-        assertTrue(policy.dispose())
-        assertFalse(policy.dispose())
-        var released = 0
-        assertFalse(policy.continueOrRelease { released++ })
-        assertEquals(1, released)
-        assertFalse(policy.isActive)
     }
 }

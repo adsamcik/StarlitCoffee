@@ -22,7 +22,6 @@
     <string name="label_coffee">Kava</string>
     <string name="label_water">Voda</string>
     <string name="label_ratio">Omjer</string>
-    <string name="label_strength">Jačina</string>
     <string name="label_grind">Mljevenje</string>
     <string name="label_filter">Filter</string>
     <string name="label_all">Sve</string>
@@ -34,7 +33,6 @@
     <string name="label_taste">Okus</string>
     <string name="label_rating">Ocjena</string>
     <string name="label_notes">Bilješke</string>
-    <string name="label_no_filter">Bez filtera</string>
     <string name="label_settings">Postavke</string>
 
     <!-- Units -->
@@ -42,58 +40,23 @@
     <string name="unit_ml">ml</string>
 
     <!-- Format strings -->
-    <string name="format_coffee_grams">☕ %1$sg</string>
-    <string name="format_water_grams">💧 %1$sg</string>
-    <string name="format_ratio">1:%1$s</string>
-    <string name="format_bloom_grams">Bloom %1$.0fg</string>
-    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
-    <string name="format_cup_volume">🥤 ~%1$.0fg u šalici</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
 
     <!-- Method Picker Screen -->
-    <string name="screen_method_picker_title">Postavite svoju pripremu</string>
-    <string name="label_coffee_input">Kava (g)</string>
-    <string name="label_water_input">Voda (g)</string>
-    <string name="label_brew_size_input">Količina pripreme (ml)</string>
-    <string name="label_cup_size_input">Veličina šalice (ml)</string>
-    <string name="label_brew_size">Količina pripreme</string>
-    <string name="label_cup_size">Veličina šalice</string>
-    <string name="format_capacity_note">%1$s prima %2$dg vode — za veće pripreme dolijevanje je automatsko</string>
-    <string name="format_amount_cd">%1$s: %2$d %3$s</string>
     <string name="label_select_coffee_bag">Odaberite vrećicu kave</string>
     <string name="cd_clear_bag">Poništi odabir vrećice</string>
     <string name="format_brewing_with">Priprema s %1$s</string>
-    <string name="label_freshness">Svježina</string>
-    <string name="format_recommended_now">Preporučeno sada: %1$s</string>
-    <string name="format_last_time">Prošli put: %1$s</string>
-    <string name="action_save_as_favorite">Spremite kao favorit</string>
     <string name="label_select_coffee_bag_title">Odabir vrećice kave</string>
     <string name="msg_no_active_bags">Nema aktivnih vrećica. Dodajte je u odjeljku Vaša zrna.</string>
     <string name="action_brew_without_bag">Pripremite bez odabira vrećice</string>
-    <string name="label_best_now">Najbolje sada</string>
-    <string name="format_grind_generic">Mljevenje: %1$s – %2$s</string>
     <string name="format_weight_left"> · preostalo %1$.0fg</string>
-    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
-    <string name="tip_pulsar">💡 Pulsar savjet: Tijekom ulijevanja držite smjesu ~1 cm iznad sloja kave. Većina korisnika priprema 20–25 g za uravnoteženu šalicu.</string>
-    <string name="tip_generic">💡 Savjet: Krenite od zadanog omjera i prilagodite jačinu po okusu. Finije mljevenje ekstrahira više, grublje mljevenje ekstrahira manje.</string>
 
     <!-- Amount & Strength Screen -->
     <string name="screen_brew_setup_title">Postavke pripreme</string>
-    <string name="label_custom_ratio">Prilagođeni omjer (npr. 16)</string>
     <string name="label_temperature">Temperatura (°C)</string>
-    <string name="label_bloom_multiplier">Množitelj blooma (npr. 3.0)</string>
-    <string name="label_pulse_count">Broj pulseva</string>
     <string name="action_start_brewing">Započnite pripremu →</string>
-    <string name="label_advanced_options">Napredne opcije</string>
     <string name="cd_collapse_advanced">Sažmi napredne opcije</string>
     <string name="cd_expand_advanced">Proširi napredne opcije</string>
-    <plurals name="format_coffee_dose_cd">
-        <item quantity="one">Doza kave: %1$d gram</item>
-        <item quantity="few">Doza kave: %1$d grama</item>
-        <item quantity="other">Doza kave: %1$d grama</item>
-    </plurals>
-    <string name="label_decrease">Smanjite %1$s</string>
-    <string name="label_increase">Povećajte %1$s</string>
 
     <!-- Grind Prep Screen -->
     <string name="action_ready_to_brew_short">Spremni za pripremu</string>
@@ -285,9 +248,6 @@
     <string name="action_open_app_settings">Otvorite postavke sustava</string>
 
     <!-- Water Retention (info sheet) -->
-    <string name="label_water_retention">Zadržavanje vode</string>
-    <string name="format_retention_explanation">Mljevena kava upija otprilike 2× svoje suhe težine u vodi. S %1$.0fg kave, talog zadržava ~%2$.0fg, ostavljajući ~%3$.0fg u vašoj šalici.\n\nOvo je procjena — tamnija prženja upijaju nešto više, svjetlija nešto manje.</string>
-    <string name="cd_about_cup_volume">O volumenu šalice</string>
 
     <!-- Brew Visualization / Coffee Insights -->
     <!-- Grind notes -->
@@ -354,8 +314,6 @@
     <string name="adjust_clogged_no_grinder">Pokušajte s mnogo grubljom postavkom mljevenja</string>
 
     <!-- Accessibility content descriptions -->
-    <string name="cd_coffee_grams">Kava: %1$s grama</string>
-    <string name="cd_water_grams">Voda: %1$s grama</string>
     <string name="cd_ratio">Omjer 1 naprema %1$s</string>
 
     <!-- AddBagSheet -->
@@ -397,8 +355,6 @@
     <!-- BrewRatingSheet -->
 
     <!-- EmptyStateBox -->
-    <!-- FavoritesRow -->
-    <string name="label_your_favorites_section">Vaši favoriti</string>
 
     <!-- FieldChipPicker -->
 
@@ -422,9 +378,6 @@
     <string name="consent_service_unavailable">Mindlayer AI usluga nije dostupna</string>
     <string name="consent_failed">Zahtjev za pristup AI-ju nije uspio</string>
 
-    <!-- PostBrewCheckInCard -->
-    <string name="label_how_was_last_cup">Kakva je bila vaša posljednja šalica?</string>
-    <string name="label_what_was_off">Što nije bilo u redu?</string>
 
     <!-- RescanDeltaDialog -->
     <string name="msg_rescan_no_changes">Skenirana etiketa odgovara vašoj spremljenoj vrećici — nema ništa za ažuriranje.</string>
@@ -473,8 +426,6 @@
     <string name="action_discard">Odbacite</string>
     <string name="action_keep_scanning">Nastavite skeniranje</string>
 
-    <!-- MethodPickerScreen -->
-    <string name="action_sync_to_bag">Uskladite s vrećicom</string>
 
     <!-- SettingsScreen -->
     <string name="label_quick_brew">Brza priprema</string>

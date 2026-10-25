@@ -105,8 +105,6 @@ import com.adsamcik.starlitcoffee.ui.component.initialBrewingSetup
 import java.util.UUID
 import com.adsamcik.starlitcoffee.ui.screen.OnboardingPersonalizeScreen
 import com.adsamcik.starlitcoffee.ui.screen.SavedRecipesScreen
-import com.adsamcik.starlitcoffee.ui.screen.ScanAddBagReview
-import com.adsamcik.starlitcoffee.ui.screen.ScanRescanReview
 import com.adsamcik.starlitcoffee.ui.screen.SettingsScreen
 import com.adsamcik.starlitcoffee.viewmodel.BagScanCaptureViewModel
 import com.adsamcik.starlitcoffee.viewmodel.BagScanDraftViewModel
@@ -934,7 +932,6 @@ fun StarlitNavHost() {
                 }
                 composable<GuidedScan> {
                     val captureViewModel: BagScanCaptureViewModel = viewModel()
-                    val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
                     GuidedScanFlow(
                         captureViewModel = captureViewModel,
                         brewViewModel = brewViewModel,
@@ -946,14 +943,7 @@ fun StarlitNavHost() {
                                 launchSingleTop = true
                             }
                         },
-                    ) { data, callbacks ->
-                        ScanAddBagReview(
-                            brewViewModel = brewViewModel,
-                            data = data,
-                            callbacks = callbacks,
-                            existingBags = bags,
-                        )
-                    }
+                    )
                 }
                 composable<GuidedScanDraft> { backStackEntry ->
                     val route = backStackEntry.toRoute<GuidedScanDraft>()
@@ -971,7 +961,6 @@ fun StarlitNavHost() {
                             draft.photoUris.joinToString(","),
                         )
                     }
-                    val bags by brewViewModel.coffeeBags.collectAsStateWithLifecycle()
                     GuidedScanFlow(
                         captureViewModel = captureViewModel,
                         brewViewModel = brewViewModel,
@@ -983,14 +972,7 @@ fun StarlitNavHost() {
                                 launchSingleTop = true
                             }
                         },
-                    ) { data, callbacks ->
-                        ScanAddBagReview(
-                            brewViewModel = brewViewModel,
-                            data = data,
-                            callbacks = callbacks,
-                            existingBags = bags,
-                        )
-                    }
+                    )
                 }
                 composable<BagDraft> { backStackEntry ->
                     val route = backStackEntry.toRoute<BagDraft>()
@@ -1035,10 +1017,6 @@ fun StarlitNavHost() {
                         }
                         return@composable
                     }
-                    val originalBag = remember(bags, route.bagId) {
-                        checkNotNull(bags.find { it.id == route.bagId })
-                    }
-
                     val captureViewModel: BagScanCaptureViewModel = viewModel()
                     GuidedScanFlow(
                         captureViewModel = captureViewModel,
@@ -1051,26 +1029,7 @@ fun StarlitNavHost() {
                                 launchSingleTop = true
                             }
                         },
-                    ) { data, callbacks ->
-                        ScanRescanReview(
-                            brewViewModel = brewViewModel,
-                            bag = originalBag,
-                            data = data,
-                            callbacks = callbacks,
-                            onNewBag = { transfer ->
-                                val inventoryEntry = navController.previousBackStackEntry
-                                check(
-                                    inventoryEntry?.destination?.hasRoute(BagInventory::class) == true,
-                                ) {
-                                    "BagInventory must be directly beneath RescanBag"
-                                }
-                                inventoryEntry.savedStateHandle.set(
-                                    SCAN_DRAFT_TRANSFER_RESULT_KEY,
-                                    ScanDraftTransferCodec.encode(transfer),
-                                )
-                            },
-                        )
-                    }
+                    )
                 }
             }
         }

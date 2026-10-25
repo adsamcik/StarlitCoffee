@@ -31,29 +31,4 @@ class ScanFieldSupportTest {
         assertEquals("Night Shift", prefill.name)
         assertTrue(prefill.isDecaf == true)
     }
-
-    @Test
-    fun `buildDraft parses scanned decaf weight and dates`() {
-        val draft = ScanFieldSupport.buildDraft(
-            mapOf(
-                "name" to "Night Shift",
-                "origin" to "Colombia",
-                "farm" to "El Paraiso",
-                "altitude" to "1900 masl",
-                "weight" to "250g",
-                "roastDate" to "2026-02-20",
-                "expiryDate" to "20.03.2026",
-                "isDecaf" to "Decaf",
-            ),
-        )!!
-
-        assertEquals("Night Shift", draft.name)
-        assertEquals("Colombia", draft.origin)
-        assertEquals("El Paraiso", draft.farm)
-        assertEquals("1900 masl", draft.altitude)
-        assertEquals(250f, draft.weightG!!, 0.01f)
-        assertEquals(DateParser.parse("2026-02-20"), draft.roastDateMillis)
-        assertEquals(DateParser.parse("20.03.2026"), draft.expiryDateMillis)
-        assertTrue(draft.isDecaf)
-    }
 }

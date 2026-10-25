@@ -4,5 +4,4 @@
     <string name="instruction_chemex_bloom">Vso kavo zmočite z vodo za prednamakanje in počakajte do konca prednamakanja.</string>
     <string name="instruction_chemex_pour">Nežno dolivajte do skupne količine vode. Med dolivanji pustite, da se gladina zniža, in jo ohranite pod robom.</string>
     <string name="instruction_chemex_drawdown">Počakajte, da voda odteče skozi kavo. Odstranite filter, nežno zavrtite in postrezite, pri tem držite za ovratnik ali ročaj.</string>
-    <string name="label_filter_chemex_bonded">Papirnati filter Chemex</string>
 </resources>

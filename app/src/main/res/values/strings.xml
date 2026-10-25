@@ -22,7 +22,6 @@
     <string name="label_coffee">Coffee</string>
     <string name="label_water">Water</string>
     <string name="label_ratio">Ratio</string>
-    <string name="label_strength">Strength</string>
     <string name="label_grind">Grind</string>
     <string name="label_filter">Filter</string>
 <string name="label_all">All</string>
@@ -34,7 +33,6 @@
     <string name="label_taste">Taste</string>
     <string name="label_rating">Rating</string>
     <string name="label_notes">Notes</string>
-    <string name="label_no_filter">No filter</string>
     <string name="label_settings">Settings</string>
 
     <!-- Units -->
@@ -42,31 +40,12 @@
     <string name="unit_ml">ml</string>
 
     <!-- Format strings -->
-    <string name="format_coffee_grams">☕ %1$sg</string>
-    <string name="format_water_grams">💧 %1$sg</string>
-    <string name="format_ratio">1:%1$s</string>
-    <string name="format_bloom_grams">Bloom %1$.0fg</string>
-    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
-    <string name="format_cup_volume">🥤 ~%1$.0fg in cup</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
 
     <!-- Method Picker Screen -->
-    <string name="screen_method_picker_title">Configure your brew</string>
-    <string name="label_coffee_input">Coffee (g)</string>
-    <string name="label_water_input">Water (g)</string>
-    <string name="label_brew_size_input">Brew size (ml)</string>
-    <string name="label_cup_size_input">Cup size (ml)</string>
-    <string name="label_brew_size">Brew size</string>
-    <string name="label_cup_size">Cup size</string>
-    <string name="format_capacity_note">%1$s holds %2$dg water — refills are automatic for larger brews</string>
-    <string name="format_amount_cd">%1$s: %2$d %3$s</string>
     <string name="label_select_coffee_bag">Select coffee bag</string>
     <string name="cd_clear_bag">Clear bag</string>
     <string name="format_brewing_with">Brewing with %1$s</string>
-    <string name="label_freshness">Freshness</string>
-    <string name="format_recommended_now">Recommended now: %1$s</string>
-    <string name="format_last_time">Last time: %1$s</string>
-    <string name="action_save_as_favorite">Save as Favorite</string>
     <string name="label_select_coffee_bag_title">Select Coffee Bag</string>
     <string name="label_search_coffee_bags">Search bags</string>
     <string name="msg_no_matching_coffee_bags">No bags match that search.</string>
@@ -75,29 +54,14 @@
     <string name="msg_no_active_bags_yet">No bags ready to brew.</string>
     <string name="msg_no_active_bags">No active bags. Add one in the Your Beans section.</string>
     <string name="action_brew_without_bag">Brew without selecting a bag</string>
-    <string name="label_best_now">Best now</string>
-    <string name="format_grind_generic">Grind: %1$s – %2$s</string>
     <string name="format_weight_left"> · %1$.0fg left</string>
-    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
-    <string name="tip_pulsar">💡 Pulsar tip: Keep slurry ~1cm above the coffee bed during pours. Most users brew 20–25g for a balanced single cup.</string>
-    <string name="tip_generic">💡 Tip: Start with the default ratio and adjust strength to taste. Finer grinds extract more, coarser grinds extract less.</string>
 
     <!-- Amount & Strength Screen -->
     <string name="screen_brew_setup_title">Brew Setup</string>
-<string name="label_custom_ratio">Custom ratio (e.g. 16)</string>
     <string name="label_temperature">Temperature (°C)</string>
-    <string name="label_bloom_multiplier">Bloom multiplier (e.g. 3.0)</string>
-    <string name="label_pulse_count">Pulse count</string>
 <string name="action_start_brewing">Start Brewing →</string>
-    <string name="label_advanced_options">Advanced options</string>
     <string name="cd_collapse_advanced">Collapse advanced options</string>
     <string name="cd_expand_advanced">Expand advanced options</string>
-    <plurals name="format_coffee_dose_cd">
-        <item quantity="one">Coffee dose: %1$d gram</item>
-        <item quantity="other">Coffee dose: %1$d grams</item>
-    </plurals>
-    <string name="label_decrease">Decrease %1$s</string>
-    <string name="label_increase">Increase %1$s</string>
 
     <!-- Grind Prep Screen -->
 <string name="action_ready_to_brew_short">Ready to Brew</string>
@@ -356,9 +320,6 @@
     <string name="action_open_app_settings">Open system settings</string>
 
     <!-- Water Retention (info sheet) -->
-    <string name="label_water_retention">Water Retention</string>
-    <string name="format_retention_explanation">Coffee grounds absorb about 2× their dry weight in water. With %1$.0fg of coffee, the grounds hold ~%2$.0fg, leaving ~%3$.0fg in your cup.\n\nThis is an estimate — dark roasts absorb slightly more, light roasts slightly less.</string>
-    <string name="cd_about_cup_volume">About cup volume</string>
 
     <!-- Brew Visualization / Coffee Insights -->
 <!-- Grind notes -->
@@ -431,8 +392,6 @@
     <string name="adjust_clogged_no_grinder">Try a much coarser grind setting</string>
 
     <!-- Accessibility content descriptions -->
-    <string name="cd_coffee_grams">Coffee: %1$s grams</string>
-    <string name="cd_water_grams">Water: %1$s grams</string>
     <string name="cd_ratio">Ratio 1 to %1$s</string>
 
     <!-- AddBagSheet -->
@@ -495,8 +454,6 @@
     <!-- BrewRatingSheet -->
 
     <!-- EmptyStateBox -->
-<!-- FavoritesRow -->
-    <string name="label_your_favorites_section">Your favorites</string>
 
     <!-- FieldChipPicker -->
 
@@ -540,9 +497,6 @@
     <string name="consent_service_unavailable">Enhanced label recognition is unavailable</string>
     <string name="consent_failed">Couldn\'t request label-recognition access</string>
 
-    <!-- PostBrewCheckInCard -->
-    <string name="label_how_was_last_cup">How was your last cup?</string>
-    <string name="label_what_was_off">What was off?</string>
 
     <!-- RescanDeltaDialog -->
     <string name="msg_rescan_no_changes">The scanned label matches your stored bag — nothing to update.</string>
@@ -599,8 +553,6 @@
     <string name="action_choose_photos">Choose photos</string>
     <string name="action_enter_manually">Enter manually</string>
 
-    <!-- MethodPickerScreen -->
-    <string name="action_sync_to_bag">Sync to bag</string>
 
     <!-- SettingsScreen -->
     <string name="label_quick_brew">Quick brew</string>

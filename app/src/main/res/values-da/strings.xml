@@ -22,7 +22,6 @@
     <string name="label_coffee">Kaffe</string>
     <string name="label_water">Vand</string>
     <string name="label_ratio">Forhold</string>
-    <string name="label_strength">Styrke</string>
     <string name="label_grind">Maling</string>
     <string name="label_filter">Filter</string>
     <string name="label_all">Alle</string>
@@ -34,7 +33,6 @@
     <string name="label_taste">Smag</string>
     <string name="label_rating">Bedømmelse</string>
     <string name="label_notes">Noter</string>
-    <string name="label_no_filter">Intet filter</string>
     <string name="label_settings">Indstillinger</string>
 
     <!-- Units -->
@@ -42,57 +40,23 @@
     <string name="unit_ml">ml</string>
 
     <!-- Format strings -->
-    <string name="format_coffee_grams">☕ %1$sg</string>
-    <string name="format_water_grams">💧 %1$sg</string>
-    <string name="format_ratio">1:%1$s</string>
-    <string name="format_bloom_grams">Bloom %1$.0fg</string>
-    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
-    <string name="format_cup_volume">🥤 ~%1$.0fg i koppen</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
 
     <!-- Method Picker Screen -->
-    <string name="screen_method_picker_title">Konfigurer dit bryg</string>
-    <string name="label_coffee_input">Kaffe (g)</string>
-    <string name="label_water_input">Vand (g)</string>
-    <string name="label_brew_size_input">Brygstørrelse (ml)</string>
-    <string name="label_cup_size_input">Kopstørrelse (ml)</string>
-    <string name="label_brew_size">Brygstørrelse</string>
-    <string name="label_cup_size">Kopstørrelse</string>
-    <string name="format_capacity_note">%1$s rummer %2$dg vand — genopfyldning sker automatisk ved større bryg</string>
-    <string name="format_amount_cd">%1$s: %2$d %3$s</string>
     <string name="label_select_coffee_bag">Vælg kaffepose</string>
     <string name="cd_clear_bag">Ryd kaffepose</string>
     <string name="format_brewing_with">Brygger med %1$s</string>
-    <string name="label_freshness">Friskhed</string>
-    <string name="format_recommended_now">Anbefalet nu: %1$s</string>
-    <string name="format_last_time">Sidste gang: %1$s</string>
-    <string name="action_save_as_favorite">Gem som favorit</string>
     <string name="label_select_coffee_bag_title">Vælg kaffepose</string>
     <string name="msg_no_active_bags">Ingen aktive poser. Tilføj en i afsnittet Dine bønner.</string>
     <string name="action_brew_without_bag">Bryg uden at vælge pose</string>
-    <string name="label_best_now">Bedst nu</string>
-    <string name="format_grind_generic">Maling: %1$s – %2$s</string>
     <string name="format_weight_left"> · %1$.0fg tilbage</string>
-    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
-    <string name="tip_pulsar">💡 Pulsar-tip: Hold slurryen ~1cm over kaffebedet under hældningerne. De fleste brygger 20–25g for en balanceret enkelt kop.</string>
-    <string name="tip_generic">💡 Tip: Start med standardforholdet, og juster styrken efter smag. Finere maling ekstraherer mere, grovere maling ekstraherer mindre.</string>
 
     <!-- Amount & Strength Screen -->
     <string name="screen_brew_setup_title">Brygopsætning</string>
-    <string name="label_custom_ratio">Tilpasset forhold (fx 16)</string>
     <string name="label_temperature">Temperatur (°C)</string>
-    <string name="label_bloom_multiplier">Bloom-multiplikator (fx 3.0)</string>
-    <string name="label_pulse_count">Antal pulser</string>
     <string name="action_start_brewing">Start brygning →</string>
-    <string name="label_advanced_options">Avancerede indstillinger</string>
     <string name="cd_collapse_advanced">Skjul avancerede indstillinger</string>
     <string name="cd_expand_advanced">Vis avancerede indstillinger</string>
-    <plurals name="format_coffee_dose_cd">
-        <item quantity="one">Kaffedosis: %1$d gram</item>
-        <item quantity="other">Kaffedosis: %1$d gram</item>
-    </plurals>
-    <string name="label_decrease">Sænk %1$s</string>
-    <string name="label_increase">Øg %1$s</string>
 
     <!-- Grind Prep Screen -->
     <string name="action_ready_to_brew_short">Klar til at brygge</string>
@@ -283,9 +247,6 @@
     <string name="action_open_app_settings">Åbn systemindstillinger</string>
 
     <!-- Water Retention (info sheet) -->
-    <string name="label_water_retention">Vandretention</string>
-    <string name="format_retention_explanation">Malet kaffe absorberer cirka 2× sin tørvægt i vand. Med %1$.0fg kaffe holdes ~%2$.0fg tilbage, så der er ~%3$.0fg i koppen.\n\nDet er et estimat — mørke ristninger absorberer lidt mere, lyse ristninger lidt mindre.</string>
-    <string name="cd_about_cup_volume">Om kopvolumen</string>
 
     <!-- Brew Visualization / Coffee Insights -->
 <!-- Grind notes -->
@@ -352,8 +313,6 @@
     <string name="adjust_clogged_no_grinder">Prøv en meget grovere malingsgrad</string>
 
     <!-- Accessibility content descriptions -->
-    <string name="cd_coffee_grams">Kaffe: %1$s gram</string>
-    <string name="cd_water_grams">Vand: %1$s gram</string>
     <string name="cd_ratio">Forhold 1 til %1$s</string>
 
     <!-- AddBagSheet -->
@@ -395,8 +354,6 @@
     <!-- BrewRatingSheet -->
 
     <!-- EmptyStateBox -->
-<!-- FavoritesRow -->
-    <string name="label_your_favorites_section">Dine favoritter</string>
 
     <!-- FieldChipPicker -->
 
@@ -420,9 +377,6 @@
     <string name="consent_service_unavailable">Mindlayer AI-tjenesten er ikke tilgængelig</string>
     <string name="consent_failed">Kunne ikke anmode om AI-adgang</string>
 
-    <!-- PostBrewCheckInCard -->
-    <string name="label_how_was_last_cup">Hvordan var din sidste kop?</string>
-    <string name="label_what_was_off">Hvad var forkert?</string>
 
     <!-- RescanDeltaDialog -->
     <string name="msg_rescan_no_changes">Den scannede label matcher din gemte pose — der er intet at opdatere.</string>
@@ -471,8 +425,6 @@
     <string name="action_discard">Kassér</string>
     <string name="action_keep_scanning">Fortsæt scanning</string>
 
-    <!-- MethodPickerScreen -->
-    <string name="action_sync_to_bag">Synkroniser med pose</string>
 
     <!-- SettingsScreen -->
     <string name="label_quick_brew">Hurtigt bryg</string>

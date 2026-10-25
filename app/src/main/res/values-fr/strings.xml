@@ -22,7 +22,6 @@
     <string name="label_coffee">Café</string>
     <string name="label_water">Eau</string>
     <string name="label_ratio">Ratio</string>
-    <string name="label_strength">Intensité</string>
     <string name="label_grind">Mouture</string>
     <string name="label_filter">Filtre</string>
 <string name="label_all">Tous</string>
@@ -34,7 +33,6 @@
     <string name="label_taste">Goût</string>
     <string name="label_rating">Note</string>
     <string name="label_notes">Notes</string>
-    <string name="label_no_filter">Sans filtre</string>
     <string name="label_settings">Paramètres</string>
 
     <!-- Units -->
@@ -42,58 +40,23 @@
     <string name="unit_ml">ml</string>
 
     <!-- Format strings -->
-    <string name="format_coffee_grams">☕ %1$sg</string>
-    <string name="format_water_grams">💧 %1$sg</string>
-    <string name="format_ratio">1:%1$s</string>
-    <string name="format_bloom_grams">Pré-infusion %1$.0fg</string>
-    <string name="format_time_range">⏱ %1$d:%2$02d–%3$d:%4$02d</string>
-    <string name="format_cup_volume">🥤 ~%1$.0fg en tasse</string>
     <string name="format_dose_water_ratio">%1$.0fg · %2$.0fg · 1:%3$.0f</string>
 
     <!-- Method Picker Screen -->
-    <string name="screen_method_picker_title">Configurer votre préparation</string>
-    <string name="label_coffee_input">Café (g)</string>
-    <string name="label_water_input">Eau (g)</string>
-    <string name="label_brew_size_input">Volume préparé (ml)</string>
-    <string name="label_cup_size_input">Taille de tasse (ml)</string>
-    <string name="label_brew_size">Volume préparé</string>
-    <string name="label_cup_size">Taille de tasse</string>
-    <string name="format_capacity_note">%1$s contient %2$dg d\'eau — les remplissages sont automatiques pour les préparations plus grandes</string>
-    <string name="format_amount_cd">%1$s : %2$d %3$s</string>
     <string name="label_select_coffee_bag">Sélectionner un paquet de café</string>
     <string name="cd_clear_bag">Effacer le paquet</string>
     <string name="format_brewing_with">Préparation avec %1$s</string>
-    <string name="label_freshness">Fraîcheur</string>
-    <string name="format_recommended_now">Recommandé maintenant : %1$s</string>
-    <string name="format_last_time">Dernière fois : %1$s</string>
-    <string name="action_save_as_favorite">Enregistrer comme favori</string>
     <string name="label_select_coffee_bag_title">Sélectionner un paquet de café</string>
     <string name="msg_no_active_bags">Aucun paquet actif. Ajoutez-en un dans la section Vos grains.</string>
     <string name="action_brew_without_bag">Préparer sans sélectionner de paquet</string>
-    <string name="label_best_now">Idéal maintenant</string>
-    <string name="format_grind_generic">Mouture : %1$s – %2$s</string>
     <string name="format_weight_left"> · %1$.0fg restants</string>
-    <string name="format_bag_chip">☕ %1$s%2$s · %3$s%4$s</string>
-    <string name="tip_pulsar">💡 Astuce Pulsar : gardez la boue environ 1 cm au-dessus du lit de café pendant les versements. La plupart des utilisateurs préparent 20–25 g pour une tasse équilibrée.</string>
-    <string name="tip_generic">💡 Astuce : commencez avec le ratio par défaut et ajustez l\'intensité à votre goût. Une mouture plus fine extrait davantage ; une mouture plus grossière extrait moins.</string>
 
     <!-- Amount & Strength Screen -->
     <string name="screen_brew_setup_title">Paramètres de préparation</string>
-<string name="label_custom_ratio">Ratio personnalisé (p. ex. 16)</string>
     <string name="label_temperature">Température (°C)</string>
-    <string name="label_bloom_multiplier">Multiplicateur de pré-infusion (p. ex. 3.0)</string>
-    <string name="label_pulse_count">Nombre de versements</string>
 <string name="action_start_brewing">Démarrer la préparation →</string>
-    <string name="label_advanced_options">Options avancées</string>
     <string name="cd_collapse_advanced">Réduire les options avancées</string>
     <string name="cd_expand_advanced">Développer les options avancées</string>
-    <plurals name="format_coffee_dose_cd">
-        <item quantity="one">Dose de café : %1$d gramme</item>
-        <item quantity="many">Dose de café : %1$d grammes</item>
-        <item quantity="other">Dose de café : %1$d grammes</item>
-    </plurals>
-    <string name="label_decrease">Diminuer %1$s</string>
-    <string name="label_increase">Augmenter %1$s</string>
 
     <!-- Grind Prep Screen -->
 <string name="action_ready_to_brew_short">Prêt à préparer</string>
@@ -285,9 +248,6 @@
     <string name="action_open_app_settings">Ouvrir les paramètres système</string>
 
     <!-- Water Retention (info sheet) -->
-    <string name="label_water_retention">Rétention d\'eau</string>
-    <string name="format_retention_explanation">La mouture absorbe environ 2× son poids sec en eau. Avec %1$.0fg de café, la mouture retient ~%2$.0fg, laissant ~%3$.0fg dans votre tasse.\n\nC\'est une estimation — les torréfactions foncées absorbent un peu plus, les torréfactions claires un peu moins.</string>
-    <string name="cd_about_cup_volume">À propos du volume en tasse</string>
 
     <!-- Brew Visualization / Coffee Insights -->
 <!-- Grind notes -->
@@ -354,8 +314,6 @@
     <string name="adjust_clogged_no_grinder">Essayez un réglage de mouture beaucoup plus grossier</string>
 
     <!-- Accessibility content descriptions -->
-    <string name="cd_coffee_grams">Café : %1$s grammes</string>
-    <string name="cd_water_grams">Eau : %1$s grammes</string>
     <string name="cd_ratio">Ratio 1 pour %1$s</string>
 
     <!-- AddBagSheet -->
@@ -397,8 +355,6 @@
     <!-- BrewRatingSheet -->
 
     <!-- EmptyStateBox -->
-<!-- FavoritesRow -->
-    <string name="label_your_favorites_section">Vos favoris</string>
 
     <!-- FieldChipPicker -->
 
@@ -422,9 +378,6 @@
     <string name="consent_service_unavailable">Le service IA Mindlayer est indisponible</string>
     <string name="consent_failed">Impossible de demander l’accès à l’IA</string>
 
-    <!-- PostBrewCheckInCard -->
-    <string name="label_how_was_last_cup">Comment était votre dernière tasse ?</string>
-    <string name="label_what_was_off">Qu\'est-ce qui clochait ?</string>
 
     <!-- RescanDeltaDialog -->
     <string name="msg_rescan_no_changes">L\'étiquette scannée correspond au paquet enregistré — rien à mettre à jour.</string>
@@ -473,8 +426,6 @@
     <string name="action_discard">Abandonner</string>
     <string name="action_keep_scanning">Continuer le scan</string>
 
-    <!-- MethodPickerScreen -->
-    <string name="action_sync_to_bag">Synchroniser avec le paquet</string>
 
     <!-- SettingsScreen -->
     <string name="label_quick_brew">Préparation rapide</string>

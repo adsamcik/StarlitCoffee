@@ -92,13 +92,10 @@ data class ScanReviewCallbacks(
 )
 
 /**
- * Hosts the guided bag-scan flow on a single nav route: camera capture and the
- * review/action surface, switched by [BagScanCaptureViewModel] phase so "scan
- * more photos" keeps the session intact. Extraction requests emitted by the
- * capture VM are forwarded to [BrewViewModel.processNewBagPhotos], so extraction
- * starts after the first photo and refines as more arrive. Review opens as an
- * editable draft immediately; recognition results merge into that draft while
- * the user can continue editing, save, add photos, or leave it in the background.
+ * Hosts camera capture and hands the session to its durable review destination.
+ * Extraction starts after the first photo and refines as more arrive. Pending
+ * results restore their session before navigation so review keeps its photos
+ * and extraction state.
  */
 @Composable
 fun GuidedScanFlow(
@@ -106,21 +103,14 @@ fun GuidedScanFlow(
     brewViewModel: BrewViewModel,
     onExit: () -> Unit,
     reviewContext: BagReviewContext = BagReviewContext.addNew(),
-    onReviewReady: ((sessionId: String) -> Unit)? = null,
-    reviewContent: @Composable (data: ScanReviewData, callbacks: ScanReviewCallbacks) -> Unit,
+    onReviewReady: (sessionId: String) -> Unit,
 ) {
     val context = LocalContext.current.applicationContext
     val state by captureViewModel.uiState.collectAsStateWithLifecycle()
     val bagPhotoResult by brewViewModel.bagPhotoResult.collectAsStateWithLifecycle()
-    val bagPhotoRetryResult by brewViewModel.bagPhotoRetryResult.collectAsStateWithLifecycle()
     val pendingScanReview by brewViewModel.pendingScanReview.collectAsStateWithLifecycle()
-    val bagPhotoProgress by brewViewModel.bagPhotoProgress.collectAsStateWithLifecycle()
-    val bagAnalysisPreview by brewViewModel.bagAnalysisPreview.collectAsStateWithLifecycle()
     val scanSessionId = state.sessionId
 
-    var reviewData by remember(scanSessionId) {
-        mutableStateOf(initialScanReviewData(scanSessionId))
-    }
     // Forward debounced/finished capture events to the extraction pipeline.
     LaunchedEffect(scanSessionId, reviewContext) {
         captureViewModel.extractionRequests.collect { csv ->
@@ -136,12 +126,7 @@ fun GuidedScanFlow(
         if (state.phase != BagScanPhase.REVIEWING) return@LaunchedEffect
         brewViewModel.ensureBagDraft(scanSessionId, state.photosCsv(), reviewContext)
         brewViewModel.markBagDraftReviewing(scanSessionId)
-        onReviewReady?.invoke(scanSessionId)
-    }
-
-    LaunchedEffect(bagAnalysisPreview, scanSessionId) {
-        val preview = bagAnalysisPreview?.result ?: return@LaunchedEffect
-        reviewData = preview.toScanReviewData(scanSessionId, isProcessing = true)
+        onReviewReady(scanSessionId)
     }
 
     LaunchedEffect(pendingScanReview, reviewContext) {
@@ -161,40 +146,7 @@ fun GuidedScanFlow(
                 sessionResult.sessionId,
                 sessionResult.result.capturedPhotoUris,
             )
-        } else {
-            val result = sessionResult.result
-            reviewData = ScanReviewData(
-                sessionId = scanSessionId,
-                ocrPrefill = result.ocrPrefill,
-                capturedPhotoUris = result.capturedPhotoUris,
-                detectedBarcode = result.detectedBarcode,
-                detectedQrUrl = result.detectedQrUrl,
-                offLookupName = result.offLookupName,
-                offLookupRoaster = result.offLookupRoaster,
-                fieldEvidence = result.fieldEvidence,
-                reviewHints = result.reviewHints,
-                llmStatus = result.llmStatus,
-                thumbnailFocus = result.thumbnailFocus,
-                generationId = sessionResult.generationId.takeIf(String::isNotBlank),
-                isProcessing = false,
-            )
         }
-    }
-
-    LaunchedEffect(bagPhotoRetryResult) {
-        val sessionResult = bagPhotoRetryResult ?: return@LaunchedEffect
-        if (sessionResult.sessionId != scanSessionId) return@LaunchedEffect
-        if (!bagReviewContextsMatch(reviewContext, sessionResult.reviewContext)) return@LaunchedEffect
-        val result = sessionResult.result
-        reviewData = reviewData.copy(
-            ocrPrefill = result.ocrPrefill ?: reviewData.ocrPrefill,
-            fieldEvidence = result.fieldEvidence.ifEmpty { reviewData.fieldEvidence },
-            reviewHints = result.reviewHints.ifEmpty { reviewData.reviewHints },
-            llmStatus = result.llmStatus,
-            thumbnailFocus = result.thumbnailFocus ?: reviewData.thumbnailFocus,
-            generationId = sessionResult.generationId.takeIf(String::isNotBlank) ?: reviewData.generationId,
-            isProcessing = false,
-        )
     }
 
     fun cleanupCaches() {
@@ -212,66 +164,15 @@ fun GuidedScanFlow(
         onExit()
     }
 
-    fun finishAndExit() {
-        // Photos were already copied to permanent storage by the save action.
-        brewViewModel.completeBagPhotoReview(scanSessionId)
-        brewViewModel.cancelBagPhotoProcessing(scanSessionId)
-        cleanupCaches()
-        captureViewModel.reset()
-        onExit()
-    }
-
-    fun saveAndExit() {
-        brewViewModel.markBagDraftSaved(scanSessionId)
-        finishAndExit()
-    }
-
-    fun preserveAndExit() {
-        brewViewModel.markBagDraftBackgrounded(scanSessionId)
-        brewViewModel.continueBagAnalysisInBackground(scanSessionId)
-        captureViewModel.reset()
-        onExit()
-    }
-
-    fun transferAndExit() {
-        if (shouldDeleteStagedPhotosOnExit(ownershipTransferred = true)) cleanupCaches()
-        captureViewModel.reset()
-        onExit()
-    }
-
-    val scanMore = {
-        captureViewModel.backToCapture()
-    }
-    if (state.phase == BagScanPhase.REVIEWING && onReviewReady == null) {
-        reviewContent(
-            reviewData.copy(isProcessing = reviewData.isProcessing || bagPhotoProgress != null),
-            ScanReviewCallbacks(
-                onScanMore = scanMore,
-                onExit = ::preserveAndExit,
-                onSaved = ::saveAndExit,
-                onDiscard = ::discardAndExit,
-                onTransfer = ::transferAndExit,
-            ),
+    when (state.phase) {
+        BagScanPhase.CAPTURING -> GuidedCaptureScreen(
+            captureViewModel = captureViewModel,
+            onBack = ::discardAndExit,
         )
-    } else {
-        when (state.phase) {
-            BagScanPhase.CAPTURING -> GuidedCaptureScreen(
-                captureViewModel = captureViewModel,
-                onBack = ::discardAndExit,
-            )
 
-            BagScanPhase.REVIEWING -> Unit
-        }
+        BagScanPhase.REVIEWING -> Unit
     }
 }
-
-internal fun shouldShowCompletedScanReview(
-    hasCompletedResult: Boolean,
-    isReviewing: Boolean,
-): Boolean = hasCompletedResult && isReviewing
-
-internal fun initialScanReviewData(sessionId: String): ScanReviewData =
-    ScanReviewData(sessionId = sessionId)
 
 private fun BagPhotoProcessingResult.toScanReviewData(
     sessionId: String,
@@ -290,9 +191,6 @@ private fun BagPhotoProcessingResult.toScanReviewData(
     thumbnailFocus = thumbnailFocus,
     isProcessing = isProcessing,
 )
-
-internal fun shouldDeleteStagedPhotosOnExit(ownershipTransferred: Boolean): Boolean =
-    !ownershipTransferred
 
 /** Preserve recognition state even before the first durable result is published. */
 internal fun BagScanDraft.toScanReviewData(): ScanReviewData {

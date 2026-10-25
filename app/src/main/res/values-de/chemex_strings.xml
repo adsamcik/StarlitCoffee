@@ -4,5 +4,4 @@
     <string name="instruction_chemex_bloom">Befeuchte das gesamte Kaffeemehl mit dem Wasser zum Vorquellen und warte, bis das Vorquellen beendet ist.</string>
     <string name="instruction_chemex_pour">Gieße vorsichtig bis zur gesamten Wassermenge. Lass den Pegel zwischen den Aufgüssen sinken und halte ihn unter dem Rand.</string>
     <string name="instruction_chemex_drawdown">Warte, bis das Wasser durch das Kaffeebett gelaufen ist. Entferne den Filter, schwenke vorsichtig und serviere am Holzkragen oder Griff.</string>
-    <string name="label_filter_chemex_bonded">Chemex-Filterpapier</string>
 </resources>

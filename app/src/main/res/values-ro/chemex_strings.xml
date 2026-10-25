@@ -4,5 +4,4 @@
     <string name="instruction_chemex_bloom">Umezește toată cafeaua cu apa de preinfuzie și așteaptă încheierea preinfuziei.</string>
     <string name="instruction_chemex_pour">Toarnă ușor până la cantitatea totală de apă. Lasă nivelul să scadă între turnări și păstrează-l sub margine.</string>
     <string name="instruction_chemex_drawdown">Așteaptă ca apa să treacă prin patul de cafea. Scoate filtrul, rotește ușor și servește ținând de guler sau mâner.</string>
-    <string name="label_filter_chemex_bonded">Hârtie de filtru Chemex</string>
 </resources>
