@@ -1,7 +1,11 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,8 +24,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
@@ -87,7 +93,12 @@ internal fun ConnectedGuideDisclosure(
     val expansionDescription = stringResource(
         if (expanded) R.string.action_hide_details else R.string.action_show_details,
     )
-    Column(modifier = modifier.fillMaxWidth().animateContentSize()) {
+    val chevronRotation by animateFloatAsState(
+        targetValue = if (expanded) 180f else 0f,
+        animationSpec = MaterialTheme.motionScheme.fastSpatialSpec(),
+        label = "guide_disclosure_chevron",
+    )
+    Column(modifier = modifier.fillMaxWidth()) {
         HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
         Surface(onClick = { onExpandedChange(!expanded) },
             color = Color.Transparent,
@@ -98,10 +109,14 @@ internal fun ConnectedGuideDisclosure(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(title, Modifier.weight(1f), style = MaterialTheme.typography.titleSmall)
-                Icon(if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore, null)
+                Icon(Icons.Filled.ExpandMore, null, Modifier.rotate(chevronRotation))
             }
         }
-        AnimatedVisibility(visible = expanded) {
+        AnimatedVisibility(visible = expanded,
+            enter = expandVertically(animationSpec = MaterialTheme.motionScheme.defaultSpatialSpec()) +
+                fadeIn(animationSpec = MaterialTheme.motionScheme.fastEffectsSpec()),
+            exit = shrinkVertically(animationSpec = MaterialTheme.motionScheme.defaultSpatialSpec()) +
+                fadeOut(animationSpec = MaterialTheme.motionScheme.fastEffectsSpec())) {
             Column(Modifier.padding(bottom = 12.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)) { content() }
         }

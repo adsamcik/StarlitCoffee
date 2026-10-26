@@ -11,12 +11,15 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assertCountEquals
+import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performSemanticsAction
@@ -155,6 +158,7 @@ class AdaptiveLiveBrewScreenTest {
             rule.onNodeWithContentDescription(context.getString(R.string.cd_brew_water_height_target))
                 .performScrollTo().assertIsDisplayed()
         } else {
+            rule.onAllNodesWithTag("approved_instruction_asset", useUnmergedTree = true).assertCountEquals(0)
             rule.onNodeWithContentDescription(context.getString(R.string.cd_brew_water_height_target)).assertDoesNotExist()
             full.step?.illustration?.description?.let {
                 rule.onNodeWithContentDescription(it).assertDoesNotExist()
@@ -166,6 +170,16 @@ class AdaptiveLiveBrewScreenTest {
         rule.onNodeWithText(guide.steps[stageIndex].why).assertDoesNotExist()
         assertTextFits()
         rule.runOnIdle { assertTrue("Rendering and reading must not emit session events", events.isEmpty()) }
+        if (packet == Packet.FULL && !large) {
+            val primary = rule.onNodeWithText(context.getString(R.string.action_complete_step))
+            primary.performTouchInput { down(center) }
+            try {
+                save("minimal-ui-full-pressed", renderedDensity, large)
+            } finally {
+                primary.performTouchInput { cancel() }
+            }
+            rule.runOnIdle { assertTrue("Press feedback must not confirm a physical step", events.isEmpty()) }
+        }
         rule.onNodeWithText(context.getString(R.string.action_complete_step)).assertIsDisplayed().performClick()
         rule.runOnIdle { assertTrue(events.single() is SessionEvent.ManualAdvance) }
     }

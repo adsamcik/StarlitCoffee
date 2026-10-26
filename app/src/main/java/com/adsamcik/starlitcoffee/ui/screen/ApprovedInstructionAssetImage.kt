@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -37,6 +38,7 @@ fun ApprovedInstructionAssetImage(
         painter = painterResource(asset.drawableRes),
         contentDescription = contentDescription,
         modifier = modifier
+            .testTag("approved_instruction_asset")
             .fillMaxWidth()
             .aspectRatio(
                 InstructionAssetGeometry.ASPECT_WIDTH.toFloat() /

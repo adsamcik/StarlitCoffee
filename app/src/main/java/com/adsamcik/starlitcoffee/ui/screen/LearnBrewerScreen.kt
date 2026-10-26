@@ -1,8 +1,6 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
-import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,6 +24,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
@@ -163,13 +162,13 @@ fun LearnBrewerScreen(
                         } }
                         content.overview?.let { overview -> item { BrewRecipeOverview(overview) } }
                         if (steps.isNotEmpty()) item {
-                            Button(onClick = { reading = true }, shape = MaterialTheme.shapes.large,
+                            Button(onClick = { reading = true }, shapes = ButtonDefaults.shapesFor(ButtonDefaults.MediumContainerHeight),
                                 modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
                                 Text(stringResource(if (safeStepIndex > 0) R.string.action_continue_reading else R.string.action_read_guide))
                             }
                         }
                         onBrewGuide?.let { start -> item {
-                            FilledTonalButton(onClick = start, shape = MaterialTheme.shapes.large,
+                            FilledTonalButton(onClick = start, shapes = ButtonDefaults.shapesFor(ButtonDefaults.MediumContainerHeight),
                                 modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
                                 Text(stringResource(R.string.action_brew_this_guide))
                             }
@@ -263,17 +262,14 @@ private fun LearningStepProgress(
 ) {
     val animatedProgress by animateFloatAsState(
         targetValue = stepNumber.toFloat() / totalSteps.coerceAtLeast(1),
-        animationSpec = tween(
-            durationMillis = 420,
-            easing = FastOutSlowInEasing,
-        ),
+        animationSpec = MaterialTheme.motionScheme.defaultEffectsSpec(),
         label = "learning_step_progress",
     )
     Column(Modifier.fillMaxWidth().semantics(mergeDescendants = true) {},
         verticalArrangement = Arrangement.spacedBy(6.dp)) {
         Text(stringResource(R.string.format_scan_stage_step, stepNumber, totalSteps),
             style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        LinearProgressIndicator(progress = { animatedProgress },
+        LinearProgressIndicator(progress = { animatedProgress.coerceIn(0f, 1f) },
             modifier = Modifier.fillMaxWidth().height(2.dp).clip(CircleShape),
             color = MaterialTheme.colorScheme.primary, trackColor = MaterialTheme.colorScheme.outlineVariant)
     }
@@ -301,7 +297,7 @@ private fun LearningStepControls(
                         Text(stringResource(R.string.action_back))
                     }
                 }
-                Button(onClick = onNext, shape = MaterialTheme.shapes.large,
+                Button(onClick = onNext, shapes = ButtonDefaults.shapesFor(ButtonDefaults.MediumContainerHeight),
                     modifier = Modifier.weight(1.1f).heightIn(min = 48.dp)) {
                     val isLastStep = stepIndex == totalSteps - 1
                     Text(stringResource(if (isLastStep) R.string.action_guide_overview else R.string.action_next))

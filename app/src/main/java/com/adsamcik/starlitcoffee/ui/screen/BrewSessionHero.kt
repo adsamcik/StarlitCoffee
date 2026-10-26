@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -44,15 +46,22 @@ internal fun BrewSessionHero(
 ) {
     val bloom = brewSessionBloomState(presentation, runtime).takeIf { !bloomSpritesheetId.isNullOrEmpty() }
     val largeText = LocalDensity.current.fontScale >= 1.5f
-    Row(
+    Surface(
         modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        shape = MaterialTheme.shapes.extraLarge,
+        color = MaterialTheme.colorScheme.primaryContainer,
+        contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
     ) {
-        BrewHeroClock(presentation, Modifier.weight(1f))
-        if (bloom != null) {
-            // Keep the whole atlas frame clear of the clock, as a quiet companion.
-            BrewHeroBloom(bloom, bloomSpritesheetId, Modifier.size(if (largeText) 64.dp else 96.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(if (largeText) 16.dp else 20.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            BrewHeroClock(presentation, Modifier.weight(1f))
+            if (bloom != null) {
+                // The atlas retains the physical bloom state; no decorative motion changes its meaning.
+                BrewHeroBloom(bloom, bloomSpritesheetId, Modifier.size(if (largeText) 56.dp else 112.dp))
+            }
         }
     }
 }
@@ -86,8 +95,8 @@ private fun BrewHeroClock(presentation: ActiveBrewSessionPresentation.Available,
         BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
             val measurer = rememberTextMeasurer()
             val availablePixels = with(LocalDensity.current) { maxWidth.roundToPx() }.coerceAtLeast(1)
-            val maximumFontSize = if (LocalDensity.current.fontScale >= 1.5f) 56f else 88f
-            val clockStyle = MaterialTheme.typography.displayLarge.copy(fontWeight = FontWeight.Light,
+            val maximumFontSize = if (LocalDensity.current.fontScale >= 1.5f) 56f else 80f
+            val clockStyle = MaterialTheme.typography.displayLarge.copy(fontWeight = FontWeight.Medium,
                 fontFeatureSettings = "tnum", letterSpacing = (-0.5).sp)
             // Measure the actual glyphs, including Android's non-linear large-font scaling.
             val fontSize = remember(clock, clockIsKnown, availablePixels, maximumFontSize, clockStyle, measurer) {
@@ -107,13 +116,13 @@ private fun BrewHeroClock(presentation: ActiveBrewSessionPresentation.Available,
                 text = clock,
                 fontSize = fontSize,
                 lineHeight = fontSize * 1.1f,
-                fontWeight = FontWeight.Light,
+                fontWeight = FontWeight.Medium,
                 style = clockStyle,
             )
         }
         if (clockIsKnown) {
             Text(stringResource(R.string.label_elapsed), style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant)
+                color = MaterialTheme.colorScheme.onPrimaryContainer)
         }
         val sourceRemaining = if (presentation.isPhysicalOriginKnown) {
             when (val completion = presentation.currentStage?.completion) {

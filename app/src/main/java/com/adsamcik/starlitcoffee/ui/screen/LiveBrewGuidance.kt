@@ -3,6 +3,7 @@
 
 package com.adsamcik.starlitcoffee.ui.screen
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,6 +39,7 @@ import com.adsamcik.starlitcoffee.ui.guidance.BuiltInGuidancePlacement
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewGuidanceVisualStatus
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidanceResolution
 import com.adsamcik.starlitcoffee.ui.guidance.ResolvedBrewGuidanceContent
+import com.adsamcik.starlitcoffee.ui.guidance.GuidancePresentationLevel
 import com.adsamcik.starlitcoffee.ui.guidance.liveSourceMetadata
 import com.adsamcik.starlitcoffee.ui.session.BrewStageReferenceCuePresentation
 
@@ -79,15 +81,16 @@ internal fun projectLiveBrewContent(
     showSupportingCopy: Boolean = true,
     requiredWarnings: List<String> = emptyList(),
 ): LiveBrewContent {
-    val selection = selectLiveBrewGuidance(resolution, equipmentProfileId, minimal)
+    val withoutGuidance = minimal || resolution.policy?.level == GuidancePresentationLevel.UTILITIES_ONLY
+    val selection = selectLiveBrewGuidance(resolution, equipmentProfileId, withoutGuidance)
     val primary = selection.primary
     val metadata = primary?.let { liveSourceMetadata(it.id, equipmentProfileId) }
     val visual = (resolution.visualStatus as? DurableBrewGuidanceVisualStatus.Approved)
-        ?.takeIf { it.targetContentId == primary?.id }
+        ?.takeIf { !withoutGuidance && it.targetContentId == primary?.id }
     val step = primary?.toBrewStepContent(illustration = approvedBrewStepIllustration(
         visual?.asset, visual?.altText ?: primary.altText,
     ))
-    val showInstruction = showSupportingCopy && (!minimal || primary?.safetyCritical == true)
+    val showInstruction = showSupportingCopy && (!withoutGuidance || primary?.safetyCritical == true)
     val warningContent = (listOfNotNull(primary) + selection.supporting).filterNot {
         !showSupportingCopy && liveSourceMetadata(it.id, equipmentProfileId).let { metadata ->
             metadata.warningInHelpWhenFocused && metadata.recognizesWarning(it.warning)
@@ -114,7 +117,7 @@ internal fun projectLiveBrewContent(
     return LiveBrewContent(
         step = step,
         target = targetCue,
-        visualCue = metadata?.visualCue,
+        visualCue = metadata?.visualCue.takeUnless { withoutGuidance },
         instruction = step?.instruction.takeIf { showInstruction },
         instructionResource = metadata?.instruction.takeIf { showInstruction },
         warnings = (warnings + requiredForLive).distinct(),
@@ -150,29 +153,37 @@ internal fun LiveBrewStep(
     val instruction = content.instructionResource?.let { stringResource(it) } ?: content.instruction
     val target = content.step?.target
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        if (content.target != null || target != null || onHelp != null) {
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically) {
-                Column(Modifier.weight(1f)) {
-                    if (content.target != null) ReferenceCueRow(content.target, prominent = true, compact = true)
-                    else if (target != null) Text(target, style = MaterialTheme.typography.headlineMedium,
-                        fontWeight = FontWeight.SemiBold)
+        val hasBody = content.target != null || target != null || onHelp != null || instruction != null ||
+            content.visualCue != null || content.step?.illustration != null
+        if (hasBody) {
+            Column(Modifier.fillMaxWidth().animateContentSize(
+                animationSpec = MaterialTheme.motionScheme.defaultSpatialSpec(),
+            ), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                val visualCue = content.visualCue
+                val illustration = content.step?.illustration
+                if (content.target != null || target != null || onHelp != null) {
+                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically) {
+                        Column(Modifier.weight(1f)) {
+                            if (content.target != null) ReferenceCueRow(content.target, prominent = true, compact = true)
+                            else if (target != null) Text(target, style = MaterialTheme.typography.headlineMedium,
+                                fontWeight = FontWeight.SemiBold)
+                        }
+                        if (onHelp != null) IconButton(onClick = onHelp, modifier = Modifier.size(48.dp)) {
+                            Icon(Icons.AutoMirrored.Outlined.HelpOutline,
+                                contentDescription = stringResource(R.string.action_brew_help))
+                        }
+                    }
                 }
-                if (onHelp != null) IconButton(onClick = onHelp, modifier = Modifier.size(48.dp)) {
-                    Icon(Icons.AutoMirrored.Outlined.HelpOutline,
-                        contentDescription = stringResource(R.string.action_brew_help))
-                }
+                instruction?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
+                if (visualCue != null) LiveBrewVisualCue(visualCue, Modifier.align(Alignment.CenterHorizontally))
+                else if (illustration != null) ApprovedInstructionAssetImage(
+                    asset = illustration.asset,
+                    contentDescription = illustration.description,
+                    modifier = Modifier.widthIn(max = 320.dp).height(168.dp).align(Alignment.CenterHorizontally),
+                )
             }
         }
-        instruction?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
-        val visualCue = content.visualCue
-        val illustration = content.step?.illustration
-        if (visualCue != null) LiveBrewVisualCue(visualCue, Modifier.align(Alignment.CenterHorizontally))
-        else if (illustration != null) ApprovedInstructionAssetImage(
-            asset = illustration.asset,
-            contentDescription = illustration.description,
-            modifier = Modifier.widthIn(max = 320.dp).height(168.dp).align(Alignment.CenterHorizontally),
-        )
         if (content.warnings.isNotEmpty()) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.Top,
                 modifier = Modifier.semantics(mergeDescendants = true) {}) {

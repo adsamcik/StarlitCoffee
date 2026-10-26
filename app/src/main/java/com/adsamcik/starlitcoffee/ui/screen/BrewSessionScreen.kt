@@ -6,7 +6,7 @@ import android.content.ContextWrapper
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
@@ -29,7 +29,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.FilledTonalIconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -718,11 +719,11 @@ internal fun BrewSessionContent(
         stringResource(R.string.format_brew_stage_progress, number, presentation.stageProgress.totalStageCount)
     }.orEmpty()
     val statusDescription = stringResource(R.string.cd_brew_session_status, actionLabel, progressLabel)
-    BoxWithConstraints(modifier) {
+    Box(modifier) {
         val largeText = LocalDensity.current.fontScale >= 1.5f
         Column(
-            modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 24.dp, vertical = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(if (largeText) 20.dp else 32.dp),
+            modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(if (largeText) 16.dp else 20.dp),
         ) {
             if (presentation.status == BrewSessionStatus.COMPLETED) {
                 CompletedBrewSession(completedLogId, onBack, presentation.isTimerOnly)
@@ -735,7 +736,8 @@ internal fun BrewSessionContent(
                     Text(
                         actionLabel,
                         style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onSurface,
                         modifier = Modifier.weight(1f).semantics {
                             heading()
                             contentDescription = statusDescription
@@ -745,7 +747,10 @@ internal fun BrewSessionContent(
                             } else LiveRegionMode.Polite
                         },
                     )
-                    IconButton(onClick = onHelp, modifier = Modifier.size(48.dp)) {
+                    FilledTonalIconButton(onClick = onHelp, shapes = IconButtonDefaults.shapes(),
+                        modifier = Modifier.size(48.dp), colors = IconButtonDefaults.filledTonalIconButtonColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                            contentColor = MaterialTheme.colorScheme.onSurfaceVariant)) {
                         Icon(Icons.AutoMirrored.Outlined.HelpOutline,
                             contentDescription = stringResource(R.string.action_brew_help))
                     }

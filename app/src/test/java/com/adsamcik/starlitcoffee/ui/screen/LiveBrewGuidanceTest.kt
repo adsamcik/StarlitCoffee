@@ -178,6 +178,49 @@ class LiveBrewGuidanceTest {
         assertNull(com.adsamcik.starlitcoffee.ui.brewing.LiveBrewContent(step = step, instruction = null).instruction)
     }
 
+    @Test
+    fun `no guidance strips every instructional image but retains the target and safety`() {
+        val source = illustratedPour()
+        val profile = PulsarLearnGuideCatalog.profileId.value
+        val target = BrewStageReferenceCuePresentation.Mass(QuantityRole.BREW_WATER_INPUT,
+            StageMassReference.BREW_CUMULATIVE, StageTargetQualifier.EXACT, 340.0, 340.0)
+        val guided = projectLiveBrewContent(source, profile, target)
+        val basic = projectLiveBrewContent(source, profile, target, minimal = true,
+            requiredWarnings = listOf("Disconnect power before opening."))
+
+        assertTrue(guided.step?.illustration != null && guided.visualCue != null)
+        assertNull(basic.step?.illustration)
+        assertNull(basic.visualCue)
+        assertEquals(target, basic.target)
+        assertEquals(listOf("Release pressure before opening.", "Disconnect power before opening."),
+            basic.warnings.map { it.text })
+        assertTrue(basic.warnings.all { it.critical })
+        assertTrue(source.visualStatus is DurableBrewGuidanceVisualStatus.Approved)
+    }
+
+    @Test
+    fun `utilities policy suppresses images even without a caller minimal flag`() {
+        val source = illustratedPour().copy(policy = com.adsamcik.starlitcoffee.ui.guidance.ResolvedGuidancePolicy(
+            PulsarLearnGuideCatalog.familyId,
+            PulsarLearnGuideCatalog.profileId,
+            com.adsamcik.starlitcoffee.ui.guidance.GuidancePresentationLevel.UTILITIES_ONLY,
+            com.adsamcik.starlitcoffee.ui.guidance.GuidancePolicySource.SESSION_OVERRIDE,
+        ))
+        val projected = projectLiveBrewContent(source, PulsarLearnGuideCatalog.profileId.value)
+        assertNull(projected.step?.illustration)
+        assertNull(projected.visualCue)
+        assertEquals("Release pressure before opening.", projected.warnings.single().text)
+    }
+
+    private fun illustratedPour(): DurableBrewSessionGuidanceResolution {
+        val pour = content("reviewed_pulsar_v1_open_and_pulse", BuiltInGuidancePlacement.LIVE_STAGE, critical = true)
+            .copy(warning = "Release pressure before opening.")
+        val asset = requireNotNull(liveSourceMetadata(pour.id, PulsarLearnGuideCatalog.profileId.value).visualCue).asset
+        return resolution(emptyList(), listOf(pour)).copy(
+            visualStatus = DurableBrewGuidanceVisualStatus.Approved(asset, pour.id, "Water level above the bed"),
+        )
+    }
+
     private fun canonicalWarning(id: String): String? =
         com.adsamcik.starlitcoffee.ui.guidance.LegacyBuiltInGuidanceCatalog.catalog.find(StageContentId(id))?.text?.warning
 

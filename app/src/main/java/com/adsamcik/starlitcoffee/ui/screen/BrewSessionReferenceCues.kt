@@ -139,7 +139,8 @@ internal fun ReferenceCueRow(
         ) {
             Text(content.value, style = MaterialTheme.typography.displaySmall,
                 fontSize = if (LocalDensity.current.fontScale >= 1.5f) 32.sp else 48.sp,
-                fontWeight = FontWeight.Normal, modifier = Modifier.alignByBaseline())
+                lineHeight = if (LocalDensity.current.fontScale >= 1.5f) 40.sp else 56.sp,
+                fontWeight = FontWeight.SemiBold, modifier = Modifier.alignByBaseline())
             Text(content.label, style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.alignByBaseline())
         }

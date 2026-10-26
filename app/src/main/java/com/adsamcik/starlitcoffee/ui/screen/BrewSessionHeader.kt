@@ -7,6 +7,8 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -30,12 +32,15 @@ internal fun BrewSessionHeader(
         title = { Text(title, Modifier.semantics { heading() }, style = MaterialTheme.typography.titleMedium,
             maxLines = 1, overflow = TextOverflow.Ellipsis) },
         navigationIcon = {
-            IconButton(onClick = onBack) {
+            IconButton(onClick = onBack, shapes = IconButtonDefaults.shapes()) {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.action_back))
             }
         },
         actions = {
-            onHelp?.let { action -> IconButton(onClick = action) {
+            onHelp?.let { action -> FilledTonalIconButton(onClick = action, shapes = IconButtonDefaults.shapes(),
+                colors = IconButtonDefaults.filledTonalIconButtonColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant)) {
                 Icon(Icons.AutoMirrored.Outlined.HelpOutline, stringResource(R.string.action_brew_help))
             } }
             onControls?.let { action -> IconButton(onClick = action) {

@@ -5,6 +5,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.test.assertCountEquals
+import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.v2.createComposeRule
@@ -77,6 +79,7 @@ class MinimalBrewScreenTest {
         rule.onNodeWithContentDescription(context.getString(R.string.cd_bloom_animation)).assertIsDisplayed()
         rule.onNodeWithText(context.getString(R.string.label_elapsed)).assertIsDisplayed()
         rule.onNodeWithText("340 g").assertIsDisplayed()
+        rule.onAllNodesWithTag("approved_instruction_asset", useUnmergedTree = true).assertCountEquals(0)
         rule.onNodeWithText(context.getString(R.string.action_brew_recipe)).assertDoesNotExist()
         rule.onNodeWithText(context.getString(R.string.action_finish)).assertIsDisplayed()
         rule.onNodeWithText(context.getString(R.string.msg_brew_pulsar_basic_pour)).assertDoesNotExist()
@@ -84,7 +87,7 @@ class MinimalBrewScreenTest {
         rule.onNodeWithText(context.getString(R.string.msg_brew_pulsar_overflow), substring = true).assertDoesNotExist()
         save(if (large) "minimal-hot-basic-200-dark" else "minimal-hot-basic-dark")
         rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).performScrollTo().performClick()
-        save("minimal-hot-help-dark")
+        save("minimal-hot-help-dark", wholeWindow = true)
         rule.onNodeWithText("Hot water and brewed coffee can burn.", substring = true)
             .performScrollTo().assertIsDisplayed()
         rule.onAllNodesWithText(context.getString(R.string.heading_guide_why))[0]
@@ -152,14 +155,14 @@ class MinimalBrewScreenTest {
             .performScrollTo().assertIsDisplayed()
         save("minimal-guided-pour-200-cue-dark")
         rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).performScrollTo().performClick()
-        save("minimal-pulsar-help-dark")
+        save("minimal-pulsar-help-dark", wholeWindow = true)
         rule.onNodeWithText(guide.steps[4].instruction).performScrollTo().assertIsDisplayed()
         rule.onNodeWithText(guide.safety.first(), substring = true).performScrollTo().assertIsDisplayed()
         rule.onNodeWithText(context.getString(R.string.action_return_to_live_brew)).performScrollTo().performClick()
         rule.onNodeWithText(context.getString(R.string.action_brew_recipe)).assertDoesNotExist()
         rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).performScrollTo().performClick()
         rule.onNodeWithText(context.getString(R.string.action_brew_recipe)).assertIsDisplayed().performClick()
-        save("minimal-recipe-200-dark")
+        save("minimal-recipe-200-dark", wholeWindow = true)
         rule.onNodeWithText(context.getString(R.string.action_return_to_live_brew)).performClick()
         rule.runOnIdle { assertTrue("Reading must not advance or pause the brew", events.isEmpty()) }
         rule.onNodeWithText(complete).assertIsDisplayed().performClick()
@@ -255,10 +258,20 @@ class MinimalBrewScreenTest {
         rule.waitForIdle()
     }
 
-    private fun save(name: String) {
+    private fun save(name: String, wholeWindow: Boolean = false) {
+        rule.waitForIdle()
         val directory = File(context.getExternalFilesDir(null), "minimal-brew-review").apply { mkdirs() }
         File(directory, "$name.png").outputStream().use {
-            rule.onRoot().captureToImage().asAndroidBitmap().compress(Bitmap.CompressFormat.PNG, 100, it)
+            val bitmap = if (wholeWindow) {
+                // Dialogs own a separate Android window; capture the compositor rather than an occluded Compose root.
+                val automation = InstrumentationRegistry.getInstrumentation().uiAutomation
+                InstrumentationRegistry.getInstrumentation().waitForIdleSync()
+                automation.waitForIdle(500L, 5_000L)
+                // Compose's test clock can settle before SurfaceFlinger latches a newly created sheet window.
+                android.os.SystemClock.sleep(250L)
+                requireNotNull(automation.takeScreenshot()) { "Window screenshot unavailable" }
+            } else rule.onRoot().captureToImage().asAndroidBitmap()
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
         }
     }
 }

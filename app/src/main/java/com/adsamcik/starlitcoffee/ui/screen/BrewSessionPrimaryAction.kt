@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -79,7 +78,10 @@ internal fun BrewSessionPrimaryActionBar(
         BrewSessionPrimaryAction.RESUME_GUIDANCE -> R.string.action_resume_brew_guide
     }
     val onClick = { onDispatch(action.event()) }
-    val buttonModifier = Modifier.fillMaxWidth().heightIn(min = 56.dp)
+    val buttonHeight = ButtonDefaults.MediumContainerHeight
+    val buttonShapes = ButtonDefaults.shapesFor(buttonHeight)
+    val contentPadding = ButtonDefaults.contentPaddingFor(buttonHeight)
+    val buttonModifier = Modifier.fillMaxWidth().heightIn(min = buttonHeight)
     Surface(color = MaterialTheme.colorScheme.surface) {
         Column(Modifier.navigationBarsPadding()) {
             Column(
@@ -92,7 +94,8 @@ internal fun BrewSessionPrimaryActionBar(
                         enabled = !isDispatching,
                         onClick = onClick,
                         modifier = buttonModifier,
-                        shape = RoundedCornerShape(16.dp),
+                        shapes = buttonShapes,
+                        contentPadding = contentPadding,
                     ) {
                         ActionLabel(labelRes)
                     }
@@ -106,7 +109,8 @@ internal fun BrewSessionPrimaryActionBar(
                         enabled = !isDispatching,
                         onClick = onClick,
                         modifier = buttonModifier,
-                        shape = RoundedCornerShape(16.dp),
+                        shapes = buttonShapes,
+                        contentPadding = contentPadding,
                         colors = ButtonDefaults.buttonColors(),
                     ) {
                         ActionLabel(labelRes)
@@ -140,7 +144,7 @@ internal fun BrewSessionPrimaryActionBar(
 private fun ActionLabel(labelRes: Int) {
     Text(
         text = stringResource(labelRes),
-        style = MaterialTheme.typography.titleMedium,
+        style = ButtonDefaults.textStyleFor(ButtonDefaults.MediumContainerHeight),
         fontWeight = FontWeight.SemiBold,
     )
 }
