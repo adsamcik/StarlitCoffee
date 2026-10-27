@@ -1,0 +1,31 @@
+{
+  "reviewer": "Independent Astra design and binding review /root/astra_design_review",
+  "reviewed_on": "2026-10-27",
+  "verdict": "approved",
+  "source_asset_id": "instruction_scene_chemex_unspecified_prepare_default",
+  "resource_sha256": "2e6f10e65a5a49a13c085c88d5bb864bd7726917c154df281b302080df20d01c",
+  "raw_source_sha256": "15ecb1fe85aeb8f0f030d41d11e0baf6518bd2356ad69b50a4a6638b2871da95",
+  "prompt_sha256": "d1f8c810e42582b13de77ae56df977e3dcf8e12a10ed6eca65512ccaf20bd945",
+  "target": {
+    "content_id": "chemex_30_480_prepare",
+    "target_family_id": "manual_gravity",
+    "target_profile_id": "manual_thick_paper_carafe",
+    "target_catalog": "reviewed",
+    "target_content_revision": "a4d51d638018ea5c4f63ec188212a27a21eba63a9fec927248382cf6733d2de5",
+    "content_revision": "a4d51d638018ea5c4f63ec188212a27a21eba63a9fec927248382cf6733d2de5",
+    "alt_text": "Close-up of three layers of bonded paper facing the Chemex spout, with the open glass air channel visible beneath them.",
+    "purpose": "instruction",
+    "review": {
+      "verdict": "approved",
+      "reviewer": "Independent Astra design and binding review /root/astra_design_review",
+      "reviewed_on": "2026-10-27",
+      "notes": [
+        "Reviewed original raw, delivery WebP, prompt and 320px light/dark previews; existing recorded hashes match. Reinforced three-layer paper faces the spout with a readable open air channel. Manufacturer preparation instructions checked.",
+        "Cross-profile reuse is limited to the cropped orientation detail; no dimensions, capacity, recipe quantities or literal folding-template geometry transfer. Six-cup filter fit and completion remain in the authored target.",
+        "Evidence: docs/brewing/astra-polish-20261027/chemex-binding-review.json"
+      ]
+    }
+  },
+  "source_reference": "https://chemexcoffeemaker.com/pages/how-to-brew-with-chemex",
+  "scope": "No pixels changed. Existing generated, admitted art reused after independent target binding review. Final native framing reviewed in the full UI pass."
+}

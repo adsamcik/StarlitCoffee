@@ -3294,7 +3294,7 @@
             "reviewer": "Codex content-binding review /root",
             "reviewed_on": "2026-10-25",
             "notes": [
-              "Explicit candidate for pulsar_standard <- pulsar_standard. Visible source action/state: Open the valve, start the timer, and pour to 60 g\u2014three times the 20 g dose.. Quantities, timing, safety and completion remain in the frozen target contract; no numeric or behavioral recipe transfer is authorized. Illustrates the initial OPEN-valve capped pour only. Source requires closing at first drips and base-only gentle swirl within this compound step; never imply leave open throughout bloom. Proposed alt text describes source pixels without importing source-recipe mass or timing; final per-binding pixel/alt QC remains required.",
+              "Explicit candidate for pulsar_standard <- pulsar_standard. Visible source action/state: Open the valve, start the timer, and pour to 60 g—three times the 20 g dose.. Quantities, timing, safety and completion remain in the frozen target contract; no numeric or behavioral recipe transfer is authorized. Illustrates the initial OPEN-valve capped pour only. Source requires closing at first drips and base-only gentle swirl within this compound step; never imply leave open throughout bloom. Proposed alt text describes source pixels without importing source-recipe mass or timing; final per-binding pixel/alt QC remains required.",
               "Pixel QC: Independent Codex reviewer /root/minimal_brew_review. Fitted dispersion cap receives a narrow incoming water stream and releases shower droplets toward the shallow wet bed; open upright valve allows first drops into receiver. No raised paper basket wall remains in this delivered version. Partial kettle spout is a deliberate action crop; no heat, quantity or timing is encoded. Canonical stage3 old black-kettle wording must use truthful manifest alt."
             ]
           }
@@ -3421,7 +3421,7 @@
             "reviewer": "Codex content-binding review /root",
             "reviewed_on": "2026-10-25",
             "notes": [
-              "Explicit candidate for pulsar_standard <- pulsar_standard. Visible source action/state: At 1:00, open the valve and pulse-pour to 340 g total\u2014the final 1:17 ratio.. Quantities, timing, safety and completion remain in the frozen target contract; no numeric or behavioral recipe transfer is authorized. Proposed alt text describes source pixels without importing source-recipe mass or timing; final per-binding pixel/alt QC remains required.",
+              "Explicit candidate for pulsar_standard <- pulsar_standard. Visible source action/state: At 1:00, open the valve and pulse-pour to 340 g total—the final 1:17 ratio.. Quantities, timing, safety and completion remain in the frozen target contract; no numeric or behavioral recipe transfer is authorized. Proposed alt text describes source pixels without importing source-recipe mass or timing; final per-binding pixel/alt QC remains required.",
               "Pixel QC: Independent Codex reviewer /root/minimal_brew_review. Upright open lever, fitted perforated cap, incoming water and shallow pool above bed with ongoing drainage correctly show active pulse-pour state. Physical water path stays within brewer and receiver, with ample headroom. Does not measure one centimeter, pulse count or total mass. Canonical stage6 black-kettle wording must be corrected to visible cream spout."
             ]
           }
@@ -3440,7 +3440,7 @@
             "reviewer": "Codex content-binding review /root",
             "reviewed_on": "2026-10-25",
             "notes": [
-              "Explicit candidate for pulsar_standard <- pulsar_standard. Visible source action/state: At 1:00, open the valve and pulse-pour to 340 g total\u2014the final 1:17 ratio.. Quantities, timing, safety and completion remain in the frozen target contract; no numeric or behavioral recipe transfer is authorized. Proposed alt text describes source pixels without importing source-recipe mass or timing; final per-binding pixel/alt QC remains required.",
+              "Explicit candidate for pulsar_standard <- pulsar_standard. Visible source action/state: At 1:00, open the valve and pulse-pour to 340 g total—the final 1:17 ratio.. Quantities, timing, safety and completion remain in the frozen target contract; no numeric or behavioral recipe transfer is authorized. Proposed alt text describes source pixels without importing source-recipe mass or timing; final per-binding pixel/alt QC remains required.",
               "Pixel QC: Independent Codex reviewer /root/minimal_brew_review. Upright open lever, fitted perforated cap, incoming water and shallow pool above bed with ongoing drainage correctly show active pulse-pour state. Physical water path stays within brewer and receiver, with ample headroom. Does not measure one centimeter, pulse count or total mass. Canonical stage6 black-kettle wording must be corrected to visible cream spout."
             ]
           }
@@ -4404,7 +4404,7 @@
             "reviewer": "Codex content-binding review /root",
             "reviewed_on": "2026-10-25",
             "notes": [
-              "Explicit candidate for pulsar_standard <- pulsar_standard. Visible source action/state: Open the valve, start the timer, and pour to 60 g\u2014three times the 20 g dose.. Quantities, timing, safety and completion remain in the frozen target contract; no numeric or behavioral recipe transfer is authorized.",
+              "Explicit candidate for pulsar_standard <- pulsar_standard. Visible source action/state: Open the valve, start the timer, and pour to 60 g—three times the 20 g dose.. Quantities, timing, safety and completion remain in the frozen target contract; no numeric or behavioral recipe transfer is authorized.",
               "Pixel QC: Independent Codex reviewer /root/minimal_brew_review. Fitted dispersion cap receives a narrow incoming water stream and releases shower droplets toward the shallow wet bed; open upright valve allows first drops into receiver. No raised paper basket wall remains in this delivered version. Partial kettle spout is a deliberate action crop; no heat, quantity or timing is encoded. Canonical stage3 old black-kettle wording must use truthful manifest alt."
             ]
           }
@@ -4566,7 +4566,7 @@
             "reviewer": "Codex content-binding review /root",
             "reviewed_on": "2026-10-25",
             "notes": [
-              "Explicit candidate for pulsar_standard <- pulsar_standard. Visible source action/state: At 1:00, open the valve and pulse-pour to 340 g total\u2014the final 1:17 ratio.. Quantities, timing, safety and completion remain in the frozen target contract; no numeric or behavioral recipe transfer is authorized.",
+              "Explicit candidate for pulsar_standard <- pulsar_standard. Visible source action/state: At 1:00, open the valve and pulse-pour to 340 g total—the final 1:17 ratio.. Quantities, timing, safety and completion remain in the frozen target contract; no numeric or behavioral recipe transfer is authorized.",
               "Pixel QC: Independent Codex reviewer /root/minimal_brew_review. Upright open lever, fitted perforated cap, incoming water and shallow pool above bed with ongoing drainage correctly show active pulse-pour state. Physical water path stays within brewer and receiver, with ample headroom. Does not measure one centimeter, pulse count or total mass. Canonical stage6 black-kettle wording must be corrected to visible cream spout."
             ]
           }
@@ -8646,6 +8646,26 @@
               "Pixel QC: Codex independent visual and binding review /root. Conceptual close-up only: reinforced paper side faces the spout with a visible blue air gap below. This is not a folding-template diagram or a statement of filter size, overall vessel dimensions or capacity. Full raw artwork, encoded delivery conversion, and actual 320px light/dark sheet inspected; no in-image text or numeric recipe claims. Manufacturer filter orientation and distinct three-cup paper scope checked."
             ]
           }
+        },
+        {
+          "content_id": "chemex_30_480_prepare",
+          "target_family_id": "manual_gravity",
+          "target_profile_id": "manual_thick_paper_carafe",
+          "target_catalog": "reviewed",
+          "target_content_revision": "a4d51d638018ea5c4f63ec188212a27a21eba63a9fec927248382cf6733d2de5",
+          "content_revision": "a4d51d638018ea5c4f63ec188212a27a21eba63a9fec927248382cf6733d2de5",
+          "alt_text": "Close-up of three layers of bonded paper facing the Chemex spout, with the open glass air channel visible beneath them.",
+          "purpose": "instruction",
+          "review": {
+            "verdict": "approved",
+            "reviewer": "Independent Astra design and binding review /root/astra_design_review",
+            "reviewed_on": "2026-10-27",
+            "notes": [
+              "Reviewed original raw, delivery WebP, prompt and 320px light/dark previews; existing recorded hashes match. Reinforced three-layer paper faces the spout with a readable open air channel. Manufacturer preparation instructions checked.",
+              "Cross-profile reuse is limited to the cropped orientation detail; no dimensions, capacity, recipe quantities or literal folding-template geometry transfer. Six-cup filter fit and completion remain in the authored target.",
+              "Evidence: docs/brewing/astra-polish-20261027/chemex-binding-review.json"
+            ]
+          }
         }
       ]
     },
@@ -9323,25 +9343,6 @@
       },
       "bindings": [
         {
-          "content_id": "chemex_30_480_prepare",
-          "target_family_id": "manual_gravity",
-          "target_profile_id": "manual_thick_paper_carafe",
-          "target_catalog": "reviewed",
-          "target_content_revision": "a4d51d638018ea5c4f63ec188212a27a21eba63a9fec927248382cf6733d2de5",
-          "content_revision": "a4d51d638018ea5c4f63ec188212a27a21eba63a9fec927248382cf6733d2de5",
-          "alt_text": "Folded bonded paper sits in a six-cup Chemex with three layers toward the open spout groove.",
-          "purpose": "instruction",
-          "review": {
-            "verdict": "approved",
-            "reviewer": "Codex content-binding review /root",
-            "reviewed_on": "2026-10-25",
-            "notes": [
-              "Explicit candidate for manual_thick_paper_carafe <- chemex_six_cup_carafe. Visible source action/state: Place the folded filter with three layers over the spout. Quantities, timing, safety and completion remain in the frozen target contract; no numeric or behavioral recipe transfer is authorized. Both target scope and source identify the six-cup Classic Chemex with matching bonded paper;42/700 source amounts are not transferred to30/480. Proposed alt text describes source pixels without importing source-recipe mass or timing; final per-binding pixel/alt QC remains required.",
-              "Pixel QC: Codex independent renewed legacy review /root/guidance_art_audit. Triple-layer side over the spout, visible vent channel, open paper, narrow stream with headroom, drainage and collar-only mixing grip remain readable. No gram targets, true preheating or completed rinse can be inferred from artwork."
-            ]
-          }
-        },
-        {
           "content_id": "p1_chemex_42_700_stage_01_instruction",
           "target_family_id": "manual_gravity",
           "target_profile_id": "manual_thick_paper_carafe",
@@ -9446,7 +9447,7 @@
             "reviewer": "Codex content-binding review /root",
             "reviewed_on": "2026-10-25",
             "notes": [
-              "Explicit candidate for manual_thick_paper_carafe <- chemex_six_cup_carafe. Visible source action/state: Bloom with 100\u2013125 g. Quantities, timing, safety and completion remain in the frozen target contract; no numeric or behavioral recipe transfer is authorized. Both target scope and source identify the six-cup Classic Chemex with matching bonded paper;42/700 source amounts are not transferred to30/480. Proposed alt text describes source pixels without importing source-recipe mass or timing; final per-binding pixel/alt QC remains required.",
+              "Explicit candidate for manual_thick_paper_carafe <- chemex_six_cup_carafe. Visible source action/state: Bloom with 100–125 g. Quantities, timing, safety and completion remain in the frozen target contract; no numeric or behavioral recipe transfer is authorized. Both target scope and source identify the six-cup Classic Chemex with matching bonded paper;42/700 source amounts are not transferred to30/480. Proposed alt text describes source pixels without importing source-recipe mass or timing; final per-binding pixel/alt QC remains required.",
               "Pixel QC: Codex independent renewed legacy review /root/guidance_art_audit. Triple-layer side over the spout, visible vent channel, open paper, narrow stream with headroom, drainage and collar-only mixing grip remain readable. No gram targets, true preheating or completed rinse can be inferred from artwork."
             ]
           }
@@ -9458,14 +9459,14 @@
           "target_catalog": "exact_p1",
           "target_content_revision": "0584b399d397fd527d46075fc9f6beb35a475975015c079e1762a1aea6d65449",
           "content_revision": "0584b399d397fd527d46075fc9f6beb35a475975015c079e1762a1aea6d65449",
-          "alt_text": "Instructional view of bloom with 100\u2013125 g using the exact brewer profile and filter configuration stated in this recipe; all 42 g coffee is saturated.",
+          "alt_text": "Instructional view of bloom with 100–125 g using the exact brewer profile and filter configuration stated in this recipe; all 42 g coffee is saturated.",
           "purpose": "instruction",
           "review": {
             "verdict": "approved",
             "reviewer": "Codex content-binding review /root",
             "reviewed_on": "2026-10-25",
             "notes": [
-              "Explicit candidate for manual_thick_paper_carafe <- chemex_six_cup_carafe. Visible source action/state: Bloom with 100\u2013125 g. Quantities, timing, safety and completion remain in the frozen target contract; no numeric or behavioral recipe transfer is authorized. Both target scope and source identify the six-cup Classic Chemex with matching bonded paper;42/700 source amounts are not transferred to30/480. Canonical self-binding only; preserve exact recipe release/localization gates and never emit an alias collision.",
+              "Explicit candidate for manual_thick_paper_carafe <- chemex_six_cup_carafe. Visible source action/state: Bloom with 100–125 g. Quantities, timing, safety and completion remain in the frozen target contract; no numeric or behavioral recipe transfer is authorized. Both target scope and source identify the six-cup Classic Chemex with matching bonded paper;42/700 source amounts are not transferred to30/480. Canonical self-binding only; preserve exact recipe release/localization gates and never emit an alias collision.",
               "Pixel QC: Codex independent renewed legacy review /root/guidance_art_audit. Triple-layer side over the spout, visible vent channel, open paper, narrow stream with headroom, drainage and collar-only mixing grip remain readable. No gram targets, true preheating or completed rinse can be inferred from artwork."
             ]
           }
@@ -12416,14 +12417,14 @@
           "target_catalog": "exact_p1",
           "target_content_revision": "54530a0899bbf6c814d3813d4b2536468b4879ef5a6a962f679a67815dfdfa3f",
           "content_revision": "54530a0899bbf6c814d3813d4b2536468b4879ef5a6a962f679a67815dfdfa3f",
-          "alt_text": "Instructional view of bloom with 50\u201360 g and wet all grounds using the exact brewer profile and filter configuration stated in this recipe; no dry islands remain.",
+          "alt_text": "Instructional view of bloom with 50–60 g and wet all grounds using the exact brewer profile and filter configuration stated in this recipe; no dry islands remain.",
           "purpose": "instruction",
           "review": {
             "verdict": "approved",
             "reviewer": "Codex content-binding review /root",
             "reviewed_on": "2026-10-25",
             "notes": [
-              "Explicit candidate for manual_conical_generic <- generic_open_bottom_60_conical_dripper_with_compatible_paper. Visible source action/state: Bloom with 50\u201360 g and wet all grounds. Quantities, timing, safety and completion remain in the frozen target contract; no numeric or behavioral recipe transfer is authorized. Canonical self-binding only; preserve exact recipe release/localization gates and never emit an alias collision.",
+              "Explicit candidate for manual_conical_generic <- generic_open_bottom_60_conical_dripper_with_compatible_paper. Visible source action/state: Bloom with 50–60 g and wet all grounds. Quantities, timing, safety and completion remain in the frozen target contract; no numeric or behavioral recipe transfer is authorized. Canonical self-binding only; preserve exact recipe release/localization gates and never emit an alias collision.",
               "Pixel QC: Codex independent renewed legacy review /root/guidance_art_audit. Generic compatible cone/paper, stable server, low narrow stream over bed and final intermittent drainage are coherent. No exact model, calibrated water level or measured quantities are implied."
             ]
           }

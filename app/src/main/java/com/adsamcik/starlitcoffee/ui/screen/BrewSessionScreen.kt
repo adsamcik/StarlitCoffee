@@ -581,6 +581,7 @@ fun BrewSessionScreen(
                         sourceExplanations = (readerGuide?.stageFactsByContentId ?: reader?.reviewedGuide?.learnFacts().orEmpty())
                             .mapNotNull { (id, facts) -> facts.explanation?.let { id to it } }.toMap(),
                         showFullExplanations = true,
+                        equipmentProfileId = persistedRecipe?.brewerProfileId,
                     )
                 }
                 availablePresentation.currentStage?.let { stage ->
@@ -729,8 +730,8 @@ internal fun BrewSessionContent(
                 CompletedBrewSession(completedLogId, onBack, presentation.isTimerOnly)
                 return@Column
             }
-            BrewSessionHero(presentation, runtime, bloomSpritesheetId)
-            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                BrewSessionHero(presentation, runtime, bloomSpritesheetId)
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(

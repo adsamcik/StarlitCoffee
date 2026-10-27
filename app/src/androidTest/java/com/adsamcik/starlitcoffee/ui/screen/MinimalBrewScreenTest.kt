@@ -106,7 +106,8 @@ class MinimalBrewScreenTest {
         val sourceStep = guide.steps[4]
         render(request, runningAt(request, 4, 130_000L), large = false, dark = true)
         rule.onNodeWithText("340 g").assertIsDisplayed()
-        val spokenTarget = context.getString(R.string.label_brew_reference_brew_water) + " · " +
+        val spokenTarget = context.getString(R.string.label_live_target) + " · " +
+            context.getString(R.string.label_brew_reference_brew_water) + " · " +
             context.getString(R.string.label_brew_reference_brew_total) + " 340 g"
         rule.onNodeWithContentDescription(spokenTarget).assertIsDisplayed()
         rule.onNodeWithText(sourceStep.instruction).assertDoesNotExist()
@@ -126,9 +127,11 @@ class MinimalBrewScreenTest {
             context.getString(R.string.label_brew_reference_brew_water) + " 340 g"
         rule.onNodeWithText(quantities).assertIsDisplayed()
         rule.onNodeWithText(context.getString(R.string.action_brew_recipe)).assertIsDisplayed()
+        rule.onNodeWithText(context.getString(R.string.msg_brew_pulsar_main_pour_help)).assertIsDisplayed()
+        rule.onNodeWithText(sourceStep.instruction).assertDoesNotExist()
+        rule.onAllNodesWithText(context.getString(R.string.heading_guide_why))[0].performScrollTo().performClick()
         rule.onNodeWithText(sourceStep.instruction).performScrollTo().assertIsDisplayed()
         rule.onNodeWithText(guide.safety.first(), substring = true).performScrollTo().assertIsDisplayed()
-        rule.onAllNodesWithText(context.getString(R.string.heading_guide_why))[0].performScrollTo().performClick()
         rule.onNodeWithText(sourceStep.why).performScrollTo().assertIsDisplayed()
         rule.onNodeWithText(sourceStep.completion).performScrollTo().assertIsDisplayed()
         rule.onNodeWithText(context.getString(R.string.action_return_to_live_brew)).performScrollTo().performClick()
@@ -156,6 +159,9 @@ class MinimalBrewScreenTest {
         save("minimal-guided-pour-200-cue-dark")
         rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).performScrollTo().performClick()
         save("minimal-pulsar-help-dark", wholeWindow = true)
+        rule.onNodeWithText(context.getString(R.string.msg_brew_pulsar_main_pour_help)).assertIsDisplayed()
+        rule.onNodeWithText(guide.steps[4].instruction).assertDoesNotExist()
+        rule.onAllNodesWithText(context.getString(R.string.heading_guide_why))[0].performScrollTo().performClick()
         rule.onNodeWithText(guide.steps[4].instruction).performScrollTo().assertIsDisplayed()
         rule.onNodeWithText(guide.safety.first(), substring = true).performScrollTo().assertIsDisplayed()
         rule.onNodeWithText(context.getString(R.string.action_return_to_live_brew)).performScrollTo().performClick()

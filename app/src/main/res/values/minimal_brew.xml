@@ -4,10 +4,12 @@
     <string name="action_brew_controls">Brew controls</string>
     <string name="action_brew_recipe">Recipe</string>
     <string name="label_live_brew_total">total</string>
+    <string name="label_live_target">Target</string>
     <string name="label_live_step_added">this step</string>
     <string name="label_live_recipe_total">recipe total</string>
     <!-- Technical captions follow the explicitly English reviewed Pulsar guide. -->
     <string name="msg_brew_pulsar_main_pour" translatable="false">Open valve fully · Pulse through cap</string>
+    <string name="msg_brew_pulsar_main_pour_help" translatable="false">At 1:00, open the valve fully. Pulse 280 g through the cap to 340 g total, keeping about 1 cm of water above the bed.</string>
     <string name="msg_brew_pulsar_basic_pour" translatable="false">Open valve · Pour through cap</string>
     <string name="msg_brew_pulsar_pause_high" translatable="false">Pause pouring if higher</string>
     <string name="msg_brew_pulsar_hot_liquid" translatable="false">Hot liquid: hands clear; keep brewer and server stable.</string>

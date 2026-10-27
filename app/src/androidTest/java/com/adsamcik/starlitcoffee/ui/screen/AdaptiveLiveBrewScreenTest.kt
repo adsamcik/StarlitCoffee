@@ -152,6 +152,10 @@ class AdaptiveLiveBrewScreenTest {
         rule.onNodeWithText(context.getString(R.string.label_elapsed)).assertIsDisplayed()
         rule.onNodeWithText("2:10", substring = true).assertIsDisplayed()
         rule.onNodeWithText("340 g").performScrollTo().assertIsDisplayed()
+        val spokenTarget = context.getString(R.string.label_live_target) + " · " +
+            context.getString(R.string.label_brew_reference_brew_water) + " · " +
+            context.getString(R.string.label_brew_reference_brew_total) + " 340 g"
+        rule.onNodeWithContentDescription(spokenTarget).assertIsDisplayed()
         rule.onNodeWithContentDescription(context.getString(R.string.cd_bloom_animation))
             .performScrollTo().assertIsDisplayed()
         if (packet == Packet.FULL) {

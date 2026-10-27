@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.ui.brewing.approvedBrewStepIllustration
 import com.adsamcik.starlitcoffee.ui.brewing.toBrewStepContent
+import com.adsamcik.starlitcoffee.ui.brewing.BrewStepContent
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.ui.guidance.BrewingTerminologyReference
 import com.adsamcik.starlitcoffee.ui.guidance.BrewingTerminologyUiCopy
@@ -32,6 +33,23 @@ import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewGuidanceVisualStatus
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidanceResolution
 import com.adsamcik.starlitcoffee.ui.guidance.GuidancePresentationLevel
 import com.adsamcik.starlitcoffee.ui.guidance.ResolvedBrewGuidanceContent
+import com.adsamcik.starlitcoffee.ui.guidance.liveSourceMetadata
+
+/** Short procedures retain source detail; only provably repeated safety instructions are omitted. */
+internal fun projectBrewHelpStep(
+    step: BrewStepContent,
+    profileId: String?,
+    conciseInstruction: String? = null,
+): BrewStepContent {
+    val metadata = liveSourceMetadata(step.id, profileId)
+    if (!metadata.recognizesInstruction(step.instruction)) return step
+    val duplicateSafety = metadata.warningInHelpWhenMinimal && metadata.recognizesWarning(step.warning)
+    if (!duplicateSafety && conciseInstruction == null) return step
+    return step.copy(
+        instruction = conciseInstruction.takeUnless { duplicateSafety },
+        details = if (duplicateSafety) step.details else (listOfNotNull(step.instruction) + step.details).distinct(),
+    )
+}
 
 /**
  * Keeps ordinary live guidance safety-first, but lets an approved stage visual
@@ -99,6 +117,7 @@ fun BrewSessionGuidancePanel(
     onShowEnglishTerminology: (Boolean) -> Unit = {},
     sourceExplanations: Map<StageContentId, String> = emptyMap(),
     showFullExplanations: Boolean = false,
+    equipmentProfileId: String? = null,
 ) {
     val approvedVisual = resolution.visualStatus as? DurableBrewGuidanceVisualStatus.Approved
     val visibleContent = remember(
@@ -130,10 +149,13 @@ fun BrewSessionGuidancePanel(
                 illustration = approvedBrewStepIllustration(visual?.asset, visual?.altText ?: content.altText),
                 extraDetails = listOfNotNull(sourceDetails),
             )
-            if (step.isReadable) GuideStepCanvas(
-                content = step,
+            val helpStep = if (showFullExplanations) projectBrewHelpStep(step, equipmentProfileId,
+                liveSourceMetadata(content.id, equipmentProfileId).helpInstruction?.let { stringResource(it) }) else step
+            if (helpStep.isReadable) GuideStepCanvas(
+                content = helpStep,
                 expanded = expanded,
                 onExpandedChange = { expanded = it },
+                instructionFirst = showFullExplanations,
             )
         }
         if (resolution.policy != null || terminologyReferences.isNotEmpty()) {

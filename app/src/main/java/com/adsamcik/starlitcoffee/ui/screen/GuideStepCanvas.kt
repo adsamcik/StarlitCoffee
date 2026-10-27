@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
@@ -44,6 +45,7 @@ internal fun GuideStepCanvas(
     expanded: Boolean,
     onExpandedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
+    instructionFirst: Boolean = false,
 ) {
     Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         (content.title ?: content.action?.label())?.let {
@@ -57,10 +59,12 @@ internal fun GuideStepCanvas(
                 content.facts.forEach { DetailsRow(stringResource(it.labelRes), it.value) }
             }
         }
+        if (instructionFirst) content.instruction?.let { Text(it, style = MaterialTheme.typography.bodyLarge) }
         content.illustration?.let { illustration ->
-            ApprovedInstructionAssetImage(illustration.asset, illustration.description)
+            ApprovedInstructionAssetImage(illustration.asset, illustration.description,
+                Modifier.widthIn(max = 280.dp).align(Alignment.CenterHorizontally))
         }
-        content.instruction?.let { Text(it, style = MaterialTheme.typography.bodyLarge) }
+        if (!instructionFirst) content.instruction?.let { Text(it, style = MaterialTheme.typography.bodyLarge) }
         content.target?.let {
             Text(it, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
         }

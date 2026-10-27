@@ -165,7 +165,8 @@ internal fun LiveBrewStep(
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
-                            if (content.target != null) ReferenceCueRow(content.target, prominent = true, compact = true)
+                            if (content.target != null) ReferenceCueRow(content.target, prominent = true, compact = true,
+                                showTargetLabel = true)
                             else if (target != null) Text(target, style = MaterialTheme.typography.headlineMedium,
                                 fontWeight = FontWeight.SemiBold)
                         }

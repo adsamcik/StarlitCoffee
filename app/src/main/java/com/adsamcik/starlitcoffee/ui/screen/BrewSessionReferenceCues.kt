@@ -126,23 +126,32 @@ internal fun ReferenceCueRow(
     cue: BrewStageReferenceCuePresentation,
     prominent: Boolean = false,
     compact: Boolean = false,
+    showTargetLabel: Boolean = false,
 ) {
     val content = cue.content(compact = compact)
     val spokenLabel = if (compact) cue.content().label else content.label
     if (compact) {
-        FlowRow(
+        val targetLabel = stringResource(R.string.label_live_target)
+        Column(
             modifier = Modifier.fillMaxWidth().semantics(mergeDescendants = true) {
-                contentDescription = "$spokenLabel ${content.value}"
+                contentDescription = if (showTargetLabel) "$targetLabel · $spokenLabel ${content.value}"
+                    else "$spokenLabel ${content.value}"
             },
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            itemVerticalAlignment = Alignment.CenterVertically,
+            verticalArrangement = Arrangement.spacedBy(2.dp),
         ) {
-            Text(content.value, style = MaterialTheme.typography.displaySmall,
-                fontSize = if (LocalDensity.current.fontScale >= 1.5f) 32.sp else 48.sp,
-                lineHeight = if (LocalDensity.current.fontScale >= 1.5f) 40.sp else 56.sp,
-                fontWeight = FontWeight.SemiBold, modifier = Modifier.alignByBaseline())
-            Text(content.label, style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.alignByBaseline())
+            if (showTargetLabel) Text(targetLabel, style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                itemVerticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(content.value, style = MaterialTheme.typography.displaySmall,
+                    fontSize = if (LocalDensity.current.fontScale >= 1.5f) 32.sp else 48.sp,
+                    lineHeight = if (LocalDensity.current.fontScale >= 1.5f) 40.sp else 56.sp,
+                    fontWeight = FontWeight.SemiBold, modifier = Modifier.alignByBaseline())
+                Text(content.label, style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.alignByBaseline())
+            }
         }
         return
     }

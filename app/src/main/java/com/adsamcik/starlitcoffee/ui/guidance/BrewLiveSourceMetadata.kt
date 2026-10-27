@@ -15,9 +15,14 @@ internal data class BrewLiveSourceMetadata(
     val visualCue: BrewLiveVisualCue? = null,
     val focusOnTarget: Boolean = false,
     val knownWarningRevision: String? = null,
+    @StringRes val helpInstruction: Int? = null,
+    val knownInstructionRevision: String? = null,
 ) {
     fun recognizesWarning(warning: String?): Boolean = warning != null &&
         knownWarningRevision == visualContractRevision(listOf(warning))
+
+    fun recognizesInstruction(instruction: String?): Boolean = instruction != null &&
+        knownInstructionRevision == visualContractRevision(listOf(instruction))
 }
 
 internal data class BrewLiveVisualCue(
@@ -44,10 +49,12 @@ internal fun liveSourceMetadata(
     if (profileId != PulsarLearnGuideCatalog.profileId.value) return BrewLiveSourceMetadata()
     return when (contentId.value) {
         "pulsar_hot_liquid_safety" -> BrewLiveSourceMetadata(
+            knownInstructionRevision = "b1d7a6685b3032ad7e29601ad92bfceef5e21f00c4d20eb104d809d3e5eba5d0",
             warningSummary = R.string.msg_brew_pulsar_hot_liquid, warningInHelpWhenMinimal = true,
             knownWarningRevision = "19456199c9f526273143dc0e0945e05111e961bb7bbaacdd74389ef7b4af685c",
         )
         "pulsar_overflow_safety" -> BrewLiveSourceMetadata(
+            knownInstructionRevision = "fadabdc43da8944b12016c2eda1597c9b01789ba4807ca32f112e9554526b10a",
             warningSummary = R.string.msg_brew_pulsar_overflow, warningInHelpWhenMinimal = true,
             knownWarningRevision = "fcd577c9d602b10d28db307c28733907e70321a3f6fce02b0c1d38275d5d979b",
         )
@@ -55,6 +62,8 @@ internal fun liveSourceMetadata(
         "${PulsarLearnGuideCatalog.GUIDE_ID}_stage_06_instruction", "reviewed_pulsar_v1_open_and_pulse" ->
             BrewLiveSourceMetadata(
                 instruction = R.string.msg_brew_pulsar_main_pour,
+                helpInstruction = R.string.msg_brew_pulsar_main_pour_help,
+                knownInstructionRevision = "87f0d411a05291b256a0b89a7f7e453798bf5ef09c0b93dd4929300bf0a47af2",
                 warningSummary = R.string.msg_brew_pulsar_pour_safety.takeIf {
                     contentId.value == "reviewed_pulsar_v1_open_and_pulse"
                 },
