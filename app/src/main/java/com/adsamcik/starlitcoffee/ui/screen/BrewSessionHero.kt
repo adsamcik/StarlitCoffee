@@ -1,25 +1,13 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.rememberTextMeasurer
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.data.brewing.snapshot.BrewRecipeSnapshotV1
 import com.adsamcik.starlitcoffee.domain.brewing.session.BrewSessionStatus
@@ -35,7 +23,7 @@ import com.adsamcik.starlitcoffee.ui.session.BrewStageReferenceCuePresentation
 import com.adsamcik.starlitcoffee.ui.session.BrewStageCompletionPresentation
 import java.text.NumberFormat
 
-/** Display-only projection: the session coordinator remains the sole owner of brew clocks. */
+/** Display only: physical clocks and targets remain owned by the durable session. */
 @Composable
 internal fun BrewSessionHero(
     presentation: ActiveBrewSessionPresentation.Available,
@@ -44,23 +32,52 @@ internal fun BrewSessionHero(
     modifier: Modifier = Modifier,
     target: BrewStageReferenceCuePresentation? = null,
 ) {
-    val bloom = brewSessionBloomState(presentation, runtime)
-    val bloomRemaining = bloom?.countdownSeconds?.toLong()?.times(1_000L)
-        .takeIf { presentation.currentStage?.action == BrewStageAction.BLOOM }
-    val largeText = LocalDensity.current.fontScale >= 1.5f
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-    ) {
-        if (bloom != null && !bloomSpritesheetId.isNullOrEmpty()) {
-            BrewHeroBloom(bloom, bloomSpritesheetId, Modifier.size(if (largeText) 104.dp else 132.dp))
+    val completed = presentation.status == BrewSessionStatus.COMPLETED
+    val bloom = brewSessionBloomState(presentation, runtime) ?: BrewSessionBloomState(
+        countdownSeconds = if (completed) 0 else null,
+    )
+    val clockKnown = presentation.hasPhysicalClockStarted && presentation.isPhysicalOriginKnown
+    val remaining = if (clockKnown && !completed) {
+        when (val completion = presentation.currentStage?.completion) {
+            is BrewStageCompletionPresentation.Countdown -> completion.remainingMillis
+            is BrewStageCompletionPresentation.ElapsedRange -> completion.maximumRemainingMillis
+            else -> bloom.countdownSeconds?.toLong()?.times(1_000L)
+                .takeIf { presentation.currentStage?.action == BrewStageAction.BLOOM }
         }
-        if (target != null) {
-            CenteredBrewTarget(target)
-            BrewHeroClock(presentation, Modifier.fillMaxWidth(), compact = true)
-        } else {
-            BrewHeroClock(presentation, Modifier.fillMaxWidth(), bloomRemainingMillis = bloomRemaining)
+    } else null
+    val elapsed = brewHeroDuration(presentation.totalActiveElapsedMillis)
+    val clock = when {
+        !presentation.hasPhysicalClockStarted -> CenteredBrewValue(
+            stringResource(R.string.label_brew_activity_ready), brewHeroDuration(0L))
+        !presentation.isPhysicalOriginKnown -> CenteredBrewValue(
+            "", stringResource(R.string.label_brew_start_unknown), numeric = false)
+        else -> CenteredBrewValue(
+            stringResource(when {
+                completed -> R.string.label_brew_time
+                remaining != null -> R.string.label_remaining
+                presentation.status == BrewSessionStatus.PAUSED -> R.string.label_brew_elapsed_paused
+                else -> R.string.label_elapsed
+            }), brewHeroDuration(remaining ?: presentation.totalActiveElapsedMillis))
+    }
+    val mainTarget = target.takeIf { !completed && remaining == null }
+    val secondary = when {
+        mainTarget != null && !clockKnown -> clock
+        clockKnown && (mainTarget != null || remaining != null) ->
+            CenteredBrewValue(stringResource(if (presentation.status == BrewSessionStatus.PAUSED)
+                R.string.label_brew_elapsed_paused else R.string.label_elapsed), elapsed)
+        else -> null
+    }
+    Column(modifier.fillMaxWidth()) {
+        CenteredBrewHero(
+            primary = mainTarget?.let { centeredBrewTargetValue(it) } ?: clock,
+            secondary = secondary,
+        ) { bloomModifier ->
+            BloomSpritesheetAnimation(bloom.countdownSeconds, bloom.durationSeconds, bloomSpritesheetId,
+                modifier = bloomModifier, isRunning = bloom.isRunning)
+        }
+        if (clockKnown) presentation.userTimerRemainingMillis?.let {
+            Text(stringResource(R.string.label_brew_reminder) + " · " + brewHeroDuration(it),
+                style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.primary)
         }
     }
 }
@@ -79,89 +96,6 @@ internal fun BrewRecipeQuantities(recipe: BrewRecipeSnapshotV1?, doseOnly: Boole
         Text(text, style = if (doseOnly) MaterialTheme.typography.bodyMedium else MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
-}
-
-@Composable
-private fun BrewHeroClock(
-    presentation: ActiveBrewSessionPresentation.Available,
-    modifier: Modifier,
-    compact: Boolean = false,
-    bloomRemainingMillis: Long? = null,
-) {
-    val clockIsKnown = presentation.hasPhysicalClockStarted && presentation.isPhysicalOriginKnown
-    val clock = when {
-        !presentation.hasPhysicalClockStarted -> stringResource(R.string.label_brew_activity_ready)
-        !presentation.isPhysicalOriginKnown -> stringResource(R.string.label_brew_start_unknown)
-        else -> brewHeroDuration(presentation.totalActiveElapsedMillis)
-    }
-    val sourceRemaining = if (clockIsKnown) {
-        when (val completion = presentation.currentStage?.completion) {
-            is BrewStageCompletionPresentation.Countdown -> completion.remainingMillis
-            is BrewStageCompletionPresentation.ElapsedRange -> completion.maximumRemainingMillis
-            else -> bloomRemainingMillis
-        }
-    } else null
-    Column(modifier = modifier.semantics(mergeDescendants = true) {},
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        if (!compact && sourceRemaining != null) {
-            BrewHeroNumber(brewHeroDuration(sourceRemaining), clockIsKnown = true)
-            Text(stringResource(R.string.label_remaining), style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant)
-        } else if (!compact || !clockIsKnown) {
-            BrewHeroNumber(clock, clockIsKnown)
-            if (clockIsKnown) Text(stringResource(R.string.label_elapsed), style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
-        if (clockIsKnown && (compact || sourceRemaining != null)) {
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                Text(stringResource(R.string.label_elapsed), style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant)
-                Text(clock, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
-            }
-        }
-        if (clockIsKnown) presentation.userTimerRemainingMillis?.let {
-            val label = stringResource(R.string.label_brew_reminder)
-            Text("$label · ${brewHeroDuration(it)}", style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.primary)
-        }
-    }
-}
-
-@Composable
-private fun BrewHeroNumber(clock: String, clockIsKnown: Boolean) {
-    BoxWithConstraints(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-        val measurer = rememberTextMeasurer()
-        val availablePixels = with(LocalDensity.current) { maxWidth.roundToPx() }.coerceAtLeast(1)
-        val maximumFontSize = if (LocalDensity.current.fontScale >= 1.5f) 48f else 64f
-        val clockStyle = MaterialTheme.typography.displayLarge.copy(fontWeight = FontWeight.Light,
-            fontFeatureSettings = "tnum", letterSpacing = (-0.5).sp)
-        val fontSize = remember(clock, clockIsKnown, availablePixels, maximumFontSize, clockStyle, measurer) {
-            if (!clockIsKnown) 26.sp else {
-                var minimum = 1f
-                var maximum = maximumFontSize
-                repeat(8) {
-                    val candidate = (minimum + maximum) / 2f
-                    val width = measurer.measure(clock, style = clockStyle.copy(fontSize = candidate.sp),
-                        softWrap = false, maxLines = 1).size.width
-                    if (width <= availablePixels) minimum = candidate else maximum = candidate
-                }
-                minimum.sp
-            }
-        }
-        Text(clock, fontSize = fontSize, lineHeight = fontSize * 1.1f, style = clockStyle)
-    }
-}
-
-@Composable
-private fun BrewHeroBloom(state: BrewSessionBloomState, spritesheetId: String?, modifier: Modifier) {
-    BloomSpritesheetAnimation(
-        bloomCountdownSeconds = state.countdownSeconds,
-        bloomDurationSeconds = state.durationSeconds,
-        selectedSpritesheetId = spritesheetId,
-        isRunning = state.isRunning,
-        modifier = modifier,
-    )
 }
 
 @Composable

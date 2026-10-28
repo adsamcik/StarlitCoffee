@@ -1,20 +1,28 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import android.graphics.Bitmap
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assertCountEquals
+import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertHeightIsAtLeast
 import androidx.compose.ui.test.assertWidthIsAtLeast
 import androidx.compose.ui.test.captureToImage
+import androidx.compose.ui.test.hasAnyDescendant
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
@@ -157,6 +165,28 @@ class MinimalBrewAccessibilityTest {
     }
 
     @Test
+    fun knownTargetCannotHideUnknownClockOriginAt200Percent() {
+        rule.setContent {
+            val density = LocalDensity.current
+            CompositionLocalProvider(LocalDensity provides Density(density.density, fontScale = 2f)) {
+                StarlitCoffeeTheme(dynamicColor = false, darkTheme = true) {
+                    Surface(Modifier.width(320.dp)) {
+                        BrewSessionHero(presentation().copy(isPhysicalOriginKnown = false), runtime = null,
+                            bloomSpritesheetId = "coffee_flower", target = BrewStageReferenceCuePresentation.Mass(
+                                QuantityRole.BREW_WATER_INPUT, StageMassReference.BREW_CUMULATIVE,
+                                StageTargetQualifier.EXACT, 340.0, 340.0))
+                    }
+                }
+            }
+        }
+        rule.onNodeWithText("340 g").assertIsDisplayed()
+        rule.onNodeWithText(context.getString(R.string.label_brew_start_unknown)).assertIsDisplayed()
+        rule.onNodeWithText(context.getString(R.string.label_elapsed)).assertDoesNotExist()
+        rule.onNodeWithText(context.getString(R.string.label_remaining)).assertDoesNotExist()
+        assertTextFits()
+    }
+
+    @Test
     fun compactBackgroundChooserKeepsBothNamedActionsAt200Percent() {
         val first = activity("other-pulsar", "Pulsar")
         val second = activity("other-cold", "Cold brew")
@@ -179,51 +209,55 @@ class MinimalBrewAccessibilityTest {
     }
 
     @Test
-    fun guidedPourKeepsTargetDiagramSafetyAndNamedHelpAccessibleAt200Percent() {
+    fun centeredPourKeepsTargetAndSafetyWithoutInstructionArtAt200Percent() {
         var helpRequests = 0
         val instruction = ResolvedBrewGuidanceContent(
-            id = StageContentId("${PulsarLearnGuideCatalog.GUIDE_ID}_stage_06_instruction"),
+            id = StageContentId("pulsar_stage_instruction"),
             placement = BuiltInGuidancePlacement.LIVE_STAGE,
             instruction = "Open valve and pulse pour.",
             target = "340 g total",
             completionCue = "All water added; let the coffee drain.",
-            explanation = null,
-            tip = null,
-            nextAction = null,
-            controlRequirements = emptyList(),
-            warning = "Hot liquid: keep the brewer on its server.",
-            utilities = emptyList(),
-            altText = "Pouring target, not a measured water level.",
-            safetyCritical = true,
+            explanation = null, tip = null, nextAction = null, controlRequirements = emptyList(),
+            warning = "Hot liquid: keep the brewer on its server.", utilities = emptyList(),
+            altText = "Pouring target, not a measured water level.", safetyCritical = true,
         )
         val resolution = DurableBrewSessionGuidanceResolution(
-            policy = null,
-            availability = DurableBrewGuidanceAvailability.Available,
-            routineContent = listOf(instruction),
-            criticalContent = emptyList(),
-            stageSafetyMessages = emptyList(),
-            visualStatus = DurableBrewGuidanceVisualStatus.NotRequested,
+            policy = null, availability = DurableBrewGuidanceAvailability.Available,
+            routineContent = listOf(instruction), criticalContent = emptyList(),
+            stageSafetyMessages = emptyList(), visualStatus = DurableBrewGuidanceVisualStatus.NotRequested,
         )
+        val cue = BrewStageReferenceCuePresentation.Mass(QuantityRole.BREW_WATER_INPUT,
+            StageMassReference.BREW_CUMULATIVE, StageTargetQualifier.EXACT, 340.0, 340.0)
+        val stage = CurrentBrewStagePresentation(StageInstanceId(StageId("pour"), 1),
+            BrewStageAction.POUR, instruction.id, null, false, StageRunStatus.ACTIVE, 10_000L,
+            BrewStageCompletionPresentation.Manual, safetyMessages = emptyList(), referenceCues = listOf(cue))
         rule.setContent {
             val density = LocalDensity.current
             CompositionLocalProvider(LocalDensity provides Density(density.density, fontScale = 2f)) {
                 StarlitCoffeeTheme(dynamicColor = false, darkTheme = false) {
-                    Surface(Modifier.width(320.dp).verticalScroll(rememberScrollState())) {
-                        LiveBrewGuidance(resolution, onHelp = { helpRequests++ },
-                            equipmentProfileId = PulsarLearnGuideCatalog.profileId.value)
+                    Surface(Modifier.width(320.dp)) {
+                        Scaffold(topBar = { BrewSessionHeader(onBack = {}, onHelp = { helpRequests++ }) }) { padding ->
+                            BrewSessionContent(presentation().copy(currentStage = stage), null, false, {},
+                                projectLiveBrewContent(resolution, targetCue = cue), runtime = null,
+                                bloomSpritesheetId = "coffee_flower", modifier = Modifier.fillMaxSize().padding(padding))
+                        }
                     }
                 }
             }
         }
-        rule.onNodeWithText("340 g total").assertIsDisplayed()
+        rule.onNodeWithText("340 g").assertIsDisplayed()
+        val elapsed = context.getString(R.string.format_brew_activity_hours, 12L, 37L)
+        rule.onAllNodes(SemanticsMatcher.keyIsDefined(SemanticsProperties.LiveRegion) and
+            hasAnyDescendant(hasText(elapsed)), useUnmergedTree = true).assertCountEquals(0)
         rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help))
             .assertHeightIsAtLeast(48.dp).assertWidthIsAtLeast(48.dp).performClick()
         rule.runOnIdle { assertEquals(1, helpRequests) }
-        rule.onNodeWithContentDescription(context.getString(R.string.cd_brew_water_height_target))
-            .performScrollTo().assertIsDisplayed()
-        save("minimal-guided-pour-200-light")
+        rule.onAllNodesWithTag("approved_instruction_asset", useUnmergedTree = true).assertCountEquals(0)
+        rule.onNodeWithContentDescription(context.getString(R.string.cd_brew_water_height_target)).assertDoesNotExist()
+        rule.onNodeWithText(instruction.instruction).assertDoesNotExist()
         rule.onNodeWithText(requireNotNull(instruction.warning)).performScrollTo().assertIsDisplayed()
-        rule.onNodeWithText(requireNotNull(instruction.completionCue)).assertDoesNotExist()
+        rule.onNodeWithContentDescription(context.getString(R.string.cd_bloom_animation)).performScrollTo().assertIsDisplayed()
+        save("centered-guided-pour-200-light")
         assertTextFits()
     }
 
@@ -294,9 +328,9 @@ class MinimalBrewAccessibilityTest {
                 StarlitCoffeeTheme(dynamicColor = false, darkTheme = true) {
                     Surface(Modifier.width(320.dp)) {
                         BrewSessionContent(presentation().copy(currentStage = stage, totalActiveElapsedMillis = 20_000L),
-                            completedLogId = null, isDispatching = false, onDispatch = {}, onBack = {},
+                            completedLogId = null, isDispatching = false, onDispatch = {},
                             liveContent = LiveBrewContent(target = target), runtime = null,
-                            bloomSpritesheetId = null, guideFacts = emptyMap())
+                            bloomSpritesheetId = null)
                     }
                 }
             }

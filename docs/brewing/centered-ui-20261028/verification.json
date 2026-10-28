@@ -1,0 +1,239 @@
+{
+  "baseline": "b2624181",
+  "device": {
+    "api": 37,
+    "codename": "REL",
+    "avd": "Android_17_Google_Play",
+    "ramMb": 4096,
+    "fontScale": 1,
+    "physicalSize": [
+      1080,
+      2424
+    ],
+    "density": 420,
+    "ramSource": "Existing configuration confirmed by emulator owner; unchanged by this task"
+  },
+  "jvm": {
+    "passed": 28,
+    "suites": {
+      "BrewSessionHeroTest": 8,
+      "BrewSessionPrimaryActionTest": 3,
+      "LiveBrewGuidanceTest": 14,
+      "BrewHelpProjectionTest": 3
+    }
+  },
+  "native": {
+    "uniquePassed": 27,
+    "observations": 32,
+    "summaries": [
+      {
+        "group": "core",
+        "summary": [
+          "Tests run: 14,  Failures: 1"
+        ],
+        "seconds": 74.501
+      },
+      {
+        "group": "header",
+        "summary": [
+          "OK (5 tests)"
+        ],
+        "seconds": 39.839
+      },
+      {
+        "group": "matrix",
+        "summary": [
+          "OK (6 tests)"
+        ],
+        "seconds": 34.786
+      },
+      {
+        "group": "interaction",
+        "summary": [
+          "OK (7 tests)"
+        ],
+        "seconds": 67.142
+      }
+    ],
+    "cases": [
+      {
+        "group": "matrix",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.AdaptiveLiveBrewScreenTest#fullGuidanceAt200PercentAnd320Dp",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "matrix",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.AdaptiveLiveBrewScreenTest#fullGuidanceAtNormalText",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "matrix",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.AdaptiveLiveBrewScreenTest#missingGuidanceAt200PercentAnd320Dp",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "matrix",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.AdaptiveLiveBrewScreenTest#missingGuidanceAtNormalText",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "matrix",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.AdaptiveLiveBrewScreenTest#partialGuidanceAt200PercentAnd320Dp",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "matrix",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.AdaptiveLiveBrewScreenTest#partialGuidanceAtNormalText",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "core",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.BrewSessionActionBarTest#finishAndPhysicalPauseStayReachableAt200PercentWithoutScrolling",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "core",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.BrewSessionActionBarTest#waitingStagePausesThePhysicalClockWithoutGuidanceCopyInDarkTheme",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "header",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.CenteredLegacyBrewScreenTest#retainedBloomUsesCenteredPresentation",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "header",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.CenteredLegacyBrewScreenTest#retainedBloomUsesCenteredPresentationAt200Percent",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "header",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.CenteredLegacyBrewScreenTest#retainedTimerUsesCenteredPresentation",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "header",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.CenteredLegacyBrewScreenTest#retainedTimerUsesCenteredPresentationAt200Percent",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "header",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.MinimalBrewAccessibilityTest#centeredPourKeepsTargetAndSafetyWithoutInstructionArtAt200Percent",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "core",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.MinimalBrewAccessibilityTest#compactBackgroundChooserKeepsBothNamedActionsAt200Percent",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "core",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.MinimalBrewAccessibilityTest#knownTargetCannotHideUnknownClockOriginAt200Percent",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "core",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.MinimalBrewAccessibilityTest#manualBloomCountdownSurvivesMissingArtworkAt200Percent",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "core",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.MinimalBrewAccessibilityTest#manyHourClockRetainsExplicitUnitsWithoutClippingAt200Percent",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "core",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.MinimalBrewAccessibilityTest#nonPourStageKeepsClockProminentAndYieldTargetSecondaryAt200Percent",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "core",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.MinimalBrewAccessibilityTest#sourceCountdownAndCustomReminderKeepSeparateLabelsWithBloomAt200Percent",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "core",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.MinimalBrewAccessibilityTest#unknownOriginShowsNoInventedElapsedOrRemainingTime",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "interaction",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.MinimalBrewScreenTest#basicTimerHasExplicitEndAndRejectedGuidePauseShowsRecovery",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "interaction",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.MinimalBrewScreenTest#completedBrewKeepsRecipeAvailableThroughHelp",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "interaction",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.MinimalBrewScreenTest#completedBrewKeepsTimeBloomAndDoneAt200Percent",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "interaction",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.MinimalBrewScreenTest#guidedPourAtNormalSizeKeepsOnlyTargetClockBloomAndControls",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "interaction",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.MinimalBrewScreenTest#guidedPourHelpAndRecipePreserveTheLiveStageAndKeepConfirmationReachable",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "interaction",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.MinimalBrewScreenTest#hotBasicTimerKeepsEssentialsAt200Percent",
+        "status": "passed",
+        "code": 0
+      },
+      {
+        "group": "interaction",
+        "test": "com.adsamcik.starlitcoffee.ui.screen.MinimalBrewScreenTest#hotBasicTimerKeepsFinishedBloomAndCumulativeTargetWithoutCompletingOnRead",
+        "status": "passed",
+        "code": 0
+      }
+    ]
+  },
+  "builds": {
+    "appAndTest": "passed, centered-brew-final-build.log, 8m17s",
+    "buttonAppAndDetekt": "passed, centered-brew-button-build.log, 6m57s",
+    "finalHeaderAppAndDetekt": "passed, centered-brew-header-build.log, 6m38s"
+  },
+  "review": {
+    "reviewer": "Astra",
+    "verdict": "Approved for commit and local integration; no remaining blockers"
+  },
+  "limits": [
+    "No physical-device brewing run",
+    "No full TalkBack traversal",
+    "No separate system-wide font-scale or reduced-motion run",
+    "No exhaustive localization",
+    "Stills do not establish motion feel"
+  ]
+}

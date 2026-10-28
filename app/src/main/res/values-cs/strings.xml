@@ -20,6 +20,9 @@
   Agreeing adjectives are neuter: Zapečetěné, Otevřené, etc.
 -->
 <resources>
+    <string name="action_brew_start_short">Spustit</string>
+    <string name="action_brew_done">Hotovo</string>
+    <string name="label_brew_elapsed_paused">Uplynulo · pozastaveno</string>
     <string name="app_name">Starlit Coffee</string>
 
     <!-- Navigation -->

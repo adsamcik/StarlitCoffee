@@ -8,45 +8,19 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.NotificationsOff
-import androidx.compose.material.icons.filled.Pause
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material3.FilledTonalIconButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.heading
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.ui.component.BloomSpritesheetAnimation
@@ -200,6 +174,7 @@ fun BloomTimerScreen(
         }
     }
 
+    var showHelp by remember { mutableStateOf(false) }
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.surface,
@@ -216,147 +191,50 @@ fun BloomTimerScreen(
             hideSystemBars = dimModeFullscreen,
             forceDarkInLight = dimModeForceDarkInLight,
         ) {
-        Column(modifier = Modifier.fillMaxSize()) {
-
-            // ── Top bar ─────────────────────────────────────────────
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.End,
-            ) {
-                IconButton(onClick = { brewViewModel.toggleMinuteAlert() }) {
-                    Icon(
-                        imageVector = if (state.minuteAlertEnabled) {
-                            Icons.Filled.Notifications
-                        } else {
-                            Icons.Filled.NotificationsOff
-                        },
-                        contentDescription = stringResource(
-                            if (state.minuteAlertEnabled) R.string.cd_disable_minute_alerts
-                            else R.string.cd_enable_minute_alerts,
-                        ),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(
-                            alpha = if (state.minuteAlertEnabled) 0.7f else 0.35f,
-                        ),
-                    )
-                }
-                IconButton(onClick = requestExit) {
-                    Icon(
-                        imageVector = Icons.Filled.Close,
-                        contentDescription = stringResource(R.string.action_close),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
-                    )
-                }
-            }
-
-            // ── Center — timer + bloom info ─────────────────────────
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .padding(horizontal = 32.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                BloomSpritesheetAnimation(
-                    bloomCountdownSeconds = state.bloomCountdownSeconds,
-                    bloomDurationSeconds = state.effectiveBloomDurationSeconds,
-                    isRunning = state.timerRunning,
-                    selectedSpritesheetId = state.bloomSpritesheetId,
-                    modifier = Modifier.size(172.dp),
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // Hero timer
-                Text(
-                    text = formatBloomTime(state.elapsedSeconds),
-                    style = MaterialTheme.typography.displayLarge,
-                    fontWeight = FontWeight.Light,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.semantics { heading() },
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // Bloom countdown
-                if (state.bloomCountdownSeconds != null) {
-                    Text(
-                        text = formatBloomTime(state.bloomCountdownSeconds ?: 0),
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onTertiaryContainer,
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    val bloomDuration = state.effectiveBloomDurationSeconds
-                    val progress = if (bloomDuration > 0) {
-                        (state.bloomCountdownSeconds ?: 0).toFloat() / bloomDuration
-                    } else {
-                        0f
-                    }
-                    LinearProgressIndicator(
-                        progress = { progress },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 24.dp),
-                        color = MaterialTheme.colorScheme.tertiary,
-                        trackColor = MaterialTheme.colorScheme.onTertiaryContainer.copy(
-                            alpha = 0.12f,
-                        ),
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                // Water info text
-                val waterText = if (state.bloomMarkedAtSeconds == null) {
-                    stringResource(R.string.format_pour_bloom_water, state.bloomG)
+            val remaining = state.bloomCountdownSeconds
+            val elapsedLabel = stringResource(
+                if (!state.timerRunning && state.elapsedSeconds > 0) {
+                    R.string.label_brew_elapsed_paused
                 } else {
-                    stringResource(R.string.format_bloom_total, state.bloomG, state.waterG)
+                    R.string.label_elapsed
+                },
+            )
+            Column(Modifier.fillMaxSize()) {
+                BrewSessionHeader(onBack = requestExit, onHelp = { showHelp = true })
+                CenteredBrewBody(Modifier.weight(1f)) {
+                    CenteredBrewHero(
+                        primary = CenteredBrewValue(
+                            label = if (remaining != null) stringResource(R.string.label_remaining) else elapsedLabel,
+                            value = formatBloomTime(remaining ?: state.elapsedSeconds),
+                        ),
+                        secondary = remaining?.let {
+                            CenteredBrewValue(label = elapsedLabel, value = formatBloomTime(state.elapsedSeconds))
+                        },
+                    ) { bloomModifier ->
+                        BloomSpritesheetAnimation(
+                            bloomCountdownSeconds = remaining,
+                            bloomDurationSeconds = state.effectiveBloomDurationSeconds,
+                            isRunning = state.timerRunning,
+                            selectedSpritesheetId = state.bloomSpritesheetId,
+                            modifier = bloomModifier,
+                        )
+                    }
                 }
-                Text(
-                    text = waterText,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                CenteredBrewActions(
+                    onToggle = {
+                        if (state.timerRunning) brewViewModel.pauseTimer() else brewViewModel.startTimer()
+                    },
+                    paused = !state.timerRunning,
                 )
             }
-
-            // ── Bottom controls ─────────────────────────────────────
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 24.dp)
-                    .padding(bottom = 40.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                // Play / Pause
-                FilledTonalIconButton(
-                    onClick = {
-                        if (state.timerRunning) brewViewModel.pauseTimer()
-                        else brewViewModel.startTimer()
-                    },
-                    modifier = Modifier.size(64.dp),
-                    shape = CircleShape,
-                    colors = IconButtonDefaults.filledTonalIconButtonColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                    ),
-                ) {
-                    Icon(
-                        imageVector = if (state.timerRunning) Icons.Filled.Pause
-                        else Icons.Filled.PlayArrow,
-                        contentDescription = stringResource(
-                            if (state.timerRunning) R.string.action_pause else R.string.action_resume,
-                        ),
-                        modifier = Modifier.size(32.dp),
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(24.dp))
+            if (showHelp) {
+                LegacyBrewHelpSheet(
+                    state = state,
+                    bloomActive = state.bloomMarkedAtSeconds != null && !state.bloomFinished,
+                    onToggleMinuteAlert = brewViewModel::toggleMinuteAlert,
+                    onDismiss = { showHelp = false },
+                )
             }
-        }
         }
     }
 }

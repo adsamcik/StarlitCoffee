@@ -8,6 +8,7 @@ import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -120,7 +121,7 @@ class MinimalBrewScreenTest {
     }
 
     @Test
-    fun guidedPourAtNormalSizeKeepsTargetAndWaterHeightVisible() {
+    fun guidedPourAtNormalSizeKeepsOnlyTargetClockBloomAndControls() {
         val guide = ReviewedMethodGuideLibrary.decode(context.assets.open(ReviewedMethodGuideLibrary.ASSET_PATH)
             .bufferedReader().use { it.readText() }).single { it.methodId == "pulsar" }
         val request = ReviewedGuideStartFactory.create(guide, BrewUiState(), null)
@@ -139,9 +140,10 @@ class MinimalBrewScreenTest {
         rule.onNodeWithText(context.getString(R.string.msg_brew_pulsar_pause_high)).assertDoesNotExist()
         rule.onNodeWithText(context.getString(R.string.label_elapsed)).assertIsDisplayed()
         rule.onNodeWithContentDescription(context.getString(R.string.cd_bloom_animation)).assertIsDisplayed()
-        rule.onNodeWithText(context.getString(R.string.action_complete_step)).assertIsDisplayed()
+        rule.onNodeWithText(context.getString(R.string.action_next)).assertIsDisplayed()
         rule.onNodeWithContentDescription(context.getString(R.string.cd_brew_water_height_target))
-            .assertIsDisplayed()
+            .assertDoesNotExist()
+        rule.onAllNodesWithTag("approved_instruction_asset", useUnmergedTree = true).assertCountEquals(0)
         save("minimal-guided-pour-dark")
         rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).performClick()
         val quantities = context.getString(R.string.label_coffee) + " 20 g · " +
@@ -165,8 +167,8 @@ class MinimalBrewScreenTest {
             .bufferedReader().use { it.readText() }).single { it.methodId == "pulsar" }
         val request = ReviewedGuideStartFactory.create(guide, BrewUiState(), null)
         val runtime = runningAt(request, 4, totalElapsed = 130_000L)
-        render(request, runtime, large = true, dark = true)
-        val complete = context.getString(R.string.action_complete_step)
+        val flow = render(request, runtime, large = true, dark = true)
+        val complete = context.getString(R.string.action_next)
         rule.onNodeWithText(complete).assertIsDisplayed()
         rule.onNodeWithText(context.getString(R.string.action_brew_recipe)).assertDoesNotExist()
         rule.onNodeWithText("340 g").assertIsDisplayed()
@@ -176,8 +178,26 @@ class MinimalBrewScreenTest {
         rule.onNodeWithText(context.getString(R.string.msg_brew_pulsar_pause_high)).assertDoesNotExist()
         save("minimal-pulsar-200-dark")
         rule.onNodeWithContentDescription(context.getString(R.string.cd_brew_water_height_target))
-            .performScrollTo().assertIsDisplayed()
-        save("minimal-guided-pour-200-cue-dark")
+            .assertDoesNotExist()
+        rule.onAllNodesWithTag("approved_instruction_asset", useUnmergedTree = true).assertCountEquals(0)
+        rule.onNodeWithContentDescription(context.getString(R.string.action_pause_brew_clock)).performClick()
+        rule.runOnIdle {
+            assertTrue("Guided Pause must pause the physical clock", events.single() is SessionEvent.Pause)
+            events.clear()
+            flow.value = ActiveBrewSessionEntityMapper.create(request.recipe,
+                runtime.copy(status = BrewSessionStatus.PAUSED), request.executionContext, System.currentTimeMillis())
+        }
+        rule.onNodeWithText(complete).assertIsEnabled()
+        rule.onNodeWithContentDescription(context.getString(R.string.action_resume)).assertIsDisplayed()
+        save("centered-guided-paused-200")
+        rule.onNodeWithContentDescription(context.getString(R.string.action_resume)).performClick()
+        rule.runOnIdle {
+            assertTrue("Guided Play must resume the physical clock", events.single() is SessionEvent.Resume)
+            events.clear()
+            flow.value = ActiveBrewSessionEntityMapper.create(request.recipe, runtime,
+                request.executionContext, System.currentTimeMillis())
+        }
+        rule.onNodeWithText(complete).assertIsEnabled()
         rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).performClick()
         save("minimal-pulsar-help-dark", wholeWindow = true)
         rule.onNodeWithText(context.getString(R.string.msg_brew_pulsar_main_pour_help)).assertIsDisplayed()
@@ -198,6 +218,15 @@ class MinimalBrewScreenTest {
 
     @Test
     fun completedBrewKeepsRecipeAvailableThroughHelp() {
+        checkCompletedBrew(large = false)
+    }
+
+    @Test
+    fun completedBrewKeepsTimeBloomAndDoneAt200Percent() {
+        checkCompletedBrew(large = true)
+    }
+
+    private fun checkCompletedBrew(large: Boolean) {
         val guide = ReviewedMethodGuideLibrary.decode(context.assets.open(ReviewedMethodGuideLibrary.ASSET_PATH)
             .bufferedReader().use { it.readText() }).single { it.methodId == "pulsar" }
         val request = ReviewedGuideStartFactory.create(guide, BrewUiState(), null)
@@ -205,7 +234,14 @@ class MinimalBrewScreenTest {
         val completed = SessionReducer.reduce(runningAt(request, endIndex, 190_000L), SessionEvent.Finish(),
             SessionClockReading(190_000L, System.currentTimeMillis())).state
         assertTrue(completed.status == BrewSessionStatus.COMPLETED)
-        render(request, completed, large = false, dark = true)
+        // A persisted completion marker models the already-saved state without touching the database.
+        render(request, completed, large = large, dark = true, completedLogId = 17L)
+        rule.onNodeWithText(context.getString(R.string.label_brew_time)).assertIsDisplayed()
+        rule.onNodeWithText("3:10").assertIsDisplayed()
+        rule.onNodeWithContentDescription(context.getString(R.string.cd_bloom_animation)).assertIsDisplayed()
+        rule.onNodeWithText(context.getString(R.string.action_brew_done)).assertIsDisplayed().assertIsEnabled()
+        rule.onNodeWithText(context.getString(R.string.msg_brew_session_finishing)).assertDoesNotExist()
+        save(if (large) "centered-completed-200" else "centered-completed")
         rule.onNodeWithText(context.getString(R.string.action_brew_recipe)).assertDoesNotExist()
         rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).assertIsDisplayed().performClick()
         rule.onNodeWithText(context.getString(R.string.action_brew_recipe)).assertIsDisplayed().performClick()
@@ -235,7 +271,8 @@ class MinimalBrewScreenTest {
         rule.onNodeWithText("Refrigerate promptly at 4 °C or colder.", substring = true)
             .performScrollTo().assertIsDisplayed()
         rule.onNodeWithText(context.getString(R.string.action_return_to_live_brew)).performScrollTo().performClick()
-        rule.onNodeWithContentDescription(context.getString(R.string.action_brew_controls)).performClick()
+        rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).performClick()
+        rule.onNodeWithText(context.getString(R.string.action_brew_controls)).performScrollTo().performClick()
         rule.onNodeWithText(context.getString(R.string.action_pause_brew_guide)).performScrollTo().performClick()
         rule.runOnIdle {
             assertTrue(events.single() is SessionEvent.SetGuidancePaused)
@@ -257,9 +294,10 @@ class MinimalBrewScreenTest {
         )
 
     private fun render(request: BrewSessionStartRequest, runtime: SessionRuntimeState, large: Boolean, dark: Boolean,
-        minimal: Boolean = false, rejectActions: Boolean = false): MutableStateFlow<ActiveBrewSessionEntity> {
+        minimal: Boolean = false, rejectActions: Boolean = false,
+        completedLogId: Long? = null): MutableStateFlow<ActiveBrewSessionEntity> {
         val entity = ActiveBrewSessionEntityMapper.create(request.recipe, runtime, request.executionContext,
-            System.currentTimeMillis())
+            System.currentTimeMillis()).copy(completedLogId = completedLogId)
         val flow = MutableStateFlow(entity)
         val gate = P1ExactRecipeReleaseGate(BuiltInP1ExactGuidanceLoadResult.Unavailable("fixture"),
             InstructionAssetCatalog(emptyList()))

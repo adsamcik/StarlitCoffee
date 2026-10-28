@@ -158,11 +158,11 @@ fun BrewSessionGuidancePanel(
                 instructionFirst = showFullExplanations,
             )
         }
-        if (resolution.policy != null || terminologyReferences.isNotEmpty()) {
+        if ((!showFullExplanations && resolution.policy != null) || terminologyReferences.isNotEmpty()) {
             var controlsExpanded by rememberSaveable { mutableStateOf(false) }
             ConnectedGuideDisclosure(stringResource(R.string.label_guidance), controlsExpanded,
                 onExpandedChange = { controlsExpanded = it }) {
-                resolution.policy?.let { policy ->
+                resolution.policy?.takeUnless { showFullExplanations }?.let { policy ->
                     GuidanceLevelControl(policy.level, sessionOverride != null, onSessionOverride, onRememberForBrewer)
                 }
                 if (terminologyUiCopy != null && terminologyReferences.isNotEmpty()) {

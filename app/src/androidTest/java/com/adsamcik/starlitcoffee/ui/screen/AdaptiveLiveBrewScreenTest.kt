@@ -39,7 +39,6 @@ import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidancePreferen
 import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidanceRequest
 import com.adsamcik.starlitcoffee.ui.guidance.InstructionAssetCatalog
 import com.adsamcik.starlitcoffee.ui.guidance.P1ExactRecipeReleaseGate
-import com.adsamcik.starlitcoffee.ui.guidance.learnFacts
 import com.adsamcik.starlitcoffee.ui.guidance.liveSourceMetadata
 import com.adsamcik.starlitcoffee.ui.guidance.resolveBrewSessionContentSource
 import com.adsamcik.starlitcoffee.ui.session.ActiveBrewSessionPresentation
@@ -117,7 +116,7 @@ class AdaptiveLiveBrewScreenTest {
             Packet.MISSING -> LiveBrewContent(target = full.target, warnings = full.warnings)
         }
         if (packet == Packet.PARTIAL) check(liveContent.instructionResource != null)
-        val action = requireNotNull(primaryBrewSessionAction(presentation.actions, presentation.isGuidancePaused))
+        val action = requireNotNull(primaryBrewSessionAction(presentation.actions))
         check(action == BrewSessionPrimaryAction.COMPLETE_STEP)
         var renderedDensity = 0f
         rule.setContent {
@@ -127,17 +126,16 @@ class AdaptiveLiveBrewScreenTest {
             CompositionLocalProvider(LocalDensity provides Density(viewportDensity, if (large) 2f else 1f)) {
                 StarlitCoffeeTheme(dynamicColor = false, darkTheme = true) {
                     Scaffold(
-                        topBar = { BrewSessionHeader(guide.methodName, onBack = {}, onHelp = {}, onControls = {}) },
+                        topBar = { BrewSessionHeader(onBack = {}, onHelp = {}) },
                         bottomBar = {
-                            BrewSessionPrimaryActionBar(action, presentation, startsBloom = false,
-                                isDispatching = false, onDispatch = { events += it }, showGuideToggle = false)
+                            BrewSessionPrimaryActionBar(action, presentation,
+                                isDispatching = false, onDispatch = { events += it })
                         },
                     ) { padding ->
                         BrewSessionContent(
                             presentation = presentation, completedLogId = null, isDispatching = false,
-                            onDispatch = { events += it }, onBack = {}, liveContent = liveContent,
+                            onDispatch = { events += it }, liveContent = liveContent,
                             runtime = runtime, bloomSpritesheetId = "coffee_flower",
-                            guideFacts = if (packet == Packet.MISSING) emptyMap() else guide.learnFacts(),
                             equipmentProfileId = guide.profileId,
                             modifier = Modifier.fillMaxSize().padding(padding),
                         )
@@ -158,16 +156,12 @@ class AdaptiveLiveBrewScreenTest {
         rule.onNodeWithContentDescription(spokenTarget).assertIsDisplayed()
         rule.onNodeWithContentDescription(context.getString(R.string.cd_bloom_animation))
             .performScrollTo().assertIsDisplayed()
-        if (packet == Packet.FULL) {
-            rule.onNodeWithContentDescription(context.getString(R.string.cd_brew_water_height_target))
-                .performScrollTo().assertIsDisplayed()
-        } else {
-            rule.onAllNodesWithTag("approved_instruction_asset", useUnmergedTree = true).assertCountEquals(0)
-            rule.onNodeWithContentDescription(context.getString(R.string.cd_brew_water_height_target)).assertDoesNotExist()
-            full.step?.illustration?.description?.let {
-                rule.onNodeWithContentDescription(it).assertDoesNotExist()
-            }
+        rule.onAllNodesWithTag("approved_instruction_asset", useUnmergedTree = true).assertCountEquals(0)
+        rule.onNodeWithContentDescription(context.getString(R.string.cd_brew_water_height_target)).assertDoesNotExist()
+        full.step?.illustration?.description?.let {
+            rule.onNodeWithContentDescription(it).assertDoesNotExist()
         }
+        rule.onNodeWithText(guide.steps[stageIndex].instruction).assertDoesNotExist()
         rule.onNodeWithText(context.getString(R.string.heading_guide_why)).assertDoesNotExist()
         rule.onNodeWithText(context.getString(R.string.msg_brew_guidance_unavailable)).assertDoesNotExist()
         rule.onNodeWithText(context.getString(R.string.msg_brew_session_unavailable)).assertDoesNotExist()
@@ -175,7 +169,7 @@ class AdaptiveLiveBrewScreenTest {
         assertTextFits()
         rule.runOnIdle { assertTrue("Rendering and reading must not emit session events", events.isEmpty()) }
         if (packet == Packet.FULL && !large) {
-            val primary = rule.onNodeWithText(context.getString(R.string.action_complete_step))
+            val primary = rule.onNodeWithText(context.getString(R.string.action_next))
             primary.performTouchInput { down(center) }
             try {
                 save("minimal-ui-full-pressed", renderedDensity, large)
@@ -184,7 +178,8 @@ class AdaptiveLiveBrewScreenTest {
             }
             rule.runOnIdle { assertTrue("Press feedback must not confirm a physical step", events.isEmpty()) }
         }
-        rule.onNodeWithText(context.getString(R.string.action_complete_step)).assertIsDisplayed().performClick()
+        rule.onNodeWithContentDescription(context.getString(R.string.action_pause_brew_clock)).assertIsDisplayed()
+        rule.onNodeWithText(context.getString(R.string.action_next)).assertIsDisplayed().performClick()
         rule.runOnIdle { assertTrue(events.single() is SessionEvent.ManualAdvance) }
     }
 

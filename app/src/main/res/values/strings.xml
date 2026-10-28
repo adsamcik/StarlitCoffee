@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="action_brew_start_short">Start</string>
+    <string name="action_brew_done">Done</string>
+    <string name="label_brew_elapsed_paused">Elapsed · paused</string>
     <string name="app_name">Starlit Coffee</string>
 
     <!-- Navigation -->

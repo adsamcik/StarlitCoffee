@@ -9,29 +9,27 @@ import org.junit.Test
 class BrewSessionPrimaryActionTest {
 
     @Test
-    fun `waiting stage pauses only guidance and physical pause remains resumable`() {
+    fun `waiting stage pauses the physical clock and remains resumable`() {
         assertEquals(
             BrewSessionPrimaryAction.START,
             primaryBrewSessionAction(actions(canStart = true)),
         )
         assertEquals(
-            BrewSessionPrimaryAction.PAUSE_GUIDANCE,
+            BrewSessionPrimaryAction.PAUSE,
             primaryBrewSessionAction(actions(canPause = true)),
         )
         assertEquals(
             BrewSessionPrimaryAction.RESUME,
             primaryBrewSessionAction(actions(canResume = true)),
         )
-        assertEquals(BrewSessionPrimaryAction.RESUME_GUIDANCE,
-            primaryBrewSessionAction(actions(canPause = true), isGuidancePaused = true))
-        assertEquals(true, (BrewSessionPrimaryAction.PAUSE_GUIDANCE.event() as SessionEvent.SetGuidancePaused).paused)
-        assertEquals(false, (BrewSessionPrimaryAction.RESUME_GUIDANCE.event() as SessionEvent.SetGuidancePaused).paused)
+        assertEquals(SessionEvent.Pause::class, BrewSessionPrimaryAction.PAUSE.event()::class)
+        assertEquals(SessionEvent.Resume::class, BrewSessionPrimaryAction.RESUME.event()::class)
     }
 
     @Test
-    fun `physical confirmation stays primary while guidance is paused`() {
+    fun `physical confirmation stays primary while the clock is running`() {
         assertEquals(BrewSessionPrimaryAction.COMPLETE_STEP,
-            primaryBrewSessionAction(actions(canPause = true, canManualAdvance = true), isGuidancePaused = true))
+            primaryBrewSessionAction(actions(canPause = true, canManualAdvance = true)))
         assertEquals(BrewSessionPrimaryAction.FINISH,
             primaryBrewSessionAction(actions(canPause = true, canManualAdvance = true, canFinish = true)))
         assertEquals(SessionEvent.ManualAdvance::class, BrewSessionPrimaryAction.COMPLETE_STEP.event()::class)

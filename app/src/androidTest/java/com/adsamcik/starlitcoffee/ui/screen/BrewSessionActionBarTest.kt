@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.unit.Density
@@ -39,7 +40,7 @@ class BrewSessionActionBarTest {
     private val context get() = InstrumentationRegistry.getInstrumentation().targetContext
 
     @Test
-    fun manualCompletionAndGuideToggleStayReachableAt200PercentWithoutScrolling() {
+    fun finishAndPhysicalPauseStayReachableAt200PercentWithoutScrolling() {
         val events = mutableListOf<SessionEvent>()
         composeRule.setContent {
             val density = LocalDensity.current
@@ -48,14 +49,15 @@ class BrewSessionActionBarTest {
                     var presentation by remember { mutableStateOf(presentation(manual = true)) }
                     Scaffold(bottomBar = {
                         BrewSessionPrimaryActionBar(
-                            action = requireNotNull(primaryBrewSessionAction(presentation.actions, presentation.isGuidancePaused)),
+                            action = requireNotNull(primaryBrewSessionAction(presentation.actions)),
                             presentation = presentation,
-                            startsBloom = false,
                             isDispatching = false,
                             onDispatch = { event ->
                                 events += event
-                                if (event is SessionEvent.SetGuidancePaused) {
-                                    presentation = presentation.copy(isGuidancePaused = event.paused)
+                                if (event is SessionEvent.Pause || event is SessionEvent.Resume) {
+                                    val paused = event is SessionEvent.Pause
+                                    presentation = presentation.copy(status = if (paused) BrewSessionStatus.PAUSED else BrewSessionStatus.RUNNING,
+                                        actions = presentation.actions.copy(canPause = !paused, canResume = paused))
                                 }
                             },
                         )
@@ -67,20 +69,20 @@ class BrewSessionActionBarTest {
             }
         }
         composeRule.onNodeWithText(context.getString(R.string.action_finish)).assertIsDisplayed()
-        composeRule.onNodeWithText(context.getString(R.string.action_pause_brew_guide)).assertIsDisplayed().performClick()
+        composeRule.onNodeWithContentDescription(context.getString(R.string.action_pause_brew_clock)).assertIsDisplayed().performClick()
         composeRule.onNodeWithText(context.getString(R.string.action_finish)).assertIsDisplayed()
-        composeRule.onNodeWithText(context.getString(R.string.action_resume_brew_guide)).assertIsDisplayed().performClick()
+        composeRule.onNodeWithContentDescription(context.getString(R.string.action_resume)).assertIsDisplayed().performClick()
         composeRule.onNodeWithText(context.getString(R.string.action_finish)).performClick()
         composeRule.runOnIdle {
-            assertEquals(true, (events[0] as SessionEvent.SetGuidancePaused).paused)
-            assertEquals(false, (events[1] as SessionEvent.SetGuidancePaused).paused)
+            assertTrue(events[0] is SessionEvent.Pause)
+            assertTrue(events[1] is SessionEvent.Resume)
             assertTrue(events[2] is SessionEvent.Finish)
-            assertTrue(events.none { it is SessionEvent.Pause })
+            assertTrue(events.none { it is SessionEvent.SetGuidancePaused })
         }
     }
 
     @Test
-    fun waitingStageExplainsThatPausingGuideKeepsClockRunningInDarkTheme() {
+    fun waitingStagePausesThePhysicalClockWithoutGuidanceCopyInDarkTheme() {
         var dispatched: SessionEvent? = null
         composeRule.setContent {
             val density = LocalDensity.current
@@ -90,16 +92,15 @@ class BrewSessionActionBarTest {
                     BrewSessionPrimaryActionBar(
                         action = requireNotNull(primaryBrewSessionAction(presentation.actions)),
                         presentation = presentation,
-                        startsBloom = false,
                         isDispatching = false,
                         onDispatch = { dispatched = it },
                     )
                 }
             }
         }
-        composeRule.onNodeWithText(context.getString(R.string.msg_brew_clock_keeps_running)).assertIsDisplayed()
-        composeRule.onNodeWithText(context.getString(R.string.action_pause_brew_guide)).assertIsDisplayed().performClick()
-        composeRule.runOnIdle { assertEquals(true, (dispatched as SessionEvent.SetGuidancePaused).paused) }
+        composeRule.onNodeWithText(context.getString(R.string.msg_brew_clock_keeps_running)).assertDoesNotExist()
+        composeRule.onNodeWithContentDescription(context.getString(R.string.action_pause_brew_clock)).assertIsDisplayed().performClick()
+        composeRule.runOnIdle { assertTrue(dispatched is SessionEvent.Pause) }
     }
 
     private fun presentation(manual: Boolean): ActiveBrewSessionPresentation.Available {
