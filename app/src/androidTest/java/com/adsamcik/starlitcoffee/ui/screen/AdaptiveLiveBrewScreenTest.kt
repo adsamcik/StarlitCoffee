@@ -129,7 +129,7 @@ class AdaptiveLiveBrewScreenTest {
                         topBar = { BrewSessionHeader(onBack = {}, onHelp = {}) },
                         bottomBar = {
                             BrewSessionPrimaryActionBar(action, presentation,
-                                isDispatching = false, onDispatch = { events += it })
+                                isDispatching = false, onDispatch = { events += it }, equipmentProfileId = guide.profileId)
                         },
                     ) { padding ->
                         BrewSessionContent(
@@ -169,7 +169,7 @@ class AdaptiveLiveBrewScreenTest {
         assertTextFits()
         rule.runOnIdle { assertTrue("Rendering and reading must not emit session events", events.isEmpty()) }
         if (packet == Packet.FULL && !large) {
-            val primary = rule.onNodeWithText(context.getString(R.string.action_next))
+            val primary = rule.onNodeWithText(context.getString(R.string.action_brew_pour_done))
             primary.performTouchInput { down(center) }
             try {
                 save("minimal-ui-full-pressed", renderedDensity, large)
@@ -179,7 +179,7 @@ class AdaptiveLiveBrewScreenTest {
             rule.runOnIdle { assertTrue("Press feedback must not confirm a physical step", events.isEmpty()) }
         }
         rule.onNodeWithContentDescription(context.getString(R.string.action_pause_brew_clock)).assertIsDisplayed()
-        rule.onNodeWithText(context.getString(R.string.action_next)).assertIsDisplayed().performClick()
+        rule.onNodeWithText(context.getString(R.string.action_brew_pour_done)).assertIsDisplayed().performClick()
         rule.runOnIdle { assertTrue(events.single() is SessionEvent.ManualAdvance) }
     }
 

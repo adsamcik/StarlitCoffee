@@ -398,6 +398,7 @@ fun BrewSessionScreen(
                     presentation = availablePresentation,
                     isDispatching = dispatching,
                     onDispatch = dispatch,
+                    equipmentProfileId = persistedRecipe?.reviewedGuide?.profileId ?: persistedRecipe?.brewerProfileId,
                     backgroundBrews = backgroundBrews,
                 )
             } else {

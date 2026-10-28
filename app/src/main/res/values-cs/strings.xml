@@ -689,4 +689,20 @@
     <string name="announce_label_recognition_no_result">Na štítku nebyly nalezeny žádné podrobnosti. Zadejte je ručně.</string>
     <string name="label_show_cup_presets">Zobrazit v kalkulačce</string>
     <string name="cd_cup_preset_options">Možnosti předvoleb šálků</string>
+    <string name="action_brew_ready">Připraveno</string>
+    <string name="action_brew_rinse_done">Propláchnuto</string>
+    <string name="action_brew_coffee_added">Káva přidána</string>
+    <string name="action_brew_water_added">Voda přidána</string>
+    <string name="action_brew_bloom_done">Blooming hotov</string>
+    <string name="action_brew_pour_done">Nalito</string>
+    <string name="action_brew_agitation_done">Promícháno</string>
+    <string name="action_brew_steep_done">Vylouhováno</string>
+    <string name="action_brew_released">Vypuštěno</string>
+    <string name="action_brew_press_done">Stlačeno</string>
+    <string name="action_brew_heating_done">Ohřáto</string>
+    <string name="action_brew_checked">Zkontrolováno</string>
+    <string name="action_brew_filtered">Přefiltrováno</string>
+    <string name="action_brew_served">Podáno</string>
+    <string name="action_brew_cleanup_done">Uklizeno</string>
+    <string name="action_brew_step_done">Krok hotov</string>
 </resources>

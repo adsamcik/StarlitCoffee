@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import com.adsamcik.starlitcoffee.R
 import com.adsamcik.starlitcoffee.domain.brewing.InstructionAssetId
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
+import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStageAction
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageSafetyMessage
 
 /** Reviewed presentation associations belong to source adapters, never to layout code. */
@@ -80,3 +81,11 @@ internal fun liveSourceMetadata(
         else -> BrewLiveSourceMetadata()
     }
 }
+
+/** Keep confirmations precise for saved plans whose combined pour step was classified as observation. */
+internal fun liveSourceConfirmationAction(
+    action: BrewStageAction?,
+    contentId: StageContentId?,
+    profileId: String?,
+): BrewStageAction? = if (action == BrewStageAction.OBSERVE && profileId == PulsarLearnGuideCatalog.profileId.value &&
+    contentId?.value == "reviewed_pulsar_v1_open_and_pulse") BrewStageAction.POUR else action

@@ -876,4 +876,20 @@
     <string name="action_allow_precise_brew_reminders">Allow precise reminders</string>
     <string name="label_show_cup_presets">Show on calculator</string>
     <string name="cd_cup_preset_options">Cup preset options</string>
+    <string name="action_brew_ready">Ready</string>
+    <string name="action_brew_rinse_done">Rinse done</string>
+    <string name="action_brew_coffee_added">Coffee added</string>
+    <string name="action_brew_water_added">Water added</string>
+    <string name="action_brew_bloom_done">Bloom done</string>
+    <string name="action_brew_pour_done">Pour done</string>
+    <string name="action_brew_agitation_done">Agitation done</string>
+    <string name="action_brew_steep_done">Steep done</string>
+    <string name="action_brew_released">Released</string>
+    <string name="action_brew_press_done">Press done</string>
+    <string name="action_brew_heating_done">Heating done</string>
+    <string name="action_brew_checked">Checked</string>
+    <string name="action_brew_filtered">Filtered</string>
+    <string name="action_brew_served">Served</string>
+    <string name="action_brew_cleanup_done">Cleanup done</string>
+    <string name="action_brew_step_done">Step done</string>
 </resources>
