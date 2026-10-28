@@ -2,6 +2,19 @@
 
 These instructions apply throughout the repository.
 
+## Validation budget on this workstation
+
+Coordinate access to the shared AVD with other active chats before restarts,
+installs or UI actions, and respect reserved native-test windows.
+
+On this Windows PC, keep the existing Android emulator at its configured
+4096 MB RAM. Do not increase its memory for testing. Avoid long-running local
+Mindlayer corpus/inference and model-conversion workloads unless the user
+explicitly authorizes that workload on this PC. Reuse existing evidence and
+choose resource-light checks; record live-verification gaps when needed.
+See `docs/reviews/2026-10-28-coffee-bag-extraction-failures.md` for the failed
+run and its limits. Do not repeat it to validate documentation changes.
+
 ## Release discipline
 
 Every release must include a complete, user-facing entry in `CHANGELOG.md` before
