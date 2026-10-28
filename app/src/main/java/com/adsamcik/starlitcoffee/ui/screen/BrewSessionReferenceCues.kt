@@ -24,11 +24,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -189,6 +189,36 @@ internal fun ReferenceCueRow(
                 color = MaterialTheme.colorScheme.onSurface,
             )
         }
+    }
+}
+
+/** Original centered target treatment; exact semantics retain its role and reference. */
+@Composable
+internal fun CenteredBrewTarget(cue: BrewStageReferenceCuePresentation) {
+    val content = cue.content(compact = true)
+    val spokenLabel = cue.content().label
+    val targetLabel = stringResource(R.string.label_live_target)
+    val largeText = LocalDensity.current.fontScale >= 1.5f
+    Column(Modifier.fillMaxWidth().semantics(mergeDescendants = true) {
+        contentDescription = "$targetLabel · $spokenLabel ${content.value}"
+    }, horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        val value = androidx.compose.ui.text.buildAnnotatedString {
+            if (cue is BrewStageReferenceCuePresentation.Mass && cue.qualifier == StageTargetQualifier.EXACT) {
+                append(content.value.removeSuffix(" g"))
+                pushStyle(androidx.compose.ui.text.SpanStyle(fontSize = if (largeText) 20.sp else 26.sp))
+                append(" g")
+                pop()
+            } else append(content.value)
+        }
+        Text(value, modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.displayLarge,
+            fontSize = if (cue.qualifier == StageTargetQualifier.EXACT) {
+                if (largeText) 40.sp else 64.sp
+            } else if (largeText) 26.sp else 36.sp,
+            fontWeight = FontWeight.Light, textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+        Text("$targetLabel · ${content.label}", modifier = Modifier.fillMaxWidth(),
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center)
     }
 }
 

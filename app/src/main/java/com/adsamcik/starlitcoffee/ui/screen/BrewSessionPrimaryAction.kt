@@ -1,6 +1,16 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Pause
+import androidx.compose.material3.FilledIconButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -78,7 +88,7 @@ internal fun BrewSessionPrimaryActionBar(
         BrewSessionPrimaryAction.RESUME_GUIDANCE -> R.string.action_resume_brew_guide
     }
     val onClick = { onDispatch(action.event()) }
-    val buttonHeight = ButtonDefaults.MediumContainerHeight
+    val buttonHeight = 64.dp
     val buttonShapes = ButtonDefaults.shapesFor(buttonHeight)
     val contentPadding = ButtonDefaults.contentPaddingFor(buttonHeight)
     val buttonModifier = Modifier.fillMaxWidth().heightIn(min = buttonHeight)
@@ -89,7 +99,36 @@ internal fun BrewSessionPrimaryActionBar(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
-                if (isGuidanceAction) {
+                if ((action == BrewSessionPrimaryAction.FINISH && presentation.actions.canPause) ||
+                    action == BrewSessionPrimaryAction.RESUME) {
+                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically) {
+                        if (presentation.actions.canFinish) {
+                            TextButton(enabled = !isDispatching,
+                                onClick = { onDispatch(BrewSessionPrimaryAction.FINISH.event()) },
+                                modifier = Modifier.weight(1f)) {
+                                Text(stringResource(if (presentation.isTimerOnly) R.string.action_end_brew_timer
+                                    else R.string.action_finish), style = MaterialTheme.typography.labelLarge,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                        } else Spacer(Modifier.weight(1f))
+                        FilledIconButton(
+                            enabled = !isDispatching,
+                            onClick = { onDispatch(if (action == BrewSessionPrimaryAction.RESUME) action.event()
+                                else SessionEvent.Pause(SessionEventId("ui:${UUID.randomUUID()}"))) },
+                            modifier = Modifier.size(72.dp), shape = CircleShape,
+                            colors = IconButtonDefaults.filledIconButtonColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                contentColor = MaterialTheme.colorScheme.onPrimaryContainer),
+                        ) {
+                            Icon(if (action == BrewSessionPrimaryAction.RESUME) Icons.Filled.PlayArrow else Icons.Filled.Pause,
+                                stringResource(if (action == BrewSessionPrimaryAction.RESUME) R.string.action_resume
+                                    else R.string.action_pause_brew_clock),
+                                Modifier.size(36.dp))
+                        }
+                        Spacer(Modifier.weight(1f))
+                    }
+                } else if (isGuidanceAction) {
                     OutlinedButton(
                         enabled = !isDispatching,
                         onClick = onClick,
@@ -111,7 +150,9 @@ internal fun BrewSessionPrimaryActionBar(
                         modifier = buttonModifier,
                         shapes = buttonShapes,
                         contentPadding = contentPadding,
-                        colors = ButtonDefaults.buttonColors(),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                            contentColor = MaterialTheme.colorScheme.onTertiaryContainer),
                     ) {
                         ActionLabel(labelRes)
                     }

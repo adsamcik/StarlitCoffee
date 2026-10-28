@@ -24,6 +24,7 @@ import com.adsamcik.starlitcoffee.data.brewing.session.ActiveBrewSession
 import com.adsamcik.starlitcoffee.data.brewing.session.ActiveBrewSessionEntityMapper
 import com.adsamcik.starlitcoffee.data.brewing.session.BrewSessionOperationResult
 import com.adsamcik.starlitcoffee.data.brewing.session.BrewSessionStartRequest
+import com.adsamcik.starlitcoffee.data.db.entity.ActiveBrewSessionEntity
 import com.adsamcik.starlitcoffee.data.model.BrewMethod
 import com.adsamcik.starlitcoffee.data.model.FilterType
 import com.adsamcik.starlitcoffee.domain.brewing.session.BrewSessionStatus
@@ -75,7 +76,7 @@ class MinimalBrewScreenTest {
         val pour = request.stagePlan.stages.indexOfFirst { it.definition.action == BrewStageAction.POUR }
         assertTrue("Fixture needs a real post-bloom pour", pour > 0)
         val runtime = runningAt(request, pour, totalElapsed = 82_000L)
-        render(request, runtime, large = large, dark = true)
+        val flow = render(request, runtime, large = large, dark = true)
         rule.onNodeWithContentDescription(context.getString(R.string.cd_bloom_animation)).assertIsDisplayed()
         rule.onNodeWithText(context.getString(R.string.label_elapsed)).assertIsDisplayed()
         rule.onNodeWithText("340 g").assertIsDisplayed()
@@ -86,7 +87,7 @@ class MinimalBrewScreenTest {
         rule.onNodeWithText(context.getString(R.string.msg_brew_pulsar_hot_liquid), substring = true).assertDoesNotExist()
         rule.onNodeWithText(context.getString(R.string.msg_brew_pulsar_overflow), substring = true).assertDoesNotExist()
         save(if (large) "minimal-hot-basic-200-dark" else "minimal-hot-basic-dark")
-        rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).performScrollTo().performClick()
+        rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).performClick()
         save("minimal-hot-help-dark", wholeWindow = true)
         rule.onNodeWithText("Hot water and brewed coffee can burn.", substring = true)
             .performScrollTo().assertIsDisplayed()
@@ -94,6 +95,26 @@ class MinimalBrewScreenTest {
             .performScrollTo().assertIsDisplayed().performClick()
         rule.onNodeWithText(context.getString(R.string.action_return_to_live_brew)).performScrollTo().performClick()
         rule.runOnIdle { assertTrue(events.isEmpty()) }
+        rule.onNodeWithContentDescription(context.getString(R.string.action_pause_brew_clock))
+            .assertIsDisplayed().performClick()
+        rule.runOnIdle {
+            assertTrue("Pause must pause the physical clock", events.single() is SessionEvent.Pause)
+            events.clear()
+        }
+        rule.runOnIdle {
+            flow.value = ActiveBrewSessionEntityMapper.create(request.recipe,
+                runtime.copy(status = BrewSessionStatus.PAUSED), request.executionContext, System.currentTimeMillis())
+        }
+        rule.onNodeWithText(context.getString(R.string.action_finish)).assertIsDisplayed()
+        rule.onNodeWithContentDescription(context.getString(R.string.action_resume)).assertIsDisplayed()
+        save(if (large) "original-basic-paused-200" else "original-basic-paused")
+        rule.onNodeWithContentDescription(context.getString(R.string.action_resume)).performClick()
+        rule.runOnIdle {
+            assertTrue("Play must resume the physical clock", events.single() is SessionEvent.Resume)
+            events.clear()
+            flow.value = ActiveBrewSessionEntityMapper.create(request.recipe, runtime,
+                request.executionContext, System.currentTimeMillis())
+        }
         rule.onNodeWithText(context.getString(R.string.action_finish)).assertIsDisplayed().performClick()
         rule.runOnIdle { assertTrue(events.single() is SessionEvent.Finish) }
     }
@@ -122,7 +143,7 @@ class MinimalBrewScreenTest {
         rule.onNodeWithContentDescription(context.getString(R.string.cd_brew_water_height_target))
             .assertIsDisplayed()
         save("minimal-guided-pour-dark")
-        rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).performScrollTo().performClick()
+        rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).performClick()
         val quantities = context.getString(R.string.label_coffee) + " 20 g · " +
             context.getString(R.string.label_brew_reference_brew_water) + " 340 g"
         rule.onNodeWithText(quantities).assertIsDisplayed()
@@ -157,7 +178,7 @@ class MinimalBrewScreenTest {
         rule.onNodeWithContentDescription(context.getString(R.string.cd_brew_water_height_target))
             .performScrollTo().assertIsDisplayed()
         save("minimal-guided-pour-200-cue-dark")
-        rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).performScrollTo().performClick()
+        rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).performClick()
         save("minimal-pulsar-help-dark", wholeWindow = true)
         rule.onNodeWithText(context.getString(R.string.msg_brew_pulsar_main_pour_help)).assertIsDisplayed()
         rule.onNodeWithText(guide.steps[4].instruction).assertDoesNotExist()
@@ -166,7 +187,7 @@ class MinimalBrewScreenTest {
         rule.onNodeWithText(guide.safety.first(), substring = true).performScrollTo().assertIsDisplayed()
         rule.onNodeWithText(context.getString(R.string.action_return_to_live_brew)).performScrollTo().performClick()
         rule.onNodeWithText(context.getString(R.string.action_brew_recipe)).assertDoesNotExist()
-        rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).performScrollTo().performClick()
+        rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).performClick()
         rule.onNodeWithText(context.getString(R.string.action_brew_recipe)).assertIsDisplayed().performClick()
         save("minimal-recipe-200-dark", wholeWindow = true)
         rule.onNodeWithText(context.getString(R.string.action_return_to_live_brew)).performClick()
@@ -210,7 +231,7 @@ class MinimalBrewScreenTest {
         rule.onNodeWithContentDescription(context.getString(R.string.label_brew_safety_warning)).assertIsDisplayed()
         rule.onNodeWithText("Use clean, food-safe equipment", substring = true).assertDoesNotExist()
         save("minimal-basic-timer-light")
-        rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).performScrollTo().performClick()
+        rule.onNodeWithContentDescription(context.getString(R.string.action_brew_help)).performClick()
         rule.onNodeWithText("Refrigerate promptly at 4 °C or colder.", substring = true)
             .performScrollTo().assertIsDisplayed()
         rule.onNodeWithText(context.getString(R.string.action_return_to_live_brew)).performScrollTo().performClick()
@@ -236,7 +257,7 @@ class MinimalBrewScreenTest {
         )
 
     private fun render(request: BrewSessionStartRequest, runtime: SessionRuntimeState, large: Boolean, dark: Boolean,
-        minimal: Boolean = false, rejectActions: Boolean = false) {
+        minimal: Boolean = false, rejectActions: Boolean = false): MutableStateFlow<ActiveBrewSessionEntity> {
         val entity = ActiveBrewSessionEntityMapper.create(request.recipe, runtime, request.executionContext,
             System.currentTimeMillis())
         val flow = MutableStateFlow(entity)
@@ -262,6 +283,7 @@ class MinimalBrewScreenTest {
             }
         }
         rule.waitForIdle()
+        return flow
     }
 
     private fun save(name: String, wholeWindow: Boolean = false) {

@@ -27,6 +27,11 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.test.platform.app.InstrumentationRegistry
 import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.domain.brewing.QuantityRole
+import com.adsamcik.starlitcoffee.ui.brewing.LiveBrewContent
+import com.adsamcik.starlitcoffee.ui.session.BrewStageReferenceCuePresentation
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageMassReference
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageTargetQualifier
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.domain.brewing.StageId
 import com.adsamcik.starlitcoffee.domain.brewing.StagePlanId
@@ -35,6 +40,7 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.CompiledBrewStage
 import com.adsamcik.starlitcoffee.domain.brewing.session.CompiledStagePlan
 import com.adsamcik.starlitcoffee.domain.brewing.session.SessionId
 import com.adsamcik.starlitcoffee.domain.brewing.session.SessionRuntimeState
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageAdvanceConstraint
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageCompletionMode
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageRuntimeProgress
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageInstanceId
@@ -96,18 +102,18 @@ class MinimalBrewAccessibilityTest {
                 }
             }
         }
-        val source = context.getString(R.string.label_remaining) + " · " +
-            context.getString(R.string.format_brew_activity_minutes, 0L, 30L)
+        val source = context.getString(R.string.format_brew_activity_minutes, 0L, 30L)
         val reminder = context.getString(R.string.label_brew_reminder) + " · " +
             context.getString(R.string.format_brew_activity_minutes, 1L, 0L)
         rule.onNodeWithText(source).assertIsDisplayed()
+        rule.onNodeWithText(context.getString(R.string.label_remaining)).assertIsDisplayed()
         rule.onNodeWithText(reminder).assertIsDisplayed()
         rule.onNodeWithContentDescription(context.getString(R.string.cd_bloom_animation)).assertIsDisplayed()
         val clockBounds = rule.onNodeWithText(context.getString(R.string.format_brew_activity_hours, 12L, 37L))
             .fetchSemanticsNode().boundsInRoot
         val bloomBounds = rule.onNodeWithContentDescription(context.getString(R.string.cd_bloom_animation))
             .fetchSemanticsNode().boundsInRoot
-        assertTrue("Clock labels overlap bloom artwork", clockBounds.right <= bloomBounds.left)
+        assertTrue("Clock labels overlap bloom artwork", clockBounds.top >= bloomBounds.bottom)
         save("minimal-bloom-clocks-200")
         assertTextFits()
     }
@@ -275,4 +281,65 @@ class MinimalBrewAccessibilityTest {
         context.getString(R.string.action_brew_steep) + " · " + context.getString(R.string.label_brew_activity_paused),
         count,
     )
+    @Test
+    fun nonPourStageKeepsClockProminentAndYieldTargetSecondaryAt200Percent() {
+        val stage = CurrentBrewStagePresentation(StageInstanceId(StageId("extract"), 1),
+            BrewStageAction.PRESS, StageContentId("extract"), null, false, StageRunStatus.ACTIVE,
+            20_000L, BrewStageCompletionPresentation.Manual, safetyMessages = emptyList())
+        val target = BrewStageReferenceCuePresentation.Mass(QuantityRole.BEVERAGE_YIELD,
+            StageMassReference.RECIPE_TOTAL, StageTargetQualifier.EXACT, 36.0, 36.0)
+        rule.setContent {
+            val density = LocalDensity.current
+            CompositionLocalProvider(LocalDensity provides Density(density.density, fontScale = 2f)) {
+                StarlitCoffeeTheme(dynamicColor = false, darkTheme = true) {
+                    Surface(Modifier.width(320.dp)) {
+                        BrewSessionContent(presentation().copy(currentStage = stage, totalActiveElapsedMillis = 20_000L),
+                            completedLogId = null, isDispatching = false, onDispatch = {}, onBack = {},
+                            liveContent = LiveBrewContent(target = target), runtime = null,
+                            bloomSpritesheetId = null, guideFacts = emptyMap())
+                    }
+                }
+            }
+        }
+        val clock = rule.onNodeWithText(context.getString(R.string.format_brew_activity_minutes, 0L, 20L),
+            useUnmergedTree = true)
+        clock.assertIsDisplayed()
+        val yieldNode = rule.onNodeWithText("36 g", useUnmergedTree = true)
+        yieldNode.performScrollTo().assertIsDisplayed()
+        assertTrue("Non-pour target displaced the primary clock",
+            clock.fetchSemanticsNode().boundsInRoot.height > yieldNode.fetchSemanticsNode().boundsInRoot.height)
+        save("original-non-pour-200")
+        assertTextFits()
+    }
+
+    @Test
+    fun manualBloomCountdownSurvivesMissingArtworkAt200Percent() {
+        val stageId = StageInstanceId(StageId("manual_bloom"), 1)
+        val stage = CurrentBrewStagePresentation(stageId, BrewStageAction.BLOOM, StageContentId("bloom_copy"),
+            null, false, StageRunStatus.ACTIVE, 60_000L, BrewStageCompletionPresentation.Manual,
+            safetyMessages = emptyList())
+        val runtime = SessionRuntimeState.create(SessionId("manual-bloom"),
+            CompiledStagePlan(StagePlanId("manual_bloom"), 1, listOf(CompiledBrewStage(stageId,
+                BrewStageDefinition(StageId("manual_bloom"), BrewStageAction.BLOOM, StageContentId("bloom_copy"),
+                    completionMode = StageCompletionMode.Manual,
+                    advanceConstraint = StageAdvanceConstraint(notBeforeBrewElapsedMillis = 90_000L)))))).copy(
+            status = BrewSessionStatus.RUNNING, currentStageIndex = 0, totalActiveElapsedMillis = 60_000L,
+            stageProgress = listOf(StageRuntimeProgress(StageRunStatus.ACTIVE, elapsedActiveMillis = 60_000L)))
+        rule.setContent {
+            val density = LocalDensity.current
+            CompositionLocalProvider(LocalDensity provides Density(density.density, fontScale = 2f)) {
+                StarlitCoffeeTheme(dynamicColor = false) {
+                    Surface(Modifier.width(320.dp)) {
+                        BrewSessionHero(presentation().copy(currentStage = stage, totalActiveElapsedMillis = 60_000L),
+                            runtime = runtime, bloomSpritesheetId = null)
+                    }
+                }
+            }
+        }
+        rule.onNodeWithText(context.getString(R.string.format_brew_activity_minutes, 0L, 30L)).assertIsDisplayed()
+        rule.onNodeWithText(context.getString(R.string.label_remaining)).assertIsDisplayed()
+        rule.onNodeWithText(context.getString(R.string.format_brew_activity_minutes, 1L, 0L)).assertIsDisplayed()
+        rule.onNodeWithContentDescription(context.getString(R.string.cd_bloom_animation)).assertDoesNotExist()
+        assertTextFits()
+    }
 }

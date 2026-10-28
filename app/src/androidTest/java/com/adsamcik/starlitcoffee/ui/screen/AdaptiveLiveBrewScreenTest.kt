@@ -127,7 +127,7 @@ class AdaptiveLiveBrewScreenTest {
             CompositionLocalProvider(LocalDensity provides Density(viewportDensity, if (large) 2f else 1f)) {
                 StarlitCoffeeTheme(dynamicColor = false, darkTheme = true) {
                     Scaffold(
-                        topBar = { BrewSessionHeader(guide.methodName, onBack = {}, onHelp = null, onControls = {}) },
+                        topBar = { BrewSessionHeader(guide.methodName, onBack = {}, onHelp = {}, onControls = {}) },
                         bottomBar = {
                             BrewSessionPrimaryActionBar(action, presentation, startsBloom = false,
                                 isDispatching = false, onDispatch = { events += it }, showGuideToggle = false)
@@ -137,7 +137,7 @@ class AdaptiveLiveBrewScreenTest {
                             presentation = presentation, completedLogId = null, isDispatching = false,
                             onDispatch = { events += it }, onBack = {}, liveContent = liveContent,
                             runtime = runtime, bloomSpritesheetId = "coffee_flower",
-                            onHelp = {}, guideFacts = if (packet == Packet.MISSING) emptyMap() else guide.learnFacts(),
+                            guideFacts = if (packet == Packet.MISSING) emptyMap() else guide.learnFacts(),
                             equipmentProfileId = guide.profileId,
                             modifier = Modifier.fillMaxSize().padding(padding),
                         )
@@ -208,6 +208,12 @@ class AdaptiveLiveBrewScreenTest {
     }
 
     private fun save(name: String, density: Float, large: Boolean) {
+        rule.waitForIdle()
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        instrumentation.waitForIdleSync()
+        instrumentation.uiAutomation.waitForIdle(500L, 5_000L)
+        // Compose can be idle before the window compositor latches its first complete frame.
+        android.os.SystemClock.sleep(250L)
         val directory = File(context.getExternalFilesDir(null), "minimal-ui-redesign").apply { mkdirs() }
         val bitmap = rule.onRoot().captureToImage().asAndroidBitmap()
         File(directory, name + ".png").outputStream().use {

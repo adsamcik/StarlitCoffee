@@ -31,6 +31,7 @@ import com.adsamcik.starlitcoffee.domain.brewing.session.StageRunStatus
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageTimeReference
 import com.adsamcik.starlitcoffee.ui.component.BloomSpritesheetAnimation
 import com.adsamcik.starlitcoffee.ui.session.ActiveBrewSessionPresentation
+import com.adsamcik.starlitcoffee.ui.session.BrewStageReferenceCuePresentation
 import com.adsamcik.starlitcoffee.ui.session.BrewStageCompletionPresentation
 import java.text.NumberFormat
 
@@ -41,18 +42,25 @@ internal fun BrewSessionHero(
     runtime: SessionRuntimeState?,
     bloomSpritesheetId: String?,
     modifier: Modifier = Modifier,
+    target: BrewStageReferenceCuePresentation? = null,
 ) {
-    val bloom = brewSessionBloomState(presentation, runtime).takeIf { !bloomSpritesheetId.isNullOrEmpty() }
+    val bloom = brewSessionBloomState(presentation, runtime)
+    val bloomRemaining = bloom?.countdownSeconds?.toLong()?.times(1_000L)
+        .takeIf { presentation.currentStage?.action == BrewStageAction.BLOOM }
     val largeText = LocalDensity.current.fontScale >= 1.5f
-    Row(
+    Column(
         modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        BrewHeroClock(presentation, Modifier.weight(1f))
-        if (bloom != null) {
-            // The atlas retains the physical bloom state; no decorative motion changes its meaning.
-            BrewHeroBloom(bloom, bloomSpritesheetId, Modifier.size(if (largeText) 56.dp else 88.dp))
+        if (bloom != null && !bloomSpritesheetId.isNullOrEmpty()) {
+            BrewHeroBloom(bloom, bloomSpritesheetId, Modifier.size(if (largeText) 104.dp else 132.dp))
+        }
+        if (target != null) {
+            CenteredBrewTarget(target)
+            BrewHeroClock(presentation, Modifier.fillMaxWidth(), compact = true)
+        } else {
+            BrewHeroClock(presentation, Modifier.fillMaxWidth(), bloomRemainingMillis = bloomRemaining)
         }
     }
 }
@@ -74,66 +82,74 @@ internal fun BrewRecipeQuantities(recipe: BrewRecipeSnapshotV1?, doseOnly: Boole
 }
 
 @Composable
-private fun BrewHeroClock(presentation: ActiveBrewSessionPresentation.Available, modifier: Modifier) {
+private fun BrewHeroClock(
+    presentation: ActiveBrewSessionPresentation.Available,
+    modifier: Modifier,
+    compact: Boolean = false,
+    bloomRemainingMillis: Long? = null,
+) {
     val clockIsKnown = presentation.hasPhysicalClockStarted && presentation.isPhysicalOriginKnown
     val clock = when {
         !presentation.hasPhysicalClockStarted -> stringResource(R.string.label_brew_activity_ready)
         !presentation.isPhysicalOriginKnown -> stringResource(R.string.label_brew_start_unknown)
         else -> brewHeroDuration(presentation.totalActiveElapsedMillis)
     }
-    // Read the clock with its elapsed/remaining labels, without announcing each tick.
-    Column(modifier = modifier.semantics(mergeDescendants = true) {}, verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
-            val measurer = rememberTextMeasurer()
-            val availablePixels = with(LocalDensity.current) { maxWidth.roundToPx() }.coerceAtLeast(1)
-            val maximumFontSize = if (LocalDensity.current.fontScale >= 1.5f) 52f else 76f
-            val clockStyle = MaterialTheme.typography.displayLarge.copy(fontWeight = FontWeight.Medium,
-                fontFeatureSettings = "tnum", letterSpacing = (-0.5).sp)
-            // Measure the actual glyphs, including Android's non-linear large-font scaling.
-            val fontSize = remember(clock, clockIsKnown, availablePixels, maximumFontSize, clockStyle, measurer) {
-                if (!clockIsKnown) 26.sp else {
-                    var minimum = 1f
-                    var maximum = maximumFontSize
-                    repeat(8) {
-                        val candidate = (minimum + maximum) / 2f
-                        val width = measurer.measure(clock, style = clockStyle.copy(fontSize = candidate.sp),
-                            softWrap = false, maxLines = 1).size.width
-                        if (width <= availablePixels) minimum = candidate else maximum = candidate
-                    }
-                    minimum.sp
-                }
-            }
-            Text(
-                text = clock,
-                fontSize = fontSize,
-                lineHeight = fontSize * 1.1f,
-                fontWeight = FontWeight.Medium,
-                style = clockStyle,
-            )
+    val sourceRemaining = if (clockIsKnown) {
+        when (val completion = presentation.currentStage?.completion) {
+            is BrewStageCompletionPresentation.Countdown -> completion.remainingMillis
+            is BrewStageCompletionPresentation.ElapsedRange -> completion.maximumRemainingMillis
+            else -> bloomRemainingMillis
         }
-        if (clockIsKnown) {
-            Text(stringResource(R.string.label_elapsed), style = MaterialTheme.typography.labelSmall,
+    } else null
+    Column(modifier = modifier.semantics(mergeDescendants = true) {},
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        if (!compact && sourceRemaining != null) {
+            BrewHeroNumber(brewHeroDuration(sourceRemaining), clockIsKnown = true)
+            Text(stringResource(R.string.label_remaining), style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
+        } else if (!compact || !clockIsKnown) {
+            BrewHeroNumber(clock, clockIsKnown)
+            if (clockIsKnown) Text(stringResource(R.string.label_elapsed), style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
-        val sourceRemaining = if (presentation.isPhysicalOriginKnown) {
-            when (val completion = presentation.currentStage?.completion) {
-                is BrewStageCompletionPresentation.Countdown -> completion.remainingMillis
-                is BrewStageCompletionPresentation.ElapsedRange -> completion.maximumRemainingMillis
-                else -> null
+        if (clockIsKnown && (compact || sourceRemaining != null)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                Text(stringResource(R.string.label_elapsed), style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(clock, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
             }
-        } else null
-        sourceRemaining?.let {
-            val label = stringResource(R.string.label_remaining)
+        }
+        if (clockIsKnown) presentation.userTimerRemainingMillis?.let {
+            val label = stringResource(R.string.label_brew_reminder)
             Text("$label · ${brewHeroDuration(it)}", style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.primary)
         }
-        if (presentation.isPhysicalOriginKnown) {
-            presentation.userTimerRemainingMillis?.let {
-                val label = stringResource(R.string.label_brew_reminder)
-                Text("$label · ${brewHeroDuration(it)}", style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary)
+    }
+}
+
+@Composable
+private fun BrewHeroNumber(clock: String, clockIsKnown: Boolean) {
+    BoxWithConstraints(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+        val measurer = rememberTextMeasurer()
+        val availablePixels = with(LocalDensity.current) { maxWidth.roundToPx() }.coerceAtLeast(1)
+        val maximumFontSize = if (LocalDensity.current.fontScale >= 1.5f) 48f else 64f
+        val clockStyle = MaterialTheme.typography.displayLarge.copy(fontWeight = FontWeight.Light,
+            fontFeatureSettings = "tnum", letterSpacing = (-0.5).sp)
+        val fontSize = remember(clock, clockIsKnown, availablePixels, maximumFontSize, clockStyle, measurer) {
+            if (!clockIsKnown) 26.sp else {
+                var minimum = 1f
+                var maximum = maximumFontSize
+                repeat(8) {
+                    val candidate = (minimum + maximum) / 2f
+                    val width = measurer.measure(clock, style = clockStyle.copy(fontSize = candidate.sp),
+                        softWrap = false, maxLines = 1).size.width
+                    if (width <= availablePixels) minimum = candidate else maximum = candidate
+                }
+                minimum.sp
             }
         }
+        Text(clock, fontSize = fontSize, lineHeight = fontSize * 1.1f, style = clockStyle)
     }
 }
 

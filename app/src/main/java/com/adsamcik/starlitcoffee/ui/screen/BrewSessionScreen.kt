@@ -6,7 +6,8 @@ import android.content.ContextWrapper
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
@@ -21,7 +22,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.HelpOutline
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.WarningAmber
@@ -29,8 +29,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.FilledTonalIconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -40,10 +38,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -51,11 +50,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.contentDescription
@@ -77,7 +74,6 @@ import com.adsamcik.starlitcoffee.data.brewing.session.ActiveBrewSessionEntityMa
 import com.adsamcik.starlitcoffee.data.brewing.session.ActiveBrewSessionRestoreResult
 import com.adsamcik.starlitcoffee.data.brewing.session.BrewSessionOperationResult
 import com.adsamcik.starlitcoffee.data.db.entity.ActiveBrewSessionEntity
-import com.adsamcik.starlitcoffee.data.brewing.snapshot.BrewRecipeSnapshotV1
 import com.adsamcik.starlitcoffee.domain.pickWeightedBloomSpritesheetId
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.domain.brewing.session.BrewSessionStatus
@@ -416,7 +412,7 @@ fun BrewSessionScreen(
                     ?.let { com.adsamcik.starlitcoffee.ui.util.localizedBrewMethodLabel(it) }
                     ?: stringResource(R.string.screen_brew_session_title),
                 onBack = onBack,
-                onHelp = if (availablePresentation?.status == BrewSessionStatus.COMPLETED && canReadAhead) {
+                onHelp = if (availablePresentation != null) {
                     { showHelp = true }
                 } else null,
                 onControls = if (availablePresentation != null && availablePresentation.status != BrewSessionStatus.COMPLETED) {
@@ -459,7 +455,6 @@ fun BrewSessionScreen(
                 } ?: LiveBrewContent(target = primaryLiveBrewCue(presentation.currentStage?.referenceCues.orEmpty())),
                 runtime = restoredSession?.runtime,
                 bloomSpritesheetId = bloomSpritesheetId,
-                onHelp = { showHelp = true },
                 guideFacts = readerGuide?.stageFactsByContentId ?: reader?.reviewedGuide?.learnFacts().orEmpty(),
                 equipmentProfileId = persistedRecipe?.reviewedGuide?.profileId ?: persistedRecipe?.brewerProfileId,
                 modifier = Modifier
@@ -708,71 +703,60 @@ internal fun BrewSessionContent(
     liveContent: LiveBrewContent,
     runtime: SessionRuntimeState?,
     bloomSpritesheetId: String?,
-    onHelp: () -> Unit,
     guideFacts: Map<StageContentId, P1ExactLearnStageFacts>,
     modifier: Modifier = Modifier,
     equipmentProfileId: String? = null,
 ) {
     val stage = presentation.currentStage
     val pourFocus = stage.isFocusedPour(equipmentProfileId)
+    val targetInHero = pourFocus && liveContent.target != null &&
+        stage?.completion !is BrewStageCompletionPresentation.Countdown &&
+        stage?.completion !is BrewStageCompletionPresentation.ElapsedRange
     val actionLabel = stage?.let { guideFacts[it.contentId]?.title ?: it.action.label() }.orEmpty()
     val progressLabel = presentation.stageProgress.currentStageNumber?.let { number ->
         stringResource(R.string.format_brew_stage_progress, number, presentation.stageProgress.totalStageCount)
     }.orEmpty()
     val statusDescription = stringResource(R.string.cd_brew_session_status, actionLabel, progressLabel)
-    Box(modifier) {
-        val largeText = LocalDensity.current.fontScale >= 1.5f
+    BoxWithConstraints(modifier) {
         Column(
-            modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp, vertical = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(if (largeText) 16.dp else 20.dp),
+            modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())
+                .heightIn(min = maxHeight).padding(horizontal = 24.dp, vertical = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
         ) {
             if (presentation.status == BrewSessionStatus.COMPLETED) {
                 CompletedBrewSession(completedLogId, onBack, presentation.isTimerOnly)
                 return@Column
             }
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                BrewSessionHero(presentation, runtime, bloomSpritesheetId)
-                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(
-                        actionLabel,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier.weight(1f).semantics {
-                            heading()
-                            contentDescription = statusDescription
-                            // Announce stage changes rather than the ticking clock.
-                            liveRegion = if (presentation.accessibility.liveRegion == BrewSessionLiveRegion.ASSERTIVE) {
-                                LiveRegionMode.Assertive
-                            } else LiveRegionMode.Polite
-                        },
-                    )
-                    FilledTonalIconButton(onClick = onHelp, shapes = IconButtonDefaults.shapes(),
-                        modifier = Modifier.size(48.dp), colors = IconButtonDefaults.filledTonalIconButtonColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-                            contentColor = MaterialTheme.colorScheme.onSurfaceVariant)) {
-                        Icon(Icons.AutoMirrored.Outlined.HelpOutline,
-                            contentDescription = stringResource(R.string.action_brew_help))
-                    }
-                }
-                if (presentation.isGuidancePaused && presentation.status == BrewSessionStatus.RUNNING) {
-                    Text(stringResource(R.string.msg_brew_guide_paused), style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite })
-                }
-                LiveBrewStep(liveContent)
-                if (stage?.referenceCues.isNullOrEmpty()) {
-                    stage?.let { current ->
-                        guideFacts[current.contentId]?.cumulativeWater?.let { volume ->
-                            GuideQuantity(stringResource(R.string.label_exact_learn_cumulative_water), volume)
-                        }
-                    }
-                }
-                // Pour details are in Help; critical safety and physical completion controls stay live.
-                BrewSessionSafety(presentation.safetyMessages.filter {
-                    !pourFocus || it.severity == StageSafetySeverity.CRITICAL
-                })
+            BrewSessionHero(presentation, runtime, bloomSpritesheetId, target = liveContent.target.takeIf { targetInHero })
+            Text(
+                actionLabel,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                modifier = Modifier.fillMaxWidth().semantics {
+                    heading()
+                    contentDescription = statusDescription
+                    liveRegion = if (presentation.accessibility.liveRegion == BrewSessionLiveRegion.ASSERTIVE) {
+                        LiveRegionMode.Assertive
+                    } else LiveRegionMode.Polite
+                },
+            )
+            if (presentation.isGuidancePaused && presentation.status == BrewSessionStatus.RUNNING) {
+                Text(stringResource(R.string.msg_brew_guide_paused), style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite })
             }
+            LiveBrewStep(liveContent, showTarget = !targetInHero)
+            if (stage?.referenceCues.isNullOrEmpty()) {
+                stage?.let { current ->
+                    guideFacts[current.contentId]?.cumulativeWater?.let { volume ->
+                        GuideQuantity(stringResource(R.string.label_exact_learn_cumulative_water), volume)
+                    }
+                }
+            }
+            BrewSessionSafety(presentation.safetyMessages.filter {
+                !pourFocus || it.severity == StageSafetySeverity.CRITICAL
+            })
             stage?.let { current -> BrewSessionStageCard(current, isDispatching, onDispatch) }
             if (presentation.userTimerRemainingMillis == 0L) {
                 Text(stringResource(R.string.msg_brew_reminder_reached), style = MaterialTheme.typography.bodyMedium,

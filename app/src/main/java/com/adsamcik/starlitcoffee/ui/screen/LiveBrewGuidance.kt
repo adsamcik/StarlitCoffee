@@ -149,24 +149,26 @@ internal fun LiveBrewStep(
     content: LiveBrewContent,
     onHelp: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
+    showTarget: Boolean = true,
 ) {
     val instruction = content.instructionResource?.let { stringResource(it) } ?: content.instruction
-    val target = content.step?.target
+    val target = content.step?.target.takeIf { showTarget }
+    val targetCue = content.target.takeIf { showTarget }
+    val hasBody = targetCue != null || target != null || onHelp != null || instruction != null ||
+        content.visualCue != null || content.step?.illustration != null
+    if (!hasBody && content.warnings.isEmpty()) return
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        val hasBody = content.target != null || target != null || onHelp != null || instruction != null ||
-            content.visualCue != null || content.step?.illustration != null
         if (hasBody) {
             Column(Modifier.fillMaxWidth().animateContentSize(
                 animationSpec = MaterialTheme.motionScheme.defaultSpatialSpec(),
             ), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 val visualCue = content.visualCue
                 val illustration = content.step?.illustration
-                if (content.target != null || target != null || onHelp != null) {
+                if (targetCue != null || target != null || onHelp != null) {
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
-                            if (content.target != null) ReferenceCueRow(content.target, prominent = true, compact = true,
-                                showTargetLabel = true)
+                            if (targetCue != null) ReferenceCueRow(targetCue)
                             else if (target != null) Text(target, style = MaterialTheme.typography.headlineMedium,
                                 fontWeight = FontWeight.SemiBold)
                         }
@@ -176,7 +178,18 @@ internal fun LiveBrewStep(
                         }
                     }
                 }
-                instruction?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
+                instruction?.let {
+                    androidx.compose.material3.Surface(
+                        color = MaterialTheme.colorScheme.primaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                        shape = MaterialTheme.shapes.large,
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        Text(it, style = MaterialTheme.typography.titleMedium,
+                            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                            modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp))
+                    }
+                }
                 if (visualCue != null) LiveBrewVisualCue(visualCue, Modifier.align(Alignment.CenterHorizontally))
                 else if (illustration != null) ApprovedInstructionAssetImage(
                     asset = illustration.asset,
