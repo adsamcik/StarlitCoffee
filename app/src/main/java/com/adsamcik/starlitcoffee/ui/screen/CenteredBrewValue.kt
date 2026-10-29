@@ -65,12 +65,13 @@ internal fun CenteredBrewBody(
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit,
 ) {
+    val large = LocalDensity.current.fontScale >= 1.5f
     BoxWithConstraints(modifier) {
         Column(
             Modifier.fillMaxWidth().verticalScroll(rememberScrollState())
-                .heightIn(min = maxHeight).padding(horizontal = 24.dp, vertical = 12.dp),
+                .heightIn(min = maxHeight).padding(horizontal = 24.dp, vertical = if (large) 8.dp else 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterVertically),
+            verticalArrangement = Arrangement.spacedBy(if (large) 16.dp else 24.dp, Alignment.CenterVertically),
             content = content,
         )
     }
@@ -78,26 +79,29 @@ internal fun CenteredBrewBody(
 
 @Composable
 internal fun CenteredBrewHero(
-    primary: CenteredBrewValue,
+    primary: CenteredBrewValue?,
     secondary: CenteredBrewValue? = null,
     modifier: Modifier = Modifier,
     bloom: @Composable (Modifier) -> Unit,
 ) {
     val large = LocalDensity.current.fontScale >= 1.5f
     Column(modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(28.dp)) {
-        bloom(Modifier.size(if (large) 128.dp else 176.dp))
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(24.dp)) {
-            Column(Modifier.fillMaxWidth().semantics(mergeDescendants = true) {
-                primary.contentDescription?.let { contentDescription = it }
-            }, horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                if (primary.label.isNotEmpty()) {
-                    Text(primary.label, Modifier.fillMaxWidth(), fontSize = 14.sp, lineHeight = 19.sp,
-                        textAlign = TextAlign.Center, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        verticalArrangement = Arrangement.spacedBy(if (large) 16.dp else 28.dp)) {
+        bloom(Modifier.size(if (large) 96.dp else 176.dp))
+        if (primary != null || secondary != null) Column(Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(if (large) 12.dp else 24.dp)) {
+            primary?.let { primary ->
+                Column(Modifier.fillMaxWidth().semantics(mergeDescendants = true) {
+                    primary.contentDescription?.let { contentDescription = it }
+                }, horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    if (primary.label.isNotEmpty()) {
+                        Text(primary.label, Modifier.fillMaxWidth(), fontSize = 14.sp, lineHeight = 19.sp,
+                            textAlign = TextAlign.Center, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                    CenteredBrewNumber(primary)
                 }
-                CenteredBrewNumber(primary)
             }
             secondary?.let { value ->
                 FlowRow(Modifier.fillMaxWidth().semantics(mergeDescendants = true) {
@@ -107,7 +111,7 @@ internal fun CenteredBrewHero(
                     itemVerticalAlignment = Alignment.CenterVertically) {
                     if (value.label.isNotEmpty()) Text(value.label, fontSize = 14.sp, lineHeight = 19.sp,
                         color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    Text(value.value, fontSize = 24.sp, lineHeight = 29.sp,
+                    Text(value.value, fontSize = if (large) 18.sp else 24.sp, lineHeight = if (large) 24.sp else 29.sp,
                         fontWeight = FontWeight.Normal,
                         style = MaterialTheme.typography.bodyLarge.copy(fontFeatureSettings = "tnum"))
                 }
@@ -133,7 +137,7 @@ private fun CenteredBrewNumber(value: CenteredBrewValue) {
         }
         val size = remember(value, width, density.fontScale, style, measurer) {
             var lower = 1f
-            var upper = if (value.numeric) 80f else 26f
+            var upper = if (value.numeric) { if (density.fontScale >= 1.5f) 64f else 80f } else 26f
             repeat(10) {
                 val candidate = (lower + upper) / 2f
                 val measured = measurer.measure(annotated(candidate),

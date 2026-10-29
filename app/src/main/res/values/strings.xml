@@ -892,4 +892,7 @@
     <string name="action_brew_served">Served</string>
     <string name="action_brew_cleanup_done">Cleanup done</string>
     <string name="action_brew_step_done">Step done</string>
+    <string name="label_live_total_short">Total</string>
+    <string name="label_live_add_short">Add</string>
+    <string name="warning_live_lift_base">Lift by the base.</string>
 </resources>

@@ -1,7 +1,17 @@
 package com.adsamcik.starlitcoffee.ui.screen
 
 import com.adsamcik.starlitcoffee.domain.brewing.QuantityRole
+import com.adsamcik.starlitcoffee.domain.brewing.StageId
+import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStageAction
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageInstanceId
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageRunStatus
+import com.adsamcik.starlitcoffee.ui.session.CurrentBrewStagePresentation
+import com.adsamcik.starlitcoffee.ui.session.BrewStageCompletionPresentation
 import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.data.brewing.guides.ReviewedMethodGuideLibrary
+import com.adsamcik.starlitcoffee.ui.brewing.LiveBrewWarning
+import com.adsamcik.starlitcoffee.ui.guidance.liveSourceWarnings
+import java.io.File
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageMassReference
 import com.adsamcik.starlitcoffee.domain.brewing.session.StageTargetQualifier
@@ -210,6 +220,60 @@ class LiveBrewGuidanceTest {
         assertNull(projected.step?.illustration)
         assertNull(projected.visualCue)
         assertEquals("Release pressure before opening.", projected.warnings.single().text)
+    }
+
+    @Test
+    fun `reviewed handling stays concise while full source and unknown warnings survive`() {
+        val path = "src/main/assets/" + ReviewedMethodGuideLibrary.ASSET_PATH
+        val source = sequenceOf(File(path), File("app/" + path)).first(File::isFile).readText()
+        val safety = ReviewedMethodGuideLibrary.decode(source).single { it.methodId == "pulsar" }.safety
+        val original = LiveBrewWarning(safety.joinToString("\n"), critical = true)
+        val profile = PulsarLearnGuideCatalog.profileId.value
+        val bloomId = StageContentId("reviewed_pulsar_v1_open_start_bloom")
+        fun live(warning: LiveBrewWarning) = liveSourceWarnings(listOf(warning), profile, bloomId, BrewStageAction.BLOOM)
+        assertTrue(live(original).isEmpty())
+        val removal = liveSourceWarnings(listOf(original), profile,
+            StageContentId("reviewed_pulsar_v1_drain_and_serve"), BrewStageAction.RELEASE)
+        assertEquals(listOf(R.string.warning_live_lift_base), removal.map { it.summaryResource })
+        assertTrue(removal.single().critical)
+        assertEquals(safety.joinToString("\n"), original.text)
+        assertEquals(listOf(original), liveSourceWarnings(listOf(original), "other_profile", bloomId, BrewStageAction.BLOOM))
+        assertEquals(listOf(original), liveSourceWarnings(listOf(original), profile, StageContentId("custom"), BrewStageAction.BLOOM))
+        assertEquals(listOf(original), liveSourceWarnings(listOf(original), profile, bloomId, BrewStageAction.CUSTOM))
+        val unfamiliar = LiveBrewWarning("Disconnect power before opening.", critical = true)
+        assertEquals(listOf(unfamiliar), live(unfamiliar))
+        val changed = LiveBrewWarning(safety[0] + " New handling requirement.", critical = true)
+        assertEquals(listOf(changed), live(changed))
+    }
+
+    @Test
+    fun `live target follows the current task without repeating spent water during drawdown`() {
+        val water = BrewStageReferenceCuePresentation.Mass(QuantityRole.BREW_WATER_INPUT,
+            StageMassReference.BREW_CUMULATIVE, StageTargetQualifier.EXACT, 340.0, 340.0)
+        val dose = water.copy(role = QuantityRole.DRY_COFFEE_DOSE,
+            reference = StageMassReference.RECIPE_TOTAL, minimumGrams = 20.0, maximumGrams = 20.0)
+        val yield = dose.copy(role = QuantityRole.BEVERAGE_YIELD, minimumGrams = 36.0, maximumGrams = 36.0)
+        fun stage(action: BrewStageAction) = CurrentBrewStagePresentation(
+            StageInstanceId(StageId("target"), 1), action, StageContentId("target"), null, false,
+            StageRunStatus.ACTIVE, 0L, BrewStageCompletionPresentation.Manual,
+            safetyMessages = emptyList(), referenceCues = listOf(water, dose))
+        assertEquals(dose, liveHeroTarget(stage(BrewStageAction.ADD_COFFEE), water))
+        assertEquals(water, liveHeroTarget(stage(BrewStageAction.BLOOM), water))
+        assertEquals(water, liveHeroTarget(stage(BrewStageAction.OBSERVE), water))
+        assertEquals(water, liveHeroTarget(stage(BrewStageAction.CUSTOM), water))
+        val drawdown = stage(BrewStageAction.RELEASE).copy(contentId = StageContentId("reviewed_pulsar_v1_drain_and_serve"))
+        assertNull(liveHeroTarget(drawdown, water, PulsarLearnGuideCatalog.profileId.value))
+        assertEquals(water, liveHeroTarget(drawdown, water, "other_profile"))
+        val timing = BrewStageReferenceCuePresentation.Time(
+            com.adsamcik.starlitcoffee.domain.brewing.session.StageTimeReference.STAGE_DURATION,
+            StageTargetQualifier.EXACT, 60_000L, 60_000L)
+        assertEquals(timing, liveHeroTarget(stage(BrewStageAction.CUSTOM), timing))
+        val countdown = stage(BrewStageAction.BLOOM).copy(
+            completion = BrewStageCompletionPresentation.Countdown(60_000L, 30_000L))
+        assertNull(liveHeroTarget(countdown, timing))
+        val approximate = timing.copy(qualifier = StageTargetQualifier.APPROXIMATE)
+        assertEquals(approximate, liveHeroTarget(countdown, approximate))
+        assertEquals(yield, liveHeroTarget(stage(BrewStageAction.PRESS), yield))
     }
 
     private fun illustratedPour(): DurableBrewSessionGuidanceResolution {

@@ -2,6 +2,7 @@ package com.adsamcik.starlitcoffee.ui.guidance
 
 import androidx.annotation.StringRes
 import com.adsamcik.starlitcoffee.R
+import com.adsamcik.starlitcoffee.ui.brewing.LiveBrewWarning
 import com.adsamcik.starlitcoffee.domain.brewing.InstructionAssetId
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
 import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStageAction
@@ -89,3 +90,41 @@ internal fun liveSourceConfirmationAction(
     profileId: String?,
 ): BrewStageAction? = if (action == BrewStageAction.OBSERVE && profileId == PulsarLearnGuideCatalog.profileId.value &&
     contentId?.value == "reviewed_pulsar_v1_open_and_pulse") BrewStageAction.POUR else action
+
+/** Familiar notes live in Help; an immediate lifting cue remains at removal. Unknown revisions stay live. */
+internal fun liveSourceWarnings(
+    warnings: List<LiveBrewWarning>,
+    profileId: String?,
+    contentId: StageContentId?,
+    action: BrewStageAction?,
+): List<LiveBrewWarning> {
+    if (profileId != PulsarLearnGuideCatalog.profileId.value || !isReviewedPulsarStage(contentId, action)) return warnings
+    return warnings.flatMap { warning ->
+        warning.text.lineSequence().filter(String::isNotBlank).mapNotNull { line ->
+            when (visualContractRevision(listOf(line))) {
+                "e6588f44882e4570bd1c02256709e66c689e13ce0697af2a2c76ae4515a3ba15" ->
+                    warning.copy(text = line, summaryResource = R.string.warning_live_lift_base)
+                        .takeIf { action == BrewStageAction.RELEASE }
+                "c95b8d5db3713f0f5b767ace4b5a982039ee3db6161baf100e3e77e3de317a45",
+                "378b5b4a4b003536c7baad6c3695c35659422afe4d8cbdd07e13c2ed13fd4708",
+                "720fa02b8e91c844efac06c5a1665f46e6c3ef2d505737b238db26d298e2b7bc",
+                "33f5aafea8cf1b25dbf3b33b46b7204a1be53e42e02d3ad296f9bf6bb8600d3f" -> null
+                else -> warning.copy(text = line)
+            }
+        }.toList()
+    }.distinctBy { it.summaryResource to if (it.summaryResource == null) it.text else null }
+}
+
+private fun isReviewedPulsarStage(contentId: StageContentId?, action: BrewStageAction?): Boolean = when (contentId?.value) {
+    "reviewed_pulsar_v1_prime_paper" -> action == BrewStageAction.RINSE
+    "reviewed_pulsar_v1_dose_level_tare" -> action == BrewStageAction.ADD_COFFEE
+    "reviewed_pulsar_v1_open_start_bloom", "reviewed_pulsar_v1_retained_bloom" -> action == BrewStageAction.BLOOM
+    "reviewed_pulsar_v1_open_and_pulse" -> action in setOf(BrewStageAction.OBSERVE, BrewStageAction.POUR)
+    "reviewed_pulsar_v1_drain_and_serve" -> action == BrewStageAction.RELEASE
+    else -> false
+}
+
+/** The completed Pulsar pour amount is a recipe reference once final drawdown begins. */
+internal fun hasSpentWaterReference(action: BrewStageAction?, contentId: StageContentId?, profileId: String?): Boolean =
+    action == BrewStageAction.RELEASE && profileId == PulsarLearnGuideCatalog.profileId.value &&
+        contentId?.value == "reviewed_pulsar_v1_drain_and_serve"

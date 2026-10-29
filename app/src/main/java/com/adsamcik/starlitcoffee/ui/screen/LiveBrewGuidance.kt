@@ -20,6 +20,13 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.adsamcik.starlitcoffee.domain.brewing.StageContentId
+import com.adsamcik.starlitcoffee.domain.brewing.QuantityRole
+import com.adsamcik.starlitcoffee.domain.brewing.session.BrewStageAction
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageTimeReference
+import com.adsamcik.starlitcoffee.domain.brewing.session.StageTargetQualifier
+import com.adsamcik.starlitcoffee.ui.session.BrewStageCompletionPresentation
+import com.adsamcik.starlitcoffee.ui.guidance.hasSpentWaterReference
+import com.adsamcik.starlitcoffee.ui.session.CurrentBrewStagePresentation
 import com.adsamcik.starlitcoffee.ui.brewing.LiveBrewContent
 import com.adsamcik.starlitcoffee.ui.brewing.LiveBrewWarning
 import com.adsamcik.starlitcoffee.ui.brewing.approvedBrewStepIllustration
@@ -61,6 +68,28 @@ internal fun hasPulsarWaterHeightTarget(contentId: StageContentId, equipmentProf
 
 internal fun primaryLiveBrewCue(cues: List<BrewStageReferenceCuePresentation>): BrewStageReferenceCuePresentation? =
     cues.primaryBrewReferenceCue()
+
+/** Only the current task gets a live target; the complete reference list remains in Help. */
+internal fun liveHeroTarget(
+    stage: CurrentBrewStagePresentation?,
+    supplied: BrewStageReferenceCuePresentation?,
+    equipmentProfileId: String? = null,
+): BrewStageReferenceCuePresentation? {
+    if (stage?.action == BrewStageAction.ADD_COFFEE) {
+        return stage.referenceCues.filterIsInstance<BrewStageReferenceCuePresentation.Mass>()
+            .firstOrNull { it.role == QuantityRole.DRY_COFFEE_DOSE } ?: supplied
+    }
+    val countdown = stage?.completion as? BrewStageCompletionPresentation.Countdown
+    if (supplied is BrewStageReferenceCuePresentation.Time && countdown != null) {
+        val sameDuration = supplied.minimumMillis == countdown.targetElapsedMillis &&
+            supplied.maximumMillis == countdown.targetElapsedMillis
+        if (sameDuration && supplied.reference == StageTimeReference.STAGE_DURATION &&
+            supplied.qualifier == StageTargetQualifier.EXACT) return null
+    }
+    if (supplied is BrewStageReferenceCuePresentation.Mass && supplied.role == QuantityRole.BREW_WATER_INPUT &&
+        hasSpentWaterReference(stage?.action, stage?.contentId, equipmentProfileId)) return null
+    return supplied
+}
 
 /** Missing guidance never removes a supplied target or a required operational warning. */
 internal fun projectLiveBrewContent(

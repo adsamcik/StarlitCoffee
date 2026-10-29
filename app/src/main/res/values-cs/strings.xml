@@ -705,4 +705,7 @@
     <string name="action_brew_served">Podáno</string>
     <string name="action_brew_cleanup_done">Uklizeno</string>
     <string name="action_brew_step_done">Krok hotov</string>
+    <string name="label_live_total_short">Celkem</string>
+    <string name="label_live_add_short">Přidat</string>
+    <string name="warning_live_lift_base">Zvedejte za základnu.</string>
 </resources>

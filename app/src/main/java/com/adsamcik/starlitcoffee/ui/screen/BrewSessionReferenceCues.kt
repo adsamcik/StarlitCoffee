@@ -199,7 +199,15 @@ internal fun centeredBrewTargetValue(cue: BrewStageReferenceCuePresentation): Ce
     val spokenLabel = cue.content().label
     val targetLabel = stringResource(R.string.label_live_target)
     return CenteredBrewValue(
-        label = targetLabel + " · " + content.label,
+        label = when (cue) {
+            is BrewStageReferenceCuePresentation.Mass -> when {
+                cue.role == QuantityRole.DRY_COFFEE_DOSE -> stringResource(R.string.label_coffee)
+                cue.reference == StageMassReference.BREW_CUMULATIVE -> stringResource(R.string.label_live_total_short)
+                cue.reference == StageMassReference.STAGE_ADDED -> stringResource(R.string.label_live_add_short)
+                else -> stringResource(cue.role.labelRes)
+            }
+            else -> content.label
+        },
         value = content.value,
         contentDescription = targetLabel + " · " + spokenLabel + " " + content.value,
         unitSuffix = " g".takeIf { cue is BrewStageReferenceCuePresentation.Mass && cue.qualifier == StageTargetQualifier.EXACT },

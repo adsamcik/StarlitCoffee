@@ -126,6 +126,19 @@ class BrewSessionHeroTest {
         assertTrue(brewHeroQuantities(null).isEmpty())
     }
 
+    @Test
+    fun `only a wait represented by the bloom clock loses its duplicate explanation`() {
+        val matching = runtime(totalElapsed = 40_001L, stageElapsed = 40_001L,
+            advanceConstraint = StageAdvanceConstraint(notBeforeBrewElapsedMillis = 60_000L))
+        assertTrue(bloomWaitIsAlreadyShown(presentation(matching), matching))
+        val different = runtime(totalElapsed = 40_000L, stageElapsed = 20_000L,
+            completion = StageCompletionMode.Countdown(30_000L),
+            advanceConstraint = StageAdvanceConstraint(notBeforeBrewElapsedMillis = 60_000L))
+        assertFalse(bloomWaitIsAlreadyShown(presentation(different), different))
+        assertFalse(bloomWaitIsAlreadyShown(presentation(matching).copy(isPhysicalOriginKnown = false), matching))
+        assertFalse(bloomWaitIsAlreadyShown(presentation(matching), null))
+    }
+
     private fun presentation(runtime: SessionRuntimeState) =
         ActiveBrewSessionPresentationMapper.map(runtime) as ActiveBrewSessionPresentation.Available
 

@@ -98,6 +98,7 @@ import com.adsamcik.starlitcoffee.ui.guidance.DurableBrewSessionGuidanceRequest
 import com.adsamcik.starlitcoffee.ui.guidance.GuidancePresentationLevel
 import com.adsamcik.starlitcoffee.ui.guidance.P1ExactRecipeReleaseGate
 import com.adsamcik.starlitcoffee.ui.guidance.resolveBrewSessionContentSource
+import com.adsamcik.starlitcoffee.ui.guidance.liveSourceWarnings
 import com.adsamcik.starlitcoffee.ui.guidance.learnFacts
 import com.adsamcik.starlitcoffee.ui.brewing.toBrewReaderContent
 import com.adsamcik.starlitcoffee.ui.brewing.LiveBrewContent
@@ -538,6 +539,11 @@ fun BrewSessionScreen(
                         style = MaterialTheme.typography.titleMedium)
                 }
                 BrewRecipeQuantities(persistedRecipe)
+                if (availablePresentation.hasPhysicalClockStarted && availablePresentation.isPhysicalOriginKnown) {
+                    Text(stringResource(R.string.label_elapsed) + " " +
+                        brewHeroDuration(availablePresentation.totalActiveElapsedMillis),
+                        style = MaterialTheme.typography.bodyMedium)
+                }
                 if (availablePresentation.status != BrewSessionStatus.COMPLETED) {
                     TextButton(onClick = { showHelp = false; showControls = true }, modifier = Modifier.fillMaxWidth()) {
                         Text(stringResource(R.string.action_brew_controls))
@@ -706,9 +712,7 @@ internal fun BrewSessionContent(
 ) {
     val stage = presentation.currentStage
     val pourFocus = stage.isFocusedPour(equipmentProfileId)
-    val targetInHero = pourFocus && liveContent.target != null &&
-        stage?.completion !is BrewStageCompletionPresentation.Countdown &&
-        stage?.completion !is BrewStageCompletionPresentation.ElapsedRange
+    val target = liveHeroTarget(stage, liveContent.target, equipmentProfileId)
     val progressLabel = presentation.stageProgress.currentStageNumber?.let { number ->
         stringResource(R.string.format_brew_stage_progress, number, presentation.stageProgress.totalStageCount)
     }.orEmpty()
@@ -722,19 +726,20 @@ internal fun BrewSessionContent(
                     LiveRegionMode.Assertive else LiveRegionMode.Polite
             })
             BrewSessionHero(presentation, runtime, bloomSpritesheetId,
-                target = liveContent.target.takeIf { targetInHero })
+                target = target, promoteTarget = pourFocus || stage?.action in setOf(
+                    BrewStageAction.ADD_COFFEE, BrewStageAction.ADD_WATER, BrewStageAction.BLOOM))
         }
         if (presentation.status == BrewSessionStatus.COMPLETED) {
             if (completedLogId == null && !presentation.isTimerOnly) {
                 Text(stringResource(R.string.msg_brew_session_finishing), style = MaterialTheme.typography.bodyMedium)
             }
         } else {
-            if (!targetInHero) liveContent.target?.let { ReferenceCueRow(it) }
-            LiveBrewWarnings(liveContent.warnings)
+            LiveBrewWarnings(liveSourceWarnings(liveContent.warnings, equipmentProfileId, stage?.contentId, stage?.action))
             BrewSessionSafety(presentation.safetyMessages.filter {
-                it.severity != StageSafetySeverity.ADVICE && (!pourFocus || it.severity == StageSafetySeverity.CRITICAL)
-            })
-            stage?.let { BrewSessionStageCard(it, isDispatching, onDispatch) }
+                it.severity != StageSafetySeverity.ADVICE
+            }, compact = true)
+            stage?.let { BrewSessionStageCard(it, isDispatching, onDispatch,
+                showAdvanceConstraint = !bloomWaitIsAlreadyShown(presentation, runtime)) }
             if (presentation.userTimerRemainingMillis == 0L) {
                 Text(stringResource(R.string.msg_brew_reminder_reached), style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite })
@@ -756,6 +761,7 @@ private fun BrewSessionStageCard(
     stage: CurrentBrewStagePresentation,
     isDispatching: Boolean,
     onDispatch: (SessionEvent) -> Unit,
+    showAdvanceConstraint: Boolean,
 ) {
     val needsInput = when (stage.completion) {
         is BrewStageCompletionPresentation.ActualValue,
@@ -763,13 +769,13 @@ private fun BrewSessionStageCard(
         is BrewStageCompletionPresentation.ExternalMarker -> true
         else -> false
     }
-    if (stage.advanceConstraint.isSatisfied && !needsInput) return
+    if ((stage.advanceConstraint.isSatisfied || !showAdvanceConstraint) && !needsInput) return
     Column(modifier = Modifier.fillMaxWidth()) {
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            if (!stage.advanceConstraint.isSatisfied) {
+            if (!stage.advanceConstraint.isSatisfied && showAdvanceConstraint) {
                 Surface(
                     shape = MaterialTheme.shapes.large,
                     color = MaterialTheme.colorScheme.secondaryContainer,
@@ -900,7 +906,7 @@ private fun ActualValueControl(
 }
 
 @Composable
-private fun BrewSessionSafety(messages: List<StageSafetyMessage>) {
+private fun BrewSessionSafety(messages: List<StageSafetyMessage>, compact: Boolean = false) {
     messages.forEach { message ->
         val critical = message.severity == StageSafetySeverity.CRITICAL
         val contentColor = if (critical) MaterialTheme.colorScheme.onErrorContainer
@@ -917,10 +923,10 @@ private fun BrewSessionSafety(messages: List<StageSafetyMessage>) {
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.Top,
         ) {
-            Icon(message.severity.icon(), contentDescription = if (critical) null else stringResource(message.severity.labelRes()),
+            Icon(message.severity.icon(), contentDescription = if (critical && !compact) null else stringResource(message.severity.labelRes()),
                 tint = contentColor, modifier = Modifier.size(16.dp))
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                if (critical) {
+                if (critical && !compact) {
                     Text(
                         text = stringResource(message.severity.labelRes()),
                         style = MaterialTheme.typography.labelLarge,

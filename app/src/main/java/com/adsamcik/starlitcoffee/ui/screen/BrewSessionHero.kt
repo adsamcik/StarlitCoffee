@@ -31,6 +31,7 @@ internal fun BrewSessionHero(
     bloomSpritesheetId: String?,
     modifier: Modifier = Modifier,
     target: BrewStageReferenceCuePresentation? = null,
+    promoteTarget: Boolean = true,
 ) {
     val completed = presentation.status == BrewSessionStatus.COMPLETED
     val bloom = brewSessionBloomState(presentation, runtime) ?: BrewSessionBloomState(
@@ -47,8 +48,7 @@ internal fun BrewSessionHero(
     } else null
     val elapsed = brewHeroDuration(presentation.totalActiveElapsedMillis)
     val clock = when {
-        !presentation.hasPhysicalClockStarted -> CenteredBrewValue(
-            stringResource(R.string.label_brew_activity_ready), brewHeroDuration(0L))
+        !presentation.hasPhysicalClockStarted -> null
         !presentation.isPhysicalOriginKnown -> CenteredBrewValue(
             "", stringResource(R.string.label_brew_start_unknown), numeric = false)
         else -> CenteredBrewValue(
@@ -59,9 +59,11 @@ internal fun BrewSessionHero(
                 else -> R.string.label_elapsed
             }), brewHeroDuration(remaining ?: presentation.totalActiveElapsedMillis))
     }
-    val mainTarget = target.takeIf { !completed && remaining == null }
+    val currentTarget = target.takeUnless { completed }
+    val mainTarget = currentTarget.takeIf { remaining == null && (promoteTarget || !presentation.hasPhysicalClockStarted) }
     val secondary = when {
-        mainTarget != null && !clockKnown -> clock
+        mainTarget != null && !presentation.isPhysicalOriginKnown -> clock
+        currentTarget != null && mainTarget == null -> centeredBrewTargetValue(currentTarget)
         clockKnown && (mainTarget != null || remaining != null) ->
             CenteredBrewValue(stringResource(if (presentation.status == BrewSessionStatus.PAUSED)
                 R.string.label_brew_elapsed_paused else R.string.label_elapsed), elapsed)
@@ -155,6 +157,19 @@ internal fun brewSessionBloomState(
     if (!presentation.hasPhysicalClockStarted || !presentation.isPhysicalOriginKnown) return BrewSessionBloomState()
     return continuousBloomState(presentation, runtime, requireNotNull(currentIndex))
         ?: activeBloomState(presentation, stages[currentIndex].definition)
+}
+
+/** A wait explanation is redundant only when the live bloom clock depicts that same boundary. */
+internal fun bloomWaitIsAlreadyShown(
+    presentation: ActiveBrewSessionPresentation.Available,
+    runtime: SessionRuntimeState?,
+): Boolean {
+    val stage = presentation.currentStage ?: return false
+    if (stage.action != BrewStageAction.BLOOM || !presentation.hasPhysicalClockStarted ||
+        !presentation.isPhysicalOriginKnown) return false
+    val wait = maxOf(stage.advanceConstraint.stageRemainingMillis, stage.advanceConstraint.brewRemainingMillis)
+    val shown = brewSessionBloomState(presentation, runtime)?.countdownSeconds?.toLong()?.times(1_000L) ?: return false
+    return wait > 0L && shown >= wait && shown - wait < 1_000L
 }
 
 /** A retained bloom can span the manual pour and a later wait, sharing one first-water boundary. */
