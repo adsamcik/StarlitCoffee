@@ -18,7 +18,7 @@ buildscript {
             add("classpath", "org.jdom:jdom2:2.0.6.1") {
                 because("Fix XML external entity injection, GHSA-2363-cqg2-863c")
             }
-            add("classpath", "org.apache.commons:commons-lang3:3.18.0") {
+            add("classpath", "org.apache.commons:commons-lang3:3.21.0") {
                 because("Fix uncontrolled recursion, GHSA-j288-q9x7-2f5v")
             }
         }
